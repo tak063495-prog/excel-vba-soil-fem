@@ -1,0 +1,16 @@
+﻿Option Explicit
+Public Function PolicyLogSelfTest() As String
+ On Error GoTo Failed
+ Dim s As PolicyV2Sample, a As String, sumText As String
+ Call PolicyLogResetRun: Call PolicyLogMark: PolicyLogGate 1, "comma,reason": PolicyLogGate 1, "comma,reason": PolicyLogGate 2, "quote" & Chr$(34) & "reason"
+ a = PolicyLogGateRows("PASS,quoted"): If InStr(a, "SHORT") = 0 Or InStr(a, ",2") = 0 Then Err.Raise 7001
+ a = PolicyLogGateRows("PASS,quoted"): If Len(a) <> 0 Then Err.Raise 7002
+ s.TrialId = PolicyLogTrialId: s.Kind = "A,B": s.Fs = 2.25: s.Assessed = True: s.Q = 0#: s.CostKnown = True: s.EstimatedNetMs = 1#: s.Accepted = True: s.Outcome = "OK": PolicyLogSample 1, s
+ s.Assessed = False: s.CostKnown = False: s.EstimatedNetMs = -999#: s.Accepted = False: PolicyLogSample 2, s
+ a = PolicyLogDrain(): If InStr(a, Chr$(34) & "A,B" & Chr$(34)) = 0 Then Err.Raise 7003
+ If Len(PolicyLogDrain()) <> 0 Then Err.Raise 7004
+ sumText = PolicyLogSummary(): If InStr(sumText, "PolicyV2_SHORT_assessed_good=1") = 0 Or InStr(sumText, "PolicyV2_LONG_unassessed=1") = 0 Then Err.Raise 7005
+ If InStr(sumText, "PolicyV2_LONG_predicted_negative=1") > 0 Then Err.Raise 7006
+ PolicyLogSelfTest = "PASS": Exit Function
+Failed: PolicyLogSelfTest = "FAIL:" & CStr(Err.Number) & ":" & Err.Description
+End Function

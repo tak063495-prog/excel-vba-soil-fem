@@ -1,0 +1,71 @@
+﻿V2a長反復経路の段階的休止・有限費用推定版（2026-10-07）
+Ver=20261007_ADAPT_04
+納品: outputs/2DSoilFEM_20261007_adaptive_policy2.xlsm
+元の2DSoilFEM_20261006_adaptive_policy.xlsmは変更していない。入力シート・全設定値・入力規則を保持。
+
+変更内容
+1. V2aの費用推定
+   旧式は初回再利用のqを将来の全反復へ外挿していたため、q≈1で大きな負の値になっていた。
+   新式は初回1回の再利用に限定する。q<=0.7では、fresh_qとの残差差を以後のfresh_qで回収する費用を推定する。
+   extra=max(0,ln(q/fresh_q)/(-ln(fresh_q)))、net=factor_price_ms-extra*correction_ms。
+   q=0のextraは0。q>0.7では継続時に既存の安全判定が再構築するため、保守的にnet=-correction_msとする。
+   q≈1でも幾何級数を外挿しない。実ログのq=.9969753737947、補正46.875msの場合、旧-10696.428msから新-46.875msとなる。
+   cost_model列にONE_STEP_FRESH_CONTINUATION / IMMEDIATE_REBUILD_ONE_CORRECTIONを記録。
+   これは初回再利用の条件付きの費用指標であり、実測短縮時間や後続の全作業の因果費用ではない。
+   新式でもfresh_q証拠、時計分解能(平均LU31.25ms以上)、AA重複等の既存条件を満たすときだけ推定する。
+
+2. LONG経路（前増分6反復以上）の休止・再開
+   初回補正の不良(q>0.7)、初回補正拒否、V2aを使用した試行の失敗で休止する。
+   不良が続くと16→32→64成功増分へ延長し、64を上限とする。
+   同じ試行のq不良と基準方式への復帰は1回だけ数える。
+   休止終了後の最初の適格な再利用をprobe=Trueとして記録する。
+   良好な初回qと増分の収束、採算損失・AA重複のないことを確認して不良段階を1つ戻す。初回qだけでは解除しない。
+   2回の採算損失によるLONG休止も段階制を使う。SHORTの既存16/8増分休止条件は維持。
+   ステージ開始で履歴をリセット。C47=0ではこの選択制御を適用しない。
+   SHORT/LONGを独立させ、LONG休止中もSHORTは適格なら利用できる。Fsや特定反復回数を固定除外しない。
+   増分失敗時の全体回復期間(3)、V1の履歴制限、進捗停滞のSTEP_REDUCTION/METHOD_LOSS分類を保持。
+
+3. 追加ログ
+   adaptive_v2a.csvの既存27列は順序を保持し、末尾へ次の7列を追加(全34列):
+   previous_step: V2a用に独立保存した前増分幅。V1の履歴がないLONGでも記録。
+   step_ratio: 今回増分幅/前増分幅。前増分幅不明時はNA。
+   probe: LONG休止後の最初の適格試用。
+   bad_streak_before / bad_streak_after: 試行前後のLONG不良段階(0～3)。
+   cost_model: 費用指標のモデル。費用不明時は空欄。
+   failure_reason: 補正拒否・試行失敗理由。成功まで回復した拒否も保持。
+   solver_events.csvのACCEL_FALLBACKへfailure_reason、line_search_retry、探索回数、材料拒否回数、最良qを追加。
+   エラー状態NOT_RUN/番号0のときもLINESEARCH_NO_REDUCTION等を記録する。
+   探索残差の強制不良試験では、通常の線形探索拒否経路から理由を記録し、接線再構築後に収束することを確認。
+   CSVの書込みは既存の試行/ステージ終了時のまとめ書き方式を維持。TRACE=0でもDEBUG_MODE=STAGEで記録する。
+
+使用方法
+   設定C36(V1)=1、C37(V2a)=1、C40(V4)=1、C47(ACCEL_ADAPTIVE)=1を推奨比較条件とする。
+   C38(V2b)、C39(V3)、C41(V5)は0。C42(TRACE)は0、DEBUG_MODEはSTAGEでよい。
+   納品ブックは受領元の設定をそのまま保持している。新たな設定項目は増やしていない。
+   出力フォルダー名は新ブック名に対応して2DSoilFEM_20261007_adaptive_policy2_outとなる。
+
+検証
+   VBAコンパイルを伴うGMRES既知解/真の残差/反復予算拒否の自己テストPASS。
+   適応制御31項目＋新制御32項目、適格性15項目、V1古い履歴の非使用、CSV自己テストPASS。
+   85節点/20 Q8要素の4ケース×5設定=20解析が収束。前版20解析と変位配列・残差・増分/LU/再利用回数・塑性点数が完全一致。
+   V2aのみを適応制御で試験した正常/補正拒否/基準方式復帰/再構築復帰/実線形探索拒否の計5解析が収束。
+   拒否の後のfresh補正を初回qへ誤分類せず、NAを維持。不良と復帰を二重に数えない。
+   計25解析のCSV列数、サンプル数、経路別集計、REUSEゲート数、経路/増分比/失敗理由の整合性を確認。
+   入力7シート、全設定値、入力規則を保持。元ブックのSHA256一致。検証用コードは納品ブックに含めない。
+   接線安全判定・V1予測適用・直接ソルバーを変更していないことをソース比較で確認。
+
+評価上の限界
+   小規模モデルはLU時間が時計分解能以下になるため、採算判定と繰り返し不良の段階制は人工条件の単体試験で確認した。
+   フルモデルの高速化率はまだ測定していない。新しい休止が有効かは実ログで確認が必要。
+   前版と同条件で総時間、Newton/LU数、最終Fs幅・PASS/FAIL・変位を比較する。
+   Fs2.275/2.2875/2.3付近でLONGのprobe、休止段階、q、失敗理由、SHORT継続を重点的に確認する。
+   前版とestimated_net_msの合計を直接比較して短縮率と解釈しない(モデル式を変更したため)。
+
+関連ファイル
+   adaptive_policy_v4_unit_checks_20261007.txt / adaptive_policy_v4_smoke_20261007.json
+   adaptive_policy_v4_fault_checks_20261007.json / adaptive_policy_v4_linesearch_checks_20261007.json
+   adaptive_policy_v4_comparison_20261007.csv / adaptive_policy_v4_log_checks_20261007.json
+   adaptive_policy_v4_changes_20261007.diff / policy2_vba_source/*.bas
+
+元ブックSHA256: F9FD19A384BE7059DBD0C4E9E67DE6D402293B197E966B51C0D813EA302E92EB
+納品ブックSHA256: E5A461E346E4E9AC44D85DC4FBF9D7C93A8DB3960306B97F15CC106785A4351A

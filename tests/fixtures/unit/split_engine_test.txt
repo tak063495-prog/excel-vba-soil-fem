@@ -1,0 +1,20 @@
+Public Function SplitPredictorSelfTest() As String
+  Dim base() As Double, used As Boolean, before() As Double, i As Long
+  On Error GoTo Failed
+  lastDof = 1
+  ReDim TDisp(1): ReDim UDisp(1): ReDim NodeCond(1): ReDim base(1)
+  TDisp(0) = 3#: TDisp(1) = 99#: base(0) = 1#: base(1) = 2#
+  P6MixedUP = False: P3HasJointElements = False: P3AfterCutback = False: AccelBaselineRetry = False
+  AccelV1 = True: AccelV2a = True: AdaptiveEnabled = False
+  AccelRememberIncrement base, 0.1, 6, 0
+  before = TDisp
+  P3ApplyIncrementPredictor 0.1, 1#, used
+  If used Or Not AccelIncrementEligible Or AccelHistoryReady Then Err.Raise vbObjectError + 3751
+  For i = 0 To lastDof
+    If TDisp(i) <> before(i) Then Err.Raise vbObjectError + 3752
+  Next i
+  SplitPredictorSelfTest = "PASS: V1 cannot consume stale history after a long increment"
+  Exit Function
+Failed:
+  SplitPredictorSelfTest = "FAIL " & CStr(Err.Number) & " " & Err.Description
+End Function

@@ -1,0 +1,520 @@
+[
+  {
+    "key": "MESH_MATERIAL",
+    "sheet": "メッシュ設定",
+    "row": 9,
+    "cell": "C9",
+    "legacyRow": 16
+  },
+  {
+    "key": "MESH_BC_BOTTOM",
+    "sheet": "メッシュ設定",
+    "row": 10,
+    "cell": "C10",
+    "legacyRow": 17
+  },
+  {
+    "key": "MESH_BC_LEFT",
+    "sheet": "メッシュ設定",
+    "row": 11,
+    "cell": "C11",
+    "legacyRow": 18
+  },
+  {
+    "key": "MESH_BC_RIGHT",
+    "sheet": "メッシュ設定",
+    "row": 12,
+    "cell": "C12",
+    "legacyRow": 19
+  },
+  {
+    "key": "MESH_BC_TOP",
+    "sheet": "メッシュ設定",
+    "row": 13,
+    "cell": "C13",
+    "legacyRow": 20
+  },
+  {
+    "key": "MESH_BC_PIN_CORNER",
+    "sheet": "メッシュ設定",
+    "row": 14,
+    "cell": "C14",
+    "legacyRow": 21
+  },
+  {
+    "key": "MESH_POINT1_X",
+    "sheet": "メッシュ設定",
+    "row": 17,
+    "cell": "C17",
+    "legacyRow": 6
+  },
+  {
+    "key": "MESH_POINT1_Y",
+    "sheet": "メッシュ設定",
+    "row": 18,
+    "cell": "C18",
+    "legacyRow": 7
+  },
+  {
+    "key": "MESH_POINT2_X",
+    "sheet": "メッシュ設定",
+    "row": 19,
+    "cell": "C19",
+    "legacyRow": 8
+  },
+  {
+    "key": "MESH_POINT2_Y",
+    "sheet": "メッシュ設定",
+    "row": 20,
+    "cell": "C20",
+    "legacyRow": 9
+  },
+  {
+    "key": "MESH_POINT3_X",
+    "sheet": "メッシュ設定",
+    "row": 21,
+    "cell": "C21",
+    "legacyRow": 10
+  },
+  {
+    "key": "MESH_POINT3_Y",
+    "sheet": "メッシュ設定",
+    "row": 22,
+    "cell": "C22",
+    "legacyRow": 11
+  },
+  {
+    "key": "MESH_POINT4_X",
+    "sheet": "メッシュ設定",
+    "row": 23,
+    "cell": "C23",
+    "legacyRow": 12
+  },
+  {
+    "key": "MESH_POINT4_Y",
+    "sheet": "メッシュ設定",
+    "row": 24,
+    "cell": "C24",
+    "legacyRow": 13
+  },
+  {
+    "key": "MESH_NX",
+    "sheet": "メッシュ設定",
+    "row": 25,
+    "cell": "C25",
+    "legacyRow": 14
+  },
+  {
+    "key": "MESH_NY",
+    "sheet": "メッシュ設定",
+    "row": 26,
+    "cell": "C26",
+    "legacyRow": 15
+  },
+  {
+    "key": "MESH_GEN_COMPARE",
+    "sheet": "メッシュ設定",
+    "row": 29,
+    "cell": "C29",
+    "legacyRow": 81
+  },
+  {
+    "key": "WEIGHT_MODE",
+    "sheet": "解析設定",
+    "row": 9,
+    "cell": "C9",
+    "legacyRow": 24
+  },
+  {
+    "key": "FLOW_POLICY",
+    "sheet": "解析設定",
+    "row": 10,
+    "cell": "C10",
+    "legacyRow": 27
+  },
+  {
+    "key": "Q8_HOURGLASS_FACTOR",
+    "sheet": "解析設定",
+    "row": 11,
+    "cell": "C11",
+    "legacyRow": 25
+  },
+  {
+    "key": "RCM_POLICY",
+    "sheet": "解析設定",
+    "row": 12,
+    "cell": "C12",
+    "legacyRow": 26
+  },
+  {
+    "key": "SRM_FMAX",
+    "sheet": "解析設定",
+    "row": 15,
+    "cell": "C15",
+    "legacyRow": 30
+  },
+  {
+    "key": "SRM_TOL",
+    "sheet": "解析設定",
+    "row": 16,
+    "cell": "C16",
+    "legacyRow": 31
+  },
+  {
+    "key": "SRM_PSI_POLICY",
+    "sheet": "解析設定",
+    "row": 17,
+    "cell": "C17",
+    "legacyRow": 32
+  },
+  {
+    "key": "SRM_MODE",
+    "sheet": "解析設定",
+    "row": 18,
+    "cell": "C18",
+    "legacyRow": 33
+  },
+  {
+    "key": "SRM_FIXED_FS",
+    "sheet": "解析設定",
+    "row": 19,
+    "cell": "C19",
+    "legacyRow": 46
+  },
+  {
+    "key": "ACCEL_ADAPTIVE",
+    "sheet": "高速化設定",
+    "row": 9,
+    "cell": "C9",
+    "legacyRow": 47
+  },
+  {
+    "key": "ACCEL_V1_PREDICTOR",
+    "sheet": "高速化設定",
+    "row": 12,
+    "cell": "C12",
+    "legacyRow": 36
+  },
+  {
+    "key": "ACCEL_V2A_REUSE",
+    "sheet": "高速化設定",
+    "row": 13,
+    "cell": "C13",
+    "legacyRow": 37
+  },
+  {
+    "key": "ACCEL_V2B_COST",
+    "sheet": "高速化設定",
+    "row": 14,
+    "cell": "C14",
+    "legacyRow": 38
+  },
+  {
+    "key": "ACCEL_V3_COST_SEARCH",
+    "sheet": "高速化設定",
+    "row": 15,
+    "cell": "C15",
+    "legacyRow": 39
+  },
+  {
+    "key": "ACCEL_V4_ANDERSON",
+    "sheet": "高速化設定",
+    "row": 16,
+    "cell": "C16",
+    "legacyRow": 40
+  },
+  {
+    "key": "ACCEL_V5_GMRES_LU",
+    "sheet": "高速化設定",
+    "row": 17,
+    "cell": "C17",
+    "legacyRow": 41
+  },
+  {
+    "key": "ACCEL_STEP_RECOVERY",
+    "sheet": "高速化設定",
+    "row": 20,
+    "cell": "C20",
+    "legacyRow": 88
+  },
+  {
+    "key": "ACCEL_STEP_FRESH_LU",
+    "sheet": "高速化設定",
+    "row": 21,
+    "cell": "C21",
+    "legacyRow": 89
+  },
+  {
+    "key": "ACCEL_TRACE",
+    "sheet": "高速化設定",
+    "row": 24,
+    "cell": "C24",
+    "legacyRow": 42
+  },
+  {
+    "key": "ACCEL_PREDICT_BETA",
+    "sheet": "高速化設定",
+    "row": 25,
+    "cell": "C25",
+    "legacyRow": 43
+  },
+  {
+    "key": "ACCEL_PREDICT_MAX_RATIO",
+    "sheet": "高速化設定",
+    "row": 26,
+    "cell": "C26",
+    "legacyRow": 44
+  },
+  {
+    "key": "ACCEL_TANGENT_CHANGE",
+    "sheet": "高速化設定",
+    "row": 27,
+    "cell": "C27",
+    "legacyRow": 45
+  },
+  {
+    "key": "OUTPUT_STAGE_MODE",
+    "sheet": "出力・表示",
+    "row": 9,
+    "cell": "C9",
+    "legacyRow": 50
+  },
+  {
+    "key": "OUTPUT_INACTIVE_ELEMENTS",
+    "sheet": "出力・表示",
+    "row": 10,
+    "cell": "C10",
+    "legacyRow": 51
+  },
+  {
+    "key": "DEBUG_MODE",
+    "sheet": "出力・表示",
+    "row": 11,
+    "cell": "C11",
+    "legacyRow": 52
+  },
+  {
+    "key": "DEBUG_FLUSH",
+    "sheet": "出力・表示",
+    "row": 12,
+    "cell": "C12",
+    "legacyRow": 56
+  },
+  {
+    "key": "EXPORT_MODE",
+    "sheet": "出力・表示",
+    "row": 13,
+    "cell": "C13",
+    "legacyRow": 57
+  },
+  {
+    "key": "EXPORT_LOAD",
+    "sheet": "出力・表示",
+    "row": 14,
+    "cell": "C14",
+    "legacyRow": 58
+  },
+  {
+    "key": "VIEW_DISP_SCALE",
+    "sheet": "出力・表示",
+    "row": 17,
+    "cell": "C17",
+    "legacyRow": 64
+  },
+  {
+    "key": "VIEW_COLOR_RESULT",
+    "sheet": "出力・表示",
+    "row": 18,
+    "cell": "C18",
+    "legacyRow": 65
+  },
+  {
+    "key": "VIEW_SCALE_MODE",
+    "sheet": "出力・表示",
+    "row": 19,
+    "cell": "C19",
+    "legacyRow": 66
+  },
+  {
+    "key": "VIEW_RESULT_SOURCE",
+    "sheet": "出力・表示",
+    "row": 20,
+    "cell": "C20",
+    "legacyRow": 68
+  },
+  {
+    "key": "VIEW_DETAIL_MODE",
+    "sheet": "出力・表示",
+    "row": 21,
+    "cell": "C21",
+    "legacyRow": 67
+  },
+  {
+    "key": "VIEW_SCALE",
+    "sheet": "出力・表示",
+    "row": 22,
+    "cell": "C22",
+    "legacyRow": 63
+  },
+  {
+    "key": "VIEW_MIN_X",
+    "sheet": "出力・表示",
+    "row": 23,
+    "cell": "C23",
+    "legacyRow": 61
+  },
+  {
+    "key": "VIEW_MAX_Y",
+    "sheet": "出力・表示",
+    "row": 24,
+    "cell": "C24",
+    "legacyRow": 62
+  },
+  {
+    "key": "SOLVER",
+    "sheet": "詳細設定",
+    "row": 9,
+    "cell": "C9",
+    "legacyRow": 53
+  },
+  {
+    "key": "BAND_LU_KERNEL",
+    "sheet": "詳細設定",
+    "row": 10,
+    "cell": "C10",
+    "legacyRow": 54
+  },
+  {
+    "key": "PHYSICAL_FAILURE_MODE",
+    "sheet": "詳細設定",
+    "row": 11,
+    "cell": "C11",
+    "legacyRow": 55
+  },
+  {
+    "key": "MESH_QUALITY_MIN_AREA_RATIO",
+    "sheet": "詳細設定",
+    "row": 14,
+    "cell": "C14",
+    "legacyRow": 71
+  },
+  {
+    "key": "MESH_QUALITY_MIN_JACOBIAN_RATIO",
+    "sheet": "詳細設定",
+    "row": 15,
+    "cell": "C15",
+    "legacyRow": 72
+  },
+  {
+    "key": "MESH_QUALITY_MIN_ANGLE_DEG",
+    "sheet": "詳細設定",
+    "row": 16,
+    "cell": "C16",
+    "legacyRow": 73
+  },
+  {
+    "key": "MESH_QUALITY_MAX_ANGLE_DEG",
+    "sheet": "詳細設定",
+    "row": 17,
+    "cell": "C17",
+    "legacyRow": 74
+  },
+  {
+    "key": "MESH_QUALITY_MAX_ASPECT_RATIO",
+    "sheet": "詳細設定",
+    "row": 18,
+    "cell": "C18",
+    "legacyRow": 75
+  },
+  {
+    "key": "MESH_REPAIR_MAX_ITERATIONS",
+    "sheet": "詳細設定",
+    "row": 21,
+    "cell": "C21",
+    "legacyRow": 76
+  },
+  {
+    "key": "MESH_REPAIR_DAMPING",
+    "sheet": "詳細設定",
+    "row": 22,
+    "cell": "C22",
+    "legacyRow": 77
+  },
+  {
+    "key": "MESH_REPAIR_IMPROVEMENT_TOLERANCE",
+    "sheet": "詳細設定",
+    "row": 23,
+    "cell": "C23",
+    "legacyRow": 78
+  },
+  {
+    "key": "MESH_REPAIR_ANGLE_ITERATIONS",
+    "sheet": "詳細設定",
+    "row": 24,
+    "cell": "C24",
+    "legacyRow": 79
+  },
+  {
+    "key": "MESH_REPAIR_TERRAIN_COMPARE",
+    "sheet": "詳細設定",
+    "row": 25,
+    "cell": "C25",
+    "legacyRow": 80
+  },
+  {
+    "key": "MESH_TERRAIN_COUNT_MIN",
+    "sheet": "詳細設定",
+    "row": 26,
+    "cell": "C26",
+    "legacyRow": 82
+  },
+  {
+    "key": "MESH_TERRAIN_COUNT_MAX",
+    "sheet": "詳細設定",
+    "row": 27,
+    "cell": "C27",
+    "legacyRow": 83
+  },
+  {
+    "key": "ADAPT_MAX_ELEMENT_RATIO",
+    "sheet": "詳細設定",
+    "row": 28,
+    "cell": "C28",
+    "legacyRow": 84
+  },
+  {
+    "key": "ADAPT_MARK_FRACTION",
+    "sheet": "詳細設定",
+    "row": 29,
+    "cell": "C29",
+    "legacyRow": 85
+  },
+  {
+    "key": "MESH_GEN_LAST_METHOD",
+    "sheet": "詳細設定",
+    "row": 32,
+    "cell": "C32",
+    "legacyRow": 92
+  },
+  {
+    "key": "MESH_GEN_LAST_COMPARE",
+    "sheet": "詳細設定",
+    "row": 33,
+    "cell": "C33",
+    "legacyRow": 93
+  },
+  {
+    "key": "BAND_LU_BENCH",
+    "sheet": "詳細設定",
+    "row": 34,
+    "cell": "C34",
+    "legacyRow": 94
+  },
+  {
+    "key": "BAND_LU_BENCH_N",
+    "sheet": "詳細設定",
+    "row": 35,
+    "cell": "C35",
+    "legacyRow": 95
+  }
+]

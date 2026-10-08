@@ -38,3 +38,10 @@
 #*.[pP][oO][tT][mM]
 #*.[pP][pP][sS]
 #*.[pP][pP][sS][mM]
+
+# FEM test and run artifacts
+~$*
+tests/tmp/
+tests/results/
+*_out/
+__pycache__/

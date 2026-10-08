@@ -1,0 +1,51 @@
+Public Function SplitEligibilitySelfTest() As String
+  Dim base() As Double, checks As Long
+  On Error GoTo Failed
+  lastDof = 1
+  ReDim TDisp(1): ReDim UDisp(1): ReDim NodeCond(1): ReDim base(1)
+  TDisp(0) = 3#: TDisp(1) = 99#: base(0) = 1#: base(1) = 2#
+  NodeCond(0) = 0: NodeCond(1) = 1
+  P6MixedUP = False: P3HasJointElements = False: P3AfterCutback = False: AccelBaselineRetry = False
+  AccelV2a = True: AccelV2aLongCandidates = 0
+  AccelRememberIncrement base, 0.1, 5, 0
+  SplitCheck AccelHistoryReady And AccelIncrementEligible, "5 iterations keeps both histories", checks
+  SplitCheck AccelDelta(0) = 2# And AccelDelta(1) = 0#, "predictor free DOFs only", checks
+  AccelRememberIncrement base, 0.2, 6, 0
+  SplitCheck Not AccelHistoryReady And AccelIncrementEligible, "6 iterations enables V2a only", checks
+  SplitCheck AccelV2aPreviousIterations = 6 And AccelV2aLongCandidates = 1, "long candidate telemetry", checks
+  SplitCheck AccelPreviousStep = 0.1 And AccelDelta(0) = 2#, "rejected predictor history not rewritten", checks
+  SplitCheck TDisp(0) = 3# And TDisp(1) = 99# And base(0) = 1#, "trial and base unchanged", checks
+  AccelRememberIncrement base, 0.1, 12, 0
+  SplitCheck Not AccelHistoryReady And AccelIncrementEligible, "12 iterations enables V2a only", checks
+  AccelRememberIncrement base, 0.1, 6, 1
+  SplitCheck Not AccelHistoryReady And Not AccelIncrementEligible, "retry excluded", checks
+  AccelRememberIncrement base, 0#, 6, 0
+  SplitCheck Not AccelHistoryReady And Not AccelIncrementEligible, "nonpositive step excluded", checks
+  AccelBaselineRetry = True
+  AccelRememberIncrement base, 0.1, 6, 0
+  SplitCheck Not AccelHistoryReady And Not AccelIncrementEligible, "baseline retry excluded", checks
+  AccelBaselineRetry = False: P6MixedUP = True
+  AccelRememberIncrement base, 0.1, 6, 0
+  SplitCheck Not AccelHistoryReady And Not AccelIncrementEligible, "mixed excluded", checks
+  P6MixedUP = False: P3HasJointElements = True
+  AccelRememberIncrement base, 0.1, 6, 0
+  SplitCheck Not AccelHistoryReady And Not AccelIncrementEligible, "joint excluded", checks
+  P3HasJointElements = False: P3AfterCutback = True
+  AccelRememberIncrement base, 0.1, 6, 0
+  SplitCheck Not AccelHistoryReady And Not AccelIncrementEligible, "long cutback excluded", checks
+  AccelRememberIncrement base, 0.1, 5, 0
+  SplitCheck AccelHistoryReady And Not AccelIncrementEligible, "V1 history unchanged; V2a explicitly blocks cutback", checks
+  P3AfterCutback = False
+  AccelRememberIncrement base, 0.1, 6, 0
+  Call AccelResetStage
+  SplitCheck Not AccelHistoryReady And Not AccelIncrementEligible And AccelV2aPreviousIterations = 0, "stage reset clears both", checks
+  SplitEligibilitySelfTest = "PASS: " & CStr(checks) & " eligibility assertions"
+  Exit Function
+Failed:
+  SplitEligibilitySelfTest = "FAIL " & CStr(Err.Number) & " " & Err.Description
+End Function
+
+Private Sub SplitCheck(ByVal ok As Boolean, ByVal label As String, ByRef checks As Long)
+  If Not ok Then Err.Raise vbObjectError + 3750, "SplitEligibilitySelfTest", label
+  checks = checks + 1
+End Sub

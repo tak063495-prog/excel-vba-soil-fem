@@ -1,0 +1,5 @@
+# Preserve byte-level hashes in MANIFEST.json across platforms.
+* -text
+*.xlsm binary
+*.zip binary
+*.png binary

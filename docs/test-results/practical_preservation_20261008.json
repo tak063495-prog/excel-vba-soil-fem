@@ -1,0 +1,29 @@
+{
+  "checks": [
+    "PASS original stored model/results preserved: 材料データ",
+    "PASS original stored model/results preserved: 節点データ",
+    "PASS original stored model/results preserved: 要素データ",
+    "PASS original stored model/results preserved: 載荷",
+    "PASS original stored model/results preserved: 接合",
+    "PASS original stored model/results preserved: ステージ",
+    "PASS original stored model/results preserved: 図形定義",
+    "PASS original stored model/results preserved: 結果節点",
+    "PASS original stored model/results preserved: 結果要素",
+    "PASS original stored model/results preserved: ステージ結果",
+    "PASS all 74 settings and keys retained",
+    "PASS only intended five module changes; no test harness in delivery",
+    "PASS native VBA retained; no external links",
+    "PASS package source matches delivered workbook source",
+    "PASS packaged workbook matches native delivery"
+  ],
+  "modified_ui_modules": [
+    "FEM",
+    "FEMEngine",
+    "FEMUiLayout",
+    "FEMViewer"
+  ],
+  "added_modules": [
+    "FEMPractical"
+  ],
+  "sha256": "d6ffce1dad590d513f60a2eb2237b40b27940dd25b9904faf644c70fb61c49c3"
+}

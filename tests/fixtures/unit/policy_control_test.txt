@@ -1,0 +1,131 @@
+﻿Public Function AdaptivePolicyV3SelfTest() As String
+  Dim i As Long, text As String, checks As Long
+  On Error GoTo Failed
+  Call AdaptiveResetRun: AdaptiveEnabled = True: AccelBaselineRetry = False
+  AdaptiveBeginIncrement 0#, 0.1
+  AccelV2aPreviousIterations = 6
+  AdaptiveUseMethod 2: AdaptiveV2aBeginUse
+  AdaptiveNoteCorrection 1#, 0.9, False, 50#
+  PolicyAssert mV2Cooldown(2) = 16 And mV2Cooldown(1) = 0, "long poor pauses long only", checks
+  PolicyAssert mV2Sample.Assessed And mV2Sample.Q = 0.9, "first correction assessed", checks
+  AdaptiveNoteCorrection 1#, 0.2, True, 400#, 350#
+  PolicyAssert mV2Sample.Q = 0.9, "later fresh correction cannot replace first q", checks
+  AdaptiveEndIncrement True, 3, False
+  PolicyAssert mV2Cooldown(2) = 16, "current success retains fresh pause", checks
+  AccelV2aPreviousIterations = 5
+  PolicyAssert AdaptiveAllowMethod(2), "long pause leaves short allowed", checks
+  AccelV2aPreviousIterations = 6
+  PolicyAssert Not AdaptiveAllowMethod(2), "long pause enforced", checks
+  For i = 1 To 16
+    AdaptiveBeginIncrement 0#, 0.1
+    AdaptiveEndIncrement True, 3, False
+  Next i
+  PolicyAssert AdaptiveAllowMethod(2), "long resumes after later successes", checks
+
+  AdaptiveResetStage
+  AdaptiveBeginIncrement 0#, 0.1
+  AccelV2aPreviousIterations = 5
+  AdaptiveUseMethod 2: AdaptiveV2aBeginUse
+  AdaptiveNoteCorrection 1#, 0.8, False, 50#
+  PolicyAssert mV2Cooldown(1) = 16 And mV2Cooldown(2) = 0, "short poor pauses short only", checks
+  AdaptiveEndIncrement True, 3, False
+  AccelV2aPreviousIterations = 8
+  PolicyAssert AdaptiveAllowMethod(2), "short pause leaves long allowed", checks
+
+  AdaptiveResetStage
+  mFreshSamples = 2: mFreshQ = 0.2
+  P6FactorizationCount = 2: P6ProfFactorMs = 200#
+  For i = 1 To 2
+    AdaptiveBeginIncrement 0#, 0.1
+    AccelV2aPreviousIterations = 6
+    AdaptiveUseMethod 2: AdaptiveV2aBeginUse
+    AdaptiveNoteCorrection 1#, 0.6, False, 200#
+    PolicyAssert mV2Sample.CostKnown And mV2Sample.EstimatedNetMs < 0#, "measured price yields estimated loss", checks
+    If i = 1 Then PolicyAssert mV2Cooldown(2) = 0, "one estimated loss does not suspend", checks
+    AdaptiveEndIncrement True, 3, False
+  Next i
+  PolicyAssert mV2Cooldown(2) = 8 And mV2Cooldown(1) = 0, "two cost losses pause own path", checks
+
+  AdaptiveResetStage
+  mFreshSamples = 2: mFreshQ = 0.2
+  P6FactorizationCount = 2: P6ProfFactorMs = 6#
+  AdaptiveBeginIncrement 0#, 0.1
+  AccelV2aPreviousIterations = 6
+  AdaptiveUseMethod 2: AdaptiveV2aBeginUse
+  AdaptiveNoteCorrection 1#, 0.6, False, 200#
+  PolicyAssert Not mV2Sample.CostKnown And mV2Sample.CostStatus = "FACTOR_TIMER_FLOOR", "tiny-price estimates unavailable", checks
+  PolicyAssert mV2Cooldown(2) = 0, "timer floor does not pause good reuse", checks
+  AdaptiveEndIncrement True, 3, False
+
+  AdaptiveResetStage
+  AdaptiveBeginIncrement 0#, 0.1
+  AccelV2aPreviousIterations = 6
+  AdaptiveUseMethod 2: AdaptiveV2aBeginUse
+  AdaptiveV2aRejectedCorrection
+  AdaptiveNoteCorrection 1#, 0.1, True, 400#, 350#
+  PolicyAssert Not mV2Sample.Assessed, "rejected first correction remains unassessed", checks
+  AdaptiveEndIncrement True, 3, False
+  text = PolicyLogSummary()
+  PolicyAssert InStr(text, "PolicyV2_LONG_unassessed=1") > 0, "unassessed recorded", checks
+
+  AdaptiveResetStage
+  AdaptiveBeginIncrement 0#, 0.1
+  AccelV2aPreviousIterations = 6
+  AdaptiveUseMethod 2: AdaptiveV2aBeginUse
+  AdaptiveNoteCorrection 1#, 0#, False, 10#
+  PolicyAssert mV2Sample.Assessed And mV2Cooldown(2) = 0, "zero residual is good", checks
+  AdaptiveEndIncrement True, 1, False
+
+  AdaptiveResetStage
+  AdaptiveBeginIncrement 0#, 0.001
+  mSamples = 3: mRate = 1#: mPreviousStep = 0.1: mIncrementStart = Timer - 1#
+  AdaptiveEndIncrement True, 8, False
+  PolicyAssert mV2Cooldown(1) = 0 And mV2Cooldown(2) = 0, "natural step shrink keeps both paths", checks
+  PolicyAssert mCooldown(4) = 0 And mCooldown(5) = 0, "unused AA GMRES not paused by progress", checks
+  PolicyAssert mNaturalStalls > 0, "natural stall classified", checks
+
+  AdaptiveResetStage
+  AdaptiveBeginIncrement 0#, 0.001
+  AccelV2aPreviousIterations = 6
+  AdaptiveUseMethod 2: AdaptiveV2aBeginUse
+  AdaptiveNoteCorrection 1#, 0.3, False, 20#
+  mSamples = 3: mRate = 1#: mPreviousStep = 0.1: mIncrementStart = Timer - 1#
+  AdaptiveEndIncrement True, 8, False
+  PolicyAssert mV2Cooldown(2) = 0, "good reuse not blamed for step shrink", checks
+
+  AdaptiveResetStage
+  AdaptiveBeginIncrement 0#, 0.1
+  AccelV2aPreviousIterations = 6
+  AdaptiveUseMethod 2: AdaptiveV2aBeginUse
+  AdaptiveFailedAttempt
+  PolicyAssert mRecovery = 3 And mV2Cooldown(2) = 8 And mV2Cooldown(1) = 0, "failed long attempt isolated plus recovery", checks
+  PolicyAssert Not mV2Active, "failed attempt closed before baseline", checks
+  PolicyAssert mCooldown(4) = 0 And mCooldown(5) = 0, "unused methods not blamed for failure", checks
+  AdaptiveEndIncrement True, 3, True
+  For i = 1 To 3
+    AdaptiveBeginIncrement 0#, 0.1
+    AdaptiveEndIncrement True, 3, False
+  Next i
+  AccelV2aPreviousIterations = 5
+  PolicyAssert AdaptiveAllowMethod(2), "short returns after global recovery", checks
+  AccelV2aPreviousIterations = 6
+  PolicyAssert Not AdaptiveAllowMethod(2), "long own pause survives global recovery", checks
+  AdaptiveEnabled = False
+  PolicyAssert AdaptiveAllowMethod(2), "adaptive off bypasses all pauses", checks
+  Call AdaptiveResetStage: AdaptiveEnabled = True
+  PolicyAssert mV2Cooldown(1) = 0 And mV2Cooldown(2) = 0 And mFreshSamples = 0, "stage resets model evidence", checks
+  mPlainSamples = 4: mPlainQ = 0.8: mPlainMs = 10#
+  AdaptiveNoteAA 1#, 0.99, 10#, True, "UNIT_COST"
+  PolicyAssert mCooldown(4) = 8 And mV2Cooldown(1) = 0 And mV2Cooldown(2) = 0, "AA cost pause remains local", checks
+  AdaptiveNoteGMRES 70#, False, True
+  PolicyAssert mCooldown(5) = 64 And mGMRESBudgetStops > 0, "GMRES paid failure keeps budget pause", checks
+  AdaptivePolicyV3SelfTest = "PASS: " & CStr(checks) & " assertions, separated paths, cost gate, progress classification, rejected-first handling, recovery"
+  Exit Function
+Failed:
+  AdaptivePolicyV3SelfTest = "FAIL " & CStr(Err.Number) & " " & Err.Description & vbCrLf & PolicyLogSummary()
+End Function
+
+Private Sub PolicyAssert(ByVal ok As Boolean, ByVal label As String, ByRef checks As Long)
+  checks = checks + 1
+  If Not ok Then Err.Raise vbObjectError + 3710, "AdaptivePolicyV3SelfTest", label
+End Sub

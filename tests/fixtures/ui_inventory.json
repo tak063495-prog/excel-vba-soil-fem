@@ -1,0 +1,919 @@
+﻿{
+  "Settings": [
+    {
+      "Value": 0.0,
+      "Choices": "",
+      "Category": "簡易",
+      "Label": "点1 X",
+      "Key": "MESH_POINT1_X",
+      "Row": 6,
+      "Help": "左下X（要素作成①）",
+      "Validation": null
+    },
+    {
+      "Value": 0.0,
+      "Choices": "",
+      "Category": "メッシュ",
+      "Label": "点1 Y",
+      "Key": "MESH_POINT1_Y",
+      "Row": 7,
+      "Help": "左下Y",
+      "Validation": null
+    },
+    {
+      "Value": 0.0,
+      "Choices": "",
+      "Category": "メッシュ",
+      "Label": "点2 X",
+      "Key": "MESH_POINT2_X",
+      "Row": 8,
+      "Help": "左上X",
+      "Validation": null
+    },
+    {
+      "Value": 4.0,
+      "Choices": "",
+      "Category": "メッシュ",
+      "Label": "点2 Y",
+      "Key": "MESH_POINT2_Y",
+      "Row": 9,
+      "Help": "左上Y",
+      "Validation": null
+    },
+    {
+      "Value": 3.0,
+      "Choices": "",
+      "Category": "メッシュ",
+      "Label": "点3 X",
+      "Key": "MESH_POINT3_X",
+      "Row": 10,
+      "Help": "右上X",
+      "Validation": null
+    },
+    {
+      "Value": 4.0,
+      "Choices": "",
+      "Category": "メッシュ",
+      "Label": "点3 Y",
+      "Key": "MESH_POINT3_Y",
+      "Row": 11,
+      "Help": "右上Y",
+      "Validation": null
+    },
+    {
+      "Value": 3.0,
+      "Choices": "",
+      "Category": "メッシュ",
+      "Label": "点4 X",
+      "Key": "MESH_POINT4_X",
+      "Row": 12,
+      "Help": "右下X",
+      "Validation": null
+    },
+    {
+      "Value": 0.0,
+      "Choices": "",
+      "Category": "メッシュ",
+      "Label": "点4 Y",
+      "Key": "MESH_POINT4_Y",
+      "Row": 13,
+      "Help": "右下Y",
+      "Validation": null
+    },
+    {
+      "Value": 25.0,
+      "Choices": "",
+      "Category": "メッシュ",
+      "Label": "nx",
+      "Key": "MESH_NX",
+      "Row": 14,
+      "Help": "X方向分割",
+      "Validation": null
+    },
+    {
+      "Value": 25.0,
+      "Choices": "",
+      "Category": "メッシュ",
+      "Label": "ny",
+      "Key": "MESH_NY",
+      "Row": 15,
+      "Help": "Y方向分割",
+      "Validation": null
+    },
+    {
+      "Value": 1.0,
+      "Choices": "",
+      "Category": "メッシュ",
+      "Label": "材料番号",
+      "Key": "MESH_MATERIAL",
+      "Row": 16,
+      "Help": "要素作成①②で付ける",
+      "Validation": null
+    },
+    {
+      "Value": "PINNED",
+      "Choices": "NONE,ROLLER,PINNED",
+      "Category": "メッシュ",
+      "Label": "底面拘束",
+      "Key": "MESH_BC_BOTTOM",
+      "Row": 17,
+      "Help": "Ymin面。NONE=自由 / ROLLER=Y固定 / PINNED=XY固定",
+      "Validation": {
+        "type": "list",
+        "operator": "between",
+        "formula1": "\"NONE,ROLLER,PINNED\"",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": "ROLLER",
+      "Choices": "NONE,ROLLER,PINNED",
+      "Category": "メッシュ",
+      "Label": "左面拘束",
+      "Key": "MESH_BC_LEFT",
+      "Row": 18,
+      "Help": "Xmin面。NONE=自由 / ROLLER=X固定 / PINNED=XY固定",
+      "Validation": {
+        "type": "list",
+        "operator": "between",
+        "formula1": "\"NONE,ROLLER,PINNED\"",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": "ROLLER",
+      "Choices": "NONE,ROLLER,PINNED",
+      "Category": "メッシュ",
+      "Label": "右面拘束",
+      "Key": "MESH_BC_RIGHT",
+      "Row": 19,
+      "Help": "Xmax面。NONE=自由 / ROLLER=X固定 / PINNED=XY固定",
+      "Validation": {
+        "type": "list",
+        "operator": "between",
+        "formula1": "\"NONE,ROLLER,PINNED\"",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": "NONE",
+      "Choices": "NONE,ROLLER,PINNED",
+      "Category": "メッシュ",
+      "Label": "上面拘束",
+      "Key": "MESH_BC_TOP",
+      "Row": 20,
+      "Help": "Ymax面。NONE=自由 / ROLLER=Y固定 / PINNED=XY固定",
+      "Validation": {
+        "type": "list",
+        "operator": "between",
+        "formula1": "\"NONE,ROLLER,PINNED\"",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": "AUTO",
+      "Choices": "AUTO,NONE",
+      "Category": "メッシュ",
+      "Label": "剛体モード止め",
+      "Key": "MESH_BC_PIN_CORNER",
+      "Row": 21,
+      "Help": "AUTO=底面の最小X節点をXY固定 / NONE=しない",
+      "Validation": {
+        "type": "list",
+        "operator": "between",
+        "formula1": "\"AUTO,NONE\"",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": "TOTAL",
+      "Choices": "TOTAL",
+      "Category": "解析",
+      "Label": "自重",
+      "Key": "WEIGHT_MODE",
+      "Row": 24,
+      "Help": "TOTALのみ。全応力のγ。浮力・水位は未実装",
+      "Validation": {
+        "type": "list",
+        "operator": "between",
+        "formula1": "\"TOTAL\"",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": 0.05,
+      "Choices": "",
+      "Category": "解析",
+      "Label": "アワーグラス係数",
+      "Key": "Q8_HOURGLASS_FACTOR",
+      "Row": 25,
+      "Help": "0～1",
+      "Validation": null
+    },
+    {
+      "Value": "AUTO",
+      "Choices": "AUTO,ON,OFF",
+      "Category": "解析",
+      "Label": "RCM",
+      "Key": "RCM_POLICY",
+      "Row": 26,
+      "Help": "AUTO=帯幅が減るときだけ並び替え / ON=必ずRCM / OFF=入力順",
+      "Validation": {
+        "type": "list",
+        "operator": "between",
+        "formula1": "\"AUTO,ON,OFF\"",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": "DAVIS",
+      "Choices": "INCONSISTENT,DAVIS",
+      "Category": "解析",
+      "Label": "非関連の扱い",
+      "Key": "FLOW_POLICY",
+      "Row": 27,
+      "Help": "INCONSISTENT=流れ則は非関連・接線は対称近似 / DAVIS=等価関連c*,φ*（JOINTには掛けない）",
+      "Validation": {
+        "type": "list",
+        "operator": "between",
+        "formula1": "\"INCONSISTENT,DAVIS\"",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": 3.0,
+      "Choices": "",
+      "Category": "SRM",
+      "Label": "上限Fs",
+      "Key": "SRM_FMAX",
+      "Row": 30,
+      "Help": "探索の上限",
+      "Validation": null
+    },
+    {
+      "Value": 0.02,
+      "Choices": "",
+      "Category": "SRM",
+      "Label": "許容差",
+      "Key": "SRM_TOL",
+      "Row": 31,
+      "Help": "通常0.025 / 検証0.0125。PASSとFAILの幅がこれ以下で終了",
+      "Validation": null
+    },
+    {
+      "Value": "KEEP",
+      "Choices": "CAP,REDUCE,KEEP",
+      "Category": "SRM",
+      "Label": "ψの扱い",
+      "Key": "SRM_PSI_POLICY",
+      "Row": 32,
+      "Help": "CAP=ψをφ'以下に制限 / REDUCE=ψもFsで低減 / KEEP=入力のまま",
+      "Validation": {
+        "type": "list",
+        "operator": "between",
+        "formula1": "\"CAP,REDUCE,KEEP\"",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": "REAPPLY",
+      "Choices": "REAPPLY",
+      "Category": "SRM",
+      "Label": "モード",
+      "Key": "SRM_MODE",
+      "Row": 33,
+      "Help": "REAPPLYのみ。各Fs試行で先行ステージを再実行",
+      "Validation": {
+        "type": "list",
+        "operator": "between",
+        "formula1": "\"REAPPLY\"",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": 1.0,
+      "Choices": "0,1",
+      "Category": "高速化",
+      "Label": "変位予測子",
+      "Key": "ACCEL_V1_PREDICTOR",
+      "Row": 36,
+      "Help": "0=基準 / 1=同一ステージの確定変位増分から予測",
+      "Validation": {
+        "type": "list",
+        "operator": "between",
+        "formula1": "\"0,1\"",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": 1.0,
+      "Choices": "0,1",
+      "Category": "高速化",
+      "Label": "増分間接線再利用",
+      "Key": "ACCEL_V2A_REUSE",
+      "Row": 37,
+      "Help": "0=基準 / 1=同一塑性集合・小接線変化で最初の補正に旧LU",
+      "Validation": {
+        "type": "list",
+        "operator": "between",
+        "formula1": "\"0,1\"",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": 0.0,
+      "Choices": "0,1",
+      "Category": "高速化",
+      "Label": "費用に応じた接線更新",
+      "Key": "ACCEL_V2B_COST",
+      "Row": 38,
+      "Help": "0=基準 / 1=実測費用と改善実績で限定再利用。上限3は維持",
+      "Validation": {
+        "type": "list",
+        "operator": "between",
+        "formula1": "\"0,1\"",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": 0.0,
+      "Choices": "0,1",
+      "Category": "高速化",
+      "Label": "費用に応じたFs探索",
+      "Key": "ACCEL_V3_COST_SEARCH",
+      "Row": 39,
+      "Help": "0=二分 / 1=保護付き探索。最終実幅は基準二分以下",
+      "Validation": {
+        "type": "list",
+        "operator": "between",
+        "formula1": "\"0,1\"",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": 1.0,
+      "Choices": "0,1",
+      "Category": "高速化",
+      "Label": "Anderson深さ1",
+      "Key": "ACCEL_V4_ANDERSON",
+      "Row": 40,
+      "Help": "0=基準 / 1=凍結接線・未減衰区間のみ。悪化候補は棄却",
+      "Validation": {
+        "type": "list",
+        "operator": "between",
+        "formula1": "\"0,1\"",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": 0.0,
+      "Choices": "0,1",
+      "Category": "高速化",
+      "Label": "旧LU前処理GMRES",
+      "Key": "ACCEL_V5_GMRES_LU",
+      "Row": 41,
+      "Help": "0=Band LU / 1=最新帯行列＋旧LU。真の残差を確認しLUへ復帰",
+      "Validation": {
+        "type": "list",
+        "operator": "between",
+        "formula1": "\"0,1\"",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": "0",
+      "Choices": "0,1",
+      "Category": "高速化",
+      "Label": "高速化詳細ログ",
+      "Key": "ACCEL_TRACE",
+      "Row": 42,
+      "Help": "0=追加詳細OFF / 1=正確な更新理由・全増分・候補/復帰をsolver_events.csvへ",
+      "Validation": {
+        "type": "list",
+        "operator": "between",
+        "formula1": "\"0,1\"",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": 1.0,
+      "Choices": "=AND(ISNUMBER(C43),C43>=0,C43<=1)",
+      "Category": "高速化",
+      "Label": "予測子係数beta",
+      "Key": "ACCEL_PREDICT_BETA",
+      "Row": 43,
+      "Help": "検証用パラメータ 0～1。収束条件は変更しない",
+      "Validation": {
+        "type": "custom",
+        "operator": "between",
+        "formula1": "AND(ISNUMBER(C43),C43>=0,C43<=1)",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": 1.5,
+      "Choices": "=AND(ISNUMBER(C44),C44>0,C44<=2)",
+      "Category": "高速化",
+      "Label": "予測子刻み比上限",
+      "Key": "ACCEL_PREDICT_MAX_RATIO",
+      "Row": 44,
+      "Help": "検証用パラメータ 0超～2。上限超は予測しない",
+      "Validation": {
+        "type": "custom",
+        "operator": "between",
+        "formula1": "AND(ISNUMBER(C44),C44>0,C44<=2)",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": 0.05,
+      "Choices": "=AND(ISNUMBER(C45),C45>0,C45<=0.1)",
+      "Category": "高速化",
+      "Label": "接線変化の上限",
+      "Key": "ACCEL_TANGENT_CHANGE",
+      "Row": 45,
+      "Help": "検証用パラメータ 0超～0.1。要素ごとの相対Frobenius差",
+      "Validation": {
+        "type": "custom",
+        "operator": "between",
+        "formula1": "AND(ISNUMBER(C45),C45>0,C45<=0.1)",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": 0.0,
+      "Choices": "=AND(ISNUMBER(C46),C46>=0)",
+      "Category": "高速化",
+      "Label": "固定Fs試験",
+      "Key": "SRM_FIXED_FS",
+      "Row": 46,
+      "Help": "0=全探索 / 正=そのFsだけ独立再載荷。F<1も可",
+      "Validation": {
+        "type": "custom",
+        "operator": "between",
+        "formula1": "AND(ISNUMBER(C46),C46>=0)",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": 1.0,
+      "Choices": "0,1",
+      "Category": "高速化",
+      "Label": "進捗・費用による自動選別",
+      "Key": "ACCEL_ADAPTIVE",
+      "Row": 47,
+      "Help": "0=固定フラグ / 1=ONのV1/V2a/V2b/V4/V5を候補に費用・進捗で休止/再試用",
+      "Validation": {
+        "type": "list",
+        "operator": "between",
+        "formula1": "\"0,1\"",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": "FINAL",
+      "Choices": "FINAL,ALL",
+      "Category": "出力",
+      "Label": "結果の残し方",
+      "Key": "OUTPUT_STAGE_MODE",
+      "Row": 50,
+      "Help": "FINAL=最後だけ結果シートへ / ALL=各ステージを追記",
+      "Validation": {
+        "type": "list",
+        "operator": "between",
+        "formula1": "\"FINAL,ALL\"",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": "SKIP",
+      "Choices": "SKIP,INCLUDE",
+      "Category": "出力",
+      "Label": "無効要素",
+      "Key": "OUTPUT_INACTIVE_ELEMENTS",
+      "Row": 51,
+      "Help": "SKIP=Death中は出さない / INCLUDE=行は残しステージ番号だけ書く",
+      "Validation": {
+        "type": "list",
+        "operator": "between",
+        "formula1": "\"SKIP,INCLUDE\"",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": "STAGE",
+      "Choices": "OFF,STAGE,ITER",
+      "Category": "外部",
+      "Label": "デバッグログ",
+      "Key": "DEBUG_MODE",
+      "Row": 52,
+      "Help": "OFF=書かない / STAGE=ステージ境界 / ITER=反復も。*_out/run.log",
+      "Validation": {
+        "type": "list",
+        "operator": "between",
+        "formula1": "\"OFF,STAGE,ITER\"",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": "BAND_LU",
+      "Choices": "BAND_LU,BAND_LDLT_EXPERIMENTAL",
+      "Category": "外部",
+      "Label": "帯域ソルバ",
+      "Key": "SOLVER",
+      "Row": 53,
+      "Help": "BAND_LU=標準 / BAND_LDLT_EXPERIMENTAL=影のLDLTをサンプル比較（本番はLUのまま）",
+      "Validation": {
+        "type": "list",
+        "operator": "between",
+        "formula1": "\"BAND_LU,BAND_LDLT_EXPERIMENTAL\"",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": "NEW",
+      "Choices": "NEW,OLD",
+      "Category": "外部",
+      "Label": "Band LUカーネル",
+      "Key": "BAND_LU_KERNEL",
+      "Row": 54,
+      "Help": "NEW=パックド1D（本番） / OLD=従来2D（回帰）。ログは BandLUKernel=",
+      "Validation": {
+        "type": "list",
+        "operator": "between",
+        "formula1": "\"NEW,OLD\"",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": "SHADOW",
+      "Choices": "",
+      "Category": "外部",
+      "Label": "物理破壊監視",
+      "Key": "PHYSICAL_FAILURE_MODE",
+      "Row": 55,
+      "Help": "未使用。GRAVITYは監視なし、SRMはSHADOWを解析入口で固定",
+      "Validation": null
+    },
+    {
+      "Value": 5.0,
+      "Choices": "",
+      "Category": "外部",
+      "Label": "ログ書き出し間隔",
+      "Key": "DEBUG_FLUSH",
+      "Row": 56,
+      "Help": "秒。長時間計算の監視用",
+      "Validation": null
+    },
+    {
+      "Value": "STAGE",
+      "Choices": "OFF,STAGE,ON_FAIL",
+      "Category": "外部",
+      "Label": "途中データの保存",
+      "Key": "EXPORT_MODE",
+      "Row": 57,
+      "Help": "OFF=保存しない / STAGE=成功ステージ / ON_FAIL=失敗時も。*_out へ",
+      "Validation": {
+        "type": "list",
+        "operator": "between",
+        "formula1": "\"OFF,STAGE,ON_FAIL\"",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": "",
+      "Choices": "",
+      "Category": "外部",
+      "Label": "再開フォルダ",
+      "Key": "EXPORT_LOAD",
+      "Row": 58,
+      "Help": "空=最初から / AUTO=最後のSUCCESS / stg01_GRAVITY などフォルダ名",
+      "Validation": null
+    },
+    {
+      "Value": 1000.0,
+      "Choices": "",
+      "Category": "表示",
+      "Label": "原点X",
+      "Key": "VIEW_MIN_X",
+      "Row": 61,
+      "Help": "作図原点X",
+      "Validation": null
+    },
+    {
+      "Value": 1000.0,
+      "Choices": "",
+      "Category": "表示",
+      "Label": "原点Y",
+      "Key": "VIEW_MAX_Y",
+      "Row": 62,
+      "Help": "作図原点Y",
+      "Validation": null
+    },
+    {
+      "Value": 35.0,
+      "Choices": "",
+      "Category": "表示",
+      "Label": "スケール",
+      "Key": "VIEW_SCALE",
+      "Row": 63,
+      "Help": "座標→図形",
+      "Validation": null
+    },
+    {
+      "Value": 1.0,
+      "Choices": "",
+      "Category": "表示",
+      "Label": "変位倍率",
+      "Key": "VIEW_DISP_SCALE",
+      "Row": 64,
+      "Help": "変形図",
+      "Validation": null
+    },
+    {
+      "Value": 13.0,
+      "Choices": "=FEMViewerSelectionIDs",
+      "Category": "表示",
+      "Label": "色付け",
+      "Key": "VIEW_COLOR_RESULT",
+      "Row": 65,
+      "Help": "P1結果ID",
+      "Validation": {
+        "type": "list",
+        "operator": "between",
+        "formula1": "FEMViewerSelectionIDs",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": "SYMMETRIC",
+      "Choices": "AUTO,SYMMETRIC,USER",
+      "Category": "表示",
+      "Label": "色スケール",
+      "Key": "VIEW_SCALE_MODE",
+      "Row": 66,
+      "Help": "AUTO=最大最小 / SYMMETRIC=正負対称 / USER=手入力",
+      "Validation": {
+        "type": "list",
+        "operator": "between",
+        "formula1": "\"AUTO,SYMMETRIC,USER\"",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": "DETAIL",
+      "Choices": "SIMPLE,DETAIL",
+      "Category": "表示",
+      "Label": "表示モード",
+      "Key": "VIEW_DETAIL_MODE",
+      "Row": 67,
+      "Help": "SIMPLE=簡易 / DETAIL=節点番号など詳細",
+      "Validation": {
+        "type": "list",
+        "operator": "between",
+        "formula1": "\"SIMPLE,DETAIL\"",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": "SMOOTHED",
+      "Choices": "SMOOTHED,ELEMENT,RAW_GAUSS",
+      "Category": "表示",
+      "Label": "色の元",
+      "Key": "VIEW_RESULT_SOURCE",
+      "Row": 68,
+      "Help": "SMOOTHED=節点平滑 / ELEMENT=要素平均 / RAW_GAUSS=Gauss点の生値",
+      "Validation": {
+        "type": "list",
+        "operator": "between",
+        "formula1": "\"SMOOTHED,ELEMENT,RAW_GAUSS\"",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": 1e-06,
+      "Choices": "",
+      "Category": "品質",
+      "Label": "最小面積比",
+      "Key": "MESH_QUALITY_MIN_AREA_RATIO",
+      "Row": 71,
+      "Help": "代表寸法^2に対する比",
+      "Validation": null
+    },
+    {
+      "Value": 1e-06,
+      "Choices": "",
+      "Category": "品質",
+      "Label": "最小Jacobian比",
+      "Key": "MESH_QUALITY_MIN_JACOBIAN_RATIO",
+      "Row": 72,
+      "Help": "代表寸法^2に対する比",
+      "Validation": null
+    },
+    {
+      "Value": 45.0,
+      "Choices": "",
+      "Category": "品質",
+      "Label": "最小角度",
+      "Key": "MESH_QUALITY_MIN_ANGLE_DEG",
+      "Row": 73,
+      "Help": "deg",
+      "Validation": null
+    },
+    {
+      "Value": 135.0,
+      "Choices": "",
+      "Category": "品質",
+      "Label": "最大角度",
+      "Key": "MESH_QUALITY_MAX_ANGLE_DEG",
+      "Row": 74,
+      "Help": "deg",
+      "Validation": null
+    },
+    {
+      "Value": 5.0,
+      "Choices": "",
+      "Category": "品質",
+      "Label": "最大アスペクト",
+      "Key": "MESH_QUALITY_MAX_ASPECT_RATIO",
+      "Row": 75,
+      "Help": "長辺/短辺",
+      "Validation": null
+    },
+    {
+      "Value": 5.0,
+      "Choices": "",
+      "Category": "修正",
+      "Label": "最大反復",
+      "Key": "MESH_REPAIR_MAX_ITERATIONS",
+      "Row": 76,
+      "Help": "1～50",
+      "Validation": null
+    },
+    {
+      "Value": 0.5,
+      "Choices": "",
+      "Category": "修正",
+      "Label": "移動係数",
+      "Key": "MESH_REPAIR_DAMPING",
+      "Row": 77,
+      "Help": "0～1",
+      "Validation": null
+    },
+    {
+      "Value": 0.0001,
+      "Choices": "",
+      "Category": "修正",
+      "Label": "改善判定",
+      "Key": "MESH_REPAIR_IMPROVEMENT_TOLERANCE",
+      "Row": 78,
+      "Help": "相対",
+      "Validation": null
+    },
+    {
+      "Value": 2000.0,
+      "Choices": "",
+      "Category": "修正",
+      "Label": "角度最適化反復",
+      "Key": "MESH_REPAIR_ANGLE_ITERATIONS",
+      "Row": 79,
+      "Help": "1～5000",
+      "Validation": null
+    },
+    {
+      "Value": 1.0,
+      "Choices": "",
+      "Category": "修正",
+      "Label": "地形追従比較",
+      "Key": "MESH_REPAIR_TERRAIN_COMPARE",
+      "Row": 80,
+      "Help": "1=地形追従と角度最適化を比較 / 0=しない",
+      "Validation": null
+    },
+    {
+      "Value": 2.0,
+      "Choices": "0,1,2",
+      "Category": "修正",
+      "Label": "生成時比較",
+      "Key": "MESH_GEN_COMPARE",
+      "Row": 81,
+      "Help": "0=両方合格なら品質の良い方 / 1=デローニ修正優先 / 2=地形格子（生格子。角度最適化しない）",
+      "Validation": {
+        "type": "list",
+        "operator": "between",
+        "formula1": "\"0,1,2\"",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": 0.55,
+      "Choices": "",
+      "Category": "修正",
+      "Label": "格子要素数下限比",
+      "Key": "MESH_TERRAIN_COUNT_MIN",
+      "Row": 82,
+      "Help": "デローニ要素数に対する比",
+      "Validation": null
+    },
+    {
+      "Value": 1.8,
+      "Choices": "",
+      "Category": "修正",
+      "Label": "格子要素数上限比",
+      "Key": "MESH_TERRAIN_COUNT_MAX",
+      "Row": 83,
+      "Help": "デローニ要素数に対する比",
+      "Validation": null
+    },
+    {
+      "Value": 2.0,
+      "Choices": "",
+      "Category": "適応",
+      "Label": "要素数倍率上限",
+      "Key": "ADAPT_MAX_ELEMENT_RATIO",
+      "Row": 84,
+      "Help": "再メッシュの増加上限",
+      "Validation": null
+    },
+    {
+      "Value": 0.15,
+      "Choices": "",
+      "Category": "適応",
+      "Label": "細分化割合",
+      "Key": "ADAPT_MARK_FRACTION",
+      "Row": 85,
+      "Help": "0～1",
+      "Validation": null
+    },
+    {
+      "Value": 0.0,
+      "Choices": "0,1",
+      "Category": "高速化",
+      "Label": "増分幅の緩やかな回復",
+      "Key": "ACCEL_STEP_RECOVERY",
+      "Row": 88,
+      "Help": "0=従来幅 / 1=1.1倍試用後8成功増分の採算を確認。C47=1時のみ",
+      "Validation": {
+        "type": "list",
+        "operator": "between",
+        "formula1": "\"0,1\"",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": 0.0,
+      "Choices": "0,1",
+      "Category": "高速化",
+      "Label": "回復直後のfresh LU試験",
+      "Key": "ACCEL_STEP_FRESH_LU",
+      "Row": 89,
+      "Help": "0=既存V2a条件 / 1=回復直後1回だけfresh LU。回復ON時のみ",
+      "Validation": {
+        "type": "list",
+        "operator": "between",
+        "formula1": "\"0,1\"",
+        "formula2": ""
+      }
+    },
+    {
+      "Value": "地形追従格子",
+      "Choices": "",
+      "Category": "追加",
+      "Label": "MESH_GEN_LAST_METHOD",
+      "Key": "MESH_GEN_LAST_METHOD",
+      "Row": 92,
+      "Help": "再構築時に保持",
+      "Validation": null
+    },
+    {
+      "Value": "選択：地形追従格子 / 要素 302 → 306 / 節点 975 → 1005\r\n最適化前：302要素、合格263 / 警告36 / 不合格3、角度 26.565～146.006°\r\n角度最適化：302要素、合格302 / 警告0 / 不合格0、角度 45.000～134.004°\r\n地形追従：306要素、合格306 / 警告0 / 不合格0、角度 45.000～135.000°\r\n地形追従＋角度最適化：306要素、合格306 / 警告0 / 不合格0、角度 45.921～134.012°\r\n採用優先：両方合格なら地形格子 (MESH_GEN_COMPARE=2)\r\n合格45～135° / 警告30～150°内 / その他は不合格。採用後は再解析が必要です。",
+      "Choices": "",
+      "Category": "追加",
+      "Label": "MESH_GEN_LAST_COMPARE",
+      "Key": "MESH_GEN_LAST_COMPARE",
+      "Row": 93,
+      "Help": "再構築時に保持",
+      "Validation": null
+    },
+    {
+      "Value": 0.0,
+      "Choices": "",
+      "Category": "追加",
+      "Label": "BAND_LU_BENCH",
+      "Key": "BAND_LU_BENCH",
+      "Row": 94,
+      "Help": "再構築時に保持",
+      "Validation": null
+    },
+    {
+      "Value": 20.0,
+      "Choices": "",
+      "Category": "追加",
+      "Label": "BAND_LU_BENCH_N",
+      "Key": "BAND_LU_BENCH_N",
+      "Row": 95,
+      "Help": "再構築時に保持",
+      "Validation": null
+    }
+  ]
+}

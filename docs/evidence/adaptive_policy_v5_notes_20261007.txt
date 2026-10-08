@@ -1,0 +1,101 @@
+﻿LONG固定休止の対照版・全増分試行ログ（2026-10-07）
+Ver=20261007_ADAPT_05
+納品: outputs/2DSoilFEM_20261007_adaptive_policy3.xlsm
+元: 2DSoilFEM_20261007_adaptive_policy2.xlsm（利用者の計測済みブック）。
+元ブックは変更していない。入力7シート、全設定値、入力規則を保持した別名ブック。
+
+今回の目的
+ADAPT_04はADAPT_03より6.65%遅く、主な差はFs2.2875の失敗までの仕事量増加だった。
+局所のLONG不良は減ったが、全体短縮には結び付かなかった。
+今回の版は、有限費用式と診断を保持したままLONG休止長を固定し、段階的休止の影響を比較する対照版。
+フルモデルでの速度改善はまだ確認していない。
+
+数値制御の変更
+・LONG不良時の休止を16→32→64成功増分から、常に16成功増分へ変更。
+・bad_streak_before/after（0～3）、probe、良好試用後の段階回復は診断履歴として保持。
+  不良段階は休止長の選択には使わない。休止後の最初の適格利用をprobeとして記録する。
+・短反復SHORTの条件、V1予測の条件、AA/GMRESの条件は保持。
+・q>0.7での接線再構築、塑性集合・材料分岐・接線変化等の安全条件、同目標の基準方式復帰、
+  荷重増分の増減規則・収束許容値・SRM探索条件は保持。
+・ADAPT_04の有限費用式は保持。推定値は実測短縮時間ではない。
+・perf_summary.txtのAdaptiveV2LongPausePolicy=FIXED_16で比較版を識別できる。
+
+新しいincrement_summary.csv（36列）
+P3の荷重増分（GRAVITY/APPLY、SRM中の再計算を含む）のすべての試行を記録する。
+圧密の時間ステップは今回のログ対象外。
+同じ増分でも、加速使用の失敗・基準方式での再試行・半幅への切戻しは別行となる。
+DEBUG_MODE=STAGE、TRACE=0で出力。DEBUG_MODE=OFFでは試行ログの収集を行わない。
+CSV行はメモリへバッファし、既存の試行/ステージ終了時にまとめて追記する。反復ごとのファイルI/Oは追加しない。
+
+列と読み方
+ver: ビルド。trial_id: perf_summary.csvの試行順。stage/kind: 内部荷重ステージ。
+fs: 正確な強度低減係数。srm_stage: SRMステージ番号（通常解析時は0）。
+increment: 収束するまで同じ番号。attempt_id: 実行内で一意の試行連番。
+lambda_start/lambda_target/delta_lambda: 試行の開始・目標・実際の増分幅。
+planned_step: 目標を1へ切り詰める前の予定幅。delta_lambdaとは異なることがある。
+previous_step: 前に受理した実際の増分幅。V1/V2aの資格とは独立して保存し、荷重ステージ開始でリセット。
+step_ratio: delta_lambda/previous_step。前幅なしはNA。
+retry_count: 試行開始時点の切戻し回数。baseline_retry: 基準方式での同目標再試行ならTrue。
+predictor_used: この試行でV1の予測を適用したか。
+v2a_enabled/v2a_eligible: 設定と基本資格。基本資格はV2a設定がOFFでもTrueの場合がある。
+v2a_path/previous_v2_iterations: 基本候補のSHORT/LONGと前反復数。資格なしならNONE。
+v2a_used: 実際に初回LUを再利用したか。
+v2a_gates: 経路.理由:件数。REUSE、PATH_PAUSE、PLASTIC_XOR等。
+  判定機会がなければNOT_ENABLED/BASIC_INELIGIBLE/NOT_REQUESTEDを区別する。
+v2a_first_q: 受理された初回再利用補正のq。拒否/未使用時はNA。後続fresh補正では上書きしない。
+iterations: 荷重幅の増減判定に使うlocalIteration。newton: この試行中の実際の求解カウンター差。
+  拒否された補正もあるため、iterationsとnewtonは常に同値とは限らない。
+factorizations/reuses/factor_ms: この試行だけのLU分解・再利用回数と分解計時。
+elapsed_ms: 試行開始～結果確定の時間。行の文字列作成・まとめ書きや試行間処理をすべて含む総時間ではない。
+accepted/outcome: 受理か、試行の結果分類。
+next_step: 次に試す予定幅。ステージ終了・最終失敗・中断時はNA。
+step_action: GROW_1_5 / KEEP / SHRINK_0_7 / SHRINK_0_5、およびMAX_CAP/REMAINING_CAP/MIN_FLOOR等。
+failure_reason: 拒否または試行失敗理由。受理した行にも、再構築で回復した補正拒否の理由が残る場合がある。
+relative_residual: 結果時点の相対残差。
+
+outcome
+ACCEPT: 受理。前幅を更新し次の幅を記録する。
+BASELINE_RETRY: 加速使用後に失敗し、同じ開始/目標を基準方式で試し直す。
+CUTBACK: 基準方式でも収束せず、同じ開始点から半幅を試す。
+FINAL_FAILURE: 最小増分/再試行上限に達し、以後の荷重増分は試さない。
+ABORT: ユーザー中断/致命的失敗。
+通常経路外の異常終了時にはRUN_CLOSE等の行を記録し、閉じ忘れた試行を残さない。
+
+集計
+IncrementLogAttemptCount: 試行行数。
+IncrementLogAcceptedCount: 受理行数（対象の荷重解析ではLoadIncrementCountに一致）。
+IncrementLogBaselineRetryCount: BASELINE_RETRY行数（AccelerationFallbackCountに一致）。
+IncrementLogCutbackCount: 次の半幅を実際に試すCUTBACK行数。
+IncrementLogAbortCount: ABORT/FINAL_FAILURE行数。
+既存CutbackCountは終了に至る失敗も数えるため、荷重解析ではCUTBACK+ABORT+FINAL_FAILUREの行数と照合する。
+試行行のnewton/factorizations/reuses合計は既存の実行集計と照合できる。
+
+確認したこと
+・コンパイルを伴う既存GMRES自己テストPASS。
+・適応制御31項目、固定休止/有限費用32項目、増分ログ26項目、適格性15項目、V1古い履歴の非使用とCSVテストPASS。
+・85節点/20 Q8要素の4ケース×5設定=20解析が収束。前版20解析と変位配列・残差・増分/LU/再利用回数・塑性点数が完全一致。
+・正常/補正拒否/基準方式復帰/接線再構築復帰/実線形探索拒否/切戻し回復の6解析が収束。
+・意図的な中断1解析は非収束で終了し、ABORT行が1行記録された。
+・計27解析の36列、連番、各試行カウンター差、受理・復帰・切戻しの集計、全ゲート数、初回qを照合。
+・基準再試行は同じ開始・目標・増分番号を保持。切戻し後は半幅とretry_count増加を確認。
+・入力7シート、全設定値・入力規則を保持。元ブックSHA256一致。検証用コードを納品へ含めない。
+・直接ソルバー、V1予測適用、接線安全判定、有限費用式が保持されていることをソース比較で確認。
+
+次の本番測定
+受領元と同じ設定を保持している。C36(V1)=1、C37(V2a)=1、C40(V4)=1、C47(適応)=1。
+C38/C39/C41=0、C42(TRACE)=0、DEBUG_MODE=STAGE。
+新しい設定項目は追加していない。
+出力フォルダー: 2DSoilFEM_20261007_adaptive_policy3_out
+前版ADAPT_03/04と同じ条件で総時間・Newton/LU・最終Fs区間・変位を比較する。
+特にFs2.2875での増分数と終了lambda、休止で再利用を見送った後のiterations/次幅を追う。
+新しい比較版の速度効果はフル測定後に判断する。
+
+関連ファイル
+adaptive_policy_v5_unit_checks_20261007.txt
+adaptive_policy_v5_smoke_20261007.json / adaptive_policy_v5_comparison_20261007.csv
+adaptive_policy_v5_fault_checks_20261007.json / adaptive_policy_v5_linesearch_checks_20261007.json
+adaptive_policy_v5_boundary_checks_20261007.json / adaptive_policy_v5_log_checks_20261007.json
+adaptive_policy_v5_changes_20261007.diff / policy3_vba_source/*.bas
+
+元ブック SHA256: DC30F9578E83EF9D98D322857603974ADA7289BEEFA4AEA690D2EB5BBC5B5645
+納品ブック SHA256: CEB35E4F081C9811F8B633255940E562DF75D572C78F94A6BC5F2CD9A980AEA8

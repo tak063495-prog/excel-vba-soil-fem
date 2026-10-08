@@ -1,0 +1,117 @@
+﻿[
+    {
+        "name":  "ThisWorkbook",
+        "file":  "ThisWorkbook.cls",
+        "type":  100
+    },
+    {
+        "name":  "Mesh",
+        "file":  "Mesh.bas",
+        "type":  1
+    },
+    {
+        "name":  "CONTROL",
+        "file":  "CONTROL.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMProgress",
+        "file":  "FEMProgress.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMViewer",
+        "file":  "FEMViewer.bas",
+        "type":  1
+    },
+    {
+        "name":  "MeshAdapt",
+        "file":  "MeshAdapt.bas",
+        "type":  1
+    },
+    {
+        "name":  "MeshAngle",
+        "file":  "MeshAngle.bas",
+        "type":  1
+    },
+    {
+        "name":  "MeshPerf",
+        "file":  "MeshPerf.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMCore",
+        "file":  "FEMCore.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMSolver",
+        "file":  "FEMSolver.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMEngine",
+        "file":  "FEMEngine.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMIo",
+        "file":  "FEMIo.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEM",
+        "file":  "FEM.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMAccel",
+        "file":  "FEMAccel.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMAdaptive",
+        "file":  "FEMAdaptive.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMPolicyLog",
+        "file":  "FEMPolicyLog.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMIncrementLog",
+        "file":  "FEMIncrementLog.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMStepRecovery",
+        "file":  "FEMStepRecovery.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMPlasticLog",
+        "file":  "FEMPlasticLog.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMUi",
+        "file":  "FEMUi.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMUiLayout",
+        "file":  "FEMUiLayout.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMUiGeometry",
+        "file":  "FEMUiGeometry.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMPractical",
+        "file":  "FEMPractical.bas",
+        "type":  1
+    }
+]

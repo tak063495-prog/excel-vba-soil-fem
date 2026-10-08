@@ -1,0 +1,422 @@
+[
+  {
+    "path": ".gitattributes",
+    "sha256": "45d2517c522805e7e574f25d2b6ed6449329ab10ae4c157bd104e2190791a4a6",
+    "bytes": 112
+  },
+  {
+    "path": ".gitignore",
+    "sha256": "952e398446069ff996c54ad61af94976707c6329e40deba2f299ef953a7206cc",
+    "bytes": 965
+  },
+  {
+    "path": "LICENSE",
+    "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "bytes": 11357
+  },
+  {
+    "path": "README.md",
+    "sha256": "3bf3c60b1f15fa8bfe0143920de5425e8b8297ef3394577437d72f13ece54be2",
+    "bytes": 5239
+  },
+  {
+    "path": "docs/ACCELERATION_HISTORY.md",
+    "sha256": "c4e56a9d42bb762c30de96ebe7a8adf9f88e6e9eb2448d987bbcfe4982c814bf",
+    "bytes": 10256
+  },
+  {
+    "path": "docs/VALIDATION.md",
+    "sha256": "fceb7ea1e022acf58c030719f84a7468fb5427246964dfa7fc6662b2f17284e0",
+    "bytes": 7114
+  },
+  {
+    "path": "docs/benchmark-summary.csv",
+    "sha256": "6df9aff63839b0ec27e26413189af45b3417442fd4cc5ef32461eb8733393a8f",
+    "bytes": 2058
+  },
+  {
+    "path": "docs/evidence/2DSoilFEM_20261008_adaptive_policy5_out.zip",
+    "sha256": "d4c8822c78b72ddaa159c38806e3e831a04122ca05dbdbf0cf5f6e111720dc67",
+    "bytes": 634234
+  },
+  {
+    "path": "docs/evidence/FEM_VBA_only_acceleration_plan_20261004.md",
+    "sha256": "541c5d2008205a1172ccc71f32b00139015bdf05d9221aa4a453aadec0c45f7f",
+    "bytes": 25414
+  },
+  {
+    "path": "docs/evidence/SRM_Case1_Case4_Benchmark_Conditions_20261004.md",
+    "sha256": "e61048ecd8027c293b9a551a98cb359ff85e58075cfa705d99b01ea4be869363",
+    "bytes": 30445
+  },
+  {
+    "path": "docs/evidence/UI_organized_notes_20261008.txt",
+    "sha256": "df5d64502f6507402327b967a66cd6e6ce485b26ac890d4970d260ee745366f5",
+    "bytes": 4147
+  },
+  {
+    "path": "docs/evidence/V0_V5_trial_comparison_20261005.csv",
+    "sha256": "d46f14c60d39c92dbcb55f4ca2f5f0066a40c95c43ab4005cfed1e636e5048a6",
+    "bytes": 1486
+  },
+  {
+    "path": "docs/evidence/V1_V2a_split_notes_20261006.txt",
+    "sha256": "0fb6f4535de654823e889b77e78724a43edd90b1f1de7ca7506e6f8a26a385a0",
+    "bytes": 5009
+  },
+  {
+    "path": "docs/evidence/V1_V4_evaluation_20261006.txt",
+    "sha256": "99b04cac9e3141456b84edb2d620584943c4c8329164d6dda5b01d11a6acf836",
+    "bytes": 2710
+  },
+  {
+    "path": "docs/evidence/V1_V4_trial_comparison_20261006.csv",
+    "sha256": "3c5a545ce7d96ae38ebee1cf09e2ff796eaf525ec86fb41162cc7442fd26af61",
+    "bytes": 4361
+  },
+  {
+    "path": "docs/evidence/adaptive_full_evaluation_20261006.txt",
+    "sha256": "bdc2dd0dafae9fc3e87d5582c8b4298931e213acb205bb6b865c5ba921a45923",
+    "bytes": 7267
+  },
+  {
+    "path": "docs/evidence/adaptive_policy4_full_evaluation_20261007.txt",
+    "sha256": "af63bd964d23508a5c49a40cca3cebe9dd0223368e78fbe9841a17fb82973bd4",
+    "bytes": 10638
+  },
+  {
+    "path": "docs/evidence/adaptive_policy5_full_evaluation_20261007.txt",
+    "sha256": "b5a69a18d2066390f71d88e4ba189cd9098f1a9fcd3aed16b2c3261d14313fba",
+    "bytes": 10987
+  },
+  {
+    "path": "docs/evidence/adaptive_policy5_trial_comparison_20261007.csv",
+    "sha256": "3e1ff5cd27e428ce6b95fd086c6dbb70c73b6a23e98c6612b25b036f08f62fd7",
+    "bytes": 22824
+  },
+  {
+    "path": "docs/evidence/adaptive_policy6_evaluation_and_plan_20261008.txt",
+    "sha256": "61a53c81b7d78ac592a40609207f7b8cab08be8f20fe139ab877fe3cc7ccd283",
+    "bytes": 13911
+  },
+  {
+    "path": "docs/evidence/adaptive_policy6_trial_comparison_20261008.csv",
+    "sha256": "59cafbc1e947d80765d19f7a9106416ec00d12d45fa7e2f7e16d50b87964ca8f",
+    "bytes": 5576
+  },
+  {
+    "path": "docs/evidence/adaptive_policy7_evaluation_and_restore_20261008.txt",
+    "sha256": "e180901c1a52106dcc556bae17892a658f6320d1ef528ac7d046c122dc9b8e04",
+    "bytes": 4147
+  },
+  {
+    "path": "docs/evidence/adaptive_policy7_full_analysis_20261008.json",
+    "sha256": "3d0e4177b77a2364ae5a7ae5e6670207134fb185fdfdde5956fc688b083c69ff",
+    "bytes": 26452
+  },
+  {
+    "path": "docs/evidence/adaptive_policy_full_evaluation_20261007.txt",
+    "sha256": "364b42d6c5ce438d75f09ff07b9e00b450098659c143d546ee9d526d5388bc49",
+    "bytes": 11969
+  },
+  {
+    "path": "docs/evidence/adaptive_policy_v3_notes_20261006.txt",
+    "sha256": "2fae6fc04e1466f92cc287dd874af166641f3ae11ea813cb7c096f6988ddc153",
+    "bytes": 7602
+  },
+  {
+    "path": "docs/evidence/adaptive_policy_v4_notes_20261007.txt",
+    "sha256": "7a4a2c9de1a5d3ea42ff81e32dadb8a4b1bca152920ff148ebf82e7331f3f994",
+    "bytes": 6292
+  },
+  {
+    "path": "docs/evidence/adaptive_policy_v5_notes_20261007.txt",
+    "sha256": "6a6c7f901037aa55cf971b65557c340d23780ed95d21336369cfd9c34c7ed2c5",
+    "bytes": 8046
+  },
+  {
+    "path": "docs/evidence/adaptive_policy_v6_notes_20261007.txt",
+    "sha256": "6a867ab655f39725c28d69d1992ef9487f51ccbe4f64822ec5fc94e4e57fc712",
+    "bytes": 7718
+  },
+  {
+    "path": "docs/evidence/adaptive_policy_v7_notes_20261008.txt",
+    "sha256": "0e955b2e0899b87d2c90a3d7e35ff929dfe558b06b8d28f35671709ab57a7a7d",
+    "bytes": 11442
+  },
+  {
+    "path": "docs/evidence/adaptive_split_full_evaluation_20261006.txt",
+    "sha256": "55899420dca480f4f61e8866c48902489228bf76a87f514419b25a445124b6ae",
+    "bytes": 10999
+  },
+  {
+    "path": "docs/evidence/combination_evaluation_20261006.txt",
+    "sha256": "8be290fc001bd0bb11593c42776336b193d650573696b811a32cb281a472ddb6",
+    "bytes": 6193
+  },
+  {
+    "path": "docs/evidence/combination_trial_comparison_20261006.csv",
+    "sha256": "fbc168f487ec65481147e7285d4d845ed2b805fd50220cf65da808b5492385dd",
+    "bytes": 5887
+  },
+  {
+    "path": "docs/test-results/practical_best03_defaults_20261008.txt",
+    "sha256": "1e5e26f43d2c23f8536431cafa40c315061a2dd25c3d6cec856ac9cd1db1c63e",
+    "bytes": 510
+  },
+  {
+    "path": "docs/test-results/practical_best03_fault_checks_20261008.json",
+    "sha256": "da89ea4e7d5f692063b6ae3d116ccba22abd301b2dbcbbf6ff0f627e0f8c9e08",
+    "bytes": 33768
+  },
+  {
+    "path": "docs/test-results/practical_best03_preservation_20261008.json",
+    "sha256": "933e36edca864d28ced48b8b083f335d4156240a41f7b901cce7567ab0305df7",
+    "bytes": 1281
+  },
+  {
+    "path": "docs/test-results/practical_best03_unit_checks_20261008.txt",
+    "sha256": "c52e0ab68780a8753350cdcc9e50fcb622a11480bbc9cdfc8ccfe0ca7e70cebb",
+    "bytes": 276
+  },
+  {
+    "path": "docs/test-results/practical_final_checks_20261008.txt",
+    "sha256": "a743324fc6fc61ae8ec68faa38c5631ec3ef36d3896690cef188185c8139c500",
+    "bytes": 1704
+  },
+  {
+    "path": "docs/test-results/practical_preservation_20261008.json",
+    "sha256": "a246f71c405ef8faf955b8ec2df0096f612470af7749db7cdde753eb37868f5f",
+    "bytes": 1218
+  },
+  {
+    "path": "docs/test-results/practical_result_checks_20261008.txt",
+    "sha256": "214ac56bfd70133496928b7ed5e189d3a8a8c21b94f7b447d4eb7772fc8eb89f",
+    "bytes": 13
+  },
+  {
+    "path": "docs/test-results/practical_smoke_20261008.json",
+    "sha256": "261efaaff651cd62b0bf7b02714db90caa07569359273eea009e7d266e38cb5c",
+    "bytes": 268096
+  },
+  {
+    "path": "docs/test-results/practical_ui_checks_20261008.txt",
+    "sha256": "0f15e47e6359c7972ea2dc83b9eb68263512c29fa3421ef1652be65b87221cc1",
+    "bytes": 22209
+  },
+  {
+    "path": "docs/test-results/practical_workflow_checks_20261008.json",
+    "sha256": "ce0cc8a036726d5b80034dd5121d8d22d99e1208bf326df2e4b18610f441bf01",
+    "bytes": 15479
+  },
+  {
+    "path": "src/vba/CONTROL.bas",
+    "sha256": "736cb1199442e182bf06c4eee25b22a549a881a0eab2956e41d662dc1ea330a1",
+    "bytes": 102316
+  },
+  {
+    "path": "src/vba/FEM.bas",
+    "sha256": "201275d827e48a30b12dcefcd9433143aeb189e9dcb2f72e9f00e6c51784a01e",
+    "bytes": 168222
+  },
+  {
+    "path": "src/vba/FEMAccel.bas",
+    "sha256": "1fa4fdc46bdf0062968f04aca6a6aff61f49884941f14f61f4dc5706919abe45",
+    "bytes": 12496
+  },
+  {
+    "path": "src/vba/FEMAdaptive.bas",
+    "sha256": "3561df14eb010ed34f917bbc7739076691ab8e18667334979a8b04070333ad11",
+    "bytes": 20324
+  },
+  {
+    "path": "src/vba/FEMCore.bas",
+    "sha256": "d3d6225eda4c11516b7802a4d928c29834b77328d896e0b144a3a82c8f630caf",
+    "bytes": 53354
+  },
+  {
+    "path": "src/vba/FEMEngine.bas",
+    "sha256": "f7f9e20c50723b242a5b85d596fd0220fcf97aa498bfdb502ca91c0326c753b0",
+    "bytes": 248698
+  },
+  {
+    "path": "src/vba/FEMIncrementLog.bas",
+    "sha256": "6ea6536097fbc78550f795cf3dc093cbbe62b8e567337af45f7ca16ad2aaf6c7",
+    "bytes": 10322
+  },
+  {
+    "path": "src/vba/FEMIo.bas",
+    "sha256": "18aae48b4a50313292a1a87c7d1a6ffeaaff66697c1e72ee0b01196a511b70fd",
+    "bytes": 162411
+  },
+  {
+    "path": "src/vba/FEMPlasticLog.bas",
+    "sha256": "8c658ba8677917a4673b411ef922a66f8a55bf6f9bf5c4d122877bf309859956",
+    "bytes": 3580
+  },
+  {
+    "path": "src/vba/FEMPolicyLog.bas",
+    "sha256": "dea89015f58273c438fa0b590b1eb4a0e07158d3ebb6ae500ad069a917407a2f",
+    "bytes": 8319
+  },
+  {
+    "path": "src/vba/FEMPractical.bas",
+    "sha256": "bfbb620bec98b94b80b9b26a25a4770f040b32cf37e587096aadfddcf9faa6ce",
+    "bytes": 5071
+  },
+  {
+    "path": "src/vba/FEMProgress.bas",
+    "sha256": "622552672d1a0d1a7f22a4d9c7af5583cfed1591fffd2b903319a8afaf087d96",
+    "bytes": 3330
+  },
+  {
+    "path": "src/vba/FEMSolver.bas",
+    "sha256": "df947d899389157d4b163486e7c7be4cb3d4ebe0c084ab5f30b4271294d8ec6f",
+    "bytes": 156391
+  },
+  {
+    "path": "src/vba/FEMStepRecovery.bas",
+    "sha256": "2337e00ee3a4fbcf371083849170fe987f38b5d653fae22944ab0431d32962a1",
+    "bytes": 19183
+  },
+  {
+    "path": "src/vba/FEMUi.bas",
+    "sha256": "571bfed0d0357bbabf379d7786b7d7acaf5e6a27247e6ede4eee29f7e9ce334d",
+    "bytes": 6530
+  },
+  {
+    "path": "src/vba/FEMUiGeometry.bas",
+    "sha256": "dd9c8b5f51e39f086c0df74c9c4582a8eb27554a45457051245a5a3d495e6932",
+    "bytes": 9713
+  },
+  {
+    "path": "src/vba/FEMUiLayout.bas",
+    "sha256": "72365d30d97f35768fab82ddd36b7598c9f053b157852f77f680ed50ef7a97a4",
+    "bytes": 16442
+  },
+  {
+    "path": "src/vba/FEMViewer.bas",
+    "sha256": "5e5c8c8ac5eb6530e14c1d9c5649534e50374b852d638803e609669b39280aff",
+    "bytes": 29682
+  },
+  {
+    "path": "src/vba/Mesh.bas",
+    "sha256": "dfb1caf47fbb2193b7882dc268ee9272ca2d35af8375eb98f5f5176de2aae372",
+    "bytes": 135015
+  },
+  {
+    "path": "src/vba/MeshAdapt.bas",
+    "sha256": "bc751d1fb574a0e6a6167ef327fecd30e6dc452b612540f3d86a9146d89f1289",
+    "bytes": 88125
+  },
+  {
+    "path": "src/vba/MeshAngle.bas",
+    "sha256": "29b68020567f83d2c3470083f68d597f42d975549bec2328455ee7281e051fc7",
+    "bytes": 8848
+  },
+  {
+    "path": "src/vba/MeshPerf.bas",
+    "sha256": "9dc06d77de5c612efc6db4037b038adeada3dd6f584375d145f0b2414933b301",
+    "bytes": 1259
+  },
+  {
+    "path": "src/vba/ThisWorkbook.cls",
+    "sha256": "62b9cef74b329eb084fd617c6ef05bd76643f501a8e905d0781689a6555a9a25",
+    "bytes": 2338
+  },
+  {
+    "path": "src/vba/modules.json",
+    "sha256": "ec4c66ae90b31ad58216ac868292c561f80c0bff1ff956129736fa62de802a2c",
+    "bytes": 2353
+  },
+  {
+    "path": "tests/fixtures/smoke_expected.json",
+    "sha256": "3eb34198ff3e0ba61c4b3f38c5871d8d259690cfe04ea0b4722b75e8a9616efe",
+    "bytes": 122929
+  },
+  {
+    "path": "tests/fixtures/smoke_mesh.json",
+    "sha256": "4f6318675417457aeca365913cd680ea00943316ab427352e3b040426d821a9e",
+    "bytes": 4780
+  },
+  {
+    "path": "tests/fixtures/ui_inventory.json",
+    "sha256": "9fe51b83693684bdf74ca1fc9ea0d0bb2e1c8fda5ed430223bdfbe86b87822c7",
+    "bytes": 25406
+  },
+  {
+    "path": "tests/fixtures/ui_mapping.json",
+    "sha256": "83fe80b5d66942dcd8ce32a894ee36059f2091e1a764db7756e4d46a880f772a",
+    "bytes": 9292
+  },
+  {
+    "path": "tests/fixtures/unit/policy_control_test.txt",
+    "sha256": "09d5512bd0c591e55686e0f160b83480526359d956c42d6219088b569fcfbe0e",
+    "bytes": 6506
+  },
+  {
+    "path": "tests/fixtures/unit/policy_log_test.txt",
+    "sha256": "4aecec4db48801990a10e64646f391db68fca07e9ed19a80a0108b73475f378c",
+    "bytes": 1311
+  },
+  {
+    "path": "tests/fixtures/unit/split_accel_test.txt",
+    "sha256": "594c30ece3d927d26cc7cbdebbd665b7dbe76a803528ea0f1ab08e969ecb152e",
+    "bytes": 3074
+  },
+  {
+    "path": "tests/fixtures/unit/split_engine_test.txt",
+    "sha256": "5e963a85eb6fdbccf6f4323fa9299ee239a07ce665e5ddcf159e3863120d9f24",
+    "bytes": 944
+  },
+  {
+    "path": "tests/run.ps1",
+    "sha256": "a7dc48315c59793eaf1664b9cb0a983106bce9e6b4b93717c8d822423522973e",
+    "bytes": 815
+  },
+  {
+    "path": "tests/test_best03_defaults.ps1",
+    "sha256": "114aa885689f28b4f51e5b3fee2e070c16968939ed24c1e3e46727bb651471b6",
+    "bytes": 3825
+  },
+  {
+    "path": "tests/test_best03_faults.ps1",
+    "sha256": "133657ff7099912444c2e5bae56bde83a7f8ca5a01856fd73835a1d5b38c1019",
+    "bytes": 5894
+  },
+  {
+    "path": "tests/test_best03_unit.ps1",
+    "sha256": "e7ab3de1743a16fa3110e035ca9bcf472121c02f0c7e70f81b67d23b1a1d9eaf",
+    "bytes": 2045
+  },
+  {
+    "path": "tests/test_practical_final.ps1",
+    "sha256": "27ced393f751eefb439f61d9a749e787819768a0cc0ed26feee69dd49e0ed001",
+    "bytes": 6613
+  },
+  {
+    "path": "tests/test_practical_results.ps1",
+    "sha256": "0f7f67a00177310098f295a1e86b3ddf57fb907b068ff3588b437632679a171c",
+    "bytes": 7799
+  },
+  {
+    "path": "tests/test_practical_smoke.ps1",
+    "sha256": "dc44a0ee87826561770198077e8684447db6e5830b38ff6ccec5370c61e7d3e9",
+    "bytes": 7407
+  },
+  {
+    "path": "tests/test_practical_ui.ps1",
+    "sha256": "2162ac3c5f3b5b1bf517df4b8b6f44ea6b3d362e7b7a2ad986b3a1707fb1bb13",
+    "bytes": 10731
+  },
+  {
+    "path": "tests/test_practical_workflows.ps1",
+    "sha256": "f7a8928ddba45878c3c75dfc45b415bd42c6aa948942c40f5b88cf81c3bcf45d",
+    "bytes": 13584
+  },
+  {
+    "path": "workbook/2DSoilFEM_20261008_practical.xlsm",
+    "sha256": "c258e934484fc3816535006e7252825d44f17a5034e4ee5096e5e85f47b08e4f",
+    "bytes": 2335575
+  }
+]

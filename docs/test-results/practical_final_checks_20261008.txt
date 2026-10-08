@@ -1,0 +1,35 @@
+﻿PASS Workbook_Open shows operation panel
+PASS Workbook_Open restores events
+PASS settings protected after reopen
+PASS setting input editable after reopen
+PASS no external workbook links
+PASS all native Excel formula results have no errors: 
+PASS custom rule rejects invalid value ACCEL_PREDICT_BETA
+PASS custom rule accepts original value ACCEL_PREDICT_BETA
+PASS custom rule rejects invalid value ACCEL_PREDICT_MAX_RATIO
+PASS custom rule accepts original value ACCEL_PREDICT_MAX_RATIO
+PASS custom rule rejects invalid value ACCEL_TANGENT_CHANGE
+PASS custom rule accepts original value ACCEL_TANGENT_CHANGE
+PASS custom rule rejects invalid value SRM_FIXED_FS
+PASS custom rule accepts original value SRM_FIXED_FS
+PASS arbitrary IDs and hole before outer boundary accepted
+PASS outer/inner/total coordinate counts
+PASS outer/inner loop counts
+PASS boundary IDs remapped to native schema
+PASS outer coordinates precede inner coordinates
+PASS previous extra inner boundary cleared
+PASS reject duplicate_coordinate
+PASS rejection preserves backend duplicate_coordinate
+PASS rejection preserves event mode duplicate_coordinate
+PASS reject unknown_boundary_id
+PASS rejection preserves backend unknown_boundary_id
+PASS rejection preserves event mode unknown_boundary_id
+PASS reject zero_spacing
+PASS rejection preserves backend zero_spacing
+PASS rejection preserves event mode zero_spacing
+PASS reject missing_coordinate
+PASS rejection preserves backend missing_coordinate
+PASS rejection preserves event mode missing_coordinate
+PASS reject duplicate_boundary_id
+PASS rejection preserves backend duplicate_boundary_id
+PASS rejection preserves event mode duplicate_boundary_id
