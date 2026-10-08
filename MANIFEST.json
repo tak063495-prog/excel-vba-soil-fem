@@ -16,13 +16,38 @@
   },
   {
     "path": "README.md",
-    "sha256": "3bf3c60b1f15fa8bfe0143920de5425e8b8297ef3394577437d72f13ece54be2",
-    "bytes": 5239
+    "sha256": "96c624e8c93ddaed9de73b5d69c2aa006e2011a2086f4613a70bc93a9c8e49d0",
+    "bytes": 6770
   },
   {
     "path": "docs/ACCELERATION_HISTORY.md",
     "sha256": "c4e56a9d42bb762c30de96ebe7a8adf9f88e6e9eb2448d987bbcfe4982c814bf",
     "bytes": 10256
+  },
+  {
+    "path": "docs/MODEL_INPUTS.md",
+    "sha256": "8011be367874c702f2f88f34dedf012e806b4511029a2b62c152ca49cc7813a5",
+    "bytes": 11293
+  },
+  {
+    "path": "docs/RESULTS_AND_TROUBLESHOOTING.md",
+    "sha256": "8d29485ed791238fe83f01637ed1cf41248971e08fd8a50489380ce19e339cd8",
+    "bytes": 16056
+  },
+  {
+    "path": "docs/SETTINGS_REFERENCE.md",
+    "sha256": "50269d8c6df75e718aa28fddfeda20ee1f4322a6d12f026b2563225cf584f9b5",
+    "bytes": 15534
+  },
+  {
+    "path": "docs/TECHNICAL_OVERVIEW.md",
+    "sha256": "8a2286f873e906b692244f95b28cb434b5964513a38e289461f5672884064898",
+    "bytes": 6988
+  },
+  {
+    "path": "docs/USER_GUIDE.md",
+    "sha256": "d9eb1c1986d04d2fea0100fac81365dff7dbc2deaa586c1c89368357dfa22d38",
+    "bytes": 22202
   },
   {
     "path": "docs/VALIDATION.md",
