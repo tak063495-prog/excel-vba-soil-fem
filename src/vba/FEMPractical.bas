@@ -1,5 +1,5 @@
 ﻿Option Explicit
-Public Const FEM_PRACTICAL_STAMP As String = "20261008_PRACTICAL_02"
+Public Const FEM_PRACTICAL_STAMP As String = "20261009_PRACTICAL_03"
 
 Public Sub FEMPracticalAfterLayout()
   Dim ws As Worksheet, shp As shape, target As range

@@ -2214,6 +2214,7 @@ Private Function P6PrepareBiotMixed() As Boolean
   P6PrepareBiotMixed = False
   P6ConsolActive = False
   P6MixedUP = False
+  FEMValidateAnalysisScope
   If P6ReadSetting("CONSOL_ENABLE", 0#) = 0# Then
     P6PrepareBiotMixed = True
     Exit Function
@@ -4034,5 +4035,7 @@ Public Function P6AccelLinearSelfTest() As String
   If ok Then Err.Raise vbObjectError + 3602, "P6AccelLinearSelfTest", "GMRES budget guard failed"
   P6AccelLinearSelfTest = "PASS: old-LU GMRES, true residual, iteration-budget rejection"
 End Function
+
+
 
 

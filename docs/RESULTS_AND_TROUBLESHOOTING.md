@@ -2,7 +2,7 @@
 
 [READMEへ](../README.md) · [操作説明書](USER_GUIDE.md) · [入力仕様](MODEL_INPUTS.md) · [設定一覧](SETTINGS_REFERENCE.md)
 
-対象は `20261008_BEST_03` の実務ブックです。保存されている旧結果は再解析前の参考データです。
+対象は `20261009_BEST_03_R1` の実務ブックです。保存されている旧結果は再解析前の参考データです。
 
 ## 目次
 
@@ -144,7 +144,7 @@ DEBUG_MODE=STAGEを通常の確認・比較の入口にします。ファイル�
 |manifest.csv|ステージ保存の記録。AUTO再開の選択にも使用|
 |band_lu_bench.csv|BAND_LU_BENCHを明示的に有効にした場合の比較試験|
 
-現在の方式の識別には `Ver=20261008_BEST_03`、`AdaptivePolicy=ADAPT_03_RESTORED`、`StepRecoveryEnabled=False` を確認します。再利用の採算式は `ADAPT03_REPEATED_Q_ESTIMATE` です。`estimated_net_ms` は推定値で、実測の基準方式との差ではありません。[CSVヘッダーと出力](../src/vba/FEMIo.bas#L499)・[V2aログ定義](../src/vba/FEMPolicyLog.bas#L168)
+現在の方式の識別には `Ver=20261009_BEST_03_R1`、`AdaptivePolicy=ADAPT_03_RESTORED`、`StepRecoveryEnabled=False` を確認します。再利用の採算式は `ADAPT03_REPEATED_Q_ESTIMATE` です。`estimated_net_ms` は推定値で、実測の基準方式との差ではありません。[CSVヘッダーと出力](../src/vba/FEMIo.bas#L499)・[V2aログ定義](../src/vba/FEMPolicyLog.bas#L168)
 
 ## 速度比較の手順
 

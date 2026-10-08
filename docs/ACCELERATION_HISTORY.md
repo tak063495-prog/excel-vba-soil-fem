@@ -78,3 +78,7 @@ ADAPT_07の悪化は特にFs2.30 FAILEDで、ADAPT_05の771.398 sから1547.785 
 - [UI整理メモ](evidence/UI_organized_notes_20261008.txt)
 
 関連する試行CSV（値照合用）: [V0/V5比較](evidence/V0_V5_trial_comparison_20261005.csv)、[V1/V4比較](evidence/V1_V4_trial_comparison_20261006.csv)、[組合せ比較](evidence/combination_trial_comparison_20261006.csv)、[adaptive policy比較](evidence/adaptive_policy5_trial_comparison_20261007.csv)、[ADAPT_06比較](evidence/adaptive_policy6_trial_comparison_20261008.csv)。出典側にない精密値は本文・CSVへ補わず、測定済みでも元ログ欠落・詳細再確認不可、または単発測定と明記した。
+
+## 2026-10-09 Issueレビュー修正
+
+`20261009_BEST_03_R1` はADAPT_03の選別方式と配布高速化設定を維持した保守更新です。荷重保持、JOINTの入力範囲、全応力解析の設定拒否、シート案内を修正しました。速度は再測定していません。[レビュー記録](ISSUE_1_REVIEW.md) を参照してください。

@@ -1,5 +1,26 @@
 # 動作確認と修正記録
 
+## Issue #1レビュー後の確認（2026-10-09）
+
+計算部 `20261009_BEST_03_R1`、実務案内 `20261009_PRACTICAL_03` を配布XLSMへ反映し、保存後に再度Excelで開いてVBAソースと照合しました。テスト用モジュール・失敗注入は配布ブックに残していません。元の入力表と74設定、旧保存結果を保持し、結果は再解析が必要な状態として保存しています。
+
+Issueの7指摘の適用条件と判定は [レビュー記録](ISSUE_1_REVIEW.md) を参照してください。荷重保持は同一呼び出しの互換経路で再現・修正、JOINTはψ=0の履歴なしモデルに適用範囲を明示しました。物理間隙水圧を扱う圧密経路は未対応設定として拒否します。休眠コードの圧密・CSR混合UPを数値的に改修・検証したものではありません。
+
+|確認|結果・記録|
+|---|---|
+|Issue専用回帰|12ケースで期待した成功・非収束・INPUT_ERRORを確認。[修正前](test-results/issue1_before_20261009.json)／[修正後](test-results/issue1_after_20261009.json)|
+|入力・配布保持|15確認。入力表、全74設定、旧結果、版表示、再解析マーカー。[保持記録](test-results/issue1_preservation_20261009.json)|
+|既定値・再生成|13確認PASS。[記録](test-results/practical_best03_defaults_20261009.txt)|
+|適応制御・適格性・線形補正|31制御＋15適格性、古いV1履歴の拒否、GMRES自己テストPASS。[記録](test-results/practical_best03_unit_checks_20261009.txt)|
+|失敗後の復帰|3ケースPASS。[記録](test-results/practical_best03_fault_checks_20261009.json)|
+|固定Fsの回帰解析|4小モデル×6設定=24条件PASS。[記録](test-results/practical_smoke_20261009.json)|
+|結果処理|117確認PASS。[記録](test-results/practical_result_checks_20261009.txt)|
+|設定・UI|428確認PASS。[記録](test-results/practical_ui_checks_20261009.txt)|
+|保存・再オープン|35確認PASS。[記録](test-results/practical_final_checks_20261009.txt)|
+|施工・載荷・表示|9条件PASS、各3種類の表示で27回PASS。[記録](test-results/practical_workflow_checks_20261009.json)|
+
+最後に接合モデルの案内欄の折返しを調整し、設定・UIの428確認とIssue専用12ケースを配布ブックのコピーで再実行しました。フルサイズの速度測定は行っていません。ADAPT_03の選別方式と配布設定は維持しています。以下は2026-10-08に行った修正・検証の履歴です。
+
 日付: 2026-10-08。Windows上のデスクトップ版Excelで、元ブックおよび配布ブックの作業用コピーを実行しました。既存のExcel解析インスタンスは操作していません。フルモデルの速度測定は今回の範囲に含めていません。
 
 ## 修正前に再現した問題

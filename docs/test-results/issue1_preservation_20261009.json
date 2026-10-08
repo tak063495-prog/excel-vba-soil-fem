@@ -1,0 +1,78 @@
+{
+  "before_sha256": "c258e934484fc3816535006e7252825d44f17a5034e4ee5096e5e85f47b08e4f",
+  "after_sha256": "1e45f152d2c2f7332ec6ccb4a5dba5438570d301888fe66ab227c42c38e922ce",
+  "checks": [
+    {
+      "check": "材料データ input/formulas preserved",
+      "cells": 24,
+      "pass": true
+    },
+    {
+      "check": "節点データ input/formulas preserved",
+      "cells": 5033,
+      "pass": true
+    },
+    {
+      "check": "要素データ input/formulas preserved",
+      "cells": 4346,
+      "pass": true
+    },
+    {
+      "check": "載荷 input/formulas preserved",
+      "cells": 16,
+      "pass": true
+    },
+    {
+      "check": "ステージ input/formulas preserved",
+      "cells": 15,
+      "pass": true
+    },
+    {
+      "check": "接合 input/formulas preserved",
+      "cells": 5,
+      "pass": true
+    },
+    {
+      "check": "形状入力 input/formulas preserved",
+      "cells": 33,
+      "pass": true
+    },
+    {
+      "check": "図形定義 input/formulas preserved",
+      "cells": 2013,
+      "pass": true
+    },
+    {
+      "check": "結果節点 saved results preserved",
+      "cells": 10060,
+      "pass": true
+    },
+    {
+      "check": "結果要素 saved results preserved",
+      "cells": 22104,
+      "pass": true
+    },
+    {
+      "check": "ステージ結果 saved results preserved",
+      "cells": 28,
+      "pass": true
+    },
+    {
+      "check": "接合結果 saved results preserved",
+      "cells": 25,
+      "pass": true
+    },
+    {
+      "check": "74 visible input settings and legacy values preserved",
+      "pass": true
+    },
+    {
+      "check": "review build stamps, reset/joint guides, and stale-result marker saved",
+      "pass": true
+    },
+    {
+      "check": "GitHub workbook equals local delivery",
+      "pass": true
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 ﻿Option Explicit
+
 Private mAccelAttemptFailure As String
 Private mLineSearchFailure As String, mLineSearchTries As Long, mLineSearchMaterialRejects As Long
 Private mLineSearchBestQ As Double
@@ -11,6 +12,15 @@ Private V3CostSearchEnabled As Boolean, V3BracketStep As Long
 Private V3LastPassCostSec As Double, V3LastFailCostSec As Double
 Private V3PassCostSamples As Long, V3FailCostSamples As Long
 Private V3TrialStartedAt As Double
+' This release uses total stress; transient pore-water-pressure/consolidation
+' is deliberately unsupported. Reject its hidden switch before building state.
+Public Sub FEMValidateAnalysisScope()
+  Dim messageText As String
+  If P6ReadSetting("CONSOL_ENABLE", 0#) = 0# Then Exit Sub
+  messageText = "本版は間隙水圧を考慮しない全応力解析です。圧密解析は未対応です。CONSOL_ENABLE=0にしてください。"
+  SetAnalysisFailure RESULT_INPUT_ERROR, messageText, vbObjectError + 3098, -1, -1, 0, 0
+  Err.Raise vbObjectError + 3098, "FEMValidateAnalysisScope", messageText
+End Sub
 Public Function P3MaterialIsJoint(ByVal materialIndex As Long) As Boolean
   P3MaterialIsJoint = (P6MaterialKindOf(materialIndex) = "JOINT")
 End Function
@@ -202,12 +212,10 @@ Public Function P3ValidateJointMaterial(ByRef mat As Material_Data, ByRef failMe
     failMessage = "ジョイントの摩擦角が90度以上または特異点に近すぎます。"
     Exit Function
   End If
-  If mat.psai < 0# Then
-    failMessage = "ジョイントのダイレタンシー角は0度以上で指定してください。"
-    Exit Function
-  End If
-  If mat.psai >= 89.999 Then
-    failMessage = "ジョイントのダイレタンシー角が90度以上または特異点に近すぎます。"
+  ' Current JOINT law caps stress from total slip; it has no plastic-slip
+  ' memory or dilatancy return mapping. Do not silently accept unused psi.
+  If mat.psai <> 0# Then
+    failMessage = "現行JOINTは履歴なしの応力上限モデルです。ダイレタンシー角psiは0のみ対応しています。"
     Exit Function
   End If
   If mat.thickness <= 0# Then
@@ -2871,6 +2879,9 @@ P3RetrySameIncrement:
         IncrementLogFinish False, localIteration, "CUTBACK", stepSize, "CUTBACK", P3AccelFailureReason()
       End If
     Loop
+      ' Lock only the stage that completed. The next stage must retain this
+      ' accepted load, including when its correction fails or is cut back.
+      P3CommitLoadLock (stageId = 1), (stageId = 2)
       If stageId = 1 Then
         gravityRan = True
         P3GravityCommitted = True
@@ -2882,7 +2893,7 @@ P3NextStage:
   If P6ConsolActive And Not P3SrmEnabled Then
     If Not P3RunConsolidationSteps(targetForce, incrementBase, internalForce) Then Exit Function
   End If
-  P3CommitLoadLock gravityRan, applyRan
+  If Not gravityRan And Not applyRan Then P3CommitLoadLock False, False
   P3UseNonlinearResidual = True
   P3RunLoadStages = True
 End Function
@@ -5740,6 +5751,8 @@ Public Function P3AccelFailureReason() As String
     End If
   End If
 End Function
+
+
 
 
 

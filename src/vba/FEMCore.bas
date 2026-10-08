@@ -244,7 +244,7 @@ Public P3FosFail As Double
 Public P3FosMid As Double
 Public P3FosWidth As Double
 Public P3FosBracket As Boolean
-Public Const FEM_BUILD_STAMP As String = "20261008_BEST_03"
+Public Const FEM_BUILD_STAMP As String = "20261009_BEST_03_R1"
 Public Const P1_FORMULATION_PLANE_STRESS As String = "PLANE_STRESS_2D"
 Public Const P1_FORMULATION_PLANE_STRAIN As String = "PLANE_STRAIN_2D"
 Public Const P1_RESULT_COUNT As Long = 22
@@ -1526,6 +1526,8 @@ Public Sub P6InvalidateActiveDependentCaches()
   P3ActiveSetGen = P3ActiveSetGen + 1
   If P3ActiveSetGen <= 0 Then P3ActiveSetGen = 1
 End Sub
+
+
 
 
 

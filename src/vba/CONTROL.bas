@@ -1069,6 +1069,8 @@ Sub ボタン5_Click()
     FEMProgressBegin
     FEMLastProc = "P0_RunAnalysis"
     ResetAnalysisState
+    FEMInvalidateSettingCache
+    FEMValidateAnalysisScope
     FEMWriteBuildStamp
     FEMInvalidateInputCache
     FEMInvalidateSettingCache
@@ -2234,6 +2236,8 @@ P1ContourViewerError:
     P1ViewerLastError = CStr(Err.Number) & " " & Err.Description
     If Not SuppressUserMessages Then MsgBox "コンター表示に失敗しました。" & vbCrLf & P1ViewerLastError, vbExclamation
 End Sub
+
+
 
 
 

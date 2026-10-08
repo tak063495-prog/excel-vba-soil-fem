@@ -85,9 +85,9 @@ Private Sub FEMUiRestoreGuides()
   ws.Cells(7, 8).value2 = "SRM　強度低減"
   ws.Cells(7, 9).value2 = "最後の有効行ならFs探索。途中の行はD列の必要Fsを確認する。"
   ws.Cells(8, 8).value2 = "RESET_U"
-  ws.Cells(8, 9).value2 = "変位と反力をリセット。応力履歴は保持。"
+  ws.Cells(8, 9).value2 = "変位・応力・塑性履歴をゼロ。基準座標はそのまま。"
   ws.Cells(9, 8).value2 = "RESET_STRESS"
-  ws.Cells(9, 9).value2 = "応力履歴をリセット。挙動は仕様シートで確認。"
+  ws.Cells(9, 9).value2 = "変形後座標を基準にし、変位・応力・塑性履歴をゼロ。"
   ws.Cells(10, 8).value2 = "MATSET"
   ws.Cells(10, 9).value2 = "材料状態を変更。D列の書式は仕様シートで確認。"
   ws.Cells(11, 8).value2 = "BIRTHの準備"
@@ -116,6 +116,12 @@ Private Sub FEMUiRestoreGuides()
   ws.Cells(7, 8).value2 = "Kn/Ksは正。M列の引張=0で開口可、1で引張を保持。"
   ws.Cells(8, 7).value2 = "高速化の扱い"
   ws.Cells(8, 8).value2 = "ジョイントを含むモデルでは対応していない高速化方式を見送る。"
+  ws.Cells(9, 7).value2 = "モデルの範囲"
+  ws.Cells(9, 8).value2 = "履歴なしの応力上限モデル。JOINTのpsiは0。塑性すべり・ダイレタンシーは未対応。"
+  ws.Cells(10, 7).value2 = "除荷・反転載荷"
+  ws.Cells(10, 8).value2 = "降伏後の残留すべり・除荷剛性・散逸を扱う弾塑性接合モデルではありません。"
+  ws.range("G9:H10").WrapText = True
+  ws.rows("9:10").RowHeight = 51
   FEMUiList ws, "D2:D2000", "1,0"
   Set ws = ThisWorkbook.Worksheets("載荷")
   FEMUiList ws, "B2:B2000", "TOP,BOTTOM,LEFT,RIGHT,BOX"

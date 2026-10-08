@@ -1,0 +1,5 @@
+﻿PASS
+PASS: 31 assertions, separated paths, cost gate, progress classification, rejected-first handling, recovery
+PASS: 15 eligibility assertions
+PASS: V1 cannot consume stale history after a long increment
+PASS: old-LU GMRES, true residual, iteration-budget rejection
