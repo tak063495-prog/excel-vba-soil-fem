@@ -1,0 +1,854 @@
+{
+  "ok": true,
+  "check_count": 77,
+  "failure_count": 0,
+  "checks": [
+    {
+      "case": "confined_combined",
+      "check": "materials",
+      "ok": true,
+      "detail": {
+        "compared_cells": 13,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "confined_combined",
+      "check": "nodes",
+      "ok": true,
+      "detail": {
+        "compared_cells": 333,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "confined_combined",
+      "check": "elements",
+      "ok": true,
+      "detail": {
+        "compared_cells": 80,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "confined_combined",
+      "check": "stages",
+      "ok": true,
+      "detail": {
+        "compared_cells": 12,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "confined_combined",
+      "check": "loads",
+      "ok": true,
+      "detail": {
+        "compared_cells": 90,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "confined_combined",
+      "check": "joints",
+      "ok": true,
+      "detail": {
+        "compared_cells": 0,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "confined_combined",
+      "check": "flow_policy",
+      "ok": true,
+      "detail": {
+        "expected": "INCONSISTENT",
+        "actual": [
+          "INCONSISTENT"
+        ]
+      }
+    },
+    {
+      "case": "confined_gravity",
+      "check": "materials",
+      "ok": true,
+      "detail": {
+        "compared_cells": 13,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "confined_gravity",
+      "check": "nodes",
+      "ok": true,
+      "detail": {
+        "compared_cells": 333,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "confined_gravity",
+      "check": "elements",
+      "ok": true,
+      "detail": {
+        "compared_cells": 80,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "confined_gravity",
+      "check": "stages",
+      "ok": true,
+      "detail": {
+        "compared_cells": 6,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "confined_gravity",
+      "check": "loads",
+      "ok": true,
+      "detail": {
+        "compared_cells": 10,
+        "inert_default_row": true,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "confined_gravity",
+      "check": "joints",
+      "ok": true,
+      "detail": {
+        "compared_cells": 0,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "confined_gravity",
+      "check": "flow_policy",
+      "ok": true,
+      "detail": {
+        "expected": "INCONSISTENT",
+        "actual": [
+          "INCONSISTENT"
+        ]
+      }
+    },
+    {
+      "case": "confined_pressure",
+      "check": "materials",
+      "ok": true,
+      "detail": {
+        "compared_cells": 13,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "confined_pressure",
+      "check": "nodes",
+      "ok": true,
+      "detail": {
+        "compared_cells": 333,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "confined_pressure",
+      "check": "elements",
+      "ok": true,
+      "detail": {
+        "compared_cells": 80,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "confined_pressure",
+      "check": "stages",
+      "ok": true,
+      "detail": {
+        "compared_cells": 12,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "confined_pressure",
+      "check": "loads",
+      "ok": true,
+      "detail": {
+        "compared_cells": 90,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "confined_pressure",
+      "check": "joints",
+      "ok": true,
+      "detail": {
+        "compared_cells": 0,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "confined_pressure",
+      "check": "flow_policy",
+      "ok": true,
+      "detail": {
+        "expected": "INCONSISTENT",
+        "actual": [
+          "INCONSISTENT"
+        ]
+      }
+    },
+    {
+      "case": "griffiths_1999_coarse",
+      "check": "materials",
+      "ok": true,
+      "detail": {
+        "compared_cells": 13,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "griffiths_1999_coarse",
+      "check": "nodes",
+      "ok": true,
+      "detail": {
+        "compared_cells": 5949,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "griffiths_1999_coarse",
+      "check": "elements",
+      "ok": true,
+      "detail": {
+        "compared_cells": 2000,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "griffiths_1999_coarse",
+      "check": "stages",
+      "ok": true,
+      "detail": {
+        "compared_cells": 12,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "griffiths_1999_coarse",
+      "check": "loads",
+      "ok": true,
+      "detail": {
+        "compared_cells": 10,
+        "inert_default_row": true,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "griffiths_1999_coarse",
+      "check": "joints",
+      "ok": true,
+      "detail": {
+        "compared_cells": 0,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "griffiths_1999_coarse",
+      "check": "flow_policy",
+      "ok": true,
+      "detail": {
+        "expected": "INCONSISTENT",
+        "actual": [
+          "INCONSISTENT"
+        ]
+      }
+    },
+    {
+      "case": "griffiths_1999_coarse_davis",
+      "check": "materials",
+      "ok": true,
+      "detail": {
+        "compared_cells": 13,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "griffiths_1999_coarse_davis",
+      "check": "nodes",
+      "ok": true,
+      "detail": {
+        "compared_cells": 5949,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "griffiths_1999_coarse_davis",
+      "check": "elements",
+      "ok": true,
+      "detail": {
+        "compared_cells": 2000,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "griffiths_1999_coarse_davis",
+      "check": "stages",
+      "ok": true,
+      "detail": {
+        "compared_cells": 12,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "griffiths_1999_coarse_davis",
+      "check": "loads",
+      "ok": true,
+      "detail": {
+        "compared_cells": 10,
+        "inert_default_row": true,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "griffiths_1999_coarse_davis",
+      "check": "joints",
+      "ok": true,
+      "detail": {
+        "compared_cells": 0,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "griffiths_1999_coarse_davis",
+      "check": "flow_policy",
+      "ok": true,
+      "detail": {
+        "expected": "DAVIS",
+        "actual": [
+          "DAVIS"
+        ]
+      }
+    },
+    {
+      "case": "griffiths_1999_fine_davis",
+      "check": "materials",
+      "ok": true,
+      "detail": {
+        "compared_cells": 13,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "griffiths_1999_fine_davis",
+      "check": "nodes",
+      "ok": true,
+      "detail": {
+        "compared_cells": 12969,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "griffiths_1999_fine_davis",
+      "check": "elements",
+      "ok": true,
+      "detail": {
+        "compared_cells": 4500,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "griffiths_1999_fine_davis",
+      "check": "stages",
+      "ok": true,
+      "detail": {
+        "compared_cells": 12,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "griffiths_1999_fine_davis",
+      "check": "loads",
+      "ok": true,
+      "detail": {
+        "compared_cells": 10,
+        "inert_default_row": true,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "griffiths_1999_fine_davis",
+      "check": "joints",
+      "ok": true,
+      "detail": {
+        "compared_cells": 0,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "griffiths_1999_fine_davis",
+      "check": "flow_policy",
+      "ok": true,
+      "detail": {
+        "expected": "DAVIS",
+        "actual": [
+          "DAVIS"
+        ]
+      }
+    },
+    {
+      "case": "pruska_h10.5_phi10_davis",
+      "check": "materials",
+      "ok": true,
+      "detail": {
+        "compared_cells": 13,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "pruska_h10.5_phi10_davis",
+      "check": "nodes",
+      "ok": true,
+      "detail": {
+        "compared_cells": 7101,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "pruska_h10.5_phi10_davis",
+      "check": "elements",
+      "ok": true,
+      "detail": {
+        "compared_cells": 2400,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "pruska_h10.5_phi10_davis",
+      "check": "stages",
+      "ok": true,
+      "detail": {
+        "compared_cells": 12,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "pruska_h10.5_phi10_davis",
+      "check": "loads",
+      "ok": true,
+      "detail": {
+        "compared_cells": 10,
+        "inert_default_row": true,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "pruska_h10.5_phi10_davis",
+      "check": "joints",
+      "ok": true,
+      "detail": {
+        "compared_cells": 0,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "pruska_h10.5_phi10_davis",
+      "check": "flow_policy",
+      "ok": true,
+      "detail": {
+        "expected": "DAVIS",
+        "actual": [
+          "DAVIS"
+        ]
+      }
+    },
+    {
+      "case": "pruska_h7_phi10_davis",
+      "check": "materials",
+      "ok": true,
+      "detail": {
+        "compared_cells": 13,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "pruska_h7_phi10_davis",
+      "check": "nodes",
+      "ok": true,
+      "detail": {
+        "compared_cells": 7101,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "pruska_h7_phi10_davis",
+      "check": "elements",
+      "ok": true,
+      "detail": {
+        "compared_cells": 2400,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "pruska_h7_phi10_davis",
+      "check": "stages",
+      "ok": true,
+      "detail": {
+        "compared_cells": 12,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "pruska_h7_phi10_davis",
+      "check": "loads",
+      "ok": true,
+      "detail": {
+        "compared_cells": 10,
+        "inert_default_row": true,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "pruska_h7_phi10_davis",
+      "check": "joints",
+      "ok": true,
+      "detail": {
+        "compared_cells": 0,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "pruska_h7_phi10_davis",
+      "check": "flow_policy",
+      "ok": true,
+      "detail": {
+        "expected": "DAVIS",
+        "actual": [
+          "DAVIS"
+        ]
+      }
+    },
+    {
+      "case": "pruska_h7_phi20_davis",
+      "check": "materials",
+      "ok": true,
+      "detail": {
+        "compared_cells": 13,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "pruska_h7_phi20_davis",
+      "check": "nodes",
+      "ok": true,
+      "detail": {
+        "compared_cells": 7101,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "pruska_h7_phi20_davis",
+      "check": "elements",
+      "ok": true,
+      "detail": {
+        "compared_cells": 2400,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "pruska_h7_phi20_davis",
+      "check": "stages",
+      "ok": true,
+      "detail": {
+        "compared_cells": 12,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "pruska_h7_phi20_davis",
+      "check": "loads",
+      "ok": true,
+      "detail": {
+        "compared_cells": 10,
+        "inert_default_row": true,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "pruska_h7_phi20_davis",
+      "check": "joints",
+      "ok": true,
+      "detail": {
+        "compared_cells": 0,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "pruska_h7_phi20_davis",
+      "check": "flow_policy",
+      "ok": true,
+      "detail": {
+        "expected": "DAVIS",
+        "actual": [
+          "DAVIS"
+        ]
+      }
+    },
+    {
+      "case": "simple_shear",
+      "check": "materials",
+      "ok": true,
+      "detail": {
+        "compared_cells": 13,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "simple_shear",
+      "check": "nodes",
+      "ok": true,
+      "detail": {
+        "compared_cells": 333,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "simple_shear",
+      "check": "elements",
+      "ok": true,
+      "detail": {
+        "compared_cells": 80,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "simple_shear",
+      "check": "stages",
+      "ok": true,
+      "detail": {
+        "compared_cells": 12,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "simple_shear",
+      "check": "loads",
+      "ok": true,
+      "detail": {
+        "compared_cells": 90,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "simple_shear",
+      "check": "joints",
+      "ok": true,
+      "detail": {
+        "compared_cells": 0,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "simple_shear",
+      "check": "flow_policy",
+      "ok": true,
+      "detail": {
+        "expected": "INCONSISTENT",
+        "actual": [
+          "INCONSISTENT"
+        ]
+      }
+    },
+    {
+      "case": "unconfined_pressure",
+      "check": "materials",
+      "ok": true,
+      "detail": {
+        "compared_cells": 13,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "unconfined_pressure",
+      "check": "nodes",
+      "ok": true,
+      "detail": {
+        "compared_cells": 333,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "unconfined_pressure",
+      "check": "elements",
+      "ok": true,
+      "detail": {
+        "compared_cells": 80,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "unconfined_pressure",
+      "check": "stages",
+      "ok": true,
+      "detail": {
+        "compared_cells": 12,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "unconfined_pressure",
+      "check": "loads",
+      "ok": true,
+      "detail": {
+        "compared_cells": 90,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "unconfined_pressure",
+      "check": "joints",
+      "ok": true,
+      "detail": {
+        "compared_cells": 0,
+        "inert_default_row": false,
+        "mismatches": [],
+        "extra_id_cells": []
+      }
+    },
+    {
+      "case": "unconfined_pressure",
+      "check": "flow_policy",
+      "ok": true,
+      "detail": {
+        "expected": "INCONSISTENT",
+        "actual": [
+          "INCONSISTENT"
+        ]
+      }
+    }
+  ]
+}

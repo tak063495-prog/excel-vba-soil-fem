@@ -1,0 +1,1722 @@
+{
+  "ok": false,
+  "ok_scope": "Independent stress/volume checks and built-in self-tests only; tangent probes are diagnostics, not an acceptance test.",
+  "independent_ok": true,
+  "records": [
+    {
+      "case": "confined_phi0_elastic",
+      "phi": 0,
+      "expected_stress": [
+        5.769230769230768,
+        13.46153846153846,
+        0.0,
+        5.769230769230768
+      ],
+      "actual_stress": [
+        5.769230769230769,
+        13.461538461538463,
+        0,
+        5.769230769230769
+      ],
+      "stress_max_abs_error": 3.552713678800501e-15,
+      "plastic_volume_strain": 0,
+      "expected_plastic": false,
+      "ok": true,
+      "tangent_3x3": [
+        [
+          134615.38461538462,
+          57692.30769230769,
+          0
+        ],
+        [
+          57692.30769230769,
+          134615.38461538462,
+          0
+        ],
+        [
+          0,
+          0,
+          38461.53846153846
+        ]
+      ],
+      "tangent_asymmetry_abs": 0.0,
+      "symmetrized_normal_block_min_eigenvalue": 76923.07692307694,
+      "tangent_probes": [
+        {
+          "name": "total_increment",
+          "probe_ok": true,
+          "h": 1e-08,
+          "returned": [
+            [
+              134615.38461538462,
+              57692.30769230769,
+              0
+            ],
+            [
+              57692.30769230769,
+              134615.38461538462,
+              0
+            ],
+            [
+              0,
+              0,
+              38461.53846153846
+            ]
+          ],
+          "finite_difference": [
+            [
+              134615.38461538858,
+              57692.307692303046,
+              0
+            ],
+            [
+              57692.307692303046,
+              134615.38461534417,
+              0
+            ],
+            [
+              0,
+              0,
+              38461.53846153846
+            ]
+          ],
+          "relative_frobenius_gap": 1.9545110046003926e-13,
+          "branches": [
+            {
+              "column": 0,
+              "plus_elastic": true,
+              "minus_elastic": true,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                134615.38461534417,
+                57692.30769221423,
+                0.0
+              ],
+              "backward_derivative": [
+                134615.384615433,
+                57692.30769239186,
+                0.0
+              ]
+            },
+            {
+              "column": 1,
+              "plus_elastic": true,
+              "minus_elastic": true,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                57692.307692303046,
+                134615.38461534417,
+                0.0
+              ],
+              "backward_derivative": [
+                57692.307692303046,
+                134615.38461534417,
+                0.0
+              ]
+            },
+            {
+              "column": 2,
+              "plus_elastic": true,
+              "minus_elastic": true,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                0.0,
+                0.0,
+                38461.53846153846
+              ],
+              "backward_derivative": [
+                0.0,
+                0.0,
+                38461.53846153846
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "confined_phi0_plastic",
+      "phi": 0,
+      "expected_stress": [
+        826.6666666666665,
+        846.6666666666665,
+        0.0,
+        826.6666666666665
+      ],
+      "actual_stress": [
+        826.6666666666666,
+        846.6666666666666,
+        -1.2104157042287225e-12,
+        826.6666666666666
+      ],
+      "stress_max_abs_error": 1.2104157042287225e-12,
+      "plastic_volume_strain": 0.0,
+      "expected_plastic": true,
+      "ok": true,
+      "tangent_3x3": [
+        [
+          121794.8717948718,
+          83333.33333333333,
+          6.213632978586872e-11
+        ],
+        [
+          83333.33333333333,
+          83333.33333333333,
+          -1.2427265957173743e-10
+        ],
+        [
+          6.213632978586872e-11,
+          -1.2427265957173743e-10,
+          38461.53846153846
+        ]
+      ],
+      "tangent_asymmetry_abs": 0.0,
+      "symmetrized_normal_block_min_eigenvalue": 17040.61497354915,
+      "tangent_probes": [
+        {
+          "name": "total_increment",
+          "probe_ok": true,
+          "h": 1e-08,
+          "returned": [
+            [
+              121794.8717948718,
+              83333.33333333333,
+              6.213632978586872e-11
+            ],
+            [
+              83333.33333333333,
+              83333.33333333333,
+              -1.2427265957173743e-10
+            ],
+            [
+              6.213632978586872e-11,
+              -1.2427265957173743e-10,
+              38461.53846153846
+            ]
+          ],
+          "finite_difference": [
+            [
+              83333.3333275732,
+              83333.33333325754,
+              0
+            ],
+            [
+              83333.33333325754,
+              83333.33333325754,
+              0
+            ],
+            [
+              1.2427265957388994e-10,
+              -1.2427265957388994e-10,
+              999.9998737091462
+            ]
+          ],
+          "relative_frobenius_gap": 0.3221364765793048,
+          "branches": [
+            {
+              "column": 0,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": "Mohr-Coulomb 3Dエッジリターン。",
+              "minus_message": "Mohr-Coulomb 3Dエッジリターン。",
+              "forward_derivative": [
+                83333.3333275732,
+                83333.33333894188,
+                1.2427265957388994e-10
+              ],
+              "backward_derivative": [
+                83333.3333275732,
+                83333.3333275732,
+                1.2427265957388994e-10
+              ]
+            },
+            {
+              "column": 1,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                83333.33333894188,
+                83333.33333894188,
+                -1.2427265959408478e-10
+              ],
+              "backward_derivative": [
+                83333.3333275732,
+                83333.3333275732,
+                -1.242726595536951e-10
+              ]
+            },
+            {
+              "column": 2,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                -0.005900346877751872,
+                -0.006912159733474255,
+                999.9999947507166
+              ],
+              "backward_derivative": [
+                0.005900346877751872,
+                0.006912159733474255,
+                999.9997526675758
+              ]
+            }
+          ]
+        },
+        {
+          "name": "small_reload",
+          "probe_ok": true,
+          "h": 1e-09,
+          "returned": [
+            [
+              121794.8717948718,
+              83333.33333333333,
+              -2.385064504386196e-09
+            ],
+            [
+              83333.33333333333,
+              83333.33333333333,
+              4.770129008772392e-09
+            ],
+            [
+              -2.385064504386196e-09,
+              4.770129008772392e-09,
+              38461.53846153846
+            ]
+          ],
+          "finite_difference": [
+            [
+              83333.33329346715,
+              83333.33335031057,
+              0
+            ],
+            [
+              83333.33335031057,
+              83333.33335031057,
+              0
+            ],
+            [
+              -4.7701290146159485e-09,
+              4.770129011081852e-09,
+              38446.75124922277
+            ]
+          ],
+          "relative_frobenius_gap": 0.22486389395796275,
+          "branches": [
+            {
+              "column": 0,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": "Mohr-Coulomb 3Dエッジリターン。",
+              "minus_message": "Mohr-Coulomb 3Dエッジリターン。",
+              "forward_derivative": [
+                83333.33323662373,
+                83333.33323662373,
+                -4.770129007547755e-09
+              ],
+              "backward_derivative": [
+                83333.33335031057,
+                83333.3334639974,
+                -4.770129021684142e-09
+              ]
+            },
+            {
+              "column": 1,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                83333.33335031057,
+                83333.33323662373,
+                4.7701290146159485e-09
+              ],
+              "backward_derivative": [
+                83333.33335031057,
+                83333.3334639974,
+                4.770129007547755e-09
+              ]
+            },
+            {
+              "column": 2,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                0.04934008757118136,
+                -0.09868017514236271,
+                38446.75124921034
+              ],
+              "backward_derivative": [
+                -0.04934008757118136,
+                0.09868017514236271,
+                38446.7512492352
+              ]
+            }
+          ]
+        },
+        {
+          "name": "small_reload_h3",
+          "probe_ok": true,
+          "h": 3e-09,
+          "returned": [
+            [
+              121794.8717948718,
+              83333.33333333333,
+              -2.385064504386196e-09
+            ],
+            [
+              83333.33333333333,
+              83333.33333333333,
+              4.770129008772392e-09
+            ],
+            [
+              -2.385064504386196e-09,
+              4.770129008772392e-09,
+              38461.53846153846
+            ]
+          ],
+          "finite_difference": [
+            [
+              83333.33335031057,
+              83333.33335031057,
+              0
+            ],
+            [
+              83333.33333136277,
+              83333.33333136277,
+              0
+            ],
+            [
+              -4.7701290075477555e-09,
+              4.77012900990382e-09,
+              38446.75124695775
+            ]
+          ],
+          "relative_frobenius_gap": 0.22486389361416814,
+          "branches": [
+            {
+              "column": 0,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": "Mohr-Coulomb 3Dエッジリターン。",
+              "minus_message": "Mohr-Coulomb 3Dエッジリターン。",
+              "forward_derivative": [
+                83333.33335031057,
+                83333.33331241495,
+                -4.7701290075477555e-09
+              ],
+              "backward_derivative": [
+                83333.33335031057,
+                83333.33335031057,
+                -4.7701290075477555e-09
+              ]
+            },
+            {
+              "column": 1,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                83333.33335031057,
+                83333.33331241495,
+                4.770129012259884e-09
+              ],
+              "backward_derivative": [
+                83333.33335031057,
+                83333.33335031057,
+                4.7701290075477555e-09
+              ]
+            },
+            {
+              "column": 2,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                0.14779288903810084,
+                -0.2956994649139233,
+                38446.75124695361
+              ],
+              "backward_derivative": [
+                -0.14779288903810084,
+                0.2956994649139233,
+                38446.75124696189
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "confined_phi20_elastic",
+      "phi": 20,
+      "expected_stress": [
+        5.769230769230768,
+        13.46153846153846,
+        0.0,
+        5.769230769230768
+      ],
+      "actual_stress": [
+        5.769230769230769,
+        13.461538461538463,
+        0,
+        5.769230769230769
+      ],
+      "stress_max_abs_error": 3.552713678800501e-15,
+      "plastic_volume_strain": 0,
+      "expected_plastic": false,
+      "ok": true,
+      "tangent_3x3": [
+        [
+          134615.38461538462,
+          57692.30769230769,
+          0
+        ],
+        [
+          57692.30769230769,
+          134615.38461538462,
+          0
+        ],
+        [
+          0,
+          0,
+          38461.53846153846
+        ]
+      ],
+      "tangent_asymmetry_abs": 0.0,
+      "symmetrized_normal_block_min_eigenvalue": 76923.07692307694,
+      "tangent_probes": [
+        {
+          "name": "total_increment",
+          "probe_ok": true,
+          "h": 1e-08,
+          "returned": [
+            [
+              134615.38461538462,
+              57692.30769230769,
+              0
+            ],
+            [
+              57692.30769230769,
+              134615.38461538462,
+              0
+            ],
+            [
+              0,
+              0,
+              38461.53846153846
+            ]
+          ],
+          "finite_difference": [
+            [
+              134615.38461538858,
+              57692.307692303046,
+              0
+            ],
+            [
+              57692.307692303046,
+              134615.38461534417,
+              0
+            ],
+            [
+              0,
+              0,
+              38461.53846153846
+            ]
+          ],
+          "relative_frobenius_gap": 1.9545110046003926e-13,
+          "branches": [
+            {
+              "column": 0,
+              "plus_elastic": true,
+              "minus_elastic": true,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                134615.38461534417,
+                57692.30769221423,
+                0.0
+              ],
+              "backward_derivative": [
+                134615.384615433,
+                57692.30769239186,
+                0.0
+              ]
+            },
+            {
+              "column": 1,
+              "plus_elastic": true,
+              "minus_elastic": true,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                57692.307692303046,
+                134615.38461534417,
+                0.0
+              ],
+              "backward_derivative": [
+                57692.307692303046,
+                134615.38461534417,
+                0.0
+              ]
+            },
+            {
+              "column": 2,
+              "plus_elastic": true,
+              "minus_elastic": true,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                0.0,
+                0.0,
+                38461.53846153846
+              ],
+              "backward_derivative": [
+                0.0,
+                0.0,
+                38461.53846153846
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "confined_phi20_plastic",
+      "phi": 20,
+      "expected_stress": [
+        178.59090952027168,
+        392.81818095945647,
+        0.0,
+        178.59090952027168
+      ],
+      "actual_stress": [
+        178.59090952027182,
+        392.8181809594564,
+        -2.6724272646140663e-14,
+        178.5909095202718
+      ],
+      "stress_max_abs_error": 1.4210854715202004e-13,
+      "plastic_volume_strain": 0.0,
+      "expected_plastic": true,
+      "ok": true,
+      "tangent_3x3": [
+        [
+          61887.21248414548,
+          61887.21248414547,
+          1.2427265957173743e-10
+        ],
+        [
+          126225.57503170904,
+          126225.57503170906,
+          -1.2427265957173743e-10
+        ],
+        [
+          2.2821415211333046e-10,
+          -2.0331167030144382e-11,
+          38461.53846153846
+        ]
+      ],
+      "tangent_asymmetry_abs": 64338.36254756357,
+      "symmetrized_normal_block_min_eigenvalue": -5349.146482904849,
+      "tangent_probes": [
+        {
+          "name": "total_increment",
+          "probe_ok": true,
+          "h": 1e-08,
+          "returned": [
+            [
+              61887.21248414548,
+              61887.21248414547,
+              1.2427265957173743e-10
+            ],
+            [
+              126225.57503170904,
+              126225.57503170906,
+              -1.2427265957173743e-10
+            ],
+            [
+              2.2821415211333046e-10,
+              -2.0331167030144382e-11,
+              38461.53846153846
+            ]
+          ],
+          "finite_difference": [
+            [
+              61887.21248179263,
+              61887.2124846348,
+              0
+            ],
+            [
+              126225.57503334519,
+              126225.57503050302,
+              0
+            ],
+            [
+              2.282141521197677e-10,
+              -2.0331167030852057e-11,
+              35704.54523693754
+            ]
+          ],
+          "relative_frobenius_gap": 0.013649039894889527,
+          "branches": [
+            {
+              "column": 0,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": "Mohr-Coulomb 3Dエッジリターン。",
+              "minus_message": "Mohr-Coulomb 3Dエッジリターン。",
+              "forward_derivative": [
+                61887.21247895046,
+                126225.57503618737,
+                2.2821415212229206e-10
+              ],
+              "backward_derivative": [
+                61887.2124846348,
+                126225.57503050302,
+                2.2821415211724336e-10
+              ]
+            },
+            {
+              "column": 1,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": "Mohr-Coulomb 3Dエッジリターン。",
+              "minus_message": "Mohr-Coulomb 3Dエッジリターン。",
+              "forward_derivative": [
+                61887.21248179263,
+                126225.57503050302,
+                -2.033116702454117e-11
+              ],
+              "backward_derivative": [
+                61887.21248747697,
+                126225.57503050302,
+                -2.0331167037162944e-11
+              ]
+            },
+            {
+              "column": 2,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                0.04363585048849927,
+                -0.091876017904724,
+                35704.54523960997
+              ],
+              "backward_derivative": [
+                -0.04363585048849927,
+                0.091876017904724,
+                35704.54523426511
+              ]
+            }
+          ]
+        },
+        {
+          "name": "small_reload",
+          "probe_ok": true,
+          "h": 1e-09,
+          "returned": [
+            [
+              100348.75094568395,
+              61887.21248414547,
+              -7.067650689836993e-11
+            ],
+            [
+              126225.57503170904,
+              126225.57503170906,
+              1.4135301379673986e-10
+            ],
+            [
+              -1.8890398573336017e-10,
+              2.312553496174961e-11,
+              38461.53846153846
+            ]
+          ],
+          "finite_difference": [
+            [
+              61887.21249600348,
+              61887.21249600348,
+              0
+            ],
+            [
+              126225.57503050301,
+              126225.5750020813,
+              0
+            ],
+            [
+              -2.5958049260005563e-10,
+              2.3125534954759673e-11,
+              38461.312528535826
+            ]
+          ],
+          "relative_frobenius_gap": 0.18993614422951308,
+          "branches": [
+            {
+              "column": 0,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": "Mohr-Coulomb 3Dエッジリターン。",
+              "minus_message": "Mohr-Coulomb 3Dエッジリターン。",
+              "forward_derivative": [
+                61887.21246758177,
+                126225.57511576814,
+                -2.595804926316101e-10
+              ],
+              "backward_derivative": [
+                61887.21252442519,
+                126225.57494523788,
+                -2.5958049256850117e-10
+              ]
+            },
+            {
+              "column": 1,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                61887.21246758177,
+                126225.57505892472,
+                2.3125534956337394e-11
+              ],
+              "backward_derivative": [
+                61887.21252442519,
+                126225.57494523788,
+                2.3125534953181952e-11
+              ]
+            },
+            {
+              "column": 2,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                0.005144329406903125,
+                -0.01028865881380625,
+                38461.31252853365
+              ],
+              "backward_derivative": [
+                -0.005144329406903125,
+                0.01028865881380625,
+                38461.312528538
+              ]
+            }
+          ]
+        },
+        {
+          "name": "small_reload_h3",
+          "probe_ok": true,
+          "h": 3e-09,
+          "returned": [
+            [
+              100348.75094568395,
+              61887.21248414547,
+              -7.067650689836993e-11
+            ],
+            [
+              126225.57503170904,
+              126225.57503170906,
+              1.4135301379673986e-10
+            ],
+            [
+              -1.8890398573336017e-10,
+              2.312553496174961e-11,
+              38461.53846153846
+            ]
+          ],
+          "finite_difference": [
+            [
+              61887.21248179263,
+              61887.212486529585,
+              0
+            ],
+            [
+              126225.57503050302,
+              126225.57502102912,
+              0
+            ],
+            [
+              -2.595804926458096e-10,
+              2.3125534955285582e-11,
+              38461.31252851479
+            ]
+          ],
+          "relative_frobenius_gap": 0.189936144295406,
+          "branches": [
+            {
+              "column": 0,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": "Mohr-Coulomb 3Dエッジリターン。",
+              "minus_message": "Mohr-Coulomb 3Dエッジリターン。",
+              "forward_derivative": [
+                61887.212467581776,
+                126225.57505892473,
+                -2.5958049267999354e-10
+              ],
+              "backward_derivative": [
+                61887.212496003485,
+                126225.57500208131,
+                -2.595804926116256e-10
+              ]
+            },
+            {
+              "column": 1,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                61887.21247705568,
+                126225.57503997693,
+                2.3125534956337397e-11
+              ],
+              "backward_derivative": [
+                61887.212496003485,
+                126225.57500208131,
+                2.3125534954233767e-11
+              ]
+            },
+            {
+              "column": 2,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                0.015575096767861396,
+                -0.031150193535722792,
+                38461.31252851407
+              ],
+              "backward_derivative": [
+                -0.015575096767861396,
+                0.031150193535722792,
+                38461.31252851551
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "confined_phi20_high_plastic",
+      "phi": 20,
+      "expected_stress": [
+        611.8013969092898,
+        1276.39720618142,
+        0.0,
+        611.8013969092898
+      ],
+      "actual_stress": [
+        611.8013969092901,
+        1276.3972061814197,
+        -1.690424418571513e-13,
+        611.8013969092901
+      ],
+      "stress_max_abs_error": 3.410605131648481e-13,
+      "plastic_volume_strain": 0.0,
+      "expected_plastic": true,
+      "ok": true,
+      "tangent_3x3": [
+        [
+          100348.75094568395,
+          61887.21248414547,
+          6.213632978586872e-11
+        ],
+        [
+          126225.57503170904,
+          126225.57503170906,
+          -1.2427265957173743e-10
+        ],
+        [
+          1.6607782232746176e-10,
+          -2.0331167030144385e-11,
+          38461.53846153846
+        ]
+      ],
+      "tangent_asymmetry_abs": 64338.36254756357,
+      "symmetrized_normal_block_min_eigenvalue": 18345.03475817373,
+      "tangent_probes": [
+        {
+          "name": "total_increment",
+          "probe_ok": true,
+          "h": 1e-08,
+          "returned": [
+            [
+              100348.75094568395,
+              61887.21248414547,
+              6.213632978586872e-11
+            ],
+            [
+              126225.57503170904,
+              126225.57503170906,
+              -1.2427265957173743e-10
+            ],
+            [
+              1.6607782232746176e-10,
+              -2.0331167030144385e-11,
+              38461.53846153846
+            ]
+          ],
+          "finite_difference": [
+            [
+              61887.21247895046,
+              61887.2124846348,
+              0
+            ],
+            [
+              126225.57502481868,
+              126225.57502481868,
+              0
+            ],
+            [
+              2.2821415211724336e-10,
+              -2.033116703810958e-11,
+              33229.79044595011
+            ]
+          ],
+          "relative_frobenius_gap": 0.19256796234957027,
+          "branches": [
+            {
+              "column": 0,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": "Mohr-Coulomb 3Dエッジリターン。",
+              "minus_message": "Mohr-Coulomb 3Dエッジリターン。",
+              "forward_derivative": [
+                61887.21247326612,
+                126225.57503618737,
+                2.2821415212734078e-10
+              ],
+              "backward_derivative": [
+                61887.2124846348,
+                126225.57501345,
+                2.2821415210714594e-10
+              ]
+            },
+            {
+              "column": 1,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                61887.2124846348,
+                126225.57503618737,
+                -2.0331167050731353e-11
+              ],
+              "backward_derivative": [
+                61887.2124846348,
+                126225.57501345,
+                -2.0331167025487804e-11
+              ]
+            },
+            {
+              "column": 2,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                0.011857537174364552,
+                -0.026329871616326272,
+                33229.790462854355
+              ],
+              "backward_derivative": [
+                -0.011857537174364552,
+                0.026329871616326272,
+                33229.79042904587
+              ]
+            }
+          ]
+        },
+        {
+          "name": "small_reload",
+          "probe_ok": true,
+          "h": 1e-09,
+          "returned": [
+            [
+              61887.21248414548,
+              61887.21248414547,
+              -1.4135301379673983e-10
+            ],
+            [
+              126225.57503170904,
+              126225.57503170906,
+              1.4135301379673983e-10
+            ],
+            [
+              -2.595804926317301e-10,
+              2.312553496174961e-11,
+              38461.53846153846
+            ]
+          ],
+          "finite_difference": [
+            [
+              61887.21243916006,
+              61887.21249600348,
+              0
+            ],
+            [
+              126225.57505892472,
+              126225.57505892472,
+              0
+            ],
+            [
+              -2.595804928367139e-10,
+              2.3125535110954133e-11,
+              38461.465632025756
+            ]
+          ],
+          "relative_frobenius_gap": 3.596569495535401e-07,
+          "branches": [
+            {
+              "column": 0,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": "Mohr-Coulomb 3Dエッジリターン。",
+              "minus_message": "Mohr-Coulomb 3Dエッジリターン。",
+              "forward_derivative": [
+                61887.2122686298,
+                126225.57505892472,
+                -2.595804929881752e-10
+              ],
+              "backward_derivative": [
+                61887.212609690316,
+                126225.57505892472,
+                -2.595804926852526e-10
+              ]
+            },
+            {
+              "column": 1,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                61887.21238231664,
+                126225.57505892472,
+                2.3125534858518643e-11
+              ],
+              "backward_derivative": [
+                61887.212609690316,
+                126225.57505892472,
+                2.3125535363389622e-11
+              ]
+            },
+            {
+              "column": 2,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                0.0014779288903810084,
+                -0.003183231456205249,
+                38461.465632023865
+              ],
+              "backward_derivative": [
+                -0.0014779288903810084,
+                0.003183231456205249,
+                38461.46563202765
+              ]
+            }
+          ]
+        },
+        {
+          "name": "small_reload_h3",
+          "probe_ok": true,
+          "h": 3e-09,
+          "returned": [
+            [
+              61887.21248414548,
+              61887.21248414547,
+              -1.4135301379673983e-10
+            ],
+            [
+              126225.57503170904,
+              126225.57503170906,
+              1.4135301379673983e-10
+            ],
+            [
+              -2.595804926317301e-10,
+              2.312553496174961e-11,
+              38461.53846153846
+            ]
+          ],
+          "finite_difference": [
+            [
+              61887.21247705568,
+              61887.212458107875,
+              0
+            ],
+            [
+              126225.57505892473,
+              126225.57505892473,
+              0
+            ],
+            [
+              -2.5958049261372924e-10,
+              2.3125534913212998e-11,
+              38461.465632024825
+            ]
+          ],
+          "relative_frobenius_gap": 3.5965690546481873e-07,
+          "branches": [
+            {
+              "column": 0,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": "Mohr-Coulomb 3Dエッジリターン。",
+              "minus_message": "Mohr-Coulomb 3Dエッジリターン。",
+              "forward_derivative": [
+                61887.212458107875,
+                126225.57505892473,
+                -2.5958049260110744e-10
+              ],
+              "backward_derivative": [
+                61887.212496003485,
+                126225.57505892473,
+                -2.5958049262635103e-10
+              ]
+            },
+            {
+              "column": 1,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": "Mohr-Coulomb 3Dエッジリターン。",
+              "minus_message": "Mohr-Coulomb 3Dエッジリターン。",
+              "forward_derivative": [
+                61887.21242021226,
+                126225.57505892473,
+                2.3125534925834773e-11
+              ],
+              "backward_derivative": [
+                61887.212496003485,
+                126225.57505892473,
+                2.3125534900591224e-11
+              ]
+            },
+            {
+              "column": 2,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                0.005002220859751105,
+                -0.010080232944649955,
+                38461.46563202414
+              ],
+              "backward_derivative": [
+                -0.005002220859751105,
+                0.010080232944649955,
+                38461.4656320255
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "pure_shear_elastic",
+      "phi": 0,
+      "expected_stress": [
+        0.0,
+        0.0,
+        3.8461538461538463,
+        0.0
+      ],
+      "actual_stress": [
+        0,
+        0,
+        3.8461538461538463,
+        0
+      ],
+      "stress_max_abs_error": 0.0,
+      "plastic_volume_strain": 0,
+      "expected_plastic": false,
+      "ok": true,
+      "tangent_3x3": [
+        [
+          134615.38461538462,
+          57692.30769230769,
+          0
+        ],
+        [
+          57692.30769230769,
+          134615.38461538462,
+          0
+        ],
+        [
+          0,
+          0,
+          38461.53846153846
+        ]
+      ],
+      "tangent_asymmetry_abs": 0.0,
+      "symmetrized_normal_block_min_eigenvalue": 76923.07692307694,
+      "tangent_probes": [
+        {
+          "name": "total_increment",
+          "probe_ok": true,
+          "h": 1e-08,
+          "returned": [
+            [
+              134615.38461538462,
+              57692.30769230769,
+              0
+            ],
+            [
+              57692.30769230769,
+              134615.38461538462,
+              0
+            ],
+            [
+              0,
+              0,
+              38461.53846153846
+            ]
+          ],
+          "finite_difference": [
+            [
+              134615.38461538462,
+              57692.30769230769,
+              0
+            ],
+            [
+              57692.30769230769,
+              134615.38461538462,
+              0
+            ],
+            [
+              0,
+              0,
+              38461.53846152056
+            ]
+          ],
+          "relative_frobenius_gap": 8.496459432361242e-14,
+          "branches": [
+            {
+              "column": 0,
+              "plus_elastic": true,
+              "minus_elastic": true,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                134615.38461538462,
+                57692.30769230769,
+                0.0
+              ],
+              "backward_derivative": [
+                134615.38461538462,
+                57692.30769230769,
+                0.0
+              ]
+            },
+            {
+              "column": 1,
+              "plus_elastic": true,
+              "minus_elastic": true,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                57692.30769230769,
+                134615.38461538462,
+                0.0
+              ],
+              "backward_derivative": [
+                57692.30769230769,
+                134615.38461538462,
+                0.0
+              ]
+            },
+            {
+              "column": 2,
+              "plus_elastic": true,
+              "minus_elastic": true,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                0.0,
+                0.0,
+                38461.53846152056
+              ],
+              "backward_derivative": [
+                0.0,
+                0.0,
+                38461.53846152056
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "pure_shear_plastic",
+      "phi": 0,
+      "expected_stress": [
+        0.0,
+        0.0,
+        10.0,
+        0.0
+      ],
+      "actual_stress": [
+        9.795583148038878e-14,
+        -9.795583148038878e-14,
+        10.000000000000007,
+        0
+      ],
+      "stress_max_abs_error": 9.795583148038878e-14,
+      "plastic_volume_strain": 0.0,
+      "expected_plastic": true,
+      "ok": true,
+      "tangent_3x3": [
+        [
+          134615.38461538462,
+          57692.30769230769,
+          1.3237274524376866e-10
+        ],
+        [
+          57692.30769230769,
+          134615.38461538462,
+          -1.3237274524376866e-10
+        ],
+        [
+          1.3237274524376866e-10,
+          -1.3237274524376866e-10,
+          0
+        ]
+      ],
+      "tangent_asymmetry_abs": 0.0,
+      "symmetrized_normal_block_min_eigenvalue": 76923.07692307694,
+      "tangent_probes": [
+        {
+          "name": "total_increment",
+          "probe_ok": true,
+          "h": 1e-08,
+          "returned": [
+            [
+              134615.38461538462,
+              57692.30769230769,
+              1.3237274524376866e-10
+            ],
+            [
+              57692.30769230769,
+              134615.38461538462,
+              -1.3237274524376866e-10
+            ],
+            [
+              1.3237274524376866e-10,
+              -1.3237274524376866e-10,
+              0
+            ]
+          ],
+          "finite_difference": [
+            [
+              106153.84615758239,
+              86153.84615010992,
+              1.32372745243357e-10
+            ],
+            [
+              86153.84615010992,
+              106153.84615758239,
+              -1.32372745243357e-10
+            ],
+            [
+              0,
+              0,
+              1.7763568394002505e-07
+            ]
+          ],
+          "relative_frobenius_gap": 0.2944121014451902,
+          "branches": [
+            {
+              "column": 0,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                106153.84614336297,
+                86153.84616432933,
+                -0.05000035940838643
+              ],
+              "backward_derivative": [
+                106153.84617180178,
+                86153.84613589053,
+                0.05000035940838643
+              ]
+            },
+            {
+              "column": 1,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                86153.84613589053,
+                106153.84617180178,
+                -0.05000035940838643
+              ],
+              "backward_derivative": [
+                86153.84616432933,
+                106153.84614336297,
+                0.05000035940838643
+              ]
+            },
+            {
+              "column": 2,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                1.3237274524461918e-10,
+                -1.3237274524461918e-10,
+                0.0
+              ],
+              "backward_derivative": [
+                1.3237274524209483e-10,
+                -1.3237274524209483e-10,
+                3.552713678800501e-07
+              ]
+            }
+          ]
+        },
+        {
+          "name": "small_reload",
+          "probe_ok": true,
+          "h": 1e-09,
+          "returned": [
+            [
+              134615.38461538462,
+              57692.30769230769,
+              -3.7790283722817835e-10
+            ],
+            [
+              57692.30769230769,
+              134615.38461538462,
+              3.7790283722817835e-10
+            ],
+            [
+              -3.7790283722817835e-10,
+              3.7790283722817835e-10,
+              0
+            ]
+          ],
+          "finite_difference": [
+            [
+              134600.59740308736,
+              57707.09490460496,
+              -3.7790283723429106e-10
+            ],
+            [
+              57707.09490460496,
+              134600.59740308736,
+              3.7790283723429106e-10
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "relative_frobenius_gap": 0.000142795223364428,
+          "branches": [
+            {
+              "column": 0,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                134600.59740308157,
+                57707.09490461073,
+                -0.07390710266008682
+              ],
+              "backward_derivative": [
+                134600.59740309312,
+                57707.0949045992,
+                0.07390710266008682
+              ]
+            },
+            {
+              "column": 1,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                57707.0949045992,
+                134600.59740309312,
+                -0.07390710266008682
+              ],
+              "backward_derivative": [
+                57707.09490461073,
+                134600.59740308157,
+                0.07390710266008682
+              ]
+            },
+            {
+              "column": 2,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                -3.779028372216693e-10,
+                3.779028372216693e-10,
+                0.0
+              ],
+              "backward_derivative": [
+                -3.7790283724691286e-10,
+                3.7790283724691286e-10,
+                0.0
+              ]
+            }
+          ]
+        },
+        {
+          "name": "small_reload_h3",
+          "probe_ok": true,
+          "h": 3e-09,
+          "returned": [
+            [
+              134615.38461538462,
+              57692.30769230769,
+              -3.7790283722817835e-10
+            ],
+            [
+              57692.30769230769,
+              134615.38461538462,
+              3.7790283722817835e-10
+            ],
+            [
+              -3.7790283722817835e-10,
+              3.7790283722817835e-10,
+              0
+            ]
+          ],
+          "finite_difference": [
+            [
+              134600.59740081013,
+              57707.09490688218,
+              -3.7790283723008387e-10
+            ],
+            [
+              57707.09490688218,
+              134600.59740081013,
+              3.7790283723008387e-10
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "relative_frobenius_gap": 0.00014279524535600882,
+          "branches": [
+            {
+              "column": 0,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                134600.59740080815,
+                57707.09490688418,
+                -0.22172308433709986
+              ],
+              "backward_derivative": [
+                134600.5974008121,
+                57707.094906880186,
+                0.22172308433709986
+              ]
+            },
+            {
+              "column": 1,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                57707.094906880186,
+                134600.5974008121,
+                -0.22172308433709986
+              ],
+              "backward_derivative": [
+                57707.09490688418,
+                134600.59740080815,
+                0.22172308433709986
+              ]
+            },
+            {
+              "column": 2,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                -3.779028372258766e-10,
+                3.779028372258766e-10,
+                0.0
+              ],
+              "backward_derivative": [
+                -3.779028372342911e-10,
+                3.779028372342911e-10,
+                0.0
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "built_in_material_self_test": false,
+  "built_in_edge_self_test": true,
+  "selftest_inputs_trial_repair": false,
+  "built_in_failure_rows": [
+    [
+      "plastic_loading_psi0",
+      false,
+      false,
+      false,
+      19.902564577046494,
+      0,
+      0,
+      4103,
+      "FAIL",
+      0,
+      0,
+      null
+    ],
+    [
+      "zero_cohesion",
+      false,
+      false,
+      false,
+      10.817307692307686,
+      0,
+      0,
+      4103,
+      "FAIL",
+      0,
+      0,
+      null
+    ]
+  ]
+}

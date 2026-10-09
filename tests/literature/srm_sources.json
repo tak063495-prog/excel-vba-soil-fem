@@ -1,0 +1,79 @@
+{
+  "schema": "srm_validation_sources_v1",
+  "language": "ja",
+  "scope": "2D plane-strain dry/drained slope strength-reduction FEM cases; values absent from the source are left null.",
+  "sources": [
+    {
+      "id": "griffiths_lane_1999_ex1",
+      "primary_url": "https://inside.mines.edu/~vgriffit/slope64/Griffiths%20and%20Lane%201999",
+      "citation": "D.V. Griffiths and P.A. Lane (1999), Slope stability analysis by finite elements, Géotechnique 49(3), 387-403, DOI 10.1680/geot.1999.49.3.387",
+      "source_pages": "Journal pp.389–392 / PDF pages3–6; Fig.1, Table2",
+      "case": "Example 1: homogeneous 2:1 slope, no foundation layer (D=1)",
+      "groundwater": "Example1: dry, no pore-pressure load",
+      "model": "弾性完全塑性 Mohr-Coulomb; plane strain FEM; strength reduction applies the same FOS to c' and tan(phi') (PDF p.390, Eqs. 4-5)",
+      "material": {
+        "c": "c/(gamma H)=0.05; choose H=10m, gamma=20kN/m3, c=10kPa",
+        "phi_deg": 20,
+        "psi_deg": 0,
+        "gamma": null,
+        "E": "p390にnominal E=100000 kPaを例示。各caseの厳密な入力デッキではない。",
+        "nu": "p390にnominal nu=0.3を例示。"
+      },
+      "geometry": "Fig1: 全底面幅3.2H、上段幅1.2H、斜面水平距離2H、斜面高さH。左面ローラー、底面固定。",
+      "constraints": "左境界 vertical rollers、底面 full fixity（PDF p.391, Fig.1）。右/斜面は自由表面。",
+      "loading_and_srm": "重力を適用後、独立解析で試行FOS=0.8,1.0,1.2,1.3,1.35,1.4。重力は1/2/3/5等分でも検討（PDF pp.390-391, Fig.3）。",
+      "reference_fos": {
+        "fem_failure": 1.4,
+        "comparison": "Bishop & Morgenstern (1960) chart FOS=1.380 (Table 2)"
+      },
+      "failure_criterion": "FOS=1.40で最大変位が急増し1000 iterationsで非収束。Fig.2/4とTable 2が判定根拠。",
+      "flow_rule": "全論文でpsi=0の非関連流れ則。journal p389、本文Soil modelで明記。",
+      "reproducibility": "無次元比と形状・psiは明記。H=10m、gamma=20、c=10を選び比を一致させ、nominal E/nuを採用する。元節点表と収束アルゴリズムは一致しない。",
+      "comparison_limits": "著者のFEMはFOSをcとtan(phi)へ同一適用。非収束閾値と反復上限に依存し、独自コードのメッシュ/構成則実装差を含む。"
+    },
+    {
+      "id": "pruska_homogeneous",
+      "primary_url": "https://data.fine.cz/handbooks-chapter-pdf/16_comparison_of_geotechnic_softwares_geo_fem_plaxis_z-soil.pdf",
+      "secondary_open_verification": "https://static.rocscience.cloud/assets/verification-and-theory/RS2/RS2_SlopeStabilityVerification_Part2.pdf",
+      "citation": "J. Pruska, Comparison of geotechnic softwares - Geo FEM, Plaxis, Z-Soil, Proc. XIII ECSMGE, Prague; RS2 problem56 cites Pruska (2003).",
+      "source_pages": "原著PDF page3（printed821）Fig2/Table1/Table2。RS2 Part2 PDF pages67-70（printed155-158）problem56。",
+      "case": "Homogeneous natural slope, Case 1 (Mohr-Coulomb)",
+      "groundwater": "乾燥/間隙水圧なしのベンチマークとして採用。原PDFは浸透計算を指定せず、初期応力のみ。",
+      "model": "plane strain; linear elastic perfectly plastic Mohr-Coulomb; safety factor is reduction factor at failure (Pruska PDF p.3).",
+      "material": {
+        "c_kPa": 20,
+        "phi_deg": 10,
+        "psi_deg": 0,
+        "gamma_kN_m3": 24,
+        "E_kPa": 5000,
+        "nu": 0.3
+      },
+      "geometry": "幅40m、左の下段15m・高さ8m、斜面run10m、高さh、右上段15m・高さ8+h。RS2 Fig1に全横寸法を明記。",
+      "constraints": "拘束条件は原PDF本文に明記なし。初期応力はsigma_v=gamma H、sigma_h=K0 gamma H（記号/添字のOCR崩れあり、Pruska PDF p.3）。",
+      "loading_and_srm": "荷重段階・FOS探索増分・収束許容値は原Pruska PDFに明記なし。RS2再現資料は重力載荷とSSR convergence graphを示すが、実装固有。",
+      "reference_fos": {
+        "fem_m_c": {
+          "ZSoil": 1.21,
+          "Plaxis": 1.22,
+          "GEO_FEM": 1.31,
+          "RS2_Slide2": 1.22
+        },
+        "lem": {
+          "Sarma": 1.3,
+          "Bishop": 1.22,
+          "Petterson": 1.18
+        }
+      },
+      "failure_criterion": "ひずみ/変位場の局所化が滑り面を示す（Pruska PDF p.3, Fig.3-5）。RS2はSSR convergence graph（RS2 PDF p.158）を提示。",
+      "flow_rule": "psi=0度は明記。associated/non-associatedの明示はなく、psi=0を用いた結果として扱う。",
+      "reproducibility": "材料値と概略形状が揃い、最も再現可能なケース。完全再現にはFig.2からの座標化、拘束、K0、メッシュ、SSR制御の補完が必要。",
+      "comparison_limits": "原著は初期応力sigma_v=gamma H、sigma_h=K0 gamma Hを記載するがK0と生成手順は不明。今回のgravity turn-onと厳密に同じとは言えない。DAVIS比較は等価関連モデルへの置換を含む。"
+    }
+  ],
+  "accessed": "2026-10-09",
+  "elastic_source": {
+    "primary_url": "https://docs.itascacg.com/itasca900/common/models/elastic/doc/modelelastic.html",
+    "reference_test": "https://docs.itascacg.com/itasca900/flac3d/zone/test3d/ConstitutiveModels/SingleZoneVonMises/singlezonevonmises.html",
+    "scope": "Independent plane-strain elastic adaptations from Hooke law; not a reproduction of the Von-Mises plastic test"
+  }
+}

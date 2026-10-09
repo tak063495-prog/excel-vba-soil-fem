@@ -1,0 +1,159 @@
+﻿{
+    "checks":  [
+                   {
+                       "ok":  true,
+                       "error":  "",
+                       "case":  "confined_combined",
+                       "elements":  8,
+                       "mode":  "Initial"
+                   },
+                   {
+                       "ok":  true,
+                       "error":  "",
+                       "case":  "confined_combined",
+                       "elements":  8,
+                       "mode":  "Result"
+                   },
+                   {
+                       "ok":  true,
+                       "error":  "",
+                       "case":  "confined_gravity",
+                       "elements":  8,
+                       "mode":  "Initial"
+                   },
+                   {
+                       "ok":  true,
+                       "error":  "",
+                       "case":  "confined_gravity",
+                       "elements":  8,
+                       "mode":  "Result"
+                   },
+                   {
+                       "ok":  true,
+                       "error":  "",
+                       "case":  "confined_pressure",
+                       "elements":  8,
+                       "mode":  "Initial"
+                   },
+                   {
+                       "ok":  true,
+                       "error":  "",
+                       "case":  "confined_pressure",
+                       "elements":  8,
+                       "mode":  "Result"
+                   },
+                   {
+                       "ok":  true,
+                       "error":  "",
+                       "case":  "griffiths_1999_coarse",
+                       "elements":  200,
+                       "mode":  "Initial"
+                   },
+                   {
+                       "ok":  true,
+                       "error":  "",
+                       "case":  "griffiths_1999_coarse",
+                       "elements":  200,
+                       "mode":  "Result"
+                   },
+                   {
+                       "ok":  true,
+                       "error":  "",
+                       "case":  "griffiths_1999_coarse_davis",
+                       "elements":  200,
+                       "mode":  "Initial"
+                   },
+                   {
+                       "ok":  true,
+                       "error":  "",
+                       "case":  "griffiths_1999_coarse_davis",
+                       "elements":  200,
+                       "mode":  "Result"
+                   },
+                   {
+                       "ok":  true,
+                       "error":  "",
+                       "case":  "griffiths_1999_fine_davis",
+                       "elements":  450,
+                       "mode":  "Initial"
+                   },
+                   {
+                       "ok":  true,
+                       "error":  "",
+                       "case":  "griffiths_1999_fine_davis",
+                       "elements":  450,
+                       "mode":  "Result"
+                   },
+                   {
+                       "ok":  true,
+                       "error":  "",
+                       "case":  "pruska_h10.5_phi10_davis",
+                       "elements":  240,
+                       "mode":  "Initial"
+                   },
+                   {
+                       "ok":  true,
+                       "error":  "",
+                       "case":  "pruska_h10.5_phi10_davis",
+                       "elements":  240,
+                       "mode":  "Result"
+                   },
+                   {
+                       "ok":  true,
+                       "error":  "",
+                       "case":  "pruska_h7_phi10_davis",
+                       "elements":  240,
+                       "mode":  "Initial"
+                   },
+                   {
+                       "ok":  true,
+                       "error":  "",
+                       "case":  "pruska_h7_phi10_davis",
+                       "elements":  240,
+                       "mode":  "Result"
+                   },
+                   {
+                       "ok":  true,
+                       "error":  "",
+                       "case":  "pruska_h7_phi20_davis",
+                       "elements":  240,
+                       "mode":  "Initial"
+                   },
+                   {
+                       "ok":  true,
+                       "error":  "",
+                       "case":  "pruska_h7_phi20_davis",
+                       "elements":  240,
+                       "mode":  "Result"
+                   },
+                   {
+                       "ok":  true,
+                       "error":  "",
+                       "case":  "simple_shear",
+                       "elements":  8,
+                       "mode":  "Initial"
+                   },
+                   {
+                       "ok":  true,
+                       "error":  "",
+                       "case":  "simple_shear",
+                       "elements":  8,
+                       "mode":  "Result"
+                   },
+                   {
+                       "ok":  true,
+                       "error":  "",
+                       "case":  "unconfined_pressure",
+                       "elements":  8,
+                       "mode":  "Initial"
+                   },
+                   {
+                       "ok":  true,
+                       "error":  "",
+                       "case":  "unconfined_pressure",
+                       "elements":  8,
+                       "mode":  "Result"
+                   }
+               ],
+    "ok":  true
+}
