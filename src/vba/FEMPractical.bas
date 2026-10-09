@@ -1,11 +1,11 @@
 ﻿Option Explicit
-Public Const FEM_PRACTICAL_STAMP As String = "20261009_PRACTICAL_03"
+Public Const FEM_PRACTICAL_STAMP As String = "20261009_PRACTICAL_04"
 
 Public Sub FEMPracticalAfterLayout()
   Dim ws As Worksheet, shp As shape, target As range
   Set ws = ThisWorkbook.Worksheets("操作パネル")
   ws.range("B35:H35").Merge
-  ws.range("B35").value2 = "実務動作修正版 " & FEM_PRACTICAL_STAMP & " / 実測最良 ADAPT_03"
+  ws.range("B35").value2 = "実務動作修正版 " & FEM_PRACTICAL_STAMP & " / INCONSISTENT接線・非収束判定修正"
   ws.range("B35").Font.size = 10
   ws.range("B35").Font.Color = RGB(97, 112, 128)
   On Error Resume Next
@@ -73,7 +73,7 @@ Public Sub FEMPracticalSaveJointResults()
       active = P3IsElementActive(e)
       If active Or Not skipInactive Then
         kn = Material(Elem(e).MatNo).kn
-        If kn <= 0# Then kn = Material(Elem(e).MatNo).Young
+        If kn <= 0# Then kn = Material(Elem(e).MatNo).young
         ks = Material(Elem(e).MatNo).ks
         If ks <= 0# Then ks = 0.1 * kn
         For gp = 0 To 2

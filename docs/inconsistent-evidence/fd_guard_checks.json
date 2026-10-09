@@ -1,0 +1,23 @@
+{
+  "source_sha256": "21A6815238D694853CE4435BA6F4DB7A0CDF56879B8F2EEADD981A24D56C26CD",
+  "status": "PASS",
+  "description": "Native atomic FD commit and stencil agreement with synthetic columns",
+  "records": [
+    {
+      "values": [
+        false,
+        0,
+        2
+      ],
+      "mode": 1
+    },
+    {
+      "values": [
+        true,
+        0,
+        6
+      ],
+      "mode": 2
+    }
+  ]
+}

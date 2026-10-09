@@ -30,6 +30,10 @@ Public Sub AccelResetRun()
   AccelV4 = (P6ReadSetting("ACCEL_V4_ANDERSON", 0#) = 1#)
   AccelV5 = (P6ReadSetting("ACCEL_V5_GMRES_LU", 0#) = 1#)
   AccelTrace = (P6ReadSetting("ACCEL_TRACE", 0#) = 1#)
+  If P3FlowPolicyIsInconsistent() Then
+    ' Full nonsymmetric Newton cannot use factors from the symmetric BAND path.
+    AccelV2a = False: AccelV2b = False: AccelV5 = False
+  End If
   AccelPredictBeta = P6ReadSetting("ACCEL_PREDICT_BETA", 1#)
   If AccelPredictBeta < 0# Or AccelPredictBeta > 1# Then AccelPredictBeta = 1#
   AccelPredictMaxRatio = P6ReadSetting("ACCEL_PREDICT_MAX_RATIO", 1.5)

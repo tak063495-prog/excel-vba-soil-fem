@@ -1,0 +1,401 @@
+{
+  "status": "PASS",
+  "cases": 50,
+  "checks": [
+    {
+      "name": "face_psi0_z0_r0_steps4",
+      "preferred_steps": 4,
+      "used_steps": 4,
+      "stress_gap": 3.552713678800501e-15,
+      "plastic_gap": 4.336808689942018e-18,
+      "tangent_relative_gap": 1.9017197900055084e-10
+    },
+    {
+      "name": "face_psi0_z0_r0_steps8",
+      "preferred_steps": 8,
+      "used_steps": 8,
+      "stress_gap": 3.552713678800501e-15,
+      "plastic_gap": 4.336808689942018e-18,
+      "tangent_relative_gap": 2.4627353113363746e-10
+    },
+    {
+      "name": "face_psi0_z0_r30_steps4",
+      "preferred_steps": 4,
+      "used_steps": 4,
+      "stress_gap": 3.1086244689504383e-15,
+      "plastic_gap": 4.336808689942018e-18,
+      "tangent_relative_gap": 7.079032642627029e-07
+    },
+    {
+      "name": "face_psi0_z0_r30_steps8",
+      "preferred_steps": 8,
+      "used_steps": 8,
+      "stress_gap": 3.1086244689504383e-15,
+      "plastic_gap": 4.336808689942018e-18,
+      "tangent_relative_gap": 1.4713100961348373e-06
+    },
+    {
+      "name": "face_psi0_z0_r60_steps4",
+      "preferred_steps": 4,
+      "used_steps": 4,
+      "stress_gap": 7.105427357601002e-15,
+      "plastic_gap": 1.2034644114589099e-17,
+      "tangent_relative_gap": 7.07889725367472e-07
+    },
+    {
+      "name": "face_psi0_z0_r60_steps8",
+      "preferred_steps": 8,
+      "used_steps": 8,
+      "stress_gap": 7.105427357601002e-15,
+      "plastic_gap": 1.2034644114589099e-17,
+      "tangent_relative_gap": 1.4714089837857612e-06
+    },
+    {
+      "name": "edge12_psi0_z0_r0_steps4",
+      "preferred_steps": 4,
+      "used_steps": 4,
+      "stress_gap": 3.1086244689504383e-15,
+      "plastic_gap": 4.336808689942018e-18,
+      "tangent_relative_gap": 2.349234842653903e-10
+    },
+    {
+      "name": "edge12_psi0_z0_r0_steps8",
+      "preferred_steps": 8,
+      "used_steps": 8,
+      "stress_gap": 3.1086244689504383e-15,
+      "plastic_gap": 4.336808689942018e-18,
+      "tangent_relative_gap": 3.34964739339913e-10
+    },
+    {
+      "name": "edge12_psi0_z0_r30_steps4",
+      "preferred_steps": 4,
+      "used_steps": 4,
+      "stress_gap": 4.440892098500626e-15,
+      "plastic_gap": 4.7704895589362195e-18,
+      "tangent_relative_gap": 3.711522276295676e-10
+    },
+    {
+      "name": "edge12_psi0_z0_r30_steps8",
+      "preferred_steps": 8,
+      "used_steps": 8,
+      "stress_gap": 4.440892098500626e-15,
+      "plastic_gap": 4.7704895589362195e-18,
+      "tangent_relative_gap": 5.026178074424284e-10
+    },
+    {
+      "name": "edge12_psi0_z0_r60_steps4",
+      "preferred_steps": 4,
+      "used_steps": 4,
+      "stress_gap": 3.9968028886505635e-15,
+      "plastic_gap": 5.637851296924623e-18,
+      "tangent_relative_gap": 2.4037540287766797e-10
+    },
+    {
+      "name": "edge12_psi0_z0_r60_steps8",
+      "preferred_steps": 8,
+      "used_steps": 8,
+      "stress_gap": 3.9968028886505635e-15,
+      "plastic_gap": 5.637851296924623e-18,
+      "tangent_relative_gap": 4.180044293615707e-10
+    },
+    {
+      "name": "edge23_psi0_z0_r0_steps4",
+      "preferred_steps": 4,
+      "used_steps": 4,
+      "stress_gap": 5.329070518200751e-15,
+      "plastic_gap": 6.7220534694101275e-18,
+      "tangent_relative_gap": 1.6074359044529143e-10
+    },
+    {
+      "name": "edge23_psi0_z0_r0_steps8",
+      "preferred_steps": 8,
+      "used_steps": 8,
+      "stress_gap": 5.329070518200751e-15,
+      "plastic_gap": 6.7220534694101275e-18,
+      "tangent_relative_gap": 2.1698822681545333e-10
+    },
+    {
+      "name": "edge23_psi0_z0_r30_steps4",
+      "preferred_steps": 4,
+      "used_steps": 4,
+      "stress_gap": 2.6645352591003757e-15,
+      "plastic_gap": 4.336808689942018e-18,
+      "tangent_relative_gap": 1.7803078738723207e-06
+    },
+    {
+      "name": "edge23_psi0_z0_r30_steps8",
+      "preferred_steps": 8,
+      "used_steps": 8,
+      "stress_gap": 2.6645352591003757e-15,
+      "plastic_gap": 4.336808689942018e-18,
+      "tangent_relative_gap": 3.718944804271977e-06
+    },
+    {
+      "name": "edge23_psi0_z0_r60_steps4",
+      "preferred_steps": 4,
+      "used_steps": 4,
+      "stress_gap": 1.4210854715202004e-14,
+      "plastic_gap": 1.8865117801247777e-17,
+      "tangent_relative_gap": 1.7803580269658737e-06
+    },
+    {
+      "name": "edge23_psi0_z0_r60_steps8",
+      "preferred_steps": 8,
+      "used_steps": 8,
+      "stress_gap": 1.4210854715202004e-14,
+      "plastic_gap": 1.8865117801247777e-17,
+      "tangent_relative_gap": 3.7189812844836755e-06
+    },
+    {
+      "name": "elastic_r0_steps4",
+      "preferred_steps": 4,
+      "used_steps": 1,
+      "stress_gap": 0.0,
+      "plastic_gap": 0.0,
+      "tangent_relative_gap": 4.0465829853683846e-13
+    },
+    {
+      "name": "elastic_r0_steps8",
+      "preferred_steps": 8,
+      "used_steps": 1,
+      "stress_gap": 2.7755575615628914e-17,
+      "plastic_gap": 0.0,
+      "tangent_relative_gap": 4.3900452765741873e-13
+    },
+    {
+      "name": "elastic_r30_steps4",
+      "preferred_steps": 4,
+      "used_steps": 1,
+      "stress_gap": 6.938893903907228e-18,
+      "plastic_gap": 0.0,
+      "tangent_relative_gap": 5.316952418061391e-13
+    },
+    {
+      "name": "elastic_r30_steps8",
+      "preferred_steps": 8,
+      "used_steps": 1,
+      "stress_gap": 6.938893903907228e-18,
+      "plastic_gap": 0.0,
+      "tangent_relative_gap": 1.3824411278886706e-12
+    },
+    {
+      "name": "elastic_r60_steps4",
+      "preferred_steps": 4,
+      "used_steps": 1,
+      "stress_gap": 1.3877787807814457e-17,
+      "plastic_gap": 0.0,
+      "tangent_relative_gap": 4.0948710951787006e-13
+    },
+    {
+      "name": "elastic_r60_steps8",
+      "preferred_steps": 8,
+      "used_steps": 1,
+      "stress_gap": 1.3877787807814457e-17,
+      "plastic_gap": 0.0,
+      "tangent_relative_gap": 1.4412628617485031e-13
+    },
+    {
+      "name": "mixed_r0_steps4",
+      "preferred_steps": 4,
+      "used_steps": 4,
+      "stress_gap": 8.881784197001252e-16,
+      "plastic_gap": 8.673617379884035e-19,
+      "tangent_relative_gap": 9.586134203506653e-11
+    },
+    {
+      "name": "mixed_r0_steps8",
+      "preferred_steps": 8,
+      "used_steps": 8,
+      "stress_gap": 4.440892098500626e-15,
+      "plastic_gap": 2.6020852139652106e-18,
+      "tangent_relative_gap": 1.021957665972648e-10
+    },
+    {
+      "name": "mixed_r30_steps4",
+      "preferred_steps": 4,
+      "used_steps": 4,
+      "stress_gap": 6.661338147750939e-16,
+      "plastic_gap": 1.734723475976807e-18,
+      "tangent_relative_gap": 8.462729096439847e-11
+    },
+    {
+      "name": "mixed_r30_steps8",
+      "preferred_steps": 8,
+      "used_steps": 8,
+      "stress_gap": 7.771561172376096e-16,
+      "plastic_gap": 6.938893903907228e-18,
+      "tangent_relative_gap": 5.281576087989562e-11
+    },
+    {
+      "name": "mixed_r60_steps4",
+      "preferred_steps": 4,
+      "used_steps": 4,
+      "stress_gap": 7.327471962526033e-15,
+      "plastic_gap": 1.0408340855860843e-17,
+      "tangent_relative_gap": 3.695005317310034e-11
+    },
+    {
+      "name": "mixed_r60_steps8",
+      "preferred_steps": 8,
+      "used_steps": 8,
+      "stress_gap": 9.103828801926284e-15,
+      "plastic_gap": 1.3877787807814457e-17,
+      "tangent_relative_gap": 6.238300568952875e-11
+    },
+    {
+      "name": "shear_r0_steps4",
+      "preferred_steps": 4,
+      "used_steps": 4,
+      "stress_gap": 4.440892098500626e-16,
+      "plastic_gap": 3.469446951953614e-18,
+      "tangent_relative_gap": 4.2238769893038337e-11
+    },
+    {
+      "name": "shear_r0_steps8",
+      "preferred_steps": 8,
+      "used_steps": 8,
+      "stress_gap": 3.3306690738754696e-16,
+      "plastic_gap": 2.526812202193574e-19,
+      "tangent_relative_gap": 3.778121347141017e-11
+    },
+    {
+      "name": "shear_r30_steps4",
+      "preferred_steps": 4,
+      "used_steps": 4,
+      "stress_gap": 3.941291737419306e-15,
+      "plastic_gap": 8.673617379884035e-18,
+      "tangent_relative_gap": 3.4342615791634754e-11
+    },
+    {
+      "name": "shear_r30_steps8",
+      "preferred_steps": 8,
+      "used_steps": 8,
+      "stress_gap": 4.496403249731884e-15,
+      "plastic_gap": 1.0408340855860843e-17,
+      "tangent_relative_gap": 8.068088790434334e-11
+    },
+    {
+      "name": "shear_r60_steps4",
+      "preferred_steps": 4,
+      "used_steps": 4,
+      "stress_gap": 3.6637359812630166e-15,
+      "plastic_gap": 8.673617379884035e-18,
+      "tangent_relative_gap": 2.4688399132499258e-11
+    },
+    {
+      "name": "shear_r60_steps8",
+      "preferred_steps": 8,
+      "used_steps": 8,
+      "stress_gap": 4.496403249731884e-15,
+      "plastic_gap": 1.214306433183765e-17,
+      "tangent_relative_gap": 3.600699788453898e-11
+    },
+    {
+      "name": "compression_r0_steps4",
+      "preferred_steps": 4,
+      "used_steps": 1,
+      "stress_gap": 0.0,
+      "plastic_gap": 0.0,
+      "tangent_relative_gap": 2.4922395533691538e-11
+    },
+    {
+      "name": "compression_r0_steps8",
+      "preferred_steps": 8,
+      "used_steps": 1,
+      "stress_gap": 1.7763568394002505e-15,
+      "plastic_gap": 0.0,
+      "tangent_relative_gap": 1.5534931642965904e-10
+    },
+    {
+      "name": "compression_r30_steps4",
+      "preferred_steps": 4,
+      "used_steps": 1,
+      "stress_gap": 4.440892098500626e-16,
+      "plastic_gap": 0.0,
+      "tangent_relative_gap": 2.5190971611603736e-11
+    },
+    {
+      "name": "compression_r30_steps8",
+      "preferred_steps": 8,
+      "used_steps": 1,
+      "stress_gap": 1.7763568394002505e-15,
+      "plastic_gap": 0.0,
+      "tangent_relative_gap": 8.182835876300786e-11
+    },
+    {
+      "name": "compression_r60_steps4",
+      "preferred_steps": 4,
+      "used_steps": 1,
+      "stress_gap": 1.7763568394002505e-15,
+      "plastic_gap": 0.0,
+      "tangent_relative_gap": 4.670484066251741e-11
+    },
+    {
+      "name": "compression_r60_steps8",
+      "preferred_steps": 8,
+      "used_steps": 1,
+      "stress_gap": 1.7763568394002505e-15,
+      "plastic_gap": 0.0,
+      "tangent_relative_gap": 9.736551970232235e-11
+    },
+    {
+      "name": "apex_domain_r0_steps4",
+      "preferred_steps": 4,
+      "used_steps": 4,
+      "stress_gap": 2.6645352591003757e-15,
+      "plastic_gap": 9.325873406851316e-19,
+      "tangent_relative_gap": 2.6985732305454087e-11
+    },
+    {
+      "name": "apex_domain_r0_steps8",
+      "preferred_steps": 8,
+      "used_steps": 8,
+      "stress_gap": 2.6645352591003757e-15,
+      "plastic_gap": 9.325873406851316e-19,
+      "tangent_relative_gap": 3.1029752961418895e-11
+    },
+    {
+      "name": "apex_domain_r30_steps4",
+      "preferred_steps": 4,
+      "used_steps": 4,
+      "stress_gap": 2.220446049250313e-15,
+      "plastic_gap": 3.469446951953614e-18,
+      "tangent_relative_gap": 1.0962817719237564e-07
+    },
+    {
+      "name": "apex_domain_r30_steps8",
+      "preferred_steps": 8,
+      "used_steps": 8,
+      "stress_gap": 2.220446049250313e-15,
+      "plastic_gap": 3.469446951953614e-18,
+      "tangent_relative_gap": 5.878128024341965e-08
+    },
+    {
+      "name": "apex_domain_r60_steps4",
+      "preferred_steps": 4,
+      "used_steps": 4,
+      "stress_gap": 2.6645352591003757e-15,
+      "plastic_gap": 1.734723475976807e-18,
+      "tangent_relative_gap": 1.0963629388023425e-07
+    },
+    {
+      "name": "apex_domain_r60_steps8",
+      "preferred_steps": 8,
+      "used_steps": 8,
+      "stress_gap": 2.6645352591003757e-15,
+      "plastic_gap": 1.734723475976807e-18,
+      "tangent_relative_gap": 5.8787338473037736e-08
+    },
+    {
+      "name": "confinement_resolution_rejected_steps4",
+      "expected": "TANGENT_PRECISION_REJECTION",
+      "accepted": false
+    },
+    {
+      "name": "confinement_resolution_rejected_steps8",
+      "expected": "TANGENT_PRECISION_REJECTION",
+      "accepted": false
+    }
+  ],
+  "source_sha256": "21A6815238D694853CE4435BA6F4DB7A0CDF56879B8F2EEADD981A24D56C26CD"
+}

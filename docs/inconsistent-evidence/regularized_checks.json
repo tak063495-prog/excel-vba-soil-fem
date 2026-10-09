@@ -1,0 +1,175 @@
+{
+  "source_sha256": "21A6815238D694853CE4435BA6F4DB7A0CDF56879B8F2EEADD981A24D56C26CD",
+  "status": "PASS",
+  "count": 28,
+  "results": [
+    {
+      "relative_gap": 0,
+      "ok": true,
+      "case": "nonsymmetric",
+      "damping": 1e-08
+    },
+    {
+      "relative_gap": 0,
+      "ok": true,
+      "case": "nonsymmetric",
+      "damping": 0.0001
+    },
+    {
+      "relative_gap": 0,
+      "ok": true,
+      "case": "nonsymmetric",
+      "damping": 0.1
+    },
+    {
+      "relative_gap": 0,
+      "ok": true,
+      "case": "nonsymmetric",
+      "damping": 1.0
+    },
+    {
+      "relative_gap": 0,
+      "ok": true,
+      "case": "nonsymmetric",
+      "damping": 100.0
+    },
+    {
+      "relative_gap": 6.7340681237866906e-09,
+      "ok": true,
+      "case": "singular",
+      "damping": 1e-08
+    },
+    {
+      "relative_gap": 2.1779577590026857e-12,
+      "ok": true,
+      "case": "singular",
+      "damping": 0.0001
+    },
+    {
+      "relative_gap": 0,
+      "ok": true,
+      "case": "singular",
+      "damping": 0.1
+    },
+    {
+      "relative_gap": 0,
+      "ok": true,
+      "case": "singular",
+      "damping": 1.0
+    },
+    {
+      "relative_gap": 0,
+      "ok": true,
+      "case": "singular",
+      "damping": 100.0
+    },
+    {
+      "relative_gap": 8.852554418677666e-17,
+      "ok": true,
+      "case": "scaled",
+      "damping": 1e-08
+    },
+    {
+      "relative_gap": 1.4732923406508111e-16,
+      "ok": true,
+      "case": "scaled",
+      "damping": 0.0001
+    },
+    {
+      "relative_gap": 6.005472846151531e-17,
+      "ok": true,
+      "case": "scaled",
+      "damping": 0.1
+    },
+    {
+      "relative_gap": 0,
+      "ok": true,
+      "case": "scaled",
+      "damping": 1.0
+    },
+    {
+      "relative_gap": 3.64071036133323e-17,
+      "ok": true,
+      "case": "scaled",
+      "damping": 100.0
+    },
+    {
+      "relative_gap": 0,
+      "ok": true,
+      "case": "constrained",
+      "damping": 1e-08
+    },
+    {
+      "relative_gap": 0,
+      "ok": true,
+      "case": "constrained",
+      "damping": 0.0001
+    },
+    {
+      "relative_gap": 0,
+      "ok": true,
+      "case": "constrained",
+      "damping": 0.1
+    },
+    {
+      "relative_gap": 0,
+      "ok": true,
+      "case": "constrained",
+      "damping": 1.0
+    },
+    {
+      "relative_gap": 0,
+      "ok": true,
+      "case": "constrained",
+      "damping": 100.0
+    },
+    {
+      "relative_gap": 0,
+      "ok": true,
+      "case": "band_fill",
+      "damping": 1e-08
+    },
+    {
+      "relative_gap": 0,
+      "ok": true,
+      "case": "band_fill",
+      "damping": 0.0001
+    },
+    {
+      "relative_gap": 0,
+      "ok": true,
+      "case": "band_fill",
+      "damping": 0.1
+    },
+    {
+      "relative_gap": 0,
+      "ok": true,
+      "case": "band_fill",
+      "damping": 1.0
+    },
+    {
+      "relative_gap": 0,
+      "ok": true,
+      "case": "band_fill",
+      "damping": 100.0
+    },
+    {
+      "relative_gap": 0,
+      "ok": false,
+      "case": "rejected",
+      "damping": 0
+    },
+    {
+      "relative_gap": 0,
+      "ok": false,
+      "case": "rejected",
+      "damping": -1
+    },
+    {
+      "relative_gap": 0,
+      "ok": false,
+      "case": "rejected",
+      "damping": 0.1
+    }
+  ]
+}

@@ -13,7 +13,7 @@ Public Function LiteratureBracketRoundoff() As Variant
   lower = NextFsByBracket(lower, upper, tol)
   upper = NextFsByBracket(lower, upper, tol)
   mid = NextFsByBracket(lower, upper, tol)
-  LiteratureBracketRoundoff = Array(lower, upper, upper - lower, tol, (upper - lower) > tol, mid)
+  LiteratureBracketRoundoff = Array(lower, upper, upper - lower, tol, mid > lower, mid, (upper - lower) > tol)
 End Function
 '@
 $xlTask=New-Object -ComObject Excel.Application
@@ -26,7 +26,8 @@ try{
   $engineTask=$wbTask.VBProject.VBComponents.Item('FEMEngine').CodeModule
   $engineTask.AddFromString($codeTask)
   $valuesTask=@($xlTask.Run("'"+$wbTask.Name+"'!LiteratureBracketRoundoff"))
-  @{value_names=@('pass','fail','width','tolerance','extra_trial','next_fs');values=$valuesTask;source_sha256=(Get-FileHash -LiteralPath $SourceWorkbook -Algorithm SHA256).Hash}|ConvertTo-Json|Set-Content -LiteralPath (Join-Path $OutputRoot 'srm_roundoff.json') -Encoding UTF8
+  if([bool]$valuesTask[4]){throw 'Roundoff caused an unnecessary extra trial'}
+  @{value_names=@('pass','fail','width','tolerance','extra_trial','next_fs','strict_width_exceeds_tolerance');values=$valuesTask;source_sha256=(Get-FileHash -LiteralPath $SourceWorkbook -Algorithm SHA256).Hash}|ConvertTo-Json|Set-Content -LiteralPath (Join-Path $OutputRoot 'srm_roundoff.json') -Encoding UTF8
 }finally{
   if($null -ne $wbTask){$wbTask.Close($false);[void][Runtime.InteropServices.Marshal]::FinalReleaseComObject($wbTask)}
   $xlTask.Quit();[void][Runtime.InteropServices.Marshal]::FinalReleaseComObject($xlTask)

@@ -11,6 +11,7 @@
 )
 $ErrorActionPreference='Stop'
 $sourceTask=(Resolve-Path -LiteralPath $SourceWorkbook).Path
+$sourceHashTask=(Get-FileHash -LiteralPath $sourceTask -Algorithm SHA256).Hash
 $outputTask=[IO.Path]::GetFullPath($OutputRoot)
 New-Item -ItemType Directory -Path $outputTask,(Join-Path $outputTask 'cases'),(Join-Path $outputTask 'results') -Force|Out-Null
 $fixturesTask=Get-Content (Join-Path $PSScriptRoot 'fixtures.json') -Raw -Encoding UTF8|ConvertFrom-Json
@@ -29,6 +30,9 @@ Public Function LiteratureBuild() As String
 End Function
 Public Function LiteratureMetrics() As Variant
   LiteratureMetrics = Array(AnalysisOK, RelativeResidualFree, P3FosPass, P3FosFail, P3FosMid, P3FosWidth, P3FosBracket, FSS, P3SrmTrialCount, P3SuccessfulIncrementCount, P6ReactionSumX, P6ReactionSumY, P6FactorizationCount, P6FactorizationReuseCount, P3ActivePlasticPointCount, NumberOfNode, NumberOfElement, BandWidth)
+End Function
+Public Function LiteratureFailureState() As Variant
+  LiteratureFailureState = Array(P3FosInterpretation, P3SrmTrialClassification, P3FailureKind, P3FailureLambda, P3FailureResidual, P3FailureLinearResidual, P3FailureCorrection)
 End Function
 Public Function LiteratureDisplacements() As Variant
   Dim result() As Double, i As Long, k As Long
@@ -118,7 +122,9 @@ foreach($caseTask in $fixturesTask.fixtures){
       $metricsTask=@($xlTask.Run($prefixTask+'LiteratureMetrics'))
       $dispTask=@($xlTask.Run($prefixTask+'LiteratureDisplacements'))
       $stressTask=@($xlTask.Run($prefixTask+'LiteratureStresses'))
-      $resultTask=[ordered]@{case=$idTask;fixture=$caseTask.name;build=$buildTask;source_sha256=(Get-FileHash -LiteralPath $sourceTask -Algorithm SHA256).Hash;status=$statusTask;flow_policy=$policyTask;elapsed_seconds=$timerTask.Elapsed.TotalSeconds;metric_names=@('analysis_ok','relative_residual','fos_pass','fos_fail','fos_mid','fos_width','fos_bracket','fss','srm_trials','accepted_increments','reaction_x','reaction_y','factorizations','reused_factors','plastic_points','nodes','elements','bandwidth');metrics=$metricsTask;displacements_flat=$dispTask;stresses_flat=$stressTask;reference=$caseTask.reference}
+      $failureTask=@($xlTask.Run($prefixTask+'LiteratureFailureState'))
+      if((Get-FileHash -LiteralPath $sourceTask -Algorithm SHA256).Hash -ne $sourceHashTask){throw 'Source workbook changed during verification'}
+      $resultTask=[ordered]@{fixed_fs=$FixedFs;failure_names=@('fos_interpretation','trial_class','failure_kind','failed_lambda','failed_residual','failed_linear_residual','failed_correction');failure_values=$failureTask;case=$idTask;fixture=$caseTask.name;build=$buildTask;source_sha256=$sourceHashTask;status=$statusTask;flow_policy=$policyTask;elapsed_seconds=$timerTask.Elapsed.TotalSeconds;metric_names=@('analysis_ok','relative_residual','fos_pass','fos_fail','fos_mid','fos_width','fos_bracket','fss','srm_trials','accepted_increments','reaction_x','reaction_y','factorizations','reused_factors','plastic_points','nodes','elements','bandwidth');metrics=$metricsTask;displacements_flat=$dispTask;stresses_flat=$stressTask;reference=$caseTask.reference}
       $resultTask|ConvertTo-Json -Depth 14|Set-Content $resultPathTask -Encoding UTF8
       Write-Host ('DONE '+$idTask+' '+$statusTask+' Fs=['+$metricsTask[2]+','+$metricsTask[3]+'] time='+$timerTask.Elapsed.TotalSeconds)
       $wbTask.VBProject.VBComponents.Remove($tmTask)

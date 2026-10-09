@@ -2,7 +2,7 @@
 
 [READMEへ](../README.md) · [入力仕様](MODEL_INPUTS.md) · [設定一覧](SETTINGS_REFERENCE.md) · [結果・ログ・対処法](RESULTS_AND_TROUBLESHOOTING.md)
 
-対象は `2DSoilFEM_20261008_practical.xlsm`、計算部 `20261009_BEST_03_R1` です。画面名・セル位置はこの配布版に合わせています。
+対象は `2DSoilFEM_20261008_practical.xlsm`、計算部 `20261009_INCO_14` です。画面名・セル位置はこの配布版に合わせています。
 
 ## 目次
 

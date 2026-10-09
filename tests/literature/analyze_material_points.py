@@ -41,7 +41,7 @@ for r in d['records']:
     rows.append(result)
 independent_ok=all(r['ok'] for r in rows)
 self_failures=[list(v) for v in zip(*[iter(d['self_test_table_flat'])]*12) if v[8]=='FAIL']
-report=dict(ok=independent_ok and d['built_in_material_self_test'] and d['built_in_edge_self_test'],ok_scope='Independent stress/volume checks and built-in self-tests only; tangent probes are diagnostics, not an acceptance test.',independent_ok=independent_ok,records=rows,built_in_material_self_test=d['built_in_material_self_test'],built_in_edge_self_test=d['built_in_edge_self_test'],selftest_inputs_trial_repair=d.get('selftest_inputs_trial_repair',False),built_in_failure_rows=self_failures)
+report=dict(source_sha256=d.get('source_sha256'),ok=independent_ok and d['built_in_material_self_test'] and d['built_in_edge_self_test'],ok_scope='Independent stress/volume checks and built-in self-tests only; tangent probes are diagnostics, not an acceptance test.',independent_ok=independent_ok,records=rows,built_in_material_self_test=d['built_in_material_self_test'],built_in_edge_self_test=d['built_in_edge_self_test'],selftest_inputs_trial_repair=d.get('selftest_inputs_trial_repair',False),built_in_failure_rows=self_failures)
 (args.output/'material_point_checks.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 for r in rows:print(r['case'],r['ok'],r['stress_max_abs_error'])
 if not report['ok']:raise SystemExit(1)

@@ -1,0 +1,96 @@
+{
+  "source_sha256": "21A6815238D694853CE4435BA6F4DB7A0CDF56879B8F2EEADD981A24D56C26CD",
+  "status": "PASS",
+  "records": [
+    {
+      "fault": 1,
+      "values": [
+        "NONCONVERGED",
+        "UNDETERMINED",
+        "NUMERICAL_FAILURE",
+        "LINEAR_SOLVER",
+        1,
+        0,
+        false,
+        0,
+        2
+      ],
+      "fixed_fs": false
+    },
+    {
+      "fault": 2,
+      "values": [
+        "GLOBAL_SINGULAR",
+        "UNDETERMINED",
+        "NUMERICAL_FAILURE",
+        "LINEAR_SOLVER",
+        1,
+        0,
+        false,
+        0,
+        2
+      ],
+      "fixed_fs": false
+    },
+    {
+      "fault": 3,
+      "values": [
+        "CAPACITY_ERROR",
+        "UNDETERMINED",
+        "NUMERICAL_FAILURE",
+        "LINEAR_SOLVER",
+        1,
+        0,
+        false,
+        0,
+        2
+      ],
+      "fixed_fs": false
+    },
+    {
+      "fault": 1,
+      "values": [
+        "NONCONVERGED",
+        "UNDETERMINED",
+        "NUMERICAL_FAILURE",
+        "LINEAR_SOLVER",
+        0,
+        0,
+        false,
+        0,
+        1
+      ],
+      "fixed_fs": true
+    },
+    {
+      "fault": 2,
+      "values": [
+        "GLOBAL_SINGULAR",
+        "UNDETERMINED",
+        "NUMERICAL_FAILURE",
+        "LINEAR_SOLVER",
+        0,
+        0,
+        false,
+        0,
+        1
+      ],
+      "fixed_fs": true
+    },
+    {
+      "fault": 3,
+      "values": [
+        "CAPACITY_ERROR",
+        "UNDETERMINED",
+        "NUMERICAL_FAILURE",
+        "LINEAR_SOLVER",
+        0,
+        0,
+        false,
+        0,
+        1
+      ],
+      "fixed_fs": true
+    }
+  ]
+}

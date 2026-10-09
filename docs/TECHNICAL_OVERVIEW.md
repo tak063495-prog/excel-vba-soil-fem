@@ -65,7 +65,7 @@ SRMでは対象材料の強度を低減し、各Fsで先行ステージをREAPPL
 
 ## 全応力と休眠コードの範囲
 
-本番の `P6SelectSolverMode` はBAND固定で `P6UseCSR=False` とします。選択肢の `BAND_LDLT_EXPERIMENTAL` も影の比較で、本番補正はLUです。ソースに残るCSRの `MIXED_UP` は機械的非圧縮性の補助未知量を扱う別経路であり、物理間隙水圧と同一ではありません。本番ではこのCSR経路も起動しません。
+DAVISは従来の対称BANDを使い、`BAND_LDLT_EXPERIMENTAL` は影の比較です。INCONSISTENTは変位未知量のみのCSRに現在の非対称接線を保持し、部分pivot付き非対称帯LUと右前処理GMRESを使います。ソースに残るCSRの `MIXED_UP` は機械的非圧縮性の補助未知量を扱う別経路であり、物理間隙水圧と同一ではありません。修正版でも補助圧力のMIXED_UPは起動せず、物理的な間隙水圧は導入しません。[接線・全体反復の修正](INCONSISTENT_REPAIR.md) を参照してください。
 
 Biot圧密の `CONSOL_ENABLE` は通常設定にありません。以前は設定再生成時にこのキーを除去していましたが、レビュー修正版では解析入口で非0を拒否し、Biot入口にも同じ防止処理を置いています。休眠コードのH行列・圧力勾配・施工領域・u/pの試行状態は、圧密やCSR混合を将来実装する際の検証課題です。[Issue #1の判定と再現](ISSUE_1_REVIEW.md) を参照してください。
 

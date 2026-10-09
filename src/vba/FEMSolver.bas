@@ -268,6 +268,28 @@ Private Sub P6ValidateRCMPermutation(ByRef oldToNew() As Long, ByRef newToOld() 
   Next oldNode
 End Sub
 
+Private Sub P6InvalidateCSROrdering()
+  ' CSR positions use global DOF numbers; element-local elastic caches do not.
+  P6InvalidateNumericTangent
+  P6InvalidateCSRConstraintCache
+  P6CSRPatternReady = False: P6CSRPatternSignature = vbNullString
+  P6CSRMaterialGeneration = -1: P6CSRDeviatoricReady = False
+  Erase P6CSRRowPtr: Erase P6CSRColumnIndex: Erase P6CSRDiagonalPosition
+  Erase P6CSRElementPosition
+  Erase P6CSRBoundaryZeroPosition: Erase P6CSRBoundaryDiagonalPosition
+  Erase P6CSRBoundaryRHSPosition: Erase P6CSRBoundaryRHSRow: Erase P6CSRBoundaryRHSColumn
+  P6CSRBoundaryZeroCount = 0: P6CSRBoundaryDiagonalCount = 0: P6CSRBoundaryRHSCount = 0
+  P6CSRScatterCount = 0: P6CSRScatterElementCount = -1
+  P6CSRScatterTangentGeneration = -1: P6CSRScatterMaterialGeneration = -1
+  P6CSRScatterPatternSignature = vbNullString
+  Erase P6CSRScatterStart: Erase P6CSRScatterLocalRow: Erase P6CSRScatterLocalColumn
+  Erase P6CSRScatterPosition: Erase P6CSRScatterValueIndex
+  P6CSRNNZ = 0: P6CSRValueCapacity = 0: P6CSRStorageBytes = 0#
+  Erase P6CSRDiagonalInverse: Erase P6CSRILUValues
+  Erase P6CSROriginalValues: Erase P6CSRValues
+  MatrixFactored = False
+End Sub
+
 Private Sub P6ApplyRCMOrdering(ByRef oldToNew() As Long, ByRef newToOld() As Long)
   Dim vectorSnapshot() As Double, conditionSnapshot() As Long
   Dim mapOldToNew() As Long, mapNewToOld() As Long
@@ -338,7 +360,7 @@ Private Sub P6ApplyRCMOrdering(ByRef oldToNew() As Long, ByRef newToOld() As Lon
     Next localDof
   Next elementId
 
-  P6InvalidateCSRConstraintCache
+  P6InvalidateCSROrdering
 
   ReDim P6RCMOldToNew(0 To NumberOfFreeNode - 1)
   ReDim P6RCMNewToOld(0 To NumberOfFreeNode - 1)
@@ -448,7 +470,7 @@ Private Sub P6SelectSolverMode()
     If P6SolverReevaluationThreshold < 1 Then P6SolverReevaluationThreshold = 2000
   End If
   isLargeProblem = (nDof >= P6SolverReevaluationThreshold)
-  If P6SolverSelectionReady And Not isLargeProblem Then
+  If P6SolverSelectionReady And Not isLargeProblem And Not P3FlowPolicyIsInconsistent() And Not P6UseCSR Then
     P6SolverEvaluationStatus = "reuse_small"
     Exit Sub
   End If
@@ -459,10 +481,15 @@ Private Sub P6SelectSolverMode()
     P6SolverEvaluationStatus = "initial_small"
   End If
 
-  ' 本番ソルバはBAND固定。CSR/Uzawa/混合はコードに残すがここでは起動しない。
+  ' Nonassociated flow retains the full nonsymmetric tangent. Other modes use BAND.
   P6SolverPolicy = "BAND"
   P6UseCSR = False
   P6SolverMode = "BAND_LU"
+  If P3FlowPolicyIsInconsistent() Then
+    P6UseCSR = True
+    P6SolverPolicy = "NONSYMMETRIC"
+    P6SolverMode = "NONSYM_BAND_LU"
+  End If
   P6MixedCoupledKrylov = False
 
   memoryLimitMB = P6ReadSetting("SOLVER_MEMORY_LIMIT_MB", 512#)
@@ -483,7 +510,22 @@ Private Sub P6SelectSolverMode()
   P6DenseStorageBytes = CDbl(nDof) * CDbl(nDof) * 8#
   P6EstimatedWorkMemoryBytes = P6BandStorageBytes * 2#
   P6MatrixStoragePolicy = "帯域格納＋分解済み帯域因子; mode=BAND_LU; solver=固定"
+  If P6UseCSR Then
+    P6MatrixStoragePolicy = "非対称帯域LU（行ピボット）＋CSR真残差照合; total-stress displacement"
+  End If
   P6SolverSelectionReady = True
+End Sub
+
+Public Sub P6InvalidateNumericTangent()
+  ' Only the assembled tangent changes; preserve geometry and initial elastic caches.
+  P6TangentGeneration = P6TangentGeneration + 1
+  If P6TangentGeneration <= 0 Then P6TangentGeneration = 1
+  P6CSRNumericGeneration = -1
+  P6CSRReady = False
+  P6CSRBoundaryApplied = False
+  P6CSRDiagonalInverseReady = False
+  P6CSRILUReady = False
+  P6FactorReady = False
 End Sub
 
 Public Function P6GetInternalFreeNode(ByVal originalNode As Long) As Long
@@ -591,32 +633,15 @@ Dim errNum As Long, errSrc As String, errDesc As String
    Else
      BandWidth = P6RCMOriginalBandwidth
    End If
-   matrixMax = 0#
-   symmetryMax = 0#
-   For k = 0 To NumberOfElement - 1
-     For i = 0 To 15
-       For j = 0 To 15
-         If Abs(Elem(k).kmat(i, j)) > matrixMax Then matrixMax = Abs(Elem(k).kmat(i, j))
-         If Abs(Elem(k).kmat(i, j) - Elem(k).kmat(j, i)) > symmetryMax Then symmetryMax = Abs(Elem(k).kmat(i, j) - Elem(k).kmat(j, i))
-       Next j
-     Next i
-   Next k
-   If matrixMax <= 1E-30 Then
-     MatrixSymmetryError = 0#
-   Else
-     MatrixSymmetryError = symmetryMax / matrixMax
-   End If
    P6MeshInvariantOriginalBandwidth = P6RCMOriginalBandwidth
    P6MeshInvariantCandidateBandwidth = P6RCMCandidateBandwidth
    P6MeshInvariantRCMApplied = P6RenumberingApplied
-   P6MeshInvariantSymmetryError = MatrixSymmetryError
    P6MeshInvariantSignature = meshCacheKey
    P6MeshInvariantReady = True
  Else
    P6RCMOriginalBandwidth = P6MeshInvariantOriginalBandwidth
    P6RCMCandidateBandwidth = P6MeshInvariantCandidateBandwidth
    P6RenumberingApplied = P6MeshInvariantRCMApplied
-   MatrixSymmetryError = P6MeshInvariantSymmetryError
    If P6MeshInvariantRCMApplied Then
      If Not P6RCMMapReady Then P6ApplyRCMOrdering P6RCMOldToNew, P6RCMNewToOld
      BandWidth = P6MeshInvariantCandidateBandwidth
@@ -628,6 +653,24 @@ Dim errNum As Long, errSrc As String, errDesc As String
      P6NodeOrderingPolicy = "原節点番号; RCM_POLICY=" & rcmPolicy
    End If
  End If
+
+   matrixMax = 0#
+   symmetryMax = 0#
+   For k = 0 To NumberOfElement - 1
+     If P3IsElementActive(k) Then
+     For i = 0 To 15
+       For j = 0 To 15
+         If Abs(Elem(k).kmat(i, j)) > matrixMax Then matrixMax = Abs(Elem(k).kmat(i, j))
+         If Abs(Elem(k).kmat(i, j) - Elem(k).kmat(j, i)) > symmetryMax Then symmetryMax = Abs(Elem(k).kmat(i, j) - Elem(k).kmat(j, i))
+       Next j
+     Next i
+     End If
+   Next k
+   If matrixMax <= 1E-30 Then
+     MatrixSymmetryError = 0#
+   Else
+     MatrixSymmetryError = symmetryMax / matrixMax
+   End If
 
  P6SelectSolverMode
  If Not P6UseCSR Then
@@ -890,7 +933,7 @@ Private Function P6EnsureCSRScatterList() As Boolean
   End If
 
   On Error GoTo ScatterBuildFailed
-  useFlatKCache = P6ElasticKCacheReady And P6ElasticKCacheElementCount = NumberOfElement
+  useFlatKCache = False ' Always assemble the current element tangent, including plastic and joint terms.
   ReDim P6CSRScatterStart(0 To NumberOfElement)
   P6CSRScatterStart(0) = 0
   totalCount = 0
@@ -971,7 +1014,7 @@ Private Function P6AssembleCSRValuesDetailed() As Boolean
   Next position
 
   ' CSR再組立時は、生成済み散布表にある有効非ゼロ項だけを加算する。
-  useFlatKCache = P6ElasticKCacheReady And P6ElasticKCacheElementCount = NumberOfElement
+  useFlatKCache = False ' Always assemble the current element tangent, including plastic and joint terms.
   For elementId = 0 To NumberOfElement - 1
     If Not P3IsElementActive(elementId) Then GoTo NextCsrDetailedElement
     For scatterIndex = P6CSRScatterStart(elementId) To P6CSRScatterStart(elementId + 1) - 1
@@ -1035,7 +1078,7 @@ Private Function P6CheckCSRDiagonalValues(ByRef matrixValues() As Double) As Boo
       If P6CSRFirstZeroDiagonalDof < 0 Then P6CSRFirstZeroDiagonalDof = rowNo
     Else
       diagonalValue = matrixValues(diagonalPosition)
-      If Abs(diagonalValue) <= 1E-30 Then
+      If Not P2IsFinite(diagonalValue) Or Abs(diagonalValue) <= 1E-30 Then
         P6CSRDiagonalZeroCount = P6CSRDiagonalZeroCount + 1
         If P6CSRFirstZeroDiagonalDof < 0 Then P6CSRFirstZeroDiagonalDof = rowNo
       ElseIf diagonalValue < P6CSRMinimumDiagonal Then
@@ -1053,6 +1096,7 @@ Private Function P6BuildCSRFromElements() As Boolean
 
   P6BuildCSRFromElements = False
   P6CSRReady = False
+  P6CSRILUReady = False
   P6CSRBoundaryApplied = False
   P6CSRDiagonalInverseReady = False
   P6CSRDirectFallbackUsed = False
@@ -1178,6 +1222,7 @@ Private Function ApplyCSRBoundaryToMatrix() As Boolean
     P6CSRValues(position) = P6CSROriginalValues(position)
   Next position
   P6CSRDiagonalInverseReady = False
+  P6CSRILUReady = False
   For i = 0 To P6CSRBoundaryZeroCount - 1
     position = P6CSRBoundaryZeroPosition(i)
     P6CSRValues(position) = 0#
@@ -2582,7 +2627,9 @@ Private Function P6PrepareMixedUP() As Boolean
   P6PrepareMixedUP = False
   P6MixedUP = False
   P6KrylovLast = lastDof
-  If Not P6UseCSR Then
+  If Not P6UseCSR Or P3FlowPolicyIsInconsistent() Then
+    ' Total-stress displacement formulation. CSR must not silently activate
+    ' the dormant mixed pressure formulation through MIXED_UP's default.
     P6PrepareMixedUP = True
     Exit Function
   End If
@@ -2762,7 +2809,7 @@ Private Function P6EnsureCSRDiagonalInverse() As Boolean
       Exit Function
     End If
     diagonalValue = P6CSRValues(diagonalPosition)
-    If Abs(diagonalValue) <= 1E-30 Then
+    If Not P2IsFinite(diagonalValue) Or Abs(diagonalValue) <= 1E-30 Then
       P6CSRDiagonalZeroCount = P6CSRDiagonalZeroCount + 1
       If P6CSRFirstZeroDiagonalDof < 0 Then P6CSRFirstZeroDiagonalDof = rowNo
       If P6CSRMinimumDiagonal = 0# Or Abs(diagonalValue) < P6CSRMinimumDiagonal Then P6CSRMinimumDiagonal = diagonalValue
@@ -2965,158 +3012,108 @@ Private Function P6BiCGRestartShadow(ByRef restartCount As Long) As Boolean
 End Function
 
 Private Function P6SolveCSRGMRES() As Boolean
-  Dim i As Long, j As Long, k As Long, innerCount As Long, totalIterations As Long
-  Dim restart As Long, normB As Double, toleranceValue As Double, residualNorm As Double, acceptLimit As Double
-  Dim beta As Double, rotationDenom As Double, tempValue As Double, innerValue As Double, normBSquare As Double
-  Dim breakdown As Boolean
-
+  Dim i As Long, j As Long, k As Long, pass As Long, used As Long, total As Long
+  Dim restart As Long, normB As Double, beta As Double, nextNorm As Double
+  Dim inner As Double, rot As Double, tmp As Double, residual As Double, tol As Double
+  Dim zBasis() As Double
   P6SolveCSRGMRES = False
+  P6IterativeLastResidual = 1E+100
+  On Error GoTo GMRESFailed
+  If nDof < 1 Or P6KrylovLast <> lastDof Then Exit Function
   restart = P6GMRESRestart
   If restart < 2 Then restart = 30
-  P6EnsureIterativeWorkspace P6KrylovLast + 1, restart
-  normBSquare = 0#
-  For i = 0 To P6KrylovLast
-    If i <= lastDof Then P6GMRESB(i) = Force(i) Else P6GMRESB(i) = 0#
-    If P6IterativeFallbackStatus = "gmres_after_bicgstab" Then
-      P6GMRESX(i) = P6BiCGX(i)
-    Else
-      P6GMRESX(i) = 0#
-    End If
-    P6GMRESR(i) = P6GMRESB(i)
-    normBSquare = normBSquare + P6GMRESB(i) * P6GMRESB(i)
-  Next i
-  If normBSquare <= 0# Then normB = 0# Else normB = Sqr(normBSquare)
-  If normB < 1# Then normB = 1#
-  toleranceValue = P6IterativeTolerance * normB
-  acceptLimit = P6EngineeringAcceptLimit(normB)
-  totalIterations = 0
-  P6IterativeLastIterations = 0
-  If P6IterativeFallbackStatus = "gmres_after_bicgstab" Then
-    residualNorm = P6CSRMatVecResidualNorm(P6GMRESX, P6GMRESB, P6GMRESR, P6CSRValues)
-  ElseIf normBSquare <= 0# Then
-    residualNorm = 0#
-  Else
-    residualNorm = Sqr(normBSquare)
-  End If
-  P6IterativeLastResidual = residualNorm / normB
-  If P6AcceptCSRSolution(P6GMRESX, residualNorm, normB, acceptLimit, toleranceValue) Then
-    P6SolveCSRGMRES = True
-    Exit Function
-  End If
-
-  Do While totalIterations < P6IterativeMaxIterations
-    If totalIterations > 0 Then residualNorm = P6CSRMatVecResidualNorm(P6GMRESX, P6GMRESB, P6GMRESR, P6CSRValues)
-    P6IterativeLastResidual = residualNorm / normB
-    If P6AcceptCSRSolution(P6GMRESX, residualNorm, normB, acceptLimit, toleranceValue) Then
-      P6SolveCSRGMRES = True
+  If restart > nDof Then restart = nDof
+  If P6SolverMemoryLimitBytes > 0# Then
+    ' Global Krylov workspace, local right-preconditioned basis and optional ILU.
+    tmp = P6CSRStorageBytes + CDbl(P6CSRNNZ) * 8# + CDbl(nDof) * (23# + 2# * restart) * 8# + CDbl(restart + 1) ^ 2 * 8#
+    If tmp > P6SolverMemoryLimitBytes Then
+      SetAnalysisFailure RESULT_CAPACITY_ERROR, "非対称GMRESの作業メモリが設定上限を超えます。", vbObjectError + 3511, -1, -1, CurrentIncrement, CurrentIteration
       Exit Function
     End If
-    If Not P6CSRApplyJacobi(P6GMRESR, P6GMRESZ) Then Exit Do
-    beta = P6CSRNorm2(P6GMRESZ)
-    If beta <= 1E-30 Then Exit Do
-    For i = 0 To P6KrylovLast
-      P6GMRESBasis(i, 0) = P6GMRESZ(i) / beta
-    Next i
-    For i = 0 To restart
-      P6GMRESG(i) = 0#
-    Next i
-    P6GMRESG(0) = beta
-    For i = 0 To restart
-      For j = 0 To restart - 1
-        P6GMRESH(i, j) = 0#
-      Next j
-    Next i
-    innerCount = 0
-    breakdown = False
+  End If
+  P6EnsureIterativeWorkspace P6KrylovLast + 1, restart
+  ReDim zBasis(0 To P6KrylovLast, 0 To restart - 1)
+  For i = 0 To P6KrylovLast
+    If Not P2IsFinite(Force(i)) Then Exit Function
+    P6GMRESB(i) = Force(i): P6GMRESX(i) = 0#
+    normB = normB + Force(i) * Force(i)
+  Next i
+  normB = Sqr(normB)
+  If Not P2IsFinite(normB) Then Exit Function
+  P6IterativeLastIterations = 0
+  If normB <= 1E-30 Then
+    For i = 0 To lastDof: Disp(i) = 0#: Next i
+    P6IterativeLastResidual = 0#: P6SolveCSRGMRES = True: Exit Function
+  End If
+  tol = P6IterativeTolerance * normB
+  Do While total < P6IterativeMaxIterations
+    residual = P6CSRMatVecResidualNorm(P6GMRESX, P6GMRESB, P6GMRESR, P6CSRValues)
+    If Not P2IsFinite(residual) Then Exit Function
+    P6IterativeLastResidual = residual / normB
+    If residual <= tol Then Exit Do
+    beta = residual
+    For i = 0 To P6KrylovLast: P6GMRESBasis(i, 0) = P6GMRESR(i) / beta: Next i
+    For i = 0 To restart: P6GMRESG(i) = 0#: Next i
+    P6GMRESG(0) = beta: used = 0
     For j = 0 To restart - 1
-      If totalIterations >= P6IterativeMaxIterations Then Exit For
-      For i = 0 To P6KrylovLast
-        P6GMRESInput(i) = P6GMRESBasis(i, j)
-      Next i
-      P6CSRMatVec P6GMRESInput, P6GMRESW, P6CSRValues
-      If Not P6CSRApplyJacobi(P6GMRESW, P6GMRESZ) Then
-        breakdown = True
-        Exit For
-      End If
-      For k = 0 To j
-        P6GMRESH(k, j) = 0#
-      Next k
-      For i = 0 To P6KrylovLast
+      For i = 0 To P6KrylovLast: P6GMRESInput(i) = P6GMRESBasis(i, j): Next i
+      If Not P6CSRApplyJacobi(P6GMRESInput, P6GMRESZ) Then Exit Function
+      For i = 0 To P6KrylovLast: zBasis(i, j) = P6GMRESZ(i): Next i
+      P6CSRMatVec P6GMRESZ, P6GMRESW, P6CSRValues
+      For k = 0 To restart: P6GMRESH(k, j) = 0#: Next k
+      ' Right preconditioning preserves the true RHS/residual scale.
+      ' Two MGS passes protect orthogonality near a plastic limit.
+      For pass = 1 To 2
         For k = 0 To j
-          P6GMRESH(k, j) = P6GMRESH(k, j) + P6GMRESZ(i) * P6GMRESBasis(i, k)
+          inner = 0#
+          For i = 0 To P6KrylovLast: inner = inner + P6GMRESW(i) * P6GMRESBasis(i, k): Next i
+          P6GMRESH(k, j) = P6GMRESH(k, j) + inner
+          For i = 0 To P6KrylovLast: P6GMRESW(i) = P6GMRESW(i) - inner * P6GMRESBasis(i, k): Next i
         Next k
-      Next i
-      For i = 0 To P6KrylovLast
-        innerValue = P6GMRESZ(i)
-        For k = 0 To j
-          innerValue = innerValue - P6GMRESH(k, j) * P6GMRESBasis(i, k)
-        Next k
-        P6GMRESZ(i) = innerValue
-      Next i
-      P6GMRESH(j + 1, j) = P6CSRNorm2(P6GMRESZ)
-      If P6GMRESH(j + 1, j) > 1E-30 Then
-        For i = 0 To P6KrylovLast
-          P6GMRESBasis(i, j + 1) = P6GMRESZ(i) / P6GMRESH(j + 1, j)
-        Next i
+      Next pass
+      nextNorm = P6CSRNorm2(P6GMRESW): P6GMRESH(j + 1, j) = nextNorm
+      If Not P2IsFinite(nextNorm) Then Exit Function
+      If nextNorm > 1E-30 Then
+        For i = 0 To P6KrylovLast: P6GMRESBasis(i, j + 1) = P6GMRESW(i) / nextNorm: Next i
       End If
       For k = 0 To j - 1
-        tempValue = P6GMRESCosine(k) * P6GMRESH(k, j) + P6GMRESSine(k) * P6GMRESH(k + 1, j)
+        tmp = P6GMRESCosine(k) * P6GMRESH(k, j) + P6GMRESSine(k) * P6GMRESH(k + 1, j)
         P6GMRESH(k + 1, j) = -P6GMRESSine(k) * P6GMRESH(k, j) + P6GMRESCosine(k) * P6GMRESH(k + 1, j)
-        P6GMRESH(k, j) = tempValue
+        P6GMRESH(k, j) = tmp
       Next k
-      rotationDenom = Sqr(P6GMRESH(j, j) * P6GMRESH(j, j) + P6GMRESH(j + 1, j) * P6GMRESH(j + 1, j))
-      If rotationDenom <= 1E-30 Then
-        breakdown = True
-        Exit For
-      End If
-      P6GMRESCosine(j) = P6GMRESH(j, j) / rotationDenom
-      P6GMRESSine(j) = P6GMRESH(j + 1, j) / rotationDenom
-      P6GMRESH(j, j) = P6GMRESCosine(j) * P6GMRESH(j, j) + P6GMRESSine(j) * P6GMRESH(j + 1, j)
-      P6GMRESH(j + 1, j) = 0#
-      tempValue = P6GMRESCosine(j) * P6GMRESG(j) + P6GMRESSine(j) * P6GMRESG(j + 1)
-      P6GMRESG(j + 1) = -P6GMRESSine(j) * P6GMRESG(j) + P6GMRESCosine(j) * P6GMRESG(j + 1)
-      P6GMRESG(j) = tempValue
-      totalIterations = totalIterations + 1
-      innerCount = j + 1
-      P6IterativeLastIterations = totalIterations
-      P6IterativeLastResidual = Abs(P6GMRESG(j + 1)) / normB
-      If Abs(P6GMRESG(j + 1)) <= toleranceValue Then Exit For
+      rot = Sqr(P6GMRESH(j, j) ^ 2 + P6GMRESH(j + 1, j) ^ 2)
+      If rot <= 1E-30 Then Exit For
+      P6GMRESCosine(j) = P6GMRESH(j, j) / rot: P6GMRESSine(j) = P6GMRESH(j + 1, j) / rot
+      P6GMRESH(j, j) = rot: P6GMRESH(j + 1, j) = 0#
+      tmp = P6GMRESCosine(j) * P6GMRESG(j)
+      P6GMRESG(j + 1) = -P6GMRESSine(j) * P6GMRESG(j): P6GMRESG(j) = tmp
+      used = j + 1: total = total + 1: P6IterativeLastIterations = total
+      If Abs(P6GMRESG(j + 1)) <= tol Or nextNorm <= 1E-30 Or total >= P6IterativeMaxIterations Then Exit For
     Next j
-    If innerCount <= 0 Then Exit Do
-    For i = 0 To innerCount - 1
-      P6GMRESY(i) = 0#
+    If used < 1 Then Exit Function
+    For i = used - 1 To 0 Step -1
+      tmp = P6GMRESG(i)
+      For k = i + 1 To used - 1: tmp = tmp - P6GMRESH(i, k) * P6GMRESY(k): Next k
+      If Abs(P6GMRESH(i, i)) <= 1E-30 Then Exit Function
+      P6GMRESY(i) = tmp / P6GMRESH(i, i)
     Next i
-    For i = innerCount - 1 To 0 Step -1
-      tempValue = P6GMRESG(i)
-      For k = i + 1 To innerCount - 1
-        tempValue = tempValue - P6GMRESH(i, k) * P6GMRESY(k)
-      Next k
-      If Abs(P6GMRESH(i, i)) <= 1E-30 Then
-        breakdown = True
-        Exit For
-      End If
-      P6GMRESY(i) = tempValue / P6GMRESH(i, i)
-    Next i
-    If breakdown Then Exit Do
-    For k = 0 To innerCount - 1
-      For i = 0 To P6KrylovLast
-        P6GMRESX(i) = P6GMRESX(i) + P6GMRESBasis(i, k) * P6GMRESY(k)
-      Next i
+    For k = 0 To used - 1
+      For i = 0 To P6KrylovLast: P6GMRESX(i) = P6GMRESX(i) + zBasis(i, k) * P6GMRESY(k): Next i
     Next k
-    residualNorm = P6CSRMatVecResidualNorm(P6GMRESX, P6GMRESB, P6GMRESR, P6CSRValues)
-    P6IterativeLastResidual = residualNorm / normB
-    If P6AcceptCSRSolution(P6GMRESX, residualNorm, normB, acceptLimit, toleranceValue) Then
-      P6SolveCSRGMRES = True
-      Exit Function
-    End If
-    If totalIterations >= P6IterativeMaxIterations Then Exit Do
   Loop
-  residualNorm = P6CSRMatVecResidualNorm(P6GMRESX, P6GMRESB, P6GMRESR, P6CSRValues)
-  If P6AcceptCSRSolution(P6GMRESX, residualNorm, normB, acceptLimit, toleranceValue) Then
-    P6SolveCSRGMRES = True
-    Exit Function
-  End If
-  If P6CSRDiagonalZeroCount > 0 Then Exit Function
+  residual = P6CSRMatVecResidualNorm(P6GMRESX, P6GMRESB, P6GMRESR, P6CSRValues)
+  If Not P2IsFinite(residual) Then Exit Function
+  P6IterativeLastResidual = residual / normB
+  If residual > tol Then Exit Function
+  For i = 0 To lastDof
+    If Not P2IsFinite(P6GMRESX(i)) Then Exit Function
+  Next i
+  For i = 0 To lastDof: Disp(i) = P6GMRESX(i): Next i
+  P6SolveCSRGMRES = True
+  Exit Function
+GMRESFailed:
+  If Err.Number = 7 Then SetAnalysisFailure RESULT_CAPACITY_ERROR, "非対称GMRESのメモリ確保に失敗しました。", Err.Number, -1, -1, CurrentIncrement, CurrentIteration
+  Err.Clear
 End Function
 
 Private Function P6CSRApplyILU(ByRef inputVector() As Double, ByRef outputVector() As Double) As Boolean
@@ -3370,6 +3367,234 @@ Private Function P6SolveMixedUzawa() As Boolean
   P6IterativeFallbackStatus = "uzawa_stalled_relres=" & Format$(P6IterativeLastResidual, "0.000E+00") & "; iter=" & CStr(uzawaMax)
 End Function
 
+Public Function P6SolveResidualRecovery(ByVal damping As Double) As Boolean
+  ' Column-scaled Levenberg-Marquardt direction for the current free residual.
+  ' A = S^-1 K^T K S^-1 + damping*I, rhs = S^-1 K^T r.
+  ' The plastic operator, primary linear residual and committed state are unchanged.
+  Dim a() As Double, rhs() As Double, solution() As Double, columnScale() As Double
+  Dim row As Long, col As Long, p As Long, q As Long, c1 As Long, c2 As Long
+  Dim i As Long, j As Long, k As Long, firstCol As Long, bw As Long, lastRow As Long
+  Dim v As Double, normB As Double, normalResidual As Double, tmp As Double, startedAt As Double, factorDone As Boolean
+  P6SolveResidualRecovery = False
+  If Not P6CSRReady Or damping <= 0# Or Not P2IsFinite(damping) Then GoTo Rejected
+  bw = 2 * BandWidth: If bw > lastDof Then bw = lastDof
+  If P6SolverMemoryLimitBytes > 0# Then
+    If P6CSRStorageBytes + CDbl(nDof) * (CDbl(bw + 1) * 8# + 32#) > P6SolverMemoryLimitBytes Then GoTo Rejected
+  End If
+  On Error GoTo Failed
+  startedAt = Timer
+  P6FactorizationCount = P6FactorizationCount + 1
+  ReDim a(0 To lastDof, 0 To bw)
+  ReDim rhs(0 To lastDof): ReDim solution(0 To lastDof): ReDim columnScale(0 To lastDof)
+  For row = 0 To lastDof
+    If NodeCond(row) = 0 Then
+      If Not P2IsFinite(Force(row)) Then GoTo Rejected
+      For p = P6CSRRowPtr(row) To P6CSRRowPtr(row + 1) - 1
+        col = P6CSRColumnIndex(p)
+        If NodeCond(col) = 0 Then
+          v = P6CSROriginalValues(p)
+          If Not P2IsFinite(v) Then GoTo Rejected
+          columnScale(col) = columnScale(col) + v * v
+        End If
+      Next p
+    End If
+  Next row
+  For col = 0 To lastDof
+    columnScale(col) = Sqr(columnScale(col))
+    If columnScale(col) < 1E-30 Then columnScale(col) = 1#
+  Next col
+  For row = 0 To lastDof
+    If NodeCond(row) = 0 Then
+      For p = P6CSRRowPtr(row) To P6CSRRowPtr(row + 1) - 1
+        c1 = P6CSRColumnIndex(p)
+        If NodeCond(c1) = 0 And P6CSROriginalValues(p) <> 0# Then
+          v = P6CSROriginalValues(p) / columnScale(c1)
+          rhs(c1) = rhs(c1) + v * Force(row)
+          For q = p To P6CSRRowPtr(row + 1) - 1
+            c2 = P6CSRColumnIndex(q)
+            If NodeCond(c2) = 0 And P6CSROriginalValues(q) <> 0# Then
+              If c2 < c1 Or c2 - c1 > bw Then GoTo Rejected
+              a(c2, bw + c1 - c2) = a(c2, bw + c1 - c2) + v * P6CSROriginalValues(q) / columnScale(c2)
+            End If
+          Next q
+        End If
+      Next p
+    End If
+  Next row
+  For i = 0 To lastDof
+    a(i, bw) = a(i, bw) + damping
+    If NodeCond(i) <> 0 Then a(i, bw) = 1#
+    normB = normB + rhs(i) * rhs(i)
+  Next i
+  If Not P2IsFinite(normB) Or normB <= 1E-60 Then GoTo Rejected
+  ' Cholesky in the lower band; positive damping makes the normal operator SPD.
+  For i = 0 To lastDof
+    firstCol = i - bw: If firstCol < 0 Then firstCol = 0
+    For j = firstCol To i
+      tmp = a(i, bw + j - i)
+      For k = firstCol To j - 1
+        If j - k <= bw Then tmp = tmp - a(i, bw + k - i) * a(j, bw + k - j)
+      Next k
+      If i = j Then
+        If tmp <= 0# Or Not P2IsFinite(tmp) Then GoTo Rejected
+        a(i, bw) = Sqr(tmp)
+      Else
+        a(i, bw + j - i) = tmp / a(j, bw)
+      End If
+    Next j
+    tmp = rhs(i)
+    For j = firstCol To i - 1: tmp = tmp - a(i, bw + j - i) * solution(j): Next j
+    solution(i) = tmp / a(i, bw)
+  Next i
+  P6ProfFactorMs = P6ProfFactorMs + P6ElapsedMs(startedAt)
+  factorDone = True: startedAt = Timer
+  For i = lastDof To 0 Step -1
+    tmp = solution(i): lastRow = i + bw: If lastRow > lastDof Then lastRow = lastDof
+    For j = i + 1 To lastRow: tmp = tmp - a(j, bw + i - j) * solution(j): Next j
+    solution(i) = tmp / a(i, bw)
+    If Not P2IsFinite(solution(i)) Then GoTo Rejected
+  Next i
+  ' Independently apply K^T K + damping to verify the regularized solve.
+  For row = 0 To lastDof
+    If NodeCond(row) = 0 Then
+      tmp = 0#
+      For p = P6CSRRowPtr(row) To P6CSRRowPtr(row + 1) - 1
+        col = P6CSRColumnIndex(p)
+        If NodeCond(col) = 0 Then tmp = tmp + P6CSROriginalValues(p) * solution(col) / columnScale(col)
+      Next p
+      For p = P6CSRRowPtr(row) To P6CSRRowPtr(row + 1) - 1
+        col = P6CSRColumnIndex(p)
+        If NodeCond(col) = 0 Then rhs(col) = rhs(col) - P6CSROriginalValues(p) * tmp / columnScale(col)
+      Next p
+    End If
+  Next row
+  For i = 0 To lastDof
+    tmp = rhs(i) - damping * solution(i)
+    normalResidual = normalResidual + tmp * tmp
+  Next i
+  If Not P2IsFinite(normalResidual) Then GoTo Rejected
+  If Sqr(normalResidual / normB) > P6IterativeTolerance Then GoTo Rejected
+  For i = 0 To lastDof
+    Disp(i) = solution(i) / columnScale(i)
+    If NodeCond(i) <> 0 Then Disp(i) = 0#
+  Next i
+  P6SolverEvent "REGULARIZED_SOLVE", "damping=" & Format$(damping, "0.000E+00") & ";normal_relres=" & Format$(Sqr(normalResidual / normB), "0.000E+00")
+  P6SolveResidualRecovery = True
+  GoTo Rejected
+Failed:
+  Err.Clear
+Rejected:
+  If startedAt <> 0# Then
+    If factorDone Then
+      P6ProfSolveMs = P6ProfSolveMs + P6ElapsedMs(startedAt)
+    Else
+      P6ProfFactorMs = P6ProfFactorMs + P6ElapsedMs(startedAt)
+    End If
+  End If
+End Function
+
+Public Function P6SolveNonsymmetricBand() As Boolean
+  ' Gaussian elimination with partial row pivoting in a full nonsymmetric band.
+  ' Lower bandwidth is b; pivoting can extend the upper bandwidth to 2*b.
+  ' Eliminate the RHS at once so earlier L columns need not be swapped/stored.
+  Dim a() As Double, rhs() As Double, solution() As Double, residualVector() As Double
+  Dim b As Long, upper As Long, k As Long, i As Long, j As Long, p As Long
+  Dim pivotRow As Long, lastRow As Long, lastColumn As Long, columnId As Long
+  Dim pivot As Double, largest As Double, multiplier As Double, tmp As Double
+  Dim normB As Double, residual As Double, memoryBytes As Double, startedAt As Double, factorDone As Boolean
+  P6SolveNonsymmetricBand = False
+  P6IterativeLastResidual = 1E+100
+  If nDof < 1 Or lastDof <> nDof - 1 Or BandWidth < 0 Then GoTo Rejected
+  b = BandWidth: If b > lastDof Then b = lastDof
+  upper = 2 * b
+  memoryBytes = CDbl(nDof) * (CDbl(3 * b + 1) * 8# + 32#) + P6CSRStorageBytes
+  If P6SolverMemoryLimitBytes > 0# And memoryBytes > P6SolverMemoryLimitBytes Then
+    SetAnalysisFailure RESULT_CAPACITY_ERROR, "非対称帯域LUの作業メモリが設定上限を超えます。", vbObjectError + 3511, -1, -1, CurrentIncrement, CurrentIteration
+    Exit Function
+  End If
+  On Error GoTo Failed
+  startedAt = Timer
+  P6FactorizationCount = P6FactorizationCount + 1
+  ReDim a(0 To lastDof, 0 To 3 * b)
+  ReDim rhs(0 To lastDof): ReDim solution(0 To lastDof): ReDim residualVector(0 To lastDof)
+  For i = 0 To lastDof
+    If Not P2IsFinite(Force(i)) Then GoTo Rejected
+    rhs(i) = Force(i): normB = normB + rhs(i) * rhs(i)
+    For p = P6CSRRowPtr(i) To P6CSRRowPtr(i + 1) - 1
+      columnId = P6CSRColumnIndex(p)
+      If Not P2IsFinite(P6CSRValues(p)) Then GoTo Rejected
+      If Abs(columnId - i) > b Then
+        If Abs(P6CSRValues(p)) > 1E-30 Then GoTo Rejected
+      Else
+        a(i, columnId - i + b) = a(i, columnId - i + b) + P6CSRValues(p)
+      End If
+    Next p
+  Next i
+  normB = Sqr(normB)
+  For k = 0 To lastDof
+    lastRow = k + b: If lastRow > lastDof Then lastRow = lastDof
+    lastColumn = k + upper: If lastColumn > lastDof Then lastColumn = lastDof
+    pivotRow = k: largest = Abs(a(k, b))
+    For i = k + 1 To lastRow
+      tmp = Abs(a(i, k - i + b))
+      If tmp > largest Then largest = tmp: pivotRow = i
+    Next i
+    If Not P2IsFinite(largest) Or largest <= 1E-30 Then GoTo Rejected
+    If pivotRow <> k Then
+      For j = k To lastColumn
+        tmp = a(k, j - k + b)
+        a(k, j - k + b) = a(pivotRow, j - pivotRow + b)
+        a(pivotRow, j - pivotRow + b) = tmp
+      Next j
+      tmp = rhs(k): rhs(k) = rhs(pivotRow): rhs(pivotRow) = tmp
+    End If
+    pivot = a(k, b)
+    For i = k + 1 To lastRow
+      multiplier = a(i, k - i + b) / pivot
+      If Not P2IsFinite(multiplier) Then GoTo Rejected
+      a(i, k - i + b) = 0#
+      If multiplier <> 0# Then
+        For j = k + 1 To lastColumn
+          a(i, j - i + b) = a(i, j - i + b) - multiplier * a(k, j - k + b)
+        Next j
+        rhs(i) = rhs(i) - multiplier * rhs(k)
+      End If
+    Next i
+  Next k
+  P6ProfFactorMs = P6ProfFactorMs + P6ElapsedMs(startedAt)
+  factorDone = True: startedAt = Timer
+  For i = lastDof To 0 Step -1
+    tmp = rhs(i): lastColumn = i + upper: If lastColumn > lastDof Then lastColumn = lastDof
+    For j = i + 1 To lastColumn: tmp = tmp - a(i, j - i + b) * solution(j): Next j
+    solution(i) = tmp / a(i, b)
+    If Not P2IsFinite(solution(i)) Then GoTo Rejected
+  Next i
+  residual = P6CSRMatVecResidualNorm(solution, Force, residualVector, P6CSRValues)
+  If Not P2IsFinite(residual) Or Not P2IsFinite(normB) Then GoTo Rejected
+  If normB > 1E-30 Then
+    P6IterativeLastResidual = residual / normB
+    If P6IterativeLastResidual > P6IterativeTolerance Then GoTo Rejected
+  Else
+    P6IterativeLastResidual = residual
+    If residual > 1E-30 Then GoTo Rejected
+  End If
+  For i = 0 To lastDof: Disp(i) = solution(i): Next i
+  P6IterativeLastIterations = 0
+  P6SolveNonsymmetricBand = True
+  GoTo Rejected
+Failed:
+  If Err.Number = 7 Then SetAnalysisFailure RESULT_CAPACITY_ERROR, "非対称帯域LUのメモリ確保に失敗しました。", Err.Number, -1, -1, CurrentIncrement, CurrentIteration
+  Err.Clear
+Rejected:
+  If startedAt <> 0# Then
+    If factorDone Then
+      P6ProfSolveMs = P6ProfSolveMs + P6ElapsedMs(startedAt)
+    Else
+      P6ProfFactorMs = P6ProfFactorMs + P6ElapsedMs(startedAt)
+    End If
+  End If
+End Function
+
 Private Function P6SolveCSR() As Boolean
   Dim bicgIterations As Long, bicgResidual As Double
 
@@ -3385,6 +3610,25 @@ Private Function P6SolveCSR() As Boolean
   If P6MixedUP Then
     P6SolveCSR = P6SolveMixedUzawa()
     Exit Function
+  End If
+  If P3FlowPolicyIsInconsistent() Then
+    If P6SolveNonsymmetricBand() Then
+      P6SolveCSR = True
+      Exit Function
+    End If
+    If ResultStatus = RESULT_CAPACITY_ERROR Then Exit Function
+    P6IterativeFallbackStatus = "right_gmres_after_nonsymmetric_band"
+    P6SolverMode = "CSR_GMRES"
+  End If
+  If P3FlowPolicyIsInconsistent() And Not P6CSRILUReady Then
+    ' ILU(0) is only a preconditioner; convergence uses the true CSR residual.
+    If P6SolverMemoryLimitBytes > 0# Then
+      If P6CSRStorageBytes + CDbl(P6CSRNNZ) * 8# + CDbl(nDof) * (23# + 2# * P6GMRESRestart) * 8# + CDbl(P6GMRESRestart + 1) ^ 2 * 8# > P6SolverMemoryLimitBytes Then
+        SetAnalysisFailure RESULT_CAPACITY_ERROR, "非対称GMRESの作業メモリが設定上限を超えます。", vbObjectError + 3511, -1, -1, CurrentIncrement, CurrentIteration
+        Exit Function
+      End If
+    End If
+    P6BuildCSRILU
   End If
   If P6SolverMode = "CSR_GMRES" Then
     P6SolveCSR = P6SolveCSRGMRES()
@@ -3719,6 +3963,10 @@ Function BandSolver() As Boolean
   ldltShadow = False
   If P6UseCSR Then
     csrOk = P6SolveCSR()
+    If P3FlowPolicyIsInconsistent() Then
+      If csrOk Then MatrixFactored = True: BandSolver = True
+      Exit Function
+    End If
     If csrOk Then
       If P6IterativeLastResidual <= P6_ITERATIVE_BAND_FALLBACK Then
         MatrixFactored = True
@@ -3726,6 +3974,7 @@ Function BandSolver() As Boolean
         Exit Function
       End If
     End If
+    If P3FlowPolicyIsInconsistent() Then Exit Function
     If P6TryBandDirectFallback() Then
       MatrixFactored = True
       BandSolver = True

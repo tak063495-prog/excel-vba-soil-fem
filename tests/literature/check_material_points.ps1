@@ -1,5 +1,6 @@
 ﻿param([Parameter(Mandatory=$true)][string]$SourceWorkbook,[Parameter(Mandatory=$true)][string]$OutputRoot,[switch]$RepairSelfTestInputs)
 $ErrorActionPreference='Stop'
+$sourceHashTask=(Get-FileHash -LiteralPath $SourceWorkbook -Algorithm SHA256).Hash
 New-Item -ItemType Directory -Force -Path $OutputRoot|Out-Null
 $pathTask=Join-Path $OutputRoot 'material_point_scratch.xlsm'
 Copy-Item -LiteralPath $SourceWorkbook -Destination $pathTask -Force
@@ -83,7 +84,8 @@ try{
     }
     $recordsTask.Add(@{case=$rowTask[0];phi=$rowTask[1];ey=$rowTask[2];gxy=$rowTask[3];values=$valuesTask;tangent_probes=$probesTask})
   }
-  @{selftest_inputs_trial_repair=[bool]$RepairSelfTestInputs;built_in_material_self_test=$selfTask;built_in_edge_self_test=$edgeTask;self_test_table_flat=$selfRowsTask;value_names=@('ok','converged','elastic','failure_code','failure_message','sx','sy','tau','sz','epx','epy','gp','epz','yield_function','plastic_multiplier','t00','t01','t02','t10','t11','t12','t20','t21','t22');records=$recordsTask}|ConvertTo-Json -Depth 8|Set-Content -LiteralPath (Join-Path $OutputRoot 'material_points_raw.json') -Encoding UTF8
+  if((Get-FileHash -LiteralPath $SourceWorkbook -Algorithm SHA256).Hash -ne $sourceHashTask){throw 'Source workbook changed'}
+  @{source_sha256=$sourceHashTask;selftest_inputs_trial_repair=[bool]$RepairSelfTestInputs;built_in_material_self_test=$selfTask;built_in_edge_self_test=$edgeTask;self_test_table_flat=$selfRowsTask;value_names=@('ok','converged','elastic','failure_code','failure_message','sx','sy','tau','sz','epx','epy','gp','epz','yield_function','plastic_multiplier','t00','t01','t02','t10','t11','t12','t20','t21','t22');records=$recordsTask}|ConvertTo-Json -Depth 8|Set-Content -LiteralPath (Join-Path $OutputRoot 'material_points_raw.json') -Encoding UTF8
 }finally{
   if($null -ne $wbTask){$wbTask.Close($false);[void][Runtime.InteropServices.Marshal]::FinalReleaseComObject($wbTask)}
   $xlTask.Quit();[void][Runtime.InteropServices.Marshal]::FinalReleaseComObject($xlTask)

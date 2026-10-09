@@ -1,0 +1,1694 @@
+{
+  "source_sha256": "21A6815238D694853CE4435BA6F4DB7A0CDF56879B8F2EEADD981A24D56C26CD",
+  "ok": true,
+  "ok_scope": "Independent stress/volume checks and built-in self-tests only; tangent probes are diagnostics, not an acceptance test.",
+  "independent_ok": true,
+  "records": [
+    {
+      "case": "confined_phi0_elastic",
+      "phi": 0,
+      "expected_stress": [
+        5.769230769230768,
+        13.46153846153846,
+        0.0,
+        5.769230769230768
+      ],
+      "actual_stress": [
+        5.769230769230769,
+        13.461538461538463,
+        0,
+        5.769230769230769
+      ],
+      "stress_max_abs_error": 3.552713678800501e-15,
+      "plastic_volume_strain": 0,
+      "expected_plastic": false,
+      "ok": true,
+      "tangent_3x3": [
+        [
+          134615.38461538462,
+          57692.30769230769,
+          0
+        ],
+        [
+          57692.30769230769,
+          134615.38461538462,
+          0
+        ],
+        [
+          0,
+          0,
+          38461.53846153846
+        ]
+      ],
+      "tangent_asymmetry_abs": 0.0,
+      "symmetrized_normal_block_min_eigenvalue": 76923.07692307694,
+      "tangent_probes": [
+        {
+          "name": "total_increment",
+          "probe_ok": true,
+          "h": 1e-08,
+          "returned": [
+            [
+              134615.38461538462,
+              57692.30769230769,
+              0
+            ],
+            [
+              57692.30769230769,
+              134615.38461538462,
+              0
+            ],
+            [
+              0,
+              0,
+              38461.53846153846
+            ]
+          ],
+          "finite_difference": [
+            [
+              134615.38461538858,
+              57692.307692303046,
+              0
+            ],
+            [
+              57692.307692303046,
+              134615.38461534417,
+              0
+            ],
+            [
+              0,
+              0,
+              38461.53846153846
+            ]
+          ],
+          "relative_frobenius_gap": 1.9545110046003926e-13,
+          "branches": [
+            {
+              "column": 0,
+              "plus_elastic": true,
+              "minus_elastic": true,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                134615.38461534417,
+                57692.30769221423,
+                0.0
+              ],
+              "backward_derivative": [
+                134615.384615433,
+                57692.30769239186,
+                0.0
+              ]
+            },
+            {
+              "column": 1,
+              "plus_elastic": true,
+              "minus_elastic": true,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                57692.307692303046,
+                134615.38461534417,
+                0.0
+              ],
+              "backward_derivative": [
+                57692.307692303046,
+                134615.38461534417,
+                0.0
+              ]
+            },
+            {
+              "column": 2,
+              "plus_elastic": true,
+              "minus_elastic": true,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                0.0,
+                0.0,
+                38461.53846153846
+              ],
+              "backward_derivative": [
+                0.0,
+                0.0,
+                38461.53846153846
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "confined_phi0_plastic",
+      "phi": 0,
+      "expected_stress": [
+        826.6666666666665,
+        846.6666666666665,
+        0.0,
+        826.6666666666665
+      ],
+      "actual_stress": [
+        826.6666666666666,
+        846.6666666666666,
+        3.2310891488651735e-14,
+        826.6666666666666
+      ],
+      "stress_max_abs_error": 1.1368683772161603e-13,
+      "plastic_volume_strain": 0.0,
+      "expected_plastic": true,
+      "ok": true,
+      "tangent_3x3": [
+        [
+          83333.33333333333,
+          83333.33333333334,
+          3.231089148865184e-12
+        ],
+        [
+          83333.33333333333,
+          83333.33333333333,
+          -3.2310891488651882e-12
+        ],
+        [
+          3.231089148865174e-12,
+          -3.2310891488651975e-12,
+          999.9999999999999
+        ]
+      ],
+      "tangent_asymmetry_abs": 1.4551915228366852e-11,
+      "symmetrized_normal_block_min_eigenvalue": -1.4551915228366852e-11,
+      "tangent_probes": [
+        {
+          "name": "total_increment",
+          "probe_ok": true,
+          "h": 1e-08,
+          "returned": [
+            [
+              83333.33333333333,
+              83333.33333333334,
+              3.231089148865184e-12
+            ],
+            [
+              83333.33333333333,
+              83333.33333333333,
+              -3.2310891488651882e-12
+            ],
+            [
+              3.231089148865174e-12,
+              -3.2310891488651975e-12,
+              999.9999999999999
+            ]
+          ],
+          "finite_difference": [
+            [
+              83333.3333275732,
+              83333.3333275732,
+              0
+            ],
+            [
+              83333.33333325754,
+              83333.3333275732,
+              0
+            ],
+            [
+              9.150786500563737e-21,
+              0,
+              1000.0000033707004
+            ]
+          ],
+          "relative_frobenius_gap": 6.318566165028918e-11,
+          "branches": [
+            {
+              "column": 0,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                83333.33333894188,
+                83333.33333894188,
+                0.0
+              ],
+              "backward_derivative": [
+                83333.33331620452,
+                83333.3333275732,
+                1.8301573001127474e-20
+              ]
+            },
+            {
+              "column": 1,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                83333.33333894188,
+                83333.33333894188,
+                0.0
+              ],
+              "backward_derivative": [
+                83333.33331620452,
+                83333.33331620452,
+                0.0
+              ]
+            },
+            {
+              "column": 2,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                0.0005002220859751105,
+                -0.0005002220859751105,
+                1000.0000001396113
+              ],
+              "backward_derivative": [
+                -0.0005002220859751105,
+                0.0005002220859751105,
+                1000.0000066017896
+              ]
+            }
+          ]
+        },
+        {
+          "name": "small_reload",
+          "probe_ok": true,
+          "h": 1e-09,
+          "returned": [
+            [
+              83333.33333333333,
+              83333.33333333334,
+              2.43741392457349e-10
+            ],
+            [
+              83333.33333333333,
+              83333.33333333333,
+              -2.43741392457349e-10
+            ],
+            [
+              2.4374139245734904e-10,
+              -2.437413924573491e-10,
+              38446.75124951963
+            ]
+          ],
+          "finite_difference": [
+            [
+              83333.33335031057,
+              83333.33335031057,
+              0
+            ],
+            [
+              83333.33335031057,
+              83333.33335031057,
+              0
+            ],
+            [
+              0,
+              0,
+              38446.75128152646
+            ]
+          ],
+          "relative_frobenius_gap": 2.728076421758621e-10,
+          "branches": [
+            {
+              "column": 0,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                83333.33335031057,
+                83333.3334639974,
+                3.660314600225495e-19
+              ],
+              "backward_derivative": [
+                83333.33335031057,
+                83333.33323662373,
+                -3.660314600225495e-19
+              ]
+            },
+            {
+              "column": 1,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                83333.33335031057,
+                83333.3334639974,
+                3.660314600225495e-19
+              ],
+              "backward_derivative": [
+                83333.33335031057,
+                83333.33323662373,
+                -3.660314600225495e-19
+              ]
+            },
+            {
+              "column": 2,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                0.0737827576813288,
+                -0.07401013135677204,
+                38446.75124921557
+              ],
+              "backward_derivative": [
+                -0.0737827576813288,
+                0.07401013135677204,
+                38446.75131383736
+              ]
+            }
+          ]
+        },
+        {
+          "name": "small_reload_h3",
+          "probe_ok": true,
+          "h": 3e-09,
+          "returned": [
+            [
+              83333.33333333333,
+              83333.33333333334,
+              2.43741392457349e-10
+            ],
+            [
+              83333.33333333333,
+              83333.33333333333,
+              -2.43741392457349e-10
+            ],
+            [
+              2.4374139245734904e-10,
+              -2.437413924573491e-10,
+              38446.75124951963
+            ]
+          ],
+          "finite_difference": [
+            [
+              83333.33335031057,
+              83333.33335031057,
+              0
+            ],
+            [
+              83333.33333136277,
+              83333.33333136277,
+              0
+            ],
+            [
+              -6.100524333709158e-20,
+              -6.100524333709158e-20,
+              38446.75125774784
+            ]
+          ],
+          "relative_frobenius_gap": 1.492763609200207e-10,
+          "branches": [
+            {
+              "column": 0,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                83333.33335031057,
+                83333.33331241495,
+                -1.2201048667418315e-19
+              ],
+              "backward_derivative": [
+                83333.33335031057,
+                83333.33335031057,
+                0.0
+              ]
+            },
+            {
+              "column": 1,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                83333.33335031057,
+                83333.33331241495,
+                -1.2201048667418315e-19
+              ],
+              "backward_derivative": [
+                83333.33335031057,
+                83333.33335031057,
+                0.0
+              ]
+            },
+            {
+              "column": 2,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                0.22168933355715126,
+                -0.22172722916972512,
+                38446.75124697754
+              ],
+              "backward_derivative": [
+                -0.22168933355715126,
+                0.22172722916972512,
+                38446.751268518135
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "confined_phi20_elastic",
+      "phi": 20,
+      "expected_stress": [
+        5.769230769230768,
+        13.46153846153846,
+        0.0,
+        5.769230769230768
+      ],
+      "actual_stress": [
+        5.769230769230769,
+        13.461538461538463,
+        0,
+        5.769230769230769
+      ],
+      "stress_max_abs_error": 3.552713678800501e-15,
+      "plastic_volume_strain": 0,
+      "expected_plastic": false,
+      "ok": true,
+      "tangent_3x3": [
+        [
+          134615.38461538462,
+          57692.30769230769,
+          0
+        ],
+        [
+          57692.30769230769,
+          134615.38461538462,
+          0
+        ],
+        [
+          0,
+          0,
+          38461.53846153846
+        ]
+      ],
+      "tangent_asymmetry_abs": 0.0,
+      "symmetrized_normal_block_min_eigenvalue": 76923.07692307694,
+      "tangent_probes": [
+        {
+          "name": "total_increment",
+          "probe_ok": true,
+          "h": 1e-08,
+          "returned": [
+            [
+              134615.38461538462,
+              57692.30769230769,
+              0
+            ],
+            [
+              57692.30769230769,
+              134615.38461538462,
+              0
+            ],
+            [
+              0,
+              0,
+              38461.53846153846
+            ]
+          ],
+          "finite_difference": [
+            [
+              134615.38461538858,
+              57692.307692303046,
+              0
+            ],
+            [
+              57692.307692303046,
+              134615.38461534417,
+              0
+            ],
+            [
+              0,
+              0,
+              38461.53846153846
+            ]
+          ],
+          "relative_frobenius_gap": 1.9545110046003926e-13,
+          "branches": [
+            {
+              "column": 0,
+              "plus_elastic": true,
+              "minus_elastic": true,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                134615.38461534417,
+                57692.30769221423,
+                0.0
+              ],
+              "backward_derivative": [
+                134615.384615433,
+                57692.30769239186,
+                0.0
+              ]
+            },
+            {
+              "column": 1,
+              "plus_elastic": true,
+              "minus_elastic": true,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                57692.307692303046,
+                134615.38461534417,
+                0.0
+              ],
+              "backward_derivative": [
+                57692.307692303046,
+                134615.38461534417,
+                0.0
+              ]
+            },
+            {
+              "column": 2,
+              "plus_elastic": true,
+              "minus_elastic": true,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                0.0,
+                0.0,
+                38461.53846153846
+              ],
+              "backward_derivative": [
+                0.0,
+                0.0,
+                38461.53846153846
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "confined_phi20_plastic",
+      "phi": 20,
+      "expected_stress": [
+        178.59090952027168,
+        392.81818095945647,
+        0.0,
+        178.59090952027168
+      ],
+      "actual_stress": [
+        178.59090952027177,
+        392.8181809594564,
+        3.460937060690718e-13,
+        178.59090952027177
+      ],
+      "stress_max_abs_error": 3.460937060690718e-13,
+      "plastic_volume_strain": 2.168404344971009e-19,
+      "expected_plastic": true,
+      "ok": true,
+      "tangent_3x3": [
+        [
+          61887.212484145464,
+          61887.21248414547,
+          1.1536456868969058e-10
+        ],
+        [
+          126225.57503170906,
+          126225.57503170906,
+          -1.1536456868969057e-10
+        ],
+        [
+          2.193060612312837e-10,
+          -1.1423076148097497e-11,
+          35704.5452398641
+        ]
+      ],
+      "tangent_asymmetry_abs": 64338.362547563585,
+      "symmetrized_normal_block_min_eigenvalue": -5349.146482904849,
+      "tangent_probes": [
+        {
+          "name": "total_increment",
+          "probe_ok": true,
+          "h": 1e-08,
+          "returned": [
+            [
+              61887.212484145464,
+              61887.21248414547,
+              1.1536456868969058e-10
+            ],
+            [
+              126225.57503170906,
+              126225.57503170906,
+              -1.1536456868969057e-10
+            ],
+            [
+              2.193060612312837e-10,
+              -1.1423076148097497e-11,
+              35704.5452398641
+            ]
+          ],
+          "finite_difference": [
+            [
+              61887.2124846348,
+              61887.21248321371,
+              0
+            ],
+            [
+              126225.57503334519,
+              126225.57503050302,
+              0
+            ],
+            [
+              1.0394149254335343e-10,
+              1.0394149254082906e-10,
+              35704.54527464127
+            ]
+          ],
+          "relative_frobenius_gap": 1.725437594939279e-10,
+          "branches": [
+            {
+              "column": 0,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                61887.21248747697,
+                126225.57503618737,
+                1.0394149254335343e-10
+              ],
+              "backward_derivative": [
+                61887.21248179263,
+                126225.57503050302,
+                1.0394149254335343e-10
+              ]
+            },
+            {
+              "column": 1,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                61887.2124846348,
+                126225.57503050302,
+                1.0394149253830472e-10
+              ],
+              "backward_derivative": [
+                61887.21248179263,
+                126225.57503050302,
+                1.0394149254335343e-10
+              ]
+            },
+            {
+              "column": 2,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                0.05950653303443687,
+                -0.05950937520537991,
+                35704.5452400319
+              ],
+              "backward_derivative": [
+                -0.05950653303443687,
+                0.05950937520537991,
+                35704.545309250636
+              ]
+            }
+          ]
+        },
+        {
+          "name": "small_reload",
+          "probe_ok": true,
+          "h": 1e-09,
+          "returned": [
+            [
+              61887.212484145464,
+              61887.21248414547,
+              2.438337067962513e-10
+            ],
+            [
+              126225.57503170906,
+              126225.57503170906,
+              -2.438337067962512e-10
+            ],
+            [
+              4.477771033916247e-10,
+              -3.989031020087787e-11,
+              38461.312528540635
+            ]
+          ],
+          "finite_difference": [
+            [
+              61887.21248179262,
+              61887.21248179262,
+              0
+            ],
+            [
+              126225.5750020813,
+              126225.57503050301,
+              0
+            ],
+            [
+              2.0394339653012756e-10,
+              2.0394339663110176e-10,
+              38461.31287384645
+            ]
+          ],
+          "relative_frobenius_gap": 1.711592060832555e-09,
+          "branches": [
+            {
+              "column": 0,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                61887.21249600348,
+                126225.57505892472,
+                2.0394339668158885e-10
+              ],
+              "backward_derivative": [
+                61887.21246758177,
+                126225.57494523788,
+                2.0394339637866627e-10
+              ]
+            },
+            {
+              "column": 1,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                61887.21249600348,
+                126225.57511576814,
+                2.0394339688353725e-10
+              ],
+              "backward_derivative": [
+                61887.21246758177,
+                126225.57494523788,
+                2.0394339637866627e-10
+              ]
+            },
+            {
+              "column": 2,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                0.006906475391588174,
+                -0.006821210263296962,
+                38461.31255152707
+              ],
+              "backward_derivative": [
+                -0.006906475391588174,
+                0.006821210263296962,
+                38461.31319616583
+              ]
+            }
+          ]
+        },
+        {
+          "name": "small_reload_h3",
+          "probe_ok": true,
+          "h": 3e-09,
+          "returned": [
+            [
+              61887.212484145464,
+              61887.21248414547,
+              2.438337067962513e-10
+            ],
+            [
+              126225.57503170906,
+              126225.57503170906,
+              -2.438337067962512e-10
+            ],
+            [
+              4.477771033916247e-10,
+              -3.989031020087787e-11,
+              38461.312528540635
+            ]
+          ],
+          "finite_difference": [
+            [
+              61887.212486529585,
+              61887.212486529585,
+              0
+            ],
+            [
+              126225.57503050302,
+              126225.57502102912,
+              0
+            ],
+            [
+              2.0394339658061466e-10,
+              2.039433965469566e-10,
+              38461.31264310376
+            ]
+          ],
+          "relative_frobenius_gap": 5.684797703252466e-10,
+          "branches": [
+            {
+              "column": 0,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                61887.212486529585,
+                126225.57505892473,
+                2.0394339668158885e-10
+              ],
+              "backward_derivative": [
+                61887.212486529585,
+                126225.57500208131,
+                2.0394339647964046e-10
+              ]
+            },
+            {
+              "column": 1,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                61887.212486529585,
+                126225.57503997693,
+                2.0394339661427272e-10
+              ],
+              "backward_derivative": [
+                61887.212486529585,
+                126225.57500208131,
+                2.0394339647964046e-10
+              ]
+            },
+            {
+              "column": 2,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                0.02071942617476452,
+                -0.020709952271621052,
+                38461.31253566397
+              ],
+              "backward_derivative": [
+                -0.02071942617476452,
+                0.020709952271621052,
+                38461.312750543555
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "confined_phi20_high_plastic",
+      "phi": 20,
+      "expected_stress": [
+        611.8013969092898,
+        1276.39720618142,
+        0.0,
+        611.8013969092898
+      ],
+      "actual_stress": [
+        611.8013969092901,
+        1276.3972061814197,
+        1.0736841538602232e-12,
+        611.8013969092901
+      ],
+      "stress_max_abs_error": 1.0736841538602232e-12,
+      "plastic_volume_strain": 0.0,
+      "expected_plastic": true,
+      "ok": true,
+      "tangent_3x3": [
+        [
+          61887.212484145464,
+          61887.21248414547,
+          1.0736841538602231e-10
+        ],
+        [
+          126225.57503170906,
+          126225.57503170906,
+          -1.073684153860223e-10
+        ],
+        [
+          2.1130990792761543e-10,
+          -3.426922844429247e-12,
+          33229.79046360648
+        ]
+      ],
+      "tangent_asymmetry_abs": 64338.362547563585,
+      "symmetrized_normal_block_min_eigenvalue": -5349.146482904849,
+      "tangent_probes": [
+        {
+          "name": "total_increment",
+          "probe_ok": true,
+          "h": 1e-08,
+          "returned": [
+            [
+              61887.212484145464,
+              61887.21248414547,
+              1.0736841538602231e-10
+            ],
+            [
+              126225.57503170906,
+              126225.57503170906,
+              -1.073684153860223e-10
+            ],
+            [
+              2.1130990792761543e-10,
+              -3.426922844429247e-12,
+              33229.79046360648
+            ]
+          ],
+          "finite_difference": [
+            [
+              61887.2124846348,
+              61887.2124846348,
+              0
+            ],
+            [
+              126225.57502481868,
+              126225.57502481868,
+              0
+            ],
+            [
+              1.03941492533256e-10,
+              1.03941492533256e-10,
+              33229.79057561415
+            ]
+          ],
+          "relative_frobenius_gap": 5.577885102709599e-10,
+          "branches": [
+            {
+              "column": 0,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                61887.2124846348,
+                126225.57503618737,
+                1.0394149255345084e-10
+              ],
+              "backward_derivative": [
+                61887.2124846348,
+                126225.57501345,
+                1.0394149251306117e-10
+              ]
+            },
+            {
+              "column": 1,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                61887.2124846348,
+                126225.57503618737,
+                1.0394149255345084e-10
+              ],
+              "backward_derivative": [
+                61887.2124846348,
+                126225.57501345,
+                1.0394149251306117e-10
+              ]
+            },
+            {
+              "column": 2,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                0.016609646991128102,
+                -0.016621015674900264,
+                33229.79046824573
+              ],
+              "backward_derivative": [
+                -0.016609646991128102,
+                0.016621015674900264,
+                33229.790682982566
+              ]
+            }
+          ]
+        },
+        {
+          "name": "small_reload",
+          "probe_ok": true,
+          "h": 1e-09,
+          "returned": [
+            [
+              61887.212484145464,
+              61887.21248414547,
+              2.4383467742851575e-10
+            ],
+            [
+              126225.57503170906,
+              126225.57503170906,
+              -2.438346774285157e-10
+            ],
+            [
+              4.4777807402388917e-10,
+              -3.989128083314236e-11,
+              38461.46563202811
+            ]
+          ],
+          "finite_difference": [
+            [
+              61887.21249600348,
+              61887.21249600348,
+              0
+            ],
+            [
+              126225.57505892472,
+              126225.57505892472,
+              0
+            ],
+            [
+              2.0394339668158885e-10,
+              2.0394339647964046e-10,
+              38461.46672328684
+            ]
+          ],
+          "relative_frobenius_gap": 5.392992337468672e-09,
+          "branches": [
+            {
+              "column": 0,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                61887.21249600348,
+                126225.5752862984,
+                2.0394339748938242e-10
+              ],
+              "backward_derivative": [
+                61887.21249600348,
+                126225.57483155104,
+                2.039433958737953e-10
+              ]
+            },
+            {
+              "column": 1,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                61887.21249600348,
+                126225.57505892472,
+                2.0394339668158885e-10
+              ],
+              "backward_derivative": [
+                61887.21249600348,
+                126225.57505892472,
+                2.0394339627769207e-10
+              ]
+            },
+            {
+              "column": 2,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                0.0022737367544323206,
+                -0.0022737367544323206,
+                38461.46572337796
+              ],
+              "backward_derivative": [
+                -0.0022737367544323206,
+                0.0022737367544323206,
+                38461.46772319571
+              ]
+            }
+          ]
+        },
+        {
+          "name": "small_reload_h3",
+          "probe_ok": true,
+          "h": 3e-09,
+          "returned": [
+            [
+              61887.212484145464,
+              61887.21248414547,
+              2.4383467742851575e-10
+            ],
+            [
+              126225.57503170906,
+              126225.57503170906,
+              -2.438346774285157e-10
+            ],
+            [
+              4.4777807402388917e-10,
+              -3.989128083314236e-11,
+              38461.46563202811
+            ]
+          ],
+          "finite_difference": [
+            [
+              61887.212496003485,
+              61887.212496003485,
+              0
+            ],
+            [
+              126225.57509682035,
+              126225.57502102912,
+              0
+            ],
+            [
+              2.03943396748905e-10,
+              2.0394339647964046e-10,
+              38461.46598289456
+            ]
+          ],
+          "relative_frobenius_gap": 1.765012626490328e-09,
+          "branches": [
+            {
+              "column": 0,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                61887.212496003485,
+                126225.57513471595,
+                2.0394339695085339e-10
+              ],
+              "backward_derivative": [
+                61887.212496003485,
+                126225.57505892473,
+                2.039433965469566e-10
+              ]
+            },
+            {
+              "column": 1,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                61887.212496003485,
+                126225.57498313351,
+                2.0394339641232432e-10
+              ],
+              "backward_derivative": [
+                61887.212496003485,
+                126225.57505892473,
+                2.039433965469566e-10
+              ]
+            },
+            {
+              "column": 2,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                0.0066696278130014735,
+                -0.0066696278130014735,
+                38461.465624996374
+              ],
+              "backward_derivative": [
+                -0.0066696278130014735,
+                0.0066696278130014735,
+                38461.46634079274
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "pure_shear_elastic",
+      "phi": 0,
+      "expected_stress": [
+        0.0,
+        0.0,
+        3.8461538461538463,
+        0.0
+      ],
+      "actual_stress": [
+        0,
+        0,
+        3.8461538461538463,
+        0
+      ],
+      "stress_max_abs_error": 0.0,
+      "plastic_volume_strain": 0,
+      "expected_plastic": false,
+      "ok": true,
+      "tangent_3x3": [
+        [
+          134615.38461538462,
+          57692.30769230769,
+          0
+        ],
+        [
+          57692.30769230769,
+          134615.38461538462,
+          0
+        ],
+        [
+          0,
+          0,
+          38461.53846153846
+        ]
+      ],
+      "tangent_asymmetry_abs": 0.0,
+      "symmetrized_normal_block_min_eigenvalue": 76923.07692307694,
+      "tangent_probes": [
+        {
+          "name": "total_increment",
+          "probe_ok": true,
+          "h": 1e-08,
+          "returned": [
+            [
+              134615.38461538462,
+              57692.30769230769,
+              0
+            ],
+            [
+              57692.30769230769,
+              134615.38461538462,
+              0
+            ],
+            [
+              0,
+              0,
+              38461.53846153846
+            ]
+          ],
+          "finite_difference": [
+            [
+              134615.38461538462,
+              57692.30769230769,
+              0
+            ],
+            [
+              57692.30769230769,
+              134615.38461538462,
+              0
+            ],
+            [
+              0,
+              0,
+              38461.53846152056
+            ]
+          ],
+          "relative_frobenius_gap": 8.496459432361242e-14,
+          "branches": [
+            {
+              "column": 0,
+              "plus_elastic": true,
+              "minus_elastic": true,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                134615.38461538462,
+                57692.30769230769,
+                0.0
+              ],
+              "backward_derivative": [
+                134615.38461538462,
+                57692.30769230769,
+                0.0
+              ]
+            },
+            {
+              "column": 1,
+              "plus_elastic": true,
+              "minus_elastic": true,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                57692.30769230769,
+                134615.38461538462,
+                0.0
+              ],
+              "backward_derivative": [
+                57692.30769230769,
+                134615.38461538462,
+                0.0
+              ]
+            },
+            {
+              "column": 2,
+              "plus_elastic": true,
+              "minus_elastic": true,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                0.0,
+                0.0,
+                38461.53846152056
+              ],
+              "backward_derivative": [
+                0.0,
+                0.0,
+                38461.53846152056
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "pure_shear_plastic",
+      "phi": 0,
+      "expected_stress": [
+        0.0,
+        0.0,
+        10.0,
+        0.0
+      ],
+      "actual_stress": [
+        -3.441691376337985e-14,
+        3.441691376337985e-14,
+        10,
+        0
+      ],
+      "stress_max_abs_error": 3.441691376337985e-14,
+      "plastic_volume_strain": 0.0,
+      "expected_plastic": true,
+      "ok": true,
+      "tangent_3x3": [
+        [
+          106153.84615384619,
+          86153.84615384619,
+          3.454186806375881e-11
+        ],
+        [
+          86153.84615384619,
+          106153.84615384619,
+          -3.454186806375881e-11
+        ],
+        [
+          3.4541868063758814e-11,
+          -3.4541868063758814e-11,
+          1.1931406493341204e-25
+        ]
+      ],
+      "tangent_asymmetry_abs": 6.462348535570529e-27,
+      "symmetrized_normal_block_min_eigenvalue": 20000.0,
+      "tangent_probes": [
+        {
+          "name": "total_increment",
+          "probe_ok": true,
+          "h": 1e-08,
+          "returned": [
+            [
+              106153.84615384619,
+              86153.84615384619,
+              3.454186806375881e-11
+            ],
+            [
+              86153.84615384619,
+              106153.84615384619,
+              -3.454186806375881e-11
+            ],
+            [
+              3.4541868063758814e-11,
+              -3.4541868063758814e-11,
+              1.1931406493341204e-25
+            ]
+          ],
+          "finite_difference": [
+            [
+              106153.84615187961,
+              86153.84615585642,
+              0
+            ],
+            [
+              86153.84615585642,
+              106153.84615187961,
+              0
+            ],
+            [
+              0,
+              0,
+              -8.881784197001252e-08
+            ]
+          ],
+          "relative_frobenius_gap": 2.057482226698543e-11,
+          "branches": [
+            {
+              "column": 0,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                106153.84615687562,
+                86153.84615086041,
+                -0.05000000413701855
+              ],
+              "backward_derivative": [
+                106153.8461468836,
+                86153.84616085242,
+                0.05000000413701855
+              ]
+            },
+            {
+              "column": 1,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                86153.84616085242,
+                106153.8461468836,
+                -0.05000000413701855
+              ],
+              "backward_derivative": [
+                86153.84615086041,
+                106153.84615687562,
+                0.05000000413701855
+              ]
+            },
+            {
+              "column": 2,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "backward_derivative": [
+                0.0,
+                0.0,
+                -1.7763568394002505e-07
+              ]
+            }
+          ]
+        },
+        {
+          "name": "small_reload",
+          "probe_ok": true,
+          "h": 1e-09,
+          "returned": [
+            [
+              134600.59740336557,
+              57707.09490432674,
+              6.036892719346911e-12
+            ],
+            [
+              57707.09490432674,
+              134600.59740336557,
+              -6.036892719346911e-12
+            ],
+            [
+              6.036892719346912e-12,
+              -6.036892719346912e-12,
+              9.479103570645464e-28
+            ]
+          ],
+          "finite_difference": [
+            [
+              134600.59738695793,
+              57707.09492219916,
+              0
+            ],
+            [
+              57707.09492219916,
+              134600.59738695793,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "relative_frobenius_gap": 1.6566662147228233e-10,
+          "branches": [
+            {
+              "column": 0,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                134600.5973722475,
+                57707.09493690962,
+                -0.07390710266008682
+              ],
+              "backward_derivative": [
+                134600.5974016684,
+                57707.0949074887,
+                0.07390710266008682
+              ]
+            },
+            {
+              "column": 1,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                57707.0949074887,
+                134600.5974016684,
+                -0.07390710266008682
+              ],
+              "backward_derivative": [
+                57707.09493690962,
+                134600.5973722475,
+                0.07390710266008682
+              ]
+            },
+            {
+              "column": 2,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "backward_derivative": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          ]
+        },
+        {
+          "name": "small_reload_h3",
+          "probe_ok": true,
+          "h": 3e-09,
+          "returned": [
+            [
+              134600.59740336557,
+              57707.09490432674,
+              6.036892719346911e-12
+            ],
+            [
+              57707.09490432674,
+              134600.59740336557,
+              -6.036892719346911e-12
+            ],
+            [
+              6.036892719346912e-12,
+              -6.036892719346912e-12,
+              9.479103570645464e-28
+            ]
+          ],
+          "finite_difference": [
+            [
+              134600.59739552517,
+              57707.094912447705,
+              0
+            ],
+            [
+              57707.094912447705,
+              134600.59739552517,
+              0
+            ],
+            [
+              2.9605947323337506e-07,
+              -2.9605947323337506e-07,
+              0
+            ]
+          ],
+          "relative_frobenius_gap": 7.710521363402285e-11,
+          "branches": [
+            {
+              "column": 0,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                134600.59739034413,
+                57707.09491762875,
+                -0.2217224922181534
+              ],
+              "backward_derivative": [
+                134600.5974007062,
+                57707.09490726666,
+                0.22172308433709986
+              ]
+            },
+            {
+              "column": 1,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                57707.09490726666,
+                134600.5974007062,
+                -0.22172308433709986
+              ],
+              "backward_derivative": [
+                57707.09491762875,
+                134600.59739034413,
+                0.2217224922181534
+              ]
+            },
+            {
+              "column": 2,
+              "plus_elastic": false,
+              "minus_elastic": false,
+              "plus_message": null,
+              "minus_message": null,
+              "forward_derivative": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "backward_derivative": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "built_in_material_self_test": true,
+  "built_in_edge_self_test": true,
+  "selftest_inputs_trial_repair": false,
+  "built_in_failure_rows": []
+}

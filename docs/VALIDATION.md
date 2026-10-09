@@ -1,5 +1,7 @@
 # 動作確認と修正記録
 
+現在のINCONSISTENT接線・非対称ソルバと非収束判定は [修正報告](INCONSISTENT_REPAIR.md) と [検証集計](inconsistent-evidence/verification_summary.json) を参照してください。以下には過去の版の検証も含みます。
+
 ## 文献・理論解との比較（2026-10-09）
 
 [文献検証報告](LITERATURE_VALIDATION.md) に、5つの弾性載荷条件とGriffiths・Pruškaの乾燥SRM斜面、メッシュと流れ則の比較をまとめました。弾性の変位・応力・反力は理論式と一致しました。SRMは全般の正解性を認定したものではありません。INCONSISTENTでの早い非収束、DAVISの強度換算・関連流れへの置換、近限界の大変位、Pruškaの初期応力の相違を分けて記録しています。実行済みのケースと生ログ・再実行スクリプトを同梱しています。

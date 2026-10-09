@@ -14,7 +14,7 @@
 ' RCM reorders internal DOFs; CSV I/O always uses original node/DOF ids.
 '
 Public Type Material_Data '材料データ
-  Young As Double         'ヤング率
+  young As Double         'ヤング率
   Poisson As Double       'ポアソン比
   thickness As Double     '厚さ
   weight As Double       '重さ
@@ -41,7 +41,7 @@ End Type
 Public Type P2_MaterialPointInput
   PreviousStress(3) As Double '確定応力 sx, sy, txy, sz。添え字3はσz
   StrainIncrement(2) As Double '今回の工学ひずみ増分 ex, ey, gxy。εz=0
-  Young As Double
+  young As Double
   Poisson As Double
   frictionAngle As Double '度
   cohesion As Double
@@ -64,7 +64,8 @@ End Type
 Public Type P2_MaterialPointOutput
   TrialStress(3) As Double 'sx, sy, txy, sz
   Stress(3) As Double 'sx, sy, txy, sz
-  Tangent(2, 2) As Double
+  tangent(2, 2) As Double
+  AlgorithmicTangentReady As Boolean
   PlasticStrain(3) As Double 'ex, ey, gxy, ez
   PlasticMultiplier As Double
   TrialYieldFunction As Double
@@ -244,7 +245,16 @@ Public P3FosFail As Double
 Public P3FosMid As Double
 Public P3FosWidth As Double
 Public P3FosBracket As Boolean
-Public Const FEM_BUILD_STAMP As String = "20261009_BEST_03_R1"
+Public P3FosInterpretation As String
+Public P3SrmTrialClassification As String
+Public P3FailureKind As String
+Public P3FailureLambda As Double
+Public P3FailureResidual As Double
+Public P3FailureLinearResidual As Double
+Public P3FailureCorrection As Double
+Public P3FailurePlasticPoints As Long
+Public P3FailureMaxDisp As Double
+Public Const FEM_BUILD_STAMP As String = "20261009_INCO_14"
 Public Const P1_FORMULATION_PLANE_STRESS As String = "PLANE_STRESS_2D"
 Public Const P1_FORMULATION_PLANE_STRAIN As String = "PLANE_STRAIN_2D"
 Public Const P1_RESULT_COUNT As Long = 22
@@ -275,8 +285,8 @@ Public Const P2_DEFAULT_TOLERANCE As Double = 0.0000000001
 Public Const P2_DEFAULT_MAX_ITERATIONS As Long = 25
 Public Const P2_DEFAULT_MAX_SUBSTEPS As Long = 8
 Public Const FEM_INTEGRATED_RESULT_SHEET As String = "診断"
-Public Const FEM_DIAGNOSTIC_LAST_ROW As Long = 141
-Public Const FEM_INTEGRATED_P1_START_ROW As Long = 145
+Public Const FEM_DIAGNOSTIC_LAST_ROW As Long = 150
+Public Const FEM_INTEGRATED_P1_START_ROW As Long = 154
 Public Const FEM_INTEGRATED_P2_TEST_START_ROW As Long = 1
 Public Const FEM_INTEGRATED_P2_TEST_START_COLUMN As Long = 40
 Public Const FEM_INTEGRATED_P2_TEST_END_ROW As Long = 50
@@ -504,6 +514,8 @@ Public Const P3_MIN_STEP_FACTOR As Double = 0.000001
 Public Const P3_STEP_GROWTH As Double = 2#
 Public Const P3_MAX_STEP_SIZE As Double = 0.2
 Public Const P3_LINESEARCH_MAX As Long = 4
+Public Const P3_INCO_LINESEARCH_MAX As Long = 16
+Public Const P3_INCO_MAX_GLOBAL_ITERATIONS As Long = 100
 Public Const P3_RESIDUAL_TOLERANCE As Double = 0.00000001
 Public Const P3_INCREMENT_TOLERANCE As Double = 0.00000001
 Public Const P3_ENGINEERING_RESIDUAL As Double = 0.00001
@@ -1119,6 +1131,9 @@ Fail:
 End Function
 
 Public Sub ResetAnalysisState()
+  P3FosPass = 0#: P3FosFail = 0#: P3FosMid = 0#: P3FosWidth = 0#: P3FosBracket = False
+  P3FosInterpretation = "NOT_EVALUATED": P3SrmTrialClassification = "NONE"
+  P3ResetFailureDiagnostics
   Dim resultId As Long
   AnalysisOK = False
   ResultStatus = RESULT_NOT_RUN
@@ -1526,17 +1541,3 @@ Public Sub P6InvalidateActiveDependentCaches()
   P3ActiveSetGen = P3ActiveSetGen + 1
   If P3ActiveSetGen <= 0 Then P3ActiveSetGen = 1
 End Sub
-
-
-
-
-
-
-
-
-
-
-
-
-
-

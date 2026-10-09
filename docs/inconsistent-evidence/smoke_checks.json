@@ -1,0 +1,222 @@
+{
+  "status": "PASS",
+  "source_sha256": "21a6815238d694853ce4435ba6f4db7a0cdf56879b8f2eeadd981a24d56c26cd",
+  "records": [
+    {
+      "Case": "Case1",
+      "Variant": "off",
+      "Metrics": "PASS|True|1.05396715415204E-15|6|3|12|0|",
+      "MaxDisplacementDifference": 4.336808689942018e-19,
+      "DisplacementTolerance": 3.4253637982968287e-06,
+      "AccelerationDisplacementDifference": 0,
+      "RelativeReactionImbalance": 1.697024496881181e-16
+    },
+    {
+      "Case": "Case1",
+      "Variant": "V1_only",
+      "Metrics": "PASS|True|4.37416614178054E-15|6|3|2|0|",
+      "MaxDisplacementDifference": 4.336808689942018e-19,
+      "DisplacementTolerance": 3.4253637982968287e-06,
+      "AccelerationDisplacementDifference": 6.938893903907228e-18,
+      "RelativeReactionImbalance": 1.3318192666464323e-15
+    },
+    {
+      "Case": "Case1",
+      "Variant": "V2a_only",
+      "Metrics": "PASS|True|1.05396715415204E-15|6|3|12|0|",
+      "MaxDisplacementDifference": 4.336808689942018e-19,
+      "DisplacementTolerance": 3.4253637982968287e-06,
+      "AccelerationDisplacementDifference": 0,
+      "RelativeReactionImbalance": 1.697024496881181e-16
+    },
+    {
+      "Case": "Case1",
+      "Variant": "fixed_pair",
+      "Metrics": "PASS|True|4.37416614178054E-15|6|3|2|0|",
+      "MaxDisplacementDifference": 4.336808689942018e-19,
+      "DisplacementTolerance": 3.4253637982968287e-06,
+      "AccelerationDisplacementDifference": 6.938893903907228e-18,
+      "RelativeReactionImbalance": 1.3318192666464323e-15
+    },
+    {
+      "Case": "Case1",
+      "Variant": "adaptive_pool",
+      "Metrics": "PASS|True|4.37416614178054E-15|6|3|2|0|",
+      "MaxDisplacementDifference": 4.336808689942018e-19,
+      "DisplacementTolerance": 3.4253637982968287e-06,
+      "AccelerationDisplacementDifference": 6.938893903907228e-18,
+      "RelativeReactionImbalance": 1.3318192666464323e-15
+    },
+    {
+      "Case": "Case1",
+      "Variant": "adaptive_no_recovery",
+      "Metrics": "PASS|True|4.37416614178054E-15|6|3|2|0|",
+      "MaxDisplacementDifference": 4.336808689942018e-19,
+      "DisplacementTolerance": 3.4253637982968287e-06,
+      "AccelerationDisplacementDifference": 6.938893903907228e-18,
+      "RelativeReactionImbalance": 1.3318192666464323e-15
+    },
+    {
+      "Case": "Case2",
+      "Variant": "off",
+      "Metrics": "PASS|True|2.71604081498375E-09|7|16|16|28|",
+      "MaxDisplacementDifference": 1.4823181426412702e-07,
+      "DisplacementTolerance": 5.444436503007074e-05,
+      "AccelerationDisplacementDifference": 0,
+      "RelativeReactionImbalance": 1.0806099639178846e-13
+    },
+    {
+      "Case": "Case2",
+      "Variant": "V1_only",
+      "Metrics": "PASS|True|5.62934462194752E-08|7|14|6|28|",
+      "MaxDisplacementDifference": 5.831304651959454e-06,
+      "DisplacementTolerance": 5.444436503007074e-05,
+      "AccelerationDisplacementDifference": 1.902592423885796e-09,
+      "RelativeReactionImbalance": 6.119951024421879e-12
+    },
+    {
+      "Case": "Case2",
+      "Variant": "V2a_only",
+      "Metrics": "PASS|True|3.04059028676031E-09|7|13|19|28|",
+      "MaxDisplacementDifference": 1.508182878515174e-07,
+      "DisplacementTolerance": 5.444436503007074e-05,
+      "AccelerationDisplacementDifference": 3.746187561548542e-11,
+      "RelativeReactionImbalance": 9.270258403993033e-14
+    },
+    {
+      "Case": "Case2",
+      "Variant": "fixed_pair",
+      "Metrics": "PASS|True|5.62934578229412E-08|7|13|7|28|",
+      "MaxDisplacementDifference": 5.831304575468557e-06,
+      "DisplacementTolerance": 5.444436503007074e-05,
+      "AccelerationDisplacementDifference": 1.9021294799664856e-09,
+      "RelativeReactionImbalance": 6.120058715922571e-12
+    },
+    {
+      "Case": "Case2",
+      "Variant": "adaptive_pool",
+      "Metrics": "PASS|True|5.62934578229412E-08|7|13|7|28|",
+      "MaxDisplacementDifference": 5.831304575468557e-06,
+      "DisplacementTolerance": 5.444436503007074e-05,
+      "AccelerationDisplacementDifference": 1.9021294799664856e-09,
+      "RelativeReactionImbalance": 6.120058715922571e-12
+    },
+    {
+      "Case": "Case2",
+      "Variant": "adaptive_no_recovery",
+      "Metrics": "PASS|True|5.62934578229412E-08|7|13|7|28|",
+      "MaxDisplacementDifference": 5.831304575468557e-06,
+      "DisplacementTolerance": 5.444436503007074e-05,
+      "AccelerationDisplacementDifference": 1.9021294799664856e-09,
+      "RelativeReactionImbalance": 6.120058715922571e-12
+    },
+    {
+      "Case": "Case3",
+      "Variant": "off",
+      "Metrics": "PASS|True|1.46030213027265E-09|7|24|26|36|",
+      "MaxDisplacementDifference": 1.2385559398399304e-07,
+      "DisplacementTolerance": 6.35725025843499e-05,
+      "AccelerationDisplacementDifference": 0,
+      "RelativeReactionImbalance": 4.591475189699237e-10
+    },
+    {
+      "Case": "Case3",
+      "Variant": "V1_only",
+      "Metrics": "PASS|True|5.35674293889289E-10|6|14|15|36|",
+      "MaxDisplacementDifference": 2.7354397496636568e-05,
+      "DisplacementTolerance": 6.35725025843499e-05,
+      "AccelerationDisplacementDifference": 2.7301705635614584e-05,
+      "RelativeReactionImbalance": 5.985898747886755e-13
+    },
+    {
+      "Case": "Case3",
+      "Variant": "V2a_only",
+      "Metrics": "PASS|True|1.44250948600403E-09|7|19|31|36|",
+      "MaxDisplacementDifference": 1.239344556338423e-07,
+      "DisplacementTolerance": 6.35725025843499e-05,
+      "AccelerationDisplacementDifference": 1.023944817823974e-12,
+      "RelativeReactionImbalance": 4.553179860584102e-10
+    },
+    {
+      "Case": "Case3",
+      "Variant": "fixed_pair",
+      "Metrics": "PASS|True|5.35674293889289E-10|6|14|15|36|",
+      "MaxDisplacementDifference": 2.735450732873658e-05,
+      "DisplacementTolerance": 6.35725025843499e-05,
+      "AccelerationDisplacementDifference": 2.7301705635614584e-05,
+      "RelativeReactionImbalance": 5.985898747886755e-13
+    },
+    {
+      "Case": "Case3",
+      "Variant": "adaptive_pool",
+      "Metrics": "PASS|True|5.35674293889289E-10|6|14|15|36|",
+      "MaxDisplacementDifference": 2.735450732873658e-05,
+      "DisplacementTolerance": 6.35725025843499e-05,
+      "AccelerationDisplacementDifference": 2.7301705635614584e-05,
+      "RelativeReactionImbalance": 5.985898747886755e-13
+    },
+    {
+      "Case": "Case3",
+      "Variant": "adaptive_no_recovery",
+      "Metrics": "PASS|True|5.35674293889289E-10|6|14|15|36|",
+      "MaxDisplacementDifference": 2.735450732873658e-05,
+      "DisplacementTolerance": 6.35725025843499e-05,
+      "AccelerationDisplacementDifference": 2.7301705635614584e-05,
+      "RelativeReactionImbalance": 5.985898747886755e-13
+    },
+    {
+      "Case": "Case4",
+      "Variant": "off",
+      "Metrics": "PASS|True|1.66834164362374E-10|7|14|16|42|",
+      "MaxDisplacementDifference": 2.196468125176959e-05,
+      "DisplacementTolerance": 5.556201669583238e-05,
+      "AccelerationDisplacementDifference": 0,
+      "RelativeReactionImbalance": 5.733559407046989e-14
+    },
+    {
+      "Case": "Case4",
+      "Variant": "V1_only",
+      "Metrics": "PASS|True|1.23203634903558E-10|7|14|9|42|",
+      "MaxDisplacementDifference": 6.735067010002482e-08,
+      "DisplacementTolerance": 5.556201669583238e-05,
+      "AccelerationDisplacementDifference": 2.196101648300683e-05,
+      "RelativeReactionImbalance": 2.7388662879114407e-14
+    },
+    {
+      "Case": "Case4",
+      "Variant": "V2a_only",
+      "Metrics": "PASS|True|1.67109011632061E-10|7|11|19|42|",
+      "MaxDisplacementDifference": 2.1964697757925408e-05,
+      "DisplacementTolerance": 5.556201669583238e-05,
+      "AccelerationDisplacementDifference": 5.057065877167588e-14,
+      "RelativeReactionImbalance": 5.720792819086154e-14
+    },
+    {
+      "Case": "Case4",
+      "Variant": "fixed_pair",
+      "Metrics": "PASS|True|1.23203626517664E-10|7|13|10|42|",
+      "MaxDisplacementDifference": 6.737831297412566e-08,
+      "DisplacementTolerance": 5.556201669583238e-05,
+      "AccelerationDisplacementDifference": 2.1961016509561976e-05,
+      "RelativeReactionImbalance": 2.7312736971303388e-14
+    },
+    {
+      "Case": "Case4",
+      "Variant": "adaptive_pool",
+      "Metrics": "PASS|True|1.23203626517664E-10|7|13|10|42|",
+      "MaxDisplacementDifference": 6.737831297412566e-08,
+      "DisplacementTolerance": 5.556201669583238e-05,
+      "AccelerationDisplacementDifference": 2.1961016509561976e-05,
+      "RelativeReactionImbalance": 2.7312736971303388e-14
+    },
+    {
+      "Case": "Case4",
+      "Variant": "adaptive_no_recovery",
+      "Metrics": "PASS|True|1.23203626517664E-10|7|13|10|42|",
+      "MaxDisplacementDifference": 6.737831297412566e-08,
+      "DisplacementTolerance": 5.556201669583238e-05,
+      "AccelerationDisplacementDifference": 2.1961016509561976e-05,
+      "RelativeReactionImbalance": 2.7312736971303388e-14
+    }
+  ]
+}

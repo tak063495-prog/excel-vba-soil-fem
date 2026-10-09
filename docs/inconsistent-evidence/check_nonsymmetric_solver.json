@@ -1,0 +1,313 @@
+{
+  "source": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work\\github-excel-vba-soil-fem\\tests\\inconsistent\\..\\..\\workbook\\2DSoilFEM_20261008_practical.xlsm",
+  "source_sha256": "21A6815238D694853CE4435BA6F4DB7A0CDF56879B8F2EEADD981A24D56C26CD",
+  "results": [
+    {
+      "case": 1,
+      "path": "public",
+      "ok": true,
+      "iterative_residual": 0,
+      "dense_residual": 0,
+      "displacement": [
+        3
+      ]
+    },
+    {
+      "case": 1,
+      "path": "private",
+      "ok": true,
+      "iterative_residual": 0,
+      "dense_residual": 0,
+      "displacement": [
+        3
+      ]
+    },
+    {
+      "case": 2,
+      "path": "public",
+      "ok": true,
+      "iterative_residual": 4.4408920985006264e-17,
+      "dense_residual": 2.220446049250313e-16,
+      "displacement": [
+        2,
+        -0.9999999999999999
+      ]
+    },
+    {
+      "case": 2,
+      "path": "private",
+      "ok": true,
+      "iterative_residual": 0,
+      "dense_residual": 0,
+      "displacement": [
+        2,
+        -1
+      ]
+    },
+    {
+      "case": 3,
+      "path": "public",
+      "ok": true,
+      "iterative_residual": 5.15373391239446e-17,
+      "dense_residual": 8.881784197001252e-16,
+      "displacement": [
+        1,
+        2,
+        -1.0000000000000002,
+        3
+      ]
+    },
+    {
+      "case": 3,
+      "path": "private",
+      "ok": true,
+      "iterative_residual": 7.212753419787372e-11,
+      "dense_residual": 1.2430234162199989e-09,
+      "displacement": [
+        0.9999999999439789,
+        2.000000000140516,
+        -1.0000000004138347,
+        2.9999999998308873
+      ]
+    },
+    {
+      "case": 4,
+      "path": "public",
+      "ok": true,
+      "iterative_residual": 0,
+      "dense_residual": 0,
+      "displacement": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "case": 4,
+      "path": "private",
+      "ok": true,
+      "iterative_residual": 0,
+      "dense_residual": 0,
+      "displacement": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "case": 5,
+      "path": "public",
+      "ok": false,
+      "iterative_residual": 1e+100,
+      "dense_residual": 513.4014024133553,
+      "displacement": [
+        77,
+        78
+      ]
+    },
+    {
+      "case": 5,
+      "path": "private",
+      "ok": false,
+      "iterative_residual": 1203.6252853717417,
+      "dense_residual": 513.4014024133553,
+      "displacement": [
+        77,
+        78
+      ]
+    },
+    {
+      "case": 6,
+      "path": "public",
+      "ok": true,
+      "iterative_residual": 0,
+      "dense_residual": 0,
+      "displacement": [
+        0.5,
+        -0.25,
+        2
+      ]
+    },
+    {
+      "case": 6,
+      "path": "private",
+      "ok": true,
+      "iterative_residual": 2.296177921733078e-16,
+      "dense_residual": 4.76837158203125e-07,
+      "displacement": [
+        0.5,
+        -0.25,
+        2.0000000000000004
+      ]
+    },
+    {
+      "case": 7,
+      "path": "public",
+      "ok": false,
+      "iterative_residual": 1e+100,
+      "dense_residual": 329.56031314465037,
+      "displacement": [
+        77,
+        78
+      ]
+    },
+    {
+      "case": 7,
+      "path": "private",
+      "ok": true,
+      "iterative_residual": 2.093456611578367e-16,
+      "dense_residual": 8.881784197001252e-16,
+      "displacement": [
+        2,
+        -1.0000000000000002
+      ]
+    },
+    {
+      "case": 8,
+      "path": "public",
+      "ok": true,
+      "iterative_residual": 0,
+      "dense_residual": 5.849050204022881e-25,
+      "displacement": [
+        2e-09,
+        -1e-09
+      ]
+    },
+    {
+      "case": 8,
+      "path": "private",
+      "ok": true,
+      "iterative_residual": 3.89936680268192e-16,
+      "dense_residual": 2.1089050423367604e-24,
+      "displacement": [
+        2.0000000000000005e-09,
+        -1.0000000000000007e-09
+      ]
+    },
+    {
+      "case": 9,
+      "path": "public",
+      "ok": true,
+      "iterative_residual": 0,
+      "dense_residual": 0,
+      "displacement": [
+        1,
+        2,
+        -1,
+        3,
+        -2
+      ]
+    },
+    {
+      "case": 9,
+      "path": "private",
+      "ok": true,
+      "iterative_residual": 8.129574933562825e-11,
+      "dense_residual": 1.899747425611815e-09,
+      "displacement": [
+        1.0000000002866445,
+        1.9999999998313271,
+        -1.0000000001887255,
+        3.0000000002434706,
+        -1.9999999998432065
+      ]
+    },
+    {
+      "case": 10,
+      "path": "public",
+      "ok": true,
+      "iterative_residual": 0,
+      "dense_residual": 0,
+      "displacement": [
+        2,
+        -1,
+        1
+      ]
+    },
+    {
+      "case": 10,
+      "path": "private",
+      "ok": true,
+      "iterative_residual": 1.4802973661668753e-16,
+      "dense_residual": 8.881784197001252e-16,
+      "displacement": [
+        2,
+        -0.9999999999999999,
+        1
+      ]
+    },
+    {
+      "case": 11,
+      "path": "public",
+      "ok": true,
+      "iterative_residual": 0,
+      "dense_residual": 0,
+      "displacement": [
+        2,
+        -1,
+        1
+      ]
+    },
+    {
+      "case": 11,
+      "path": "private",
+      "ok": true,
+      "iterative_residual": 1.5520101766615787e-16,
+      "dense_residual": 1.7763568394002505e-15,
+      "displacement": [
+        1.9999999999999996,
+        -1.0000000000000002,
+        1
+      ]
+    },
+    {
+      "case": 12,
+      "path": "public",
+      "ok": true,
+      "iterative_residual": 0,
+      "dense_residual": 0,
+      "displacement": [
+        2,
+        -1,
+        1
+      ]
+    },
+    {
+      "case": 12,
+      "path": "private",
+      "ok": true,
+      "iterative_residual": 1.320355640372324e-16,
+      "dense_residual": 1.7763568394002505e-15,
+      "displacement": [
+        2.0000000000000004,
+        -1,
+        0.9999999999999999
+      ]
+    },
+    {
+      "case": 13,
+      "path": "public",
+      "ok": true,
+      "iterative_residual": 0,
+      "dense_residual": 0,
+      "displacement": [
+        2,
+        -1,
+        1
+      ]
+    },
+    {
+      "case": 13,
+      "path": "private",
+      "ok": true,
+      "iterative_residual": 4.5324665183683945e-17,
+      "dense_residual": 2.482534153247273e-16,
+      "displacement": [
+        1.9999999999999998,
+        -1,
+        0.9999999999999999
+      ]
+    }
+  ],
+  "status": "PASS"
+}

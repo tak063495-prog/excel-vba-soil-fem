@@ -2,7 +2,7 @@
 
 [READMEへ](../README.md) · [操作説明書](USER_GUIDE.md) · [入力仕様](MODEL_INPUTS.md) · [設定一覧](SETTINGS_REFERENCE.md)
 
-対象は `20261009_BEST_03_R1` の実務ブックです。保存されている旧結果は再解析前の参考データです。
+対象は `20261009_INCO_14` の実務ブックです。保存されている旧結果は再解析前の参考データです。
 
 ## 目次
 
@@ -91,6 +91,8 @@ AUTOは選択値の最小〜最大、SYMMETRICは0を中心とする正負対称
 
 ## SRMのPASSFAILと限界状態
 
+`FOS_INTERPRETATION=UNDETERMINED`は、安全率を確定できなかった状態です。FSS・上限・中点・区間幅・表示Fsは0にし、停止原因を診断142〜150行とログに残します。最後に収束したFsは診断値であり、失敗後の結果表がそのFsの状態という意味ではありません。材料・線形解法・容量等の失敗を崩壊上限と扱いません。`NUMERICAL_BRACKET`も数値収束境界で、力学的破壊の確定とは区別します。[修正と検証の詳細](INCONSISTENT_REPAIR.md) を参照してください。
+
 SRM探索のPASSは、そのFsで数値的に計算を通過した側です。FAILは通過しなかった側です。探索結果は次の区間として読みます。
 
 |ログ項目|意味|
@@ -146,7 +148,7 @@ DEBUG_MODE=STAGEを通常の確認・比較の入口にします。ファイル�
 |manifest.csv|ステージ保存の記録。AUTO再開の選択にも使用|
 |band_lu_bench.csv|BAND_LU_BENCHを明示的に有効にした場合の比較試験|
 
-現在の方式の識別には `Ver=20261009_BEST_03_R1`、`AdaptivePolicy=ADAPT_03_RESTORED`、`StepRecoveryEnabled=False` を確認します。再利用の採算式は `ADAPT03_REPEATED_Q_ESTIMATE` です。`estimated_net_ms` は推定値で、実測の基準方式との差ではありません。[CSVヘッダーと出力](../src/vba/FEMIo.bas#L499)・[V2aログ定義](../src/vba/FEMPolicyLog.bas#L168)
+現在の方式の識別には `Ver=20261009_INCO_14`、`AdaptivePolicy=ADAPT_03_RESTORED`、`StepRecoveryEnabled=False` を確認します。再利用の採算式は `ADAPT03_REPEATED_Q_ESTIMATE` です。`estimated_net_ms` は推定値で、実測の基準方式との差ではありません。[CSVヘッダーと出力](../src/vba/FEMIo.bas#L499)・[V2aログ定義](../src/vba/FEMPolicyLog.bas#L168)
 
 ## 速度比較の手順
 

@@ -105,7 +105,7 @@ Private Sub FEMRebuildSettingsLayout(ByVal ws As Worksheet)
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "WEIGHT_MODE", "解析", "自重", "TOTAL", "TOTALのみ。全応力のγ。浮力・水位は未実装", True
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "Q8_HOURGLASS_FACTOR", "解析", "アワーグラス係数", 0.05, "0～1", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "RCM_POLICY", "解析", "RCM", "AUTO", "AUTO=帯幅が減るときだけ並び替え / ON=必ずRCM / OFF=入力順", True
-  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "FLOW_POLICY", "解析", "非関連の扱い", "INCONSISTENT", "INCONSISTENT=流れ則は非関連・接線は対称近似 / DAVIS=等価関連c*,φ*（JOINTには掛けない）", True
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "FLOW_POLICY", "解析", "非関連の扱い", "INCONSISTENT", "INCONSISTENT=非関連流れ・非対称整合接線・全Newton / DAVIS=等価関連c*,φ*（JOINTには掛けない）", True
   writeRow = writeRow + 1
   FEMPutSection ws, writeRow, "3. SRMパラメータ（実行の有無はステージシート）"
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "SRM_FMAX", "SRM", "上限Fs", 3#, "探索の上限", False
@@ -115,11 +115,11 @@ Private Sub FEMRebuildSettingsLayout(ByVal ws As Worksheet)
   writeRow = writeRow + 1
   FEMPutSection ws, writeRow, "高速化比較（0=従来経路、各方式を単独評価）"
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ACCEL_V1_PREDICTOR", "高速化", "変位予測子", 0, "0=基準 / 1=同一ステージの確定変位増分から予測", False
-  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ACCEL_V2A_REUSE", "高速化", "増分間接線再利用", 0, "0=基準 / 1=同一塑性集合・小接線変化で最初の補正に旧LU", False
-  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ACCEL_V2B_COST", "高速化", "費用に応じた接線更新", 0, "0=基準 / 1=実測費用と改善実績で限定再利用。上限3は維持", False
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ACCEL_V2A_REUSE", "高速化", "増分間接線再利用", 0, "DAVISで0=基準 / 1=旧LU再利用。INCONSISTENTは毎反復更新のため休止", False
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ACCEL_V2B_COST", "高速化", "費用に応じた接線更新", 0, "DAVISで費用に応じた限定再利用。INCONSISTENTは毎反復更新のため休止", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ACCEL_V3_COST_SEARCH", "高速化", "費用に応じたFs探索", 0, "0=二分 / 1=保護付き探索。最終実幅は基準二分以下", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ACCEL_V4_ANDERSON", "高速化", "Anderson深さ1", 0, "0=基準 / 1=凍結接線・未減衰区間のみ。悪化候補は棄却", False
-  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ACCEL_V5_GMRES_LU", "高速化", "旧LU前処理GMRES", 0, "0=Band LU / 1=最新帯行列＋旧LU。真の残差を確認しLUへ復帰", False
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ACCEL_V5_GMRES_LU", "高速化", "旧LU前処理GMRES", 0, "DAVISの旧LU前処理GMRES。INCONSISTENTは非対称LU＋右GMRESを自動選択", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ACCEL_TRACE", "高速化", "高速化詳細ログ", 0, "0=追加詳細OFF / 1=正確な更新理由・全増分・候補/復帰をsolver_events.csvへ", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ACCEL_PREDICT_BETA", "高速化", "予測子係数beta", 1, "検証用パラメータ 0～1。収束条件は変更しない", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ACCEL_PREDICT_MAX_RATIO", "高速化", "予測子刻み比上限", 1.5, "検証用パラメータ 0超～2。上限超は予測しない", False
@@ -131,7 +131,7 @@ Private Sub FEMRebuildSettingsLayout(ByVal ws As Worksheet)
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "OUTPUT_STAGE_MODE", "出力", "結果の残し方", "FINAL", "FINAL=最後だけ結果シートへ / ALL=各ステージを追記", True
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "OUTPUT_INACTIVE_ELEMENTS", "出力", "無効要素", "SKIP", "SKIP=Death中は出さない / INCLUDE=行は残しステージ番号だけ書く", True
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "DEBUG_MODE", "外部", "デバッグログ", "STAGE", "OFF=書かない / STAGE=ステージ境界 / ITER=反復も。*_out/run.log", True
-  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "SOLVER", "外部", "帯域ソルバ", "BAND_LU", "BAND_LU=標準 / BAND_LDLT_EXPERIMENTAL=影のLDLTをサンプル比較（本番はLUのまま）", True
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "SOLVER", "外部", "帯域ソルバ", "BAND_LU", "DAVISは対称帯LU。INCONSISTENTは非対称帯LU＋右GMRES（この選択値より優先）", True
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "BAND_LU_KERNEL", "外部", "Band LUカーネル", "NEW", "NEW=パックド1D（本番） / OLD=従来2D（回帰）。ログは BandLUKernel=", True
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "PHYSICAL_FAILURE_MODE", "外部", "物理破壊監視", "SHADOW", "未使用。GRAVITYは監視なし、SRMはSHADOWを解析入口で固定", True
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "DEBUG_FLUSH", "外部", "ログ書き出し間隔", 5#, "秒。長時間計算の監視用", False
@@ -367,7 +367,7 @@ Private Sub FEMIoTrimDiagnosticSheet()
   lastRow = ws.Cells(ws.rows.count, 1).End(xlUp).row
   If lastRow < ws.Cells(ws.rows.count, 4).End(xlUp).row Then lastRow = ws.Cells(ws.rows.count, 4).End(xlUp).row
   If lastRow > FEM_DIAGNOSTIC_LAST_ROW Then
-    ws.range(ws.Cells(FEM_INTEGRATED_P1_START_ROW, 1), ws.Cells(lastRow, 36)).ClearContents
+    ws.range(ws.Cells(FEM_DIAGNOSTIC_LAST_ROW + 1, 1), ws.Cells(lastRow, 36)).ClearContents
   End If
   lastRow = ws.Cells(ws.rows.count, 4).End(xlUp).row
   If lastRow > 80 Then
@@ -516,7 +516,7 @@ Private Function P6CsvHeaderSummary() As String
   s = "ver,fs,numerical_status,mechanical_status,elapsed_s,inc,newton,factor,reuse,umax,umax_over_H,limit_candidate,first_candidate_inc,first_candidate_umax,max_compliance_ratio,relres,energy"
   s = s & ",newton_policy,ls50_enabled,ls50_tried,ls50_ok,ls50_saved"
   s = s & ",ls50_gate_policy_reject,ls50_gate_disabled,ls50_gate_alpha_reject,ls50_gate_qls_reject,ls50_gate_cutback_reject,ls50_gate_active_reject,ls50_gate_residual_reject,ls50_gate_factor_invalid"
-  s = s & ",band_kernel,factor_avg_ms"
+  s = s & ",band_kernel,factor_avg_ms,trial_classification,failure_kind,failure_lambda,failure_relres,failure_linear_relres,failure_correction,failure_plastic_points,failure_umax"
   P6CsvHeaderSummary = s
 End Function
 
@@ -868,7 +868,7 @@ Private Sub P6WriteTrialCsv(ByVal statusText As String)
   P6PushLimitState
   numText = P6NumericalStatus(statusText)
   If P6Limit.candidate Then
-    mechText = "LIMIT_STATE"
+    mechText = "LIMIT_CANDIDATE"
   ElseIf numText = "CONVERGED" Then
     mechText = "STABLE"
   Else
@@ -882,8 +882,8 @@ Private Sub P6WriteTrialCsv(ByVal statusText As String)
   Else
     P3LastTrial.NumericalStatus = NS_UNKNOWN
   End If
-  If mechText = "LIMIT_STATE" Then
-    P3LastTrial.MechanicalStatus = MS_LIMIT_STATE
+  If mechText = "LIMIT_CANDIDATE" Then
+    P3LastTrial.MechanicalStatus = MS_UNKNOWN
   ElseIf mechText = "STABLE" Then
     P3LastTrial.MechanicalStatus = MS_STABLE
   Else
@@ -955,6 +955,10 @@ Private Sub P6WriteTrialCsv(ByVal statusText As String)
   lineText = lineText & "," & CStr(P6Ls50GateFactor - P6PerfMarkLs50GateFactor)
   lineText = lineText & "," & P6BandKernelName()
   lineText = lineText & "," & P6TrialFactorAvgText()
+  lineText = lineText & "," & FEMIoCsv(P3SrmTrialClassification) & "," & FEMIoCsv(P3FailureKind)
+  lineText = lineText & "," & Format$(P3FailureLambda, "0.000000000000") & "," & Format$(P3FailureResidual, "0.000E+00")
+  lineText = lineText & "," & Format$(P3FailureLinearResidual, "0.000E+00") & "," & Format$(P3FailureCorrection, "0.000E+00")
+  lineText = lineText & "," & CStr(P3FailurePlasticPoints) & "," & Format$(P3FailureMaxDisp, "0.000E+00")
   FEMIoAppendCsv "perf_summary.csv", P6CsvSummaryHeader, headerText, lineText
   FEMIoFlushPolicy statusText
 End Sub
@@ -1865,6 +1869,7 @@ Private Sub P6PerfWriteSummary()
   End If
   lineText = "ElapsedTotal=" & Format$(elapsed, "0.000") & " sec" & vbCrLf
   lineText = lineText & "SRMTrialCount=" & CStr(P3SrmTrialCount) & vbCrLf
+  lineText = lineText & "FOS_INTERPRETATION=" & P3FosInterpretation & vbCrLf
   lineText = lineText & "Fs1ReuseCount=" & CStr(P6SrmFs1ReuseCount) & vbCrLf
   lineText = lineText & "FOS_PASS=" & Format$(P3FosPass, "0.000") & vbCrLf
   If P3FosBracket Then
@@ -3336,7 +3341,7 @@ Private Sub FEMApplyListValidation(ByVal targetRange As range, ByVal listText As
     targetRange.Validation.InCellDropdown = True
     targetRange.Validation.ShowError = True
     targetRange.Validation.ErrorTitle = "入力値"
-    targetRange.Validation.ErrorMessage = "リストの値を選んでください。"
+    targetRange.Validation.errorMessage = "リストの値を選んでください。"
   End If
   Err.Clear
   On Error GoTo 0
@@ -3445,7 +3450,7 @@ Private Sub FEMApplyNumericValidation(ByVal targetRange As range, ByVal ruleText
     .IgnoreBlank = False
     .ShowError = True
     .ErrorTitle = "入力値"
-    .ErrorMessage = "F列の範囲内の数値を入力してください。"
+    .errorMessage = "F列の範囲内の数値を入力してください。"
   End With
 End Sub
 
@@ -3507,7 +3512,7 @@ Private Sub FEMEnsureSpecSheet()
   FEMSpecPut ws, rowNo, "設定", "剛体モード止め", "AUTO / NONE", "AUTO=底面の最小X節点をXY固定して剛体変位を止める"
   FEMSpecPut ws, rowNo, "設定", "自重", "TOTAL", "間隙水圧を考慮しない全応力解析。CONSOL_ENABLEの有効化は拒否"
   FEMSpecPut ws, rowNo, "設定", "RCM", "AUTO / ON / OFF", "帯幅縮小の節点並び替え。checkpointは元の節点番号で持つ"
-  FEMSpecPut ws, rowNo, "設定", "非関連の扱い", "INCONSISTENT / DAVIS", "INCONSISTENT=流れ則は非関連、接線は対称近似。DAVIS=等価関連c*,φ*。JOINTのc,φには掛けない"
+  FEMSpecPut ws, rowNo, "設定", "非関連の扱い", "INCONSISTENT / DAVIS", "INCONSISTENT=非関連流れ・非対称整合接線・全Newton。DAVIS=等価関連c*,φ*。JOINTのc,φには掛けない"
   FEMSpecPut ws, rowNo, "設定", "ψの扱い", "CAP / REDUCE / KEEP", "SRM時のダイレタンシー。CAP=φ'以下、REDUCE=Fsで低減、KEEP=入力のまま"
   FEMSpecPut ws, rowNo, "設定", "SRMモード", "REAPPLY", "各Fs試行で先行ステージを再実行する"
   FEMSpecPut ws, rowNo, "設定", "結果の残し方", "FINAL / ALL", "FINAL=最後だけ結果シートへ。ALL=各ステージを追記"

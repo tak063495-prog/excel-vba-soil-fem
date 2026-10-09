@@ -1,6 +1,6 @@
 # 文献ケースの再実行
 
-配布版 `20261009_BEST_03_R1` に対する、2026-10-09の検証用入力です。結果の評価・出典・論文と異なる条件は [文献検証報告](../../docs/LITERATURE_VALIDATION.md) を参照してください。SRMの数値PASSは論文との一致や力学的安定の認定ではありません。
+文献条件を座標化した検証用入力です。同梱の旧ケースZIPと文献検証報告は `20261009_BEST_03_R1` の結果を記録しています。下記の自動実行は現行配布ブックを使います。INCONSISTENTの材料・反復・判定の更新後は [修正検証報告](../../docs/INCONSISTENT_REPAIR.md) を参照してください。結果の評価・出典・論文と異なる条件は [文献検証報告](../../docs/LITERATURE_VALIDATION.md) を参照してください。SRMの数値PASSは論文との一致や力学的安定の認定ではありません。
 
 ## 検証ブックを使う
 
@@ -24,7 +24,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tests/literature/run_cases.p
 # 破壊付近は微小増分が多く、長時間かかります。
 powershell -NoProfile -ExecutionPolicy Bypass -File tests/literature/run_cases.ps1 -Mode SRM -FlowPolicy DAVIS
 
-# 論文のpsi=0を直接用いる対称接線近似との比較
+# 論文のpsi=0を直接用いる非対称接線での検証
 powershell -NoProfile -ExecutionPolicy Bypass -File tests/literature/run_cases.ps1 -Mode SRM -Names griffiths_1999_coarse -FlowPolicy INCONSISTENT
 
 python tests/literature/analyze_results.py --output tests/tmp/literature_validation
@@ -68,14 +68,14 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tests/literature/check_mater
 python tests/literature/analyze_material_points.py --output tests/tmp/literature_material
 ```
 
-配布R1では、独立の7照合はPASSですが、内蔵自己テストの2つの引張入力の期待結果に不整合があり、解析スクリプトは終了値1でこれを報告します。`material_point_checks.json` の `independent_ok` と内蔵試験の結果を分けて確認してください。材料モデル全般の合格を表示する仕組みではありません。
+旧R1の記録では、独立の7照合はPASSですが、内蔵自己テストの2つの引張入力の期待結果に不整合があり、解析スクリプトは終了値1でこれを報告します。`material_point_checks.json` の `independent_ok` と内蔵試験の結果を分けて確認してください。材料モデル全般の合格を表示する仕組みではありません。
 
-同じ記録に、材料サブステップを使わない接線の中心差分照合を含めています。塑性点からの微小再載荷と2つの差分幅を使い、前進・後退差分と分岐メッセージも保存します。今回、一部の状態で19～22%の差が残りました。稜線では接線の一意性にも注意が必要で、単純な合否閾値で材料モデル全体を認定していません。
+旧R1の記録に、材料サブステップを使わない接線の中心差分照合を含めています。塑性点からの微小再載荷と2つの差分幅を使い、前進・後退差分と分岐メッセージも保存します。今回、一部の状態で19～22%の差が残りました。稜線では接線の一意性にも注意が必要で、単純な合否閾値で材料モデル全体を認定していません。
 
-自己テスト入力だけの修正候補は、次のように別の保存先のコピーで確認できます。計算部の材料更新・ソルバは変更せず、このコピーの変更も保存しません。修正候補で旧引張例を置き換える場合は、旧例を期待する失敗の試験として残すことも必要です。
+旧R1の自己テスト入力だけの修正候補は、次のように旧R1を別の保存先のコピーで確認できました。現在の配布版は成功用入力と期待する棄却の両方を保持しており、`-RepairSelfTestInputs`を指定する必要はありません。以下は旧R1向けの履歴です。計算部の材料更新・ソルバは変更せず、このコピーの変更も保存しません。修正候補で旧引張例を置き換える場合は、旧例を期待する失敗の試験として残すことも必要です。
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tests/literature/check_material_points.ps1 -SourceWorkbook workbook/2DSoilFEM_20261008_practical.xlsm -OutputRoot tests/tmp/literature_material_trial -RepairSelfTestInputs
+powershell -NoProfile -ExecutionPolicy Bypass -File tests/literature/check_material_points.ps1 -SourceWorkbook path/to/old_R1.xlsm -OutputRoot tests/tmp/literature_material_trial -RepairSelfTestInputs
 python tests/literature/analyze_material_points.py --output tests/tmp/literature_material_trial
 ```
 
@@ -84,3 +84,5 @@ SRMの幅0.0125付近で丸めにより追加探索する診断は、実際の�
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File tests/literature/check_srm_roundoff.ps1 -SourceWorkbook workbook/2DSoilFEM_20261008_practical.xlsm -OutputRoot tests/tmp/literature_roundoff
 ```
+
+現在の接線の合否は、75材料点・50合成サブステップを含む [INCONSISTENT試験](../inconsistent/README.md) で確認します。[修正報告](../../docs/INCONSISTENT_REPAIR.md) に同じ配布ハッシュの集計と文献斜面の限界を保存しています。

@@ -231,7 +231,7 @@ End Function
 
 Public Function P3ValidateSolidMaterial(ByRef mat As Material_Data, ByRef failMessage As String) As Boolean
   P3ValidateSolidMaterial = False
-  If Not P2MaterialConstantsAreValid(mat.Young, mat.Poisson, mat.fai, mat.cohesion, mat.psai, P2_DEFAULT_TOLERANCE, failMessage) Then Exit Function
+  If Not P2MaterialConstantsAreValid(mat.young, mat.Poisson, mat.fai, mat.cohesion, mat.psai, P2_DEFAULT_TOLERANCE, failMessage) Then Exit Function
   If mat.thickness <= 0# Then
     failMessage = "板厚は正で指定してください。"
     Exit Function
@@ -359,7 +359,7 @@ Private Function P3ApplyMatSet(ByVal stageIndex As Long) As Boolean
       If P3KindIsJoint(Material(idx).kind) Then
         matNote = "JOINTにE=は無視。kn=を使ってください。"
       Else
-        Material(idx).Young = value
+        Material(idx).young = value
       End If
     End If
     If Not P3ParseMatSetToken(paramText, "nu", found, value, failMessage) Then
@@ -414,8 +414,8 @@ Private Function P3ApplyMatSet(ByVal stageIndex As Long) As Boolean
     Material(idx).ElasticD01 = 0#
     Material(idx).ElasticD22 = Material(idx).ks
   Else
-    shearModulus = Material(idx).Young / (2# * (1# + Material(idx).Poisson))
-    lameLambda = Material(idx).Young * Material(idx).Poisson / ((1# + Material(idx).Poisson) * (1# - 2# * Material(idx).Poisson))
+    shearModulus = Material(idx).young / (2# * (1# + Material(idx).Poisson))
+    lameLambda = Material(idx).young * Material(idx).Poisson / ((1# + Material(idx).Poisson) * (1# - 2# * Material(idx).Poisson))
     Material(idx).ElasticD00 = lameLambda + 2# * shearModulus
     Material(idx).ElasticD01 = lameLambda
     Material(idx).ElasticD22 = shearModulus
@@ -476,7 +476,7 @@ Public Sub P3JointEval(ByVal elementId As Long, ByVal addForce As Boolean)
   Elem(elementId).HourglassModeCount = 0
   Elem(elementId).HourglassScale = 0#
   knValue = Material(materialIndex).kn
-  If knValue <= 0# Then knValue = Material(materialIndex).Young
+  If knValue <= 0# Then knValue = Material(materialIndex).young
   ksValue = Material(materialIndex).ks
   If ksValue <= 0# Then ksValue = 0.1 * knValue
   piValue = 3.14159265358979
@@ -586,6 +586,59 @@ Private Sub P3ClearTransientFailure()
   P3CurrentElementZeroIncrement = False
 End Sub
 
+Public Sub P3ResetFailureDiagnostics()
+  P3FailureKind = "NONE": P3FailureLambda = 0#: P3FailureResidual = 0#
+  P3FailureLinearResidual = 0#: P3FailureCorrection = 0#: P3FailurePlasticPoints = 0: P3FailureMaxDisp = 0#
+End Sub
+
+Private Sub P3RecordRejectedAttempt(ByVal lambdaTarget As Double, ByVal correctionRatio As Double)
+  Dim i As Long, rawReason As String
+  rawReason = P3AccelFailureReason()
+  If InStr(rawReason, "SOLVE_FAILURE") > 0 Then
+    P3FailureKind = "LINEAR_SOLVER"
+  ElseIf InStr(rawReason, "TANGENT_BUILD") > 0 Then
+    P3FailureKind = "TANGENT_BUILD"
+  ElseIf InStr(rawReason, "TRIAL_STATE") > 0 Or InStr(rawReason, "MATERIAL") > 0 Or InStr(rawReason, "NO_VALID_STATE") > 0 Or InStr(rawReason, "BEST_STATE_REJECT") > 0 Then
+    P3FailureKind = "CONSTITUTIVE_UPDATE"
+  ElseIf InStr(rawReason, "GLOBAL_ITERATION_LIMIT") > 0 Then
+    P3FailureKind = "GLOBAL_ITERATION_LIMIT"
+  ElseIf InStr(rawReason, "LINESEARCH") > 0 Then
+    P3FailureKind = "LINE_SEARCH"
+  Else
+    P3FailureKind = "UNKNOWN"
+  End If
+  If InStr(1, rawReason, "STAGNATION", vbTextCompare) > 0 Then P3FailureKind = "GLOBAL_STAGNATION"
+  P3FailureLambda = lambdaTarget: P3FailureResidual = RelativeResidualFree
+  P3FailureCorrection = correctionRatio: P3FailureLinearResidual = P6IterativeLastResidual
+  P3FailurePlasticPoints = P3ActivePlasticPointCount
+  P3FailureMaxDisp = 0#
+  For i = 0 To lastDof
+    If Abs(TDisp(i)) > P3FailureMaxDisp Then P3FailureMaxDisp = Abs(TDisp(i))
+  Next i
+  P6SolverEvent "REJECTED_ATTEMPT", "class=" & P3FailureKind & ";reason=" & rawReason & _
+    ";lambda_target=" & Format$(lambdaTarget, "0.000000000000") & ";relres=" & Format$(P3FailureResidual, "0.000E+00") & _
+    ";linear_relres=" & Format$(P3FailureLinearResidual, "0.000E+00") & ";correction=" & Format$(correctionRatio, "0.000E+00") & _
+    ";plastic_points=" & CStr(P3FailurePlasticPoints) & ";umax=" & Format$(P3FailureMaxDisp, "0.000E+00")
+End Sub
+
+Public Function P3SrmFailureClass() As String
+  ' A solver/material/capacity failure is not evidence of a physical SRM limit.
+  If ResultStatus = RESULT_NONCONVERGED And AnalysisErrorNumber <> 18 And _
+     P2IsFinite(P3FailureResidual) And P2IsFinite(P3FailureLinearResidual) And _
+     (P3FailureKind = "GLOBAL_ITERATION_LIMIT" Or P3FailureKind = "LINE_SEARCH") And _
+     P3FailurePlasticPoints > 0 Then
+    P3SrmFailureClass = "NONCONVERGENCE_BOUNDARY"
+  Else
+    P3SrmFailureClass = "NUMERICAL_FAILURE"
+  End If
+End Function
+
+Private Function P3SrmWidthReached(ByVal lower As Double, ByVal upper As Double, ByVal target As Double) As Boolean
+  Dim scaleValue As Double
+  scaleValue = Abs(lower) + Abs(upper) + Abs(target): If scaleValue < 1# Then scaleValue = 1#
+  P3SrmWidthReached = ((upper - lower) <= target + 0.000000000001 * scaleValue)
+End Function
+
 Private Function P3IsFatalFailure() As Boolean
   If P3UserCancel Then
     P3IsFatalFailure = True
@@ -599,7 +652,7 @@ Private Function P3IsFatalFailure() As Boolean
     P3IsFatalFailure = True
     Exit Function
   End If
-  If ResultStatus = RESULT_INPUT_ERROR Or ResultStatus = RESULT_CAPACITY_ERROR Or ResultStatus = RESULT_RUNTIME_ERROR Then
+  If ResultStatus = RESULT_INPUT_ERROR Or ResultStatus = RESULT_CAPACITY_ERROR Or ResultStatus = RESULT_RUNTIME_ERROR Or ResultStatus = RESULT_GLOBAL_SINGULAR Then
     P3IsFatalFailure = True
     Exit Function
   End If
@@ -627,7 +680,7 @@ Private Function P3CanDeferGravityToSrm(ByVal stageIndex As Long) As Boolean
   If P3SrmTrialRunning Then Exit Function
   If P3UserCancel Or P3SearchFatal Then Exit Function
   If AnalysisErrorNumber = 18 Then Exit Function
-  If ResultStatus <> RESULT_NONCONVERGED And ResultStatus <> RESULT_GLOBAL_SINGULAR Then Exit Function
+  If P3SrmFailureClass() <> "NONCONVERGENCE_BOUNDARY" Then Exit Function
   If Not P3HasLaterEnabledSrm(stageIndex) Then Exit Function
   P3CanDeferGravityToSrm = True
 End Function
@@ -691,7 +744,7 @@ Public Function P3SetMaterialForStrengthFactor(ByVal strengthFactor As Double) A
   piValue = 3.14159265358979
   P3EnsurePolicyCache
   For i = 0 To NumberOfMaterial - 1
-    Material(i).Young = P3OriginalMaterial(i).Young
+    Material(i).young = P3OriginalMaterial(i).young
     Material(i).Poisson = P3OriginalMaterial(i).Poisson
     Material(i).thickness = P3OriginalMaterial(i).thickness
     Material(i).weight = P3OriginalMaterial(i).weight
@@ -737,7 +790,7 @@ Public Function P3SetMaterialForStrengthFactor(ByVal strengthFactor As Double) A
     End If
     Material(i).MaterialCacheReady = True
     If Material(i).kind <> "JOINT" Then
-      If Not P2MaterialConstantsAreValid(Material(i).Young, Material(i).Poisson, Material(i).fai, Material(i).cohesion, Material(i).psai, P2_DEFAULT_TOLERANCE, constFail) Then
+      If Not P2MaterialConstantsAreValid(Material(i).young, Material(i).Poisson, Material(i).fai, Material(i).cohesion, Material(i).psai, P2_DEFAULT_TOLERANCE, constFail) Then
         SetAnalysisFailure RESULT_INPUT_ERROR, "強度低減後の材料定数が範囲外です。材料=" & CStr(i + 1), vbObjectError + 3210, -1, -1, CurrentIncrement, CurrentIteration
         Exit Function
       End If
@@ -813,16 +866,6 @@ Private Sub P3ApplyDavisEquivalent(ByRef phiDeg As Double, ByRef psiDeg As Doubl
   psiDeg = phiDeg
 End Sub
 
-Private Sub P3SymmetrizeKmat(ByRef kmat() As Double)
-  Dim i As Long, j As Long, avg As Double
-  For i = 0 To 15
-    For j = i + 1 To 15
-      avg = 0.5 * (kmat(i, j) + kmat(j, i))
-      kmat(i, j) = avg
-      kmat(j, i) = avg
-    Next j
-  Next i
-End Sub
 
 Public Sub P3EnsureElementCounterClockwise(ByRef elementData As Element_Data)
   Dim areaValue As Double
@@ -948,8 +991,8 @@ Private Sub P3EnsureMaterialElasticCache(ByVal materialIndex As Long)
     Material(materialIndex).MaterialCacheReady = True
     Exit Sub
   End If
-  shearModulus = Material(materialIndex).Young / (2# * (1# + Material(materialIndex).Poisson))
-  lameLambda = Material(materialIndex).Young * Material(materialIndex).Poisson / ((1# + Material(materialIndex).Poisson) * (1# - 2# * Material(materialIndex).Poisson))
+  shearModulus = Material(materialIndex).young / (2# * (1# + Material(materialIndex).Poisson))
+  lameLambda = Material(materialIndex).young * Material(materialIndex).Poisson / ((1# + Material(materialIndex).Poisson) * (1# - 2# * Material(materialIndex).Poisson))
   Material(materialIndex).ElasticD00 = lameLambda + 2# * shearModulus
   Material(materialIndex).ElasticD01 = lameLambda
   Material(materialIndex).ElasticD22 = shearModulus
@@ -1153,6 +1196,7 @@ End Function
 Public Sub P3BumpConstraintGeneration()
   P3ConstraintGeneration = P3ConstraintGeneration + 1
   If P3ConstraintGeneration <= 0 Then P3ConstraintGeneration = 1
+  P6InvalidateCSRConstraintCache
 End Sub
 
 Private Function P3JointContactChangedSinceFactor() As Boolean
@@ -1297,7 +1341,7 @@ Private Function NextFsByBracket(ByVal fsLower As Double, ByVal fsUpper As Doubl
   Dim width As Double, mid As Double, frac As Double
   Dim passCost As Double, failCost As Double, totalCost As Double
   width = fsUpper - fsLower
-  If width <= targetTol Then
+  If P3SrmWidthReached(fsLower, fsUpper, targetTol) Then
     NextFsByBracket = fsLower
     Exit Function
   End If
@@ -1337,6 +1381,13 @@ End Function
 
 Private Sub P3PublishFos(ByVal fsPass As Double, ByVal fsFail As Double, ByVal haveFail As Boolean)
   P3FosPass = fsPass
+  If haveFail Then
+    P3FosInterpretation = "NUMERICAL_BRACKET"
+  ElseIf P6ReadSetting("SRM_FIXED_FS", 0#) > 0# Then
+    P3FosInterpretation = "FIXED_FS_VERIFIED"
+  Else
+    P3FosInterpretation = "LOWER_BOUND"
+  End If
   P3FosBracket = haveFail
   If haveFail And fsFail > fsPass Then
     P3FosFail = fsFail
@@ -1354,10 +1405,12 @@ Private Sub P3PublishFos(ByVal fsPass As Double, ByVal fsFail As Double, ByVal h
     P3FosBracket = False
     P3SrmNote = "FOS_PASS=" & Format$(fsPass, "0.000") & " FOS_FAIL=NA FOS_MID=" & Format$(fsPass, "0.000") & " FOS_WIDTH=NA"
   End If
-  P3SrmNote = P3SrmNote & " 試行=" & CStr(P3SrmTrialCount)
+  P3SrmNote = P3SrmNote & " 試行=" & CStr(P3SrmTrialCount) & " 判定=" & P3FosInterpretation
+  If haveFail Then P3SrmNote = P3SrmNote & "（収束境界の推定。物理破壊・設計安全率の確定値ではありません）"
 End Sub
 
 Private Function P3FosDisplayFs() As Double
+  If P3FosInterpretation = "UNDETERMINED" Then Exit Function
   If P3FosBracket Then
     P3FosDisplayFs = P3FosMid
   ElseIf P3FosPass > 0# Then
@@ -1409,6 +1462,12 @@ Private Function P3ShouldRebuildTangent(ByVal localIteration As Long, ByVal resi
   Dim ls50 As Boolean, watch As Boolean, heldReason As String
   Dim v2Eligible As Boolean, v2Path As Long, gateReason As String
   P3ShouldRebuildTangent = True
+  If P3FlowPolicyIsInconsistent() Then
+    ' Full Newton: no stale/symmetrized factor or LS50 reuse for this path.
+    P3ForceTangentRebuild = False
+    P3ForceRebuildReason = vbNullString
+    Exit Function
+  End If
   v2Eligible = (localIteration = 0 And AccelV2a And Not AccelBaselineRetry And AccelIncrementEligible And Not P3AfterCutback)
   v2Path = AdaptiveV2aPath()
   ls50 = P3Ls50Pending
@@ -1637,12 +1696,15 @@ Private Function P3RebuildTangentFromSpmat() As Boolean
       materialIndex = Elem(k).MatNo
       If Elem(k).IsJoint Then
         P3JointEval k, False
-        If P3FlowPolicyIsInconsistent() Then P3SymmetrizeKmat Elem(k).kmat
+        ' Retain the complete joint tangent for the nonsymmetric path.
         Elem(k).TangentDirty = False
         P3TangentDirtyRebuildCount = P3TangentDirtyRebuildCount + 1
         GoTo NextTangentElement
       End If
-      If Not Elem(k).TangentDirty Then GoTo NextTangentElement
+      ' A rejected line-search probe restores committed material flags but the
+      ' assembled kmat can still belong to the previous trial. Full Newton must
+      ' rebuild every active element from the currently evaluated Spmat.
+      If Not Elem(k).TangentDirty And Not P3FlowPolicyIsInconsistent() Then GoTo NextTangentElement
       If materialIndex >= 0 And materialIndex <= UBound(Material) Then
         For im = 0 To 3
           If Not Elem(k).SpmatValid(im) Then
@@ -1655,9 +1717,7 @@ Private Function P3RebuildTangentFromSpmat() As Boolean
         Next im
         SetElmStiffness Material(materialIndex).thickness, Material(materialIndex).weight, Elem(k).Bmat, Elem(k).Spmat, Elem(k).kmat, Elem(k).ElmWeight, Elem(k).dj, P6GaussN
         P6AddQ8HourglassStabilization Elem(k), Material(materialIndex).thickness, True
-        If P3FlowPolicyIsInconsistent() Then
-          P3SymmetrizeKmat Elem(k).kmat
-        ElseIf P3KmatIsUnsymmetric(Elem(k).kmat) Then
+        If Not P3FlowPolicyIsInconsistent() And P3KmatIsUnsymmetric(Elem(k).kmat) Then
           SetAnalysisFailure RESULT_MATERIAL_ERROR, "BAND対称ソルバは非対称接線に未対応です（非関連流れ φ≠ψ の塑性接線）。FLOW_POLICY=INCONSISTENT または DAVIS を指定してください。要素=" & CStr(k + 1), vbObjectError + 3240, k + 1, -1, CurrentIncrement, CurrentIteration
           GoTo TangentDone
         End If
@@ -1667,7 +1727,7 @@ Private Function P3RebuildTangentFromSpmat() As Boolean
     End If
 NextTangentElement:
   Next k
-  P6FactorReady = False
+  P6InvalidateNumericTangent
   SetTotalMat
   P3LastTangentPlasticCount = P3ActivePlasticPointCount
   P3TangentStaleIters = 0
@@ -1732,17 +1792,16 @@ End Sub
 
 Private Function P3KmatIsUnsymmetric(ByRef kmat() As Double) As Boolean
   Dim i As Long, j As Long, gap As Double, scaleValue As Double
-  P3KmatIsUnsymmetric = False
+  ' Normalize by the whole element operator, not a nearly zero off-diagonal.
+  ' Finite-difference roundoff in an associated tangent is not a flow asymmetry.
   For i = 0 To 15
-    For j = i + 1 To 15
-      gap = Abs(kmat(i, j) - kmat(j, i))
-      scaleValue = 1# + Abs(kmat(i, j)) + Abs(kmat(j, i))
-      If gap > 0.00000001 * scaleValue Then
-        P3KmatIsUnsymmetric = True
-        Exit Function
-      End If
+    For j = 0 To 15
+      If Abs(kmat(i, j)) > scaleValue Then scaleValue = Abs(kmat(i, j))
+      If Abs(kmat(i, j) - kmat(j, i)) > gap Then gap = Abs(kmat(i, j) - kmat(j, i))
     Next j
   Next i
+  If scaleValue < 1# Then scaleValue = 1#
+  P3KmatIsUnsymmetric = (gap > 0.0000001 * scaleValue)
 End Function
 
 Private Sub P3WriteStageSnapshot()
@@ -2123,7 +2182,7 @@ Private Function P3EvaluateTrialState(ByRef incrementBase() As Double, ByRef int
         If Abs(.u(j)) > 1E-30 Then P3CurrentElementZeroIncrement = False
 NextEvalDof:
       Next j
-      If Not Nrf(.Smat, .Spmat, .u, .Stmat, .mStmat, Material(materialIndex).fai, Material(materialIndex).cohesion, Material(materialIndex).psai, Material(materialIndex).Young, Material(materialIndex).Poisson, .Dmat, .Dpmat, .Bmat, materialIndex) Then
+      If Not Nrf(.Smat, .Spmat, .u, .Stmat, .mStmat, Material(materialIndex).fai, Material(materialIndex).cohesion, Material(materialIndex).psai, Material(materialIndex).young, Material(materialIndex).Poisson, .Dmat, .Dpmat, .Bmat, materialIndex) Then
         P6ProfEvalCount = P6ProfEvalCount + 1
         P6ProfEvalMs = P6ProfEvalMs + P6ElapsedMs(t0)
         Exit Function
@@ -2388,7 +2447,7 @@ Private Function P3BoundaryDispSatisfied() As Boolean
   P3BoundaryDispSatisfied = (P3RelativeBoundaryDispError <= P3_BOUNDARY_DISP_TOLERANCE) Or (P3MaxBoundaryDispError <= 0.000000000001)
 End Function
 
-Private Function P3ApplyLineSearch(ByRef incrementBase() As Double, ByRef targetForce() As Double, ByRef internalForce() As Double, ByRef correctionRatio As Double, ByVal residualBefore As Double) As Boolean
+Private Function P3ApplyLineSearch(ByRef incrementBase() As Double, ByRef targetForce() As Double, ByRef internalForce() As Double, ByRef correctionRatio As Double, ByVal residualBefore As Double, Optional ByVal requestedSearchLimit As Long = 0) As Boolean
   Dim i As Long, tryCount As Long
   Dim alpha As Double, bestAlpha As Double, bestRes As Double
   Dim trialCorr As Double
@@ -2406,10 +2465,14 @@ Private Function P3ApplyLineSearch(ByRef incrementBase() As Double, ByRef target
   For i = 0 To lastDof
     P3LineSearchSavedT(i) = TDisp(i)
   Next i
+  Dim searchLimit As Long
+  searchLimit = P3_LINESEARCH_MAX
+  If P3FlowPolicyIsInconsistent() Then searchLimit = P3_INCO_LINESEARCH_MAX
+  If requestedSearchLimit > 0 Then searchLimit = requestedSearchLimit
   alpha = 1#
   bestAlpha = -1#
   bestRes = 1E+308
-  For tryCount = 1 To P3_LINESEARCH_MAX
+  For tryCount = 1 To searchLimit
     mLineSearchTries = tryCount
     P6LsNoteTry
     For i = 0 To lastDof
@@ -2538,6 +2601,11 @@ Private Sub P3ApplyCorrectionRatioFromDir(ByVal alpha As Double, ByRef savedT() 
   End If
 End Sub
 
+Private Function P3GlobalIterationLimit() As Long
+  P3GlobalIterationLimit = P3_MAX_GLOBAL_ITERATIONS
+  If P3FlowPolicyIsInconsistent() Then P3GlobalIterationLimit = P3_INCO_MAX_GLOBAL_ITERATIONS
+End Function
+
 Private Function P3RunLoadStages() As Boolean
   Dim targetForce() As Double, incrementBase() As Double, internalForce() As Double
   Dim i As Long, stageId As Long, stageSteps As Long, localIteration As Long
@@ -2547,6 +2615,7 @@ Private Function P3RunLoadStages() As Boolean
   Dim failedIncrement As Long, failedIteration As Long, failedStatus As String, failedMessage As String
   Dim hasSelfWeight As Boolean, hasAppliedLoad As Boolean, hasPrescribedDisp As Boolean
   Dim selfWeightSquare As Double, appliedSquare As Double, previousDisplacementForceSquare As Double
+  Dim lockedForceSquare As Double
   Dim converged As Boolean, boundaryOk As Boolean
   Dim wantGravity As Boolean, wantApply As Boolean
   Dim lineSearchRebuildUsed As Boolean
@@ -2554,7 +2623,9 @@ Private Function P3RunLoadStages() As Boolean
   Dim duMax As Double
   Dim predictorUsed As Boolean, accelerationRetried As Boolean, correctionBuilt As Boolean
   Dim logStepAction As String, recoveryRatio As Double, boundedNextStep As Double
+  Dim stagnationCount As Long
   P3ApplyNewtonPolicy P3RunLogKind
+  P3ResetFailureDiagnostics
   P3EvalSkipCount = 0
   P3TangentDirtyRebuildCount = 0
   P3ElasticFastCount = 0
@@ -2572,6 +2643,14 @@ Private Function P3RunLoadStages() As Boolean
   hasAppliedLoad = (appliedSquare > 1E-30)
   hasPrescribedDisp = P3HasNonzeroPrescribedDisp()
   P3ForceRef = Sqr(selfWeightSquare) + Sqr(appliedSquare)
+  If P3ForceRef <= 0.000000000001 Then
+    ' During force unloading, zero target load is not the characteristic scale.
+    ' Retain the last committed external load; do not demand roundoff / 1E-12.
+    For i = 0 To lastDof
+      lockedForceSquare = lockedForceSquare + (P3LockedSelfWeight(i) + P3LockedApplied(i)) ^ 2
+    Next i
+    If lockedForceSquare > 0# Then P3ForceRef = Sqr(lockedForceSquare)
+  End If
   If P3ForceRef <= 0.000000000001 And P3CommittedBoundaryReady Then
     ' Retain the committed displacement-load reaction scale during unloading.
     ' A kinematic reset has zero committed displacement and must not reuse it.
@@ -2651,7 +2730,7 @@ P3RetrySameIncrement:
       P3BuildTargetForce selfWeightFactor, appliedFactor, targetForce
       P3ClearTransientFailure
       mAccelAttemptFailure = "": mLineSearchFailure = "": mLineSearchTries = 0: mLineSearchMaterialRejects = 0: mLineSearchBestQ = -1#
-      localIteration = 0: correctionRatio = 0#: converged = False
+      localIteration = 0: correctionRatio = 0#: converged = False: stagnationCount = 0
       P6LsWatch = False
       P3PrevResidualNorm = 0#
       P3TangentStaleIters = 0
@@ -2684,7 +2763,7 @@ P3RetrySameIncrement:
             Exit Do
           End If
         End If
-        If localIteration >= P3_MAX_GLOBAL_ITERATIONS Then
+        If localIteration >= P3GlobalIterationLimit() Then
           mAccelAttemptFailure = "GLOBAL_ITERATION_LIMIT"
           SetAnalysisFailure RESULT_NONCONVERGED, "P3全体反復が上限回数に達しました。Ver=" & FEM_BUILD_STAMP & " 相対残差=" & Format$(RelativeResidualFree, "0.000E+00") & " 補正比=" & Format$(correctionRatio, "0.000E+00") & " 拘束変位誤差=" & Format$(P3MaxBoundaryDispError, "0.000E+00") & "。状態は前増分へ戻します。", vbObjectError + 3202, FailureElement, FailureGaussPoint, CurrentIncrement, CurrentIteration
           Exit Do
@@ -2705,7 +2784,7 @@ P3RetrySameIncrement:
           End If
         ElseIf P3JointContactChangedSinceFactor() Then
           P3TangentJustRebuilt = True
-          P6FactorReady = False
+          P6InvalidateNumericTangent
           SetTotalMat
           P3JointAssembleCount = P3JointAssembleCount + 1
         Else
@@ -2721,8 +2800,9 @@ P3RetrySameIncrement:
         P3NoteSolveAge
         P3GlobalIterationCount = P3GlobalIterationCount + 1
         P6PerfNewtonCount = P6PerfNewtonCount + 1
+        localIteration = localIteration + 1
         P3PrevResidualNorm = ResidualNormFree
-        If Not P3AccelApplyCorrection(incrementBase, targetForce, internalForce, correctionRatio, P3PrevResidualNorm) Then
+        If Not P3AccelApplyCorrection(incrementBase, targetForce, internalForce, correctionRatio, P3PrevResidualNorm, localIteration) Then
           If Len(mLineSearchFailure) > 0 Then mAccelAttemptFailure = mLineSearchFailure
           If Len(mAccelAttemptFailure) = 0 Then mAccelAttemptFailure = P3AccelFailureReason()
           StepRecoveryRejectedCorrection mAccelAttemptFailure
@@ -2731,8 +2811,7 @@ P3RetrySameIncrement:
           If P3LineSearchRetryCorrection And Not lineSearchRebuildUsed Then
             lineSearchRebuildUsed = True
             P3RequestTangentRebuild "LINESEARCH_RETRY"
-            localIteration = localIteration + 1
-            If localIteration >= P3_MAX_GLOBAL_ITERATIONS Then
+            If localIteration >= P3GlobalIterationLimit() Then
               mAccelAttemptFailure = "GLOBAL_ITERATION_LIMIT_AFTER_LINESEARCH_RETRY"
               SetAnalysisFailure RESULT_NONCONVERGED, "P3全体反復が上限回数に達しました。Ver=" & FEM_BUILD_STAMP & " 相対残差=" & Format$(RelativeResidualFree, "0.000E+00") & " 補正比=" & Format$(correctionRatio, "0.000E+00") & " 拘束変位誤差=" & Format$(P3MaxBoundaryDispError, "0.000E+00") & "。状態は前増分へ戻します。", vbObjectError + 3202, FailureElement, FailureGaussPoint, CurrentIncrement, CurrentIteration
               Exit Do
@@ -2744,7 +2823,18 @@ P3RetrySameIncrement:
           AccelNoteCorrection P3PrevResidualNorm, ResidualNormFree, correctionBuilt
           lineSearchRebuildUsed = False
           If correctionRatio > P3MaxCorrection Then P3MaxCorrection = correctionRatio
-          localIteration = localIteration + 1
+          If P3FlowPolicyIsInconsistent() And RelativeResidualFree > P3_ENGINEERING_RESIDUAL Then
+            If P3PrevResidualNorm > 0# And ResidualNormFree > 0.99 * P3PrevResidualNorm And correctionRatio < P3_ENGINEERING_CORRECTION Then
+              stagnationCount = stagnationCount + 1
+            Else
+              stagnationCount = 0
+            End If
+            If stagnationCount >= 4 Then
+              mAccelAttemptFailure = "GLOBAL_STAGNATION"
+              SetAnalysisFailure RESULT_NONCONVERGED, "非関連流れの全体反復が停滞しました。残差が許容値に達していないため増分を縮小します。", vbObjectError + 3202, FailureElement, FailureGaussPoint, CurrentIncrement, CurrentIteration
+              Exit Do
+            End If
+          End If
           If femIoMode = "ITER" Or P3GlobalIterationCount <= 12 Then P3TraceIteration "correction"
         End If
       Loop
@@ -2843,6 +2933,7 @@ P3RetrySameIncrement:
         AdaptiveEndIncrement False, localIteration, accelerationRetried
         AccelHistoryReady = False: AccelIncrementEligible = False: AccelV2aPreviousIterations = 0: AccelV2aPreviousStep = 0#
         P3AccelResetAA
+        P3RecordRejectedAttempt targetFactor, correctionRatio
         failedStatus = ResultStatus
         failedMessage = AnalysisMessage
         failedError = AnalysisErrorNumber
@@ -2866,7 +2957,7 @@ P3RetrySameIncrement:
         If retryCount > P3_MAX_STEP_RETRIES Or stepSize * 0.5 < P3_MIN_STEP_FACTOR Then
           StepRecoveryTerminateWindow
           IncrementLogFinish False, localIteration, "FINAL_FAILURE", -1#, "RETRY_OR_MIN_STEP_LIMIT", P3AccelFailureReason()
-          If failedStatus = RESULT_MATERIAL_ERROR Or failedStatus = RESULT_GLOBAL_SINGULAR Then
+          If failedStatus = RESULT_MATERIAL_ERROR Or failedStatus = RESULT_GLOBAL_SINGULAR Or failedStatus = RESULT_INPUT_ERROR Or failedStatus = RESULT_CAPACITY_ERROR Or failedStatus = RESULT_RUNTIME_ERROR Then
             SetAnalysisFailure failedStatus, failedMessage, failedError, failedElement, failedGauss, failedIncrement, failedIteration
           Else
             If Len(failedMessage) = 0 Then failedMessage = "P3荷重増分が収束せず、最小増分に達しました。"
@@ -3677,6 +3768,7 @@ Private Function P3TryStrengthFactor(ByVal strengthFactor As Double) As Boolean
   If V3CostSearchEnabled Then V3BeginTrialCost
   P3ClearTransientFailure
   P3SrmTrialFailNote = vbNullString
+  P3SrmTrialClassification = "NONE"
   If Not P3SetMaterialForStrengthFactor(strengthFactor) Then
     FEMAppendRunLog "SRM試行", "INVALID_INPUT", "Fs=" & Format$(strengthFactor, "0.000000000000") & ";" & AnalysisMessage
     Exit Function
@@ -3693,6 +3785,7 @@ Private Function P3TryStrengthFactor(ByVal strengthFactor As Double) As Boolean
   FEMAppendRunLog "SRM試行", "TRY", "Fs=" & Format$(strengthFactor, "0.000")
   If P3ReplayStages(P3SrmReplayLimit) Then
     P3TryStrengthFactor = True
+    P3SrmTrialClassification = "CONVERGED"
     P3SrmLower = strengthFactor
     P3CaptureSrmSuccessSnapshot strengthFactor
     If P3SrmLogStageNo > 0 Then
@@ -3703,12 +3796,13 @@ Private Function P3TryStrengthFactor(ByVal strengthFactor As Double) As Boolean
     P6PerfEmit "SRM試行", "PASS"
     If V3CostSearchEnabled Then V3RecordTrialCost True
   Else
+    P3SrmTrialClassification = P3SrmFailureClass()
     If Len(P3SrmTrialFailNote) = 0 Then P3SrmTrialFailNote = AnalysisMessage
     If P3SrmLogStageNo > 0 Then
       P3RunLogStageNo = P3SrmLogStageNo
       P3RunLogKind = P3SrmLogKind
     End If
-    FEMAppendRunLog "SRM試行", "FAIL", "Fs=" & Format$(strengthFactor, "0.000") & " " & P3SrmTrialFailNote
+    FEMAppendRunLog "SRM試行", "FAIL", "Fs=" & Format$(strengthFactor, "0.000") & " class=" & P3SrmTrialClassification & " cause=" & P3FailureKind & " " & P3SrmTrialFailNote
     P6PerfEmit "SRM試行", "FAIL"
     If V3CostSearchEnabled And Not P3IsFatalFailure() Then V3RecordTrialCost False
   End If
@@ -3717,8 +3811,12 @@ End Function
 
 Private Function P3SrmAbortIfFatal() As Boolean
   P3SrmAbortIfFatal = False
-  If Not P3IsFatalFailure() Then Exit Function
-  P3SrmNote = "SRM停止: " & AnalysisMessage
+  If Not P3IsFatalFailure() And P3SrmTrialClassification <> "NUMERICAL_FAILURE" Then Exit Function
+  P3FosInterpretation = "UNDETERMINED"
+  P3FosBracket = False: P3FosFail = 0#: P3FosMid = 0#: P3FosWidth = 0#: FSS = 0#
+  P3FosPass = P3SrmLower: P3SrmUpper = 0#
+  P3SrmNote = "SRM探索停止: 数値障害を破壊上限に使用しません。直前収束Fs=" & Format$(P3SrmLower, "0.000") & "。" & AnalysisMessage
+  P6SolverEvent "SRM_NUMERICAL_ABORT", "class=" & P3SrmTrialClassification & ";cause=" & P3FailureKind & ";last_converged_fs=" & Format$(P3SrmLower, "0.000000000000")
   P3SrmAbortIfFatal = True
 End Function
 
@@ -3746,6 +3844,11 @@ Private Function P3RunStrengthReduction() As Boolean
       FSS = fsValue
       P3PublishFos fsValue, 0#, False
       P3RunStrengthReduction = True
+    Else
+      FSS = 0#: P3FosPass = 0#: P3FosFail = 0#: P3FosMid = 0#: P3FosWidth = 0#: P3FosBracket = False
+      P3FosInterpretation = "UNDETERMINED"
+      P3SrmNote = "固定Fs=" & Format$(fsValue, "0.000") & " の検証に失敗。設計安全率は未確定。class=" & P3SrmTrialClassification & ";cause=" & P3FailureKind
+      P6SolverEvent "FIXED_FS_REJECT", P3SrmNote
     End If
     Exit Function
   End If
@@ -3765,6 +3868,7 @@ Private Function P3RunStrengthReduction() As Boolean
       FEMAppendRunLog "SRM試行", "PASS", "Fs=1.000 PASS_REUSED_FROM_GRAVITY 残差=" & Format$(RelativeResidualFree, "0.000E+00")
       P6PerfEmitReuse "PASS_REUSED"
       fLow = 1#
+      P3SrmLower = 1#
       stepValue = 0.1
       Do
         fsValue = fLow + stepValue
@@ -3786,7 +3890,9 @@ Private Function P3RunStrengthReduction() As Boolean
         End If
       Loop
     Else
-      FEMAppendRunLog "SRM試行", "FAIL", "Fs=1.000 FAIL_REUSED_FROM_GRAVITY"
+      P3SrmTrialClassification = P3SrmFailureClass()
+      If P3SrmAbortIfFatal() Then Exit Function
+      FEMAppendRunLog "SRM試行", "FAIL", "Fs=1.000 FAIL_REUSED_FROM_GRAVITY class=" & P3SrmTrialClassification
       P6PerfEmitReuse "FAIL_REUSED"
       fHigh = 1#
       fsValue = 0.9
@@ -3850,14 +3956,14 @@ Private Function P3RunStrengthReduction() As Boolean
   P3SrmUpper = fHigh
   If V3CostSearchEnabled Then
     baselineWidth = fHigh - fLow
-    Do While baselineWidth > fTol: baselineWidth = baselineWidth * 0.5: Loop
+    Do While Not P3SrmWidthReached(0#, baselineWidth, fTol): baselineWidth = baselineWidth * 0.5: Loop
     fTol = baselineWidth
   End If
   AccelSrmWidthTarget = fTol
   bisectCount = 0
-  Do While (fHigh - fLow) > fTol And bisectCount < 40
+  Do While Not P3SrmWidthReached(fLow, fHigh, fTol) And bisectCount < 40
     fsValue = NextFsByBracket(fLow, fHigh, fTol)
-    If (fHigh - fLow) <= fTol Then Exit Do
+    If P3SrmWidthReached(fLow, fHigh, fTol) Then Exit Do
     If P3TryStrengthFactor(fsValue) Then
       fLow = fsValue
     Else
@@ -3869,12 +3975,16 @@ Private Function P3RunStrengthReduction() As Boolean
   If P3SrmSnapReady And Abs(P3SrmSnapFs - fLow) <= 0.000000001 Then
     If Not P3RestoreSrmSuccessSnapshot() Then
       SetAnalysisFailure RESULT_NONCONVERGED, "SRM: 収束Fs=" & Format$(fLow, "0.000") & " の保存状態を復元できませんでした。", vbObjectError + 3221, FailureElement, FailureGaussPoint, CurrentIncrement, CurrentIteration
-      P3SrmNote = "SRMスナップショット復元失敗"
+      P3FailureKind = "STATE_RESTORE": P3SrmTrialClassification = "NUMERICAL_FAILURE"
+      Call P3SrmAbortIfFatal
       Exit Function
     End If
   ElseIf Not P3TryStrengthFactor(fLow) Then
-    SetAnalysisFailure RESULT_NONCONVERGED, "SRM: 最後に収束したFs=" & Format$(fLow, "0.000") & " の再解析に失敗しました。", vbObjectError + 3221, FailureElement, FailureGaussPoint, CurrentIncrement, CurrentIteration
-    P3SrmNote = "SRM再解析失敗"
+    If ResultStatus = RESULT_PASS Or Len(ResultStatus) = 0 Then
+      SetAnalysisFailure RESULT_NONCONVERGED, "SRM: 最後に収束したFs=" & Format$(fLow, "0.000") & " の再解析に失敗しました。", vbObjectError + 3221, FailureElement, FailureGaussPoint, CurrentIncrement, CurrentIteration
+    End If
+    P3FailureKind = "FINAL_VERIFICATION": P3SrmTrialClassification = "NUMERICAL_FAILURE"
+    Call P3SrmAbortIfFatal
     Exit Function
   End If
   FSS = fLow
@@ -4239,7 +4349,7 @@ Public Sub P2ResetOutput(ByRef outputState As P2_MaterialPointOutput)
   Next i
   For i = 0 To 2
     For j = 0 To 2
-      outputState.Tangent(i, j) = 0#
+      outputState.tangent(i, j) = 0#
     Next j
   Next i
   outputState.PlasticMultiplier = 0#
@@ -4257,6 +4367,7 @@ Public Sub P2ResetOutput(ByRef outputState As P2_MaterialPointOutput)
   outputState.failureMessage = vbNullString
   outputState.iterations = 0
   outputState.UsedSubsteps = 0
+  outputState.AlgorithmicTangentReady = False
 End Sub
 
 Public Function P2IsFinite(ByVal value As Double) As Boolean
@@ -4418,7 +4529,7 @@ Private Sub P2CopyOutput(ByRef sourceState As P2_MaterialPointOutput, ByRef targ
   Next i
   For i = 0 To 2
     For j = 0 To 2
-      targetState.Tangent(i, j) = sourceState.Tangent(i, j)
+      targetState.tangent(i, j) = sourceState.tangent(i, j)
     Next j
   Next i
   targetState.PlasticMultiplier = sourceState.PlasticMultiplier
@@ -4438,9 +4549,9 @@ Private Sub P2CopyOutput(ByRef sourceState As P2_MaterialPointOutput, ByRef targ
   targetState.UsedSubsteps = sourceState.UsedSubsteps
 End Sub
 
-Private Function P2MaterialConstantsAreValid(ByVal Young As Double, ByVal Poisson As Double, ByVal frictionAngle As Double, ByVal cohesion As Double, ByVal dilationAngle As Double, ByVal tolerance As Double, ByRef failMessage As String) As Boolean
+Private Function P2MaterialConstantsAreValid(ByVal young As Double, ByVal Poisson As Double, ByVal frictionAngle As Double, ByVal cohesion As Double, ByVal dilationAngle As Double, ByVal tolerance As Double, ByRef failMessage As String) As Boolean
   P2MaterialConstantsAreValid = False
-  If Young <= 0# Then
+  If young <= 0# Then
     failMessage = "ヤング率は正で指定してください。"
     Exit Function
   End If
@@ -4479,7 +4590,7 @@ Private Function P2ValidateInput(ByRef inputState As P2_MaterialPointInput, ByRe
   Dim i As Long, failMessage As String
   P2ValidateInput = False
   If Not inputState.UseCachedConstants Then
-    If Not P2MaterialConstantsAreValid(inputState.Young, inputState.Poisson, inputState.frictionAngle, inputState.cohesion, inputState.dilationAngle, inputState.tolerance, failMessage) Then
+    If Not P2MaterialConstantsAreValid(inputState.young, inputState.Poisson, inputState.frictionAngle, inputState.cohesion, inputState.dilationAngle, inputState.tolerance, failMessage) Then
       P2SetFailure outputState, P2_FAILURE_INVALID_INPUT, failMessage
       Exit Function
     End If
@@ -4671,9 +4782,9 @@ Private Function P2TryEdgeReturn(ByRef inputState As P2_MaterialPointInput, ByVa
     b2 = eqx * elasticMap(0, col) + eqy * elasticMap(1, col) + eqz * elasticMap(2, col) + eqt * elasticMap(3, col)
     dl1 = (a22 * b1 - a12 * b2) / determinant
     dl2 = (-a21 * b1 + a11 * b2) / determinant
-    outputState.Tangent(0, col) = elasticMap(0, col) - q1x * dl1 - q2x * dl2
-    outputState.Tangent(1, col) = elasticMap(1, col) - q1y * dl1 - q2y * dl2
-    outputState.Tangent(2, col) = elasticMap(3, col) - q1t * dl1 - q2t * dl2
+    outputState.tangent(0, col) = elasticMap(0, col) - q1x * dl1 - q2x * dl2
+    outputState.tangent(1, col) = elasticMap(1, col) - q1y * dl1 - q2y * dl2
+    outputState.tangent(2, col) = elasticMap(3, col) - q1t * dl1 - q2t * dl2
   Next col
   outputState.Stress(0) = stressX
   outputState.Stress(1) = stressY
@@ -4819,6 +4930,22 @@ NextMask:
   End If
 End Function
 
+Private Function P2StrictVertexConeInterior(ByVal sinPsi As Double, ByVal ex As Double, ByVal ey As Double, ByVal gammaXY As Double, ByVal ez As Double, ByVal tolerance As Double, ByVal stressScale As Double, ByVal young As Double) As Boolean
+  Dim multiplierSum As Double, centerValue As Double, radiusValue As Double, maximumValue As Double, minimumValue As Double, margin As Double
+  If sinPsi <= 0.000000000001 Then Exit Function
+  multiplierSum = -(ex + ey + ez) / (2# * sinPsi)
+  If multiplierSum <= 0# Or Not P2IsFinite(multiplierSum) Then Exit Function
+  centerValue = 0.5 * (ex + ey)
+  radiusValue = 0.5 * Sqr((ex - ey) * (ex - ey) + gammaXY * gammaXY)
+  maximumValue = centerValue + radiusValue: minimumValue = centerValue - radiusValue
+  If ez > maximumValue Then maximumValue = ez
+  If ez < minimumValue Then minimumValue = ez
+  margin = 0.00000001 * (Abs(ex) + Abs(ey) + Abs(gammaXY) + Abs(ez) + multiplierSum) + tolerance * stressScale / young
+  ' The cone section is the permutahedron of (1-sinPsi,0,-1-sinPsi).
+  ' Strict max/min inequalities put the plastic principal strains in its interior.
+  P2StrictVertexConeInterior = (maximumValue < (1# - sinPsi) * multiplierSum - margin And minimumValue > (-1# - sinPsi) * multiplierSum + margin)
+End Function
+
 Private Function P2TryVertexReturn(ByRef inputState As P2_MaterialPointInput, ByVal trialSx As Double, ByVal trialSy As Double, ByVal trialSz As Double, ByVal trialTxy As Double, ByVal d00 As Double, ByVal d01 As Double, ByVal d22 As Double, ByVal sinPhi As Double, ByVal cosPhi As Double, ByVal sinPsi As Double, ByRef outputState As P2_MaterialPointOutput) As Boolean
   Dim vertexStress As Double, trialMean As Double, scaleValue As Double
   Dim deltaSx As Double, deltaSy As Double, deltaSz As Double, deltaTxy As Double
@@ -4828,7 +4955,7 @@ Private Function P2TryVertexReturn(ByRef inputState As P2_MaterialPointInput, By
   Dim residualValue As Double
   P2TryVertexReturn = False
   If sinPhi <= 0.000000000001 Then Exit Function
-  If inputState.Young <= 0# Then Exit Function
+  If inputState.young <= 0# Then Exit Function
   vertexStress = -inputState.cohesion * cosPhi / sinPhi
   trialMean = (trialSx + trialSy + trialSz) / 3#
   scaleValue = Abs(vertexStress) + Abs(trialMean) + Abs(inputState.cohesion) + 1#
@@ -4838,7 +4965,7 @@ Private Function P2TryVertexReturn(ByRef inputState As P2_MaterialPointInput, By
   deltaSy = trialSy - vertexStress
   deltaSz = trialSz - vertexStress
   deltaTxy = trialTxy
-  P2ComplianceFromStressDelta inputState.Young, inputState.Poisson, d22, deltaSx, deltaSy, deltaSz, deltaTxy, plasticEx, plasticEy, plasticEz, plasticGamma
+  P2ComplianceFromStressDelta inputState.young, inputState.Poisson, d22, deltaSx, deltaSy, deltaSz, deltaTxy, plasticEx, plasticEy, plasticEz, plasticGamma
   plasticVol = plasticEx + plasticEy + plasticEz
   plasticNorm = Abs(plasticEx) + Abs(plasticEy) + Abs(plasticEz) + Abs(plasticGamma)
   If plasticNorm < 1# Then plasticNorm = 1#
@@ -4861,9 +4988,9 @@ Private Function P2TryVertexReturn(ByRef inputState As P2_MaterialPointInput, By
   outputState.PlasticStrain(2) = plasticGamma
   outputState.PlasticStrain(3) = plasticEz
   outputState.PlasticMultiplier = Sqr(plasticEx * plasticEx + plasticEy * plasticEy + 0.5 * plasticGamma * plasticGamma + plasticEz * plasticEz)
-  outputState.Tangent(0, 0) = 0#: outputState.Tangent(0, 1) = 0#: outputState.Tangent(0, 2) = 0#
-  outputState.Tangent(1, 0) = 0#: outputState.Tangent(1, 1) = 0#: outputState.Tangent(1, 2) = 0#
-  outputState.Tangent(2, 0) = 0#: outputState.Tangent(2, 1) = 0#: outputState.Tangent(2, 2) = 0#
+  outputState.tangent(0, 0) = 0#: outputState.tangent(0, 1) = 0#: outputState.tangent(0, 2) = 0#
+  outputState.tangent(1, 0) = 0#: outputState.tangent(1, 1) = 0#: outputState.tangent(1, 2) = 0#
+  outputState.tangent(2, 0) = 0#: outputState.tangent(2, 1) = 0#: outputState.tangent(2, 2) = 0#
   outputState.PrincipalStress(0) = vertexStress
   outputState.PrincipalStress(1) = vertexStress
   outputState.PrincipalStress(2) = vertexStress
@@ -4874,8 +5001,194 @@ Private Function P2TryVertexReturn(ByRef inputState As P2_MaterialPointInput, By
   outputState.converged = True
   outputState.failureCode = P2_FAILURE_VERTEX
   outputState.failureMessage = "Mohr-Coulomb 3D頂点への整合戻し。"
+  ' In the strict flow-cone interior, stress is constant at the vertex.
+  outputState.AlgorithmicTangentReady = P2StrictVertexConeInterior(sinPsi, plasticEx, plasticEy, plasticGamma, plasticEz, inputState.tolerance, scaleValue, inputState.young)
   outputState.iterations = 1
   P2TryVertexReturn = True
+End Function
+
+Private Function P2FillSpectralTangent(ByRef nFace() As Double, ByRef qFace() As Double, ByRef activeMatrix() As Double, ByVal count As Long, ByRef rankMode() As Long, ByRef physicalTrial() As Double, ByRef physicalCorrected() As Double, ByVal trialAngle As Double, ByVal d00 As Double, ByVal d01 As Double, ByVal d22 As Double, ByRef outputState As P2_MaterialPointOutput) As Boolean
+  ' Derivative of the selected return region in the fixed trial eigenbasis.
+  ' A = I - C*M*(N^T*C*M)^-1*N^T. Include the trial-eigenvector rotation.
+  Dim inverseH(0 To 1, 0 To 1) As Double, aPrincipal(0 To 2, 0 To 2) As Double
+  Dim trialDerivative(0 To 2) As Double, rankedDerivative(0 To 2) As Double, returnedDerivative(0 To 2) As Double, physicalDerivative(0 To 2) As Double
+  Dim tangent(0 To 2, 0 To 2) As Double
+  Dim i As Long, j As Long, f As Long, g As Long, col As Long
+  Dim determinant As Double, c As Double, sn As Double, dsx As Double, dsy As Double, dt As Double, dsz As Double, angleDerivative As Double, planeGap As Double
+  P2FillSpectralTangent = False
+  On Error GoTo Failed
+  planeGap = physicalTrial(0) - physicalTrial(1)
+  If planeGap <= 0.000000000001 * (Abs(physicalTrial(0)) + Abs(physicalTrial(1)) + 1#) Then Exit Function
+  If count = 1 Then
+    inverseH(0, 0) = 1# / activeMatrix(0, 0)
+  Else
+    determinant = activeMatrix(0, 0) * activeMatrix(1, 1) - activeMatrix(0, 1) * activeMatrix(1, 0)
+    inverseH(0, 0) = activeMatrix(1, 1) / determinant
+    inverseH(0, 1) = -activeMatrix(0, 1) / determinant
+    inverseH(1, 0) = -activeMatrix(1, 0) / determinant
+    inverseH(1, 1) = activeMatrix(0, 0) / determinant
+  End If
+  For i = 0 To 2
+    For j = 0 To 2
+      If i = j Then aPrincipal(i, j) = 1#
+      For f = 0 To count - 1
+        For g = 0 To count - 1
+          aPrincipal(i, j) = aPrincipal(i, j) - qFace(i, f) * inverseH(f, g) * nFace(j, g)
+        Next g
+      Next f
+    Next j
+  Next i
+  c = Cos(trialAngle): sn = Sin(trialAngle)
+  For col = 0 To 2
+    dsx = 0#: dsy = 0#: dt = 0#: dsz = 0#
+    If col = 0 Then dsx = d00: dsy = d01: dsz = d01
+    If col = 1 Then dsx = d01: dsy = d00: dsz = d01
+    If col = 2 Then dt = d22
+    trialDerivative(0) = c * c * dsx + sn * sn * dsy + 2# * c * sn * dt
+    trialDerivative(1) = sn * sn * dsx + c * c * dsy - 2# * c * sn * dt
+    trialDerivative(2) = dsz
+    For i = 0 To 2: rankedDerivative(i) = trialDerivative(rankMode(i)): Next i
+    For i = 0 To 2
+      returnedDerivative(i) = 0#
+      For j = 0 To 2: returnedDerivative(i) = returnedDerivative(i) + aPrincipal(i, j) * rankedDerivative(j): Next j
+      physicalDerivative(rankMode(i)) = returnedDerivative(i)
+    Next i
+    angleDerivative = (c * sn * (dsy - dsx) + (c * c - sn * sn) * dt) / planeGap
+    tangent(0, col) = c * c * physicalDerivative(0) + sn * sn * physicalDerivative(1) + 2# * c * sn * (physicalCorrected(1) - physicalCorrected(0)) * angleDerivative
+    tangent(1, col) = sn * sn * physicalDerivative(0) + c * c * physicalDerivative(1) + 2# * c * sn * (physicalCorrected(0) - physicalCorrected(1)) * angleDerivative
+    tangent(2, col) = c * sn * (physicalDerivative(0) - physicalDerivative(1)) + (c * c - sn * sn) * (physicalCorrected(0) - physicalCorrected(1)) * angleDerivative
+    For i = 0 To 2: If Not P2IsFinite(tangent(i, col)) Then Exit Function
+    Next i
+  Next col
+  For i = 0 To 2
+    For j = 0 To 2: outputState.tangent(i, j) = tangent(i, j): Next j
+  Next i
+  outputState.AlgorithmicTangentReady = True
+  P2FillSpectralTangent = True
+  Exit Function
+Failed:
+  Err.Clear
+End Function
+
+Private Function P2TrySpectralReturn(ByRef inputState As P2_MaterialPointInput, ByVal trialSx As Double, ByVal trialSy As Double, ByVal trialSz As Double, ByVal trialTxy As Double, ByVal d00 As Double, ByVal d01 As Double, ByVal d22 As Double, ByVal sinPhi As Double, ByVal cosPhi As Double, ByVal sinPsi As Double, ByVal trialAngle As Double, ByRef outputState As P2_MaterialPointOutput) As Boolean
+  ' Perfect-plastic multisurface return in the FIXED trial eigenbasis.
+  ' Rank-to-physical-mode mapping is retained even when sigma_z is extreme.
+  Dim physicalTrial(0 To 2) As Double, rankMode(0 To 2) As Long
+  Dim principalTrial(0 To 2) As Double, corrected(0 To 2) As Double, physicalCorrected(0 To 2) As Double
+  Dim nFace(0 To 2, 0 To 1) As Double, mFace(0 To 2, 0 To 1) As Double, qFace(0 To 2, 0 To 1) As Double
+  Dim activeMatrix(0 To 1, 0 To 1) As Double, faceTrial(0 To 1) As Double, multiplier(0 To 1) As Double
+  Dim i As Long, j As Long, f As Long, g As Long, candidate As Long, count As Long, swapMode As Long
+  Dim radiusValue As Double, centerValue As Double, determinant As Double, stressTolerance As Double, lambdaTolerance As Double
+  Dim stressScale As Double, cAngle As Double, sAngle As Double, finalYield As Double
+  Dim maximumValue As Double, middleValue As Double, minimumValue As Double, finalAngle As Double, finalRadius As Double
+  Dim maximumMode As Long, minimumMode As Long, plasticEx As Double, plasticEy As Double, plasticEz As Double, plasticGamma As Double
+  Dim stressX As Double, stressY As Double, stressZ As Double, shearXY As Double
+  P2TrySpectralReturn = False
+  On Error GoTo Failed
+  centerValue = 0.5 * (trialSx + trialSy)
+  radiusValue = Sqr((0.5 * (trialSx - trialSy)) ^ 2 + trialTxy ^ 2)
+  physicalTrial(0) = centerValue + radiusValue: physicalTrial(1) = centerValue - radiusValue: physicalTrial(2) = trialSz
+  For i = 0 To 2: rankMode(i) = i: Next i
+  For i = 0 To 1
+    For j = i + 1 To 2
+      If physicalTrial(rankMode(j)) > physicalTrial(rankMode(i)) Then
+        swapMode = rankMode(i): rankMode(i) = rankMode(j): rankMode(j) = swapMode
+      End If
+    Next j
+  Next i
+  For i = 0 To 2: principalTrial(i) = physicalTrial(rankMode(i)): Next i
+  stressScale = Abs(principalTrial(0)) + Abs(principalTrial(2)) + 2# * inputState.cohesion * cosPhi + 1#
+  stressTolerance = inputState.tolerance * stressScale * 10#
+  lambdaTolerance = 0.000000000001 + inputState.tolerance * stressScale / inputState.young
+  cAngle = Cos(trialAngle): sAngle = Sin(trialAngle)
+  For candidate = 1 To 3
+    Erase nFace: Erase mFace: Erase qFace: Erase activeMatrix: Erase faceTrial: Erase multiplier
+    count = 1: If candidate > 1 Then count = 2
+    nFace(0, 0) = 1# - sinPhi: nFace(2, 0) = -1# - sinPhi
+    mFace(0, 0) = 1# - sinPsi: mFace(2, 0) = -1# - sinPsi
+    If candidate = 2 Then
+      ' Faces (1,3) and (2,3): corrected ranks 1 and 2 coincide.
+      nFace(1, 1) = 1# - sinPhi: nFace(2, 1) = -1# - sinPhi
+      mFace(1, 1) = 1# - sinPsi: mFace(2, 1) = -1# - sinPsi
+    ElseIf candidate = 3 Then
+      ' Faces (1,3) and (1,2): corrected ranks 2 and 3 coincide.
+      nFace(0, 1) = 1# - sinPhi: nFace(1, 1) = -1# - sinPhi
+      mFace(0, 1) = 1# - sinPsi: mFace(1, 1) = -1# - sinPsi
+    End If
+    For f = 0 To count - 1
+      faceTrial(f) = -2# * inputState.cohesion * cosPhi
+      For i = 0 To 2
+        faceTrial(f) = faceTrial(f) + nFace(i, f) * principalTrial(i)
+        For j = 0 To 2
+          If i = j Then
+            qFace(i, f) = qFace(i, f) + d00 * mFace(j, f)
+          Else
+            qFace(i, f) = qFace(i, f) + d01 * mFace(j, f)
+          End If
+        Next j
+      Next i
+    Next f
+    For f = 0 To count - 1
+      For g = 0 To count - 1
+        For i = 0 To 2: activeMatrix(f, g) = activeMatrix(f, g) + nFace(i, f) * qFace(i, g): Next i
+      Next g
+    Next f
+    If count = 1 Then
+      If Abs(activeMatrix(0, 0)) <= 1E-30 Then GoTo NextCandidate
+      multiplier(0) = faceTrial(0) / activeMatrix(0, 0)
+    Else
+      determinant = activeMatrix(0, 0) * activeMatrix(1, 1) - activeMatrix(0, 1) * activeMatrix(1, 0)
+      If Abs(determinant) <= 0.00000000000001 * (Abs(activeMatrix(0, 0) * activeMatrix(1, 1)) + Abs(activeMatrix(0, 1) * activeMatrix(1, 0)) + 1#) Then GoTo NextCandidate
+      multiplier(0) = (faceTrial(0) * activeMatrix(1, 1) - faceTrial(1) * activeMatrix(0, 1)) / determinant
+      multiplier(1) = (faceTrial(1) * activeMatrix(0, 0) - faceTrial(0) * activeMatrix(1, 0)) / determinant
+    End If
+    For f = 0 To count - 1
+      If Not P2IsFinite(multiplier(f)) Or multiplier(f) < -lambdaTolerance Then GoTo NextCandidate
+      If multiplier(f) < 0# Then multiplier(f) = 0#
+    Next f
+    For i = 0 To 2
+      corrected(i) = principalTrial(i)
+      For f = 0 To count - 1: corrected(i) = corrected(i) - multiplier(f) * qFace(i, f): Next f
+      If Not P2IsFinite(corrected(i)) Then GoTo NextCandidate
+    Next i
+    If corrected(0) < corrected(1) - stressTolerance Or corrected(1) < corrected(2) - stressTolerance Then GoTo NextCandidate
+    For f = 0 To count - 1
+      finalYield = -2# * inputState.cohesion * cosPhi
+      For i = 0 To 2: finalYield = finalYield + nFace(i, f) * corrected(i): Next i
+      If Abs(finalYield) > stressTolerance Then GoTo NextCandidate
+    Next f
+    For i = 0 To 2: physicalCorrected(rankMode(i)) = corrected(i): Next i
+    stressX = physicalCorrected(0) * cAngle ^ 2 + physicalCorrected(1) * sAngle ^ 2
+    stressY = physicalCorrected(0) * sAngle ^ 2 + physicalCorrected(1) * cAngle ^ 2
+    shearXY = (physicalCorrected(0) - physicalCorrected(1)) * cAngle * sAngle
+    stressZ = physicalCorrected(2)
+    If Not P2EvaluateYield(stressX, stressY, stressZ, shearXY, sinPhi, inputState.cohesion, cosPhi, finalYield, maximumValue, middleValue, minimumValue, finalAngle, finalRadius, maximumMode, minimumMode) Then GoTo NextCandidate
+    If Abs(finalYield) > stressTolerance Then GoTo NextCandidate
+    If sinPhi > 0.000000000001 And Abs(maximumValue - minimumValue) <= stressTolerance Then
+      ' Coincidence alone is not sufficient: verify the apex flow cone/volume.
+      If P2TryVertexReturn(inputState, trialSx, trialSy, trialSz, trialTxy, d00, d01, d22, sinPhi, cosPhi, sinPsi, outputState) Then
+        P2TrySpectralReturn = True: Exit Function
+      End If
+      GoTo NextCandidate
+    End If
+    P2ComplianceFromStressDelta inputState.young, inputState.Poisson, d22, trialSx - stressX, trialSy - stressY, trialSz - stressZ, trialTxy - shearXY, plasticEx, plasticEy, plasticEz, plasticGamma
+    If Abs(sinPsi) <= 0.000000000001 Then
+      If Abs(plasticEx + plasticEy + plasticEz) > 0.0000000001 * (Abs(plasticEx) + Abs(plasticEy) + Abs(plasticEz) + Abs(plasticGamma) + 1#) Then GoTo NextCandidate
+    End If
+    outputState.Stress(0) = stressX: outputState.Stress(1) = stressY: outputState.Stress(2) = shearXY: outputState.Stress(3) = stressZ
+    outputState.PlasticStrain(0) = plasticEx: outputState.PlasticStrain(1) = plasticEy: outputState.PlasticStrain(2) = plasticGamma: outputState.PlasticStrain(3) = plasticEz
+    outputState.PlasticMultiplier = multiplier(0) + multiplier(1)
+    outputState.PrincipalStress(0) = maximumValue: outputState.PrincipalStress(1) = middleValue: outputState.PrincipalStress(2) = minimumValue
+    outputState.principalAngle = finalAngle * 180# / 3.14159265358979
+    outputState.YieldFunction = finalYield: outputState.yielded = True: outputState.Elastic = False
+    outputState.PlasticOccurred = True: outputState.converged = True: outputState.iterations = 1
+    ' A regular one-step return has an exact, generally nonsymmetric tangent.
+    Call P2FillSpectralTangent(nFace, qFace, activeMatrix, count, rankMode, physicalTrial, physicalCorrected, trialAngle, d00, d01, d22, outputState)
+    P2TrySpectralReturn = True: Exit Function
+NextCandidate:
+  Next candidate
+Failed:
+  Err.Clear
 End Function
 
 Private Function P2MaterialPointUpdateCore(ByRef inputState As P2_MaterialPointInput, ByRef outputState As P2_MaterialPointOutput)
@@ -4904,8 +5217,8 @@ Private Function P2MaterialPointUpdateCore(ByRef inputState As P2_MaterialPointI
     cosPhi = inputState.CachedCosFriction
     sinPsi = inputState.CachedSinDilation
   Else
-    shearModulus = inputState.Young / (2# * (1# + inputState.Poisson))
-    lameLambda = inputState.Young * inputState.Poisson / ((1# + inputState.Poisson) * (1# - 2# * inputState.Poisson))
+    shearModulus = inputState.young / (2# * (1# + inputState.Poisson))
+    lameLambda = inputState.young * inputState.Poisson / ((1# + inputState.Poisson) * (1# - 2# * inputState.Poisson))
     d00 = lameLambda + 2# * shearModulus
     d01 = lameLambda
     d22 = shearModulus
@@ -4937,9 +5250,9 @@ Private Function P2MaterialPointUpdateCore(ByRef inputState As P2_MaterialPointI
     outputState.Stress(1) = trialSy
     outputState.Stress(2) = trialTxy
     outputState.Stress(3) = trialSz
-    outputState.Tangent(0, 0) = d00: outputState.Tangent(0, 1) = d01: outputState.Tangent(0, 2) = 0#
-    outputState.Tangent(1, 0) = d01: outputState.Tangent(1, 1) = d00: outputState.Tangent(1, 2) = 0#
-    outputState.Tangent(2, 0) = 0#: outputState.Tangent(2, 1) = 0#: outputState.Tangent(2, 2) = d22
+    outputState.tangent(0, 0) = d00: outputState.tangent(0, 1) = d01: outputState.tangent(0, 2) = 0#
+    outputState.tangent(1, 0) = d01: outputState.tangent(1, 1) = d00: outputState.tangent(1, 2) = 0#
+    outputState.tangent(2, 0) = 0#: outputState.tangent(2, 1) = 0#: outputState.tangent(2, 2) = d22
     outputState.PrincipalStress(0) = sigmaMax
     outputState.PrincipalStress(1) = sigmaMid
     outputState.PrincipalStress(2) = sigmaMin
@@ -4953,164 +5266,16 @@ Private Function P2MaterialPointUpdateCore(ByRef inputState As P2_MaterialPointI
     Exit Function
   End If
 
-  If P2IsStressAtVertex(inputState.PreviousStress(0), inputState.PreviousStress(1), inputState.PreviousStress(3), inputState.PreviousStress(2), -inputState.cohesion * cosPhi / (sinPhi + 1E-30), inputState.tolerance, yieldScale) Then
-    If P2TryVertexReturn(inputState, trialSx, trialSy, trialSz, trialTxy, d00, d01, d22, sinPhi, cosPhi, sinPsi, outputState) Then
-      P2MaterialPointUpdateCore = True
-      Exit Function
-    End If
-  End If
-
-  If radius <= 0.000000000001 * yieldScale And Abs(sigmaMax - sigmaMin) <= 0.000000000001 * yieldScale Then
-    If P2TryVertexReturn(inputState, trialSx, trialSy, trialSz, trialTxy, d00, d01, d22, sinPhi, cosPhi, sinPsi, outputState) Then
-      P2MaterialPointUpdateCore = True
-      Exit Function
-    End If
-  End If
-
-  P2FlowGradients3D principalAngle, trialSx, trialSy, trialSz, trialTxy, maximumMode, minimumMode, sigmaMax, sigmaMin, sinPhi, sinPsi, nx, ny, nz, nt, mx, my, mz, mt
-  initialMaximumMode = maximumMode
-  initialMinimumMode = minimumMode
-  qx = d00 * mx + d01 * my + d01 * mz
-  qy = d01 * mx + d00 * my + d01 * mz
-  qz = d01 * mx + d01 * my + d00 * mz
-  qt = d22 * mt
-  rx = nx * d00 + ny * d01 + nz * d01
-  ry = nx * d01 + ny * d00 + nz * d01
-  rt = nt * d22
-  denominator = nx * qx + ny * qy + nz * qz + nt * qt
-  If Abs(denominator) <= 0.00000000000001 * yieldScale Then
-    P2SetFailure outputState, P2_FAILURE_DENOMINATOR, "3D塑性補正の分母が0または小さすぎます。微小値を加えて続行しません。"
+  trialPrincipalAngle = principalAngle
+  If P2TrySpectralReturn(inputState, trialSx, trialSy, trialSz, trialTxy, d00, d01, d22, sinPhi, cosPhi, sinPsi, trialPrincipalAngle, outputState) Then
+    P2MaterialPointUpdateCore = True
     Exit Function
   End If
-  lambdaValue = yieldTrial / denominator
-  If lambdaValue < 0# Then
-    If Abs(lambdaValue) <= inputState.tolerance Then
-      lambdaValue = 0#
-    Else
-      P2SetFailure outputState, P2_FAILURE_DENOMINATOR, "3D塑性乗数が負になりました。材料点の符号規約を確認してください。"
-      Exit Function
-    End If
-  End If
-  maxIterations = inputState.maxIterations
-  If maxIterations <= 0 Then maxIterations = P2_DEFAULT_MAX_ITERATIONS
-  If maxIterations > 100 Then maxIterations = 100
-  lambdaTolerance = inputState.tolerance / (Abs(denominator) + 1#)
-  For iter = 1 To maxIterations
-NextFaceIteration:
-    sx = trialSx - lambdaValue * qx
-    sy = trialSy - lambdaValue * qy
-    txy = trialTxy - lambdaValue * qt
-    sz = trialSz - lambdaValue * qz
-    If Not P2EvaluateYield(sx, sy, sz, txy, sinPhi, inputState.cohesion, cosPhi, yieldCurrent, sigmaMax, sigmaMid, sigmaMin, principalAngle, radius, maximumMode, minimumMode) Then
-      P2SetFailure outputState, P2_FAILURE_NONFINITE, "3D塑性補正後の応力または降伏関数が有限ではありません。"
-      Exit Function
-    End If
-    If maximumMode <> initialMaximumMode Or minimumMode <> initialMinimumMode Then
-      If P2TryEdgeReturn(inputState, trialSx, trialSy, trialSz, trialTxy, d00, d01, d22, sinPhi, cosPhi, sinPsi, trialPrincipalAngle, trialSigmaMax, trialSigmaMid, trialSigmaMin, initialMaximumMode, initialMinimumMode, maximumMode, minimumMode, outputState) Then
-        outputState.iterations = iter
-        P2MaterialPointUpdateCore = True
-        Exit Function
-      End If
-      If P2TryVertexReturn(inputState, trialSx, trialSy, trialSz, trialTxy, d00, d01, d22, sinPhi, cosPhi, sinPsi, outputState) Then
-        outputState.iterations = iter
-        P2MaterialPointUpdateCore = True
-        Exit Function
-      End If
-      faceRestart = faceRestart + 1
-      If faceRestart > 3 Then
-        P2SetFailure outputState, P2_FAILURE_NOT_CONVERGED, "面・エッジ・頂点のいずれでも流れ則と整合する戻しが得られません。"
-        Exit Function
-      End If
-      P2BuildFaceGradient3D principalAngle, maximumMode, minimumMode, sinPhi, nx, ny, nz, nt
-      P2BuildFaceGradient3D principalAngle, maximumMode, minimumMode, sinPsi, mx, my, mz, mt
-      initialMaximumMode = maximumMode
-      initialMinimumMode = minimumMode
-      qx = d00 * mx + d01 * my + d01 * mz
-      qy = d01 * mx + d00 * my + d01 * mz
-      qz = d01 * mx + d01 * my + d00 * mz
-      qt = d22 * mt
-      rx = nx * d00 + ny * d01 + nz * d01
-      ry = nx * d01 + ny * d00 + nz * d01
-      rt = nt * d22
-      denominator = nx * qx + ny * qy + nz * qz + nt * qt
-      If Abs(denominator) <= 0.00000000000001 * yieldScale Then
-        P2SetFailure outputState, P2_FAILURE_DENOMINATOR, "面切替後の3D塑性補正の分母が0です。"
-        Exit Function
-      End If
-      yieldTrial = P2FaceYieldAtStress(maximumMode, minimumMode, trialSx, trialSy, trialSz, trialTxy, trialPrincipalAngle, sinPhi, inputState.cohesion, cosPhi)
-      If Not P2IsFinite(yieldTrial) Then
-        P2SetFailure outputState, P2_FAILURE_NONFINITE, "面切替後のtrial降伏関数が有限ではありません。"
-        Exit Function
-      End If
-      lambdaValue = yieldTrial / denominator
-      If lambdaValue < 0# Then lambdaValue = 0#
-      GoTo NextFaceIteration
-    End If
-    yieldScale = Abs(sigmaMax) + Abs(sigmaMin) + 2# * inputState.cohesion * cosPhi
-    If yieldScale < 1# Then yieldScale = 1#
-    If Abs(yieldCurrent) <= inputState.tolerance * yieldScale Then Exit For
-    deltaLambda = yieldCurrent / denominator
-    If Abs(deltaLambda) <= lambdaTolerance Then Exit For
-    lambdaValue = lambdaValue + deltaLambda
-    If lambdaValue < -lambdaTolerance Then
-      P2SetFailure outputState, P2_FAILURE_DENOMINATOR, "3D塑性乗数の更新で負の値になりました。"
-      Exit Function
-    End If
-    If lambdaValue < 0# Then lambdaValue = 0#
-  Next iter
-  If iter > maxIterations Then
-    If P2TryEdgeReturn(inputState, trialSx, trialSy, trialSz, trialTxy, d00, d01, d22, sinPhi, cosPhi, sinPsi, trialPrincipalAngle, trialSigmaMax, trialSigmaMid, trialSigmaMin, initialMaximumMode, initialMinimumMode, maximumMode, minimumMode, outputState) Then
-      outputState.iterations = maxIterations
-      P2MaterialPointUpdateCore = True
-      Exit Function
-    End If
-    If P2TryVertexReturn(inputState, trialSx, trialSy, trialSz, trialTxy, d00, d01, d22, sinPhi, cosPhi, sinPsi, outputState) Then
-      outputState.iterations = maxIterations
-      P2MaterialPointUpdateCore = True
-      Exit Function
-    End If
-    P2SetFailure outputState, P2_FAILURE_NOT_CONVERGED, "3D材料点の塑性補正が反復上限に達しました。"
-    outputState.iterations = maxIterations
+  If P2TryVertexReturn(inputState, trialSx, trialSy, trialSz, trialTxy, d00, d01, d22, sinPhi, cosPhi, sinPsi, outputState) Then
+    P2MaterialPointUpdateCore = True
     Exit Function
   End If
-  outputState.Stress(0) = sx
-  outputState.Stress(1) = sy
-  outputState.Stress(2) = txy
-  outputState.Stress(3) = sz
-  outputState.PlasticMultiplier = lambdaValue
-  outputState.PlasticStrain(0) = lambdaValue * mx
-  outputState.PlasticStrain(1) = lambdaValue * my
-  outputState.PlasticStrain(2) = lambdaValue * mt
-  outputState.PlasticStrain(3) = lambdaValue * mz
-  outputState.Tangent(0, 0) = d00 - qx * rx / denominator
-  outputState.Tangent(0, 1) = d01 - qx * ry / denominator
-  outputState.Tangent(0, 2) = -qx * rt / denominator
-  outputState.Tangent(1, 0) = d01 - qy * rx / denominator
-  outputState.Tangent(1, 1) = d00 - qy * ry / denominator
-  outputState.Tangent(1, 2) = -qy * rt / denominator
-  outputState.Tangent(2, 0) = -qt * rx / denominator
-  outputState.Tangent(2, 1) = -qt * ry / denominator
-  outputState.Tangent(2, 2) = d22 - qt * rt / denominator
-  outputState.PrincipalStress(0) = sigmaMax
-  outputState.PrincipalStress(1) = sigmaMid
-  outputState.PrincipalStress(2) = sigmaMin
-  outputState.principalAngle = principalAngle * 180# / piValue
-  outputState.YieldFunction = yieldCurrent
-  outputState.yielded = True
-  outputState.Elastic = False
-  outputState.converged = True
-  outputState.iterations = iter
-  For iter = 0 To 3
-    If Not P2IsFinite(outputState.Stress(iter)) Then
-      P2SetFailure outputState, P2_FAILURE_NONFINITE, "平面ひずみ更新応力に有限でない値があります。"
-      Exit Function
-    End If
-    If Not P2IsFinite(outputState.PlasticStrain(iter)) Then
-      P2SetFailure outputState, P2_FAILURE_NONFINITE, "平面ひずみ塑性ひずみに有限でない値があります。"
-      Exit Function
-    End If
-  Next iter
-  P2MaterialPointUpdateCore = True
+  P2SetFailure outputState, P2_FAILURE_NOT_CONVERGED, "試行主応力基底で面・稜線・頂点の流れ則に適合する戻しがありません。"
   Exit Function
 Failed:
   P2SetFailure outputState, P2_FAILURE_NONFINITE, "平面ひずみ材料点更新で算術エラーが発生しました。"
@@ -5157,39 +5322,97 @@ Private Function P2RunEqualSubsteps(ByRef inputState As P2_MaterialPointInput, B
   P2RunEqualSubsteps = True
 End Function
 
-Private Function P2FillFiniteDifferenceTangent(ByRef inputState As P2_MaterialPointInput, ByRef outputState As P2_MaterialPointOutput, ByVal stepCount As Long) As Boolean
-  Dim pertInput As P2_MaterialPointInput, pertOutput As P2_MaterialPointOutput
-  Dim col As Long, i As Long, j As Long
-  Dim h As Double, strainScale As Double
-  Dim baseSx As Double, baseSy As Double, baseTxy As Double
-  Dim savedTangent(0 To 2, 0 To 2) As Double
-  P2FillFiniteDifferenceTangent = False
-  For i = 0 To 2
-    For j = 0 To 2
-      savedTangent(i, j) = outputState.Tangent(i, j)
-    Next j
-  Next i
-  baseSx = outputState.Stress(0)
-  baseSy = outputState.Stress(1)
-  baseTxy = outputState.Stress(2)
-  strainScale = Abs(inputState.StrainIncrement(0)) + Abs(inputState.StrainIncrement(1)) + Abs(inputState.StrainIncrement(2))
-  h = 0.000001 * (1# + strainScale)
-  If h < 0.0000000001 Then h = 0.0000000001
-  For col = 0 To 2
-    pertInput = inputState
-    pertInput.StrainIncrement(col) = pertInput.StrainIncrement(col) + h
-    If Not P2RunEqualSubsteps(pertInput, pertOutput, stepCount) Then
-      For i = 0 To 2
-        For j = 0 To 2
-          outputState.Tangent(i, j) = savedTangent(i, j)
-        Next j
-      Next i
-      Exit Function
+Private Function P2FiniteDifferenceColumn(ByRef inputState As P2_MaterialPointInput, ByRef baseState As P2_MaterialPointOutput, ByVal stepCount As Long, ByVal col As Long, ByVal h As Double, ByRef columnValue() As Double, ByRef stencilKind As Long) As Boolean
+  Dim plusInput As P2_MaterialPointInput, minusInput As P2_MaterialPointInput
+  Dim plusOutput As P2_MaterialPointOutput, minusOutput As P2_MaterialPointOutput
+  Dim plusOK As Boolean, minusOK As Boolean, row As Long
+  stencilKind = 0
+  plusInput = inputState: minusInput = inputState
+  plusInput.StrainIncrement(col) = plusInput.StrainIncrement(col) + h
+  minusInput.StrainIncrement(col) = minusInput.StrainIncrement(col) - h
+  plusOK = P2RunEqualSubsteps(plusInput, plusOutput, stepCount)
+  minusOK = P2RunEqualSubsteps(minusInput, minusOutput, stepCount)
+  If Not plusOK And Not minusOK Then Exit Function
+  If plusOK And minusOK Then
+    stencilKind = 1
+  ElseIf plusOK Then
+    stencilKind = 2
+  Else
+    stencilKind = -2
+  End If
+  For row = 0 To 2
+    If plusOK And minusOK Then
+      columnValue(row) = (plusOutput.Stress(row) - minusOutput.Stress(row)) / (2# * h)
+    ElseIf plusOK Then
+      columnValue(row) = (plusOutput.Stress(row) - baseState.Stress(row)) / h
+    Else
+      columnValue(row) = (baseState.Stress(row) - minusOutput.Stress(row)) / h
     End If
-    outputState.Tangent(0, col) = (pertOutput.Stress(0) - baseSx) / h
-    outputState.Tangent(1, col) = (pertOutput.Stress(1) - baseSy) / h
-    outputState.Tangent(2, col) = (pertOutput.Stress(2) - baseTxy) / h
+    If Not P2IsFinite(columnValue(row)) Then Exit Function
+  Next row
+  P2FiniteDifferenceColumn = True
+End Function
+
+Private Function P2FillFiniteDifferenceTangent(ByRef inputState As P2_MaterialPointInput, ByRef outputState As P2_MaterialPointOutput, ByVal stepCount As Long) As Boolean
+  Dim trialTangent(0 To 2, 0 To 2) As Double, coarse(0 To 2) As Double, fine(0 To 2) As Double
+  Dim col As Long, row As Long, attempt As Long, point As Long, coarseStencil As Long, fineStencil As Long
+  Dim h As Double, h0 As Double, hResolution As Double, hLocal As Double, strainScale As Double
+  Dim stressScale As Double, resolutionScale As Double, localStressScale As Double, meanValue As Double
+  Dim elasticScale As Double, value As Double, derivativeScale As Double, derivativeGap As Double, columnOK As Boolean
+  P2FillFiniteDifferenceTangent = False
+  strainScale = Abs(inputState.StrainIncrement(0)) + Abs(inputState.StrainIncrement(1)) + Abs(inputState.StrainIncrement(2))
+  resolutionScale = 1#: localStressScale = Abs(inputState.cohesion)
+  For row = 0 To 3
+    If Abs(inputState.PreviousStress(row)) > stressScale Then stressScale = Abs(inputState.PreviousStress(row))
+    resolutionScale = resolutionScale + Abs(inputState.PreviousStress(row)) + Abs(outputState.Stress(row))
+  Next row
+  For point = 0 To 1
+    If point = 0 Then
+      meanValue = (inputState.PreviousStress(0) + inputState.PreviousStress(1) + inputState.PreviousStress(3)) / 3#
+      value = Abs(inputState.PreviousStress(0) - meanValue) + Abs(inputState.PreviousStress(1) - meanValue) + Abs(inputState.PreviousStress(3) - meanValue) + 2# * Abs(inputState.PreviousStress(2))
+    Else
+      meanValue = (outputState.Stress(0) + outputState.Stress(1) + outputState.Stress(3)) / 3#
+      value = Abs(outputState.Stress(0) - meanValue) + Abs(outputState.Stress(1) - meanValue) + Abs(outputState.Stress(3) - meanValue) + 2# * Abs(outputState.Stress(2))
+    End If
+    If value > localStressScale Then localStressScale = value
+  Next point
+  elasticScale = inputState.young * (1# - inputState.Poisson) / ((1# + inputState.Poisson) * (1# - 2# * inputState.Poisson))
+  If elasticScale <= 0# Or Not P2IsFinite(elasticScale) Then Exit Function
+  ' Do not replace a local tangent with a wide secant under high confinement.
+  hLocal = 0.001 * localStressScale / elasticScale
+  value = 0.001 * strainScale: If value > hLocal Then hLocal = value
+  ' Resolve yield tolerances in every replayed step, at BOTH probe widths.
+  hResolution = 10000# * inputState.tolerance * resolutionScale * CDbl(stepCount) / inputState.young
+  If hResolution <= 0# Or Not P2IsFinite(hResolution) Or hLocal < 2# * hResolution Then Exit Function
+  h0 = 0.00001 * strainScale
+  value = 0.00000001 * stressScale / inputState.young: If value > h0 Then h0 = value
+  If h0 < 2# * hResolution Then h0 = 2# * hResolution
+  If h0 > hLocal Then h0 = hLocal
+  For col = 0 To 2
+    h = h0: columnOK = False
+    For attempt = 0 To 3
+      If h < 2# * hResolution Then Exit For
+      If P2FiniteDifferenceColumn(inputState, outputState, stepCount, col, h, coarse, coarseStencil) Then
+        If P2FiniteDifferenceColumn(inputState, outputState, stepCount, col, h * 0.5, fine, fineStencil) Then
+          derivativeScale = 0#: derivativeGap = 0#
+          For row = 0 To 2
+            If Abs(coarse(row)) > derivativeScale Then derivativeScale = Abs(coarse(row))
+            If Abs(fine(row)) > derivativeScale Then derivativeScale = Abs(fine(row))
+            If Abs(coarse(row) - fine(row)) > derivativeGap Then derivativeGap = Abs(coarse(row) - fine(row))
+          Next row
+          If derivativeScale < 0.00000001 * elasticScale Then derivativeScale = 0.00000001 * elasticScale
+          If coarseStencil = fineStencil And derivativeGap <= 0.0001 * derivativeScale Then columnOK = True: Exit For
+        End If
+      End If
+      h = h * 0.25
+    Next attempt
+    If Not columnOK Then Exit Function
+    For row = 0 To 2: trialTangent(row, col) = fine(row): Next row
   Next col
+  ' Commit all columns together. The stress/plastic state stays unchanged.
+  For row = 0 To 2
+    For col = 0 To 2: outputState.tangent(row, col) = trialTangent(row, col): Next col
+  Next row
   P2FillFiniteDifferenceTangent = True
 End Function
 
@@ -5220,8 +5443,8 @@ Public Function P2MaterialPointUpdate(ByRef inputState As P2_MaterialPointInput,
     sinPhi = inputState.CachedSinFriction
     cosPhi = inputState.CachedCosFriction
   Else
-    shearModulus = inputState.Young / (2# * (1# + inputState.Poisson))
-    lameLambda = inputState.Young * inputState.Poisson / ((1# + inputState.Poisson) * (1# - 2# * inputState.Poisson))
+    shearModulus = inputState.young / (2# * (1# + inputState.Poisson))
+    lameLambda = inputState.young * inputState.Poisson / ((1# + inputState.Poisson) * (1# - 2# * inputState.Poisson))
     d00 = lameLambda + 2# * shearModulus
     d01 = lameLambda
     d22 = shearModulus
@@ -5244,9 +5467,9 @@ Public Function P2MaterialPointUpdate(ByRef inputState As P2_MaterialPointInput,
     outputState.Stress(1) = outputState.TrialStress(1)
     outputState.Stress(2) = outputState.TrialStress(2)
     outputState.Stress(3) = outputState.TrialStress(3)
-    outputState.Tangent(0, 0) = d00: outputState.Tangent(0, 1) = d01: outputState.Tangent(0, 2) = 0#
-    outputState.Tangent(1, 0) = d01: outputState.Tangent(1, 1) = d00: outputState.Tangent(1, 2) = 0#
-    outputState.Tangent(2, 0) = 0#: outputState.Tangent(2, 1) = 0#: outputState.Tangent(2, 2) = d22
+    outputState.tangent(0, 0) = d00: outputState.tangent(0, 1) = d01: outputState.tangent(0, 2) = 0#
+    outputState.tangent(1, 0) = d01: outputState.tangent(1, 1) = d00: outputState.tangent(1, 2) = 0#
+    outputState.tangent(2, 0) = 0#: outputState.tangent(2, 1) = 0#: outputState.tangent(2, 2) = d22
     outputState.PrincipalStress(0) = sigmaMax
     outputState.PrincipalStress(1) = sigmaMid
     outputState.PrincipalStress(2) = sigmaMin
@@ -5281,7 +5504,7 @@ Public Function P2MaterialPointUpdate(ByRef inputState As P2_MaterialPointInput,
     specialFailureMessage = vbNullString
     allOK = True
     For stepId = 1 To stepCount
-      stepInput.Young = inputState.Young
+      stepInput.young = inputState.young
       stepInput.Poisson = inputState.Poisson
       stepInput.frictionAngle = inputState.frictionAngle
       stepInput.cohesion = inputState.cohesion
@@ -5354,26 +5577,34 @@ Public Function P2MaterialPointUpdate(ByRef inputState As P2_MaterialPointInput,
   outputState.failureMessage = specialFailureMessage
   outputState.iterations = totalIterations
   outputState.UsedSubsteps = stepCount
+  outputState.AlgorithmicTangentReady = (stepCount = 1 And stepOutput.AlgorithmicTangentReady)
   AccelNoteSubsteps stepCount
-  outputState.Tangent(0, 0) = stepOutput.Tangent(0, 0)
-  outputState.Tangent(0, 1) = stepOutput.Tangent(0, 1)
-  outputState.Tangent(0, 2) = stepOutput.Tangent(0, 2)
-  outputState.Tangent(1, 0) = stepOutput.Tangent(1, 0)
-  outputState.Tangent(1, 1) = stepOutput.Tangent(1, 1)
-  outputState.Tangent(1, 2) = stepOutput.Tangent(1, 2)
-  outputState.Tangent(2, 0) = stepOutput.Tangent(2, 0)
-  outputState.Tangent(2, 1) = stepOutput.Tangent(2, 1)
-  outputState.Tangent(2, 2) = stepOutput.Tangent(2, 2)
+  outputState.tangent(0, 0) = stepOutput.tangent(0, 0)
+  outputState.tangent(0, 1) = stepOutput.tangent(0, 1)
+  outputState.tangent(0, 2) = stepOutput.tangent(0, 2)
+  outputState.tangent(1, 0) = stepOutput.tangent(1, 0)
+  outputState.tangent(1, 1) = stepOutput.tangent(1, 1)
+  outputState.tangent(1, 2) = stepOutput.tangent(1, 2)
+  outputState.tangent(2, 0) = stepOutput.tangent(2, 0)
+  outputState.tangent(2, 1) = stepOutput.tangent(2, 1)
+  outputState.tangent(2, 2) = stepOutput.tangent(2, 2)
   outputState.PrincipalStress(0) = stepOutput.PrincipalStress(0)
   outputState.PrincipalStress(1) = stepOutput.PrincipalStress(1)
   outputState.PrincipalStress(2) = stepOutput.PrincipalStress(2)
   outputState.principalAngle = stepOutput.principalAngle
   outputState.YieldFunction = stepOutput.YieldFunction
-  ' サブステップ後は最後のalgorithmic tangentを使う。FDは列途中失敗で混成接線になるため既定では呼ばない。
+  ' Differentiate the complete stress update, including every substep and
+  ' principal-direction change. A failed column never leaves a mixed matrix.
+  If yieldedAny And Not (stepCount = 1 And stepOutput.AlgorithmicTangentReady) Then
+    If Not P2FillFiniteDifferenceTangent(inputState, outputState, stepCount) Then
+      P2SetFailure outputState, P2_FAILURE_NOT_CONVERGED, "材料更新と整合する接線を評価できませんでした。"
+      Exit Function
+    End If
+  End If
   If Not yieldedAny Then
-    outputState.Tangent(0, 0) = d00: outputState.Tangent(0, 1) = d01: outputState.Tangent(0, 2) = 0#
-    outputState.Tangent(1, 0) = d01: outputState.Tangent(1, 1) = d00: outputState.Tangent(1, 2) = 0#
-    outputState.Tangent(2, 0) = 0#: outputState.Tangent(2, 1) = 0#: outputState.Tangent(2, 2) = d22
+    outputState.tangent(0, 0) = d00: outputState.tangent(0, 1) = d01: outputState.tangent(0, 2) = 0#
+    outputState.tangent(1, 0) = d01: outputState.tangent(1, 1) = d00: outputState.tangent(1, 2) = 0#
+    outputState.tangent(2, 0) = 0#: outputState.tangent(2, 1) = 0#: outputState.tangent(2, 2) = d22
     outputState.PrincipalStress(0) = sigmaMax
     outputState.PrincipalStress(1) = sigmaMid
     outputState.PrincipalStress(2) = sigmaMin
@@ -5389,7 +5620,7 @@ End Function
 
 Private Sub P2SetSelfTestInput(ByRef inputState As P2_MaterialPointInput, ByVal ex As Double, ByVal ey As Double, ByVal gammaXY As Double, ByVal phi As Double, ByVal cohesionValue As Double, ByVal psi As Double)
   Dim i As Long
-  inputState.Young = 1000#
+  inputState.young = 1000#
   inputState.Poisson = 0.3
   inputState.frictionAngle = phi
   inputState.cohesion = cohesionValue
@@ -5409,6 +5640,10 @@ End Sub
 Private Function P2RunSelfTestCase(ByRef ws As Worksheet, ByVal rowNumber As Long, ByVal startColumn As Long, ByVal caseName As String, ByRef inputState As P2_MaterialPointInput, ByVal expectedYielded As Boolean, ByVal expectedFailureCode As Long, ByRef outputState As P2_MaterialPointOutput) As Boolean
   Dim passed As Boolean, yieldScale As Double
   passed = P2MaterialPointUpdate(inputState, outputState)
+  If expectedFailureCode = P2_FAILURE_NOT_CONVERGED Then
+    passed = (Not passed) And (Not outputState.converged) And outputState.failureCode = expectedFailureCode
+    GoTo WriteSelfTestResult
+  End If
   If passed Then
     If Not outputState.converged Then passed = False
   End If
@@ -5427,6 +5662,7 @@ Private Function P2RunSelfTestCase(ByRef ws As Worksheet, ByVal rowNumber As Lon
       If Abs(outputState.YieldFunction) > 0.000001 * yieldScale Then passed = False
     End If
   End If
+WriteSelfTestResult:
   ws.Cells(rowNumber, startColumn).value2 = caseName
   ws.Cells(rowNumber, startColumn + 1).value2 = outputState.converged
   ws.Cells(rowNumber, startColumn + 2).value2 = outputState.yielded
@@ -5480,11 +5716,11 @@ Public Function P2RunMaterialPointSelfTest() As Boolean
   rowNumber = rowNumber + 1
   P2SetSelfTestInput inputState, 0.0001, 0.0002, 0#, 30#, 100#, 0#
   passed = P2RunSelfTestCase(ws, rowNumber, testStartColumn, "plane_strain_sigma_z", inputState, False, 0, outputState)
-  If Abs(outputState.Stress(3) - inputState.Young * inputState.Poisson / ((1# + inputState.Poisson) * (1# - 2# * inputState.Poisson)) * 0.0003) > 0.00000001 Then passed = False
+  If Abs(outputState.Stress(3) - inputState.young * inputState.Poisson / ((1# + inputState.Poisson) * (1# - 2# * inputState.Poisson)) * 0.0003) > 0.00000001 Then passed = False
   If Abs(outputState.PlasticStrain(3)) > 0.000000000001 Then passed = False
   If Not passed Then allPassed = False
   rowNumber = rowNumber + 1
-  P2SetSelfTestInput inputState, -0.1, 0#, 0#, 30#, 1#, 0#
+  P2SetSelfTestInput inputState, 0.01, -0.009, 0#, 30#, 1#, 0#
   passed = P2RunSelfTestCase(ws, rowNumber, testStartColumn, "plastic_loading_psi0", inputState, True, 0, plasticOutput): If Not passed Then allPassed = False
   rowNumber = rowNumber + 1
   inputState.PreviousStress(0) = plasticOutput.Stress(0)
@@ -5496,7 +5732,7 @@ Public Function P2RunMaterialPointSelfTest() As Boolean
   inputState.StrainIncrement(2) = 0#
   passed = P2RunSelfTestCase(ws, rowNumber, testStartColumn, "unloading", inputState, False, 0, outputState): If Not passed Then allPassed = False
   rowNumber = rowNumber + 1
-  P2SetSelfTestInput inputState, -0.05, 0#, 0#, 30#, 0#, 0#
+  P2SetSelfTestInput inputState, 0.01, -0.009, 0#, 30#, 0#, 0#
   passed = P2RunSelfTestCase(ws, rowNumber, testStartColumn, "zero_cohesion", inputState, True, 0, outputState): If Not passed Then allPassed = False
   rowNumber = rowNumber + 1
   P2SetSelfTestInput inputState, 0#, 0#, 0.02, 0#, 5#, 0#
@@ -5519,10 +5755,18 @@ Public Function P2RunMaterialPointSelfTest() As Boolean
   inputState.PreviousStress(0) = -10#: inputState.PreviousStress(1) = -10#: inputState.PreviousStress(2) = 0#: inputState.PreviousStress(3) = -10#
   passed = P2RunSelfTestCase(ws, rowNumber, testStartColumn, "mohr_coulomb_vertex_3d", inputState, True, P2_FAILURE_VERTEX, outputState): If Not passed Then allPassed = False
   rowNumber = rowNumber + 1
+  ' Zero-dilatancy cannot return a strongly tensile mean stress to the MC apex.
+  ' These are expected rejection tests, not admissible plastic loading examples.
+  P2SetSelfTestInput inputState, -0.1, 0#, 0#, 30#, 1#, 0#
+  passed = P2RunSelfTestCase(ws, rowNumber, testStartColumn, "tensile_mean_psi0_rejected", inputState, True, P2_FAILURE_NOT_CONVERGED, outputState): If Not passed Then allPassed = False
+  rowNumber = rowNumber + 1
+  P2SetSelfTestInput inputState, -0.05, 0#, 0#, 30#, 0#, 0#
+  passed = P2RunSelfTestCase(ws, rowNumber, testStartColumn, "tensile_zero_cohesion_rejected", inputState, True, P2_FAILURE_NOT_CONVERGED, outputState): If Not passed Then allPassed = False
+  rowNumber = rowNumber + 1
   ws.Cells(rowNumber, testStartColumn).value2 = "rotation_principal_difference"
   ws.Cells(rowNumber, testStartColumn + 1).value2 = principalDifference
   rowNumber = rowNumber + 1
-  tangentDifference = Abs(plasticOutput.Tangent(0, 1) - plasticOutput.Tangent(1, 0))
+  tangentDifference = Abs(plasticOutput.tangent(0, 1) - plasticOutput.tangent(1, 0))
   ws.Cells(rowNumber, testStartColumn).value2 = "nonassociated_tangent_asymmetry"
   ws.Cells(rowNumber, testStartColumn + 1).value2 = tangentDifference
   ws.Cells(rowNumber + 1, testStartColumn).value2 = "Overall"
@@ -5705,7 +5949,142 @@ RejectAA:
   If Not P3IsFatalFailure() Then P3ClearTransientFailure
 End Function
 
-Private Function P3AccelApplyCorrection(ByRef incrementBase() As Double, ByRef targetForce() As Double, ByRef internalForce() As Double, ByRef correctionRatio As Double, ByVal residualBefore As Double) As Boolean
+Private Sub P3SetGlobalBudgetFailure()
+  mLineSearchFailure = "GLOBAL_ITERATION_LIMIT"
+  P3LineSearchRetryCorrection = False
+  SetAnalysisFailure RESULT_NONCONVERGED, "全体反復と回復補正の合計が上限に達しました。状態は前増分へ戻します。", vbObjectError + 3202, FailureElement, FailureGaussPoint, CurrentIncrement, CurrentIteration
+End Sub
+
+Private Function P3TryNewtonWatchdog(ByRef incrementBase() As Double, ByRef targetForce() As Double, ByRef internalForce() As Double, ByRef correctionRatio As Double, ByRef localIteration As Long) As Boolean
+  ' Bounded look-ahead crosses a nonsmooth merit ridge without committing it.
+  ' Accept only if the combined correction decreases the ORIGINAL free residual.
+  Dim savedT() As Double, savedDirection() As Double
+  Dim i As Long, attempt As Long, innerStep As Long
+  Dim alpha As Double, originalNorm As Double, oldLinearResidual As Double, oldLinearIterations As Long
+  Dim errorNumber As Long, errorMessage As String, failedStatus As String, failedError As Long
+  Dim failedElement As Long, failedGauss As Long, budgetExhausted As Boolean
+  P3TryNewtonWatchdog = False
+  If Not P3BoundaryDispSatisfied() Then Exit Function
+  If P6SolverMemoryLimitBytes > 0# Then
+    If P6CSRStorageBytes + CDbl(nDof) * (CDbl(3 * BandWidth + 1) * 8# + 48#) > P6SolverMemoryLimitBytes Then Exit Function
+  End If
+  On Error GoTo FatalTrial
+  ReDim savedT(lastDof): ReDim savedDirection(lastDof)
+  For i = 0 To lastDof: savedT(i) = TDisp(i): savedDirection(i) = Disp(i): Next i
+  oldLinearResidual = P6IterativeLastResidual: oldLinearIterations = P6IterativeLastIterations
+  If Not P3EvaluateTrialState(incrementBase, internalForce) Then GoTo FatalTrial
+  P3UpdateResidualMetrics targetForce, internalForce
+  originalNorm = ResidualNormFree: alpha = 1#
+  For attempt = 1 To 3
+    P3RestoreCommittedMaterialState False
+    For i = 0 To lastDof
+      TDisp(i) = savedT(i) + alpha * savedDirection(i): UDisp(i) = TDisp(i)
+    Next i
+    For innerStep = 1 To 6
+      P6LsNoteTry
+      If Not P3EvaluateTrialState(incrementBase, internalForce) Then
+        If P3MaterialFailureIsFatal() Then GoTo FatalTrial
+        P3ClearTransientFailure
+        GoTo NextWatchdogAlpha
+      End If
+      P3UpdateResidualMetrics targetForce, internalForce
+      If Not P2IsFinite(ResidualNormFree) Then GoTo NextWatchdogAlpha
+      If ResidualNormFree <= originalNorm * (1# - 0.0001) Then
+        For i = 0 To lastDof: Disp(i) = TDisp(i) - savedT(i): Next i
+        P3ApplyCorrectionRatioFromDir 1#, savedT, correctionRatio
+        P3LineSearchRetryCorrection = False: mLineSearchFailure = ""
+        P6LsNoteAccept alpha, False: P6LsNoteQ originalNorm, ResidualNormFree
+        IncrementLogLineSearchAlpha alpha
+        P6SolverEvent "NEWTON_WATCHDOG_ACCEPT", "first_alpha=" & CStr(alpha) & ";steps=" & CStr(innerStep) & ";relative_residual=" & Format$(RelativeResidualFree, "0.000E+00")
+        P3TryNewtonWatchdog = True
+        Exit Function
+      End If
+      If innerStep = 6 Or ResidualNormFree > 100# * originalNorm Then GoTo NextWatchdogAlpha
+      For i = 0 To lastDof
+        Disp(i) = 0#: Force(i) = 0#
+        If NodeCond(i) = 0 Then Force(i) = targetForce(i) - internalForce(i)
+      Next i
+      If localIteration >= P3GlobalIterationLimit() Then
+        budgetExhausted = True: GoTo RestoreWatchdog
+      End If
+      If Not P3RebuildTangentFromSpmat() Then GoTo FatalTrial
+      SetBoundaryCondition
+      localIteration = localIteration + 1
+      P3GlobalIterationCount = P3GlobalIterationCount + 1: P6PerfNewtonCount = P6PerfNewtonCount + 1
+      If Not BandSolver() Then
+        If P3IsFatalFailure() Then GoTo FatalTrial
+        ' Only ordinary linear nonconvergence may reject this optional candidate.
+        P3ClearTransientFailure
+        GoTo NextWatchdogAlpha
+      End If
+      For i = 0 To lastDof
+        TDisp(i) = TDisp(i) + Disp(i): UDisp(i) = TDisp(i)
+      Next i
+    Next innerStep
+NextWatchdogAlpha:
+    alpha = alpha * 0.5
+  Next attempt
+RestoreWatchdog:
+  ' Restore both state AND operator before the regularized recovery is attempted.
+  P3RestoreCommittedMaterialState False
+  For i = 0 To lastDof: TDisp(i) = savedT(i): UDisp(i) = savedT(i): Disp(i) = savedDirection(i): Next i
+  If Not P3EvaluateTrialState(incrementBase, internalForce) Then GoTo FatalTrial
+  P3UpdateResidualMetrics targetForce, internalForce
+  If Not P3RebuildTangentFromSpmat() Then GoTo FatalTrial
+  P6IterativeLastResidual = oldLinearResidual: P6IterativeLastIterations = oldLinearIterations
+  If budgetExhausted Then P3SetGlobalBudgetFailure
+  Exit Function
+FatalTrial:
+  errorNumber = Err.Number: errorMessage = Err.Description
+  If errorNumber <> 0 Then
+    If errorNumber = 7 Then
+      SetAnalysisFailure RESULT_CAPACITY_ERROR, errorMessage, errorNumber, FailureElement, FailureGaussPoint, CurrentIncrement, CurrentIteration
+    Else
+      SetAnalysisFailure RESULT_RUNTIME_ERROR, errorMessage, errorNumber, FailureElement, FailureGaussPoint, CurrentIncrement, CurrentIteration
+    End If
+    Err.Clear
+  End If
+  failedStatus = ResultStatus: failedError = AnalysisErrorNumber: errorMessage = AnalysisMessage
+  failedElement = FailureElement: failedGauss = FailureGaussPoint
+  On Error Resume Next
+  P3RestoreCommittedMaterialState False
+  For i = 0 To lastDof: TDisp(i) = savedT(i): UDisp(i) = savedT(i): Next i
+  SetAnalysisFailure failedStatus, errorMessage, failedError, failedElement, failedGauss, CurrentIncrement, CurrentIteration
+  P3LineSearchRetryCorrection = False
+  mLineSearchFailure = "WATCHDOG_FATAL"
+End Function
+
+Private Function P3TryResidualRecovery(ByRef incrementBase() As Double, ByRef targetForce() As Double, ByRef internalForce() As Double, ByRef correctionRatio As Double, ByRef localIteration As Long) As Boolean
+  Dim i As Long, attempt As Long, damping As Double, residualBefore As Double
+  P3TryResidualRecovery = False
+  If Not P3BoundaryDispSatisfied() Then Exit Function
+  damping = 0.00000001
+  For attempt = 1 To 6
+    If localIteration >= P3GlobalIterationLimit() Then
+      Call P3SetGlobalBudgetFailure
+      Exit Function
+    End If
+    If Not P3EvaluateTrialState(incrementBase, internalForce) Then Exit Function
+    P3UpdateResidualMetrics targetForce, internalForce
+    residualBefore = ResidualNormFree
+    For i = 0 To lastDof
+      Force(i) = 0#: Disp(i) = 0#
+      If NodeCond(i) = 0 Then Force(i) = targetForce(i) - internalForce(i)
+    Next i
+    localIteration = localIteration + 1
+    P3GlobalIterationCount = P3GlobalIterationCount + 1: P6PerfNewtonCount = P6PerfNewtonCount + 1
+    If P6SolveResidualRecovery(damping) Then
+      If P3ApplyLineSearch(incrementBase, targetForce, internalForce, correctionRatio, residualBefore, 12) Then
+        P6SolverEvent "REGULARIZED_CORRECTION_ACCEPT", "damping=" & Format$(damping, "0.000E+00") & ";relres=" & Format$(RelativeResidualFree, "0.000E+00") & ";correction=" & Format$(correctionRatio, "0.000E+00")
+        P3TryResidualRecovery = True: Exit Function
+      End If
+    End If
+    If P3IsFatalFailure() Then Exit Function
+    damping = damping * 100#
+  Next attempt
+End Function
+
+Private Function P3AccelApplyCorrection(ByRef incrementBase() As Double, ByRef targetForce() As Double, ByRef internalForce() As Double, ByRef correctionRatio As Double, ByVal residualBefore As Double, ByRef localIteration As Long) As Boolean
   Dim cutsBefore As Long, ok As Boolean
   mAccelAttemptFailure = ""
   mLineSearchFailure = "": mLineSearchTries = 0: mLineSearchMaterialRejects = 0: mLineSearchBestQ = -1#
@@ -5714,7 +6093,13 @@ Private Function P3AccelApplyCorrection(ByRef incrementBase() As Double, ByRef t
     P3AccelApplyCorrection = True: Exit Function
   End If
   If P3IsFatalFailure() Then Exit Function
-  ok = P3ApplyLineSearch(incrementBase, targetForce, internalForce, correctionRatio, residualBefore)
+  If P3FlowPolicyIsInconsistent() Then
+    ok = P3ApplyLineSearch(incrementBase, targetForce, internalForce, correctionRatio, residualBefore, P3_LINESEARCH_MAX)
+    If Not ok And Not P3IsFatalFailure() Then ok = P3TryNewtonWatchdog(incrementBase, targetForce, internalForce, correctionRatio, localIteration)
+    If Not ok And Not P3IsFatalFailure() Then ok = P3TryResidualRecovery(incrementBase, targetForce, internalForce, correctionRatio, localIteration)
+  Else
+    ok = P3ApplyLineSearch(incrementBase, targetForce, internalForce, correctionRatio, residualBefore)
+  End If
   If Not ok Or P3LineSearchCuts <> cutsBefore Then mAAReady = False
   P3AccelApplyCorrection = ok
 End Function
@@ -5751,13 +6136,3 @@ Public Function P3AccelFailureReason() As String
     End If
   End If
 End Function
-
-
-
-
-
-
-
-
-
-

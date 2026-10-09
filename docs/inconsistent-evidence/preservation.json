@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "old_sha256": "1e45f152d2c2f7332ec6ccb4a5dba5438570d301888fe66ab227c42c38e922ce",
+  "new_sha256": "21a6815238d694853ce4435ba6f4db7a0cdf56879b8f2eeadd981a24d56c26cd",
+  "model_inputs": {
+    "材料データ": {
+      "preserved_cells": 11
+    },
+    "節点データ": {
+      "preserved_cells": 5025
+    },
+    "要素データ": {
+      "preserved_cells": 4336
+    },
+    "接合": {
+      "preserved_cells": 0
+    },
+    "載荷": {
+      "preserved_cells": 6
+    },
+    "ステージ": {
+      "preserved_cells": 9
+    }
+  },
+  "stored_settings_preserved": 74,
+  "full_compile": true,
+  "build": "20261009_INCO_14"
+}

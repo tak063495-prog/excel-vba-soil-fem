@@ -1,0 +1,187 @@
+{
+  "source_sha256": "21A6815238D694853CE4435BA6F4DB7A0CDF56879B8F2EEADD981A24D56C26CD",
+  "status": "PASS",
+  "description": "Synthetic nonlinear force map with native watchdog control and native material checkpoint restoration",
+  "records": [
+    {
+      "values": [
+        true,
+        1.0840434673026924,
+        1.0840434673026924,
+        0.9840434673026924,
+        3.0051060239973624,
+        0.0009,
+        2,
+        "NOT_RUN",
+        0,
+        101.08404346730269,
+        7,
+        3,
+        0.1751502390016435,
+        3,
+        ""
+      ],
+      "mode": 1
+    },
+    {
+      "values": [
+        false,
+        0,
+        0,
+        5,
+        0,
+        0.0123,
+        17,
+        "NOT_RUN",
+        0,
+        100,
+        7,
+        12,
+        1,
+        12,
+        ""
+      ],
+      "mode": 2
+    },
+    {
+      "values": [
+        false,
+        0.1,
+        0.1,
+        0,
+        10.1,
+        0.0123,
+        17,
+        "GLOBAL_SINGULAR",
+        -2147218203,
+        7,
+        7,
+        1,
+        24.502499999999998,
+        1,
+        "WATCHDOG_FATAL"
+      ],
+      "mode": 3
+    },
+    {
+      "values": [
+        false,
+        0.1,
+        0.1,
+        0,
+        10.1,
+        0.0123,
+        17,
+        "NONCONVERGED",
+        18,
+        7,
+        7,
+        1,
+        24.502499999999998,
+        1,
+        "WATCHDOG_FATAL"
+      ],
+      "mode": 4
+    },
+    {
+      "values": [
+        false,
+        0.1,
+        0.1,
+        4.95,
+        0.2,
+        0.0123,
+        17,
+        "CAPACITY_ERROR",
+        7,
+        7,
+        7,
+        0,
+        0.99,
+        0,
+        "WATCHDOG_FATAL"
+      ],
+      "mode": 5
+    },
+    {
+      "values": [
+        false,
+        0,
+        0,
+        5,
+        0,
+        0.0123,
+        17,
+        "NONCONVERGED",
+        -2147218302,
+        100,
+        7,
+        0,
+        1,
+        100,
+        "GLOBAL_ITERATION_LIMIT"
+      ],
+      "mode": 6
+    },
+    {
+      "values": [
+        false,
+        0,
+        0,
+        5,
+        0,
+        0.0123,
+        17,
+        "NONCONVERGED",
+        -2147218302,
+        100,
+        7,
+        1,
+        1,
+        100,
+        "GLOBAL_ITERATION_LIMIT"
+      ],
+      "mode": 7
+    },
+    {
+      "values": [
+        false,
+        0,
+        0,
+        5,
+        0.2,
+        0.0123,
+        17,
+        "NONCONVERGED",
+        -2147218302,
+        7,
+        7,
+        0,
+        1,
+        100,
+        "GLOBAL_ITERATION_LIMIT"
+      ],
+      "mode": 8
+    },
+    {
+      "values": [
+        false,
+        0,
+        0,
+        0,
+        0.2,
+        0.0123,
+        17,
+        "NONCONVERGED",
+        -2147218302,
+        100,
+        7,
+        1,
+        1,
+        100,
+        "GLOBAL_ITERATION_LIMIT"
+      ],
+      "mode": 9
+    }
+  ]
+}

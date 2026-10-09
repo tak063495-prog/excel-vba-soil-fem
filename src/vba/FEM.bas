@@ -765,7 +765,7 @@ Sub SetMaterialData()
   For rowNo = 1 To NumberOfMaterial
     materialId = P6InputMaterialId(rowNo)
     materialIndex = materialId - 1
-    Material(materialIndex).Young = P6InputMaterialYoung(rowNo)
+    Material(materialIndex).young = P6InputMaterialYoung(rowNo)
     Material(materialIndex).Poisson = P6InputMaterialPoisson(rowNo)
     Material(materialIndex).thickness = P6InputMaterialThickness(rowNo)
     Material(materialIndex).weight = P6InputMaterialWeight(rowNo)
@@ -775,7 +775,7 @@ Sub SetMaterialData()
     Material(materialIndex).ReduceStrength = P6InputMaterialReduce(rowNo)
     Material(materialIndex).InitialActive = P6InputMaterialInitialActive(rowNo)
     Material(materialIndex).kind = P6InputMaterialKind(rowNo)
-    Material(materialIndex).kn = Material(materialIndex).Young
+    Material(materialIndex).kn = Material(materialIndex).young
     Material(materialIndex).ks = P6InputMaterialKs(rowNo)
     Material(materialIndex).AllowTension = P6InputMaterialAllowTension(rowNo)
     If Material(materialIndex).kind = "JOINT" Then
@@ -789,8 +789,8 @@ Sub SetMaterialData()
       Material(materialIndex).ElasticD01 = 0#
       Material(materialIndex).ElasticD22 = Material(materialIndex).ks
     Else
-      shearModulus = Material(materialIndex).Young / (2# * (1# + Material(materialIndex).Poisson))
-      lameLambda = Material(materialIndex).Young * Material(materialIndex).Poisson / ((1# + Material(materialIndex).Poisson) * (1# - 2# * Material(materialIndex).Poisson))
+      shearModulus = Material(materialIndex).young / (2# * (1# + Material(materialIndex).Poisson))
+      lameLambda = Material(materialIndex).young * Material(materialIndex).Poisson / ((1# + Material(materialIndex).Poisson) * (1# - 2# * Material(materialIndex).Poisson))
       Material(materialIndex).ElasticD00 = lameLambda + 2# * shearModulus
       Material(materialIndex).ElasticD01 = lameLambda
       Material(materialIndex).ElasticD22 = shearModulus
@@ -1173,19 +1173,19 @@ Private Sub P6ComputeGaussIntegral(ByRef RN() As Double, ByRef n() As Double)
 Next i
  
 End Sub
-Sub SetDmat(Young As Double, Poisson As Double, Dmat() As Double)
+Sub SetDmat(young As Double, Poisson As Double, Dmat() As Double)
 Dim a As Double: Dim b As Double: Dim c As Double
 '弾性定数行列。地盤用途の既定は平面ひずみ。
-  If Young <= 0# Then
+  If young <= 0# Then
     Err.Raise vbObjectError + 3025, "FEM.SetDmat", "ヤング率は正で指定してください。"
   End If
   If Poisson <= -1# Or Poisson >= 0.5 Then
     Err.Raise vbObjectError + 3026, "FEM.SetDmat", "ポアソン比は-1より大きく0.5未満で指定してください。値=" & Format$(Poisson, "0.##########")
   End If
   P1Formulation = P1_FORMULATION_PLANE_STRAIN
-  a = Young * (1# - Poisson) / ((1# + Poisson) * (1# - 2# * Poisson))
-  b = Young * Poisson / ((1# + Poisson) * (1# - 2# * Poisson))
-  c = 0.5 * Young / (1# + Poisson)
+  a = young * (1# - Poisson) / ((1# + Poisson) * (1# - 2# * Poisson))
+  b = young * Poisson / ((1# + Poisson) * (1# - 2# * Poisson))
+  c = 0.5 * young / (1# + Poisson)
   Dmat(0, 0) = a
   Dmat(0, 1) = b
   Dmat(0, 2) = 0#
@@ -1660,7 +1660,7 @@ Function SetElmMat() As Boolean
           .Dmat(2, 1) = 0#
           .Dmat(2, 2) = Material(materialIndex).ElasticD22
         Else
-          SetDmat Material(materialIndex).Young, Material(materialIndex).Poisson, .Dmat
+          SetDmat Material(materialIndex).young, Material(materialIndex).Poisson, .Dmat
         End If
         If Not CheckElementJacobian(Elem(i), i, False) Then Exit Function
         Call SetBmat(Elem(i), i)
@@ -2202,7 +2202,7 @@ Dim startRow As Long, stageNo As Long, outputMode As String, lastUsed As Long
   On Error GoTo 0
 End Sub
 
-Public Function Nrf(Smat() As Double, Spmat() As Double, UE() As Double, Stmat() As Double, mStmat() As Double, fai As Double, cohesion As Double, psai As Double, Young As Double, Poisson As Double, Dmat() As Double, Dpmat() As Double, Bmat() As Double, Optional ByVal materialIndex As Long = -1) As Boolean
+Public Function Nrf(Smat() As Double, Spmat() As Double, UE() As Double, Stmat() As Double, mStmat() As Double, fai As Double, cohesion As Double, psai As Double, young As Double, Poisson As Double, Dmat() As Double, Dpmat() As Double, Bmat() As Double, Optional ByVal materialIndex As Long = -1) As Boolean
   Dim inputState As P2_MaterialPointInput, outputState As P2_MaterialPointOutput
   Dim im As Long, i As Long, j As Long, k As Long
   Dim workStmat(0 To 16, 0 To 3) As Double
@@ -2223,7 +2223,7 @@ Public Function Nrf(Smat() As Double, Spmat() As Double, UE() As Double, Stmat()
     Nrf = True
     Exit Function
   End If
-  inputState.Young = Young
+  inputState.young = young
   inputState.Poisson = Poisson
   inputState.frictionAngle = fai
   inputState.cohesion = cohesion
@@ -2276,17 +2276,7 @@ Public Function Nrf(Smat() As Double, Spmat() As Double, UE() As Double, Stmat()
       SetAnalysisFailure RESULT_MATERIAL_ERROR, errDescription, errNumber, FailureElement, im, CurrentIncrement, CurrentIteration
       Exit Function
     End If
-    If P3FlowPolicyIsInconsistent() Then
-      avg = 0.5 * (outputState.Tangent(0, 1) + outputState.Tangent(1, 0))
-      outputState.Tangent(0, 1) = avg
-      outputState.Tangent(1, 0) = avg
-      avg = 0.5 * (outputState.Tangent(0, 2) + outputState.Tangent(2, 0))
-      outputState.Tangent(0, 2) = avg
-      outputState.Tangent(2, 0) = avg
-      avg = 0.5 * (outputState.Tangent(1, 2) + outputState.Tangent(2, 1))
-      outputState.Tangent(1, 2) = avg
-      outputState.Tangent(2, 1) = avg
-    End If
+    ' Preserve the complete algorithmic tangent from the constitutive update.
     workStmat(0, im) = outputState.Stress(0)
     workStmat(1, im) = outputState.Stress(1)
     workStmat(2, im) = outputState.Stress(2)
@@ -2332,12 +2322,12 @@ Public Function Nrf(Smat() As Double, Spmat() As Double, UE() As Double, Stmat()
     End If
     For i = 0 To 2
       For j = 0 To 2
-        workDpmat(i, j, im) = outputState.Tangent(i, j)
+        workDpmat(i, j, im) = outputState.tangent(i, j)
       Next j
       For j = 0 To 15
         s = 0#
         For k = 0 To 2
-          s = s + outputState.Tangent(i, k) * Bmat(k, j, im)
+          s = s + outputState.tangent(i, k) * Bmat(k, j, im)
         Next k
         workSpmat(i, j, im) = s
       Next j
@@ -2961,6 +2951,15 @@ Public Sub SaveAnalysisReport()
    ws.Cells(139, 1).value2 = "P6ProfEvalCount": ws.Cells(139, 2).value2 = P6ProfEvalCount
    ws.Cells(140, 1).value2 = "P6ProfEvalMs": ws.Cells(140, 2).value2 = P6ProfEvalMs
    ws.Cells(141, 1).value2 = "FLOW_POLICY": ws.Cells(141, 2).value2 = P3FlowPolicyText()
+   ws.Cells(142, 1).value2 = "FOS_INTERPRETATION": ws.Cells(142, 2).value2 = P3FosInterpretation
+   ws.Cells(143, 1).value2 = "SRM_TRIAL_CLASS": ws.Cells(143, 2).value2 = P3SrmTrialClassification
+   ws.Cells(144, 1).value2 = "FAILURE_KIND": ws.Cells(144, 2).value2 = P3FailureKind
+   ws.Cells(145, 1).value2 = "FAILED_TRIAL_LAMBDA": ws.Cells(145, 2).value2 = P3FailureLambda
+   ws.Cells(146, 1).value2 = "FAILED_TRIAL_RELRES": ws.Cells(146, 2).value2 = P3FailureResidual
+   ws.Cells(147, 1).value2 = "FAILED_TRIAL_LINEAR_RELRES": ws.Cells(147, 2).value2 = P3FailureLinearResidual
+   ws.Cells(148, 1).value2 = "FAILED_TRIAL_CORRECTION": ws.Cells(148, 2).value2 = P3FailureCorrection
+   ws.Cells(149, 1).value2 = "FAILED_TRIAL_PLASTIC_POINTS": ws.Cells(149, 2).value2 = P3FailurePlasticPoints
+   ws.Cells(150, 1).value2 = "FAILED_TRIAL_UMAX": ws.Cells(150, 2).value2 = P3FailureMaxDisp
    If P6ReadSetting("OUTPUT_AUTOFIT", 0#) <> 0# Then ws.columns("A:B").AutoFit
 End Sub
 
@@ -3528,5 +3527,3 @@ Public Sub SaveP0Progress(ByVal stageName As String)
     If stageName = "start" Then ThisWorkbook.Save
   End If
 End Sub
-
-

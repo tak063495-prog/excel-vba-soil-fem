@@ -18,8 +18,9 @@ published_displacement={.8:.379,1.:.381,1.2:.422,1.3:.453,1.35:.544,1.4:1.476}
 for path in sorted((OUT/'results').glob('*.json')):
  d=json.loads(path.read_text(encoding='utf-8-sig'))
  if 'metrics' not in d:continue
- m=dict(zip(d['metric_names'],d['metrics']));ref=d['reference']
- row={'case':d['case'],'status':d['status'],'flow_policy':d['flow_policy'],'elements':m['elements'],'nodes':m['nodes'],'seconds':d['elapsed_seconds'],'fos_pass':m['fos_pass'],'fos_fail':m['fos_fail'],'fos_mid':m['fos_mid'],'fos_bracket':m['fos_bracket'],'relative_residual':m['relative_residual'],'reaction_x':m['reaction_x'],'reaction_y':m['reaction_y']}
+ m=dict(zip(d['metric_names'],d['metrics']));ref=d['reference']; fixed=float(d.get('fixed_fs',0))
+ failure=dict(zip(d.get('failure_names',[]),d.get('failure_values',[])))
+ row={'case':d['case'],'test_type':'FIXED_FS' if fixed>0 else 'SEARCH_OR_LOADING','fixed_fs':fixed,**failure,'status':d['status'],'flow_policy':d['flow_policy'],'elements':m['elements'],'nodes':m['nodes'],'seconds':d['elapsed_seconds'],'fos_pass':m['fos_pass'],'fos_fail':m['fos_fail'],'fos_mid':m['fos_mid'],'fos_bracket':m['fos_bracket'],'relative_residual':m['relative_residual'],'reaction_x':m['reaction_x'],'reaction_y':m['reaction_y']}
  if ref['source_id']=='elastic_validation':
   actual={int(v[0]):v[1:] for v in zip(*[iter(d['displacements_flat'])]*3)}
   err=max(abs(actual[n][i]-[ux,uy][i]) for n,ux,uy in ref['expected_displacements'] for i in range(2))
@@ -39,8 +40,8 @@ for path in sorted((OUT/'results').glob('*.json')):
   row.update(umax=component,umax_vector=umax,umax_over_slope_height=component/ref['H'],umax_vector_over_slope_height=umax/ref['H'])
   weight=fixture['checks']['area_sum']*fixture['materials'][0][4]*fixture['materials'][0][3]
   row.update(expected_self_weight=weight,vertical_reaction_balance_error=abs(m['reaction_y']-weight))
-  if ref.get('fos_reported'):row.update(reference_fos=ref['fos_reported'],mid_difference_percent=(m['fos_mid']/ref['fos_reported']-1)*100)
-  if ref.get('fos_reference_range'):row.update(reference_min=ref['fos_reference_range'][0],reference_max=ref['fos_reference_range'][1],range_overlap=bool(m['fos_bracket'] and m['fos_pass']<=ref['fos_reference_range'][1] and m['fos_fail']>=ref['fos_reference_range'][0]))
+  if ref.get('fos_reported') and fixed==0 and m['fos_bracket']:row.update(reference_fos=ref['fos_reported'],mid_difference_percent=(m['fos_mid']/ref['fos_reported']-1)*100)
+  if ref.get('fos_reference_range') and fixed==0 and m['fos_bracket']:row.update(reference_min=ref['fos_reference_range'][0],reference_max=ref['fos_reference_range'][1],range_overlap=bool(m['fos_bracket'] and m['fos_pass']<=ref['fos_reference_range'][1] and m['fos_fail']>=ref['fos_reference_range'][0]))
   if d['flow_policy']=='DAVIS' and m['fos_bracket']:
    row.update(equivalent_yield_strength_pass=equivalent_yield_strength(m['fos_pass'],phi),equivalent_yield_strength_fail=equivalent_yield_strength(m['fos_fail'],phi),equivalent_yield_strength_mid=equivalent_yield_strength(m['fos_mid'],phi))
   log=OUT/'cases'/(d['case']+'_out')/'perf_summary.csv'
@@ -62,9 +63,9 @@ for path in sorted((OUT/'results').glob('*.json')):
       t['published_normalized_displacement']=published_displacement[fs]
       t['normalized_displacement_difference_percent']=(normalized/published_displacement[fs]-1)*100
     trial_rows.append(t)
-   limits=[t for t in trials if t['mechanical_status']=='LIMIT_STATE']
-   row['limit_state_trial_count']=len(limits)
-   row['converged_limit_state_trial_count']=sum(t['numerical_status']=='CONVERGED' for t in limits)
+   limits=[t for t in trials if t['mechanical_status'] in ('LIMIT_STATE','LIMIT_CANDIDATE')]
+   row['limit_candidate_trial_count']=len(limits)
+   row['converged_limit_candidate_trial_count']=sum(t['numerical_status']=='CONVERGED' for t in limits)
  rows.append(row)
 fields=list(dict.fromkeys(k for row in rows for k in row))
 with (OUT/'comparison.csv').open('w',encoding='utf-8-sig',newline='') as f:

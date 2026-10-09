@@ -1,0 +1,21 @@
+{
+  "source_sha256": "21A6815238D694853CE4435BA6F4DB7A0CDF56879B8F2EEADD981A24D56C26CD",
+  "value_names": [
+    "pass",
+    "fail",
+    "width",
+    "tolerance",
+    "extra_trial",
+    "next_fs",
+    "strict_width_exceeds_tolerance"
+  ],
+  "values": [
+    0.8250000000000001,
+    0.8375000000000001,
+    0.012500000000000067,
+    0.0125,
+    false,
+    0.8250000000000001,
+    true
+  ]
+}

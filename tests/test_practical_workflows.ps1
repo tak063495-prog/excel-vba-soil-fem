@@ -1,4 +1,5 @@
-﻿$ErrorActionPreference='Stop'
+﻿param([ValidateSet("DAVIS","INCONSISTENT")][string]$FlowPolicy="DAVIS",[string]$SourceWorkbook=(Join-Path $PSScriptRoot "../workbook/2DSoilFEM_20261008_practical.xlsm"))
+$ErrorActionPreference='Stop'
 $rootTask=Split-Path -Parent $PSScriptRoot
 Push-Location $rootTask
 try {
@@ -53,6 +54,18 @@ End Function
 Public Function FeatureDisp() As Variant
   FeatureDisp = TDisp
 End Function
+Public Function FeatureOriginalDisp() As Variant
+  Dim result() As Double, n As Long, k As Long
+  ReDim result(lastDof)
+  For n = 0 To NumberOfFreeNode - 1
+    k = P6GetInternalFreeNode(n)
+    result(2*n) = TDisp(2*k): result(2*n+1) = TDisp(2*k+1)
+  Next n
+  FeatureOriginalDisp = result
+End Function
+Public Function FeatureCSRStatus() As String
+  FeatureCSRStatus = P6CSRNumericAssemblyStatus & "|" & P6CSRLastAssemblyPath & "|" & CStr(P6RCMMapReady)
+End Function
 Public Function FeatureViewer(ByVal viewMode As String) As String
   On Error GoTo Failed
   SetP0SilentMode True
@@ -80,13 +93,15 @@ $xlTask=New-Object -ComObject Excel.Application
 try {
   $xlTask.EnableEvents=$false;$xlTask.DisplayAlerts=$false;$xlTask.AutomationSecurity=1
   foreach($editionTask in @('after')){
-    $srcTask=$(if($editionTask -eq 'before'){'2DSoilFEM_20261008_adaptive_policy5.xlsm'}else{'workbook/2DSoilFEM_20261008_practical.xlsm'})
-    $copyTask=Join-Path $pwd ('tests/tmp/practical_features_'+$editionTask+'.xlsm')
+    $srcTask=(Resolve-Path -LiteralPath $SourceWorkbook).Path
+    $sourceHashTask=(Get-FileHash -LiteralPath $srcTask -Algorithm SHA256).Hash
+    $copyTask=Join-Path $pwd ('tests/tmp/practical_features_'+$editionTask+'_'+$FlowPolicy+'.xlsm')
     Copy-Item -LiteralPath $srcTask -Destination $copyTask -Force
     $wbTask=$xlTask.Workbooks.Open($copyTask,0,$false)
     $tmTask=$wbTask.VBProject.VBComponents.Add(1);$tmTask.Name='FeatureHarness';$tmTask.CodeModule.AddFromString($harnessTask)
-    foreach($variantTask in @('joint_birth_death_skip','joint_birth_death_include','load_unload','matset','reset_u','reset_stress','disp_soil','disp_unload','disp_rcm')){
+    foreach($variantTask in @('joint_birth_death_skip','joint_birth_death_include','load_unload','matset','reset_u','reset_stress','disp_soil','disp_unload','disp_rcm','disp_rcm_cached')){
       foreach($keyTask in @('ACCEL_V1_PREDICTOR','ACCEL_V2A_REUSE','ACCEL_V2B_COST','ACCEL_V3_COST_SEARCH','ACCEL_V4_ANDERSON','ACCEL_V5_GMRES_LU','ACCEL_STEP_RECOVERY','ACCEL_ADAPTIVE')){Setting $wbTask $keyTask 0}
+      Setting $wbTask 'FLOW_POLICY' $FlowPolicy
       Setting $wbTask 'EXPORT_MODE' 'OFF'; Setting $wbTask 'EXPORT_LOAD' '';Setting $wbTask 'DEBUG_MODE' 'OFF'
       Setting $wbTask 'SRM_FIXED_FS' 0;Setting $wbTask 'RCM_POLICY' 'OFF'
       Setting $wbTask 'MESH_BC_BOTTOM' 'PINNED';Setting $wbTask 'MESH_BC_LEFT' 'ROLLER';Setting $wbTask 'MESH_BC_RIGHT' 'NONE';Setting $wbTask 'MESH_BC_TOP' 'NONE';Setting $wbTask 'MESH_BC_PIN_CORNER' 'NONE'
@@ -159,11 +174,20 @@ try {
         $stageRowsTask=@(,@(1.0,'LOAD',1.0,$null,1.0,'変位載荷'))
         if($variantTask -like 'reset*'){$stageRowsTask+=,@(2.0,$variantTask.ToUpper(),$null,$null,1.0,'リセット')}
         if($variantTask -eq 'disp_unload'){$stageRowsTask+=,@(2.0,'UNLOAD',1.0,$null,1.0,'変位除荷')}
-        if($variantTask -eq 'disp_rcm'){Setting $wbTask 'RCM_POLICY' 'ON'}
+        if($variantTask -like 'disp_rcm*'){Setting $wbTask 'RCM_POLICY' 'ON'}
       }
       PutRows $wbTask 'ステージ' $stageRowsTask 6
       $runTask=$xlTask.Run("'"+$wbTask.Name+"'!FeatureRun")
       $dispTask=@($xlTask.Run("'"+$wbTask.Name+"'!FeatureDisp"))
+      $originalDispTask=@($xlTask.Run("'"+$wbTask.Name+"'!FeatureOriginalDisp"))
+      $stressMaxTask=[double]$xlTask.Run("'"+$wbTask.Name+"'!FeatureStressMax")
+      $csrStatusTask=$xlTask.Run("'"+$wbTask.Name+"'!FeatureCSRStatus")
+      if($variantTask -eq 'disp_soil'){$referenceDispTask=$originalDispTask;$referenceStressTask=$stressMaxTask}
+      if($variantTask -like 'disp_rcm*'){
+        for($iTask=0;$iTask -lt $originalDispTask.Count;$iTask++){if([Math]::Abs($originalDispTask[$iTask]-$referenceDispTask[$iTask]) -gt 1e-10){throw 'RCM original displacement differs from OFF'}}
+        if([Math]::Abs($stressMaxTask-$referenceStressTask) -gt 1e-8){throw 'RCM stress differs from OFF'}
+        if($FlowPolicy -eq 'INCONSISTENT' -and -not $csrStatusTask.StartsWith('build|')){throw ('RCM CSR was not rebuilt '+$csrStatusTask)}
+      }
       Write-Output ($editionTask+' '+$variantTask+' '+$runTask)
       if(-not $runTask.StartsWith('PASS|True') -and ($variantTask -ne 'joint' -or $editionTask -eq 'after')){throw $runTask}
       if($variantTask -like 'joint_birth*'){
@@ -213,11 +237,13 @@ try {
         $dirtyViewTask=$xlTask.Run("'"+$wbTask.Name+"'!FeatureViewer",'RESULT')
         if(-not $dirtyViewTask.Contains('入力変更後')){throw ('RESET_STRESS dirty input safeguard failed '+$dirtyViewTask)}
       }
-      $resultsTask.Add([PSCustomObject]@{Edition=$editionTask;Variant=$variantTask;Metrics=$runTask;Disp=$dispTask;Views=$viewsTask})
+      $resultsTask.Add([PSCustomObject]@{Edition=$editionTask;SourceSha256=$sourceHashTask;FlowPolicy=$FlowPolicy;Variant=$variantTask;Metrics=$runTask;Disp=$dispTask;OriginalDisp=$originalDispTask;StressMax=$stressMaxTask;CSRStatus=$csrStatusTask;Views=$viewsTask})
     }
     $wbTask.Close($false)
+    if((Get-FileHash -LiteralPath $srcTask -Algorithm SHA256).Hash -ne $sourceHashTask){throw 'Source workbook changed'}
   }
-  $resultsTask | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath tests/results/practical_workflow_checks_20261008.json -Encoding UTF8
+  $reportTask=$(if($FlowPolicy -eq 'INCONSISTENT'){'tests/results/practical_workflow_inconsistent_20261009.json'}else{'tests/results/practical_workflow_checks_20261008.json'})
+  $resultsTask | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $reportTask -Encoding UTF8
 } finally {
   if($null -ne $wbTask){try{$wbTask.Close($false)}catch{}}
   try{$xlTask.Quit()}catch{}
