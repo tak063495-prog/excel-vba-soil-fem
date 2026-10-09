@@ -20,7 +20,7 @@ try{
       $moduleTask=$wbTask.VBProject.VBComponents.Add(1);$moduleTask.Name='LiteratureViewHarness';$moduleTask.CodeModule.AddFromString($harnessTask)
       $prefixTask="'"+$wbTask.Name+"'!"
       $xlTask.Run($prefixTask+'SetP0SilentMode',$true)
-      $sourceUrlTask=$(if($resultTask.reference.source_id -eq 'griffiths_lane_1999_ex1'){'https://inside.mines.edu/~vgriffit/slope64/Griffiths%20and%20Lane%201999'}elseif($resultTask.reference.source_id -eq 'pruska_homogeneous'){'https://data.fine.cz/handbooks-chapter-pdf/16_comparison_of_geotechnic_softwares_geo_fem_plaxis_z-soil.pdf'}else{'https://docs.itascacg.com/itasca900/common/models/elastic/doc/modelelastic.html'})
+      $sourceUrlTask=$(if($resultTask.reference.primary_url){[string]$resultTask.reference.primary_url}elseif($resultTask.reference.source_id -like 'griffiths_lane_1999*'){'https://inside.mines.edu/~vgriffit/slope64/Griffiths%20and%20Lane%201999'}elseif($resultTask.reference.source_id -eq 'pruska_homogeneous'){'https://data.fine.cz/handbooks-chapter-pdf/16_comparison_of_geotechnic_softwares_geo_fem_plaxis_z-soil.pdf'}else{'https://docs.itascacg.com/itasca900/common/models/elastic/doc/modelelastic.html'})
       $materialTask=$wbTask.Worksheets.Item('材料データ')
       $materialTask.Range('O11').Value2='参照資料'
       $materialTask.Range('P11').Value2=$sourceUrlTask
@@ -44,10 +44,10 @@ try{
         }else{
           $checksTask.Add(@{case=$resultTask.case;mode=$modeTask;elements=$stateTask[0];error=$stateTask[1];ok=($stateTask[0] -eq $expectedTask -and [string]$stateTask[1] -eq '')})
         }
-        if($modeTask -eq 'Result' -and $resultTask.status.StartsWith('PASS|') -and $resultTask.case -in @('confined_combined','griffiths_1999_coarse_davis','pruska_h7_phi10_davis','pruska_h10.5_phi10_davis')){
+        if(($modeTask -eq 'Initial' -and $resultTask.case -like '*_critical*') -or ($modeTask -eq 'Result' -and $resultTask.status.StartsWith('PASS|') -and ($resultTask.case -like '*_critical*' -or $resultTask.case -in @('confined_combined','griffiths_1999_coarse_davis','pruska_h7_phi10_davis','pruska_h10.5_phi10_davis')))){
           $wsTask=$wbTask.Worksheets.Item('図');$setupTask=$wsTask.PageSetup
           $setupTask.PrintArea='A2:W45';$setupTask.Orientation=2;$setupTask.Zoom=$false;$setupTask.FitToPagesWide=1;$setupTask.FitToPagesTall=1
-          $pdfTask=Join-Path $visualTask ($resultTask.case+'_result.pdf')
+          $pdfTask=Join-Path $visualTask ($resultTask.case+'_'+$modeTask.ToLowerInvariant()+'.pdf')
           $wsTask.ExportAsFixedFormat(0,[IO.Path]::GetFullPath($pdfTask))
           [void][Runtime.InteropServices.Marshal]::FinalReleaseComObject($setupTask)
           [void][Runtime.InteropServices.Marshal]::FinalReleaseComObject($wsTask)

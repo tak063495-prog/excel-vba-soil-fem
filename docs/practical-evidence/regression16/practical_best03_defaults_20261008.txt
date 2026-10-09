@@ -1,0 +1,13 @@
+﻿PASS delivered preset: adaptive ON, recovery OFF
+PASS inherited results require re-analysis under BEST_03
+PASS preset ACCEL_V1_PREDICTOR=1
+PASS preset ACCEL_V2A_REUSE=1
+PASS preset ACCEL_V4_ANDERSON=1
+PASS preset ACCEL_V2B_COST=0
+PASS preset ACCEL_V3_COST_SEARCH=0
+PASS preset ACCEL_V5_GMRES_LU=0
+PASS preset ACCEL_STEP_FRESH_LU=0
+PASS preset ACCEL_TRACE=0
+PASS explicit recovery opt-in remains available
+PASS missing key fallback keeps recovery OFF
+PASS regenerated settings seed recovery OFF

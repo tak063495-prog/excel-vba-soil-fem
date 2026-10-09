@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "baseline_commit": "651803e8e16cf5c7e3c956ae6ec8e2274f942337",
+  "changed_modules": [
+    {
+      "module": "src/vba/FEMCore.bas",
+      "changed_procedures": [],
+      "old_sha256": "279399e6a8e6666efcccfbfcf60788882b261e3aab1ba46c329413c78a62c49b",
+      "new_sha256": "4093f269c38ba89f65d88bc9979b596f6587c33eb1a6f8d53fb8d25b85ac50cb"
+    },
+    {
+      "module": "src/vba/FEMEngine.bas",
+      "changed_procedures": [
+        "P3ExecuteStage",
+        "PlaCalc"
+      ],
+      "old_sha256": "d657ce5831baca714c7915db2a2714c6f1310d9fb026521a1203560ec8473d04",
+      "new_sha256": "09b0c47c88edb208a00a9aba5c04583227de0cb09c6493bdddda9cc479e9d45e"
+    },
+    {
+      "module": "src/vba/FEMIo.bas",
+      "changed_procedures": [
+        "P6PerfWriteSummary"
+      ],
+      "old_sha256": "6a6f249ca93d6961fa93af86fb7c3a677aba7c62b3a90b5105c9ccd6951e9757",
+      "new_sha256": "ab7526f50c3eec24488b4cc3bc92d35eec1c5cb755ffea9bd69bd15b3916fe73"
+    }
+  ],
+  "scope": "Build stamp, deferred-gravity failure handoff, final failed-run FOS publication, summary formatting. Material/tangent/linear/Newton procedure bodies unchanged."
+}

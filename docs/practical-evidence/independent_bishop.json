@@ -1,0 +1,1061 @@
+{
+  "method": "independent Bishop simplified, homogeneous dry circular slips",
+  "script_sha256": "09e03b1df0adf111452dc0596d540c26c30136f1161e6085f407779a445d4ef2",
+  "limits": [
+    "finite deterministic search; circular mechanism restriction",
+    "no FEM side restraints, no K0 or stress path",
+    "not an exact oracle or certified global minimum"
+  ],
+  "cases": [
+    {
+      "model": {
+        "name": "griffiths_ex1",
+        "width": 32,
+        "c": 10,
+        "phi": 20,
+        "gamma": 20,
+        "ground": {
+          "crest": 12,
+          "run": 20,
+          "top": 10,
+          "toe": 0
+        },
+        "published": 1.38
+      },
+      "runs": [
+        {
+          "seed": 20261009,
+          "candidate_count": 5680,
+          "slice_convergence": [
+            {
+              "slices": 80,
+              "fos": 1.377986957974953,
+              "entry_x": 9.4077137118265,
+              "exit_x": 31.696536247769203,
+              "center_distance": 20.883432511453133,
+              "circle_center_x": 28.99225168114438,
+              "circle_center_y": 24.177751047272316,
+              "radius": 24.177732570075403,
+              "minimum_elevation": 1.8477196913835314e-05
+            },
+            {
+              "slices": 160,
+              "fos": 1.3780485022027618,
+              "entry_x": 9.4077137118265,
+              "exit_x": 31.696536247769203,
+              "center_distance": 20.883432511453133,
+              "circle_center_x": 28.99225168114438,
+              "circle_center_y": 24.177751047272316,
+              "radius": 24.177732570075403,
+              "minimum_elevation": 1.8477196913835314e-05
+            },
+            {
+              "slices": 320,
+              "fos": 1.3780741859794787,
+              "entry_x": 9.4077137118265,
+              "exit_x": 31.696536247769203,
+              "center_distance": 20.883432511453133,
+              "circle_center_x": 28.99225168114438,
+              "circle_center_y": 24.177751047272316,
+              "radius": 24.177732570075403,
+              "minimum_elevation": 1.8477196913835314e-05
+            },
+            {
+              "slices": 640,
+              "fos": 1.3780764623647932,
+              "entry_x": 9.4077137118265,
+              "exit_x": 31.696536247769203,
+              "center_distance": 20.883432511453133,
+              "circle_center_x": 28.99225168114438,
+              "circle_center_y": 24.177751047272316,
+              "radius": 24.177732570075403,
+              "minimum_elevation": 1.8477196913835314e-05
+            }
+          ],
+          "searched_minimum_by_slices": [
+            {
+              "slices": 80,
+              "fos": 1.377979474867612,
+              "entry_x": 9.392389828265909,
+              "exit_x": 31.69207758930877,
+              "center_distance": 20.86434750261758,
+              "circle_center_x": 28.969612502531177,
+              "circle_center_y": 24.16363257143729,
+              "radius": 24.16352903150625,
+              "minimum_elevation": 0.00010353993103962011
+            },
+            {
+              "slices": 160,
+              "fos": 1.3780391106896492,
+              "entry_x": 9.422363329032454,
+              "exit_x": 31.693715963090174,
+              "center_distance": 20.82729188027699,
+              "circle_center_x": 28.979991217558535,
+              "circle_center_y": 24.125109504177864,
+              "radius": 24.12508087304722,
+              "minimum_elevation": 2.863113064321965e-05
+            },
+            {
+              "slices": 320,
+              "fos": 1.3780735150395964,
+              "entry_x": 9.399253500032827,
+              "exit_x": 31.692992868947528,
+              "center_distance": 20.86016409172605,
+              "circle_center_x": 28.974021254151104,
+              "circle_center_y": 24.1586012754392,
+              "radius": 24.158591074492264,
+              "minimum_elevation": 1.0200946935157162e-05
+            },
+            {
+              "slices": 640,
+              "fos": 1.3780764623647932,
+              "entry_x": 9.4077137118265,
+              "exit_x": 31.696536247769203,
+              "center_distance": 20.883432511453133,
+              "circle_center_x": 28.99225168114438,
+              "circle_center_y": 24.177751047272316,
+              "radius": 24.177732570075403,
+              "minimum_elevation": 1.8477196913835314e-05
+            }
+          ]
+        },
+        {
+          "seed": 20261010,
+          "candidate_count": 5680,
+          "slice_convergence": [
+            {
+              "slices": 80,
+              "fos": 1.3779865246471814,
+              "entry_x": 9.407953506374737,
+              "exit_x": 31.695736722200717,
+              "center_distance": 20.874247494123054,
+              "circle_center_x": 28.98830226921112,
+              "circle_center_y": 24.169530646951525,
+              "radius": 24.16951916007446,
+              "minimum_elevation": 1.1486877063759948e-05
+            },
+            {
+              "slices": 160,
+              "fos": 1.3780478794163613,
+              "entry_x": 9.407953506374737,
+              "exit_x": 31.695736722200717,
+              "center_distance": 20.874247494123054,
+              "circle_center_x": 28.98830226921112,
+              "circle_center_y": 24.169530646951525,
+              "radius": 24.16951916007446,
+              "minimum_elevation": 1.1486877063759948e-05
+            },
+            {
+              "slices": 320,
+              "fos": 1.3780736644957692,
+              "entry_x": 9.407953506374737,
+              "exit_x": 31.695736722200717,
+              "center_distance": 20.874247494123054,
+              "circle_center_x": 28.98830226921112,
+              "circle_center_y": 24.169530646951525,
+              "radius": 24.16951916007446,
+              "minimum_elevation": 1.1486877063759948e-05
+            },
+            {
+              "slices": 640,
+              "fos": 1.3780759416813948,
+              "entry_x": 9.407953506374737,
+              "exit_x": 31.695736722200717,
+              "center_distance": 20.874247494123054,
+              "circle_center_x": 28.98830226921112,
+              "circle_center_y": 24.169530646951525,
+              "radius": 24.16951916007446,
+              "minimum_elevation": 1.1486877063759948e-05
+            }
+          ],
+          "searched_minimum_by_slices": [
+            {
+              "slices": 80,
+              "fos": 1.3779772960507708,
+              "entry_x": 9.39511965968284,
+              "exit_x": 31.696486302825672,
+              "center_distance": 20.90527857358546,
+              "circle_center_x": 28.990764267673907,
+              "circle_center_y": 24.199510430533522,
+              "radius": 24.199491401050555,
+              "minimum_elevation": 1.9029482967169997e-05
+            },
+            {
+              "slices": 160,
+              "fos": 1.3780385991862572,
+              "entry_x": 9.422455947509793,
+              "exit_x": 31.696562517060343,
+              "center_distance": 20.857486966909338,
+              "circle_center_x": 28.99381816265736,
+              "circle_center_y": 24.151948997328596,
+              "radius": 24.151933243106978,
+              "minimum_elevation": 1.5754221617925168e-05
+            },
+            {
+              "slices": 320,
+              "fos": 1.3780728230501604,
+              "entry_x": 9.397918586272004,
+              "exit_x": 31.696128102785334,
+              "center_distance": 20.896086644815217,
+              "circle_center_x": 28.98914305744144,
+              "circle_center_y": 24.190806498875993,
+              "radius": 24.19080538899624,
+              "minimum_elevation": 1.1098797543240835e-06
+            },
+            {
+              "slices": 640,
+              "fos": 1.3780759416813948,
+              "entry_x": 9.407953506374737,
+              "exit_x": 31.695736722200717,
+              "center_distance": 20.874247494123054,
+              "circle_center_x": 28.98830226921112,
+              "circle_center_y": 24.169530646951525,
+              "radius": 24.16951916007446,
+              "minimum_elevation": 1.1486877063759948e-05
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": {
+        "name": "griffiths_ex3_phi0",
+        "width": 60,
+        "c": 50,
+        "phi": 0,
+        "gamma": 20,
+        "ground": {
+          "crest": 20,
+          "run": 20,
+          "top": 20,
+          "toe": 10
+        },
+        "published": 1.47
+      },
+      "runs": [
+        {
+          "seed": 20261009,
+          "candidate_count": 5680,
+          "slice_convergence": [
+            {
+              "slices": 80,
+              "fos": 1.4707802961565963,
+              "entry_x": 2.3881522332434093,
+              "exit_x": 51.940874711245726,
+              "center_distance": 14.347944931969208,
+              "circle_center_x": 30.00278611929747,
+              "circle_center_y": 29.06441367963173,
+              "radius": 29.064266720774153,
+              "minimum_elevation": 0.0001469588575773173
+            },
+            {
+              "slices": 160,
+              "fos": 1.4714886798403097,
+              "entry_x": 2.3881522332434093,
+              "exit_x": 51.940874711245726,
+              "center_distance": 14.347944931969208,
+              "circle_center_x": 30.00278611929747,
+              "circle_center_y": 29.06441367963173,
+              "radius": 29.064266720774153,
+              "minimum_elevation": 0.0001469588575773173
+            },
+            {
+              "slices": 320,
+              "fos": 1.4716662175065989,
+              "entry_x": 2.3881522332434093,
+              "exit_x": 51.940874711245726,
+              "center_distance": 14.347944931969208,
+              "circle_center_x": 30.00278611929747,
+              "circle_center_y": 29.06441367963173,
+              "radius": 29.064266720774153,
+              "minimum_elevation": 0.0001469588575773173
+            },
+            {
+              "slices": 640,
+              "fos": 1.471705531197034,
+              "entry_x": 2.3881522332434093,
+              "exit_x": 51.940874711245726,
+              "center_distance": 14.347944931969208,
+              "circle_center_x": 30.00278611929747,
+              "circle_center_y": 29.06441367963173,
+              "radius": 29.064266720774153,
+              "minimum_elevation": 0.0001469588575773173
+            }
+          ],
+          "searched_minimum_by_slices": [
+            {
+              "slices": 80,
+              "fos": 1.4707713348321856,
+              "entry_x": 2.3149144766450562,
+              "exit_x": 51.94609374549361,
+              "center_distance": 14.414889088919397,
+              "circle_center_x": 29.977687800421283,
+              "circle_center_y": 29.130908409756806,
+              "radius": 29.13078296836515,
+              "minimum_elevation": 0.0001254413916562669
+            },
+            {
+              "slices": 160,
+              "fos": 1.4714802357425645,
+              "entry_x": 2.454979087356802,
+              "exit_x": 51.89746548955477,
+              "center_distance": 14.253719943983045,
+              "circle_center_x": 30.00189540375591,
+              "circle_center_y": 28.97083045802826,
+              "radius": 28.970819761432065,
+              "minimum_elevation": 1.0696596195458596e-05
+            },
+            {
+              "slices": 320,
+              "fos": 1.471661475734475,
+              "entry_x": 2.4357154768450986,
+              "exit_x": 51.9542818364426,
+              "center_distance": 14.318685731944758,
+              "circle_center_x": 30.029360542056917,
+              "circle_center_y": 29.03535371099411,
+              "radius": 29.035269323146693,
+              "minimum_elevation": 8.438784741571226e-05
+            },
+            {
+              "slices": 640,
+              "fos": 1.471705531197034,
+              "entry_x": 2.3881522332434093,
+              "exit_x": 51.940874711245726,
+              "center_distance": 14.347944931969208,
+              "circle_center_x": 30.00278611929747,
+              "circle_center_y": 29.06441367963173,
+              "radius": 29.064266720774153,
+              "minimum_elevation": 0.0001469588575773173
+            }
+          ]
+        },
+        {
+          "seed": 20261010,
+          "candidate_count": 5680,
+          "slice_convergence": [
+            {
+              "slices": 80,
+              "fos": 1.470778288552793,
+              "entry_x": 2.3869846590674832,
+              "exit_x": 51.93700183314773,
+              "center_distance": 14.345348356789422,
+              "circle_center_x": 29.999901116546038,
+              "circle_center_y": 29.061838371868188,
+              "radius": 29.061831841189107,
+              "minimum_elevation": 6.530679080185564e-06
+            },
+            {
+              "slices": 160,
+              "fos": 1.4714861246486834,
+              "entry_x": 2.3869846590674832,
+              "exit_x": 51.93700183314773,
+              "center_distance": 14.345348356789422,
+              "circle_center_x": 29.999901116546038,
+              "circle_center_y": 29.061838371868188,
+              "radius": 29.061831841189107,
+              "minimum_elevation": 6.530679080185564e-06
+            },
+            {
+              "slices": 320,
+              "fos": 1.471664935515577,
+              "entry_x": 2.3869846590674832,
+              "exit_x": 51.93700183314773,
+              "center_distance": 14.345348356789422,
+              "circle_center_x": 29.999901116546038,
+              "circle_center_y": 29.061838371868188,
+              "radius": 29.061831841189107,
+              "minimum_elevation": 6.530679080185564e-06
+            },
+            {
+              "slices": 640,
+              "fos": 1.4717038657487955,
+              "entry_x": 2.3869846590674832,
+              "exit_x": 51.93700183314773,
+              "center_distance": 14.345348356789422,
+              "circle_center_x": 29.999901116546038,
+              "circle_center_y": 29.061838371868188,
+              "radius": 29.061831841189107,
+              "minimum_elevation": 6.530679080185564e-06
+            }
+          ],
+          "searched_minimum_by_slices": [
+            {
+              "slices": 80,
+              "fos": 1.4707726082427819,
+              "entry_x": 2.359406398109392,
+              "exit_x": 51.94519654853532,
+              "center_distance": 14.375866414101132,
+              "circle_center_x": 29.994275149990617,
+              "circle_center_y": 29.092151034430678,
+              "radius": 29.09214982373424,
+              "minimum_elevation": 1.2106964391023212e-06
+            },
+            {
+              "slices": 160,
+              "fos": 1.4714806120220527,
+              "entry_x": 2.416862783037453,
+              "exit_x": 51.90891593483324,
+              "center_distance": 14.29594708449423,
+              "circle_center_x": 29.994206691193657,
+              "circle_center_y": 29.012770789772905,
+              "radius": 29.012754683719777,
+              "minimum_elevation": 1.610605312762914e-05
+            },
+            {
+              "slices": 320,
+              "fos": 1.471662566866809,
+              "entry_x": 2.4234942082426936,
+              "exit_x": 51.94089390929593,
+              "center_distance": 14.31756470988776,
+              "circle_center_x": 30.016398197027108,
+              "circle_center_y": 29.034241914849044,
+              "radius": 29.03421907870591,
+              "minimum_elevation": 2.283614313469684e-05
+            },
+            {
+              "slices": 640,
+              "fos": 1.4717038657487955,
+              "entry_x": 2.3869846590674832,
+              "exit_x": 51.93700183314773,
+              "center_distance": 14.345348356789422,
+              "circle_center_x": 29.999901116546038,
+              "circle_center_y": 29.061838371868188,
+              "radius": 29.061831841189107,
+              "minimum_elevation": 6.530679080185564e-06
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": {
+        "name": "pruska_h7_phi10",
+        "width": 40,
+        "c": 20,
+        "phi": 10,
+        "gamma": 24,
+        "ground": {
+          "crest": 15,
+          "run": 10,
+          "top": 15,
+          "toe": 8
+        },
+        "published": 1.22
+      },
+      "runs": [
+        {
+          "seed": 20261009,
+          "candidate_count": 5680,
+          "slice_convergence": [
+            {
+              "slices": 80,
+              "fos": 1.2187904857036913,
+              "entry_x": 11.515136556474612,
+              "exit_x": 25.00002457875822,
+              "center_distance": 8.22113579172208,
+              "circle_center_x": 22.04525161892385,
+              "circle_center_y": 18.796617141732288,
+              "radius": 11.193642166395879,
+              "minimum_elevation": 7.602974975336409
+            },
+            {
+              "slices": 160,
+              "fos": 1.2189367384999337,
+              "entry_x": 11.515136556474612,
+              "exit_x": 25.00002457875822,
+              "center_distance": 8.22113579172208,
+              "circle_center_x": 22.04525161892385,
+              "circle_center_y": 18.796617141732288,
+              "radius": 11.193642166395879,
+              "minimum_elevation": 7.602974975336409
+            },
+            {
+              "slices": 320,
+              "fos": 1.2189752128756193,
+              "entry_x": 11.515136556474612,
+              "exit_x": 25.00002457875822,
+              "center_distance": 8.22113579172208,
+              "circle_center_x": 22.04525161892385,
+              "circle_center_y": 18.796617141732288,
+              "radius": 11.193642166395879,
+              "minimum_elevation": 7.602974975336409
+            },
+            {
+              "slices": 640,
+              "fos": 1.2189838646463746,
+              "entry_x": 11.515136556474612,
+              "exit_x": 25.00002457875822,
+              "center_distance": 8.22113579172208,
+              "circle_center_x": 22.04525161892385,
+              "circle_center_y": 18.796617141732288,
+              "radius": 11.193642166395879,
+              "minimum_elevation": 7.602974975336409
+            }
+          ],
+          "searched_minimum_by_slices": [
+            {
+              "slices": 80,
+              "fos": 1.2187725784595624,
+              "entry_x": 11.53879691882214,
+              "exit_x": 25.000150715623747,
+              "center_distance": 8.217593311240128,
+              "circle_center_x": 22.06072391834864,
+              "circle_center_y": 18.790765563344692,
+              "radius": 11.183955084834915,
+              "minimum_elevation": 7.606810478509777
+            },
+            {
+              "slices": 160,
+              "fos": 1.2189281608945763,
+              "entry_x": 11.500016980173669,
+              "exit_x": 25.000036243007315,
+              "center_distance": 8.247452203730873,
+              "circle_center_x": 22.04646615476787,
+              "circle_center_y": 18.82171528043971,
+              "radius": 11.217535285304214,
+              "minimum_elevation": 7.604179995135498
+            },
+            {
+              "slices": 320,
+              "fos": 1.218974184247206,
+              "entry_x": 11.526186064689268,
+              "exit_x": 25.000062024050628,
+              "center_distance": 8.213337683101892,
+              "circle_center_x": 22.04963790489834,
+              "circle_center_y": 18.788431153594576,
+              "radius": 11.184598751798188,
+              "minimum_elevation": 7.603832401796389
+            },
+            {
+              "slices": 640,
+              "fos": 1.2189838646463746,
+              "entry_x": 11.515136556474612,
+              "exit_x": 25.00002457875822,
+              "center_distance": 8.22113579172208,
+              "circle_center_x": 22.04525161892385,
+              "circle_center_y": 18.796617141732288,
+              "radius": 11.193642166395879,
+              "minimum_elevation": 7.602974975336409
+            }
+          ]
+        },
+        {
+          "seed": 20261010,
+          "candidate_count": 5680,
+          "slice_convergence": [
+            {
+              "slices": 80,
+              "fos": 1.218797223185439,
+              "entry_x": 11.509051469506113,
+              "exit_x": 25.000045012398964,
+              "center_distance": 8.237314735041751,
+              "circle_center_x": 22.04832015980432,
+              "circle_center_y": 18.81167892291966,
+              "radius": 11.207367252737376,
+              "minimum_elevation": 7.604311670182286
+            },
+            {
+              "slices": 160,
+              "fos": 1.218933568669482,
+              "entry_x": 11.509051469506113,
+              "exit_x": 25.000045012398964,
+              "center_distance": 8.237314735041751,
+              "circle_center_x": 22.04832015980432,
+              "circle_center_y": 18.81167892291966,
+              "radius": 11.207367252737376,
+              "minimum_elevation": 7.604311670182286
+            },
+            {
+              "slices": 320,
+              "fos": 1.218976587818314,
+              "entry_x": 11.509051469506113,
+              "exit_x": 25.000045012398964,
+              "center_distance": 8.237314735041751,
+              "circle_center_x": 22.04832015980432,
+              "circle_center_y": 18.81167892291966,
+              "radius": 11.207367252737376,
+              "minimum_elevation": 7.604311670182286
+            },
+            {
+              "slices": 640,
+              "fos": 1.2189840380431147,
+              "entry_x": 11.509051469506113,
+              "exit_x": 25.000045012398964,
+              "center_distance": 8.237314735041751,
+              "circle_center_x": 22.04832015980432,
+              "circle_center_y": 18.81167892291966,
+              "radius": 11.207367252737376,
+              "minimum_elevation": 7.604311670182286
+            }
+          ],
+          "searched_minimum_by_slices": [
+            {
+              "slices": 80,
+              "fos": 1.21877530192477,
+              "entry_x": 11.54210601004043,
+              "exit_x": 24.9999617596039,
+              "center_distance": 8.233753908375972,
+              "circle_center_x": 22.07050551942968,
+              "circle_center_y": 18.80471862949313,
+              "radius": 11.194779143820567,
+              "minimum_elevation": 7.609939485672564
+            },
+            {
+              "slices": 160,
+              "fos": 1.2189277216925771,
+              "entry_x": 11.498187960346556,
+              "exit_x": 25.000041540072097,
+              "center_distance": 8.23253549276364,
+              "circle_center_x": 22.038282116619293,
+              "circle_center_y": 18.80868328147737,
+              "radius": 11.207125106899625,
+              "minimum_elevation": 7.601558174577747
+            },
+            {
+              "slices": 320,
+              "fos": 1.2189746796167906,
+              "entry_x": 11.523437066259417,
+              "exit_x": 25.000001213872903,
+              "center_distance": 8.233569926849288,
+              "circle_center_x": 22.05696419918884,
+              "circle_center_y": 18.80669478502571,
+              "radius": 11.20027316838756,
+              "minimum_elevation": 7.6064216166381495
+            },
+            {
+              "slices": 640,
+              "fos": 1.2189840380431147,
+              "entry_x": 11.509051469506113,
+              "exit_x": 25.000045012398964,
+              "center_distance": 8.237314735041751,
+              "circle_center_x": 22.04832015980432,
+              "circle_center_y": 18.81167892291966,
+              "radius": 11.207367252737376,
+              "minimum_elevation": 7.604311670182286
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": {
+        "name": "pruska_h7_phi20",
+        "width": 40,
+        "c": 20,
+        "phi": 20,
+        "gamma": 24,
+        "ground": {
+          "crest": 15,
+          "run": 10,
+          "top": 15,
+          "toe": 8
+        },
+        "published": 1.65
+      },
+      "runs": [
+        {
+          "seed": 20261009,
+          "candidate_count": 5680,
+          "slice_convergence": [
+            {
+              "slices": 80,
+              "fos": 1.6421172607739198,
+              "entry_x": 12.362824945596591,
+              "exit_x": 24.999997527813413,
+              "center_distance": 9.181426837593584,
+              "circle_center_x": 23.13027243249876,
+              "circle_center_y": 19.53157809733151,
+              "radius": 11.682171263742475,
+              "minimum_elevation": 7.849406833589036
+            },
+            {
+              "slices": 160,
+              "fos": 1.642234868049845,
+              "entry_x": 12.362824945596591,
+              "exit_x": 24.999997527813413,
+              "center_distance": 9.181426837593584,
+              "circle_center_x": 23.13027243249876,
+              "circle_center_y": 19.53157809733151,
+              "radius": 11.682171263742475,
+              "minimum_elevation": 7.849406833589036
+            },
+            {
+              "slices": 320,
+              "fos": 1.642274223761451,
+              "entry_x": 12.362824945596591,
+              "exit_x": 24.999997527813413,
+              "center_distance": 9.181426837593584,
+              "circle_center_x": 23.13027243249876,
+              "circle_center_y": 19.53157809733151,
+              "radius": 11.682171263742475,
+              "minimum_elevation": 7.849406833589036
+            },
+            {
+              "slices": 640,
+              "fos": 1.6422799038026832,
+              "entry_x": 12.362824945596591,
+              "exit_x": 24.999997527813413,
+              "center_distance": 9.181426837593584,
+              "circle_center_x": 23.13027243249876,
+              "circle_center_y": 19.53157809733151,
+              "radius": 11.682171263742475,
+              "minimum_elevation": 7.849406833589036
+            }
+          ],
+          "searched_minimum_by_slices": [
+            {
+              "slices": 80,
+              "fos": 1.6420958038367508,
+              "entry_x": 12.382701707131833,
+              "exit_x": 25.000170594764366,
+              "center_distance": 9.160840779892297,
+              "circle_center_x": 23.135624626525917,
+              "circle_center_y": 19.510629974482594,
+              "radius": 11.660666107780099,
+              "minimum_elevation": 7.849963866702495
+            },
+            {
+              "slices": 160,
+              "fos": 1.6422270932724603,
+              "entry_x": 12.352110971857774,
+              "exit_x": 25.000104132602466,
+              "center_distance": 9.204115719153506,
+              "circle_center_x": 23.133042960425843,
+              "circle_center_y": 19.553041222962904,
+              "radius": 11.702934628550643,
+              "minimum_elevation": 7.85010659441226
+            },
+            {
+              "slices": 320,
+              "fos": 1.642272088102387,
+              "entry_x": 12.374373517336007,
+              "exit_x": 25.000009671687412,
+              "center_distance": 9.172014617827339,
+              "circle_center_x": 23.134599379955574,
+              "circle_center_y": 19.521621789863424,
+              "radius": 11.671654733805086,
+              "minimum_elevation": 7.849967056058338
+            },
+            {
+              "slices": 640,
+              "fos": 1.6422799042569325,
+              "entry_x": 12.362824945596591,
+              "exit_x": 24.999997527813413,
+              "center_distance": 9.181426837593584,
+              "circle_center_x": 23.13027243249876,
+              "circle_center_y": 19.53157809733151,
+              "radius": 11.682171263742475,
+              "minimum_elevation": 7.849406833589036
+            }
+          ]
+        },
+        {
+          "seed": 20261010,
+          "candidate_count": 5680,
+          "slice_convergence": [
+            {
+              "slices": 80,
+              "fos": 1.642114815338414,
+              "entry_x": 12.364852843003465,
+              "exit_x": 24.99998470373915,
+              "center_distance": 9.188540695079892,
+              "circle_center_x": 23.13527285207171,
+              "circle_center_y": 19.53750313962819,
+              "radius": 11.68721018523554,
+              "minimum_elevation": 7.85029295439265
+            },
+            {
+              "slices": 160,
+              "fos": 1.6422371964416387,
+              "entry_x": 12.364852843003465,
+              "exit_x": 24.99998470373915,
+              "center_distance": 9.188540695079892,
+              "circle_center_x": 23.13527285207171,
+              "circle_center_y": 19.53750313962819,
+              "radius": 11.68721018523554,
+              "minimum_elevation": 7.85029295439265
+            },
+            {
+              "slices": 320,
+              "fos": 1.6422741002478665,
+              "entry_x": 12.364852843003465,
+              "exit_x": 24.99998470373915,
+              "center_distance": 9.188540695079892,
+              "circle_center_x": 23.13527285207171,
+              "circle_center_y": 19.53750313962819,
+              "radius": 11.68721018523554,
+              "minimum_elevation": 7.85029295439265
+            },
+            {
+              "slices": 640,
+              "fos": 1.6422801256104536,
+              "entry_x": 12.364852843003465,
+              "exit_x": 24.99998470373915,
+              "center_distance": 9.188540695079892,
+              "circle_center_x": 23.13527285207171,
+              "circle_center_y": 19.53750313962819,
+              "radius": 11.68721018523554,
+              "minimum_elevation": 7.85029295439265
+            }
+          ],
+          "searched_minimum_by_slices": [
+            {
+              "slices": 80,
+              "fos": 1.6420995234173552,
+              "entry_x": 12.387899099959737,
+              "exit_x": 25.000417008004785,
+              "center_distance": 9.1745870820688,
+              "circle_center_x": 23.14635103950486,
+              "circle_center_y": 19.52190910856805,
+              "radius": 11.670130681429963,
+              "minimum_elevation": 7.851778427138086
+            },
+            {
+              "slices": 160,
+              "fos": 1.642227104222168,
+              "entry_x": 12.352476139516991,
+              "exit_x": 25.00010130133777,
+              "center_distance": 9.207854350979547,
+              "circle_center_x": 23.135133809012878,
+              "circle_center_y": 19.556257333579282,
+              "radius": 11.705775809716053,
+              "minimum_elevation": 7.850481523863229
+            },
+            {
+              "slices": 320,
+              "fos": 1.64227261853634,
+              "entry_x": 12.36823417778986,
+              "exit_x": 25.000004600575913,
+              "center_distance": 9.196947192627222,
+              "circle_center_x": 23.141959965022316,
+              "circle_center_y": 19.544345533626295,
+              "radius": 11.692914250411096,
+              "minimum_elevation": 7.851431283215199
+            },
+            {
+              "slices": 640,
+              "fos": 1.6422801260649451,
+              "entry_x": 12.364852843003465,
+              "exit_x": 24.99998470373915,
+              "center_distance": 9.188540695079892,
+              "circle_center_x": 23.13527285207171,
+              "circle_center_y": 19.53750313962819,
+              "radius": 11.68721018523554,
+              "minimum_elevation": 7.85029295439265
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": {
+        "name": "pruska_h105_phi10",
+        "width": 40,
+        "c": 20,
+        "phi": 10,
+        "gamma": 24,
+        "ground": {
+          "crest": 15,
+          "run": 10,
+          "top": 18.5,
+          "toe": 8
+        },
+        "published": 0.84
+      },
+      "runs": [
+        {
+          "seed": 20261009,
+          "candidate_count": 5680,
+          "slice_convergence": [
+            {
+              "slices": 80,
+              "fos": 0.7996488570276888,
+              "entry_x": 10.644323542632293,
+              "exit_x": 24.999998466571423,
+              "center_distance": 11.38138501733116,
+              "circle_center_x": 24.541251210094273,
+              "circle_center_y": 22.43639028749555,
+              "radius": 14.443675677962295,
+              "minimum_elevation": 7.9927146095332535
+            },
+            {
+              "slices": 160,
+              "fos": 0.799716746890282,
+              "entry_x": 10.644323542632293,
+              "exit_x": 24.999998466571423,
+              "center_distance": 11.38138501733116,
+              "circle_center_x": 24.541251210094273,
+              "circle_center_y": 22.43639028749555,
+              "radius": 14.443675677962295,
+              "minimum_elevation": 7.9927146095332535
+            },
+            {
+              "slices": 320,
+              "fos": 0.799743282654236,
+              "entry_x": 10.644323542632293,
+              "exit_x": 24.999998466571423,
+              "center_distance": 11.38138501733116,
+              "circle_center_x": 24.541251210094273,
+              "circle_center_y": 22.43639028749555,
+              "radius": 14.443675677962295,
+              "minimum_elevation": 7.9927146095332535
+            },
+            {
+              "slices": 640,
+              "fos": 0.7997472488247608,
+              "entry_x": 10.644323542632293,
+              "exit_x": 24.999998466571423,
+              "center_distance": 11.38138501733116,
+              "circle_center_x": 24.541251210094273,
+              "circle_center_y": 22.43639028749555,
+              "radius": 14.443675677962295,
+              "minimum_elevation": 7.9927146095332535
+            }
+          ],
+          "searched_minimum_by_slices": [
+            {
+              "slices": 80,
+              "fos": 0.7996363976637394,
+              "entry_x": 10.610380571023182,
+              "exit_x": 24.99996033844579,
+              "center_distance": 11.447182322569759,
+              "circle_center_x": 24.552701501504316,
+              "circle_center_y": 22.497118091136638,
+              "radius": 14.503974143765705,
+              "minimum_elevation": 7.993143947370934
+            },
+            {
+              "slices": 160,
+              "fos": 0.7997157992109853,
+              "entry_x": 10.648952009105473,
+              "exit_x": 24.999986160968252,
+              "center_distance": 11.367669528867623,
+              "circle_center_x": 24.536870442363046,
+              "circle_center_y": 22.42429625896201,
+              "radius": 14.431714365830508,
+              "minimum_elevation": 7.992581893131501
+            },
+            {
+              "slices": 320,
+              "fos": 0.7997428794656914,
+              "entry_x": 10.62872648641652,
+              "exit_x": 25.000016428625624,
+              "center_distance": 11.42203203724853,
+              "circle_center_x": 24.552682764141775,
+              "circle_center_y": 22.47268814364876,
+              "radius": 14.479599770390477,
+              "minimum_elevation": 7.993088373258283
+            },
+            {
+              "slices": 640,
+              "fos": 0.7997472488247608,
+              "entry_x": 10.644323542632293,
+              "exit_x": 24.999998466571423,
+              "center_distance": 11.38138501733116,
+              "circle_center_x": 24.541251210094273,
+              "circle_center_y": 22.43639028749555,
+              "radius": 14.443675677962295,
+              "minimum_elevation": 7.9927146095332535
+            }
+          ]
+        },
+        {
+          "seed": 20261010,
+          "candidate_count": 5680,
+          "slice_convergence": [
+            {
+              "slices": 80,
+              "fos": 0.7996457698751711,
+              "entry_x": 10.635801870518742,
+              "exit_x": 25.00001728641233,
+              "center_distance": 11.403511801899768,
+              "circle_center_x": 24.547454686432346,
+              "circle_center_y": 22.456155769696014,
+              "radius": 14.463237968885668,
+              "minimum_elevation": 7.992917800810346
+            },
+            {
+              "slices": 160,
+              "fos": 0.7997201985894895,
+              "entry_x": 10.635801870518742,
+              "exit_x": 25.00001728641233,
+              "center_distance": 11.403511801899768,
+              "circle_center_x": 24.547454686432346,
+              "circle_center_y": 22.456155769696014,
+              "radius": 14.463237968885668,
+              "minimum_elevation": 7.992917800810346
+            },
+            {
+              "slices": 320,
+              "fos": 0.7997432016113206,
+              "entry_x": 10.635801870518742,
+              "exit_x": 25.00001728641233,
+              "center_distance": 11.403511801899768,
+              "circle_center_x": 24.547454686432346,
+              "circle_center_y": 22.456155769696014,
+              "radius": 14.463237968885668,
+              "minimum_elevation": 7.992917800810346
+            },
+            {
+              "slices": 640,
+              "fos": 0.7997471440922879,
+              "entry_x": 10.635801870518742,
+              "exit_x": 25.00001728641233,
+              "center_distance": 11.403511801899768,
+              "circle_center_x": 24.547454686432346,
+              "circle_center_y": 22.456155769696014,
+              "radius": 14.463237968885668,
+              "minimum_elevation": 7.992917800810346
+            }
+          ],
+          "searched_minimum_by_slices": [
+            {
+              "slices": 80,
+              "fos": 0.7996401780557301,
+              "entry_x": 10.61838903788627,
+              "exit_x": 25.000085253167114,
+              "center_distance": 11.409779556856497,
+              "circle_center_x": 24.53714362722395,
+              "circle_center_y": 22.465114969960847,
+              "radius": 14.47252106729219,
+              "minimum_elevation": 7.992593902668657
+            },
+            {
+              "slices": 160,
+              "fos": 0.7997156888001589,
+              "entry_x": 10.648523535331496,
+              "exit_x": 25.000014473202278,
+              "center_distance": 11.36687053821174,
+              "circle_center_x": 24.536065475684875,
+              "circle_center_y": 22.423741546322695,
+              "radius": 14.431201227458955,
+              "minimum_elevation": 7.992540318863741
+            },
+            {
+              "slices": 320,
+              "fos": 0.7997427909437336,
+              "entry_x": 10.63094272539955,
+              "exit_x": 24.99999440574159,
+              "center_distance": 11.393519226683383,
+              "circle_center_x": 24.53763913971769,
+              "circle_center_y": 22.44917154838064,
+              "radius": 14.456561177491283,
+              "minimum_elevation": 7.992610370889357
+            },
+            {
+              "slices": 640,
+              "fos": 0.7997471440922879,
+              "entry_x": 10.635801870518742,
+              "exit_x": 25.00001728641233,
+              "center_distance": 11.403511801899768,
+              "circle_center_x": 24.547454686432346,
+              "circle_center_y": 22.456155769696014,
+              "radius": 14.463237968885668,
+              "minimum_elevation": 7.992917800810346
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

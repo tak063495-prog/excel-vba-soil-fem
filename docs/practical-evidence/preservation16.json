@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "old_sha256": "21a6815238d694853ce4435ba6f4db7a0cdf56879b8f2eeadd981a24d56c26cd",
+  "new_sha256": "a4c4ca06c794fc3128175a04bdd50eef2a6694914d0a56747a8bdf6597841db7",
+  "preserved": {
+    "材料データ": 11,
+    "節点データ": 5025,
+    "要素データ": 4336,
+    "接合": 0,
+    "載荷": 6,
+    "ステージ": 9,
+    "settings": 74
+  },
+  "full_compile": true,
+  "native_source_modules_matched": 7
+}

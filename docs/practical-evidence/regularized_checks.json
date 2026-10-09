@@ -1,0 +1,175 @@
+{
+    "source_sha256":  "A4C4CA06C794FC3128175A04BDD50EEF2A6694914D0A56747A8BDF6597841DB7",
+    "status":  "PASS",
+    "count":  28,
+    "results":  [
+                    {
+                        "relative_gap":  0,
+                        "ok":  true,
+                        "case":  "nonsymmetric",
+                        "damping":  1E-08
+                    },
+                    {
+                        "relative_gap":  0,
+                        "ok":  true,
+                        "case":  "nonsymmetric",
+                        "damping":  0.0001
+                    },
+                    {
+                        "relative_gap":  0,
+                        "ok":  true,
+                        "case":  "nonsymmetric",
+                        "damping":  0.1
+                    },
+                    {
+                        "relative_gap":  0,
+                        "ok":  true,
+                        "case":  "nonsymmetric",
+                        "damping":  1.0
+                    },
+                    {
+                        "relative_gap":  0,
+                        "ok":  true,
+                        "case":  "nonsymmetric",
+                        "damping":  100.0
+                    },
+                    {
+                        "relative_gap":  6.7340681237866906E-09,
+                        "ok":  true,
+                        "case":  "singular",
+                        "damping":  1E-08
+                    },
+                    {
+                        "relative_gap":  2.1779577590026857E-12,
+                        "ok":  true,
+                        "case":  "singular",
+                        "damping":  0.0001
+                    },
+                    {
+                        "relative_gap":  0,
+                        "ok":  true,
+                        "case":  "singular",
+                        "damping":  0.1
+                    },
+                    {
+                        "relative_gap":  0,
+                        "ok":  true,
+                        "case":  "singular",
+                        "damping":  1.0
+                    },
+                    {
+                        "relative_gap":  0,
+                        "ok":  true,
+                        "case":  "singular",
+                        "damping":  100.0
+                    },
+                    {
+                        "relative_gap":  8.8525544186776661E-17,
+                        "ok":  true,
+                        "case":  "scaled",
+                        "damping":  1E-08
+                    },
+                    {
+                        "relative_gap":  1.4732923406508111E-16,
+                        "ok":  true,
+                        "case":  "scaled",
+                        "damping":  0.0001
+                    },
+                    {
+                        "relative_gap":  6.0054728461515313E-17,
+                        "ok":  true,
+                        "case":  "scaled",
+                        "damping":  0.1
+                    },
+                    {
+                        "relative_gap":  0,
+                        "ok":  true,
+                        "case":  "scaled",
+                        "damping":  1.0
+                    },
+                    {
+                        "relative_gap":  3.64071036133323E-17,
+                        "ok":  true,
+                        "case":  "scaled",
+                        "damping":  100.0
+                    },
+                    {
+                        "relative_gap":  0,
+                        "ok":  true,
+                        "case":  "constrained",
+                        "damping":  1E-08
+                    },
+                    {
+                        "relative_gap":  0,
+                        "ok":  true,
+                        "case":  "constrained",
+                        "damping":  0.0001
+                    },
+                    {
+                        "relative_gap":  0,
+                        "ok":  true,
+                        "case":  "constrained",
+                        "damping":  0.1
+                    },
+                    {
+                        "relative_gap":  0,
+                        "ok":  true,
+                        "case":  "constrained",
+                        "damping":  1.0
+                    },
+                    {
+                        "relative_gap":  0,
+                        "ok":  true,
+                        "case":  "constrained",
+                        "damping":  100.0
+                    },
+                    {
+                        "relative_gap":  0,
+                        "ok":  true,
+                        "case":  "band_fill",
+                        "damping":  1E-08
+                    },
+                    {
+                        "relative_gap":  0,
+                        "ok":  true,
+                        "case":  "band_fill",
+                        "damping":  0.0001
+                    },
+                    {
+                        "relative_gap":  0,
+                        "ok":  true,
+                        "case":  "band_fill",
+                        "damping":  0.1
+                    },
+                    {
+                        "relative_gap":  0,
+                        "ok":  true,
+                        "case":  "band_fill",
+                        "damping":  1.0
+                    },
+                    {
+                        "relative_gap":  0,
+                        "ok":  true,
+                        "case":  "band_fill",
+                        "damping":  100.0
+                    },
+                    {
+                        "relative_gap":  0,
+                        "ok":  false,
+                        "case":  "rejected",
+                        "damping":  0
+                    },
+                    {
+                        "relative_gap":  0,
+                        "ok":  false,
+                        "case":  "rejected",
+                        "damping":  -1
+                    },
+                    {
+                        "relative_gap":  0,
+                        "ok":  false,
+                        "case":  "rejected",
+                        "damping":  0.1
+                    }
+                ]
+}

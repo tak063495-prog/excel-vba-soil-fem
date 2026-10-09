@@ -1,0 +1,158 @@
+﻿{
+    "source_sha256":  "A4C4CA06C794FC3128175A04BDD50EEF2A6694914D0A56747A8BDF6597841DB7",
+    "status":  "PASS",
+    "checks":  [
+                   {
+                       "name":  "gravity_stagnation",
+                       "values":  [
+                                      "NONCONVERGED",
+                                      -2147217803,
+                                      "Injected global stagnation",
+                                      "UNDETERMINED",
+                                      "GLOBAL_STAGNATION",
+                                      "NUMERICAL_FAILURE",
+                                      0,
+                                      0,
+                                      0,
+                                      0,
+                                      false,
+                                      0,
+                                      0,
+                                      false
+                                  ]
+                   },
+                   {
+                       "name":  "gravity_capacity",
+                       "values":  [
+                                      "CAPACITY_ERROR",
+                                      -2147217802,
+                                      "Injected capacity failure",
+                                      "UNDETERMINED",
+                                      "CAPACITY",
+                                      "NUMERICAL_FAILURE",
+                                      0,
+                                      0,
+                                      0,
+                                      0,
+                                      false,
+                                      0,
+                                      0,
+                                      false
+                                  ]
+                   },
+                   {
+                       "name":  "gravity_material",
+                       "values":  [
+                                      "MATERIAL_ERROR",
+                                      -2147217801,
+                                      "Injected material failure",
+                                      "UNDETERMINED",
+                                      "MATERIAL",
+                                      "NUMERICAL_FAILURE",
+                                      0,
+                                      0,
+                                      0,
+                                      0,
+                                      false,
+                                      0,
+                                      0,
+                                      false
+                                  ]
+                   },
+                   {
+                       "name":  "gravity_cancel",
+                       "values":  [
+                                      "NONCONVERGED",
+                                      18,
+                                      "ユーザーが解析を中断しました。",
+                                      "UNDETERMINED",
+                                      "CANCELLED",
+                                      "NUMERICAL_FAILURE",
+                                      0,
+                                      0,
+                                      0,
+                                      0,
+                                      false,
+                                      0,
+                                      0,
+                                      false
+                                  ]
+                   },
+                   {
+                       "name":  "load_failure",
+                       "values":  [
+                                      "NONCONVERGED",
+                                      -2147217803,
+                                      "Injected global stagnation",
+                                      "UNDETERMINED",
+                                      "GLOBAL_STAGNATION",
+                                      "CONVERGED",
+                                      1.1,
+                                      0,
+                                      0,
+                                      0,
+                                      false,
+                                      0,
+                                      0,
+                                      false
+                                  ]
+                   },
+                   {
+                       "name":  "ordinary_gravity",
+                       "values":  [
+                                      "NONCONVERGED",
+                                      -2147217803,
+                                      "Injected global stagnation",
+                                      "NOT_EVALUATED",
+                                      "GLOBAL_STAGNATION",
+                                      "NONE",
+                                      0,
+                                      0,
+                                      0,
+                                      0,
+                                      false,
+                                      1,
+                                      1,
+                                      false
+                                  ]
+                   },
+                   {
+                       "name":  "disabled_srm",
+                       "values":  [
+                                      "NONCONVERGED",
+                                      -2147217803,
+                                      "Injected global stagnation",
+                                      "NOT_EVALUATED",
+                                      "GLOBAL_STAGNATION",
+                                      "NONE",
+                                      0,
+                                      0,
+                                      0,
+                                      0,
+                                      false,
+                                      1,
+                                      1,
+                                      false
+                                  ]
+                   },
+                   {
+                       "name":  "successful_srm",
+                       "values":  [
+                                      "PASS",
+                                      0,
+                                      null,
+                                      "LOWER_BOUND",
+                                      "NONE",
+                                      "CONVERGED",
+                                      1.1,
+                                      0,
+                                      1.1,
+                                      0,
+                                      false,
+                                      1.1,
+                                      1.1,
+                                      true
+                                  ]
+                   }
+               ]
+}

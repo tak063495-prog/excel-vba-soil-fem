@@ -1,0 +1,452 @@
+﻿PASS input MESH_MATERIAL actual=1 expected=1.0
+PASS reader MESH_MATERIAL actual=1 expected=1.0
+PASS binding MESH_MATERIAL
+PASS input MESH_BC_BOTTOM actual=PINNED expected=PINNED
+PASS reader MESH_BC_BOTTOM actual=PINNED expected=PINNED
+PASS binding MESH_BC_BOTTOM
+PASS validation type MESH_BC_BOTTOM
+PASS choices MESH_BC_BOTTOM actual=NONE,ROLLER,PINNED
+PASS input MESH_BC_LEFT actual=ROLLER expected=ROLLER
+PASS reader MESH_BC_LEFT actual=ROLLER expected=ROLLER
+PASS binding MESH_BC_LEFT
+PASS validation type MESH_BC_LEFT
+PASS choices MESH_BC_LEFT actual=NONE,ROLLER,PINNED
+PASS input MESH_BC_RIGHT actual=ROLLER expected=ROLLER
+PASS reader MESH_BC_RIGHT actual=ROLLER expected=ROLLER
+PASS binding MESH_BC_RIGHT
+PASS validation type MESH_BC_RIGHT
+PASS choices MESH_BC_RIGHT actual=NONE,ROLLER,PINNED
+PASS input MESH_BC_TOP actual=NONE expected=NONE
+PASS reader MESH_BC_TOP actual=NONE expected=NONE
+PASS binding MESH_BC_TOP
+PASS validation type MESH_BC_TOP
+PASS choices MESH_BC_TOP actual=NONE,ROLLER,PINNED
+PASS input MESH_BC_PIN_CORNER actual=AUTO expected=AUTO
+PASS reader MESH_BC_PIN_CORNER actual=AUTO expected=AUTO
+PASS binding MESH_BC_PIN_CORNER
+PASS validation type MESH_BC_PIN_CORNER
+PASS choices MESH_BC_PIN_CORNER actual=AUTO,NONE
+PASS input MESH_POINT1_X actual=0 expected=0.0
+PASS reader MESH_POINT1_X actual=0 expected=0.0
+PASS binding MESH_POINT1_X
+PASS input MESH_POINT1_Y actual=0 expected=0.0
+PASS reader MESH_POINT1_Y actual=0 expected=0.0
+PASS binding MESH_POINT1_Y
+PASS input MESH_POINT2_X actual=0 expected=0.0
+PASS reader MESH_POINT2_X actual=0 expected=0.0
+PASS binding MESH_POINT2_X
+PASS input MESH_POINT2_Y actual=4 expected=4.0
+PASS reader MESH_POINT2_Y actual=4 expected=4.0
+PASS binding MESH_POINT2_Y
+PASS input MESH_POINT3_X actual=3 expected=3.0
+PASS reader MESH_POINT3_X actual=3 expected=3.0
+PASS binding MESH_POINT3_X
+PASS input MESH_POINT3_Y actual=4 expected=4.0
+PASS reader MESH_POINT3_Y actual=4 expected=4.0
+PASS binding MESH_POINT3_Y
+PASS input MESH_POINT4_X actual=3 expected=3.0
+PASS reader MESH_POINT4_X actual=3 expected=3.0
+PASS binding MESH_POINT4_X
+PASS input MESH_POINT4_Y actual=0 expected=0.0
+PASS reader MESH_POINT4_Y actual=0 expected=0.0
+PASS binding MESH_POINT4_Y
+PASS input MESH_NX actual=25 expected=25.0
+PASS reader MESH_NX actual=25 expected=25.0
+PASS binding MESH_NX
+PASS input MESH_NY actual=25 expected=25.0
+PASS reader MESH_NY actual=25 expected=25.0
+PASS binding MESH_NY
+PASS input MESH_GEN_COMPARE actual=2 expected=2.0
+PASS reader MESH_GEN_COMPARE actual=2 expected=2.0
+PASS binding MESH_GEN_COMPARE
+PASS validation type MESH_GEN_COMPARE
+PASS choices MESH_GEN_COMPARE actual=0,1,2
+PASS input WEIGHT_MODE actual=TOTAL expected=TOTAL
+PASS reader WEIGHT_MODE actual=TOTAL expected=TOTAL
+PASS binding WEIGHT_MODE
+PASS validation type WEIGHT_MODE
+PASS choices WEIGHT_MODE actual=TOTAL
+PASS input FLOW_POLICY actual=DAVIS expected=DAVIS
+PASS reader FLOW_POLICY actual=DAVIS expected=DAVIS
+PASS binding FLOW_POLICY
+PASS validation type FLOW_POLICY
+PASS choices FLOW_POLICY actual=INCONSISTENT,DAVIS
+PASS input Q8_HOURGLASS_FACTOR actual=0.05 expected=0.05
+PASS reader Q8_HOURGLASS_FACTOR actual=0.05 expected=0.05
+PASS binding Q8_HOURGLASS_FACTOR
+PASS input RCM_POLICY actual=AUTO expected=AUTO
+PASS reader RCM_POLICY actual=AUTO expected=AUTO
+PASS binding RCM_POLICY
+PASS validation type RCM_POLICY
+PASS choices RCM_POLICY actual=AUTO,ON,OFF
+PASS input SRM_FMAX actual=3 expected=3.0
+PASS reader SRM_FMAX actual=3 expected=3.0
+PASS binding SRM_FMAX
+PASS input SRM_TOL actual=0.02 expected=0.02
+PASS reader SRM_TOL actual=0.02 expected=0.02
+PASS binding SRM_TOL
+PASS input SRM_PSI_POLICY actual=KEEP expected=KEEP
+PASS reader SRM_PSI_POLICY actual=KEEP expected=KEEP
+PASS binding SRM_PSI_POLICY
+PASS validation type SRM_PSI_POLICY
+PASS choices SRM_PSI_POLICY actual=CAP,REDUCE,KEEP
+PASS input SRM_MODE actual=REAPPLY expected=REAPPLY
+PASS reader SRM_MODE actual=REAPPLY expected=REAPPLY
+PASS binding SRM_MODE
+PASS validation type SRM_MODE
+PASS choices SRM_MODE actual=REAPPLY
+PASS input SRM_FIXED_FS actual=0 expected=0.0
+PASS reader SRM_FIXED_FS actual=0 expected=0.0
+PASS binding SRM_FIXED_FS
+PASS validation type SRM_FIXED_FS
+PASS validation custom reference SRM_FIXED_FS
+PASS validation accepts preserved value SRM_FIXED_FS
+PASS input ACCEL_ADAPTIVE actual=1 expected=1.0
+PASS reader ACCEL_ADAPTIVE actual=1 expected=1.0
+PASS binding ACCEL_ADAPTIVE
+PASS validation type ACCEL_ADAPTIVE
+PASS choices ACCEL_ADAPTIVE actual=0,1
+PASS input ACCEL_V1_PREDICTOR actual=1 expected=1.0
+PASS reader ACCEL_V1_PREDICTOR actual=1 expected=1.0
+PASS binding ACCEL_V1_PREDICTOR
+PASS validation type ACCEL_V1_PREDICTOR
+PASS choices ACCEL_V1_PREDICTOR actual=0,1
+PASS input ACCEL_V2A_REUSE actual=1 expected=1.0
+PASS reader ACCEL_V2A_REUSE actual=1 expected=1.0
+PASS binding ACCEL_V2A_REUSE
+PASS validation type ACCEL_V2A_REUSE
+PASS choices ACCEL_V2A_REUSE actual=0,1
+PASS input ACCEL_V2B_COST actual=0 expected=0.0
+PASS reader ACCEL_V2B_COST actual=0 expected=0.0
+PASS binding ACCEL_V2B_COST
+PASS validation type ACCEL_V2B_COST
+PASS choices ACCEL_V2B_COST actual=0,1
+PASS input ACCEL_V3_COST_SEARCH actual=0 expected=0.0
+PASS reader ACCEL_V3_COST_SEARCH actual=0 expected=0.0
+PASS binding ACCEL_V3_COST_SEARCH
+PASS validation type ACCEL_V3_COST_SEARCH
+PASS choices ACCEL_V3_COST_SEARCH actual=0,1
+PASS input ACCEL_V4_ANDERSON actual=1 expected=1.0
+PASS reader ACCEL_V4_ANDERSON actual=1 expected=1.0
+PASS binding ACCEL_V4_ANDERSON
+PASS validation type ACCEL_V4_ANDERSON
+PASS choices ACCEL_V4_ANDERSON actual=0,1
+PASS input ACCEL_V5_GMRES_LU actual=0 expected=0.0
+PASS reader ACCEL_V5_GMRES_LU actual=0 expected=0.0
+PASS binding ACCEL_V5_GMRES_LU
+PASS validation type ACCEL_V5_GMRES_LU
+PASS choices ACCEL_V5_GMRES_LU actual=0,1
+PASS input ACCEL_STEP_RECOVERY actual=0 expected=0.0
+PASS reader ACCEL_STEP_RECOVERY actual=0 expected=0.0
+PASS binding ACCEL_STEP_RECOVERY
+PASS validation type ACCEL_STEP_RECOVERY
+PASS choices ACCEL_STEP_RECOVERY actual=0,1
+PASS input ACCEL_STEP_FRESH_LU actual=0 expected=0.0
+PASS reader ACCEL_STEP_FRESH_LU actual=0 expected=0.0
+PASS binding ACCEL_STEP_FRESH_LU
+PASS validation type ACCEL_STEP_FRESH_LU
+PASS choices ACCEL_STEP_FRESH_LU actual=0,1
+PASS input ACCEL_TRACE actual=0 expected=0
+PASS reader ACCEL_TRACE actual=0 expected=0
+PASS binding ACCEL_TRACE
+PASS validation type ACCEL_TRACE
+PASS choices ACCEL_TRACE actual=0,1
+PASS input ACCEL_PREDICT_BETA actual=1 expected=1.0
+PASS reader ACCEL_PREDICT_BETA actual=1 expected=1.0
+PASS binding ACCEL_PREDICT_BETA
+PASS validation type ACCEL_PREDICT_BETA
+PASS validation custom reference ACCEL_PREDICT_BETA
+PASS validation accepts preserved value ACCEL_PREDICT_BETA
+PASS input ACCEL_PREDICT_MAX_RATIO actual=1.5 expected=1.5
+PASS reader ACCEL_PREDICT_MAX_RATIO actual=1.5 expected=1.5
+PASS binding ACCEL_PREDICT_MAX_RATIO
+PASS validation type ACCEL_PREDICT_MAX_RATIO
+PASS validation custom reference ACCEL_PREDICT_MAX_RATIO
+PASS validation accepts preserved value ACCEL_PREDICT_MAX_RATIO
+PASS input ACCEL_TANGENT_CHANGE actual=0.05 expected=0.05
+PASS reader ACCEL_TANGENT_CHANGE actual=0.05 expected=0.05
+PASS binding ACCEL_TANGENT_CHANGE
+PASS validation type ACCEL_TANGENT_CHANGE
+PASS validation custom reference ACCEL_TANGENT_CHANGE
+PASS validation accepts preserved value ACCEL_TANGENT_CHANGE
+PASS input OUTPUT_STAGE_MODE actual=FINAL expected=FINAL
+PASS reader OUTPUT_STAGE_MODE actual=FINAL expected=FINAL
+PASS binding OUTPUT_STAGE_MODE
+PASS validation type OUTPUT_STAGE_MODE
+PASS choices OUTPUT_STAGE_MODE actual=FINAL,ALL
+PASS input OUTPUT_INACTIVE_ELEMENTS actual=SKIP expected=SKIP
+PASS reader OUTPUT_INACTIVE_ELEMENTS actual=SKIP expected=SKIP
+PASS binding OUTPUT_INACTIVE_ELEMENTS
+PASS validation type OUTPUT_INACTIVE_ELEMENTS
+PASS choices OUTPUT_INACTIVE_ELEMENTS actual=SKIP,INCLUDE
+PASS input DEBUG_MODE actual=STAGE expected=STAGE
+PASS reader DEBUG_MODE actual=STAGE expected=STAGE
+PASS binding DEBUG_MODE
+PASS validation type DEBUG_MODE
+PASS choices DEBUG_MODE actual=OFF,STAGE,ITER
+PASS input DEBUG_FLUSH actual=5 expected=5.0
+PASS reader DEBUG_FLUSH actual=5 expected=5.0
+PASS binding DEBUG_FLUSH
+PASS input EXPORT_MODE actual=STAGE expected=STAGE
+PASS reader EXPORT_MODE actual=STAGE expected=STAGE
+PASS binding EXPORT_MODE
+PASS validation type EXPORT_MODE
+PASS choices EXPORT_MODE actual=OFF,STAGE,ON_FAIL
+PASS input EXPORT_LOAD actual= expected=
+PASS reader EXPORT_LOAD actual= expected=
+PASS binding EXPORT_LOAD
+PASS input VIEW_DISP_SCALE actual=1 expected=1.0
+PASS reader VIEW_DISP_SCALE actual=1 expected=1.0
+PASS binding VIEW_DISP_SCALE
+PASS input VIEW_COLOR_RESULT actual=13 expected=13.0
+PASS reader VIEW_COLOR_RESULT actual=13 expected=13.0
+PASS binding VIEW_COLOR_RESULT
+PASS validation type VIEW_COLOR_RESULT
+PASS choices VIEW_COLOR_RESULT actual==FEMViewerSelectionIDs
+PASS input VIEW_SCALE_MODE actual=SYMMETRIC expected=SYMMETRIC
+PASS reader VIEW_SCALE_MODE actual=SYMMETRIC expected=SYMMETRIC
+PASS binding VIEW_SCALE_MODE
+PASS validation type VIEW_SCALE_MODE
+PASS choices VIEW_SCALE_MODE actual=AUTO,SYMMETRIC,USER
+PASS input VIEW_RESULT_SOURCE actual=SMOOTHED expected=SMOOTHED
+PASS reader VIEW_RESULT_SOURCE actual=SMOOTHED expected=SMOOTHED
+PASS binding VIEW_RESULT_SOURCE
+PASS validation type VIEW_RESULT_SOURCE
+PASS choices VIEW_RESULT_SOURCE actual=SMOOTHED,ELEMENT,RAW_GAUSS
+PASS input VIEW_DETAIL_MODE actual=DETAIL expected=DETAIL
+PASS reader VIEW_DETAIL_MODE actual=DETAIL expected=DETAIL
+PASS binding VIEW_DETAIL_MODE
+PASS validation type VIEW_DETAIL_MODE
+PASS choices VIEW_DETAIL_MODE actual=SIMPLE,DETAIL
+PASS input VIEW_SCALE actual=35 expected=35.0
+PASS reader VIEW_SCALE actual=35 expected=35.0
+PASS binding VIEW_SCALE
+PASS input VIEW_MIN_X actual=1000 expected=1000.0
+PASS reader VIEW_MIN_X actual=1000 expected=1000.0
+PASS binding VIEW_MIN_X
+PASS input VIEW_MAX_Y actual=1000 expected=1000.0
+PASS reader VIEW_MAX_Y actual=1000 expected=1000.0
+PASS binding VIEW_MAX_Y
+PASS input SOLVER actual=BAND_LU expected=BAND_LU
+PASS reader SOLVER actual=BAND_LU expected=BAND_LU
+PASS binding SOLVER
+PASS validation type SOLVER
+PASS choices SOLVER actual=BAND_LU,BAND_LDLT_EXPERIMENTAL
+PASS input BAND_LU_KERNEL actual=NEW expected=NEW
+PASS reader BAND_LU_KERNEL actual=NEW expected=NEW
+PASS binding BAND_LU_KERNEL
+PASS validation type BAND_LU_KERNEL
+PASS choices BAND_LU_KERNEL actual=NEW,OLD
+PASS input PHYSICAL_FAILURE_MODE actual=SHADOW expected=SHADOW
+PASS reader PHYSICAL_FAILURE_MODE actual=SHADOW expected=SHADOW
+PASS binding PHYSICAL_FAILURE_MODE
+PASS input MESH_QUALITY_MIN_AREA_RATIO actual=1E-06 expected=1E-06
+PASS reader MESH_QUALITY_MIN_AREA_RATIO actual=1E-06 expected=1E-06
+PASS binding MESH_QUALITY_MIN_AREA_RATIO
+PASS input MESH_QUALITY_MIN_JACOBIAN_RATIO actual=1E-06 expected=1E-06
+PASS reader MESH_QUALITY_MIN_JACOBIAN_RATIO actual=1E-06 expected=1E-06
+PASS binding MESH_QUALITY_MIN_JACOBIAN_RATIO
+PASS input MESH_QUALITY_MIN_ANGLE_DEG actual=45 expected=45.0
+PASS reader MESH_QUALITY_MIN_ANGLE_DEG actual=45 expected=45.0
+PASS binding MESH_QUALITY_MIN_ANGLE_DEG
+PASS input MESH_QUALITY_MAX_ANGLE_DEG actual=135 expected=135.0
+PASS reader MESH_QUALITY_MAX_ANGLE_DEG actual=135 expected=135.0
+PASS binding MESH_QUALITY_MAX_ANGLE_DEG
+PASS input MESH_QUALITY_MAX_ASPECT_RATIO actual=5 expected=5.0
+PASS reader MESH_QUALITY_MAX_ASPECT_RATIO actual=5 expected=5.0
+PASS binding MESH_QUALITY_MAX_ASPECT_RATIO
+PASS input MESH_REPAIR_MAX_ITERATIONS actual=5 expected=5.0
+PASS reader MESH_REPAIR_MAX_ITERATIONS actual=5 expected=5.0
+PASS binding MESH_REPAIR_MAX_ITERATIONS
+PASS input MESH_REPAIR_DAMPING actual=0.5 expected=0.5
+PASS reader MESH_REPAIR_DAMPING actual=0.5 expected=0.5
+PASS binding MESH_REPAIR_DAMPING
+PASS input MESH_REPAIR_IMPROVEMENT_TOLERANCE actual=0.0001 expected=0.0001
+PASS reader MESH_REPAIR_IMPROVEMENT_TOLERANCE actual=0.0001 expected=0.0001
+PASS binding MESH_REPAIR_IMPROVEMENT_TOLERANCE
+PASS input MESH_REPAIR_ANGLE_ITERATIONS actual=2000 expected=2000.0
+PASS reader MESH_REPAIR_ANGLE_ITERATIONS actual=2000 expected=2000.0
+PASS binding MESH_REPAIR_ANGLE_ITERATIONS
+PASS input MESH_REPAIR_TERRAIN_COMPARE actual=1 expected=1.0
+PASS reader MESH_REPAIR_TERRAIN_COMPARE actual=1 expected=1.0
+PASS binding MESH_REPAIR_TERRAIN_COMPARE
+PASS input MESH_TERRAIN_COUNT_MIN actual=0.55 expected=0.55
+PASS reader MESH_TERRAIN_COUNT_MIN actual=0.55 expected=0.55
+PASS binding MESH_TERRAIN_COUNT_MIN
+PASS input MESH_TERRAIN_COUNT_MAX actual=1.8 expected=1.8
+PASS reader MESH_TERRAIN_COUNT_MAX actual=1.8 expected=1.8
+PASS binding MESH_TERRAIN_COUNT_MAX
+PASS input ADAPT_MAX_ELEMENT_RATIO actual=2 expected=2.0
+PASS reader ADAPT_MAX_ELEMENT_RATIO actual=2 expected=2.0
+PASS binding ADAPT_MAX_ELEMENT_RATIO
+PASS input ADAPT_MARK_FRACTION actual=0.15 expected=0.15
+PASS reader ADAPT_MARK_FRACTION actual=0.15 expected=0.15
+PASS binding ADAPT_MARK_FRACTION
+PASS input MESH_GEN_LAST_METHOD actual=地形追従格子 expected=地形追従格子
+PASS reader MESH_GEN_LAST_METHOD actual=地形追従格子 expected=地形追従格子
+PASS binding MESH_GEN_LAST_METHOD
+PASS input MESH_GEN_LAST_COMPARE actual=選択：地形追従格子 / 要素 302 → 306 / 節点 975 → 1005
+最適化前：302要素、合格263 / 警告36 / 不合格3、角度 26.565～146.006°
+角度最適化：302要素、合格302 / 警告0 / 不合格0、角度 45.000～134.004°
+地形追従：306要素、合格306 / 警告0 / 不合格0、角度 45.000～135.000°
+地形追従＋角度最適化：306要素、合格306 / 警告0 / 不合格0、角度 45.921～134.012°
+採用優先：両方合格なら地形格子 (MESH_GEN_COMPARE=2)
+合格45～135° / 警告30～150°内 / その他は不合格。採用後は再解析が必要です。 expected=選択：地形追従格子 / 要素 302 → 306 / 節点 975 → 1005
+最適化前：302要素、合格263 / 警告36 / 不合格3、角度 26.565～146.006°
+角度最適化：302要素、合格302 / 警告0 / 不合格0、角度 45.000～134.004°
+地形追従：306要素、合格306 / 警告0 / 不合格0、角度 45.000～135.000°
+地形追従＋角度最適化：306要素、合格306 / 警告0 / 不合格0、角度 45.921～134.012°
+採用優先：両方合格なら地形格子 (MESH_GEN_COMPARE=2)
+合格45～135° / 警告30～150°内 / その他は不合格。採用後は再解析が必要です。
+PASS reader MESH_GEN_LAST_COMPARE actual=選択：地形追従格子 / 要素 302 → 306 / 節点 975 → 1005
+最適化前：302要素、合格263 / 警告36 / 不合格3、角度 26.565～146.006°
+角度最適化：302要素、合格302 / 警告0 / 不合格0、角度 45.000～134.004°
+地形追従：306要素、合格306 / 警告0 / 不合格0、角度 45.000～135.000°
+地形追従＋角度最適化：306要素、合格306 / 警告0 / 不合格0、角度 45.921～134.012°
+採用優先：両方合格なら地形格子 (MESH_GEN_COMPARE=2)
+合格45～135° / 警告30～150°内 / その他は不合格。採用後は再解析が必要です。 expected=選択：地形追従格子 / 要素 302 → 306 / 節点 975 → 1005
+最適化前：302要素、合格263 / 警告36 / 不合格3、角度 26.565～146.006°
+角度最適化：302要素、合格302 / 警告0 / 不合格0、角度 45.000～134.004°
+地形追従：306要素、合格306 / 警告0 / 不合格0、角度 45.000～135.000°
+地形追従＋角度最適化：306要素、合格306 / 警告0 / 不合格0、角度 45.921～134.012°
+採用優先：両方合格なら地形格子 (MESH_GEN_COMPARE=2)
+合格45～135° / 警告30～150°内 / その他は不合格。採用後は再解析が必要です。
+PASS binding MESH_GEN_LAST_COMPARE
+PASS input BAND_LU_BENCH actual=0 expected=0.0
+PASS reader BAND_LU_BENCH actual=0 expected=0.0
+PASS binding BAND_LU_BENCH
+PASS input BAND_LU_BENCH_N actual=20 expected=20.0
+PASS reader BAND_LU_BENCH_N actual=20 expected=20.0
+PASS binding BAND_LU_BENCH_N
+PASS edit invalidates cached physical setting
+PASS physical edit invalidates analysis
+PASS nonphysical edit retains analysis VIEW_DISP_SCALE
+PASS nonphysical edit retains analysis DEBUG_FLUSH
+PASS nonphysical edit retains analysis EXPORT_LOAD
+PASS nonphysical edit retains analysis RCM_POLICY
+PASS nonphysical edit retains analysis ADAPT_MARK_FRACTION
+PASS manual calculation reads changed setting
+PASS lowercase VBA writer updates canonical cell
+PASS writer preserves registry formula
+PASS text writer canonical input
+PASS blank resume remains blank after layout
+PASS layout rebuild retains values and binding
+PASS layout retains BOX X2/Y2 inputs
+PASS stage dropdown beyond row 100
+PASS joint activation dropdown
+PASS duplicate mapping is rejected
+PASS invalid mapping does not partially rebind
+PASS button workbook UI_Run practical_ui.xlsm!FEMUiRun
+PASS button workbook UI_Nodes practical_ui.xlsm!FEMUiShowNodes
+PASS button workbook UI_Elements practical_ui.xlsm!FEMUiShowElements
+PASS button workbook UI_Results practical_ui.xlsm!FEMUiShowResults
+PASS button workbook UI_Diagnostic practical_ui.xlsm!FEMUiShowDiagnostic
+PASS button workbook UI_Quantities practical_ui.xlsm!FEMUiShowQuantities
+PASS button workbook UI_Spec practical_ui.xlsm!FEMUiShowSpecs
+PASS button workbook UI_JointResults practical_ui.xlsm!FEMPracticalShowJointResults
+PASS button workbook UI_Mesh1 practical_ui.xlsm!ボタン1_Click
+PASS button workbook UI_Mesh2 practical_ui.xlsm!FEMUiGenerateShape
+PASS button workbook UI_Repair practical_ui.xlsm!ボタン20_Click
+PASS button workbook UI_ViewMesh practical_ui.xlsm!FEMViewInitial
+PASS button workbook UI_Remesh practical_ui.xlsm!MeshPlasticRemesh
+PASS button workbook UI_ResultFigure practical_ui.xlsm!FEMViewResult
+PASS button workbook ActionButton1 practical_ui.xlsm!ボタン1_Click
+PASS button workbook ActionButton2 practical_ui.xlsm!ボタン2_Click
+PASS button workbook ActionButton3 practical_ui.xlsm!FEMViewAll
+PASS button workbook ActionButton4 practical_ui.xlsm!ボタン4_Click
+PASS button workbook ActionButton5 practical_ui.xlsm!ボタン5_Click
+PASS button workbook ActionButton6 practical_ui.xlsm!FEMViewResult
+PASS button workbook ActionButton7 practical_ui.xlsm!FEMViewInitial
+PASS button workbook ActionButton20 practical_ui.xlsm!ボタン20_Click
+PASS button workbook ActionButton19 practical_ui.xlsm!ボタン19_Click
+PASS button workbook ActionPlasticRemesh practical_ui.xlsm!MeshPlasticRemesh
+PASS button workbook Button 21 practical_ui.xlsm!MeshApplyCandidateUI
+PASS button workbook Button 22 practical_ui.xlsm!MeshCancelCandidateUI
+PASS eleven workflow navigation links
+PASS internal hyperlink destination
+PASS internal hyperlink destination
+PASS internal hyperlink destination
+PASS internal hyperlink destination
+PASS internal hyperlink destination
+PASS internal hyperlink destination
+PASS internal hyperlink destination
+PASS internal hyperlink destination
+PASS internal hyperlink destination
+PASS internal hyperlink destination
+PASS internal hyperlink destination
+PASS raw input button opens hidden sheet
+PASS return to operation panel
+PASS formula result MESH_MATERIAL
+PASS formula result MESH_BC_BOTTOM
+PASS formula result MESH_BC_LEFT
+PASS formula result MESH_BC_RIGHT
+PASS formula result MESH_BC_TOP
+PASS formula result MESH_BC_PIN_CORNER
+PASS formula result MESH_POINT1_X
+PASS formula result MESH_POINT1_Y
+PASS formula result MESH_POINT2_X
+PASS formula result MESH_POINT2_Y
+PASS formula result MESH_POINT3_X
+PASS formula result MESH_POINT3_Y
+PASS formula result MESH_POINT4_X
+PASS formula result MESH_POINT4_Y
+PASS formula result MESH_NX
+PASS formula result MESH_NY
+PASS formula result MESH_GEN_COMPARE
+PASS formula result WEIGHT_MODE
+PASS formula result FLOW_POLICY
+PASS formula result Q8_HOURGLASS_FACTOR
+PASS formula result RCM_POLICY
+PASS formula result SRM_FMAX
+PASS formula result SRM_TOL
+PASS formula result SRM_PSI_POLICY
+PASS formula result SRM_MODE
+PASS formula result SRM_FIXED_FS
+PASS formula result ACCEL_ADAPTIVE
+PASS formula result ACCEL_V1_PREDICTOR
+PASS formula result ACCEL_V2A_REUSE
+PASS formula result ACCEL_V2B_COST
+PASS formula result ACCEL_V3_COST_SEARCH
+PASS formula result ACCEL_V4_ANDERSON
+PASS formula result ACCEL_V5_GMRES_LU
+PASS formula result ACCEL_STEP_RECOVERY
+PASS formula result ACCEL_STEP_FRESH_LU
+PASS formula result ACCEL_TRACE
+PASS formula result ACCEL_PREDICT_BETA
+PASS formula result ACCEL_PREDICT_MAX_RATIO
+PASS formula result ACCEL_TANGENT_CHANGE
+PASS formula result OUTPUT_STAGE_MODE
+PASS formula result OUTPUT_INACTIVE_ELEMENTS
+PASS formula result DEBUG_MODE
+PASS formula result DEBUG_FLUSH
+PASS formula result EXPORT_MODE
+PASS formula result EXPORT_LOAD
+PASS formula result VIEW_DISP_SCALE
+PASS formula result VIEW_COLOR_RESULT
+PASS formula result VIEW_SCALE_MODE
+PASS formula result VIEW_RESULT_SOURCE
+PASS formula result VIEW_DETAIL_MODE
+PASS formula result VIEW_SCALE
+PASS formula result VIEW_MIN_X
+PASS formula result VIEW_MAX_Y
+PASS formula result SOLVER
+PASS formula result BAND_LU_KERNEL
+PASS formula result PHYSICAL_FAILURE_MODE
+PASS formula result MESH_QUALITY_MIN_AREA_RATIO
+PASS formula result MESH_QUALITY_MIN_JACOBIAN_RATIO
+PASS formula result MESH_QUALITY_MIN_ANGLE_DEG
+PASS formula result MESH_QUALITY_MAX_ANGLE_DEG
+PASS formula result MESH_QUALITY_MAX_ASPECT_RATIO
+PASS formula result MESH_REPAIR_MAX_ITERATIONS
+PASS formula result MESH_REPAIR_DAMPING
+PASS formula result MESH_REPAIR_IMPROVEMENT_TOLERANCE
+PASS formula result MESH_REPAIR_ANGLE_ITERATIONS
+PASS formula result MESH_REPAIR_TERRAIN_COMPARE
+PASS formula result MESH_TERRAIN_COUNT_MIN
+PASS formula result MESH_TERRAIN_COUNT_MAX
+PASS formula result ADAPT_MAX_ELEMENT_RATIO
+PASS formula result ADAPT_MARK_FRACTION
+PASS formula result MESH_GEN_LAST_METHOD
+PASS formula result MESH_GEN_LAST_COMPARE
+PASS formula result BAND_LU_BENCH
+PASS formula result BAND_LU_BENCH_N

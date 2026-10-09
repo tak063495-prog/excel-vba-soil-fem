@@ -1,0 +1,2258 @@
+{
+  "protocol": {
+    "schema": "practical_srm_verification_protocol_v1",
+    "source_build": "20261009_INCO_14",
+    "source_sha256": "21a6815238d694853ce4435ba6f4db7a0cdf56879b8f2eeadd981a24d56c26cd",
+    "additional_reviewed_sources": [
+      {
+        "build": "20261009_INCO_15",
+        "sha256": "fac30df6e3f8355ba5d8529b65aa7af05f87247c6eeaf36176beaba1b27b58a7",
+        "change": "Only final failed-run FOS publication and summary formatting; constitutive and solver algorithms unchanged from INCO_14."
+      },
+      {
+        "build": "20261009_INCO_16",
+        "sha256": "a4c4ca06c794fc3128175a04bdd50eef2a6694914d0a56747a8bdf6597841db7",
+        "change": "Preserve the nonfatal deferred Fs=1 gravity failure until SRM classifies it, enabling the intended Fs<1 search. Numerical acceptance criteria and material laws unchanged."
+      }
+    ],
+    "scope": "Dry or total-stress homogeneous plane-strain slopes. No hydraulic coupling or post-collapse travel.",
+    "controls": {
+      "srm_tolerance": 0.0125,
+      "srm_fmax": 2.2,
+      "flow_policy": "INCONSISTENT",
+      "psi": 0,
+      "srm_mode": "REAPPLY",
+      "solver": "BAND_LU",
+      "rcm": "ON"
+    },
+    "primary_comparisons": [
+      "Griffiths-Lane example1 coarse/fine",
+      "Griffiths-Lane example3 homogeneous phi0 coarse/fine"
+    ],
+    "secondary_comparisons": [
+      "Griffiths-Lane example2 foundation with reconstructed toe extent",
+      "Pruska h7 phi10",
+      "Pruska h7 phi20",
+      "Pruska h10.5 phi10"
+    ],
+    "solver_model_controls": [
+      "DAVIS Griffiths example1: transformed strength/flow, secondary only",
+      "DAVIS phi0 homogeneous: same material flow but different solver path",
+      "DAVIS Pruska h7phi10: transformed strength/flow, secondary only"
+    ],
+    "project_review_thresholds": {
+      "relative_fos_deviation_outside_published_interval": 0.05,
+      "coarse_fine_midpoint_relative_change": 0.02,
+      "relative_reaction_imbalance": 1e-05,
+      "global_residual": 1e-05,
+      "note": "These are declared project screening choices, not statutory or universal engineering tolerances. Passing a numerical comparison alone does not establish physical collapse."
+    },
+    "failure_interpretation": "Numerical failure/stagnation leaves critical FOS undetermined. A converged/nonconverged bracket is only a numerical boundary; inspect load completion, displacement trend and mechanism. Partial loading and interrupted runs are never treated as a measured critical FOS.",
+    "practical_decision": "Assess whether useful safety-rate results are produced repeatably for primary cases, whether mesh/path dependence is controlled, and whether unsupported results are clearly refused. Secondary cases with missing K0/side restraints cannot alone certify or falsify the constitutive model.",
+    "material_parameters": "No tuning of materials or convergence tolerances to match reference FOS.",
+    "timings": "Concurrent independent Excel runs are verification timings, not a performance ranking."
+  },
+  "fixture_sha256": "cb706a29d979c0552126baf3107cd8579d55fc95d9af2a94f892b7c2dc2d88e9",
+  "cases": [
+    {
+      "case": "griffiths_1999_foundation_critical14",
+      "fixture": "griffiths_1999_foundation",
+      "role": "baseline_flow_run",
+      "flow_policy": "INCONSISTENT",
+      "source_build": "20261009_INCO_14",
+      "literature_comparison_role": "secondary_extent_reconstructed",
+      "status": "NONCONVERGED|非関連流れの全体反復が停滞しました。残差が許容値に達していないため増分を縮小します。",
+      "source_sha256": "21A6815238D694853CE4435BA6F4DB7A0CDF56879B8F2EEADD981A24D56C26CD",
+      "metrics": {
+        "analysis_ok": false,
+        "relative_residual": 1.0037756187202572e-05,
+        "fos_pass": 1.3000000000000003,
+        "fos_fail": 0,
+        "fos_mid": 0,
+        "fos_width": 0,
+        "fos_bracket": false,
+        "fss": 0,
+        "srm_trials": 5,
+        "accepted_increments": 14,
+        "reaction_x": 0.061690833654246546,
+        "reaction_y": 8391.274941565915,
+        "factorizations": 947,
+        "reused_factors": 0,
+        "plastic_points": 610,
+        "nodes": 789,
+        "elements": 240,
+        "bandwidth": 129
+      },
+      "failure": {
+        "fos_interpretation": "UNDETERMINED",
+        "trial_class": "NUMERICAL_FAILURE",
+        "failure_kind": "GLOBAL_STAGNATION",
+        "failed_lambda": 0.9120992012023926,
+        "failed_residual": 1.0037756187202572e-05,
+        "failed_linear_residual": 8.788091550619107e-12,
+        "failed_correction": 1.7383205160034612e-06
+      },
+      "numerical_checks": {
+        "source_hash_and_build": true,
+        "controls_match": true,
+        "fixture_identity_recorded_at_run_start": true,
+        "source_control_errors": {},
+        "completed_bracket": false,
+        "global_residual": false,
+        "reaction_balance": false,
+        "refuses_invalid_fos": true
+      },
+      "reference_interval": [
+        1.35,
+        1.4
+      ],
+      "reference": {
+        "source_id": "griffiths_lane_1999_ex2",
+        "primary_url": "https://inside.mines.edu/~vgriffit/slope64/Griffiths%20and%20Lane%201999",
+        "source_pages": "journal392-394,Fig2/5",
+        "H": 10,
+        "D": 1.5,
+        "fos_reported": 1.4,
+        "fos_reference_range": [
+          1.35,
+          1.4
+        ],
+        "comparison_role": "secondary_extent_reconstructed",
+        "expected_mechanism": "toe failure with shallow foundation penetration",
+        "explicit_assumptions": [
+          "same material in slope and foundation; foundation depthH/2,total height1.5H",
+          "crest12m,slope run20m,right bench16m reconstructed from Fig5",
+          "side rollers and fixed base; original mesh/side boundary not published",
+          "H10,gamma20,c10,phi20,psi0,E100000,nu0.3; stress-free gravity turn-on"
+        ]
+      },
+      "fos_outside_reference_fraction": null,
+      "reference_screen": false,
+      "relative_reaction_imbalance": null,
+      "geometry": {
+        "max_component_mm": 29.006475491000494,
+        "max_vector_mm": 30.187454542205167,
+        "max_absolute_small_strain": 0.012069593827242802,
+        "min_deformed_gradient_det": 0.997731126295119,
+        "max_infinitesimal_rotation_radians": 0.0056057136297828275
+      },
+      "geometry_state_basis": "partial-load failed-trial diagnostic; not equilibrium displacement",
+      "trial_history": [
+        {
+          "fs_log_rounded": 1.0,
+          "status": "PASS",
+          "residual": 3.732e-12,
+          "message": "Fs=1.000 PASS_REUSED_FROM_GRAVITY 残差=3.732E-12"
+        },
+        {
+          "fs_log_rounded": 1.1,
+          "status": "PASS",
+          "residual": 1.316e-07,
+          "message": "Fs=1.100 残差=1.316E-07 変位max=1.948E-02"
+        },
+        {
+          "fs_log_rounded": 1.2,
+          "status": "PASS",
+          "residual": 2.877e-12,
+          "message": "Fs=1.200 残差=2.877E-12 変位max=2.106E-02"
+        },
+        {
+          "fs_log_rounded": 1.3,
+          "status": "PASS",
+          "residual": 1.569e-08,
+          "message": "Fs=1.300 残差=1.569E-08 変位max=2.337E-02"
+        },
+        {
+          "fs_log_rounded": 1.4,
+          "status": "FAIL",
+          "residual": 1.004e-05,
+          "message": "Fs=1.400 class=NUMERICAL_FAILURE cause=GLOBAL_STAGNATION NONCONVERGED P3全体反復が上限回数に達しました。Ver=20261009_INCO_14 相対残差=1.267E-03 補正比=8.056E-04 拘束変位誤差=0.000E+00。状態は前増分へ戻します。"
+        }
+      ],
+      "failed_trial_fs_log_rounded": 1.4,
+      "elapsed_seconds": 1533.7679194,
+      "small_deformation_diagnostic": "inspect local fields",
+      "reference_assessment": "NOT_ESTABLISHED"
+    },
+    {
+      "case": "griffiths_1999_foundation_critical15_davis",
+      "fixture": "griffiths_1999_foundation",
+      "role": "different_flow_control",
+      "flow_policy": "DAVIS",
+      "source_build": "20261009_INCO_15",
+      "literature_comparison_role": "secondary_extent_reconstructed",
+      "status": "PASS|",
+      "source_sha256": "FAC30DF6E3F8355BA5D8529B65AA7AF05F87247C6EEAF36176BEABA1B27B58A7",
+      "metrics": {
+        "analysis_ok": true,
+        "relative_residual": 2.25019757005023e-07,
+        "fos_pass": 1.3375000000000004,
+        "fos_fail": 1.3500000000000003,
+        "fos_mid": 1.3437500000000004,
+        "fos_width": 0.012499999999999956,
+        "fos_bracket": true,
+        "fss": 1.3375000000000004,
+        "srm_trials": 8,
+        "accepted_increments": 87,
+        "reaction_x": 4.785632512493976e-08,
+        "reaction_y": 9200.000000088126,
+        "factorizations": 892,
+        "reused_factors": 930,
+        "plastic_points": 623,
+        "nodes": 789,
+        "elements": 240,
+        "bandwidth": 129
+      },
+      "failure": {
+        "fos_interpretation": "NUMERICAL_BRACKET",
+        "trial_class": "CONVERGED",
+        "failure_kind": "LINE_SEARCH",
+        "failed_lambda": 0.99653931177706,
+        "failed_residual": 1.4249546648838624e-05,
+        "failed_linear_residual": 0.0,
+        "failed_correction": 0.0
+      },
+      "numerical_checks": {
+        "source_hash_and_build": true,
+        "controls_match": true,
+        "fixture_identity_recorded_at_run_start": true,
+        "source_control_errors": {},
+        "completed_bracket": true,
+        "global_residual": true,
+        "reaction_balance": true,
+        "valid_bracket_endpoints": true
+      },
+      "reference_interval": [
+        1.35,
+        1.4
+      ],
+      "reference": {
+        "source_id": "griffiths_lane_1999_ex2",
+        "primary_url": "https://inside.mines.edu/~vgriffit/slope64/Griffiths%20and%20Lane%201999",
+        "source_pages": "journal392-394,Fig2/5",
+        "H": 10,
+        "D": 1.5,
+        "fos_reported": 1.4,
+        "fos_reference_range": [
+          1.35,
+          1.4
+        ],
+        "comparison_role": "secondary_extent_reconstructed",
+        "expected_mechanism": "toe failure with shallow foundation penetration",
+        "explicit_assumptions": [
+          "same material in slope and foundation; foundation depthH/2,total height1.5H",
+          "crest12m,slope run20m,right bench16m reconstructed from Fig5",
+          "side rollers and fixed base; original mesh/side boundary not published",
+          "H10,gamma20,c10,phi20,psi0,E100000,nu0.3; stress-free gravity turn-on"
+        ]
+      },
+      "fos_outside_reference_fraction": null,
+      "reference_screen": false,
+      "relative_reaction_imbalance": 9.578956372064092e-12,
+      "geometry": {
+        "max_component_mm": 59.62116343108943,
+        "max_vector_mm": 62.27410366926811,
+        "max_absolute_small_strain": 0.04526887780917382,
+        "min_deformed_gradient_det": 0.9977300881996863,
+        "max_infinitesimal_rotation_radians": 0.02060779240602513
+      },
+      "geometry_state_basis": "final full-load converged lower-Fs state",
+      "trial_history": [
+        {
+          "fs_log_rounded": 1.0,
+          "status": "PASS",
+          "residual": 3.55e-08,
+          "message": "Fs=1.000 PASS_REUSED_FROM_GRAVITY 残差=3.550E-08"
+        },
+        {
+          "fs_log_rounded": 1.1,
+          "status": "PASS",
+          "residual": 5.027e-06,
+          "message": "Fs=1.100 残差=5.027E-06 変位max=1.827E-02"
+        },
+        {
+          "fs_log_rounded": 1.2,
+          "status": "PASS",
+          "residual": 6.63e-06,
+          "message": "Fs=1.200 残差=6.630E-06 変位max=1.918E-02"
+        },
+        {
+          "fs_log_rounded": 1.3,
+          "status": "PASS",
+          "residual": 6.147e-08,
+          "message": "Fs=1.300 残差=6.147E-08 変位max=2.059E-02"
+        },
+        {
+          "fs_log_rounded": 1.4,
+          "status": "FAIL",
+          "residual": 2.719e-05,
+          "message": "Fs=1.400 class=NONCONVERGENCE_BOUNDARY cause=LINE_SEARCH NONCONVERGED P3荷重増分が収束せず、最小増分に達しました。"
+        },
+        {
+          "fs_log_rounded": 1.35,
+          "status": "FAIL",
+          "residual": 1.234e-05,
+          "message": "Fs=1.350 class=NONCONVERGENCE_BOUNDARY cause=LINE_SEARCH NONCONVERGED P3荷重増分が収束せず、最小増分に達しました。"
+        },
+        {
+          "fs_log_rounded": 1.325,
+          "status": "PASS",
+          "residual": 2.353e-09,
+          "message": "Fs=1.325 残差=2.353E-09 変位max=2.188E-02"
+        },
+        {
+          "fs_log_rounded": 1.338,
+          "status": "PASS",
+          "residual": 2.234e-07,
+          "message": "Fs=1.338 残差=2.234E-07 変位max=5.962E-02"
+        }
+      ],
+      "failed_trial_fs_log_rounded": 1.35,
+      "elapsed_seconds": 485.9029315,
+      "small_deformation_diagnostic": "inspect local fields",
+      "davis_strength_only_equivalent_interval": [
+        1.3861387309471571,
+        1.3982039663195764
+      ],
+      "reference_assessment": "FLOW_CHANGED"
+    },
+    {
+      "case": "griffiths_1999_coarse_critical14",
+      "fixture": "griffiths_1999_coarse",
+      "role": "baseline_flow_run",
+      "flow_policy": "INCONSISTENT",
+      "source_build": "20261009_INCO_14",
+      "literature_comparison_role": "primary_reconstructed",
+      "status": "NONCONVERGED|非関連流れの全体反復が停滞しました。残差が許容値に達していないため増分を縮小します。",
+      "source_sha256": "21A6815238D694853CE4435BA6F4DB7A0CDF56879B8F2EEADD981A24D56C26CD",
+      "metrics": {
+        "analysis_ok": false,
+        "relative_residual": 1.0085244542509146e-05,
+        "fos_pass": 1.3000000000000003,
+        "fos_fail": 0,
+        "fos_mid": 0,
+        "fos_width": 0,
+        "fos_bracket": false,
+        "fss": 0,
+        "srm_trials": 5,
+        "accepted_increments": 84,
+        "reaction_x": 0.037600324243797445,
+        "reaction_y": 4067.228575667818,
+        "factorizations": 2497,
+        "reused_factors": 0,
+        "plastic_points": 448,
+        "nodes": 661,
+        "elements": 200,
+        "bandwidth": 129
+      },
+      "failure": {
+        "fos_interpretation": "UNDETERMINED",
+        "trial_class": "NUMERICAL_FAILURE",
+        "failure_kind": "GLOBAL_STAGNATION",
+        "failed_lambda": 0.9243748468986107,
+        "failed_residual": 1.0085244542509146e-05,
+        "failed_linear_residual": 5.8656189134786544e-12,
+        "failed_correction": 7.49805593118383e-07
+      },
+      "numerical_checks": {
+        "source_hash_and_build": true,
+        "controls_match": true,
+        "fixture_identity_recorded_at_run_start": false,
+        "source_control_errors": {},
+        "completed_bracket": false,
+        "global_residual": false,
+        "reaction_balance": false,
+        "refuses_invalid_fos": true
+      },
+      "reference_interval": [
+        1.35,
+        1.4
+      ],
+      "reference": {
+        "source_id": "griffiths_lane_1999_ex1",
+        "fos_reported": 1.4,
+        "published_pass_fail": [
+          1.35,
+          1.4
+        ],
+        "lem_reference": 1.38,
+        "H": 10,
+        "normalised_displacement_formula": "E*umax/(gamma*H^2)",
+        "explicit_assumptions": [
+          "H=10m and gamma=20kN/m3 preserve c/(gamma H)=0.05",
+          "E=100000kPa, nu=.3 are nominal values suggested on p390",
+          "stress-free gravity turn-on; psi=0 non-associated"
+        ],
+        "comparison_role": "primary_reconstructed"
+      },
+      "fos_outside_reference_fraction": null,
+      "reference_screen": false,
+      "relative_reaction_imbalance": null,
+      "geometry": {
+        "max_component_mm": 13.023644497530643,
+        "max_vector_mm": 13.568198164571838,
+        "max_absolute_small_strain": 0.012613199809075815,
+        "min_deformed_gradient_det": 0.9984787621787621,
+        "max_infinitesimal_rotation_radians": 0.0062536758172997975
+      },
+      "geometry_state_basis": "partial-load failed-trial diagnostic; not equilibrium displacement",
+      "trial_history": [
+        {
+          "fs_log_rounded": 1.0,
+          "status": "PASS",
+          "residual": 6.033e-12,
+          "message": "Fs=1.000 PASS_REUSED_FROM_GRAVITY 残差=6.033E-12"
+        },
+        {
+          "fs_log_rounded": 1.1,
+          "status": "PASS",
+          "residual": 1.381e-08,
+          "message": "Fs=1.100 残差=1.381E-08 変位max=7.987E-03"
+        },
+        {
+          "fs_log_rounded": 1.2,
+          "status": "PASS",
+          "residual": 9.916e-08,
+          "message": "Fs=1.200 残差=9.916E-08 変位max=8.547E-03"
+        },
+        {
+          "fs_log_rounded": 1.3,
+          "status": "PASS",
+          "residual": 4.437e-06,
+          "message": "Fs=1.300 残差=4.437E-06 変位max=9.352E-03"
+        },
+        {
+          "fs_log_rounded": 1.4,
+          "status": "FAIL",
+          "residual": 1.009e-05,
+          "message": "Fs=1.400 class=NUMERICAL_FAILURE cause=GLOBAL_STAGNATION NONCONVERGED 非関連流れの全体反復が停滞しました。残差が許容値に達していないため増分を縮小します。"
+        }
+      ],
+      "failed_trial_fs_log_rounded": 1.4,
+      "elapsed_seconds": 2605.920969,
+      "small_deformation_diagnostic": "inspect local fields",
+      "reference_assessment": "NOT_ESTABLISHED"
+    },
+    {
+      "case": "griffiths_1999_coarse_critical14_davis",
+      "fixture": "griffiths_1999_coarse",
+      "role": "different_flow_control",
+      "flow_policy": "DAVIS",
+      "source_build": "20261009_INCO_14",
+      "literature_comparison_role": "primary_reconstructed",
+      "status": "PASS|",
+      "source_sha256": "21A6815238D694853CE4435BA6F4DB7A0CDF56879B8F2EEADD981A24D56C26CD",
+      "metrics": {
+        "analysis_ok": true,
+        "relative_residual": 5.107483335262545e-10,
+        "fos_pass": 1.3375000000000004,
+        "fos_fail": 1.3500000000000003,
+        "fos_mid": 1.3437500000000004,
+        "fos_width": 0.012499999999999956,
+        "fos_bracket": true,
+        "fss": 1.3375000000000004,
+        "srm_trials": 8,
+        "accepted_increments": 32,
+        "reaction_x": 2.9119959776835458e-09,
+        "reaction_y": 4399.999999998434,
+        "factorizations": 788,
+        "reused_factors": 699,
+        "plastic_points": 536,
+        "nodes": 661,
+        "elements": 200,
+        "bandwidth": 129
+      },
+      "failure": {
+        "fos_interpretation": "NUMERICAL_BRACKET",
+        "trial_class": "CONVERGED",
+        "failure_kind": "NONE",
+        "failed_lambda": 0,
+        "failed_residual": 0,
+        "failed_linear_residual": 0,
+        "failed_correction": 0
+      },
+      "numerical_checks": {
+        "source_hash_and_build": true,
+        "controls_match": true,
+        "fixture_identity_recorded_at_run_start": true,
+        "source_control_errors": {},
+        "completed_bracket": true,
+        "global_residual": true,
+        "reaction_balance": true,
+        "valid_bracket_endpoints": true
+      },
+      "reference_interval": [
+        1.35,
+        1.4
+      ],
+      "reference": {
+        "source_id": "griffiths_lane_1999_ex1",
+        "fos_reported": 1.4,
+        "published_pass_fail": [
+          1.35,
+          1.4
+        ],
+        "lem_reference": 1.38,
+        "H": 10,
+        "normalised_displacement_formula": "E*umax/(gamma*H^2)",
+        "explicit_assumptions": [
+          "H=10m and gamma=20kN/m3 preserve c/(gamma H)=0.05",
+          "E=100000kPa, nu=.3 are nominal values suggested on p390",
+          "stress-free gravity turn-on; psi=0 non-associated"
+        ],
+        "comparison_role": "primary_reconstructed"
+      },
+      "fos_outside_reference_fraction": null,
+      "reference_screen": false,
+      "relative_reaction_imbalance": 3.5573645039800224e-13,
+      "geometry": {
+        "max_component_mm": 9.199568231325197,
+        "max_vector_mm": 9.278233330999905,
+        "max_absolute_small_strain": 0.005185016677110723,
+        "min_deformed_gradient_det": 0.9984836979105023,
+        "max_infinitesimal_rotation_radians": 0.0025152182857646455
+      },
+      "geometry_state_basis": "final full-load converged lower-Fs state",
+      "trial_history": [
+        {
+          "fs_log_rounded": 1.0,
+          "status": "PASS",
+          "residual": 9.712e-08,
+          "message": "Fs=1.000 PASS_REUSED_FROM_GRAVITY 残差=9.712E-08"
+        },
+        {
+          "fs_log_rounded": 1.1,
+          "status": "PASS",
+          "residual": 1.629e-06,
+          "message": "Fs=1.100 残差=1.629E-06 変位max=7.810E-03"
+        },
+        {
+          "fs_log_rounded": 1.2,
+          "status": "PASS",
+          "residual": 1.122e-06,
+          "message": "Fs=1.200 残差=1.122E-06 変位max=8.093E-03"
+        },
+        {
+          "fs_log_rounded": 1.3,
+          "status": "PASS",
+          "residual": 9.171e-06,
+          "message": "Fs=1.300 残差=9.171E-06 変位max=8.515E-03"
+        },
+        {
+          "fs_log_rounded": 1.4,
+          "status": "FAIL",
+          "residual": 1.164e-05,
+          "message": "Fs=1.400 class=NONCONVERGENCE_BOUNDARY cause=LINE_SEARCH NONCONVERGED P3荷重増分が収束せず、最小増分に達しました。"
+        },
+        {
+          "fs_log_rounded": 1.35,
+          "status": "FAIL",
+          "residual": 1.235e-05,
+          "message": "Fs=1.350 class=NONCONVERGENCE_BOUNDARY cause=LINE_SEARCH NONCONVERGED P3荷重増分が収束せず、最小増分に達しました。"
+        },
+        {
+          "fs_log_rounded": 1.325,
+          "status": "PASS",
+          "residual": 2.086e-06,
+          "message": "Fs=1.325 残差=2.086E-06 変位max=8.777E-03"
+        },
+        {
+          "fs_log_rounded": 1.338,
+          "status": "PASS",
+          "residual": 5.037e-10,
+          "message": "Fs=1.338 残差=5.037E-10 変位max=9.200E-03"
+        }
+      ],
+      "failed_trial_fs_log_rounded": 1.35,
+      "elapsed_seconds": 396.8065583,
+      "small_deformation_diagnostic": "inspect local fields",
+      "davis_strength_only_equivalent_interval": [
+        1.3861387309471571,
+        1.3982039663195764
+      ],
+      "reference_assessment": "FLOW_CHANGED"
+    },
+    {
+      "case": "griffiths_1999_fine_critical14",
+      "fixture": "griffiths_1999_fine",
+      "role": "baseline_flow_run",
+      "flow_policy": "INCONSISTENT",
+      "source_build": "20261009_INCO_14",
+      "literature_comparison_role": "primary_reconstructed",
+      "status": "NONCONVERGED|非関連流れの全体反復が停滞しました。残差が許容値に達していないため増分を縮小します。",
+      "source_sha256": "21A6815238D694853CE4435BA6F4DB7A0CDF56879B8F2EEADD981A24D56C26CD",
+      "metrics": {
+        "analysis_ok": false,
+        "relative_residual": 1.0032982484802861e-05,
+        "fos_pass": 1.3000000000000003,
+        "fos_fail": 0,
+        "fos_mid": 0,
+        "fos_width": 0,
+        "fos_bracket": false,
+        "fss": 0,
+        "srm_trials": 5,
+        "accepted_increments": 100,
+        "reaction_x": 0.03915280002021504,
+        "reaction_y": 3950.7555321743625,
+        "factorizations": 2806,
+        "reused_factors": 0,
+        "plastic_points": 976,
+        "nodes": 1441,
+        "elements": 450,
+        "bandwidth": 189
+      },
+      "failure": {
+        "fos_interpretation": "UNDETERMINED",
+        "trial_class": "NUMERICAL_FAILURE",
+        "failure_kind": "GLOBAL_STAGNATION",
+        "failed_lambda": 0.8979035312068636,
+        "failed_residual": 1.0032982484802861e-05,
+        "failed_linear_residual": 5.668502350691211e-12,
+        "failed_correction": 2.33815854842472e-07
+      },
+      "numerical_checks": {
+        "source_hash_and_build": true,
+        "controls_match": true,
+        "fixture_identity_recorded_at_run_start": true,
+        "source_control_errors": {},
+        "completed_bracket": false,
+        "global_residual": false,
+        "reaction_balance": false,
+        "refuses_invalid_fos": true
+      },
+      "reference_interval": [
+        1.35,
+        1.4
+      ],
+      "reference": {
+        "source_id": "griffiths_lane_1999_ex1",
+        "fos_reported": 1.4,
+        "published_pass_fail": [
+          1.35,
+          1.4
+        ],
+        "lem_reference": 1.38,
+        "H": 10,
+        "normalised_displacement_formula": "E*umax/(gamma*H^2)",
+        "explicit_assumptions": [
+          "H=10m and gamma=20kN/m3 preserve c/(gamma H)=0.05",
+          "E=100000kPa, nu=.3 are nominal values suggested on p390",
+          "stress-free gravity turn-on; psi=0 non-associated"
+        ],
+        "comparison_role": "primary_reconstructed"
+      },
+      "fos_outside_reference_fraction": null,
+      "reference_screen": false,
+      "relative_reaction_imbalance": null,
+      "geometry": {
+        "max_component_mm": 10.152244748870187,
+        "max_vector_mm": 10.293132810647872,
+        "max_absolute_small_strain": 0.007967212213877965,
+        "min_deformed_gradient_det": 0.9985089012550757,
+        "max_infinitesimal_rotation_radians": 0.003958966016798305
+      },
+      "geometry_state_basis": "partial-load failed-trial diagnostic; not equilibrium displacement",
+      "trial_history": [
+        {
+          "fs_log_rounded": 1.0,
+          "status": "PASS",
+          "residual": 2.016e-07,
+          "message": "Fs=1.000 PASS_REUSED_FROM_GRAVITY 残差=2.016E-07"
+        },
+        {
+          "fs_log_rounded": 1.1,
+          "status": "PASS",
+          "residual": 2.303e-06,
+          "message": "Fs=1.100 残差=2.303E-06 変位max=7.982E-03"
+        },
+        {
+          "fs_log_rounded": 1.2,
+          "status": "PASS",
+          "residual": 7.223e-06,
+          "message": "Fs=1.200 残差=7.223E-06 変位max=8.534E-03"
+        },
+        {
+          "fs_log_rounded": 1.3,
+          "status": "PASS",
+          "residual": 2.104e-10,
+          "message": "Fs=1.300 残差=2.104E-10 変位max=9.318E-03"
+        },
+        {
+          "fs_log_rounded": 1.4,
+          "status": "FAIL",
+          "residual": 1.003e-05,
+          "message": "Fs=1.400 class=NUMERICAL_FAILURE cause=GLOBAL_STAGNATION NONCONVERGED 全体反復と回復補正の合計が上限に達しました。状態は前増分へ戻します。"
+        }
+      ],
+      "failed_trial_fs_log_rounded": 1.4,
+      "elapsed_seconds": 12342.730052899999,
+      "small_deformation_diagnostic": "inspect local fields",
+      "reference_assessment": "NOT_ESTABLISHED"
+    },
+    {
+      "case": "griffiths_1999_fine_critical14_davis",
+      "fixture": "griffiths_1999_fine",
+      "role": "different_flow_control",
+      "flow_policy": "DAVIS",
+      "source_build": "20261009_INCO_14",
+      "literature_comparison_role": "primary_reconstructed",
+      "status": "PASS|",
+      "source_sha256": "21A6815238D694853CE4435BA6F4DB7A0CDF56879B8F2EEADD981A24D56C26CD",
+      "metrics": {
+        "analysis_ok": true,
+        "relative_residual": 4.461501678419295e-06,
+        "fos_pass": 1.3250000000000002,
+        "fos_fail": 1.3375000000000004,
+        "fos_mid": 1.3312500000000003,
+        "fos_width": 0.012500000000000178,
+        "fos_bracket": true,
+        "fss": 1.3250000000000002,
+        "srm_trials": 8,
+        "accepted_increments": 61,
+        "reaction_x": 4.313429027291704e-06,
+        "reaction_y": 4400.00013040948,
+        "factorizations": 1304,
+        "reused_factors": 1039,
+        "plastic_points": 1178,
+        "nodes": 1441,
+        "elements": 450,
+        "bandwidth": 189
+      },
+      "failure": {
+        "fos_interpretation": "NUMERICAL_BRACKET",
+        "trial_class": "NONCONVERGENCE_BOUNDARY",
+        "failure_kind": "LINE_SEARCH",
+        "failed_lambda": 0.9997839745440541,
+        "failed_residual": 1.1990477068226356e-05,
+        "failed_linear_residual": 0,
+        "failed_correction": 0
+      },
+      "numerical_checks": {
+        "source_hash_and_build": true,
+        "controls_match": true,
+        "fixture_identity_recorded_at_run_start": true,
+        "source_control_errors": {},
+        "completed_bracket": true,
+        "global_residual": true,
+        "reaction_balance": true,
+        "valid_bracket_endpoints": true
+      },
+      "reference_interval": [
+        1.35,
+        1.4
+      ],
+      "reference": {
+        "source_id": "griffiths_lane_1999_ex1",
+        "fos_reported": 1.4,
+        "published_pass_fail": [
+          1.35,
+          1.4
+        ],
+        "lem_reference": 1.38,
+        "H": 10,
+        "normalised_displacement_formula": "E*umax/(gamma*H^2)",
+        "explicit_assumptions": [
+          "H=10m and gamma=20kN/m3 preserve c/(gamma H)=0.05",
+          "E=100000kPa, nu=.3 are nominal values suggested on p390",
+          "stress-free gravity turn-on; psi=0 non-associated"
+        ],
+        "comparison_role": "primary_reconstructed"
+      },
+      "fos_outside_reference_fraction": null,
+      "reference_screen": false,
+      "relative_reaction_imbalance": 2.9638519084652572e-08,
+      "geometry": {
+        "max_component_mm": 8.824225537491314,
+        "max_vector_mm": 8.863512996626998,
+        "max_absolute_small_strain": 0.00423300423953435,
+        "min_deformed_gradient_det": 0.9984729548837974,
+        "max_infinitesimal_rotation_radians": 0.002078204536349559
+      },
+      "geometry_state_basis": "final full-load converged lower-Fs state",
+      "trial_history": [
+        {
+          "fs_log_rounded": 1.0,
+          "status": "PASS",
+          "residual": 1.125e-07,
+          "message": "Fs=1.000 PASS_REUSED_FROM_GRAVITY 残差=1.125E-07"
+        },
+        {
+          "fs_log_rounded": 1.1,
+          "status": "PASS",
+          "residual": 1.992e-06,
+          "message": "Fs=1.100 残差=1.992E-06 変位max=7.808E-03"
+        },
+        {
+          "fs_log_rounded": 1.2,
+          "status": "PASS",
+          "residual": 5.538e-06,
+          "message": "Fs=1.200 残差=5.538E-06 変位max=8.085E-03"
+        },
+        {
+          "fs_log_rounded": 1.3,
+          "status": "PASS",
+          "residual": 6.68e-06,
+          "message": "Fs=1.300 残差=6.680E-06 変位max=8.518E-03"
+        },
+        {
+          "fs_log_rounded": 1.4,
+          "status": "FAIL",
+          "residual": 1.335e-05,
+          "message": "Fs=1.400 class=NONCONVERGENCE_BOUNDARY cause=LINE_SEARCH NONCONVERGED P3荷重増分が収束せず、最小増分に達しました。"
+        },
+        {
+          "fs_log_rounded": 1.35,
+          "status": "FAIL",
+          "residual": 1.274e-05,
+          "message": "Fs=1.350 class=NONCONVERGENCE_BOUNDARY cause=LINE_SEARCH NONCONVERGED P3荷重増分が収束せず、最小増分に達しました。"
+        },
+        {
+          "fs_log_rounded": 1.325,
+          "status": "PASS",
+          "residual": 4.421e-06,
+          "message": "Fs=1.325 残差=4.421E-06 変位max=8.824E-03"
+        },
+        {
+          "fs_log_rounded": 1.338,
+          "status": "FAIL",
+          "residual": 1.199e-05,
+          "message": "Fs=1.338 class=NONCONVERGENCE_BOUNDARY cause=LINE_SEARCH NONCONVERGED P3荷重増分が収束せず、最小増分に達しました。"
+        }
+      ],
+      "failed_trial_fs_log_rounded": 1.338,
+      "elapsed_seconds": 2233.8785944,
+      "small_deformation_diagnostic": "inspect local fields",
+      "davis_strength_only_equivalent_interval": [
+        1.3740812681321999,
+        1.3861387309471571
+      ],
+      "reference_assessment": "FLOW_CHANGED"
+    },
+    {
+      "case": "griffiths_1999_phi0_coarse_critical14",
+      "fixture": "griffiths_1999_phi0_coarse",
+      "role": "baseline_flow_run",
+      "flow_policy": "INCONSISTENT",
+      "source_build": "20261009_INCO_14",
+      "literature_comparison_role": "primary_reconstructed",
+      "status": "NONCONVERGED|CSR-GMRESが収束しませんでした。反復=2000、相対残差=8.857E-01",
+      "source_sha256": "21A6815238D694853CE4435BA6F4DB7A0CDF56879B8F2EEADD981A24D56C26CD",
+      "metrics": {
+        "analysis_ok": false,
+        "relative_residual": 1.0423658152041191e-05,
+        "fos_pass": 1.4000000000000004,
+        "fos_fail": 0,
+        "fos_mid": 0,
+        "fos_width": 0,
+        "fos_bracket": false,
+        "fss": 0,
+        "srm_trials": 6,
+        "accepted_increments": 19,
+        "reaction_x": -3.628820763879048e-07,
+        "reaction_y": 17762.82787268639,
+        "factorizations": 507,
+        "reused_factors": 0,
+        "plastic_points": 665,
+        "nodes": 641,
+        "elements": 192,
+        "bandwidth": 105
+      },
+      "failure": {
+        "fos_interpretation": "UNDETERMINED",
+        "trial_class": "NUMERICAL_FAILURE",
+        "failure_kind": "LINEAR_SOLVER",
+        "failed_lambda": 0.9868340203270113,
+        "failed_residual": 1.0423658152041191e-05,
+        "failed_linear_residual": 0.8856873453092888,
+        "failed_correction": 0
+      },
+      "numerical_checks": {
+        "source_hash_and_build": true,
+        "controls_match": true,
+        "fixture_identity_recorded_at_run_start": true,
+        "source_control_errors": {},
+        "completed_bracket": false,
+        "global_residual": false,
+        "reaction_balance": false,
+        "refuses_invalid_fos": true
+      },
+      "reference_interval": [
+        1.45,
+        1.5
+      ],
+      "reference": {
+        "source_id": "griffiths_lane_1999_ex3_homogeneous",
+        "primary_url": "https://inside.mines.edu/~vgriffit/slope64/Griffiths%20and%20Lane%201999",
+        "source_pages": "journal394-395, Fig6-8",
+        "H": 10,
+        "D": 2,
+        "fos_reported": 1.47,
+        "fos_reference_range": [
+          1.45,
+          1.5
+        ],
+        "reference_definition": "Taylor1.47; source FE curve rounded to nearest0.05",
+        "comparison_role": "primary_reconstructed",
+        "expected_mechanism": "circular base failure",
+        "explicit_assumptions": [
+          "cu2/cu1=1 removes the weak-layer material discontinuity",
+          "Fig6 slope2H horizontal:1H vertical; foundation depthH, total depth2H",
+          "H10m,gamma20,cu50 preserve cu/(gamma H)=0.25",
+          "E100000kPa,nu0.3 are declared nominal reconstruction values",
+          "both vertical sides ux=0,base ux=uy=0; side restraints are reconstruction assumptions",
+          "stress-free gravity turn-on; phi=psi=0 total-stress Tresca, no pore-pressure model"
+        ]
+      },
+      "fos_outside_reference_fraction": null,
+      "reference_screen": false,
+      "relative_reaction_imbalance": null,
+      "geometry": {
+        "max_component_mm": 19590.200987342654,
+        "max_vector_mm": 19649.61231686275,
+        "max_absolute_small_strain": 9.785039919900747,
+        "min_deformed_gradient_det": -3.9575910362402484,
+        "max_infinitesimal_rotation_radians": 4.872608786131904
+      },
+      "geometry_state_basis": "partial-load failed-trial diagnostic; not equilibrium displacement",
+      "trial_history": [
+        {
+          "fs_log_rounded": 1.0,
+          "status": "PASS",
+          "residual": 1.073e-09,
+          "message": "Fs=1.000 PASS_REUSED_FROM_GRAVITY 残差=1.073E-09"
+        },
+        {
+          "fs_log_rounded": 1.1,
+          "status": "PASS",
+          "residual": 3.761e-12,
+          "message": "Fs=1.100 残差=3.761E-12 変位max=4.686E-02"
+        },
+        {
+          "fs_log_rounded": 1.2,
+          "status": "PASS",
+          "residual": 3.92e-08,
+          "message": "Fs=1.200 残差=3.920E-08 変位max=5.142E-02"
+        },
+        {
+          "fs_log_rounded": 1.3,
+          "status": "PASS",
+          "residual": 3.389e-06,
+          "message": "Fs=1.300 残差=3.389E-06 変位max=5.664E-02"
+        },
+        {
+          "fs_log_rounded": 1.4,
+          "status": "PASS",
+          "residual": 5.729e-09,
+          "message": "Fs=1.400 残差=5.729E-09 変位max=6.334E-02"
+        },
+        {
+          "fs_log_rounded": 1.5,
+          "status": "FAIL",
+          "residual": 1.042e-05,
+          "message": "Fs=1.500 class=NUMERICAL_FAILURE cause=LINEAR_SOLVER NONCONVERGED 全体反復と回復補正の合計が上限に達しました。状態は前増分へ戻します。"
+        }
+      ],
+      "failed_trial_fs_log_rounded": 1.5,
+      "elapsed_seconds": 486.9555769,
+      "small_deformation_diagnostic": "large local deformation",
+      "reference_assessment": "NOT_ESTABLISHED"
+    },
+    {
+      "case": "griffiths_1999_phi0_coarse_critical14_davis",
+      "fixture": "griffiths_1999_phi0_coarse",
+      "role": "same_material_flow_solver_control",
+      "flow_policy": "DAVIS",
+      "source_build": "20261009_INCO_14",
+      "literature_comparison_role": "primary_reconstructed",
+      "status": "PASS|",
+      "source_sha256": "21A6815238D694853CE4435BA6F4DB7A0CDF56879B8F2EEADD981A24D56C26CD",
+      "metrics": {
+        "analysis_ok": true,
+        "relative_residual": 6.082968815802412e-07,
+        "fos_pass": 1.4375000000000004,
+        "fos_fail": 1.4500000000000004,
+        "fos_mid": 1.4437500000000005,
+        "fos_width": 0.012499999999999956,
+        "fos_bracket": true,
+        "fss": 1.4375000000000004,
+        "srm_trials": 9,
+        "accepted_increments": 18,
+        "reaction_x": 4.447985304523172e-06,
+        "reaction_y": 18000.000031112217,
+        "factorizations": 407,
+        "reused_factors": 390,
+        "plastic_points": 603,
+        "nodes": 641,
+        "elements": 192,
+        "bandwidth": 105
+      },
+      "failure": {
+        "fos_interpretation": "NUMERICAL_BRACKET",
+        "trial_class": "CONVERGED",
+        "failure_kind": "NONE",
+        "failed_lambda": 0,
+        "failed_residual": 0,
+        "failed_linear_residual": 0,
+        "failed_correction": 0
+      },
+      "numerical_checks": {
+        "source_hash_and_build": true,
+        "controls_match": true,
+        "fixture_identity_recorded_at_run_start": true,
+        "source_control_errors": {},
+        "completed_bracket": true,
+        "global_residual": true,
+        "reaction_balance": true,
+        "valid_bracket_endpoints": true
+      },
+      "reference_interval": [
+        1.45,
+        1.5
+      ],
+      "reference": {
+        "source_id": "griffiths_lane_1999_ex3_homogeneous",
+        "primary_url": "https://inside.mines.edu/~vgriffit/slope64/Griffiths%20and%20Lane%201999",
+        "source_pages": "journal394-395, Fig6-8",
+        "H": 10,
+        "D": 2,
+        "fos_reported": 1.47,
+        "fos_reference_range": [
+          1.45,
+          1.5
+        ],
+        "reference_definition": "Taylor1.47; source FE curve rounded to nearest0.05",
+        "comparison_role": "primary_reconstructed",
+        "expected_mechanism": "circular base failure",
+        "explicit_assumptions": [
+          "cu2/cu1=1 removes the weak-layer material discontinuity",
+          "Fig6 slope2H horizontal:1H vertical; foundation depthH, total depth2H",
+          "H10m,gamma20,cu50 preserve cu/(gamma H)=0.25",
+          "E100000kPa,nu0.3 are declared nominal reconstruction values",
+          "both vertical sides ux=0,base ux=uy=0; side restraints are reconstruction assumptions",
+          "stress-free gravity turn-on; phi=psi=0 total-stress Tresca, no pore-pressure model"
+        ]
+      },
+      "fos_outside_reference_fraction": 0.004310344827585809,
+      "reference_screen": true,
+      "relative_reaction_imbalance": 1.7284564819419757e-09,
+      "geometry": {
+        "max_component_mm": 65.9807325785073,
+        "max_vector_mm": 66.7869650383304,
+        "max_absolute_small_strain": 0.03238642777934408,
+        "min_deformed_gradient_det": 0.9958280766344914,
+        "max_infinitesimal_rotation_radians": 0.016056213808258352
+      },
+      "geometry_state_basis": "final full-load converged lower-Fs state",
+      "trial_history": [
+        {
+          "fs_log_rounded": 1.0,
+          "status": "PASS",
+          "residual": 7.212e-06,
+          "message": "Fs=1.000 PASS_REUSED_FROM_GRAVITY 残差=7.212E-06"
+        },
+        {
+          "fs_log_rounded": 1.1,
+          "status": "PASS",
+          "residual": 1.289e-08,
+          "message": "Fs=1.100 残差=1.289E-08 変位max=4.653E-02"
+        },
+        {
+          "fs_log_rounded": 1.2,
+          "status": "PASS",
+          "residual": 1.403e-09,
+          "message": "Fs=1.200 残差=1.403E-09 変位max=5.106E-02"
+        },
+        {
+          "fs_log_rounded": 1.3,
+          "status": "PASS",
+          "residual": 1.414e-08,
+          "message": "Fs=1.300 残差=1.414E-08 変位max=5.591E-02"
+        },
+        {
+          "fs_log_rounded": 1.4,
+          "status": "PASS",
+          "residual": 5.837e-07,
+          "message": "Fs=1.400 残差=5.837E-07 変位max=6.234E-02"
+        },
+        {
+          "fs_log_rounded": 1.5,
+          "status": "FAIL",
+          "residual": 7.077e-05,
+          "message": "Fs=1.500 class=NONCONVERGENCE_BOUNDARY cause=LINE_SEARCH NONCONVERGED P3荷重増分が収束せず、最小増分に達しました。"
+        },
+        {
+          "fs_log_rounded": 1.45,
+          "status": "FAIL",
+          "residual": 1.242e-05,
+          "message": "Fs=1.450 class=NONCONVERGENCE_BOUNDARY cause=LINE_SEARCH NONCONVERGED P3荷重増分が収束せず、最小増分に達しました。"
+        },
+        {
+          "fs_log_rounded": 1.425,
+          "status": "PASS",
+          "residual": 4.448e-07,
+          "message": "Fs=1.425 残差=4.448E-07 変位max=6.489E-02"
+        },
+        {
+          "fs_log_rounded": 1.438,
+          "status": "PASS",
+          "residual": 6.028e-07,
+          "message": "Fs=1.438 残差=6.028E-07 変位max=6.598E-02"
+        }
+      ],
+      "failed_trial_fs_log_rounded": 1.45,
+      "elapsed_seconds": 156.70541319999998,
+      "small_deformation_diagnostic": "inspect local fields",
+      "reference_assessment": "PASS_SCREEN"
+    },
+    {
+      "case": "griffiths_1999_phi0_fine_critical14",
+      "fixture": "griffiths_1999_phi0_fine",
+      "role": "baseline_flow_run",
+      "flow_policy": "INCONSISTENT",
+      "source_build": "20261009_INCO_14",
+      "literature_comparison_role": "primary_reconstructed",
+      "status": "NONCONVERGED|CSR-GMRESが収束しませんでした。反復=2000、相対残差=9.363E-01",
+      "source_sha256": "21A6815238D694853CE4435BA6F4DB7A0CDF56879B8F2EEADD981A24D56C26CD",
+      "metrics": {
+        "analysis_ok": false,
+        "relative_residual": 1.0950756669394897e-05,
+        "fos_pass": 1.4000000000000004,
+        "fos_fail": 0,
+        "fos_mid": 0,
+        "fos_width": 0,
+        "fos_bracket": false,
+        "fss": 0,
+        "srm_trials": 6,
+        "accepted_increments": 14,
+        "reaction_x": -3.97335497837048e-11,
+        "reaction_y": 17589.62862913779,
+        "factorizations": 503,
+        "reused_factors": 0,
+        "plastic_points": 1357,
+        "nodes": 1393,
+        "elements": 432,
+        "bandwidth": 153
+      },
+      "failure": {
+        "fos_interpretation": "UNDETERMINED",
+        "trial_class": "NUMERICAL_FAILURE",
+        "failure_kind": "LINEAR_SOLVER",
+        "failed_lambda": 0.9772124540512086,
+        "failed_residual": 1.0950756669394897e-05,
+        "failed_linear_residual": 0.9362947663516112,
+        "failed_correction": 0
+      },
+      "numerical_checks": {
+        "source_hash_and_build": true,
+        "controls_match": true,
+        "fixture_identity_recorded_at_run_start": true,
+        "source_control_errors": {},
+        "completed_bracket": false,
+        "global_residual": false,
+        "reaction_balance": false,
+        "refuses_invalid_fos": true
+      },
+      "reference_interval": [
+        1.45,
+        1.5
+      ],
+      "reference": {
+        "source_id": "griffiths_lane_1999_ex3_homogeneous",
+        "primary_url": "https://inside.mines.edu/~vgriffit/slope64/Griffiths%20and%20Lane%201999",
+        "source_pages": "journal394-395, Fig6-8",
+        "H": 10,
+        "D": 2,
+        "fos_reported": 1.47,
+        "fos_reference_range": [
+          1.45,
+          1.5
+        ],
+        "reference_definition": "Taylor1.47; source FE curve rounded to nearest0.05",
+        "comparison_role": "primary_reconstructed",
+        "expected_mechanism": "circular base failure",
+        "explicit_assumptions": [
+          "cu2/cu1=1 removes the weak-layer material discontinuity",
+          "Fig6 slope2H horizontal:1H vertical; foundation depthH, total depth2H",
+          "H10m,gamma20,cu50 preserve cu/(gamma H)=0.25",
+          "E100000kPa,nu0.3 are declared nominal reconstruction values",
+          "both vertical sides ux=0,base ux=uy=0; side restraints are reconstruction assumptions",
+          "stress-free gravity turn-on; phi=psi=0 total-stress Tresca, no pore-pressure model"
+        ]
+      },
+      "fos_outside_reference_fraction": null,
+      "reference_screen": false,
+      "relative_reaction_imbalance": null,
+      "geometry": {
+        "max_component_mm": 4038.6234106441234,
+        "max_vector_mm": 4039.5444719214443,
+        "max_absolute_small_strain": 3.2728619940510453,
+        "min_deformed_gradient_det": 0.6856982703502214,
+        "max_infinitesimal_rotation_radians": 1.6317791335364398
+      },
+      "geometry_state_basis": "partial-load failed-trial diagnostic; not equilibrium displacement",
+      "trial_history": [
+        {
+          "fs_log_rounded": 1.0,
+          "status": "PASS",
+          "residual": 6.417e-08,
+          "message": "Fs=1.000 PASS_REUSED_FROM_GRAVITY 残差=6.417E-08"
+        },
+        {
+          "fs_log_rounded": 1.1,
+          "status": "PASS",
+          "residual": 7.092e-09,
+          "message": "Fs=1.100 残差=7.092E-09 変位max=4.700E-02"
+        },
+        {
+          "fs_log_rounded": 1.2,
+          "status": "PASS",
+          "residual": 6.794e-06,
+          "message": "Fs=1.200 残差=6.794E-06 変位max=5.175E-02"
+        },
+        {
+          "fs_log_rounded": 1.3,
+          "status": "PASS",
+          "residual": 1.06e-09,
+          "message": "Fs=1.300 残差=1.060E-09 変位max=5.688E-02"
+        },
+        {
+          "fs_log_rounded": 1.4,
+          "status": "PASS",
+          "residual": 7.41e-09,
+          "message": "Fs=1.400 残差=7.410E-09 変位max=6.355E-02"
+        },
+        {
+          "fs_log_rounded": 1.5,
+          "status": "FAIL",
+          "residual": 1.095e-05,
+          "message": "Fs=1.500 class=NUMERICAL_FAILURE cause=LINEAR_SOLVER NONCONVERGED 全体反復と回復補正の合計が上限に達しました。状態は前増分へ戻します。"
+        }
+      ],
+      "failed_trial_fs_log_rounded": 1.5,
+      "elapsed_seconds": 1693.3005927,
+      "small_deformation_diagnostic": "large local deformation",
+      "reference_assessment": "NOT_ESTABLISHED"
+    },
+    {
+      "case": "griffiths_1999_phi0_fine_critical14_davis",
+      "fixture": "griffiths_1999_phi0_fine",
+      "role": "same_material_flow_solver_control",
+      "flow_policy": "DAVIS",
+      "source_build": "20261009_INCO_14",
+      "literature_comparison_role": "primary_reconstructed",
+      "status": "PASS|",
+      "source_sha256": "21A6815238D694853CE4435BA6F4DB7A0CDF56879B8F2EEADD981A24D56C26CD",
+      "metrics": {
+        "analysis_ok": true,
+        "relative_residual": 1.2258981396318056e-06,
+        "fos_pass": 1.4375000000000004,
+        "fos_fail": 1.4500000000000004,
+        "fos_mid": 1.4437500000000005,
+        "fos_width": 0.012499999999999956,
+        "fos_bracket": true,
+        "fss": 1.4375000000000004,
+        "srm_trials": 9,
+        "accepted_increments": 45,
+        "reaction_x": 1.8150743130718183e-08,
+        "reaction_y": 18000.000000026754,
+        "factorizations": 706,
+        "reused_factors": 621,
+        "plastic_points": 1353,
+        "nodes": 1393,
+        "elements": 432,
+        "bandwidth": 153
+      },
+      "failure": {
+        "fos_interpretation": "NUMERICAL_BRACKET",
+        "trial_class": "CONVERGED",
+        "failure_kind": "NONE",
+        "failed_lambda": 0,
+        "failed_residual": 0,
+        "failed_linear_residual": 0,
+        "failed_correction": 0
+      },
+      "numerical_checks": {
+        "source_hash_and_build": true,
+        "controls_match": true,
+        "fixture_identity_recorded_at_run_start": true,
+        "source_control_errors": {},
+        "completed_bracket": true,
+        "global_residual": true,
+        "reaction_balance": true,
+        "valid_bracket_endpoints": true
+      },
+      "reference_interval": [
+        1.45,
+        1.5
+      ],
+      "reference": {
+        "source_id": "griffiths_lane_1999_ex3_homogeneous",
+        "primary_url": "https://inside.mines.edu/~vgriffit/slope64/Griffiths%20and%20Lane%201999",
+        "source_pages": "journal394-395, Fig6-8",
+        "H": 10,
+        "D": 2,
+        "fos_reported": 1.47,
+        "fos_reference_range": [
+          1.45,
+          1.5
+        ],
+        "reference_definition": "Taylor1.47; source FE curve rounded to nearest0.05",
+        "comparison_role": "primary_reconstructed",
+        "expected_mechanism": "circular base failure",
+        "explicit_assumptions": [
+          "cu2/cu1=1 removes the weak-layer material discontinuity",
+          "Fig6 slope2H horizontal:1H vertical; foundation depthH, total depth2H",
+          "H10m,gamma20,cu50 preserve cu/(gamma H)=0.25",
+          "E100000kPa,nu0.3 are declared nominal reconstruction values",
+          "both vertical sides ux=0,base ux=uy=0; side restraints are reconstruction assumptions",
+          "stress-free gravity turn-on; phi=psi=0 total-stress Tresca, no pore-pressure model"
+        ]
+      },
+      "fos_outside_reference_fraction": 0.004310344827585809,
+      "reference_screen": true,
+      "relative_reaction_imbalance": 1.4834869135585054e-12,
+      "geometry": {
+        "max_component_mm": 65.98976104135043,
+        "max_vector_mm": 66.90374791539968,
+        "max_absolute_small_strain": 0.04752303916976448,
+        "min_deformed_gradient_det": 0.995788227510937,
+        "max_infinitesimal_rotation_radians": 0.02369154724452241
+      },
+      "geometry_state_basis": "final full-load converged lower-Fs state",
+      "trial_history": [
+        {
+          "fs_log_rounded": 1.0,
+          "status": "PASS",
+          "residual": 1.154e-07,
+          "message": "Fs=1.000 PASS_REUSED_FROM_GRAVITY 残差=1.154E-07"
+        },
+        {
+          "fs_log_rounded": 1.1,
+          "status": "PASS",
+          "residual": 3.534e-10,
+          "message": "Fs=1.100 残差=3.534E-10 変位max=4.658E-02"
+        },
+        {
+          "fs_log_rounded": 1.2,
+          "status": "PASS",
+          "residual": 1.056e-06,
+          "message": "Fs=1.200 残差=1.056E-06 変位max=5.119E-02"
+        },
+        {
+          "fs_log_rounded": 1.3,
+          "status": "PASS",
+          "residual": 2.305e-06,
+          "message": "Fs=1.300 残差=2.305E-06 変位max=5.645E-02"
+        },
+        {
+          "fs_log_rounded": 1.4,
+          "status": "PASS",
+          "residual": 8.765e-07,
+          "message": "Fs=1.400 残差=8.765E-07 変位max=6.276E-02"
+        },
+        {
+          "fs_log_rounded": 1.5,
+          "status": "FAIL",
+          "residual": 1.697e-05,
+          "message": "Fs=1.500 class=NONCONVERGENCE_BOUNDARY cause=LINE_SEARCH NONCONVERGED P3荷重増分が収束せず、最小増分に達しました。"
+        },
+        {
+          "fs_log_rounded": 1.45,
+          "status": "FAIL",
+          "residual": 2.911e-05,
+          "message": "Fs=1.450 class=NONCONVERGENCE_BOUNDARY cause=LINE_SEARCH NONCONVERGED P3荷重増分が収束せず、最小増分に達しました。"
+        },
+        {
+          "fs_log_rounded": 1.425,
+          "status": "PASS",
+          "residual": 3.364e-09,
+          "message": "Fs=1.425 残差=3.364E-09 変位max=6.510E-02"
+        },
+        {
+          "fs_log_rounded": 1.438,
+          "status": "PASS",
+          "residual": 1.219e-06,
+          "message": "Fs=1.438 残差=1.219E-06 変位max=6.599E-02"
+        }
+      ],
+      "failed_trial_fs_log_rounded": 1.45,
+      "elapsed_seconds": 824.8637947,
+      "small_deformation_diagnostic": "inspect local fields",
+      "reference_assessment": "PASS_SCREEN"
+    },
+    {
+      "case": "pruska_h7_phi10_critical14_davis",
+      "fixture": "pruska_h7_phi10",
+      "role": "different_flow_control",
+      "flow_policy": "DAVIS",
+      "source_build": "20261009_INCO_14",
+      "literature_comparison_role": "secondary_initial_stress_not_matched",
+      "status": "PASS|",
+      "source_sha256": "21A6815238D694853CE4435BA6F4DB7A0CDF56879B8F2EEADD981A24D56C26CD",
+      "metrics": {
+        "analysis_ok": true,
+        "relative_residual": 6.559646802405966e-11,
+        "fos_pass": 1.225,
+        "fos_fail": 1.2375000000000003,
+        "fos_mid": 1.2312500000000002,
+        "fos_width": 0.012500000000000178,
+        "fos_bracket": true,
+        "fss": 1.225,
+        "srm_trials": 7,
+        "accepted_increments": 44,
+        "reaction_x": -6.381313255587884e-10,
+        "reaction_y": 11039.99999999866,
+        "factorizations": 818,
+        "reused_factors": 813,
+        "plastic_points": 730,
+        "nodes": 789,
+        "elements": 240,
+        "bandwidth": 129
+      },
+      "failure": {
+        "fos_interpretation": "NUMERICAL_BRACKET",
+        "trial_class": "NONCONVERGENCE_BOUNDARY",
+        "failure_kind": "LINE_SEARCH",
+        "failed_lambda": 0.9909256247598216,
+        "failed_residual": 1.2308833821688046e-05,
+        "failed_linear_residual": 0,
+        "failed_correction": 0
+      },
+      "numerical_checks": {
+        "source_hash_and_build": true,
+        "controls_match": true,
+        "fixture_identity_recorded_at_run_start": true,
+        "source_control_errors": {},
+        "completed_bracket": true,
+        "global_residual": true,
+        "reaction_balance": true,
+        "valid_bracket_endpoints": true
+      },
+      "reference_interval": [
+        1.21,
+        1.31
+      ],
+      "reference": {
+        "source_id": "pruska_homogeneous",
+        "fos_reference_range": [
+          1.21,
+          1.31
+        ],
+        "code_values": {
+          "ZSoil": 1.21,
+          "Plaxis": 1.22,
+          "GeoFEM": 1.31
+        },
+        "H": 7,
+        "explicit_assumptions": [
+          "ux fixed at sides and ux/uy fixed at base",
+          "stress-free gravity turn-on instead of imposed K0 stresses",
+          "15m toe bench, 10m slope run, 15m crest bench; RS2 problem56 confirms dimensions"
+        ],
+        "comparison_role": "secondary_initial_stress_not_matched"
+      },
+      "fos_outside_reference_fraction": null,
+      "reference_screen": false,
+      "relative_reaction_imbalance": 1.2011261550588145e-13,
+      "geometry": {
+        "max_component_mm": 701.9830268343782,
+        "max_vector_mm": 725.2540906478166,
+        "max_absolute_small_strain": 0.2850863489892871,
+        "min_deformed_gradient_det": 0.9389702017011076,
+        "max_infinitesimal_rotation_radians": 0.10627731510580282
+      },
+      "geometry_state_basis": "final full-load converged lower-Fs state",
+      "trial_history": [
+        {
+          "fs_log_rounded": 1.0,
+          "status": "PASS",
+          "residual": 3.387e-07,
+          "message": "Fs=1.000 PASS_REUSED_FROM_GRAVITY 残差=3.387E-07"
+        },
+        {
+          "fs_log_rounded": 1.1,
+          "status": "PASS",
+          "residual": 2.993e-08,
+          "message": "Fs=1.100 残差=2.993E-08 変位max=5.294E-01"
+        },
+        {
+          "fs_log_rounded": 1.2,
+          "status": "PASS",
+          "residual": 5.879e-06,
+          "message": "Fs=1.200 残差=5.879E-06 変位max=5.789E-01"
+        },
+        {
+          "fs_log_rounded": 1.3,
+          "status": "FAIL",
+          "residual": 1.252e-05,
+          "message": "Fs=1.300 class=NONCONVERGENCE_BOUNDARY cause=LINE_SEARCH NONCONVERGED P3荷重増分が収束せず、最小増分に達しました。"
+        },
+        {
+          "fs_log_rounded": 1.25,
+          "status": "FAIL",
+          "residual": 1.311e-05,
+          "message": "Fs=1.250 class=NONCONVERGENCE_BOUNDARY cause=LINE_SEARCH NONCONVERGED P3荷重増分が収束せず、最小増分に達しました。"
+        },
+        {
+          "fs_log_rounded": 1.225,
+          "status": "PASS",
+          "residual": 6.512e-11,
+          "message": "Fs=1.225 残差=6.512E-11 変位max=7.020E-01"
+        },
+        {
+          "fs_log_rounded": 1.238,
+          "status": "FAIL",
+          "residual": 1.231e-05,
+          "message": "Fs=1.238 class=NONCONVERGENCE_BOUNDARY cause=LINE_SEARCH NONCONVERGED P3荷重増分が収束せず、最小増分に達しました。"
+        }
+      ],
+      "failed_trial_fs_log_rounded": 1.238,
+      "elapsed_seconds": 472.0426528,
+      "small_deformation_diagnostic": "large local deformation",
+      "davis_strength_only_equivalent_interval": [
+        1.23762522765406,
+        1.2499989816498909
+      ],
+      "reference_assessment": "FLOW_CHANGED"
+    },
+    {
+      "case": "pruska_h10.5_phi10_critical15_davis",
+      "fixture": "pruska_h10.5_phi10",
+      "role": "different_flow_control",
+      "flow_policy": "DAVIS",
+      "source_build": "20261009_INCO_15",
+      "literature_comparison_role": "secondary_initial_stress_not_matched",
+      "status": "RUNTIME_ERROR|解析に失敗しました。",
+      "source_sha256": "FAC30DF6E3F8355BA5D8529B65AA7AF05F87247C6EEAF36176BEABA1B27B58A7",
+      "metrics": {
+        "analysis_ok": false,
+        "relative_residual": 6.092638401797809e-05,
+        "fos_pass": 0.0,
+        "fos_fail": 0.0,
+        "fos_mid": 0.0,
+        "fos_width": 0.0,
+        "fos_bracket": false,
+        "fss": 0.0,
+        "srm_trials": 1,
+        "accepted_increments": 7,
+        "reaction_x": -1.5645351680859676e-09,
+        "reaction_y": 9218.825072266169,
+        "factorizations": 68,
+        "reused_factors": 18,
+        "plastic_points": 615,
+        "nodes": 789,
+        "elements": 240,
+        "bandwidth": 129
+      },
+      "failure": {
+        "fos_interpretation": "UNDETERMINED",
+        "trial_class": "NUMERICAL_FAILURE",
+        "failure_kind": "LINE_SEARCH",
+        "failed_lambda": 0.7247739257812499,
+        "failed_residual": 6.092638401797809e-05,
+        "failed_linear_residual": 0.0,
+        "failed_correction": 0.0
+      },
+      "numerical_checks": {
+        "source_hash_and_build": true,
+        "controls_match": true,
+        "fixture_identity_recorded_at_run_start": true,
+        "source_control_errors": {},
+        "completed_bracket": false,
+        "global_residual": false,
+        "reaction_balance": false,
+        "refuses_invalid_fos": true
+      },
+      "reference_interval": [
+        0.83,
+        0.91
+      ],
+      "reference": {
+        "source_id": "pruska_homogeneous",
+        "fos_reference_range": [
+          0.83,
+          0.91
+        ],
+        "code_values": {
+          "ZSoil": 0.83,
+          "Plaxis": 0.85,
+          "GeoFEM": 0.91
+        },
+        "H": 10.5,
+        "explicit_assumptions": [
+          "ux fixed at sides and ux/uy fixed at base",
+          "stress-free gravity turn-on instead of imposed K0 stresses",
+          "15m toe bench, 10m slope run, 15m crest bench; RS2 problem56 confirms dimensions"
+        ],
+        "comparison_role": "secondary_initial_stress_not_matched"
+      },
+      "fos_outside_reference_fraction": null,
+      "reference_screen": false,
+      "relative_reaction_imbalance": null,
+      "geometry": {
+        "max_component_mm": 741.1551002087579,
+        "max_vector_mm": 761.574155254693,
+        "max_absolute_small_strain": 0.45999932000003496,
+        "min_deformed_gradient_det": 0.948642708236108,
+        "max_infinitesimal_rotation_radians": 0.12970329119840543
+      },
+      "geometry_state_basis": "partial-load failed-trial diagnostic; not equilibrium displacement",
+      "trial_history": [],
+      "failed_trial_fs_log_rounded": null,
+      "elapsed_seconds": 37.7301733,
+      "small_deformation_diagnostic": "large local deformation",
+      "davis_strength_only_equivalent_interval": null,
+      "reference_assessment": "NOT_ESTABLISHED"
+    },
+    {
+      "case": "pruska_h10.5_phi10_critical14",
+      "fixture": "pruska_h10.5_phi10",
+      "role": "baseline_flow_run",
+      "flow_policy": "INCONSISTENT",
+      "source_build": "20261009_INCO_14",
+      "literature_comparison_role": "secondary_initial_stress_not_matched",
+      "status": "NONCONVERGED|非関連流れの全体反復が停滞しました。残差が許容値に達していないため増分を縮小します。",
+      "source_sha256": "21A6815238D694853CE4435BA6F4DB7A0CDF56879B8F2EEADD981A24D56C26CD",
+      "metrics": {
+        "analysis_ok": false,
+        "relative_residual": 1.010194539681876e-05,
+        "fos_pass": 0,
+        "fos_fail": 0,
+        "fos_mid": 0,
+        "fos_width": 0,
+        "fos_bracket": false,
+        "fss": 1,
+        "srm_trials": 0,
+        "accepted_increments": 17,
+        "reaction_x": -0.0783913497410964,
+        "reaction_y": 9718.668532176102,
+        "factorizations": 756,
+        "reused_factors": 0,
+        "plastic_points": 588,
+        "nodes": 789,
+        "elements": 240,
+        "bandwidth": 129
+      },
+      "failure": {
+        "fos_interpretation": "NOT_EVALUATED",
+        "trial_class": "NONE",
+        "failure_kind": "GLOBAL_STAGNATION",
+        "failed_lambda": 0.7640511241149903,
+        "failed_residual": 1.010194539681876e-05,
+        "failed_linear_residual": 1.4534418426003439e-11,
+        "failed_correction": 2.776419082765482e-08
+      },
+      "numerical_checks": {
+        "source_hash_and_build": true,
+        "controls_match": true,
+        "fixture_identity_recorded_at_run_start": true,
+        "source_control_errors": {},
+        "completed_bracket": false,
+        "global_residual": false,
+        "reaction_balance": false,
+        "refuses_invalid_fos": false
+      },
+      "reference_interval": [
+        0.83,
+        0.91
+      ],
+      "reference": {
+        "source_id": "pruska_homogeneous",
+        "fos_reference_range": [
+          0.83,
+          0.91
+        ],
+        "code_values": {
+          "ZSoil": 0.83,
+          "Plaxis": 0.85,
+          "GeoFEM": 0.91
+        },
+        "H": 10.5,
+        "explicit_assumptions": [
+          "ux fixed at sides and ux/uy fixed at base",
+          "stress-free gravity turn-on instead of imposed K0 stresses",
+          "15m toe bench, 10m slope run, 15m crest bench; RS2 problem56 confirms dimensions"
+        ],
+        "comparison_role": "secondary_initial_stress_not_matched"
+      },
+      "fos_outside_reference_fraction": null,
+      "reference_screen": false,
+      "relative_reaction_imbalance": null,
+      "geometry": {
+        "max_component_mm": 67076.68773939737,
+        "max_vector_mm": 67374.3323702229,
+        "max_absolute_small_strain": 52.85622233121097,
+        "min_deformed_gradient_det": -798.4180243920006,
+        "max_infinitesimal_rotation_radians": 16.03336388136413
+      },
+      "geometry_state_basis": "partial-load failed-trial diagnostic; not equilibrium displacement",
+      "trial_history": [],
+      "failed_trial_fs_log_rounded": null,
+      "elapsed_seconds": 1067.0505715,
+      "small_deformation_diagnostic": "large local deformation",
+      "reference_assessment": "NOT_ESTABLISHED"
+    },
+    {
+      "case": "pruska_h7_phi10_critical14",
+      "fixture": "pruska_h7_phi10",
+      "role": "baseline_flow_run",
+      "flow_policy": "INCONSISTENT",
+      "source_build": "20261009_INCO_14",
+      "literature_comparison_role": "secondary_initial_stress_not_matched",
+      "status": "NONCONVERGED|非関連流れの全体反復が停滞しました。残差が許容値に達していないため増分を縮小します。",
+      "source_sha256": "21A6815238D694853CE4435BA6F4DB7A0CDF56879B8F2EEADD981A24D56C26CD",
+      "metrics": {
+        "analysis_ok": false,
+        "relative_residual": 1.0009315334753083e-05,
+        "fos_pass": 1.2000000000000002,
+        "fos_fail": 0,
+        "fos_mid": 0,
+        "fos_width": 0,
+        "fos_bracket": false,
+        "fss": 0,
+        "srm_trials": 4,
+        "accepted_increments": 19,
+        "reaction_x": -0.06830013309286542,
+        "reaction_y": 10543.610243639057,
+        "factorizations": 906,
+        "reused_factors": 0,
+        "plastic_points": 644,
+        "nodes": 789,
+        "elements": 240,
+        "bandwidth": 129
+      },
+      "failure": {
+        "fos_interpretation": "UNDETERMINED",
+        "trial_class": "NUMERICAL_FAILURE",
+        "failure_kind": "GLOBAL_STAGNATION",
+        "failed_lambda": 0.9550395965576172,
+        "failed_residual": 1.0009315334753083e-05,
+        "failed_linear_residual": 1.5227550175360364e-11,
+        "failed_correction": 1.127532523657882e-08
+      },
+      "numerical_checks": {
+        "source_hash_and_build": true,
+        "controls_match": true,
+        "fixture_identity_recorded_at_run_start": false,
+        "source_control_errors": {},
+        "completed_bracket": false,
+        "global_residual": false,
+        "reaction_balance": false,
+        "refuses_invalid_fos": true
+      },
+      "reference_interval": [
+        1.21,
+        1.31
+      ],
+      "reference": {
+        "source_id": "pruska_homogeneous",
+        "fos_reference_range": [
+          1.21,
+          1.31
+        ],
+        "code_values": {
+          "ZSoil": 1.21,
+          "Plaxis": 1.22,
+          "GeoFEM": 1.31
+        },
+        "H": 7,
+        "explicit_assumptions": [
+          "ux fixed at sides and ux/uy fixed at base",
+          "stress-free gravity turn-on instead of imposed K0 stresses",
+          "15m toe bench, 10m slope run, 15m crest bench; RS2 problem56 confirms dimensions"
+        ],
+        "comparison_role": "secondary_initial_stress_not_matched"
+      },
+      "fos_outside_reference_fraction": null,
+      "reference_screen": false,
+      "relative_reaction_imbalance": null,
+      "geometry": {
+        "max_component_mm": 75208.89412921599,
+        "max_vector_mm": 76355.9734777005,
+        "max_absolute_small_strain": 52.21284602098818,
+        "min_deformed_gradient_det": -976.9312635214376,
+        "max_infinitesimal_rotation_radians": 17.693725738555653
+      },
+      "geometry_state_basis": "partial-load failed-trial diagnostic; not equilibrium displacement",
+      "trial_history": [
+        {
+          "fs_log_rounded": 1.0,
+          "status": "PASS",
+          "residual": 3.005e-10,
+          "message": "Fs=1.000 PASS_REUSED_FROM_GRAVITY 残差=3.005E-10"
+        },
+        {
+          "fs_log_rounded": 1.1,
+          "status": "PASS",
+          "residual": 1.412e-10,
+          "message": "Fs=1.100 残差=1.412E-10 変位max=5.906E-01"
+        },
+        {
+          "fs_log_rounded": 1.2,
+          "status": "PASS",
+          "residual": 1.761e-08,
+          "message": "Fs=1.200 残差=1.761E-08 変位max=6.473E-01"
+        },
+        {
+          "fs_log_rounded": 1.3,
+          "status": "FAIL",
+          "residual": 1.001e-05,
+          "message": "Fs=1.300 class=NUMERICAL_FAILURE cause=GLOBAL_STAGNATION NONCONVERGED 非関連流れの全体反復が停滞しました。残差が許容値に達していないため増分を縮小します。"
+        }
+      ],
+      "failed_trial_fs_log_rounded": 1.3,
+      "elapsed_seconds": 1250.158882,
+      "small_deformation_diagnostic": "large local deformation",
+      "reference_assessment": "NOT_ESTABLISHED"
+    },
+    {
+      "case": "pruska_h7_phi20_critical14",
+      "fixture": "pruska_h7_phi20",
+      "role": "baseline_flow_run",
+      "flow_policy": "INCONSISTENT",
+      "source_build": "20261009_INCO_14",
+      "literature_comparison_role": "secondary_initial_stress_not_matched",
+      "status": "NONCONVERGED|非関連流れの全体反復が停滞しました。残差が許容値に達していないため増分を縮小します。",
+      "source_sha256": "21A6815238D694853CE4435BA6F4DB7A0CDF56879B8F2EEADD981A24D56C26CD",
+      "metrics": {
+        "analysis_ok": false,
+        "relative_residual": 1.0174726148734895e-05,
+        "fos_pass": 1.7000000000000006,
+        "fos_fail": 0,
+        "fos_mid": 0,
+        "fos_width": 0,
+        "fos_bracket": false,
+        "fss": 0,
+        "srm_trials": 9,
+        "accepted_increments": 12,
+        "reaction_x": -0.05519789339074066,
+        "reaction_y": 10051.098867027898,
+        "factorizations": 853,
+        "reused_factors": 0,
+        "plastic_points": 525,
+        "nodes": 789,
+        "elements": 240,
+        "bandwidth": 129
+      },
+      "failure": {
+        "fos_interpretation": "UNDETERMINED",
+        "trial_class": "NUMERICAL_FAILURE",
+        "failure_kind": "GLOBAL_STAGNATION",
+        "failed_lambda": 0.9104296340942384,
+        "failed_residual": 1.0174726148734895e-05,
+        "failed_linear_residual": 1.1785059706323172e-11,
+        "failed_correction": 4.736888494238399e-08
+      },
+      "numerical_checks": {
+        "source_hash_and_build": true,
+        "controls_match": true,
+        "fixture_identity_recorded_at_run_start": true,
+        "source_control_errors": {},
+        "completed_bracket": false,
+        "global_residual": false,
+        "reaction_balance": false,
+        "refuses_invalid_fos": true
+      },
+      "reference_interval": [
+        1.64,
+        1.71
+      ],
+      "reference": {
+        "source_id": "pruska_homogeneous",
+        "fos_reference_range": [
+          1.64,
+          1.71
+        ],
+        "code_values": {
+          "ZSoil": 1.64,
+          "Plaxis": 1.65,
+          "GeoFEM": 1.71
+        },
+        "H": 7,
+        "explicit_assumptions": [
+          "ux fixed at sides and ux/uy fixed at base",
+          "stress-free gravity turn-on instead of imposed K0 stresses",
+          "15m toe bench, 10m slope run, 15m crest bench; RS2 problem56 confirms dimensions"
+        ],
+        "comparison_role": "secondary_initial_stress_not_matched"
+      },
+      "fos_outside_reference_fraction": null,
+      "reference_screen": false,
+      "relative_reaction_imbalance": null,
+      "geometry": {
+        "max_component_mm": 32875.314619067474,
+        "max_vector_mm": 33091.92967430234,
+        "max_absolute_small_strain": 23.159211100661658,
+        "min_deformed_gradient_det": -172.51087191454783,
+        "max_infinitesimal_rotation_radians": 8.43346411392046
+      },
+      "geometry_state_basis": "partial-load failed-trial diagnostic; not equilibrium displacement",
+      "trial_history": [
+        {
+          "fs_log_rounded": 1.0,
+          "status": "PASS",
+          "residual": 9.323e-10,
+          "message": "Fs=1.000 PASS_REUSED_FROM_GRAVITY 残差=9.323E-10"
+        },
+        {
+          "fs_log_rounded": 1.1,
+          "status": "PASS",
+          "residual": 1.843e-11,
+          "message": "Fs=1.100 残差=1.843E-11 変位max=4.236E-01"
+        },
+        {
+          "fs_log_rounded": 1.2,
+          "status": "PASS",
+          "residual": 3.045e-12,
+          "message": "Fs=1.200 残差=3.045E-12 変位max=4.449E-01"
+        },
+        {
+          "fs_log_rounded": 1.3,
+          "status": "PASS",
+          "residual": 9.38e-14,
+          "message": "Fs=1.300 残差=9.380E-14 変位max=4.699E-01"
+        },
+        {
+          "fs_log_rounded": 1.4,
+          "status": "PASS",
+          "residual": 1.199e-07,
+          "message": "Fs=1.400 残差=1.199E-07 変位max=4.975E-01"
+        },
+        {
+          "fs_log_rounded": 1.5,
+          "status": "PASS",
+          "residual": 3.457e-08,
+          "message": "Fs=1.500 残差=3.457E-08 変位max=5.262E-01"
+        },
+        {
+          "fs_log_rounded": 1.6,
+          "status": "PASS",
+          "residual": 1.804e-10,
+          "message": "Fs=1.600 残差=1.804E-10 変位max=5.533E-01"
+        },
+        {
+          "fs_log_rounded": 1.7,
+          "status": "PASS",
+          "residual": 1.772e-07,
+          "message": "Fs=1.700 残差=1.772E-07 変位max=1.129E+01"
+        },
+        {
+          "fs_log_rounded": 1.8,
+          "status": "FAIL",
+          "residual": 1.017e-05,
+          "message": "Fs=1.800 class=NUMERICAL_FAILURE cause=GLOBAL_STAGNATION NONCONVERGED 全体反復と回復補正の合計が上限に達しました。状態は前増分へ戻します。"
+        }
+      ],
+      "failed_trial_fs_log_rounded": 1.8,
+      "elapsed_seconds": 1237.480312,
+      "small_deformation_diagnostic": "large local deformation",
+      "reference_assessment": "NOT_ESTABLISHED"
+    },
+    {
+      "case": "pruska_h7_phi20_critical15_davis",
+      "fixture": "pruska_h7_phi20",
+      "role": "different_flow_control",
+      "flow_policy": "DAVIS",
+      "source_build": "20261009_INCO_15",
+      "literature_comparison_role": "secondary_initial_stress_not_matched",
+      "status": "PASS|",
+      "source_sha256": "FAC30DF6E3F8355BA5D8529B65AA7AF05F87247C6EEAF36176BEABA1B27B58A7",
+      "metrics": {
+        "analysis_ok": true,
+        "relative_residual": 6.1840006378015135e-06,
+        "fos_pass": 1.6625000000000005,
+        "fos_fail": 1.6750000000000007,
+        "fos_mid": 1.6687500000000006,
+        "fos_width": 0.012500000000000178,
+        "fos_bracket": true,
+        "fss": 1.6625000000000005,
+        "srm_trials": 11,
+        "accepted_increments": 77,
+        "reaction_x": -8.871332095594653e-07,
+        "reaction_y": 11040.000000000173,
+        "factorizations": 1036,
+        "reused_factors": 1060,
+        "plastic_points": 705,
+        "nodes": 789,
+        "elements": 240,
+        "bandwidth": 129
+      },
+      "failure": {
+        "fos_interpretation": "NUMERICAL_BRACKET",
+        "trial_class": "CONVERGED",
+        "failure_kind": "NONE",
+        "failed_lambda": 0.0,
+        "failed_residual": 0.0,
+        "failed_linear_residual": 0.0,
+        "failed_correction": 0.0
+      },
+      "numerical_checks": {
+        "source_hash_and_build": true,
+        "controls_match": true,
+        "fixture_identity_recorded_at_run_start": true,
+        "source_control_errors": {},
+        "completed_bracket": true,
+        "global_residual": true,
+        "reaction_balance": true,
+        "valid_bracket_endpoints": true
+      },
+      "reference_interval": [
+        1.64,
+        1.71
+      ],
+      "reference": {
+        "source_id": "pruska_homogeneous",
+        "fos_reference_range": [
+          1.64,
+          1.71
+        ],
+        "code_values": {
+          "ZSoil": 1.64,
+          "Plaxis": 1.65,
+          "GeoFEM": 1.71
+        },
+        "H": 7,
+        "explicit_assumptions": [
+          "ux fixed at sides and ux/uy fixed at base",
+          "stress-free gravity turn-on instead of imposed K0 stresses",
+          "15m toe bench, 10m slope run, 15m crest bench; RS2 problem56 confirms dimensions"
+        ],
+        "comparison_role": "secondary_initial_stress_not_matched"
+      },
+      "fos_outside_reference_fraction": null,
+      "reference_screen": false,
+      "relative_reaction_imbalance": 1.6970643891777488e-14,
+      "geometry": {
+        "max_component_mm": 2262.858764376888,
+        "max_vector_mm": 2291.9746649086546,
+        "max_absolute_small_strain": 1.8302940616783379,
+        "min_deformed_gradient_det": 0.21185104491530943,
+        "max_infinitesimal_rotation_radians": 0.6173390120221111
+      },
+      "geometry_state_basis": "final full-load converged lower-Fs state",
+      "trial_history": [
+        {
+          "fs_log_rounded": 1.0,
+          "status": "PASS",
+          "residual": 1.028e-10,
+          "message": "Fs=1.000 PASS_REUSED_FROM_GRAVITY 残差=1.028E-10"
+        },
+        {
+          "fs_log_rounded": 1.1,
+          "status": "PASS",
+          "residual": 9.404e-09,
+          "message": "Fs=1.100 残差=9.404E-09 変位max=4.178E-01"
+        },
+        {
+          "fs_log_rounded": 1.2,
+          "status": "PASS",
+          "residual": 2.347e-08,
+          "message": "Fs=1.200 残差=2.347E-08 変位max=4.282E-01"
+        },
+        {
+          "fs_log_rounded": 1.3,
+          "status": "PASS",
+          "residual": 7.843e-06,
+          "message": "Fs=1.300 残差=7.843E-06 変位max=4.417E-01"
+        },
+        {
+          "fs_log_rounded": 1.4,
+          "status": "PASS",
+          "residual": 1.605e-07,
+          "message": "Fs=1.400 残差=1.605E-07 変位max=4.576E-01"
+        },
+        {
+          "fs_log_rounded": 1.5,
+          "status": "PASS",
+          "residual": 1.936e-06,
+          "message": "Fs=1.500 残差=1.936E-06 変位max=4.752E-01"
+        },
+        {
+          "fs_log_rounded": 1.6,
+          "status": "PASS",
+          "residual": 6.078e-06,
+          "message": "Fs=1.600 残差=6.078E-06 変位max=4.951E-01"
+        },
+        {
+          "fs_log_rounded": 1.7,
+          "status": "FAIL",
+          "residual": 2.845e-05,
+          "message": "Fs=1.700 class=NONCONVERGENCE_BOUNDARY cause=LINE_SEARCH NONCONVERGED P3荷重増分が収束せず、最小増分に達しました。"
+        },
+        {
+          "fs_log_rounded": 1.65,
+          "status": "PASS",
+          "residual": 1.73e-06,
+          "message": "Fs=1.650 残差=1.730E-06 変位max=7.564E-01"
+        },
+        {
+          "fs_log_rounded": 1.675,
+          "status": "FAIL",
+          "residual": 2.136e-05,
+          "message": "Fs=1.675 class=NONCONVERGENCE_BOUNDARY cause=LINE_SEARCH NONCONVERGED P3荷重増分が収束せず、最小増分に達しました。"
+        },
+        {
+          "fs_log_rounded": 1.663,
+          "status": "PASS",
+          "residual": 6.139e-06,
+          "message": "Fs=1.663 残差=6.139E-06 変位max=2.263E+00"
+        }
+      ],
+      "failed_trial_fs_log_rounded": 1.675,
+      "elapsed_seconds": 584.6344278,
+      "small_deformation_diagnostic": "large local deformation",
+      "davis_strength_only_equivalent_interval": [
+        1.701875606920728,
+        1.7140884841313755
+      ],
+      "reference_assessment": "FLOW_CHANGED"
+    },
+    {
+      "case": "pruska_h10.5_phi10_critical16_davis",
+      "fixture": "pruska_h10.5_phi10",
+      "role": "different_flow_control",
+      "flow_policy": "DAVIS",
+      "source_build": "20261009_INCO_16",
+      "literature_comparison_role": "secondary_initial_stress_not_matched",
+      "status": "PASS|",
+      "source_sha256": "A4C4CA06C794FC3128175A04BDD50EEF2A6694914D0A56747A8BDF6597841DB7",
+      "metrics": {
+        "analysis_ok": true,
+        "relative_residual": 3.602453164487318e-10,
+        "fos_pass": 0.8,
+        "fos_fail": 0.8125,
+        "fos_mid": 0.80625,
+        "fos_width": 0.012499999999999956,
+        "fos_bracket": true,
+        "fss": 0.8,
+        "srm_trials": 6,
+        "accepted_increments": 47,
+        "reaction_x": -1.1797739674079821e-08,
+        "reaction_y": 12720.000000001268,
+        "factorizations": 772,
+        "reused_factors": 674,
+        "plastic_points": 562,
+        "nodes": 789,
+        "elements": 240,
+        "bandwidth": 129
+      },
+      "failure": {
+        "fos_interpretation": "NUMERICAL_BRACKET",
+        "trial_class": "NONCONVERGENCE_BOUNDARY",
+        "failure_kind": "LINE_SEARCH",
+        "failed_lambda": 0.9977351293224767,
+        "failed_residual": 1.5191251224779816e-05,
+        "failed_linear_residual": 0,
+        "failed_correction": 0
+      },
+      "numerical_checks": {
+        "source_hash_and_build": true,
+        "controls_match": true,
+        "fixture_identity_recorded_at_run_start": true,
+        "source_control_errors": {},
+        "completed_bracket": true,
+        "global_residual": true,
+        "reaction_balance": true,
+        "valid_bracket_endpoints": true
+      },
+      "reference_interval": [
+        0.83,
+        0.91
+      ],
+      "reference": {
+        "source_id": "pruska_homogeneous",
+        "fos_reference_range": [
+          0.83,
+          0.91
+        ],
+        "code_values": {
+          "ZSoil": 0.83,
+          "Plaxis": 0.85,
+          "GeoFEM": 0.91
+        },
+        "H": 10.5,
+        "explicit_assumptions": [
+          "ux fixed at sides and ux/uy fixed at base",
+          "stress-free gravity turn-on instead of imposed K0 stresses",
+          "15m toe bench, 10m slope run, 15m crest bench; RS2 problem56 confirms dimensions"
+        ],
+        "comparison_role": "secondary_initial_stress_not_matched"
+      },
+      "fos_outside_reference_fraction": null,
+      "reference_screen": false,
+      "relative_reaction_imbalance": 1.0110263430085867e-13,
+      "geometry": {
+        "max_component_mm": 794.559710525947,
+        "max_vector_mm": 801.4900133430239,
+        "max_absolute_small_strain": 0.3786769048770449,
+        "min_deformed_gradient_det": 0.9312963274926693,
+        "max_infinitesimal_rotation_radians": 0.07741926052687692
+      },
+      "geometry_state_basis": "final full-load converged lower-Fs state",
+      "trial_history": [
+        {
+          "fs_log_rounded": 1.0,
+          "status": "FAIL",
+          "residual": 6.093e-05,
+          "message": "Fs=1.000 FAIL_REUSED_FROM_GRAVITY class=NONCONVERGENCE_BOUNDARY"
+        },
+        {
+          "fs_log_rounded": 0.9,
+          "status": "FAIL",
+          "residual": 1.421e-05,
+          "message": "Fs=0.900 class=NONCONVERGENCE_BOUNDARY cause=LINE_SEARCH NONCONVERGED P3荷重増分が収束せず、最小増分に達しました。"
+        },
+        {
+          "fs_log_rounded": 0.8,
+          "status": "PASS",
+          "residual": 3.576e-10,
+          "message": "Fs=0.800 残差=3.576E-10 変位max=7.946E-01"
+        },
+        {
+          "fs_log_rounded": 0.85,
+          "status": "FAIL",
+          "residual": 1.252e-05,
+          "message": "Fs=0.850 class=NONCONVERGENCE_BOUNDARY cause=LINE_SEARCH NONCONVERGED P3荷重増分が収束せず、最小増分に達しました。"
+        },
+        {
+          "fs_log_rounded": 0.825,
+          "status": "FAIL",
+          "residual": 1.527e-05,
+          "message": "Fs=0.825 class=NONCONVERGENCE_BOUNDARY cause=LINE_SEARCH NONCONVERGED P3荷重増分が収束せず、最小増分に達しました。"
+        },
+        {
+          "fs_log_rounded": 0.813,
+          "status": "FAIL",
+          "residual": 1.519e-05,
+          "message": "Fs=0.813 class=NONCONVERGENCE_BOUNDARY cause=LINE_SEARCH NONCONVERGED P3荷重増分が収束せず、最小増分に達しました。"
+        }
+      ],
+      "failed_trial_fs_log_rounded": 0.813,
+      "elapsed_seconds": 409.17232839999997,
+      "small_deformation_diagnostic": "large local deformation",
+      "davis_strength_only_equivalent_interval": [
+        0.8192015650166713,
+        0.8314129263643688
+      ],
+      "reference_assessment": "FLOW_CHANGED"
+    }
+  ],
+  "case_count": 17,
+  "source_controls_audit_ok": true,
+  "fixture_provenance_gaps": [
+    "griffiths_1999_coarse_critical14",
+    "pruska_h7_phi10_critical14"
+  ],
+  "audit_ok": false,
+  "critical_fos_not_established_cases": [
+    "griffiths_1999_foundation_critical14",
+    "griffiths_1999_coarse_critical14",
+    "griffiths_1999_fine_critical14",
+    "griffiths_1999_phi0_coarse_critical14",
+    "griffiths_1999_phi0_fine_critical14",
+    "pruska_h10.5_phi10_critical15_davis",
+    "pruska_h10.5_phi10_critical14",
+    "pruska_h7_phi10_critical14",
+    "pruska_h7_phi20_critical14"
+  ]
+}

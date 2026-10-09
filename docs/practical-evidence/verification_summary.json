@@ -1,0 +1,329 @@
+{
+  "verification_execution_complete": true,
+  "practical_readiness": "restricted; general standalone critical-FOS design use not established",
+  "delivered_build": "20261009_INCO_16",
+  "delivered_sha256": "a4c4ca06c794fc3128175a04bdd50eef2a6694914d0a56747a8bdf6597841db7",
+  "main_srm_runs": 17,
+  "supplemental_runs": 3,
+  "total_srm_runs": 20,
+  "fixture_models_including_mesh_variants": 8,
+  "distinct_geometry_material_conditions": 6,
+  "numerical_brackets": 8,
+  "fixture_provenance_gaps": [
+    "griffiths_1999_coarse_critical14",
+    "pruska_h7_phi10_critical14"
+  ],
+  "native_case_check_groups": [
+    {
+      "case": "griffiths_1999_foundation_critical14",
+      "check": "verification/verify_inputs.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_foundation_critical14",
+      "check": "verification/verify_vba.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_foundation_critical14",
+      "check": "visual_checks/viewer_checks.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_foundation_critical15_davis",
+      "check": "verification/verify_inputs.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_foundation_critical15_davis",
+      "check": "verification/verify_vba.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_foundation_critical15_davis",
+      "check": "visual_checks/viewer_checks.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_coarse_critical14",
+      "check": "verification/verify_inputs.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_coarse_critical14",
+      "check": "verification/verify_vba.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_coarse_critical14",
+      "check": "visual_checks/viewer_checks.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_coarse_critical14_davis",
+      "check": "verification/verify_inputs.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_coarse_critical14_davis",
+      "check": "verification/verify_vba.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_coarse_critical14_davis",
+      "check": "visual_checks/viewer_checks.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_fine_critical14",
+      "check": "verification/verify_inputs.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_fine_critical14",
+      "check": "verification/verify_vba.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_fine_critical14",
+      "check": "visual_checks/viewer_checks.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_fine_critical14_davis",
+      "check": "verification/verify_inputs.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_fine_critical14_davis",
+      "check": "verification/verify_vba.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_fine_critical14_davis",
+      "check": "visual_checks/viewer_checks.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_phi0_coarse_critical14",
+      "check": "verification/verify_inputs.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_phi0_coarse_critical14",
+      "check": "verification/verify_vba.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_phi0_coarse_critical14",
+      "check": "visual_checks/viewer_checks.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_phi0_coarse_critical14_davis",
+      "check": "verification/verify_inputs.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_phi0_coarse_critical14_davis",
+      "check": "verification/verify_vba.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_phi0_coarse_critical14_davis",
+      "check": "visual_checks/viewer_checks.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_phi0_fine_critical14",
+      "check": "verification/verify_inputs.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_phi0_fine_critical14",
+      "check": "verification/verify_vba.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_phi0_fine_critical14",
+      "check": "visual_checks/viewer_checks.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_phi0_fine_critical14_davis",
+      "check": "verification/verify_inputs.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_phi0_fine_critical14_davis",
+      "check": "verification/verify_vba.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_phi0_fine_critical14_davis",
+      "check": "visual_checks/viewer_checks.json",
+      "ok": true
+    },
+    {
+      "case": "pruska_h7_phi10_critical14_davis",
+      "check": "verification/verify_inputs.json",
+      "ok": true
+    },
+    {
+      "case": "pruska_h7_phi10_critical14_davis",
+      "check": "verification/verify_vba.json",
+      "ok": true
+    },
+    {
+      "case": "pruska_h7_phi10_critical14_davis",
+      "check": "visual_checks/viewer_checks.json",
+      "ok": true
+    },
+    {
+      "case": "pruska_h10.5_phi10_critical15_davis",
+      "check": "verification/verify_inputs.json",
+      "ok": true
+    },
+    {
+      "case": "pruska_h10.5_phi10_critical15_davis",
+      "check": "verification/verify_vba.json",
+      "ok": true
+    },
+    {
+      "case": "pruska_h10.5_phi10_critical15_davis",
+      "check": "visual_checks/viewer_checks.json",
+      "ok": true
+    },
+    {
+      "case": "pruska_h10.5_phi10_critical14",
+      "check": "verification/verify_inputs.json",
+      "ok": true
+    },
+    {
+      "case": "pruska_h10.5_phi10_critical14",
+      "check": "verification/verify_vba.json",
+      "ok": true
+    },
+    {
+      "case": "pruska_h10.5_phi10_critical14",
+      "check": "visual_checks/viewer_checks.json",
+      "ok": true
+    },
+    {
+      "case": "pruska_h7_phi10_critical14",
+      "check": "verification/verify_inputs.json",
+      "ok": true
+    },
+    {
+      "case": "pruska_h7_phi10_critical14",
+      "check": "verification/verify_vba.json",
+      "ok": true
+    },
+    {
+      "case": "pruska_h7_phi10_critical14",
+      "check": "visual_checks/viewer_checks.json",
+      "ok": true
+    },
+    {
+      "case": "pruska_h7_phi20_critical14",
+      "check": "verification/verify_inputs.json",
+      "ok": true
+    },
+    {
+      "case": "pruska_h7_phi20_critical14",
+      "check": "verification/verify_vba.json",
+      "ok": true
+    },
+    {
+      "case": "pruska_h7_phi20_critical14",
+      "check": "visual_checks/viewer_checks.json",
+      "ok": true
+    },
+    {
+      "case": "pruska_h7_phi20_critical15_davis",
+      "check": "verification/verify_inputs.json",
+      "ok": true
+    },
+    {
+      "case": "pruska_h7_phi20_critical15_davis",
+      "check": "verification/verify_vba.json",
+      "ok": true
+    },
+    {
+      "case": "pruska_h7_phi20_critical15_davis",
+      "check": "visual_checks/viewer_checks.json",
+      "ok": true
+    },
+    {
+      "case": "pruska_h10.5_phi10_critical16_davis",
+      "check": "verification/verify_inputs.json",
+      "ok": true
+    },
+    {
+      "case": "pruska_h10.5_phi10_critical16_davis",
+      "check": "verification/verify_vba.json",
+      "ok": true
+    },
+    {
+      "case": "pruska_h10.5_phi10_critical16_davis",
+      "check": "visual_checks/viewer_checks.json",
+      "ok": true
+    },
+    {
+      "case": "pruska_h10.5_phi10_critical15",
+      "check": "verification/verify_inputs.json",
+      "ok": true
+    },
+    {
+      "case": "pruska_h10.5_phi10_critical15",
+      "check": "verification/verify_vba.json",
+      "ok": true
+    },
+    {
+      "case": "pruska_h10.5_phi10_critical15",
+      "check": "visual_checks/viewer_checks.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_phi0_coarse_hg0_davis",
+      "check": "verification/verify_inputs.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_phi0_coarse_hg0_davis",
+      "check": "verification/verify_vba.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_phi0_coarse_hg0_davis",
+      "check": "visual_checks/viewer_checks.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_phi0_coarse_hg0.1_davis",
+      "check": "verification/verify_inputs.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_phi0_coarse_hg0.1_davis",
+      "check": "verification/verify_vba.json",
+      "ok": true
+    },
+    {
+      "case": "griffiths_1999_phi0_coarse_hg0.1_davis",
+      "check": "visual_checks/viewer_checks.json",
+      "ok": true
+    }
+  ],
+  "unit_numerical_checks": 198,
+  "failed_publication_cases": 8,
+  "practical_regression_source_sha256": "a4c4ca06c794fc3128175a04bdd50eef2a6694914d0a56747a8bdf6597841db7",
+  "ui_checks": 428,
+  "result_checks": 117,
+  "reopen_checks": 35,
+  "workflows_per_flow_policy": 10,
+  "flow_policies": [
+    "DAVIS",
+    "INCONSISTENT"
+  ]
+}

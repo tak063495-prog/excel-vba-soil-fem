@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "affine_q8_gauss_points": 800,
+  "phi0_exact_circle_fos": 1.47172042647592,
+  "phi0_640_slice_fos": 1.471705531197034,
+  "relative_integration_error": 1.0120997587675574e-05
+}

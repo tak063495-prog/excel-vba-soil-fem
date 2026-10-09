@@ -1,0 +1,40 @@
+﻿{
+    "source_sha256":  "A4C4CA06C794FC3128175A04BDD50EEF2A6694914D0A56747A8BDF6597841DB7",
+    "status":  "PASS",
+    "records":  [
+                    {
+                        "fault":  1,
+                        "values":  [
+                                       "NONCONVERGED",
+                                       "UNDETERMINED",
+                                       "NUMERICAL_FAILURE",
+                                       "STATE_RESTORE",
+                                       1,
+                                       0,
+                                       0,
+                                       0,
+                                       false,
+                                       0,
+                                       true,
+                                       0
+                                   ]
+                    },
+                    {
+                        "fault":  2,
+                        "values":  [
+                                       "CAPACITY_ERROR",
+                                       "UNDETERMINED",
+                                       "NUMERICAL_FAILURE",
+                                       "FINAL_VERIFICATION",
+                                       1,
+                                       0,
+                                       0,
+                                       0,
+                                       false,
+                                       0,
+                                       true,
+                                       0
+                                   ]
+                    }
+                ]
+}

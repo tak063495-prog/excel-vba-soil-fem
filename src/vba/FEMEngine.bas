@@ -4090,7 +4090,8 @@ Private Function P3ExecuteStage(ByVal stageIndex As Long) As Boolean
           P6PerfEmit "GRAVITY", "DEFER"
           P3GravityReuseStatus = "DEFER"
         End If
-        P3ClearTransientFailure
+        ' Fs=1 failure is reused by SRM. Preserve its status and reason until
+        ' P3TryStrengthFactor resets them for the next independent Fs trial.
         P3ExecuteStage = True
         Exit Function
       End If
@@ -4338,6 +4339,16 @@ End Function
 
 Function PlaCalc() As Boolean
   PlaCalc = P3RunAnalysis()
+  If Not PlaCalc And P3HasLaterEnabledSrm(0) Then
+    ' A failure before SRM (or in a later stage) invalidates the final run FOS.
+    ' Keep the last converged lower value only as diagnostic history.
+    P3FosInterpretation = "UNDETERMINED"
+    P3FosBracket = False: P3FosFail = 0#: P3FosMid = 0#: P3FosWidth = 0#: FSS = 0#
+    P3SrmUpper = 0#: P3SrmSnapReady = False
+    If P3SrmTrialClassification = "NONE" Then P3SrmTrialClassification = "NUMERICAL_FAILURE"
+    P3SrmNote = "SRMを含む解析が停止したため安全率は未確定。" & AnalysisMessage
+    P6SolverEvent "SRM_RUN_INVALID", "stage=" & CStr(P3RunLogStageNo) & ";kind=" & P3RunLogKind & ";cause=" & P3FailureKind
+  End If
   Exit Function
 End Function
 Public Sub P2ResetOutput(ByRef outputState As P2_MaterialPointOutput)

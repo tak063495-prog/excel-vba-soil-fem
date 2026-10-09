@@ -6,6 +6,10 @@
   [double]$FixedFs=0,
   [switch]$DisableAcceleration,
   [string]$CaseSuffix='',
+  [string]$FixturePath=(Join-Path $PSScriptRoot 'fixtures.json'),
+  [double]$SrmTolerance=0.0125,
+  [double]$SrmMaximum=2.2,
+  [double]$Q8HourglassFactor=0.05,
   [string]$SourceWorkbook=(Join-Path $PSScriptRoot '../../workbook/2DSoilFEM_20261008_practical.xlsm'),
   [string]$OutputRoot=(Join-Path $PSScriptRoot '../tmp/literature_validation')
 )
@@ -14,7 +18,11 @@ $sourceTask=(Resolve-Path -LiteralPath $SourceWorkbook).Path
 $sourceHashTask=(Get-FileHash -LiteralPath $sourceTask -Algorithm SHA256).Hash
 $outputTask=[IO.Path]::GetFullPath($OutputRoot)
 New-Item -ItemType Directory -Path $outputTask,(Join-Path $outputTask 'cases'),(Join-Path $outputTask 'results') -Force|Out-Null
-$fixturesTask=Get-Content (Join-Path $PSScriptRoot 'fixtures.json') -Raw -Encoding UTF8|ConvertFrom-Json
+$fixturesPathTask=(Resolve-Path -LiteralPath $FixturePath).Path
+$fixturesHashTask=(Get-FileHash -LiteralPath $fixturesPathTask -Algorithm SHA256).Hash
+$fixturesTask=Get-Content $fixturesPathTask -Raw -Encoding UTF8|ConvertFrom-Json
+if($SrmTolerance -lt 0.001 -or $SrmMaximum -le 1){throw 'Invalid SRM verification tolerance or maximum'}
+if($Q8HourglassFactor -lt 0 -or $Q8HourglassFactor -gt 1){throw 'Invalid Q8 stabilization factor'}
 $harnessTask=@'
 Public Function LiteratureRun() As String
   On Error GoTo Failed
@@ -61,6 +69,23 @@ Public Function LiteratureStresses() As Variant
   Next e
   LiteratureStresses = result
 End Function
+Public Function LiteratureGaussState() As Variant
+  Dim result() As Double, e As Long, g As Long, k As Long
+  ReDim result(0 To NumberOfElement * 4 * 8 - 1)
+  For e = 0 To NumberOfElement - 1
+    For g = 0 To 3
+      result(k) = e + 1: result(k + 1) = g + 1
+      result(k + 2) = Elem(e).Stmat(16, g)
+      result(k + 3) = Elem(e).P2YieldFunction(g)
+      result(k + 4) = Abs(Elem(e).P2Yielded(g))
+      result(k + 5) = Elem(e).P2PrincipalStress(0, g)
+      result(k + 6) = Elem(e).P2PrincipalStress(1, g)
+      result(k + 7) = Elem(e).P2PrincipalStress(2, g)
+      k = k + 8
+    Next g
+  Next e
+  LiteratureGaussState = result
+End Function
 '@
 function PutRows($wb,$name,$rows,$cols){
   $wsTask=$wb.Worksheets.Item($name)
@@ -93,7 +118,7 @@ foreach($caseTask in $fixturesTask.fixtures){
     Copy-Item -LiteralPath $sourceTask -Destination $bookTask -Force
     $xlTask=New-Object -ComObject Excel.Application
     try {
-      $xlTask.EnableEvents=$false;$xlTask.DisplayAlerts=$false;$xlTask.AutomationSecurity=1
+      $xlTask.Visible=$false;$xlTask.EnableEvents=$false;$xlTask.DisplayAlerts=$false;$xlTask.AutomationSecurity=1
       $wbTask=$xlTask.Workbooks.Open($bookTask,0,$false)
       $tmTask=$wbTask.VBProject.VBComponents.Add(1);$tmTask.Name='LiteratureHarness';$tmTask.CodeModule.AddFromString($harnessTask)
       $prefixTask="'"+$wbTask.Name+"'!"
@@ -105,7 +130,8 @@ foreach($caseTask in $fixturesTask.fixtures){
       PutRows $wbTask '載荷' $caseTask.loads 10
       PutRows $wbTask '接合' @() 5
       Setting $wbTask 'EXPORT_LOAD' '';Setting $wbTask 'EXPORT_MODE' 'OFF';Setting $wbTask 'DEBUG_MODE' 'STAGE';Setting $wbTask 'DEBUG_FLUSH' 1
-      Setting $wbTask 'SRM_FIXED_FS' $FixedFs;Setting $wbTask 'SRM_FMAX' 2.2;Setting $wbTask 'SRM_TOL' 0.0125;Setting $wbTask 'SRM_MODE' 'REAPPLY';Setting $wbTask 'SRM_PSI_POLICY' 'KEEP'
+      Setting $wbTask 'SRM_FIXED_FS' $FixedFs;Setting $wbTask 'SRM_FMAX' $SrmMaximum;Setting $wbTask 'SRM_TOL' $SrmTolerance;Setting $wbTask 'SRM_MODE' 'REAPPLY';Setting $wbTask 'SRM_PSI_POLICY' 'KEEP'
+      Setting $wbTask 'Q8_HOURGLASS_FACTOR' $Q8HourglassFactor
       Setting $wbTask 'FLOW_POLICY' $policyTask;Setting $wbTask 'SOLVER' 'BAND_LU';Setting $wbTask 'RCM_POLICY' $(if($elasticTask){'OFF'}else{'ON'})
       foreach($keyTask in @('ACCEL_V1_PREDICTOR','ACCEL_V2A_REUSE','ACCEL_V2B_COST','ACCEL_V3_COST_SEARCH','ACCEL_V4_ANDERSON','ACCEL_V5_GMRES_LU','ACCEL_ADAPTIVE','ACCEL_STEP_RECOVERY','ACCEL_STEP_FRESH_LU','ACCEL_TRACE')){Setting $wbTask $keyTask 0}
       if(-not $elasticTask -and -not $DisableAcceleration){foreach($keyTask in @('ACCEL_V1_PREDICTOR','ACCEL_V2A_REUSE','ACCEL_V4_ANDERSON','ACCEL_ADAPTIVE')){Setting $wbTask $keyTask 1}}
@@ -123,8 +149,9 @@ foreach($caseTask in $fixturesTask.fixtures){
       $dispTask=@($xlTask.Run($prefixTask+'LiteratureDisplacements'))
       $stressTask=@($xlTask.Run($prefixTask+'LiteratureStresses'))
       $failureTask=@($xlTask.Run($prefixTask+'LiteratureFailureState'))
+      $gaussTask=@($xlTask.Run($prefixTask+'LiteratureGaussState'))
       if((Get-FileHash -LiteralPath $sourceTask -Algorithm SHA256).Hash -ne $sourceHashTask){throw 'Source workbook changed during verification'}
-      $resultTask=[ordered]@{fixed_fs=$FixedFs;failure_names=@('fos_interpretation','trial_class','failure_kind','failed_lambda','failed_residual','failed_linear_residual','failed_correction');failure_values=$failureTask;case=$idTask;fixture=$caseTask.name;build=$buildTask;source_sha256=$sourceHashTask;status=$statusTask;flow_policy=$policyTask;elapsed_seconds=$timerTask.Elapsed.TotalSeconds;metric_names=@('analysis_ok','relative_residual','fos_pass','fos_fail','fos_mid','fos_width','fos_bracket','fss','srm_trials','accepted_increments','reaction_x','reaction_y','factorizations','reused_factors','plastic_points','nodes','elements','bandwidth');metrics=$metricsTask;displacements_flat=$dispTask;stresses_flat=$stressTask;reference=$caseTask.reference}
+      $resultTask=[ordered]@{fixed_fs=$FixedFs;srm_tolerance=$SrmTolerance;srm_maximum=$SrmMaximum;fixture_sha256=$fixturesHashTask;failure_names=@('fos_interpretation','trial_class','failure_kind','failed_lambda','failed_residual','failed_linear_residual','failed_correction');failure_values=$failureTask;case=$idTask;fixture=$caseTask.name;build=$buildTask;source_sha256=$sourceHashTask;status=$statusTask;flow_policy=$policyTask;elapsed_seconds=$timerTask.Elapsed.TotalSeconds;metric_names=@('analysis_ok','relative_residual','fos_pass','fos_fail','fos_mid','fos_width','fos_bracket','fss','srm_trials','accepted_increments','reaction_x','reaction_y','factorizations','reused_factors','plastic_points','nodes','elements','bandwidth');metrics=$metricsTask;displacements_flat=$dispTask;stresses_flat=$stressTask;gauss_state_columns=@('element','gauss','sigma_z','yield_function','yielded','principal_max','principal_mid','principal_min');gauss_state_flat=$gaussTask;reference=$caseTask.reference}
       $resultTask|ConvertTo-Json -Depth 14|Set-Content $resultPathTask -Encoding UTF8
       Write-Host ('DONE '+$idTask+' '+$statusTask+' Fs=['+$metricsTask[2]+','+$metricsTask[3]+'] time='+$timerTask.Elapsed.TotalSeconds)
       $wbTask.VBProject.VBComponents.Remove($tmTask)

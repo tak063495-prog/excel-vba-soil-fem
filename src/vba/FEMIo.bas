@@ -1872,7 +1872,13 @@ Private Sub P6PerfWriteSummary()
   lineText = lineText & "FOS_INTERPRETATION=" & P3FosInterpretation & vbCrLf
   lineText = lineText & "Fs1ReuseCount=" & CStr(P6SrmFs1ReuseCount) & vbCrLf
   lineText = lineText & "FOS_PASS=" & Format$(P3FosPass, "0.000") & vbCrLf
-  If P3FosBracket Then
+  If P3FosInterpretation = "UNDETERMINED" Then
+    lineText = lineText & "FOS_PASS_ROLE=LAST_CONVERGED_TRIAL" & vbCrLf
+    lineText = lineText & "FOS_FAIL=NA" & vbCrLf
+    lineText = lineText & "FOS_MID=NA" & vbCrLf
+    lineText = lineText & "FOS_WIDTH=NA" & vbCrLf
+    lineText = lineText & "FOS=UNDETERMINED" & vbCrLf
+  ElseIf P3FosBracket Then
     lineText = lineText & "FOS_FAIL=" & Format$(P3FosFail, "0.000") & vbCrLf
     lineText = lineText & "FOS_MID=" & Format$(P3FosMid, "0.000") & vbCrLf
     lineText = lineText & "FOS_WIDTH=" & Format$(P3FosWidth, "0.000") & vbCrLf
