@@ -27,6 +27,15 @@ Private P6Packed() As Double
 Private P6PackRowOff() As Long
 Private P6BandFactorFailK As Long
 Private P6BandSolveFailK As Long
+Private P6BandRejectReason As String
+Private mBandCacheReady As Boolean, mBandCacheN As Long, mBandCacheBw As Long
+Private mBandCacheA() As Double, mBandCacheLower() As Double
+Private mBandCachePivots() As Long, mBandCacheRows() As Long, mBandCacheColumns() As Long
+Private mBandCacheValues() As Double
+Private P6CSRPreconditionerMode As String
+Private P6CSRILUFailRow As Long
+Private P6CSRILUFailColumn As Long
+Private P6CSRILUMinAbsDiag As Double
 Private mPreReady As Boolean, mPreUses As Long, mPreN As Long, mPreBw As Long
 Private mPreActive As Long, mPreConstraint As Long
 Private mPreMaterial As Long, mPreStrength As Long, mPreGeometry As Long
@@ -2831,10 +2840,13 @@ Private Function P6CSRApplyJacobi(ByRef inputVector() As Double, ByRef outputVec
   Dim rowNo As Long
   P6CSRApplyJacobi = False
   If P6CSRILUReady Then
+    P6CSRPreconditionerMode = "ILU0"
     P6CSRApplyJacobi = P6CSRApplyILU(inputVector, outputVector)
+    If Not P6CSRApplyJacobi Then P6CSRPreconditionerMode = "ILU0_APPLY_FAILED"
     Exit Function
   End If
   If Not P6EnsureCSRDiagonalInverse() Then Exit Function
+  If Len(P6CSRPreconditionerMode) = 0 Then P6CSRPreconditionerMode = "JACOBI"
   For rowNo = 0 To P6KrylovLast
     outputVector(rowNo) = inputVector(rowNo) * P6CSRDiagonalInverse(rowNo)
   Next rowNo
@@ -3018,6 +3030,11 @@ Private Function P6SolveCSRGMRES() As Boolean
   Dim zBasis() As Double
   P6SolveCSRGMRES = False
   P6IterativeLastResidual = 1E+100
+  If P6CSRILUReady Then
+    P6CSRPreconditionerMode = "ILU0"
+  ElseIf Len(P6CSRPreconditionerMode) = 0 Then
+    P6CSRPreconditionerMode = "JACOBI"
+  End If
   On Error GoTo GMRESFailed
   If nDof < 1 Or P6KrylovLast <> lastDof Then Exit Function
   restart = P6GMRESRestart
@@ -3048,8 +3065,12 @@ Private Function P6SolveCSRGMRES() As Boolean
   tol = P6IterativeTolerance * normB
   Do While total < P6IterativeMaxIterations
     residual = P6CSRMatVecResidualNorm(P6GMRESX, P6GMRESB, P6GMRESR, P6CSRValues)
-    If Not P2IsFinite(residual) Then Exit Function
+    If Not P2IsFinite(residual) Then
+      P6SolverEvent "GMRES_BREAKDOWN", "reason=nonfinite_true_residual;iterations=" & CStr(total)
+      Exit Function
+    End If
     P6IterativeLastResidual = residual / normB
+    P6SolverEvent "GMRES_RESTART", "restart=" & CStr(total \ restart) & ";iterations=" & CStr(total) & ";preconditioner=" & P6CSRPreconditionerMode & ";true_relres=" & Format$(P6IterativeLastResidual, "0.000E+00")
     If residual <= tol Then Exit Do
     beta = residual
     For i = 0 To P6KrylovLast: P6GMRESBasis(i, 0) = P6GMRESR(i) / beta: Next i
@@ -3057,7 +3078,10 @@ Private Function P6SolveCSRGMRES() As Boolean
     P6GMRESG(0) = beta: used = 0
     For j = 0 To restart - 1
       For i = 0 To P6KrylovLast: P6GMRESInput(i) = P6GMRESBasis(i, j): Next i
-      If Not P6CSRApplyJacobi(P6GMRESInput, P6GMRESZ) Then Exit Function
+      If Not P6CSRApplyJacobi(P6GMRESInput, P6GMRESZ) Then
+        P6SolverEvent "GMRES_BREAKDOWN", "reason=preconditioner_apply;preconditioner=" & P6CSRPreconditionerMode & ";iterations=" & CStr(total)
+        Exit Function
+      End If
       For i = 0 To P6KrylovLast: zBasis(i, j) = P6GMRESZ(i): Next i
       P6CSRMatVec P6GMRESZ, P6GMRESW, P6CSRValues
       For k = 0 To restart: P6GMRESH(k, j) = 0#: Next k
@@ -3072,7 +3096,10 @@ Private Function P6SolveCSRGMRES() As Boolean
         Next k
       Next pass
       nextNorm = P6CSRNorm2(P6GMRESW): P6GMRESH(j + 1, j) = nextNorm
-      If Not P2IsFinite(nextNorm) Then Exit Function
+      If Not P2IsFinite(nextNorm) Then
+        P6SolverEvent "GMRES_BREAKDOWN", "reason=nonfinite_krylov_norm;iterations=" & CStr(total)
+        Exit Function
+      End If
       If nextNorm > 1E-30 Then
         For i = 0 To P6KrylovLast: P6GMRESBasis(i, j + 1) = P6GMRESW(i) / nextNorm: Next i
       End If
@@ -3082,7 +3109,10 @@ Private Function P6SolveCSRGMRES() As Boolean
         P6GMRESH(k, j) = tmp
       Next k
       rot = Sqr(P6GMRESH(j, j) ^ 2 + P6GMRESH(j + 1, j) ^ 2)
-      If rot <= 1E-30 Then Exit For
+      If rot <= 1E-30 Then
+        P6SolverEvent "GMRES_BREAKDOWN", "reason=zero_givens_rotation;preconditioner=" & P6CSRPreconditionerMode & ";iterations=" & CStr(total)
+        Exit For
+      End If
       P6GMRESCosine(j) = P6GMRESH(j, j) / rot: P6GMRESSine(j) = P6GMRESH(j + 1, j) / rot
       P6GMRESH(j, j) = rot: P6GMRESH(j + 1, j) = 0#
       tmp = P6GMRESCosine(j) * P6GMRESG(j)
@@ -3094,7 +3124,10 @@ Private Function P6SolveCSRGMRES() As Boolean
     For i = used - 1 To 0 Step -1
       tmp = P6GMRESG(i)
       For k = i + 1 To used - 1: tmp = tmp - P6GMRESH(i, k) * P6GMRESY(k): Next k
-      If Abs(P6GMRESH(i, i)) <= 1E-30 Then Exit Function
+      If Abs(P6GMRESH(i, i)) <= 1E-30 Then
+        P6SolverEvent "GMRES_BREAKDOWN", "reason=zero_upper_triangular_diagonal;preconditioner=" & P6CSRPreconditionerMode & ";iterations=" & CStr(total)
+        Exit Function
+      End If
       P6GMRESY(i) = tmp / P6GMRESH(i, i)
     Next i
     For k = 0 To used - 1
@@ -3149,6 +3182,7 @@ Private Function P6BuildCSRILU() As Boolean
   Dim diagK As Double, multiplier As Double
   P6BuildCSRILU = False
   P6CSRILUReady = False
+  P6CSRILUFailRow = -1: P6CSRILUFailColumn = -1: P6CSRILUMinAbsDiag = 1E+308
   If P6CSRNNZ <= 0 Then Exit Function
   ReDim P6CSRILUValues(0 To P6CSRNNZ - 1)
   For position = 0 To P6CSRNNZ - 1
@@ -3159,8 +3193,16 @@ Private Function P6BuildCSRILU() As Boolean
       columnId = P6CSRColumnIndex(position)
       If columnId < rowNo Then
         diagK = P6CSRILUValues(P6CSRDiagonalPosition(columnId))
-        If Abs(diagK) <= 0.000000000001 Then Exit Function
+        If Not P2IsFinite(diagK) Or Abs(diagK) <= 0.000000000001 Then
+          P6CSRILUFailRow = rowNo: P6CSRILUFailColumn = columnId
+          If P2IsFinite(diagK) Then P6CSRILUMinAbsDiag = Abs(diagK) Else P6CSRILUMinAbsDiag = 0#
+          Exit Function
+        End If
         multiplier = P6CSRILUValues(position) / diagK
+        If Not P2IsFinite(multiplier) Then
+          P6CSRILUFailRow = rowNo: P6CSRILUFailColumn = columnId: P6CSRILUMinAbsDiag = Abs(diagK)
+          Exit Function
+        End If
         P6CSRILUValues(position) = multiplier
         For kPos = P6CSRRowPtr(columnId) To P6CSRRowPtr(columnId + 1) - 1
           kCol = P6CSRColumnIndex(kPos)
@@ -3171,7 +3213,15 @@ Private Function P6BuildCSRILU() As Boolean
         Next kPos
       End If
     Next position
+    diagK = P6CSRILUValues(P6CSRDiagonalPosition(rowNo))
+    If Not P2IsFinite(diagK) Or Abs(diagK) <= 0.000000000001 Then
+      P6CSRILUFailRow = rowNo: P6CSRILUFailColumn = rowNo
+      If P2IsFinite(diagK) Then P6CSRILUMinAbsDiag = Abs(diagK) Else P6CSRILUMinAbsDiag = 0#
+      Exit Function
+    End If
+    If Abs(diagK) < P6CSRILUMinAbsDiag Then P6CSRILUMinAbsDiag = Abs(diagK)
   Next rowNo
+  If P6CSRILUMinAbsDiag = 1E+308 Then P6CSRILUMinAbsDiag = 0#
   P6CSRILUReady = True
   P6BuildCSRILU = True
 End Function
@@ -3496,30 +3546,42 @@ End Function
 Public Function P6SolveNonsymmetricBand() As Boolean
   ' Gaussian elimination with partial row pivoting in a full nonsymmetric band.
   ' Lower bandwidth is b; pivoting can extend the upper bandwidth to 2*b.
-  ' Eliminate the RHS at once so earlier L columns need not be swapped/stored.
-  Dim a() As Double, rhs() As Double, solution() As Double, residualVector() As Double
+  ' Store chronological row exchanges and elimination multipliers for residual refinement.
+  Dim a() As Double, rhs() As Double, solution() As Double, residualVector() As Double, refineRhs() As Double, correction() As Double
+  Dim pivotRows() As Long, lowerMult() As Double, refineIter As Long, reused As Boolean
   Dim b As Long, upper As Long, k As Long, i As Long, j As Long, p As Long
   Dim pivotRow As Long, lastRow As Long, lastColumn As Long, columnId As Long
   Dim pivot As Double, largest As Double, multiplier As Double, tmp As Double
   Dim normB As Double, residual As Double, memoryBytes As Double, startedAt As Double, factorDone As Boolean
   P6SolveNonsymmetricBand = False
+  P6BandRejectReason = "INPUT"
   P6IterativeLastResidual = 1E+100
   If nDof < 1 Or lastDof <> nDof - 1 Or BandWidth < 0 Then GoTo Rejected
   b = BandWidth: If b > lastDof Then b = lastDof
   upper = 2 * b
-  memoryBytes = CDbl(nDof) * (CDbl(3 * b + 1) * 8# + 32#) + P6CSRStorageBytes
+  reused = P6BandCSRCacheMatches(b)
+  If Not reused Then P6ClearElasticRecoveryCSR
+  ' Both the retained factors/CSR identity and this call's work arrays count.
+  memoryBytes = CDbl(nDof) * (CDbl(8 * b + 6) * 8# + 80#) + CDbl(P6CSRNNZ) * 12# + P6CSRStorageBytes
   If P6SolverMemoryLimitBytes > 0# And memoryBytes > P6SolverMemoryLimitBytes Then
     SetAnalysisFailure RESULT_CAPACITY_ERROR, "非対称帯域LUの作業メモリが設定上限を超えます。", vbObjectError + 3511, -1, -1, CurrentIncrement, CurrentIteration
     Exit Function
   End If
   On Error GoTo Failed
   startedAt = Timer
-  P6FactorizationCount = P6FactorizationCount + 1
-  ReDim a(0 To lastDof, 0 To 3 * b)
+  If reused Then
+    a = mBandCacheA: pivotRows = mBandCachePivots: lowerMult = mBandCacheLower
+    P6FactorizationReuseCount = P6FactorizationReuseCount + 1
+  Else
+    P6FactorizationCount = P6FactorizationCount + 1
+    ReDim a(0 To lastDof, 0 To 3 * b)
+    ReDim pivotRows(0 To lastDof): ReDim lowerMult(0 To lastDof, 0 To b)
+  End If
   ReDim rhs(0 To lastDof): ReDim solution(0 To lastDof): ReDim residualVector(0 To lastDof)
   For i = 0 To lastDof
-    If Not P2IsFinite(Force(i)) Then GoTo Rejected
+    If Not P2IsFinite(Force(i)) Then P6BandRejectReason = "NONFINITE_RHS": GoTo Rejected
     rhs(i) = Force(i): normB = normB + rhs(i) * rhs(i)
+    If Not reused Then
     For p = P6CSRRowPtr(i) To P6CSRRowPtr(i + 1) - 1
       columnId = P6CSRColumnIndex(p)
       If Not P2IsFinite(P6CSRValues(p)) Then GoTo Rejected
@@ -3529,8 +3591,12 @@ Public Function P6SolveNonsymmetricBand() As Boolean
         a(i, columnId - i + b) = a(i, columnId - i + b) + P6CSRValues(p)
       End If
     Next p
+    End If
   Next i
   normB = Sqr(normB)
+  If reused Then
+    P6BandReplayForward rhs, pivotRows, lowerMult, b
+  Else
   For k = 0 To lastDof
     lastRow = k + b: If lastRow > lastDof Then lastRow = lastDof
     lastColumn = k + upper: If lastColumn > lastDof Then lastColumn = lastDof
@@ -3539,7 +3605,8 @@ Public Function P6SolveNonsymmetricBand() As Boolean
       tmp = Abs(a(i, k - i + b))
       If tmp > largest Then largest = tmp: pivotRow = i
     Next i
-    If Not P2IsFinite(largest) Or largest <= 1E-30 Then GoTo Rejected
+    If Not P2IsFinite(largest) Or largest <= 1E-30 Then P6BandRejectReason = "ZERO_PIVOT": GoTo Rejected
+    pivotRows(k) = pivotRow
     If pivotRow <> k Then
       For j = k To lastColumn
         tmp = a(k, j - k + b)
@@ -3551,8 +3618,9 @@ Public Function P6SolveNonsymmetricBand() As Boolean
     pivot = a(k, b)
     For i = k + 1 To lastRow
       multiplier = a(i, k - i + b) / pivot
-      If Not P2IsFinite(multiplier) Then GoTo Rejected
+      If Not P2IsFinite(multiplier) Then P6BandRejectReason = "NONFINITE_MULTIPLIER": GoTo Rejected
       a(i, k - i + b) = 0#
+      lowerMult(i, i - k) = multiplier
       If multiplier <> 0# Then
         For j = k + 1 To lastColumn
           a(i, j - i + b) = a(i, j - i + b) - multiplier * a(k, j - k + b)
@@ -3561,6 +3629,10 @@ Public Function P6SolveNonsymmetricBand() As Boolean
       End If
     Next i
   Next k
+    mBandCacheA = a: mBandCachePivots = pivotRows: mBandCacheLower = lowerMult
+    mBandCacheRows = P6CSRRowPtr: mBandCacheColumns = P6CSRColumnIndex: mBandCacheValues = P6CSRValues
+    mBandCacheN = nDof: mBandCacheBw = b: mBandCacheReady = True
+  End If
   P6ProfFactorMs = P6ProfFactorMs + P6ElapsedMs(startedAt)
   factorDone = True: startedAt = Timer
   For i = lastDof To 0 Step -1
@@ -3570,10 +3642,40 @@ Public Function P6SolveNonsymmetricBand() As Boolean
     If Not P2IsFinite(solution(i)) Then GoTo Rejected
   Next i
   residual = P6CSRMatVecResidualNorm(solution, Force, residualVector, P6CSRValues)
-  If Not P2IsFinite(residual) Or Not P2IsFinite(normB) Then GoTo Rejected
+  If Not P2IsFinite(residual) Or Not P2IsFinite(normB) Then P6BandRejectReason = "NONFINITE_RESIDUAL": GoTo Rejected
   If normB > 1E-30 Then
     P6IterativeLastResidual = residual / normB
-    If P6IterativeLastResidual > P6IterativeTolerance Then GoTo Rejected
+    If P6IterativeLastResidual > P6IterativeTolerance Then
+      P6SolverEvent "NONSYM_BAND_REFINEMENT_START", "relative_residual=" & Format$(P6IterativeLastResidual, "0.000E+00")
+      ReDim refineRhs(0 To lastDof): ReDim correction(0 To lastDof)
+      For refineIter = 1 To 5
+        For i = 0 To lastDof: refineRhs(i) = residualVector(i): correction(i) = 0#: Next i
+        For k = 0 To lastDof
+          pivotRow = pivotRows(k)
+          If pivotRow <> k Then tmp = refineRhs(k): refineRhs(k) = refineRhs(pivotRow): refineRhs(pivotRow) = tmp
+          lastRow = k + b: If lastRow > lastDof Then lastRow = lastDof
+          For i = k + 1 To lastRow
+            refineRhs(i) = refineRhs(i) - lowerMult(i, i - k) * refineRhs(k)
+          Next i
+        Next k
+        For i = lastDof To 0 Step -1
+          tmp = refineRhs(i): lastColumn = i + upper: If lastColumn > lastDof Then lastColumn = lastDof
+          For j = i + 1 To lastColumn: tmp = tmp - a(i, j - i + b) * correction(j): Next j
+          If Abs(a(i, b)) <= 1E-30 Then GoTo Rejected
+          correction(i) = tmp / a(i, b)
+        Next i
+        For i = 0 To lastDof
+          solution(i) = solution(i) + correction(i)
+          If Not P2IsFinite(solution(i)) Then GoTo Rejected
+        Next i
+        residual = P6CSRMatVecResidualNorm(solution, Force, residualVector, P6CSRValues)
+        If Not P2IsFinite(residual) Then GoTo Rejected
+        P6IterativeLastResidual = residual / normB
+        P6SolverEvent "NONSYM_BAND_REFINEMENT", "iteration=" & CStr(refineIter) & ";relative_residual=" & Format$(P6IterativeLastResidual, "0.000E+00")
+        If P6IterativeLastResidual <= P6IterativeTolerance Then Exit For
+      Next refineIter
+      If P6IterativeLastResidual > P6IterativeTolerance Then P6BandRejectReason = "RESIDUAL": GoTo Rejected
+    End If
   Else
     P6IterativeLastResidual = residual
     If residual > 1E-30 Then GoTo Rejected
@@ -3586,6 +3688,10 @@ Failed:
   If Err.Number = 7 Then SetAnalysisFailure RESULT_CAPACITY_ERROR, "非対称帯域LUのメモリ確保に失敗しました。", Err.Number, -1, -1, CurrentIncrement, CurrentIteration
   Err.Clear
 Rejected:
+  If Not P6SolveNonsymmetricBand Then
+    P6ClearElasticRecoveryCSR
+    P6SolverEvent "NONSYM_BAND_REJECT", "pivot_index=" & CStr(k) & ";reason=" & P6BandRejectReason & ";pivot=" & Format$(pivot, "0.000E+00") & ";pivot_scale=" & Format$(largest, "0.000E+00") & ";bandwidth=" & CStr(b) & ";norm_rhs=" & Format$(normB, "0.000E+00") & ";relative_residual=" & Format$(P6IterativeLastResidual, "0.000E+00")
+  End If
   If startedAt <> 0# Then
     If factorDone Then
       P6ProfSolveMs = P6ProfSolveMs + P6ElapsedMs(startedAt)
@@ -3594,6 +3700,46 @@ Rejected:
     End If
   End If
 End Function
+
+' Elastic correction API. The caller may use this bounded path without
+' changing the nonlinear solver's existing fallback policy.
+Public Function P6SolveElasticRecoveryCSR() As Boolean
+  P6SolveElasticRecoveryCSR = P6SolveNonsymmetricBand()
+End Function
+
+Public Sub P6ClearElasticRecoveryCSR()
+  mBandCacheReady = False: mBandCacheN = 0: mBandCacheBw = 0
+  Erase mBandCacheA, mBandCacheLower, mBandCachePivots, mBandCacheRows, mBandCacheColumns, mBandCacheValues
+End Sub
+
+Private Function P6BandCSRCacheMatches(ByVal b As Long) As Boolean
+  Dim i As Long
+  P6BandCSRCacheMatches = False
+  If Not mBandCacheReady Or mBandCacheN <> nDof Or mBandCacheBw <> b Then Exit Function
+  On Error GoTo NotMatching
+  If UBound(mBandCacheValues) <> P6CSRNNZ - 1 Then Exit Function
+  For i = 0 To nDof
+    If mBandCacheRows(i) <> P6CSRRowPtr(i) Then Exit Function
+  Next i
+  For i = 0 To P6CSRNNZ - 1
+    If mBandCacheColumns(i) <> P6CSRColumnIndex(i) Then Exit Function
+    If mBandCacheValues(i) <> P6CSRValues(i) Then Exit Function
+  Next i
+  P6BandCSRCacheMatches = True
+NotMatching:
+End Function
+
+Private Sub P6BandReplayForward(ByRef rhs() As Double, ByRef pivots() As Long, ByRef multipliers() As Double, ByVal b As Long)
+  Dim k As Long, i As Long, p As Long, lastRow As Long, tmp As Double
+  For k = 0 To lastDof
+    p = pivots(k)
+    If p <> k Then tmp = rhs(k): rhs(k) = rhs(p): rhs(p) = tmp
+    lastRow = k + b: If lastRow > lastDof Then lastRow = lastDof
+    For i = k + 1 To lastRow
+      rhs(i) = rhs(i) - multipliers(i, i - k) * rhs(k)
+    Next i
+  Next k
+End Sub
 
 Private Function P6SolveCSR() As Boolean
   Dim bicgIterations As Long, bicgResidual As Double
@@ -3628,7 +3774,13 @@ Private Function P6SolveCSR() As Boolean
         Exit Function
       End If
     End If
-    P6BuildCSRILU
+    If Not P6BuildCSRILU() Then
+      P6CSRPreconditionerMode = "JACOBI_AFTER_ILU_FAILURE"
+      P6SolverEvent "CSR_ILU", "status=FAIL;row=" & CStr(P6CSRILUFailRow) & ";column=" & CStr(P6CSRILUFailColumn) & ";min_abs_diag=" & Format$(P6CSRILUMinAbsDiag, "0.000E+00") & ";fallback=JACOBI"
+    Else
+      P6CSRPreconditionerMode = "ILU0"
+      P6SolverEvent "CSR_ILU", "status=PASS;min_abs_diag=" & Format$(P6CSRILUMinAbsDiag, "0.000E+00")
+    End If
   End If
   If P6SolverMode = "CSR_GMRES" Then
     P6SolveCSR = P6SolveCSRGMRES()

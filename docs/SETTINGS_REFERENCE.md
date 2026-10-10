@@ -2,7 +2,7 @@
 
 [READMEへ](../README.md) · [操作説明書](USER_GUIDE.md) · [入力仕様](MODEL_INPUTS.md) · [結果・対処法](RESULTS_AND_TROUBLESHOOTING.md)
 
-対象は `2DSoilFEM_20261008_practical.xlsm`（`20261009_INCO_16`）です。以下の74項目の「配布保存値」は配布XLSMの用途別シートC列から確認した値です。プログラムがKEY欠落時に使う既定値や、すべての案件に推奨する値とは区別してください。
+対象は `2DSoilFEM_20261008_practical.xlsm`（`20261010_INCO_24`）です。以下の74項目の「配布保存値」は配布XLSMの用途別シートC列から確認した値です。プログラムがKEY欠落時に使う既定値や、すべての案件に推奨する値とは区別してください。
 
 本版は全応力解析です。`CONSOL_ENABLE` は配布設定にありません。隠しKEYとして非0を追加すると、解析開始時に未対応の圧密設定としてINPUT_ERRORになります。物理間隙水圧を加えるための設定ではありません。
 
@@ -73,7 +73,7 @@ ROLLERは底面・上面ではY固定、左右ではX固定です。PINNEDはXY�
 |入力セル|項目|KEY|配布保存値|選択肢・条件|用途|
 |---|---|---|---|---|---|
 |C9|自重|`WEIGHT_MODE`|TOTAL|TOTAL|TOTALのみ。全応力のγ。浮力・水位は未実装|
-|C10|非関連の扱い|`FLOW_POLICY`|DAVIS|INCONSISTENT / DAVIS|INCONSISTENT=非関連流れ・非対称接線・毎回Newton更新 / DAVIS=等価関連c*,φ*（JOINTには掛けない）|
+|C10|非関連の扱い|`FLOW_POLICY`|DAVIS|INCONSISTENT / DAVIS|INCONSISTENT=非関連流れ・非対称Newton。SRM計画では失敗増分を弾性補正で再試行 / DAVIS=等価関連c*,φ*（JOINTには掛けない）|
 |C11|アワーグラス係数|`Q8_HOURGLASS_FACTOR`|0.05|数値（用途欄参照）|0～1|
 |C12|節点の並び替え|`RCM_POLICY`|AUTO|AUTO / ON / OFF|AUTO=帯幅が減るときだけ並び替え / ON=必ずRCM / OFF=入力順|
 |C15|Fs探索の上限|`SRM_FMAX`|3|数値（用途欄参照）|探索の上限|
@@ -87,6 +87,8 @@ INCONSISTENTとDAVIS、ψのCAP/REDUCE/KEEPは計算の材料条件に関わり�
 旧R1の[文献検証](LITERATURE_VALIDATION.md) のGriffiths斜面では、INCONSISTENTのψ=0は安定側のFs=1.0でも早い非収束になりました。V系列と適応選別をOFFにしても再現しています。DAVISは各Fs試行の強度低減後にc・tanφへ追加の係数を掛け、ψを等価φと同じにします。単一材料・入力ψ=0なら、降伏強度だけの換算はFy=√(Fs²+tan²φ0)ですが、これは補正済み安全率ではありません。表示Fs・材料強度・流れ則を分けて比較してください。
 
 修正版INCONSISTENTのソルバ、V2a/V2b/V5の休止、FOSの判定は [修正報告](INCONSISTENT_REPAIR.md) を参照してください。DAVISの保存設定は変更していません。
+
+INCONSISTENTのSRMを含む計画では、Q8安定化の弾性力を材料内力へ加えません。係数0.05は弾性補正の方向を作るときの安定化剛性に使います。Newtonの材料接線、応力・降伏条件・ψ、収束許容値は同じ材料条件のままです。SRMを含まないINCONSISTENTとDAVISは従来の安定化経路です。[追加改修と検証](INCONSISTENT_SRM_IMPROVEMENT.md) に適用範囲を記録しています。
 
 ## 高速化設定
 

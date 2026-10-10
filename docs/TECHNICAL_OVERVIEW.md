@@ -65,7 +65,7 @@ SRMでは対象材料の強度を低減し、各Fsで先行ステージをREAPPL
 
 ## 全応力と休眠コードの範囲
 
-DAVISは従来の対称BANDを使い、`BAND_LDLT_EXPERIMENTAL` は影の比較です。INCONSISTENTは変位未知量のみのCSRに現在の非対称接線を保持し、部分pivot付き非対称帯LUと右前処理GMRESを使います。ソースに残るCSRの `MIXED_UP` は機械的非圧縮性の補助未知量を扱う別経路であり、物理間隙水圧と同一ではありません。修正版でも補助圧力のMIXED_UPは起動せず、物理的な間隙水圧は導入しません。[接線・全体反復の修正](INCONSISTENT_REPAIR.md) を参照してください。
+DAVISは従来の対称BANDを使い、`BAND_LDLT_EXPERIMENTAL` は影の比較です。INCONSISTENTは変位未知量のみのCSRに現在の非対称接線を保持し、部分pivot付き非対称帯LUと右前処理GMRESを使います。ソースに残るCSRの `MIXED_UP` は機械的非圧縮性の補助未知量を扱う別経路であり、物理間隙水圧と同一ではありません。修正版でも補助圧力のMIXED_UPは起動せず、物理的な間隙水圧は導入しません。[材料点・接線の修正履歴](INCONSISTENT_REPAIR.md) と [最新のSRM改良](INCONSISTENT_SRM_IMPROVEMENT.md) を参照してください。INCONSISTENTのSRMではhourglass力を収束力へ加えず、Newton接線も材料力に一致させます。hourglass剛性は弾性補正方向の計算に使用し、採否は材料力残差で判断します。帯LUの反復改良も、元のCSR行列から計算した真残差で判定します。
 
 Biot圧密の `CONSOL_ENABLE` は通常設定にありません。以前は設定再生成時にこのキーを除去していましたが、レビュー修正版では解析入口で非0を拒否し、Biot入口にも同じ防止処理を置いています。休眠コードのH行列・圧力勾配・施工領域・u/pの試行状態は、圧密やCSR混合を将来実装する際の検証課題です。[Issue #1の判定と再現](ISSUE_1_REVIEW.md) を参照してください。
 

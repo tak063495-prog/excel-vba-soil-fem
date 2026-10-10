@@ -1,11 +1,11 @@
-param(
+﻿param(
  [string]$SourceWorkbook=(Join-Path $PSScriptRoot '../../workbook/2DSoilFEM_20261008_practical.xlsm'),
  [string]$OutputRoot=(Join-Path $PSScriptRoot '../tmp/inconsistent'),
  [string]$PythonPath='python',
  [switch]$SkipSpectral
 )
 $ErrorActionPreference='Stop'
-$checksTask=@('check_nonsymmetric_solver','check_regularized_solver','check_failure_classification','check_finalization','check_failed_run_publication','check_watchdog','check_fd_guard')
+$checksTask=@('check_nonsymmetric_solver','check_elastic_recovery_solver','check_linear_diagnostics','check_hourglass_force_policy','check_regularized_solver','check_failure_classification','check_finalization','check_failed_run_publication','check_watchdog','check_fd_guard')
 if(-not $SkipSpectral){$checksTask=@('check_spectral_points','check_material_substeps')+$checksTask}
 foreach($checkTask in $checksTask){
  Write-Host ('Running '+$checkTask)

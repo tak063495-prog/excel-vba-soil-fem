@@ -2,7 +2,7 @@
 
 [READMEへ](../README.md) · [操作説明書](USER_GUIDE.md) · [入力仕様](MODEL_INPUTS.md) · [設定一覧](SETTINGS_REFERENCE.md)
 
-対象は `20261009_INCO_16` の実務ブックです。保存されている旧結果は再解析前の参考データです。
+対象は `20261010_INCO_24` の実務ブックです。保存されている旧結果は再解析前の参考データです。
 
 ## 目次
 
@@ -150,7 +150,9 @@ DEBUG_MODE=STAGEを通常の確認・比較の入口にします。ファイル�
 |manifest.csv|ステージ保存の記録。AUTO再開の選択にも使用|
 |band_lu_bench.csv|BAND_LU_BENCHを明示的に有効にした場合の比較試験|
 
-現在の方式の識別には `Ver=20261009_INCO_16`、`AdaptivePolicy=ADAPT_03_RESTORED`、`StepRecoveryEnabled=False` を確認します。再利用の採算式は `ADAPT03_REPEATED_Q_ESTIMATE` です。`estimated_net_ms` は推定値で、実測の基準方式との差ではありません。[CSVヘッダーと出力](../src/vba/FEMIo.bas#L499)・[V2aログ定義](../src/vba/FEMPolicyLog.bas#L168)
+INCO_24では `CSR_ILU` と `GMRES_RESTART/BREAKDOWN` に前処理・真残差・数値崩壊の理由、`NONSYM_BAND_REFINEMENT/REJECT` にLU補正後の真残差を記録します。`ELASTIC_CORRECTION_RETRY/CARRY/RELEASE` と `NEWTON_CORRECTION_RETRY` は、同じ荷重目標への再試行、次増分への引継ぎ、Newtonへの復帰を示します。`SRM_MATERIAL_FORCE` は材料力で判定する経路の記録です。失敗を調べる場合は、ブックの版と入力を保存し、`run.log`・`solver_events.csv`・`increment_summary.csv`・Fs別集計を揃えます。[診断と改善の実例](INCONSISTENT_SRM_IMPROVEMENT.md) を参照してください。
+
+現在の方式の識別には `Ver=20261010_INCO_24`、`AdaptivePolicy=ADAPT_03_RESTORED`、`StepRecoveryEnabled=False` を確認します。再利用の採算式は `ADAPT03_REPEATED_Q_ESTIMATE` です。`estimated_net_ms` は推定値で、実測の基準方式との差ではありません。[CSVヘッダーと出力](../src/vba/FEMIo.bas#L499)・[V2aログ定義](../src/vba/FEMPolicyLog.bas#L168)
 
 ## 速度比較の手順
 

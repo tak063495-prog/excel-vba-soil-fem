@@ -1,6 +1,6 @@
 # 動作確認と修正記録
 
-現在のINCONSISTENT接線・非対称ソルバと非収束判定は [修正報告](INCONSISTENT_REPAIR.md) と [検証集計](inconsistent-evidence/verification_summary.json) を参照してください。以下には過去の版の検証も含みます。
+最新の `20261010_INCO_24` は [INCONSISTENTのSRM改良](INCONSISTENT_SRM_IMPROVEMENT.md) に、失敗行列の再求解、状態復元、材料力の独立確認、斜面のFs比較をまとめています。材料則の先行検証は [修正報告](INCONSISTENT_REPAIR.md) と [検証集計](inconsistent-evidence/verification_summary.json) に保持します。以下には過去の版の検証も含みます。
 
 ## 文献・理論解との比較（2026-10-09）
 

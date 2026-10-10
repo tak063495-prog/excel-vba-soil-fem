@@ -1,0 +1,66 @@
+{
+  "archive_entries.json": {
+    "bytes": 31728,
+    "sha256": "cf08375890e83e3237191c85dc8d40c7b38a8737eb0c6006160ef6917b1bc95b"
+  },
+  "diagnostic_archive_entries.json": {
+    "bytes": 241149,
+    "sha256": "cab921ac6b2676582cec9178645dc0f502be6384bf49b460064c6e7aba0b1409"
+  },
+  "diagnostics_INCO16_24.zip": {
+    "bytes": 61957634,
+    "sha256": "68f52603c37b51ca34464e0c1a818f75d2e1bd34f53ae72c6510ac1ef2930ce8"
+  },
+  "fixtures.json": {
+    "bytes": 3103880,
+    "sha256": "cb706a29d979c0552126baf3107cd8579d55fc95d9af2a94f892b7c2dc2d88e9"
+  },
+  "material_force_audit.json": {
+    "bytes": 12409,
+    "sha256": "68e34fb5e6b6236e3809af6e6bf947a4b516fdbe4acc9bc28f4a4cf53930d351"
+  },
+  "practical_comparison.csv": {
+    "bytes": 3082,
+    "sha256": "90afc16bf683345e5ca674c5ad4785dd967495511cdd402d299a1bbc1f3d4f7d"
+  },
+  "practical_comparison.json": {
+    "bytes": 48049,
+    "sha256": "66409f119ffeb0e4c7b05c4227c21e74fb9cff5cef1a4e4a3e5fc5ffd96dde17"
+  },
+  "progress/manifest.json": {
+    "bytes": 1674,
+    "sha256": "133c45762fd5f268b5bcac2ea19e5672172a60e434e073a08604407a692ee78b"
+  },
+  "progress/trial_progress_1p325.csv": {
+    "bytes": 7025,
+    "sha256": "c9157c7d5047038e7f445d48fe9704dbb8429ff04fab64e80d9c59cf5c426751"
+  },
+  "progress/trial_progress_1p325.png": {
+    "bytes": 109122,
+    "sha256": "5f9224ff7a4b015fa675e7632e56e2511f06e6e0d3d2c5b303d6522cd7ca0870"
+  },
+  "progress/trial_progress_1p350.csv": {
+    "bytes": 9963,
+    "sha256": "72c120203a6e2fbc4e5e4099f31adef2f026f794d4d2b8e30dce179228ca16fa"
+  },
+  "progress/trial_progress_1p350.png": {
+    "bytes": 110769,
+    "sha256": "4d7c7e2021eef0baf03d38a7f6513b0e50ff0e2642e7a2fef0b1a3a396da9876"
+  },
+  "protocol.json": {
+    "bytes": 4536,
+    "sha256": "6def1260042a06ac03d95bb265a4553521f8260c604f620fcd5ccfcb2399d0a9"
+  },
+  "results_table.md": {
+    "bytes": 1777,
+    "sha256": "40eb2ff265f61e3104f1c64765257020f51463651482b165573ece6b43e8bdc5"
+  },
+  "srm_cases_INCO24.zip": {
+    "bytes": 33199260,
+    "sha256": "bc569a2ae9db3074d2a124e386a5807072ec955295ed889d8a2833824b40f2bb"
+  },
+  "visual_qa.json": {
+    "bytes": 8625,
+    "sha256": "58a93f367e40efbae97aee627ef253c99ec75a4fbcafc064aa93dc2dff67a9c6"
+  }
+}

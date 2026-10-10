@@ -13,7 +13,8 @@ function RowsTask($book,$sheet,$rows,$columns){
 }
 $recordsTask=@()
 foreach($fixedTask in @($false,$true)){
-foreach($faultTask in @(1,2,3)){
+$controlTask=$null
+foreach($faultTask in @(0,1,2,3,4,5,6)){
  $pathTask=Join-Path $OutputRoot ('fault_'+$fixedTask+'_'+$faultTask+'.xlsm')
  Copy-Item -LiteralPath $sourceTask -Destination $pathTask -Force
  $xlTask=New-Object -ComObject Excel.Application;$xlTask.DisplayAlerts=$false;$xlTask.EnableEvents=$false;$xlTask.AutomationSecurity=1;$wbTask=$null
@@ -21,13 +22,25 @@ foreach($faultTask in @(1,2,3)){
   $wbTask=$xlTask.Workbooks.Open([IO.Path]::GetFullPath($pathTask),0,$false)
   $cmTask=$wbTask.VBProject.VBComponents.Item('FEMSolver').CodeModule
   $textTask=$cmTask.Lines(1,$cmTask.CountOfLines)
-  $textTask=$textTask.Replace('Option Explicit',"Option Explicit`r`nPublic IncoFault As Long")
+  $textTask=$textTask.Replace('Option Explicit',"Option Explicit`r`nPublic IncoFault As Long`r`nPublic IncoSeedRetries As Long`r`nPublic IncoCarryUses As Long`r`nPublic IncoNewtonRetries As Long")
   $needleTask='Function BandSolver() As Boolean'
   if(-not $textTask.Contains($needleTask)){throw 'Solver hook absent'}
   $injectionTask=@'
 Function BandSolver() As Boolean
-  If IncoFault > 0 And P3SrmTrialRunning And P3CurrentStrengthFactor > 1.05 Then
-    If IncoFault = 1 Then
+  If IncoFault = 6 And P3SrmEnabled And Not P3SrmTrialRunning Then
+    If (Not P3IncoElasticCorrection And IncoSeedRetries = 0) Or (P3IncoElasticCorrection And CurrentIncrement > 1) Then
+      SetAnalysisFailure RESULT_NONCONVERGED, "Injected correction-mode rejection", vbObjectError + 3202, -1, -1, CurrentIncrement, CurrentIteration
+      BandSolver = False
+      Exit Function
+    End If
+  End If
+  If IncoFault = 5 And P3SrmEnabled And Not P3SrmTrialRunning And Not P3IncoElasticCorrection Then
+    SetAnalysisFailure RESULT_NONCONVERGED, "Injected seed-gravity Newton rejection", vbObjectError + 3202, -1, -1, CurrentIncrement, CurrentIteration
+    BandSolver = False
+    Exit Function
+  End If
+  If IncoFault > 0 And IncoFault < 5 And P3SrmTrialRunning And P3CurrentStrengthFactor > 1.05 Then
+    If IncoFault = 1 Or IncoFault = 4 Then
       SetAnalysisFailure RESULT_NONCONVERGED, "Injected linear solver rejection", vbObjectError + 3202, -1, -1, CurrentIncrement, CurrentIteration
     ElseIf IncoFault = 2 Then
       SetAnalysisFailure RESULT_GLOBAL_SINGULAR, "Injected singular tangent", vbObjectError + 3301, -1, -1, CurrentIncrement, CurrentIteration
@@ -39,12 +52,34 @@ Function BandSolver() As Boolean
   End If
 '@
   $textTask=$textTask.Replace($needleTask,($injectionTask -replace "`r?`n","`r`n"))
+  # Fault1 rejects both the primary and recovery solve. Fault4 leaves the
+  # independent regularized solve available, and must match the control.
+  $recoveryNeedleTask='Public Function P6SolveResidualRecovery(ByVal damping As Double) As Boolean'
+  if(-not $textTask.Contains($recoveryNeedleTask)){throw 'Recovery hook absent'}
+  $textTask=$textTask.Replace($recoveryNeedleTask,($recoveryNeedleTask+"`r`n  If IncoFault = 1 Then P6SolveResidualRecovery = False: Exit Function`r`n  If IncoFault = 5 And Not P3SrmTrialRunning Then P6SolveResidualRecovery = False: Exit Function`r`n  If IncoFault = 6 And Not P3SrmTrialRunning And IncoSeedRetries = 0 Then P6SolveResidualRecovery = False: Exit Function"))
   $cmTask.DeleteLines(1,$cmTask.CountOfLines);$cmTask.AddFromString($textTask)
   $cmTask.AddFromString(@'
 Public Sub IncoSetFault(ByVal value As Long)
   IncoFault = value
 End Sub
+Public Function IncoSeedRecoveryCount() As Long
+  IncoSeedRecoveryCount = IncoSeedRetries
+End Function
+Public Function IncoModeCounts() As Variant
+  IncoModeCounts = Array(IncoSeedRetries, IncoCarryUses, IncoNewtonRetries)
+End Function
 '@)
+  $engineTask=$wbTask.VBProject.VBComponents.Item('FEMEngine').CodeModule
+  $engineTextTask=$engineTask.Lines(1,$engineTask.CountOfLines)
+  $seedNeedleTask='          P6SolverEvent "ELASTIC_CORRECTION_RETRY",'
+  if(-not $engineTextTask.Contains($seedNeedleTask)){throw 'Seed recovery hook absent'}
+  $engineTextTask=$engineTextTask.Replace($seedNeedleTask,("          If Not P3SrmTrialRunning Then IncoSeedRetries = IncoSeedRetries + 1`r`n"+$seedNeedleTask))
+  $carryNeedleTask='      If P3IncoElasticCorrection Then P6SolverEvent "ELASTIC_CORRECTION_CARRY",'
+  $newtonNeedleTask='          P6SolverEvent "NEWTON_CORRECTION_RETRY",'
+  if(-not $engineTextTask.Contains($carryNeedleTask) -or -not $engineTextTask.Contains($newtonNeedleTask)){throw 'Correction-mode hooks absent'}
+  $engineTextTask=$engineTextTask.Replace($carryNeedleTask,("      If P3IncoElasticCorrection Then IncoCarryUses = IncoCarryUses + 1`r`n"+$carryNeedleTask))
+  $engineTextTask=$engineTextTask.Replace($newtonNeedleTask,("          IncoNewtonRetries = IncoNewtonRetries + 1`r`n"+$newtonNeedleTask))
+  $engineTask.DeleteLines(1,$engineTask.CountOfLines);$engineTask.AddFromString($engineTextTask)
   $hTask=$wbTask.VBProject.VBComponents.Add(1);$hTask.Name='IncoFailureHarness'
   $hTask.CodeModule.AddFromString(@'
 Public Function IncoFailureRun() As Variant
@@ -67,11 +102,21 @@ End Function
   $xlTask.Run($prefixTask+'IncoSetFault',$faultTask)
   $vTask=@($xlTask.Run($prefixTask+'IncoFailureRun'))
   $expectedPassTask=$(if($fixedTask){0}else{1});$expectedTrialsTask=$(if($fixedTask){1}else{2})
-  if($vTask[0] -eq 'PASS' -or $vTask[1] -ne 'UNDETERMINED' -or $vTask[2] -ne 'NUMERICAL_FAILURE' -or $vTask[3] -ne 'LINEAR_SOLVER' -or $vTask[4] -ne $expectedPassTask -or $vTask[5] -ne 0 -or $vTask[6] -or $vTask[7] -ne 0 -or $vTask[8] -ne $expectedTrialsTask){throw ('Fault '+$faultTask+' unsafe classification: '+($vTask -join '|'))}
+  if($faultTask -eq 0){
+   if($vTask[0] -ne 'PASS' -or $vTask[2] -ne 'CONVERGED'){throw 'Control did not converge'}
+   $controlTask=$vTask
+  }elseif($faultTask -in @(4,5,6)){
+   if(($vTask -join '|') -ne ($controlTask -join '|')){throw ('Recovered solve differs from control: '+($vTask -join '|'))}
+   if($faultTask -eq 5 -and [int]$xlTask.Run($prefixTask+'IncoSeedRecoveryCount') -lt 1){throw 'Seed-gravity elastic recovery was not exercised'}
+   if($faultTask -eq 6){
+    $countsTask=@($xlTask.Run($prefixTask+'IncoModeCounts'))
+    if(@($countsTask|Where-Object {$_ -lt 1}).Count -ne 0){throw ('Carry and Newton retry were not exercised: '+($countsTask -join '|'))}
+   }
+  }elseif($vTask[0] -eq 'PASS' -or $vTask[1] -ne 'UNDETERMINED' -or $vTask[2] -ne 'NUMERICAL_FAILURE' -or $vTask[3] -ne 'LINEAR_SOLVER' -or $vTask[4] -ne $expectedPassTask -or $vTask[5] -ne 0 -or $vTask[6] -or $vTask[7] -ne 0 -or $vTask[8] -ne $expectedTrialsTask){throw ('Fault '+$faultTask+' unsafe classification: '+($vTask -join '|'))}
   $recordsTask+=@{fixed_fs=$fixedTask;fault=$faultTask;values=$vTask}
  }finally{if($null -ne $wbTask){$wbTask.Close($false);[void][Runtime.InteropServices.Marshal]::FinalReleaseComObject($wbTask)};$xlTask.Quit();[void][Runtime.InteropServices.Marshal]::FinalReleaseComObject($xlTask)}
 }
 }
 if((Get-FileHash -LiteralPath $sourceTask -Algorithm SHA256).Hash -ne $hashTask){throw 'Source changed'}
 @{status='PASS';source_sha256=$hashTask;records=$recordsTask}|ConvertTo-Json -Depth 8|Set-Content (Join-Path $OutputRoot 'failure_checks.json') -Encoding UTF8
-Write-Host 'PASS: linear/singular/capacity failures do not establish an SRM upper bound'
+Write-Host 'PASS: unrecovered numerical failures give no upper bound; recovered solve matches control'

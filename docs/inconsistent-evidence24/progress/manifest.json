@@ -1,0 +1,51 @@
+{
+  "schema": "completed_trial_progress_v1",
+  "source_case": "griffiths_1999_fine_critical24",
+  "source_build": "20261010_INCO_24",
+  "source_sha256": "83b1e4d527c0a9920603d052743df829abc552a582d319e29f20f8776a132856",
+  "source_csv": "cases/griffiths_1999_fine/cases/griffiths_1999_fine_critical24_out/increment_summary.csv",
+  "x_axis": "attempt order within each selected trial, not elapsed time",
+  "visual_review": "both PNGs reviewed; labels, units, and uncommitted targets distinguished",
+  "trials": {
+    "1.350": {
+      "terminal_status": "FAIL",
+      "rows": 89,
+      "accepted": 72,
+      "rejected": 17,
+      "native_trial_ids": [
+        7
+      ],
+      "last_accepted_lambda": 0.9942770666975,
+      "files": {
+        "trial_progress_1p350.png": {
+          "bytes": 110769,
+          "sha256": "4d7c7e2021eef0baf03d38a7f6513b0e50ff0e2642e7a2fef0b1a3a396da9876"
+        },
+        "trial_progress_1p350.csv": {
+          "bytes": 9963,
+          "sha256": "72c120203a6e2fbc4e5e4099f31adef2f026f794d4d2b8e30dce179228ca16fa"
+        }
+      }
+    },
+    "1.325": {
+      "terminal_status": "PASS",
+      "rows": 67,
+      "accepted": 57,
+      "rejected": 10,
+      "native_trial_ids": [
+        8
+      ],
+      "last_accepted_lambda": 1.0,
+      "files": {
+        "trial_progress_1p325.png": {
+          "bytes": 109122,
+          "sha256": "5f9224ff7a4b015fa675e7632e56e2511f06e6e0d3d2c5b303d6522cd7ca0870"
+        },
+        "trial_progress_1p325.csv": {
+          "bytes": 7025,
+          "sha256": "c9157c7d5047038e7f445d48fe9704dbb8429ff04fab64e80d9c59cf5c426751"
+        }
+      }
+    }
+  }
+}

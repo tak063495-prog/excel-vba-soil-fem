@@ -1463,6 +1463,11 @@ Private Function P3ShouldRebuildTangent(ByVal localIteration As Long, ByVal resi
   Dim v2Eligible As Boolean, v2Path As Long, gateReason As String
   P3ShouldRebuildTangent = True
   If P3FlowPolicyIsInconsistent() Then
+    If P3IncoElasticCorrection Then
+      P3ShouldRebuildTangent = (localIteration = 0 Or P3ForceTangentRebuild Or P3JointContactChangedSinceFactor())
+      P3ForceTangentRebuild = False: P3ForceRebuildReason = vbNullString
+      Exit Function
+    End If
     ' Full Newton: no stale/symmetrized factor or LS50 reuse for this path.
     P3ForceTangentRebuild = False
     P3ForceRebuildReason = vbNullString
@@ -1715,8 +1720,16 @@ Private Function P3RebuildTangentFromSpmat() As Boolean
             Next i
           End If
         Next im
+        If P3IncoElasticCorrection Then
+          ' Only the correction operator changes. Trial stress/flow/yield and
+          ' the actual internal force continue to use the same material law.
+          SetElmStiffness Material(materialIndex).thickness, Material(materialIndex).weight, Elem(k).Bmat, Elem(k).Smat, Elem(k).kmat, Elem(k).ElmWeight, Elem(k).dj, P6GaussN
+        Else
         SetElmStiffness Material(materialIndex).thickness, Material(materialIndex).weight, Elem(k).Bmat, Elem(k).Spmat, Elem(k).kmat, Elem(k).ElmWeight, Elem(k).dj, P6GaussN
-        P6AddQ8HourglassStabilization Elem(k), Material(materialIndex).thickness, True
+        End If
+        ' Full Newton uses the material force's derivative. Retain numerical
+        ' stabilization only in the elastic fallback correction operator.
+        If Not (P3SrmEnabled And P3FlowPolicyIsInconsistent() And Not P3IncoElasticCorrection) Then P6AddQ8HourglassStabilization Elem(k), Material(materialIndex).thickness, True
         If Not P3FlowPolicyIsInconsistent() And P3KmatIsUnsymmetric(Elem(k).kmat) Then
           SetAnalysisFailure RESULT_MATERIAL_ERROR, "BAND対称ソルバは非対称接線に未対応です（非関連流れ φ≠ψ の塑性接線）。FLOW_POLICY=INCONSISTENT または DAVIS を指定してください。要素=" & CStr(k + 1), vbObjectError + 3240, k + 1, -1, CurrentIncrement, CurrentIteration
           GoTo TangentDone
@@ -2603,7 +2616,10 @@ End Sub
 
 Private Function P3GlobalIterationLimit() As Long
   P3GlobalIterationLimit = P3_MAX_GLOBAL_ITERATIONS
-  If P3FlowPolicyIsInconsistent() Then P3GlobalIterationLimit = P3_INCO_MAX_GLOBAL_ITERATIONS
+  If P3FlowPolicyIsInconsistent() Then
+    P3GlobalIterationLimit = P3_INCO_MAX_GLOBAL_ITERATIONS
+    If P3IncoElasticCorrection Then P3GlobalIterationLimit = P3_INCO_ELASTIC_MAX_ITERATIONS
+  End If
 End Function
 
 Private Function P3RunLoadStages() As Boolean
@@ -2623,8 +2639,10 @@ Private Function P3RunLoadStages() As Boolean
   Dim duMax As Double
   Dim predictorUsed As Boolean, accelerationRetried As Boolean, correctionBuilt As Boolean
   Dim logStepAction As String, recoveryRatio As Double, boundedNextStep As Double
-  Dim stagnationCount As Long
+  Dim stagnationCount As Long, elasticRetried As Boolean, newtonRetried As Boolean, elasticPreference As Boolean
+  P3IncoElasticCorrection = False
   P3ApplyNewtonPolicy P3RunLogKind
+  If P3SrmEnabled And P3FlowPolicyIsInconsistent() Then P6SolverEvent "SRM_MATERIAL_FORCE", "hourglass_force=False;newton_hourglass_tangent=False;elastic_hourglass_tangent=iteration_regularization"
   P3ResetFailureDiagnostics
   P3EvalSkipCount = 0
   P3TangentDirtyRebuildCount = 0
@@ -2676,6 +2694,8 @@ Private Function P3RunLoadStages() As Boolean
   applyRan = False
   P3RunLoadStages = False
   For stageId = 1 To 2
+    P3IncoElasticCorrection = False
+    elasticPreference = False
     If stageId = 1 Then
       If Not wantGravity Then GoTo P3NextStage
       If Not hasSelfWeight And Not P3VectorHasChange(P3LockedSelfWeight, P3SelfWeightForce) Then GoTo P3NextStage
@@ -2704,8 +2724,14 @@ Private Function P3RunLoadStages() As Boolean
       P6PhysLambda = targetFactor
       P6PhysStep = stepSize
       prescribedFactor = P3PrescribedFactor(stageId, targetFactor)
-      accelerationRetried = False
-      AccelBaselineRetry = False
+      ' Carry a successful elastic correction within this load stage. A failed
+      ' carried attempt gets one clean Newton retry, not an endless mode cycle.
+      P3IncoElasticCorrection = elasticPreference
+      elasticRetried = P3IncoElasticCorrection
+      newtonRetried = Not P3IncoElasticCorrection
+      accelerationRetried = P3IncoElasticCorrection
+      AccelBaselineRetry = P3IncoElasticCorrection
+      If P3IncoElasticCorrection Then P6SolverEvent "ELASTIC_CORRECTION_CARRY", "lambda_start=" & Format$(stageFactor, "0.000000000000") & ";lambda_target=" & Format$(targetFactor, "0.000000000000")
       AdaptiveBeginIncrement stageFactor, targetFactor
 P3RetrySameIncrement:
       StepRecoveryBeginAttempt
@@ -2794,6 +2820,20 @@ P3RetrySameIncrement:
         End If
         SetBoundaryCondition
         If Not BandSolver() Then
+          If P3FlowPolicyIsInconsistent() And Not P3IncoElasticCorrection And Not P3IsFatalFailure() Then
+            ' Retry a failed Newton direction with the existing regularized
+            ' residual minimization. Acceptance still requires actual force
+            ' residual reduction under the unchanged constitutive law.
+            P6SolverEvent "REGULARIZED_CORRECTION_REQUEST", "reason=LINEAR_SOLVER;linear_relres=" & Format$(P6IterativeLastResidual, "0.000E+00")
+            P3ClearTransientFailure
+            If P3TryResidualRecovery(incrementBase, targetForce, internalForce, correctionRatio, localIteration) Then
+              P3ClearTransientFailure
+              If correctionRatio > P3MaxCorrection Then P3MaxCorrection = correctionRatio
+              stagnationCount = 0
+              P3RequestTangentRebuild "RESIDUAL_RECOVERY"
+              GoTo P3NextGlobalIteration
+            End If
+          End If
           mAccelAttemptFailure = "BAND_SOLVE_FAILURE"
           Exit Do
         End If
@@ -2823,13 +2863,29 @@ P3RetrySameIncrement:
           AccelNoteCorrection P3PrevResidualNorm, ResidualNormFree, correctionBuilt
           lineSearchRebuildUsed = False
           If correctionRatio > P3MaxCorrection Then P3MaxCorrection = correctionRatio
-          If P3FlowPolicyIsInconsistent() And RelativeResidualFree > P3_ENGINEERING_RESIDUAL Then
+          If P3FlowPolicyIsInconsistent() And Not P3IncoElasticCorrection And RelativeResidualFree > P3_ENGINEERING_RESIDUAL Then
             If P3PrevResidualNorm > 0# And ResidualNormFree > 0.99 * P3PrevResidualNorm And correctionRatio < P3_ENGINEERING_CORRECTION Then
               stagnationCount = stagnationCount + 1
             Else
               stagnationCount = 0
             End If
             If stagnationCount >= 4 Then
+              P6SolverEvent "REGULARIZED_CORRECTION_REQUEST", "reason=GLOBAL_STAGNATION;relres=" & Format$(RelativeResidualFree, "0.000E+00")
+              If P3TryResidualRecovery(incrementBase, targetForce, internalForce, correctionRatio, localIteration) Then
+                P3ClearTransientFailure
+                If correctionRatio > P3MaxCorrection Then P3MaxCorrection = correctionRatio
+                stagnationCount = 0
+                P3RequestTangentRebuild "RESIDUAL_RECOVERY"
+                GoTo P3NextGlobalIteration
+              End If
+              If P3IsFatalFailure() Then Exit Do
+              If localIteration >= P3GlobalIterationLimit() Then
+                ' Preserve the shared Newton/recovery budget failure instead
+                ' of overwriting it with an early stagnation diagnosis.
+                mAccelAttemptFailure = "GLOBAL_ITERATION_LIMIT"
+                P3SetGlobalBudgetFailure
+                Exit Do
+              End If
               mAccelAttemptFailure = "GLOBAL_STAGNATION"
               SetAnalysisFailure RESULT_NONCONVERGED, "非関連流れの全体反復が停滞しました。残差が許容値に達していないため増分を縮小します。", vbObjectError + 3202, FailureElement, FailureGaussPoint, CurrentIncrement, CurrentIteration
               Exit Do
@@ -2837,6 +2893,7 @@ P3RetrySameIncrement:
           End If
           If femIoMode = "ITER" Or P3GlobalIterationCount <= 12 Then P3TraceIteration "correction"
         End If
+P3NextGlobalIteration:
       Loop
       IncrementLogCorrectionRatio correctionRatio, (localIteration > 0)
       If converged Then
@@ -2870,6 +2927,19 @@ P3RetrySameIncrement:
         If stageId = 2 Then P3LastConvergedLoadFactor = targetFactor
         stageFactor = targetFactor
         retryCount = 0
+        If P3IncoElasticCorrection Then
+          ' Elastic relaxation needs many cheap iterations even when stable;
+          ' Newton's >8-iteration rule would repeatedly halve accepted steps.
+          If localIteration <= 30 Then
+            stepSize = stepSize * 1.5: logStepAction = "ELASTIC_GROW_1_5"
+          ElseIf localIteration <= 100 Then
+            logStepAction = "ELASTIC_KEEP"
+          ElseIf localIteration <= 300 Then
+            stepSize = stepSize * 0.7: logStepAction = "ELASTIC_SHRINK_0_7"
+          Else
+            stepSize = stepSize * 0.5: logStepAction = "ELASTIC_SHRINK_0_5"
+          End If
+        Else
         If localIteration <= 2 Then
           stepSize = stepSize * 1.5
           logStepAction = "GROW_1_5"
@@ -2886,6 +2956,7 @@ P3RetrySameIncrement:
         Else
           stepSize = stepSize * 0.5
           logStepAction = "SHRINK_0_5"
+        End If
         End If
         boundedNextStep = StepRecoveryBoundNextStep(stepSize)
         If boundedNextStep < stepSize Then
@@ -2906,6 +2977,10 @@ P3RetrySameIncrement:
         End If
         StepRecoveryNoteNextStep logStepAction, stepSize
         P3LastSuccessStepSize = stepSize
+        ' Cheap iterations alone are not useful if load progress is tiny. Give
+        ' full Newton another chance after slow or heavily cut-back successes.
+        elasticPreference = P3IncoElasticCorrection And localIteration <= P3_INCO_MAX_GLOBAL_ITERATIONS And P6PhysStep >= 0.05 * baseStepSize
+        If P3IncoElasticCorrection And Not elasticPreference Then P6SolverEvent "ELASTIC_CORRECTION_RELEASE", "iterations=" & CStr(localIteration) & ";progress_fraction=" & Format$(P6PhysStep / baseStepSize, "0.000E+00") & ";next_mode=NEWTON"
         If stageFactor >= 1# - 0.000000000001 Then
           IncrementLogFinish True, localIteration, "ACCEPT", -1#, logStepAction & "|STAGE_COMPLETE", ""
         Else
@@ -2930,6 +3005,30 @@ P3RetrySameIncrement:
           P3ClearTransientFailure
           GoTo P3RetrySameIncrement
         End If
+        If P3IncoElasticCorrection And Not newtonRetried And Not P3IsFatalFailure() Then
+          P6SolverEvent "NEWTON_CORRECTION_RETRY", "fs=" & Format$(P3CurrentStrengthFactor, "0.000000000000") & ";lambda_target=" & Format$(targetFactor, "0.000000000000") & ";elastic_reason=" & P3AccelFailureReason()
+          IncrementLogFinish False, localIteration, "NEWTON_RETRY", stepSize, "RETRY_SAME_TARGET", P3AccelFailureReason()
+          newtonRetried = True: P3IncoElasticCorrection = False
+          accelerationRetried = True: AccelBaselineRetry = True
+          P3RestoreCommittedMaterialState
+          AccelHistoryReady = False: AccelIncrementEligible = False
+          P3ClearTransientFailure
+          P3RequestTangentRebuild "NEWTON_CORRECTION_RETRY"
+          GoTo P3RetrySameIncrement
+        End If
+        ' SRM's seed gravity/replay must use the same recovery as its Fs trials.
+        If P3FlowPolicyIsInconsistent() And P3SrmEnabled And Not elasticRetried And Not P3IsFatalFailure() Then
+          P6SolverEvent "ELASTIC_CORRECTION_RETRY", "fs=" & Format$(P3CurrentStrengthFactor, "0.000000000000") & ";lambda_target=" & Format$(targetFactor, "0.000000000000") & ";newton_reason=" & P3AccelFailureReason()
+          IncrementLogFinish False, localIteration, "ELASTIC_RETRY", stepSize, "RETRY_SAME_TARGET", P3AccelFailureReason()
+          elasticRetried = True: P3IncoElasticCorrection = True
+          accelerationRetried = True: AccelBaselineRetry = True
+          P3RestoreCommittedMaterialState
+          AccelHistoryReady = False: AccelIncrementEligible = False
+          P3ClearTransientFailure
+          P3RequestTangentRebuild "ELASTIC_CORRECTION_RETRY"
+          GoTo P3RetrySameIncrement
+        End If
+        elasticPreference = False
         AdaptiveEndIncrement False, localIteration, accelerationRetried
         AccelHistoryReady = False: AccelIncrementEligible = False: AccelV2aPreviousIterations = 0: AccelV2aPreviousStep = 0#
         P3AccelResetAA
@@ -6100,6 +6199,12 @@ Private Function P3AccelApplyCorrection(ByRef incrementBase() As Double, ByRef t
   mAccelAttemptFailure = ""
   mLineSearchFailure = "": mLineSearchTries = 0: mLineSearchMaterialRejects = 0: mLineSearchBestQ = -1#
   cutsBefore = P3LineSearchCuts
+  If P3IncoElasticCorrection Then
+    ok = P3ApplyLineSearch(incrementBase, targetForce, internalForce, correctionRatio, residualBefore, 16)
+    If Not ok And Not P3IsFatalFailure() Then ok = P3TryNewtonWatchdog(incrementBase, targetForce, internalForce, correctionRatio, localIteration)
+    P3AccelApplyCorrection = ok
+    Exit Function
+  End If
   If P3AccelTryAA(incrementBase, targetForce, internalForce, correctionRatio, residualBefore) Then
     P3AccelApplyCorrection = True: Exit Function
   End If

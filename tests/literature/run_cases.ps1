@@ -14,6 +14,16 @@
   [string]$OutputRoot=(Join-Path $PSScriptRoot '../tmp/literature_validation')
 )
 $ErrorActionPreference='Stop'
+if(-not ('SrmNativeProcess' -as [type])){
+ Add-Type -TypeDefinition @'
+using System;
+using System.Runtime.InteropServices;
+public static class SrmNativeProcess {
+ [DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr hwnd, out uint processId);
+ public static uint Id(long hwnd) { uint id; GetWindowThreadProcessId(new IntPtr(hwnd), out id); return id; }
+}
+'@
+}
 $sourceTask=(Resolve-Path -LiteralPath $SourceWorkbook).Path
 $sourceHashTask=(Get-FileHash -LiteralPath $sourceTask -Algorithm SHA256).Hash
 $outputTask=[IO.Path]::GetFullPath($OutputRoot)
@@ -106,6 +116,12 @@ function Setting($wb,$key,$value){
   $methodTask=$(if($value -is [string]){'FEMWriteTextSetting'}else{'FEMWriteNumericSetting'})
   $xlTask.Run("'"+$wb.Name+"'!"+$methodTask,$key,$value)
 }
+function SharedBookHashTask([string]$path){
+ $streamTask=[IO.File]::Open($path,[IO.FileMode]::Open,[IO.FileAccess]::Read,[IO.FileShare]::ReadWrite)
+ $hashAlgorithmTask=[Security.Cryptography.SHA256]::Create()
+ try{return ([BitConverter]::ToString($hashAlgorithmTask.ComputeHash($streamTask))).Replace('-','')}
+ finally{$streamTask.Dispose();$hashAlgorithmTask.Dispose()}
+}
 foreach($caseTask in $fixturesTask.fixtures){
   $elasticTask=$caseTask.reference.source_id -eq 'elastic_validation'
   if(($Mode -eq 'Elastic' -and -not $elasticTask) -or ($Mode -eq 'SRM' -and $elasticTask) -or $caseTask.name -notlike $Names){continue}
@@ -139,7 +155,9 @@ foreach($caseTask in $fixturesTask.fixtures){
       $wbTask.Worksheets.Item('材料データ').Range('O9').Value2='検証ケース';$wbTask.Worksheets.Item('材料データ').Range('P9').Value2=$idTask
       $wbTask.Worksheets.Item('材料データ').Range('O10').Value2='条件・出典';$wbTask.Worksheets.Item('材料データ').Range('P10').Value2='同梱の検証報告とfixtures.jsonを参照'
       $xlTask.Run($prefixTask+'FEMViewerMarkDirty');$wbTask.Save()
-      @{case=$idTask;state='RUNNING';flow_policy=$policyTask;started_at=(Get-Date).ToString('o')}|ConvertTo-Json|Set-Content (Join-Path $outputTask ('results/'+$idTask+'_state.json')) -Encoding UTF8
+      $buildTask=$xlTask.Run($prefixTask+'LiteratureBuild')
+      $processTask=[SrmNativeProcess]::Id([long]$xlTask.Hwnd)
+      @{case=$idTask;state='RUNNING';flow_policy=$policyTask;started_at=(Get-Date).ToString('o');build=$buildTask;source_sha256=$sourceHashTask;fixture_sha256=$fixturesHashTask;input_workbook_sha256=(SharedBookHashTask $bookTask);fixed_fs=$FixedFs;srm_tolerance=$SrmTolerance;srm_maximum=$SrmMaximum;hourglass_factor=$Q8HourglassFactor;excel_process_id=$processTask}|ConvertTo-Json|Set-Content (Join-Path $outputTask ('results/'+$idTask+'_state.json')) -Encoding UTF8
       Write-Host ('START '+$idTask+' elements='+$caseTask.elements.Count+' '+$policyTask)
       $timerTask=[Diagnostics.Stopwatch]::StartNew()
       $statusTask=$xlTask.Run($prefixTask+'LiteratureRun')
@@ -151,12 +169,15 @@ foreach($caseTask in $fixturesTask.fixtures){
       $failureTask=@($xlTask.Run($prefixTask+'LiteratureFailureState'))
       $gaussTask=@($xlTask.Run($prefixTask+'LiteratureGaussState'))
       if((Get-FileHash -LiteralPath $sourceTask -Algorithm SHA256).Hash -ne $sourceHashTask){throw 'Source workbook changed during verification'}
-      $resultTask=[ordered]@{fixed_fs=$FixedFs;srm_tolerance=$SrmTolerance;srm_maximum=$SrmMaximum;fixture_sha256=$fixturesHashTask;failure_names=@('fos_interpretation','trial_class','failure_kind','failed_lambda','failed_residual','failed_linear_residual','failed_correction');failure_values=$failureTask;case=$idTask;fixture=$caseTask.name;build=$buildTask;source_sha256=$sourceHashTask;status=$statusTask;flow_policy=$policyTask;elapsed_seconds=$timerTask.Elapsed.TotalSeconds;metric_names=@('analysis_ok','relative_residual','fos_pass','fos_fail','fos_mid','fos_width','fos_bracket','fss','srm_trials','accepted_increments','reaction_x','reaction_y','factorizations','reused_factors','plastic_points','nodes','elements','bandwidth');metrics=$metricsTask;displacements_flat=$dispTask;stresses_flat=$stressTask;gauss_state_columns=@('element','gauss','sigma_z','yield_function','yielded','principal_max','principal_mid','principal_min');gauss_state_flat=$gaussTask;reference=$caseTask.reference}
+      $resultTask=[ordered]@{fixed_fs=$FixedFs;srm_tolerance=$SrmTolerance;srm_maximum=$SrmMaximum;hourglass_factor=$Q8HourglassFactor;fixture_sha256=$fixturesHashTask;failure_names=@('fos_interpretation','trial_class','failure_kind','failed_lambda','failed_residual','failed_linear_residual','failed_correction');failure_values=$failureTask;case=$idTask;fixture=$caseTask.name;build=$buildTask;source_sha256=$sourceHashTask;status=$statusTask;flow_policy=$policyTask;elapsed_seconds=$timerTask.Elapsed.TotalSeconds;metric_names=@('analysis_ok','relative_residual','fos_pass','fos_fail','fos_mid','fos_width','fos_bracket','fss','srm_trials','accepted_increments','reaction_x','reaction_y','factorizations','reused_factors','plastic_points','nodes','elements','bandwidth');metrics=$metricsTask;displacements_flat=$dispTask;stresses_flat=$stressTask;gauss_state_columns=@('element','gauss','sigma_z','yield_function','yielded','principal_max','principal_mid','principal_min');gauss_state_flat=$gaussTask;reference=$caseTask.reference}
       $resultTask|ConvertTo-Json -Depth 14|Set-Content $resultPathTask -Encoding UTF8
       Write-Host ('DONE '+$idTask+' '+$statusTask+' Fs=['+$metricsTask[2]+','+$metricsTask[3]+'] time='+$timerTask.Elapsed.TotalSeconds)
       $wbTask.VBProject.VBComponents.Remove($tmTask)
       $xlTask.CalculateFull();$wbTask.Save();$wbTask.Close($false)
-      @{case=$idTask;state='DONE';status=$statusTask;finished_at=(Get-Date).ToString('o')}|ConvertTo-Json|Set-Content (Join-Path $outputTask ('results/'+$idTask+'_state.json')) -Encoding UTF8
+      $statePathTask=Join-Path $outputTask ('results/'+$idTask+'_state.json')
+      $stateRecordTask=Get-Content -LiteralPath $statePathTask -Raw -Encoding UTF8|ConvertFrom-Json
+      $stateRecordTask.state='DONE';$stateRecordTask|Add-Member status $statusTask;$stateRecordTask|Add-Member finished_at (Get-Date).ToString('o')
+      $stateRecordTask|ConvertTo-Json|Set-Content -LiteralPath $statePathTask -Encoding UTF8
     } finally {
       if($null -ne $wbTask){try{$wbTask.Close($false)}catch{}}
       try{$xlTask.Quit()}catch{}

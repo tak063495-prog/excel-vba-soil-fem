@@ -1,0 +1,226 @@
+{
+  "schema": "native_pdf_visual_review_v1",
+  "build": "20261010_INCO_24",
+  "method": "Rendered all result, initial, and input PDFs; reviewed plots, headings, legends, and layout. Seven cases reviewed before completion of the final fine-mesh case.",
+  "scope": "No missing plot, blank page, overlapping heading, or clipped legend found. Numerical acceptance is documented separately in the independent audits.",
+  "case_count": 8,
+  "pdf_count": 24,
+  "records": [
+    {
+      "case": "griffiths_1999_coarse_critical24",
+      "kind": "result",
+      "path": "griffiths_1999_coarse/visual_checks/griffiths_1999_coarse_critical24_result.pdf",
+      "pages": 1,
+      "bytes": 93426,
+      "sha256": "41be495062137ce8a94be2c3951fbc118f6e4646e1681f88eccead0921e47ece",
+      "reviewed": true
+    },
+    {
+      "case": "griffiths_1999_coarse_critical24",
+      "kind": "initial",
+      "path": "griffiths_1999_coarse/visual_checks/griffiths_1999_coarse_critical24_initial.pdf",
+      "pages": 1,
+      "bytes": 95582,
+      "sha256": "11cddf0d59d884b2b8ee295075545340fdb370a606a55edee8d7f4339f296723",
+      "reviewed": true
+    },
+    {
+      "case": "griffiths_1999_coarse_critical24",
+      "kind": "inputs",
+      "path": "griffiths_1999_coarse/visual_checks/griffiths_1999_coarse_critical24_inputs.pdf",
+      "pages": 1,
+      "bytes": 331579,
+      "sha256": "66f6db0d1a10ab72ddf6012947ac69d1c0d43897c8f2484ae0addf3fb3ad0c7f",
+      "reviewed": true
+    },
+    {
+      "case": "griffiths_1999_fine_critical24",
+      "kind": "result",
+      "path": "griffiths_1999_fine/visual_checks/griffiths_1999_fine_critical24_result.pdf",
+      "pages": 1,
+      "bytes": 114335,
+      "sha256": "e4f3bd65c07b377c600e162e74b0d826e4f70b3b680facb8936c7fc609524ebd",
+      "reviewed": true
+    },
+    {
+      "case": "griffiths_1999_fine_critical24",
+      "kind": "initial",
+      "path": "griffiths_1999_fine/visual_checks/griffiths_1999_fine_critical24_initial.pdf",
+      "pages": 1,
+      "bytes": 104916,
+      "sha256": "d7c501437c5a623d0468404006240802d391962082377b40f95bbf1b230f206a",
+      "reviewed": true
+    },
+    {
+      "case": "griffiths_1999_fine_critical24",
+      "kind": "inputs",
+      "path": "griffiths_1999_fine/visual_checks/griffiths_1999_fine_critical24_inputs.pdf",
+      "pages": 1,
+      "bytes": 331580,
+      "sha256": "90813bc303740fe3b2143ef935d2c69528242e55e175d608a9cb5d536477a51f",
+      "reviewed": true
+    },
+    {
+      "case": "griffiths_1999_foundation_critical24",
+      "kind": "result",
+      "path": "griffiths_1999_foundation/visual_checks/griffiths_1999_foundation_critical24_result.pdf",
+      "pages": 1,
+      "bytes": 89836,
+      "sha256": "3d1aa9b85ab398ba683e8f0c320b90c08af965ae41cfe97466ea10ff6a711409",
+      "reviewed": true
+    },
+    {
+      "case": "griffiths_1999_foundation_critical24",
+      "kind": "initial",
+      "path": "griffiths_1999_foundation/visual_checks/griffiths_1999_foundation_critical24_initial.pdf",
+      "pages": 1,
+      "bytes": 97993,
+      "sha256": "32592567a20222ea7559504da5053f725e6e713f0b7c3720a253bf10d1f242ed",
+      "reviewed": true
+    },
+    {
+      "case": "griffiths_1999_foundation_critical24",
+      "kind": "inputs",
+      "path": "griffiths_1999_foundation/visual_checks/griffiths_1999_foundation_critical24_inputs.pdf",
+      "pages": 1,
+      "bytes": 331581,
+      "sha256": "37729790e4252ac5d9a67dc8c21b63572b2856aa92ea976b626b0c971b938bec",
+      "reviewed": true
+    },
+    {
+      "case": "griffiths_1999_phi0_coarse_critical24",
+      "kind": "result",
+      "path": "griffiths_1999_phi0_coarse/visual_checks/griffiths_1999_phi0_coarse_critical24_result.pdf",
+      "pages": 1,
+      "bytes": 99129,
+      "sha256": "4335c5a574c080572de7d9c6157707545cd8b3f049c7d8fa6f916379f14ce043",
+      "reviewed": true
+    },
+    {
+      "case": "griffiths_1999_phi0_coarse_critical24",
+      "kind": "initial",
+      "path": "griffiths_1999_phi0_coarse/visual_checks/griffiths_1999_phi0_coarse_critical24_initial.pdf",
+      "pages": 1,
+      "bytes": 96438,
+      "sha256": "1479c8ffeec5aac8b071bc7d3ad057335ce00c7176c3b3cb337d91e27a3b6aca",
+      "reviewed": true
+    },
+    {
+      "case": "griffiths_1999_phi0_coarse_critical24",
+      "kind": "inputs",
+      "path": "griffiths_1999_phi0_coarse/visual_checks/griffiths_1999_phi0_coarse_critical24_inputs.pdf",
+      "pages": 1,
+      "bytes": 332362,
+      "sha256": "3b427486573e295e492f1442ea3a4489c5f3b89fa9ac8fa1bd3a4d916257fe57",
+      "reviewed": true
+    },
+    {
+      "case": "griffiths_1999_phi0_fine_critical24",
+      "kind": "result",
+      "path": "griffiths_1999_phi0_fine/visual_checks/griffiths_1999_phi0_fine_critical24_result.pdf",
+      "pages": 1,
+      "bytes": 103589,
+      "sha256": "9ae7a8138eb82aae8e082a151725c09d57cc5180f9c1ebd66931b529d3470e6e",
+      "reviewed": true
+    },
+    {
+      "case": "griffiths_1999_phi0_fine_critical24",
+      "kind": "initial",
+      "path": "griffiths_1999_phi0_fine/visual_checks/griffiths_1999_phi0_fine_critical24_initial.pdf",
+      "pages": 1,
+      "bytes": 103071,
+      "sha256": "7f8d437e93eb5e31127a9e8a170c4d3bcb7acd64fe1115f7c4d256c9bab5ed76",
+      "reviewed": true
+    },
+    {
+      "case": "griffiths_1999_phi0_fine_critical24",
+      "kind": "inputs",
+      "path": "griffiths_1999_phi0_fine/visual_checks/griffiths_1999_phi0_fine_critical24_inputs.pdf",
+      "pages": 1,
+      "bytes": 332361,
+      "sha256": "92d41aae1cf1ed3a5797efd57a9563bddb400a66b76a41ab61e2110f90ef861f",
+      "reviewed": true
+    },
+    {
+      "case": "pruska_h10.5_phi10_critical24",
+      "kind": "result",
+      "path": "pruska_h10.5_phi10/visual_checks/pruska_h10.5_phi10_critical24_result.pdf",
+      "pages": 1,
+      "bytes": 95288,
+      "sha256": "80901ae940009d1e5ef8dd67c8221810e320c05405fc5e3f29ff337ff6a0653e",
+      "reviewed": true
+    },
+    {
+      "case": "pruska_h10.5_phi10_critical24",
+      "kind": "initial",
+      "path": "pruska_h10.5_phi10/visual_checks/pruska_h10.5_phi10_critical24_initial.pdf",
+      "pages": 1,
+      "bytes": 98036,
+      "sha256": "ef5df12935b6beef336e8421b6990ffc7ce78bc55a7cd866c3ea9818df218778",
+      "reviewed": true
+    },
+    {
+      "case": "pruska_h10.5_phi10_critical24",
+      "kind": "inputs",
+      "path": "pruska_h10.5_phi10/visual_checks/pruska_h10.5_phi10_critical24_inputs.pdf",
+      "pages": 1,
+      "bytes": 342075,
+      "sha256": "05d8cd55b1c0707ec6ee226d8046ac9e6b758ba3d938018520e0f5e6fc8b04fd",
+      "reviewed": true
+    },
+    {
+      "case": "pruska_h7_phi10_critical24",
+      "kind": "result",
+      "path": "pruska_h7_phi10/visual_checks/pruska_h7_phi10_critical24_result.pdf",
+      "pages": 1,
+      "bytes": 88457,
+      "sha256": "d19ceed32869f8fd2e7be172d8c1270a337273689d0196e75e635d2f89ab41e2",
+      "reviewed": true
+    },
+    {
+      "case": "pruska_h7_phi10_critical24",
+      "kind": "initial",
+      "path": "pruska_h7_phi10/visual_checks/pruska_h7_phi10_critical24_initial.pdf",
+      "pages": 1,
+      "bytes": 97989,
+      "sha256": "5bb80e3c3b864b619dfec08f2a90fb694ea5ae38c3b77511faf833890c83844f",
+      "reviewed": true
+    },
+    {
+      "case": "pruska_h7_phi10_critical24",
+      "kind": "inputs",
+      "path": "pruska_h7_phi10/visual_checks/pruska_h7_phi10_critical24_inputs.pdf",
+      "pages": 1,
+      "bytes": 338745,
+      "sha256": "fe6245856102cf8c93f3c2df0e84af5f3648db2cf81278bf22c9256863688a1f",
+      "reviewed": true
+    },
+    {
+      "case": "pruska_h7_phi20_critical24",
+      "kind": "result",
+      "path": "pruska_h7_phi20/visual_checks/pruska_h7_phi20_critical24_result.pdf",
+      "pages": 1,
+      "bytes": 92889,
+      "sha256": "891e561d6245a4fd218c044bae3ee9ac915163984265c6fef6a77be47d842f24",
+      "reviewed": true
+    },
+    {
+      "case": "pruska_h7_phi20_critical24",
+      "kind": "initial",
+      "path": "pruska_h7_phi20/visual_checks/pruska_h7_phi20_critical24_initial.pdf",
+      "pages": 1,
+      "bytes": 97989,
+      "sha256": "6cf971953b1dc85598db7c446ff00e61c2a869b9758c883476a8b5cf0152de01",
+      "reviewed": true
+    },
+    {
+      "case": "pruska_h7_phi20_critical24",
+      "kind": "inputs",
+      "path": "pruska_h7_phi20/visual_checks/pruska_h7_phi20_critical24_inputs.pdf",
+      "pages": 1,
+      "bytes": 338740,
+      "sha256": "6e8cd2e25331b87a395a2891ade5d6052b255b404ea219465fd23c36f0d8d615",
+      "reviewed": true
+    }
+  ]
+}

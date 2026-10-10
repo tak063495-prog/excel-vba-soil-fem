@@ -2583,6 +2583,10 @@ Dim s As Double, projValue As Double
     iNForce(kj) = iNForce(kj) + s
 NextCalcForceDof:
   Next j
+  ' For INCONSISTENT SRM, hourglass stiffness is an iterative regularizer.
+  ' Its unbounded elastic force must not add artificial soil bearing strength.
+  ' Use the same material-only force during gravity replay and final recovery.
+  If P3SrmEnabled And P3FlowPolicyIsInconsistent() Then Exit Sub
   If Elem(ElMNo).HourglassModeCount > 0 And Elem(ElMNo).HourglassScale > 0# Then
     For modeId = 0 To Elem(ElMNo).HourglassModeCount - 1
       projValue = 0#

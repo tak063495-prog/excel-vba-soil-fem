@@ -254,7 +254,7 @@ Public P3FailureLinearResidual As Double
 Public P3FailureCorrection As Double
 Public P3FailurePlasticPoints As Long
 Public P3FailureMaxDisp As Double
-Public Const FEM_BUILD_STAMP As String = "20261009_INCO_16"
+Public Const FEM_BUILD_STAMP As String = "20261010_INCO_24"
 Public Const P1_FORMULATION_PLANE_STRESS As String = "PLANE_STRESS_2D"
 Public Const P1_FORMULATION_PLANE_STRAIN As String = "PLANE_STRAIN_2D"
 Public Const P1_RESULT_COUNT As Long = 22
@@ -457,6 +457,7 @@ Public P3SrmLogKind As String
 Public P3SrmReplayLimit As Long
 Public P3SearchFatal As Boolean
 Public P3UserCancel As Boolean
+Public P3IncoElasticCorrection As Boolean
 Public P3CommittedNodeCond() As Long
 Public P3CommittedBoundaryDisp() As Double
 Public P3CommittedBoundaryReady As Boolean
@@ -516,6 +517,7 @@ Public Const P3_MAX_STEP_SIZE As Double = 0.2
 Public Const P3_LINESEARCH_MAX As Long = 4
 Public Const P3_INCO_LINESEARCH_MAX As Long = 16
 Public Const P3_INCO_MAX_GLOBAL_ITERATIONS As Long = 100
+Public Const P3_INCO_ELASTIC_MAX_ITERATIONS As Long = 1000
 Public Const P3_RESIDUAL_TOLERANCE As Double = 0.00000001
 Public Const P3_INCREMENT_TOLERANCE As Double = 0.00000001
 Public Const P3_ENGINEERING_RESIDUAL As Double = 0.00001
@@ -1140,6 +1142,8 @@ Public Sub ResetAnalysisState()
   AnalysisMessage = ""
   AnalysisErrorNumber = 0
   P3UserCancel = False
+  P3IncoElasticCorrection = False
+  P6ClearElasticRecoveryCSR
   P3SearchFatal = False
   FailureElement = -1
   FailureGaussPoint = -1

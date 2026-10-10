@@ -19,6 +19,8 @@ try {
   $tmTask.CodeModule.AddFromString(@'
 Public Function FinalFormulaErrors() As String
   Dim ws As Worksheet, cells As Range, cell As Range
+  ' A nonempty success sentinel avoids marshaling a null BSTR in PowerShell 7.
+  FinalFormulaErrors = "PASS"
   For Each ws In ThisWorkbook.Worksheets
     Set cells = Nothing
     On Error Resume Next
@@ -43,7 +45,7 @@ End Function
   $prefixTask="'"+$wbTask.Name+"'!"
   $xlTask.CalculateFull()
   $formulaErrorsTask=[string]$xlTask.Run($prefixTask+'FinalFormulaErrors')
-  Check ($formulaErrorsTask -eq '') ('all native Excel formula results have no errors: '+$formulaErrorsTask)
+  Check ($formulaErrorsTask -eq 'PASS') ('all native Excel formula results have no errors: '+$formulaErrorsTask)
   $mappingTask=Get-Content tests/fixtures/ui_mapping.json -Raw -Encoding UTF8 | ConvertFrom-Json
   foreach($keyTask in @('ACCEL_PREDICT_BETA','ACCEL_PREDICT_MAX_RATIO','ACCEL_TANGENT_CHANGE','SRM_FIXED_FS')){
     $mTask=$mappingTask | Where-Object {$_.key -eq $keyTask}
