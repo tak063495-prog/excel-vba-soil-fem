@@ -1,4 +1,5 @@
 ﻿Option Explicit
+Private mEvBuf As String, mEvPath As String, mEvHeader As String, mEvCount As Long
 ' Workbook layout, run.log, checkpoint export/resume, V0 performance log.
 ' Limit-state shadow for SRM only. Does not stop the analysis and does not change numerical PASS/FAIL.
 Private Const PHYS_REF_N As Long = 3
@@ -489,6 +490,7 @@ End Sub
 
 Private Sub FEMIoResetMeasureFiles(ByVal folderPath As String)
   Dim sep As String
+  FEMIoFlushEvents
   If Len(folderPath) = 0 Then Exit Sub
   sep = Application.PathSeparator
   FEMIoWriteNewCsv folderPath, "perf_summary.csv", P6CsvHeaderSummary()
@@ -827,6 +829,22 @@ Public Function P6RollWindowText(ByVal lambdaNow As Double) As String
   P6RollWindowText = s
 End Function
 
+' NATIVE_DLL=AUTO: solver_events.csv lines are buffered in memory and written
+' in blocks (same bytes, same order). Flushed every 512 lines, before any other
+' CSV append, at measure-file reset and when the analysis ends.
+Public Sub FEMIoFlushEvents()
+  Dim fileNum As Integer
+  If mEvCount = 0 Then Exit Sub
+  On Error Resume Next
+  fileNum = FreeFile
+  Open mEvPath For Append As #fileNum
+  If Dir$(mEvPath) = vbNullString Or LOF(fileNum) = 0 Then Print #fileNum, mEvHeader
+  Print #fileNum, mEvBuf;
+  Close #fileNum
+  mEvBuf = vbNullString: mEvCount = 0
+  Err.Clear
+End Sub
+
 Private Sub FEMIoAppendCsv(ByVal fileName As String, ByRef headerFlag As Boolean, ByVal headerText As String, ByVal lineText As String)
   Dim folderPath As String, pathText As String, fileNum As Integer, needHeader As Boolean
   If femIoMode = "OFF" Then Exit Sub
@@ -834,6 +852,16 @@ Private Sub FEMIoAppendCsv(ByVal fileName As String, ByRef headerFlag As Boolean
   folderPath = FEMIoOutDir()
   If Len(folderPath) = 0 Then Exit Sub
   pathText = folderPath & Application.PathSeparator & fileName
+  If fileName = "solver_events.csv" And FEMKernOn() Then
+    If mEvCount > 0 And mEvPath <> pathText Then FEMIoFlushEvents
+    mEvPath = pathText: mEvHeader = headerText
+    mEvBuf = mEvBuf & lineText & vbCrLf: mEvCount = mEvCount + 1
+    headerFlag = True
+    If mEvCount >= 512 Then FEMIoFlushEvents
+    Err.Clear
+    Exit Sub
+  End If
+  If mEvCount > 0 Then FEMIoFlushEvents
   needHeader = (Dir$(pathText) = vbNullString)
   fileNum = FreeFile
   Open pathText For Append As #fileNum

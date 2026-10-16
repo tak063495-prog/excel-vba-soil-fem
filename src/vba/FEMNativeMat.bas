@@ -22,7 +22,7 @@ Private mPar(0 To 15) As LongLong
 Private mOut(0 To 15) As LongLong
 #End If
 Private Const SFM_DLL As String = "soilfem_mat_x64.dll"
-Private Const SFM_API As Long = 3
+Private Const SFM_API As Long = 4
 Private Const SFM_MAT_STRIDE As Long = 16
 Private mChecked As Boolean, mAvailable As Boolean, mReason As String
 Private mMat() As Double
@@ -36,6 +36,7 @@ Public Sub FEMMatResetCounts()
   Dim i As Long
   FEMMatEvalCalls = 0: FEMMatEvalElements = 0: FEMMatDeclines = 0
   FEMMatTangentCalls = 0: FEMMatTangentElements = 0: FEMMatFallbacks = 0
+  FEMKernResetCounts
   For i = 0 To 7: FEMMatDeclineReason(i) = 0: Next i
 End Sub
 
@@ -62,7 +63,7 @@ Public Function FEMMatAvailable() As Boolean
   If mChecked Then FEMMatAvailable = mAvailable: Exit Function
   mChecked = True: mAvailable = False
   On Error GoTo LoadFailed
-  If FEMNativeModeText() <> "AUTO" Then mReason = FEMNativeModeText() & "_SELECTED": Exit Function
+  If FEMNativeModeText() <> "AUTO" And FEMNativeModeText() <> "MAT" Then mReason = FEMNativeModeText() & "_SELECTED": Exit Function
 #If Win64 Then
   path = ThisWorkbook.path & Application.PathSeparator & SFM_DLL
   If Len(Dir$(path)) = 0 Then mReason = "DLL_NOT_FOUND": Exit Function
@@ -271,6 +272,16 @@ Failed:
   Err.Clear
 #End If
 End Function
+
+#If Win64 Then
+Public Function FEMMatOffset(ByVal i As Long) As LongLong
+  FEMMatOffset = mOff(i)
+End Function
+Public Function FEMMatParamsPtr() As LongPtr
+  FEMMatCommonParams 0
+  FEMMatParamsPtr = VarPtr(mPar(0))
+End Function
+#End If
 
 Public Function FEMMatTangentDone(ByVal k As Long) As Boolean
   If Not mTangentOK Then Exit Function

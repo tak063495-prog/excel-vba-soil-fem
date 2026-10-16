@@ -37,7 +37,7 @@ __declspec(dllexport) int32_t __stdcall sfm_init(void) {
   c_pow = (fn2)(void (*)(void))GetProcAddress(m, "pow");
   if (!c_sin || !c_cos || !c_atan || !c_sqrt || !c_pow) return -2;
   g_ready = 1;
-  return 3; /* API version */
+  return 4; /* API version */
 }
 
 /* ---------- FPU flag helpers ---------- */
@@ -502,4 +502,384 @@ __declspec(dllexport) int32_t __stdcall sfm_tangent(const int64_t *P, int16_t *d
   if (fp_bad()) { fp_clear(); return 1; }
   fp_clear();
   return 0;
+}
+
+/* =====================================================================
+ * Phase C kernels (API 4): assembly, CSR/GMRES/ILU(0), regularized
+ * correction, residual metrics, RCM. Same x87 discipline as above: every
+ * VBA Double variable/array element is a C double (rounded on store),
+ * every expression is evaluated in xd. Loop order follows FEMSolver.bas.
+ * ===================================================================== */
+static inline double vsqr(double v) { return c_sqrt(v); }
+static inline int vfin(double v) { return is_finite(v); }
+
+/* SetTotalMat band scatter: band(row, col) += Elem(el).kmat(li, lj) */
+__declspec(dllexport) int32_t __stdcall sfm_band_scatter(int32_t n, const int32_t *row, const int32_t *col,
+    const int32_t *el, const int32_t *li, const int32_t *lj, double *band, int64_t ld,
+    const char *elemBase, int64_t stride, int64_t kmatOff) {
+  int32_t s;
+  if (!band || n < 0) return 1;
+  for (s = 0; s < n; s++) {
+    const double *K = (const double *)(elemBase + stride * (int64_t)el[s] + kmatOff);
+    double *a = &band[row[s] + (int64_t)col[s] * ld];
+    *a = (xd)*a + K[li[s] + 16 * lj[s]];
+  }
+  return 0;
+}
+
+/* P6AssembleCSRValuesDetailed */
+__declspec(dllexport) int32_t __stdcall sfm_csr_scatter(const int64_t *P, int32_t nnz, const int32_t *scStart,
+    const int32_t *scPos, const int32_t *scRow, const int32_t *scCol, double *vals, int64_t kmatOff) {
+  const char *base = (const char *)(intptr_t)P[0]; const int64_t *off = (const int64_t *)(intptr_t)P[1];
+  int nElem = (int)P[2]; int k, p, s;
+  for (p = 0; p < nnz; p++) vals[p] = 0.0;
+  for (k = 0; k < nElem; k++) {
+    const double *K;
+    if (!elem_active(P, k)) continue;
+    K = (const double *)(base + off[O_STRIDE] * (int64_t)k + kmatOff);
+    for (s = scStart[k]; s < scStart[k + 1]; s++) {
+      p = scPos[s];
+      if (p < 0 || p >= nnz) return 1;
+      vals[p] = (xd)vals[p] + K[scRow[s] + 16 * scCol[s]];
+    }
+  }
+  return 0;
+}
+
+static void csr_matvec(int32_t n, const int32_t *rp, const int32_t *ci, const double *v, const double *x, double *y) {
+  int32_t r, p;
+  for (r = 0; r < n; r++) {
+    y[r] = 0.0;
+    for (p = rp[r]; p < rp[r + 1]; p++) y[r] = (xd)y[r] + (xd)v[p] * x[ci[p]];
+  }
+}
+/* P6CSRMatVecResidualNorm: r = b - A x, returns ||r|| */
+static double csr_resnorm(int32_t n, const int32_t *rp, const int32_t *ci, const double *v, const double *x, const double *b, double *r) {
+  int32_t i; double rv, ss = 0.0;
+  csr_matvec(n, rp, ci, v, x, r);
+  for (i = 0; i < n; i++) { rv = (xd)b[i] - r[i]; r[i] = rv; ss = (xd)ss + (xd)rv * rv; }
+  if (ss <= 0.0) return 0.0;
+  return vsqr(ss);
+}
+__declspec(dllexport) int32_t __stdcall sfm_csr_resnorm(int32_t n, const int32_t *rp, const int32_t *ci, const double *v,
+    const double *x, const double *b, double *r, double *norm) {
+  if (!g_ready) return 1;
+  *norm = csr_resnorm(n, rp, ci, v, x, b, r);
+  return 0;
+}
+
+/* P6BuildCSRILU. out: [0]=failRow [1]=failCol ; minAbs. returns 1 ready, 0 failed */
+__declspec(dllexport) int32_t __stdcall sfm_ilu0(int32_t n, int32_t nnz, const int32_t *rp, const int32_t *ci, const int32_t *dp,
+    const double *vals, double *ilu, int32_t *fail, double *minAbs) {
+  int32_t r, p, kp, u, c, kc; double dk, m;
+  fail[0] = -1; fail[1] = -1; *minAbs = 1E+308;
+  if (nnz <= 0) return 0;
+  for (p = 0; p < nnz; p++) ilu[p] = vals[p];
+  for (r = 0; r < n; r++) {
+    for (p = rp[r]; p < rp[r + 1]; p++) {
+      c = ci[p];
+      if (c < r) {
+        dk = ilu[dp[c]];
+        if (!vfin(dk) || ABS(dk) <= 0.000000000001) { fail[0] = r; fail[1] = c; *minAbs = vfin(dk) ? (double)ABS(dk) : 0.0; return 0; }
+        m = (xd)ilu[p] / dk;
+        if (!vfin(m)) { fail[0] = r; fail[1] = c; *minAbs = ABS(dk); return 0; }
+        ilu[p] = m;
+        for (kp = rp[c]; kp < rp[c + 1]; kp++) {
+          kc = ci[kp];
+          if (kc > c) {
+            int32_t q; u = -1;
+            for (q = rp[r]; q < rp[r + 1]; q++) if (ci[q] == kc) { u = q; break; }
+            if (u >= 0) ilu[u] = (xd)ilu[u] - (xd)m * ilu[kp];
+          }
+        }
+      }
+    }
+    dk = ilu[dp[r]];
+    if (!vfin(dk) || ABS(dk) <= 0.000000000001) { fail[0] = r; fail[1] = r; *minAbs = vfin(dk) ? (double)ABS(dk) : 0.0; return 0; }
+    if (ABS(dk) < *minAbs) *minAbs = ABS(dk);
+  }
+  if (*minAbs == 1E+308) *minAbs = 0.0;
+  return 1;
+}
+
+static int ilu_apply(int32_t n, const int32_t *rp, const int32_t *ci, const double *ilu, const double *in, double *out) {
+  int32_t r, p, c; double rv, dv;
+  for (r = 0; r < n; r++) {
+    rv = in[r];
+    for (p = rp[r]; p < rp[r + 1]; p++) { c = ci[p]; if (c < r) rv = (xd)rv - (xd)ilu[p] * out[c]; }
+    out[r] = rv;
+  }
+  for (r = n - 1; r >= 0; r--) {
+    rv = out[r]; dv = 0.0;
+    for (p = rp[r]; p < rp[r + 1]; p++) { c = ci[p]; if (c == r) dv = ilu[p]; if (c > r) rv = (xd)rv - (xd)ilu[p] * out[c]; }
+    if (ABS(dv) <= 0.000000000001) return 0;
+    out[r] = (xd)rv / dv;
+  }
+  return 1;
+}
+
+/* Right-preconditioned restarted GMRES with ILU(0) = P6SolveCSRGMRES (ILU branch).
+ * G (int64): 0 n 1 rowptr 2 col 3 vals 4 ilu 5 rhs(Force) 6 x out(Disp) 7 work 8 restart 9 maxIter
+ *            10 events(double, 3 per event) 11 eventCap 12 out(double): [0]lastRes [1]iters [2]nEvents [3]overflow
+ * dtol: P6IterativeTolerance. returns 1 success (x written), 0 failure. */
+enum { EV_RESTART = 1, EV_NONFIN_TRUE = 2, EV_PREC = 3, EV_NONFIN_KRYLOV = 4, EV_ZERO_GIVENS = 5, EV_ZERO_UPPER = 6 };
+static void ev_push(double *ev, int64_t cap, double *o, int t, double a, double b) {
+  int64_t k = (int64_t)o[2];
+  if (k >= cap) { o[3] = 1.0; return; }
+  ev[3 * k] = t; ev[3 * k + 1] = a; ev[3 * k + 2] = b; o[2] = (double)(k + 1);
+}
+__declspec(dllexport) int32_t __stdcall sfm_gmres(const int64_t *G, double dtol) {
+  int32_t n = (int32_t)G[0]; const int32_t *rp = (const int32_t *)(intptr_t)G[1], *ci = (const int32_t *)(intptr_t)G[2];
+  const double *A = (const double *)(intptr_t)G[3], *ilu = (const double *)(intptr_t)G[4], *F = (const double *)(intptr_t)G[5];
+  double *X = (double *)(intptr_t)G[6], *wk = (double *)(intptr_t)G[7]; int32_t m = (int32_t)G[8], maxIt = (int32_t)G[9];
+  double *ev = (double *)(intptr_t)G[10]; int64_t cap = G[11]; double *o = (double *)(intptr_t)G[12];
+  double *V, *Z, *H, *cs, *sn, *g, *y, *b, *x, *r, *w;
+  int32_t i, j, k, pass, used, total = 0; int64_t ld = n, hl = (int64_t)m + 1;
+  double normB = 0.0, beta, nextNorm, inner, rot, tmp, residual, tol;
+  o[0] = 1E+100; o[1] = 0; o[2] = 0; o[3] = 0;
+  if (!g_ready || n < 1 || m < 1) return -1;
+  V = wk; Z = V + ld * (m + 1); H = Z + ld * m; cs = H + hl * m; sn = cs + m; g = sn + m; y = g + m + 1;
+  b = y + m; x = b + n; r = x + n; w = r + n;
+  for (i = 0; i < n; i++) {
+    if (!vfin(F[i])) return 0;
+    b[i] = F[i]; x[i] = 0.0;
+    normB = (xd)normB + (xd)F[i] * F[i];
+  }
+  normB = vsqr(normB);
+  if (!vfin(normB)) return 0;
+  if (normB <= 1E-30) { for (i = 0; i < n; i++) X[i] = 0.0; o[0] = 0.0; return 1; }
+  tol = (xd)dtol * normB;
+  while (total < maxIt) {
+    residual = csr_resnorm(n, rp, ci, A, x, b, r);
+    if (!vfin(residual)) { ev_push(ev, cap, o, EV_NONFIN_TRUE, total, 0); return 0; }
+    o[0] = (xd)residual / normB;
+    ev_push(ev, cap, o, EV_RESTART, total, o[0]);
+    if (residual <= tol) break;
+    beta = residual;
+    for (i = 0; i < n; i++) V[i] = (xd)r[i] / beta;
+    for (i = 0; i <= m; i++) g[i] = 0.0;
+    g[0] = beta; used = 0;
+    for (j = 0; j < m; j++) {
+      double *zj = Z + ld * j;
+      if (!ilu_apply(n, rp, ci, ilu, V + ld * j, zj)) { ev_push(ev, cap, o, EV_PREC, total, 0); return 0; }
+      csr_matvec(n, rp, ci, A, zj, w);
+      for (k = 0; k <= m; k++) H[k + hl * j] = 0.0;
+      for (pass = 1; pass <= 2; pass++) {
+        for (k = 0; k <= j; k++) {
+          const double *vk = V + ld * k;
+          inner = 0.0;
+          for (i = 0; i < n; i++) inner = (xd)inner + (xd)w[i] * vk[i];
+          H[k + hl * j] = (xd)H[k + hl * j] + inner;
+          for (i = 0; i < n; i++) w[i] = (xd)w[i] - (xd)inner * vk[i];
+        }
+      }
+      { double ss = 0.0, cv; for (i = 0; i < n; i++) { cv = w[i]; ss = (xd)ss + (xd)cv * cv; } nextNorm = (ss <= 0.0) ? 0.0 : vsqr(ss); }
+      H[j + 1 + hl * j] = nextNorm;
+      if (!vfin(nextNorm)) { ev_push(ev, cap, o, EV_NONFIN_KRYLOV, total, 0); return 0; }
+      if (nextNorm > 1E-30) { double *vn = V + ld * (j + 1); for (i = 0; i < n; i++) vn[i] = (xd)w[i] / nextNorm; }
+      for (k = 0; k <= j - 1; k++) {
+        tmp = (xd)cs[k] * H[k + hl * j] + (xd)sn[k] * H[k + 1 + hl * j];
+        H[k + 1 + hl * j] = (xd)(-sn[k]) * H[k + hl * j] + (xd)cs[k] * H[k + 1 + hl * j];
+        H[k + hl * j] = tmp;
+      }
+      { double p1 = c_pow(H[j + hl * j], 2.0), p2 = c_pow(H[j + 1 + hl * j], 2.0); double s2 = (xd)p1 + p2; rot = vsqr(s2); }
+      if (rot <= 1E-30) { ev_push(ev, cap, o, EV_ZERO_GIVENS, total, 0); break; }
+      cs[j] = (xd)H[j + hl * j] / rot; sn[j] = (xd)H[j + 1 + hl * j] / rot;
+      H[j + hl * j] = rot; H[j + 1 + hl * j] = 0.0;
+      tmp = (xd)cs[j] * g[j];
+      g[j + 1] = (xd)(-sn[j]) * g[j]; g[j] = tmp;
+      used = j + 1; total = total + 1; o[1] = total;
+      if (ABS(g[j + 1]) <= tol || nextNorm <= 1E-30 || total >= maxIt) break;
+    }
+    if (used < 1) return 0;
+    for (i = used - 1; i >= 0; i--) {
+      tmp = g[i];
+      for (k = i + 1; k <= used - 1; k++) tmp = (xd)tmp - (xd)H[i + hl * k] * y[k];
+      if (ABS(H[i + hl * i]) <= 1E-30) { ev_push(ev, cap, o, EV_ZERO_UPPER, total, 0); return 0; }
+      y[i] = (xd)tmp / H[i + hl * i];
+    }
+    for (k = 0; k <= used - 1; k++) { const double *zk = Z + ld * k; for (i = 0; i < n; i++) x[i] = (xd)x[i] + (xd)zk[i] * y[k]; }
+  }
+  residual = csr_resnorm(n, rp, ci, A, x, b, r);
+  if (!vfin(residual)) return 0;
+  o[0] = (xd)residual / normB;
+  if (residual > tol) return 0;
+  for (i = 0; i < n; i++) if (!vfin(x[i])) return 0;
+  for (i = 0; i < n; i++) X[i] = x[i];
+  return 1;
+}
+
+/* P6SolveResidualRecovery numeric core (column-scaled LM normal equations, band Cholesky).
+ * R (int64): 0 n 1 rowptr 2 col 3 origVals 4 nodeCond(int32) 5 force 6 disp out 7 bandWork (n*(bw+1)) 8 bw
+ *            9 vecWork (4n) 10 out(double) [0]normal_relres [1]factorDone
+ * returns 1 accepted (Disp written), 0 rejected */
+__declspec(dllexport) int32_t __stdcall sfm_regularized(const int64_t *R, double damping, double itTol) {
+  int32_t n = (int32_t)R[0]; const int32_t *rp = (const int32_t *)(intptr_t)R[1], *ci = (const int32_t *)(intptr_t)R[2];
+  const double *O = (const double *)(intptr_t)R[3]; const int32_t *nc = (const int32_t *)(intptr_t)R[4];
+  const double *F = (const double *)(intptr_t)R[5]; double *D = (double *)(intptr_t)R[6], *a = (double *)(intptr_t)R[7];
+  int32_t bw = (int32_t)R[8]; double *vw = (double *)(intptr_t)R[9], *o = (double *)(intptr_t)R[10];
+  double *rhs = vw, *sol = vw + n, *cs = vw + 2 * n; int64_t ld = n;
+  int32_t row, col, p, q, c1, c2, i, j, k, fc, lr; double v, normB = 0.0, nres = 0.0, tmp;
+#define A_(r, c) a[(r) + (int64_t)(c) * ld]
+  o[0] = 0; o[1] = 0;
+  if (!g_ready || n < 1 || bw < 0) return -1;
+  fp_clear();
+  for (i = 0; i < n; i++) { rhs[i] = 0.0; sol[i] = 0.0; cs[i] = 0.0; }
+  for (i = 0; i < n * (int64_t)(bw + 1); i++) a[i] = 0.0;
+  for (row = 0; row < n; row++) if (nc[row] == 0) {
+    if (!vfin(F[row])) return 0;
+    for (p = rp[row]; p < rp[row + 1]; p++) { col = ci[p]; if (nc[col] == 0) { v = O[p]; if (!vfin(v)) return 0; cs[col] = (xd)cs[col] + (xd)v * v; } }
+  }
+  for (col = 0; col < n; col++) { cs[col] = vsqr(cs[col]); if (cs[col] < 1E-30) cs[col] = 1.0; }
+  for (row = 0; row < n; row++) if (nc[row] == 0) {
+    for (p = rp[row]; p < rp[row + 1]; p++) {
+      c1 = ci[p];
+      if (nc[c1] == 0 && O[p] != 0.0) {
+        v = (xd)O[p] / cs[c1];
+        rhs[c1] = (xd)rhs[c1] + (xd)v * F[row];
+        for (q = p; q < rp[row + 1]; q++) {
+          c2 = ci[q];
+          if (nc[c2] == 0 && O[q] != 0.0) {
+            if (c2 < c1 || c2 - c1 > bw) return 0;
+            A_(c2, bw + c1 - c2) = (xd)A_(c2, bw + c1 - c2) + (xd)v * O[q] / cs[c2];
+          }
+        }
+      }
+    }
+  }
+  for (i = 0; i < n; i++) {
+    A_(i, bw) = (xd)A_(i, bw) + damping;
+    if (nc[i] != 0) A_(i, bw) = 1.0;
+    normB = (xd)normB + (xd)rhs[i] * rhs[i];
+  }
+  if (!vfin(normB) || normB <= 1E-60) return 0;
+  for (i = 0; i < n; i++) {
+    fc = i - bw; if (fc < 0) fc = 0;
+    for (j = fc; j <= i; j++) {
+      tmp = A_(i, bw + j - i);
+      for (k = fc; k <= j - 1; k++) if (j - k <= bw) tmp = (xd)tmp - (xd)A_(i, bw + k - i) * A_(j, bw + k - j);
+      if (i == j) { if (tmp <= 0.0 || !vfin(tmp)) return 0; A_(i, bw) = vsqr(tmp); }
+      else A_(i, bw + j - i) = (xd)tmp / A_(j, bw);
+    }
+    tmp = rhs[i];
+    for (j = fc; j <= i - 1; j++) tmp = (xd)tmp - (xd)A_(i, bw + j - i) * sol[j];
+    sol[i] = (xd)tmp / A_(i, bw);
+  }
+  o[1] = 1;
+  for (i = n - 1; i >= 0; i--) {
+    tmp = sol[i]; lr = i + bw; if (lr > n - 1) lr = n - 1;
+    for (j = i + 1; j <= lr; j++) tmp = (xd)tmp - (xd)A_(j, bw + i - j) * sol[j];
+    sol[i] = (xd)tmp / A_(i, bw);
+    if (!vfin(sol[i])) return 0;
+  }
+  for (row = 0; row < n; row++) if (nc[row] == 0) {
+    tmp = 0.0;
+    for (p = rp[row]; p < rp[row + 1]; p++) { col = ci[p]; if (nc[col] == 0) tmp = (xd)tmp + (xd)O[p] * sol[col] / cs[col]; }
+    for (p = rp[row]; p < rp[row + 1]; p++) { col = ci[p]; if (nc[col] == 0) rhs[col] = (xd)rhs[col] - (xd)O[p] * tmp / cs[col]; }
+  }
+  for (i = 0; i < n; i++) { tmp = (xd)rhs[i] - (xd)damping * sol[i]; nres = (xd)nres + (xd)tmp * tmp; }
+  if (!vfin(nres)) return 0;
+  { double q2 = (xd)nres / normB; o[0] = vsqr(q2); }
+  if (o[0] > itTol) return 0;
+  for (i = 0; i < n; i++) { D[i] = (xd)sol[i] / cs[i]; if (nc[i] != 0) D[i] = 0.0; }
+  fp_clear();
+  return 1;
+#undef A_
+}
+
+/* P3AccumulateResidualMetrics (non-mixed). M (int64): 0 n 1 internal 2 target 3 nodeCond 4 tdisp 5 reaction(0=lite)
+ * 6 boundaryDisp 7 stageStartDisp(0=not ready) 8 out(double)
+ * in: forceRef. out: 0 ResFull 1 ResFree 2 ForceFree 3 MaxAbsResFree 4 InternalFree 5 maxAbsDisp 6 dispForceSq
+ *     7 reactX 8 reactY 9 energyValue */
+__declspec(dllexport) int32_t __stdcall sfm_residual(const int64_t *M, double forceRef) {
+  int32_t n = (int32_t)M[0], i; const double *in = (const double *)(intptr_t)M[1], *tg = (const double *)(intptr_t)M[2];
+  const int32_t *nc = (const int32_t *)(intptr_t)M[3]; const double *td = (const double *)(intptr_t)M[4];
+  double *re = (double *)(intptr_t)M[5]; const double *bd = (const double *)(intptr_t)M[6], *sd = (const double *)(intptr_t)M[7];
+  double *o = (double *)(intptr_t)M[8]; int lite = (re == 0);
+  double rf = 0, rs = 0, fs = 0, is = 0, mr = 0, md = 0, dfs = 0, rx = 0, ry = 0, en = 0, rv;
+  if (!g_ready) return 1;
+  for (i = 0; i < n; i++) {
+    rv = (xd)in[i] - tg[i];
+    if (!lite) re[i] = rv;
+    if (ABS(rv) > rf) rf = ABS(rv);
+    if (nc[i] == 0) {
+      rs = (xd)rs + (xd)rv * rv; fs = (xd)fs + (xd)tg[i] * tg[i]; is = (xd)is + (xd)in[i] * in[i];
+      if (ABS(rv) > mr) mr = ABS(rv);
+      if (ABS(td[i]) > md) md = ABS(td[i]);
+    } else {
+      if (forceRef <= 0.000000000001) {
+        int dd = (ABS(bd[i]) > 1E-30);
+        if (!dd && sd) dd = (ABS(sd[i]) > 1E-30);
+        if (dd) dfs = (xd)dfs + (xd)in[i] * in[i];
+      }
+      if (!lite) { if (i % 2 == 0) rx = (xd)rx + rv; else ry = (xd)ry + rv; }
+    }
+    if (!lite) en = (xd)en + (xd)td[i] * rv;
+  }
+  o[0] = rf; o[1] = vsqr(rs); o[2] = vsqr(fs); o[3] = mr; o[4] = vsqr(is); o[5] = md; o[6] = dfs; o[7] = rx; o[8] = ry; o[9] = en;
+  return 0;
+}
+
+/* ---------- RCM (P6BuildRCMOrdering + P6ComputeRCMCandidateBandwidth) ---------- */
+static void *halloc(size_t n) { return HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, n ? n : 1); }
+static void hfree(void *p) { if (p) HeapFree(GetProcessHeap(), 0, p); }
+/* nodes: nElem*8 (Elem.node), elnode: nElem*16 (Elem.ElNode). returns 0 ok, 1 range error, 2 alloc, 3 count */
+__declspec(dllexport) int32_t __stdcall sfm_rcm(int32_t nNode, int32_t nElem, const int32_t *nodes, const int32_t *elnode,
+    int32_t *oldToNew, int32_t *newToOld, int32_t *candBw) {
+  int32_t *deg = 0, *cap = 0, **adj = 0, *queue = 0, *cm = 0, *nb = 0; char *vis = 0;
+  int32_t e, a, b2, i, j, rc = 0, cmCount = 0, maxDeg = 0;
+  if (nNode <= 0 || nElem <= 0) return 3;
+  deg = halloc(sizeof(int32_t) * nNode); cap = halloc(sizeof(int32_t) * nNode); adj = halloc(sizeof(int32_t *) * nNode);
+  queue = halloc(sizeof(int32_t) * nNode); cm = halloc(sizeof(int32_t) * nNode); vis = halloc(nNode);
+  if (!deg || !cap || !adj || !queue || !cm || !vis) { rc = 2; goto done; }
+#define ADDN(x, y) do { int32_t _t; for (_t = 0; _t < deg[x]; _t++) if (adj[x][_t] == (y)) break; \
+    if (_t == deg[x]) { if (deg[x] == cap[x]) { int32_t nc2 = cap[x] ? cap[x] * 2 : 16; int32_t *np = halloc(sizeof(int32_t) * nc2); \
+      if (!np) { rc = 2; goto done; } for (_t = 0; _t < deg[x]; _t++) np[_t] = adj[x][_t]; hfree(adj[x]); adj[x] = np; cap[x] = nc2; } \
+      adj[x][deg[x]++] = (y); } } while (0)
+  for (e = 0; e < nElem; e++) for (i = 0; i < 8; i++) {
+    a = nodes[e * 8 + i]; if (a < 0) continue;
+    for (j = i + 1; j < 8; j++) {
+      b2 = nodes[e * 8 + j]; if (b2 < 0) continue;
+      if (b2 >= nNode || a >= nNode) { rc = 1; goto done; }
+      ADDN(a, b2); ADDN(b2, a);
+    }
+  }
+  for (i = 0; i < nNode; i++) if (deg[i] > maxDeg) maxDeg = deg[i];
+  nb = halloc(sizeof(int32_t) * (maxDeg + 1)); if (!nb) { rc = 2; goto done; }
+  while (cmCount < nNode) {
+    int32_t start = -1, sd = nNode + 1, head = 0, tail = 0;
+    for (i = 0; i < nNode; i++) if (!vis[i] && deg[i] < sd) { start = i; sd = deg[i]; }
+    if (start < 0) break;
+    queue[0] = start; vis[start] = 1;
+    while (head <= tail) {
+      int32_t cur = queue[head++], cnt, o2, in2;
+      cm[cmCount++] = cur;
+      cnt = deg[cur];
+      for (i = 0; i < cnt; i++) nb[i] = adj[cur][i];
+      for (o2 = 1; o2 < cnt; o2++) { /* P6SortRCMNeighbors */
+        int32_t key = nb[o2]; in2 = o2 - 1;
+        while (in2 >= 0) { int32_t pv = nb[in2]; int mv = (deg[pv] > deg[key]) || (deg[pv] == deg[key] && pv > key);
+          if (!mv) break; nb[in2 + 1] = pv; in2--; }
+        nb[in2 + 1] = key;
+      }
+      for (i = 0; i < cnt; i++) { int32_t q = nb[i]; if (!vis[q]) { if (tail >= nNode - 1) { rc = 1; goto done; } queue[++tail] = q; vis[q] = 1; } }
+    }
+  }
+  if (cmCount != nNode) { rc = 3; goto done; }
+  for (i = 0; i < nNode; i++) { int32_t nd = cm[nNode - 1 - i]; newToOld[i] = nd; oldToNew[nd] = i; }
+  { int32_t bw = 0, li, lj, na, nb2, da, db, df;
+    for (e = 0; e < nElem; e++) for (li = 0; li < 16; li++) {
+      if (elnode[e * 16 + li] < 0) continue; na = nodes[e * 8 + li / 2]; if (na < 0) continue;
+      da = 2 * oldToNew[na] + li - (li / 2) * 2;
+      for (lj = 0; lj < 16; lj++) {
+        if (elnode[e * 16 + lj] < 0) continue; nb2 = nodes[e * 8 + lj / 2]; if (nb2 < 0) continue;
+        db = 2 * oldToNew[nb2] + lj - (lj / 2) * 2; df = db - da; if (df < 0) df = -df; if (df > bw) bw = df;
+      }
+    }
+    *candBw = bw; }
+done:
+  if (adj) for (i = 0; i < nNode; i++) hfree(adj[i]);
+  hfree(adj); hfree(deg); hfree(cap); hfree(queue); hfree(cm); hfree(vis); hfree(nb);
+  return rc;
+#undef ADDN
 }

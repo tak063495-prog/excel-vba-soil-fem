@@ -69,6 +69,7 @@ Private Sub SaveApplicationState()
 End Sub
 
 Private Sub RestoreApplicationState()
+    FEMIoFlushEvents
     If applicationStateSaved Then
         Application.ScreenUpdating = savedScreenUpdating
         Application.EnableEvents = savedEnableEvents

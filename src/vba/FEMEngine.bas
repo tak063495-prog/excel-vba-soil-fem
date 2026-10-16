@@ -2264,10 +2264,19 @@ Private Sub P3AccumulateResidualMetrics(ByRef targetForce() As Double, ByRef int
   Dim i As Long, residualValue As Double, residualSquare As Double, forceSquare As Double, internalSquare As Double
   Dim energyValue As Double, energyScale As Double, dispScale As Double, maxAbsDisp As Double
   Dim pressureIndex As Long, displacementForceSquare As Double, displacementDriven As Boolean
+  Dim kOut(0 To 9) As Double
   ResidualNormFull = 0#: ResidualNormFree = 0#: ForceNormFree = 0#: MaxAbsResidualFree = 0#
   If Not lite Then
     P6ReactionSumX = 0#: P6ReactionSumY = 0#
     P6EnsureReactionWorkspace
+  End If
+  If Not P6MixedUP Then
+    If FEMKernResidual(internalForce, targetForce, lite, P3ForceRef, kOut) Then
+      ResidualNormFull = kOut(0): ResidualNormFree = kOut(1): ForceNormFree = kOut(2): MaxAbsResidualFree = kOut(3)
+      P3InternalNormFree = kOut(4): maxAbsDisp = kOut(5): displacementForceSquare = kOut(6)
+      If Not lite Then P6ReactionSumX = kOut(7): P6ReactionSumY = kOut(8): energyValue = kOut(9)
+      GoTo ResidualTail
+    End If
   End If
   For i = 0 To lastDof
     residualValue = internalForce(i) - targetForce(i)
@@ -2312,6 +2321,7 @@ Private Sub P3AccumulateResidualMetrics(ByRef targetForce() As Double, ByRef int
   ResidualNormFree = Sqr(residualSquare)
   ForceNormFree = Sqr(forceSquare)
   P3InternalNormFree = Sqr(internalSquare)
+ResidualTail:
   If maxAbsDisp > P3MaxTrialDisp Then P3MaxTrialDisp = maxAbsDisp
   energyScale = ForceNormFree
   If P3InternalNormFree > energyScale Then energyScale = P3InternalNormFree

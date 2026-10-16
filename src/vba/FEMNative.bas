@@ -28,7 +28,7 @@ Public FEMNativeFactorCalls As Long, FEMNativeSolveCalls As Long, FEMNativeNsCal
 ' Test/diagnostic switch: "AUTO", "BAND", "OFF" or "" (= follow NATIVE_DLL setting).
 Public Sub FEMNativeSetMode(ByVal modeText As String)
   modeText = UCase$(Trim$(modeText))
-  mForcedSet = (modeText = "AUTO" Or modeText = "OFF" Or modeText = "BAND")
+  mForcedSet = (modeText = "AUTO" Or modeText = "OFF" Or modeText = "BAND" Or modeText = "MAT")
   mForcedOff = (modeText = "OFF")
   mForcedText = modeText
   mChecked = False: mAvailable = False
@@ -59,6 +59,8 @@ Public Function FEMNativeModeText() As String
     FEMNativeModeText = "OFF"
   ElseIf modeText = "BAND" Then
     FEMNativeModeText = "BAND"
+  ElseIf modeText = "MAT" Then
+    FEMNativeModeText = "MAT"
   Else
     FEMNativeModeText = "AUTO"
   End If
