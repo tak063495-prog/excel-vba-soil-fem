@@ -12,7 +12,7 @@ Public Function TRun(ByVal modeText As String) As String
   FEMNativeSetMode modeText
   t = Timer
   P0_RunAnalysis
-  TRun = CStr(Timer - t) & "|" & ResultStatus & "|" & CStr(AnalysisOK) & "|" & CStr(RelativeResidualFree) & "|" & CStr(P3SuccessfulIncrementCount) & "|" & CStr(P6FactorizationCount) & "|" & CStr(P6FactorizationReuseCount) & "|" & CStr(P3ActivePlasticPointCount) & "|" & FEMNativeStatusText() & "|" & CStr(P6ProfFactorMs) & "|" & CStr(P6ProfSolveMs) & "|" & CStr(P6ProfEvalMs) & "|" & CStr(P6ProfTangentMs) & "|" & AnalysisMessage
+  TRun = CStr(Timer - t) & "|" & ResultStatus & "|" & CStr(AnalysisOK) & "|" & CStr(RelativeResidualFree) & "|" & CStr(P3SuccessfulIncrementCount) & "|" & CStr(P6FactorizationCount) & "|" & CStr(P6FactorizationReuseCount) & "|" & CStr(P3ActivePlasticPointCount) & "|" & FEMNativeStatusText() & "|" & CStr(P6ProfFactorMs) & "|" & CStr(P6ProfSolveMs) & "|" & CStr(P6ProfEvalMs) & "|" & CStr(P6ProfTangentMs) & "|" & AnalysisMessage & "|" & FEMMatStatusText()
   Exit Function
 Failed:
   TRun = "ERROR|" & CStr(Err.Number) & "|" & Err.Description

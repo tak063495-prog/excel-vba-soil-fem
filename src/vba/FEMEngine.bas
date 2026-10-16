@@ -1691,11 +1691,16 @@ Private Function P3RebuildTangentFromSpmat() As Boolean
   Dim hasSpmat As Boolean
   Dim t0 As Double
   Dim errNum As Long, errSrc As String, errDesc As String
+  Dim nativeTangent As Boolean
   P3RebuildTangentFromSpmat = False
   FEMLastProc = "P3RebuildTangentFromSpmat"
   t0 = Timer
   On Error GoTo TangentFail
   P6EnsureGaussCache
+  ' Native element tangents (Spmat repair + SetElmStiffness) for all eligible
+  ' elements in one call; hourglass, checks and flags stay below in VBA.
+  nativeTangent = False
+  If FEMMatAvailable() Then nativeTangent = FEMMatTangent(P3IncoElasticCorrection, P3FlowPolicyIsInconsistent())
   For k = 0 To NumberOfElement - 1
     If P3IsElementActive(k) Then
       materialIndex = Elem(k).MatNo
@@ -1711,6 +1716,8 @@ Private Function P3RebuildTangentFromSpmat() As Boolean
       ' rebuild every active element from the currently evaluated Spmat.
       If Not Elem(k).TangentDirty And Not P3FlowPolicyIsInconsistent() Then GoTo NextTangentElement
       If materialIndex >= 0 And materialIndex <= UBound(Material) Then
+        If nativeTangent Then hasSpmat = FEMMatTangentDone(k) Else hasSpmat = False
+        If Not hasSpmat Then
         For im = 0 To 3
           If Not Elem(k).SpmatValid(im) Then
             For i = 0 To 2
@@ -1726,6 +1733,7 @@ Private Function P3RebuildTangentFromSpmat() As Boolean
           SetElmStiffness Material(materialIndex).thickness, Material(materialIndex).weight, Elem(k).Bmat, Elem(k).Smat, Elem(k).kmat, Elem(k).ElmWeight, Elem(k).dj, P6GaussN
         Else
         SetElmStiffness Material(materialIndex).thickness, Material(materialIndex).weight, Elem(k).Bmat, Elem(k).Spmat, Elem(k).kmat, Elem(k).ElmWeight, Elem(k).dj, P6GaussN
+        End If
         End If
         ' Full Newton uses the material force's derivative. Retain numerical
         ' stabilization only in the elastic fallback correction operator.
@@ -2172,6 +2180,7 @@ End Sub
 Private Function P3EvaluateTrialState(ByRef incrementBase() As Double, ByRef internalForce() As Double) As Boolean
   Dim i As Long, j As Long, k As Long, materialIndex As Long
   Dim t0 As Double
+  Dim nativeOn As Boolean, nativeNext As Long, nativeFlags As Long
   t0 = Timer
   P3EvaluateTrialState = False
   P3TrialStateValid = False
@@ -2179,7 +2188,27 @@ Private Function P3EvaluateTrialState(ByRef incrementBase() As Double, ByRef int
   For i = 0 To lastDof
     iNForce(i) = 0#
   Next i
+  ' Native material/force kernel (FEMNativeMat): evaluates runs of elements in
+  ' order and stops at the first element it does not handle, which the
+  ' unchanged VBA code below evaluates. Force sums keep the element order.
+  nativeOn = FEMMatAvailable()
+  If nativeOn Then
+    If CurrentIncrement >= 0 Then nativeFlags = 1
+    If P3TrialStateInitialized Then nativeFlags = nativeFlags Or 2
+    If P3SrmEnabled And P3FlowPolicyIsInconsistent() Then nativeFlags = nativeFlags Or 4
+  End If
+  nativeNext = 0
   For k = 0 To NumberOfElement - 1
+    If nativeOn Then
+      If k >= nativeNext Then
+        nativeNext = FEMMatEval(k, incrementBase, nativeFlags)
+        If nativeNext > k Then
+          k = nativeNext - 1
+          GoTo NextEvalElement
+        End If
+        nativeNext = k + 1
+      End If
+    End If
     If Not P3IsElementActive(k) Then GoTo NextEvalElement
     materialIndex = Elem(k).MatNo
     FailureElement = k
