@@ -2640,6 +2640,7 @@ Private Function P3RunLoadStages() As Boolean
   Dim predictorUsed As Boolean, accelerationRetried As Boolean, correctionBuilt As Boolean
   Dim logStepAction As String, recoveryRatio As Double, boundedNextStep As Double
   Dim stagnationCount As Long, elasticRetried As Boolean, newtonRetried As Boolean, elasticPreference As Boolean
+  Dim elWinRes As Double, elWinIter As Long, elRate As Double, elNeed As Double
   P3IncoElasticCorrection = False
   P3ApplyNewtonPolicy P3RunLogKind
   If P3SrmEnabled And P3FlowPolicyIsInconsistent() Then P6SolverEvent "SRM_MATERIAL_FORCE", "hourglass_force=False;newton_hourglass_tangent=False;elastic_hourglass_tangent=iteration_regularization"
@@ -2757,6 +2758,7 @@ P3RetrySameIncrement:
       P3ClearTransientFailure
       mAccelAttemptFailure = "": mLineSearchFailure = "": mLineSearchTries = 0: mLineSearchMaterialRejects = 0: mLineSearchBestQ = -1#
       localIteration = 0: correctionRatio = 0#: converged = False: stagnationCount = 0
+      elWinRes = 0#: elWinIter = 0
       P6LsWatch = False
       P3PrevResidualNorm = 0#
       P3TangentStaleIters = 0
@@ -2889,6 +2891,31 @@ P3RetrySameIncrement:
               mAccelAttemptFailure = "GLOBAL_STAGNATION"
               SetAnalysisFailure RESULT_NONCONVERGED, "非関連流れの全体反復が停滞しました。残差が許容値に達していないため増分を縮小します。", vbObjectError + 3202, FailureElement, FailureGaussPoint, CurrentIncrement, CurrentIteration
               Exit Do
+            End If
+          End If
+          ' Elastic-correction contraction guard (INCONSISTENT only; DAVIS never enters).
+          ' Near the limit load the elastic iteration contracts too slowly to reach the
+          ' engineering residual within its budget; burning the full budget only delays
+          ' the same cutback. Measure the geometric rate over 50-iteration windows from
+          ' iteration 50 and stop when the projected count exceeds the remaining budget.
+          If P3IncoElasticCorrection And RelativeResidualFree > P3_ENGINEERING_RESIDUAL Then
+            If localIteration >= 50 And elWinIter = 0 Then
+              elWinRes = RelativeResidualFree: elWinIter = localIteration
+            ElseIf elWinIter > 0 And localIteration - elWinIter >= 50 Then
+              If localIteration >= P3_INCO_MAX_GLOBAL_ITERATIONS And elWinRes > 0# Then
+                elNeed = 1E+30
+                If RelativeResidualFree < elWinRes Then
+                  elRate = Log(RelativeResidualFree / elWinRes) / CDbl(localIteration - elWinIter)
+                  If elRate < 0# Then elNeed = Log(P3_ENGINEERING_RESIDUAL / RelativeResidualFree) / elRate
+                End If
+                If elNeed > CDbl(P3GlobalIterationLimit() - localIteration) Then
+                  P6SolverEvent "ELASTIC_SLOW_CONTRACTION", "iterations=" & CStr(localIteration) & ";relres=" & Format$(RelativeResidualFree, "0.000E+00") & ";window_relres=" & Format$(elWinRes, "0.000E+00") & ";projected=" & Format$(elNeed, "0.000E+00")
+                  mAccelAttemptFailure = "ELASTIC_STAGNATION"
+                  SetAnalysisFailure RESULT_NONCONVERGED, "非関連流れの弾性補正反復の収束速度が不足しています（予測反復数が上限超過）。増分を縮小します。", vbObjectError + 3202, FailureElement, FailureGaussPoint, CurrentIncrement, CurrentIteration
+                  Exit Do
+                End If
+              End If
+              elWinRes = RelativeResidualFree: elWinIter = localIteration
             End If
           End If
           If femIoMode = "ITER" Or P3GlobalIterationCount <= 12 Then P3TraceIteration "correction"

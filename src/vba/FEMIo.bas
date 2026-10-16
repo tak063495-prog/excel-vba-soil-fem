@@ -475,6 +475,7 @@ Public Sub FEMIoBegin()
   femIoLastFlush = Timer
   On Error GoTo 0
   FEMAppendRunLog "SOLVER", "KERNEL", "BandLUKernel=" & P6BandKernelName()
+  FEMAppendRunLog "SOLVER", "NATIVE", "NativeDLL=" & FEMNativeStatusText()
   If femIoMode <> "OFF" Then FEMIoResetMeasureFiles folderPath
 End Sub
 
@@ -1955,6 +1956,7 @@ Private Sub P6PerfWriteSummary()
   lineText = lineText & "TimeEval_ms=" & Format$(P6ProfEvalMs, "0") & vbCrLf
   lineText = lineText & "SolverMode=" & P6SolverMode & vbCrLf
   lineText = lineText & "BandLUKernel=" & P6BandKernelName() & vbCrLf
+  lineText = lineText & "NativeDLL=" & FEMNativeStatusText() & vbCrLf
   If P6FactorizationCount > 0 Then
     lineText = lineText & "FactorAvgMs=" & Format$(P6ProfFactorMs / CDbl(P6FactorizationCount), "0.000") & vbCrLf
   Else
