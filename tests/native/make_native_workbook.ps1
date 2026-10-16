@@ -1,4 +1,4 @@
-﻿param([string]$Src,[string]$Dst,[string]$ModDir)
+﻿param([string]$Src,[string]$Dst,[string]$ModDir,[string]$Modules='FEMSolver,FEMIo,FEMCore')
 $ErrorActionPreference='Stop'
 $before=@(Get-Process EXCEL -ErrorAction SilentlyContinue|%{$_.Id})
 if($before.Count -gt 0){throw "Another Excel is running: $before"}
@@ -9,7 +9,7 @@ Set-Content "$Dst.running" "pid=$xpid"
 try{
  $xl.EnableEvents=$false;$xl.DisplayAlerts=$false;$xl.AutomationSecurity=1
  $wb=$xl.Workbooks.Open($Dst,0,$false)
- foreach($m in 'FEMSolver','FEMIo','FEMCore'){
+ foreach($m in $Modules.Split(',')){
   $cm=$wb.VBProject.VBComponents.Item($m).CodeModule
   $cm.DeleteLines(1,$cm.CountOfLines)
   $cm.AddFromString((Get-Content (Join-Path $ModDir "$m.bas") -Raw -Encoding UTF8))

@@ -16,8 +16,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 11303,
-    "sha256": "ca57e797a6353a3e0482f8b1c08436977b62d84fa645361a8d9e3ea3b4efe2b1"
+    "bytes": 11444,
+    "sha256": "f724c8cddad6175946d7464ef04b3e2a02cde418fb06f1b26a905fb7e9545c87"
   },
   {
     "path": "docs/ACCELERATION_HISTORY.md",
@@ -51,8 +51,8 @@
   },
   {
     "path": "docs/NATIVE_DLL.md",
-    "bytes": 7215,
-    "sha256": "42eb21bcd31ec067d2d9808d22037a93f195710e9cf65a745d89b5af504cfe15"
+    "bytes": 9773,
+    "sha256": "0cc9fa68e42682b4fb6a5d2c726de07fd95b1283541d593a0031e88d2f8c3a12"
   },
   {
     "path": "docs/PRACTICAL_SRM_VALIDATION.md",
@@ -495,6 +495,16 @@
     "sha256": "3ec12f7c1d9d41f74fca88f1a254221bf84eb8f905a7b89549338fd337089d02"
   },
   {
+    "path": "docs/native-evidence/smokesrm_davis_20261017.json",
+    "bytes": 131383,
+    "sha256": "cd38fa176b761121c13e0dd8f38fdf2e696e34f99e727f7501059e9dbbcd2876"
+  },
+  {
+    "path": "docs/native-evidence/smokesrm_inconsistent_case1_20261017.json",
+    "bytes": 14019,
+    "sha256": "f8be31a8acc412520183a15b53faa18d42cfa145d03498070d264891b6487bdb"
+  },
+  {
     "path": "docs/practical-evidence/check_nonsymmetric_solver.json",
     "bytes": 13914,
     "sha256": "c0de0fc9bdbf1040568eb81f21a653c8ef42c2d645c4a7b15275851ac89e8308"
@@ -792,12 +802,12 @@
   {
     "path": "src/vba/FEMCore.bas",
     "bytes": 54175,
-    "sha256": "9c1f5d43fa61db3972390bf5f6153489ed55e8122681d25d75fc202255e05155"
+    "sha256": "7aa3b4d870e13c7aea10e8d42e8f43bc05b32e3f8ffcc4d21bbaecf7a5c1c399"
   },
   {
     "path": "src/vba/FEMEngine.bas",
-    "bytes": 283740,
-    "sha256": "c37fb50ab84c541686f5b509ee69ef0f80bfa0e4580aae8c8008026aea55d96a"
+    "bytes": 285904,
+    "sha256": "ae0aa9f380afd6eb44fdd88a1d0b8beb13c6028f017ee1d83f9d9fd708b4b34e"
   },
   {
     "path": "src/vba/FEMIncrementLog.bas",
@@ -1141,13 +1151,13 @@
   },
   {
     "path": "tests/native/make_native_workbook.ps1",
-    "bytes": 1515,
-    "sha256": "2657811c2eec5952575567b1488b3da65d86edda4daad896a3a668d40e3ae845"
+    "bytes": 1548,
+    "sha256": "85d746cd6e323f7a6fe3dd287d341937368a69a177550f9e25c5dcb33ac0f76f"
   },
   {
     "path": "tests/native/run_native_compare.ps1",
-    "bytes": 4339,
-    "sha256": "0e18fe27e367f08459d261a487a1483469860a3d0000c5b4806f3b3e30e4e289"
+    "bytes": 4860,
+    "sha256": "d426a1ac401cb165074982b65d3a929ec7c0d3df288bf287ca756b56513cf014"
   },
   {
     "path": "tests/run.ps1",
@@ -1208,6 +1218,11 @@
     "path": "workbook/2DSoilFEM_native_20261016_2222.xlsm",
     "bytes": 2922890,
     "sha256": "f69faede03297f17802d7edd26c348b7614e81ab210d979c9f8a2ec64d79c6d6"
+  },
+  {
+    "path": "workbook/2DSoilFEM_native_20261017_0505.xlsm",
+    "bytes": 2927748,
+    "sha256": "f7fc63095252e7bcb05752b2f83a5e9d9f7bbbc981e82e88642b66ff885e1a3c"
   },
   {
     "path": "workbook/soilfem_native_x64.dll",

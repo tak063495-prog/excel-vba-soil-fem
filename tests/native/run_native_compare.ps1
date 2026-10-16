@@ -17,6 +17,17 @@ Public Function TRun(ByVal modeText As String) As String
 Failed:
   TRun = "ERROR|" & CStr(Err.Number) & "|" & Err.Description
 End Function
+Public Function TFos() As String
+  Dim ws As Worksheet, r As Long
+  On Error GoTo Failed
+  Set ws = ThisWorkbook.Worksheets("ステージ結果")
+  For r = 2 To ws.Cells(ws.Rows.Count, 1).End(xlUp).Row
+    TFos = TFos & CStr(ws.Cells(r, 2).Value2) & ":" & CStr(ws.Cells(r, 3).Value2) & ":" & CStr(ws.Cells(r, 5).Value2) & ":" & CStr(ws.Cells(r, 10).Value2) & ";"
+  Next r
+  Exit Function
+Failed:
+  TFos = "ERR"
+End Function
 Public Function TDispV() As Variant
   TDispV = TDisp
 End Function
@@ -34,7 +45,7 @@ try{
  SetS $wb 'EXPORT_MODE' 'OFF'; SetS $wb 'EXPORT_LOAD' ''
  if($Flow -ne ''){SetS $wb 'FLOW_POLICY' $Flow}
  $runs=@()
- if($Suite -eq 'smoke'){
+ if($Suite -like 'smoke*'){
   $mesh=Get-Content (Join-Path $root 'smoke_mesh.json') -Raw|ConvertFrom-Json
   SetRows $wb '要素データ' $mesh.elements 10
   $wb.Worksheets.Item('載荷').Range('A2:F100').ClearContents()
@@ -49,7 +60,7 @@ try{
    $nodes=[Collections.Generic.List[object]]::new();foreach($n in $mesh.nodes){$a=@($n);$a[1]=[double]$a[1]*$sc;$a[2]=[double]$a[2]*$sc;$nodes.Add($a)}
    SetRows $wb '節点データ' $nodes 9
    $wm=$wb.Worksheets.Item('材料データ');$wm.Cells(2,6).Value2=$c[2];$wm.Cells(2,7).Value2=$c[1]
-   SetS $wb 'SRM_FIXED_FS' $c[3]
+   SetS $wb 'SRM_FIXED_FS' $(if($Suite -eq 'smokesrm'){0}else{$c[3]})
    foreach($k in 'ACCEL_V1_PREDICTOR','ACCEL_V2A_REUSE','ACCEL_V2B_COST','ACCEL_V3_COST_SEARCH','ACCEL_V4_ANDERSON','ACCEL_V5_GMRES_LU'){SetS $wb $k 0}
    SetS $wb 'ACCEL_ADAPTIVE' 0
    if($v -eq 'adaptive'){SetS $wb 'ACCEL_ADAPTIVE' 1;foreach($k in 'ACCEL_V1_PREDICTOR','ACCEL_V2A_REUSE','ACCEL_V4_ANDERSON'){SetS $wb $k 1}}
@@ -60,9 +71,10 @@ try{
    Set-Content "$copy.running" "pid=$xpid case=$name/$v/$mode start=$(Get-Date -Format s)"
    $t=$xl.Run("'"+$wb.Name+"'!TRun",$mode)
    $d=@($xl.Run("'"+$wb.Name+"'!TDispV"))
-   $res.Add([PSCustomObject]@{Case=$name;Variant=$v;Mode=$mode;Run=$t;Disp=$d})
+   $fos=$xl.Run("'"+$wb.Name+"'!TFos")
+   $res.Add([PSCustomObject]@{Case=$name;Variant=$v;Mode=$mode;Run=$t;Fos=$fos;Disp=$d})
    $res|ConvertTo-Json -Depth 4|Set-Content $Out -Encoding UTF8
-   Write-Output "$name $v $mode $t"
+   Write-Output "$name $v $mode $t FOS=$fos"
   }
  }
  $wb.Close($false)
