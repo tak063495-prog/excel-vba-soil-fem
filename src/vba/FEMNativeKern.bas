@@ -12,16 +12,21 @@ Private Declare PtrSafe Function SfmGmres Lib "soilfem_mat_x64.dll" Alias "sfm_g
 Private Declare PtrSafe Function SfmRegularized Lib "soilfem_mat_x64.dll" Alias "sfm_regularized" (ByVal params As LongPtr, ByVal damping As Double, ByVal itTol As Double) As Long
 Private Declare PtrSafe Function SfmResidual Lib "soilfem_mat_x64.dll" Alias "sfm_residual" (ByVal params As LongPtr, ByVal forceRef As Double) As Long
 Private Declare PtrSafe Function SfmRcm Lib "soilfem_mat_x64.dll" Alias "sfm_rcm" (ByVal nNode As Long, ByVal nElem As Long, ByVal nodes As LongPtr, ByVal elnode As LongPtr, ByVal o2n As LongPtr, ByVal n2o As LongPtr, ByRef candBw As Long) As Long
+Private Declare PtrSafe Function SfmHgApply Lib "soilfem_mat_x64.dll" Alias "sfm_hg_apply" (ByVal params As LongPtr, ByVal tdone As LongPtr, ByVal hgdone As LongPtr, ByVal unsym As LongPtr, ByVal hoff As LongPtr, ByVal shapeGen As Long, ByVal hgFactor As Double, ByVal applyHg As Long) As Long
 Private mG(0 To 15) As LongLong
+Private mHOff(0 To 7) As LongLong
 Private mOutD(0 To 15) As Double
 #End If
 Public FEMKernScatterCalls As Long, FEMKernGmresCalls As Long, FEMKernIluCalls As Long, FEMKernRegCalls As Long
 Public FEMKernResidualCalls As Long, FEMKernRcmCalls As Long, FEMKernResNormCalls As Long, FEMKernDeclines As Long
+Private mHgDone() As Integer, mUnsym() As Integer, mHgOK As Boolean
+Public FEMKernHgCalls As Long, FEMKernHgApplied As Long
 Private mWork() As Double, mEv() As Double, mVec() As Double, mBand() As Double
 
 Public Sub FEMKernResetCounts()
   FEMKernScatterCalls = 0: FEMKernGmresCalls = 0: FEMKernIluCalls = 0: FEMKernRegCalls = 0
   FEMKernResidualCalls = 0: FEMKernRcmCalls = 0: FEMKernResNormCalls = 0: FEMKernDeclines = 0
+  FEMKernHgCalls = 0: FEMKernHgApplied = 0
 End Sub
 
 Public Function FEMKernOn() As Boolean
@@ -33,7 +38,7 @@ End Function
 Public Function FEMKernStatusText() As String
   If FEMKernOn() Then
     FEMKernStatusText = "KERN(scatter=" & CStr(FEMKernScatterCalls) & ";residual=" & CStr(FEMKernResidualCalls) & ";resnorm=" & CStr(FEMKernResNormCalls) & _
-      ";ilu=" & CStr(FEMKernIluCalls) & ";gmres=" & CStr(FEMKernGmresCalls) & ";regularized=" & CStr(FEMKernRegCalls) & ";rcm=" & CStr(FEMKernRcmCalls) & ";declined=" & CStr(FEMKernDeclines) & ")"
+      ";ilu=" & CStr(FEMKernIluCalls) & ";gmres=" & CStr(FEMKernGmresCalls) & ";regularized=" & CStr(FEMKernRegCalls) & ";rcm=" & CStr(FEMKernRcmCalls) & ";hg=" & CStr(FEMKernHgCalls) & "/" & CStr(FEMKernHgApplied) & ";declined=" & CStr(FEMKernDeclines) & ")"
   Else
     FEMKernStatusText = "KERN(OFF)"
   End If
@@ -203,4 +208,46 @@ Public Function FEMKernRcm(ByRef oldToNew() As Long, ByRef newToOld() As Long, B
 Failed:
   Err.Clear: FEMKernDeclines = FEMKernDeclines + 1
 #End If
+End Function
+
+' Hourglass (cached-mode path) + unsymmetry check for every element whose
+' tangent the material DLL just built. Returns elements with hourglass applied
+' (for P6HourglassReuseCount), -1 when not handled.
+Public Function FEMKernHgApply(ByVal applyHg As Boolean) As Long
+  Dim b As LongPtr, dp As LongPtr
+  FEMKernHgApply = -1: mHgOK = False
+  If Not FEMKernOn() Then Exit Function
+#If Win64 Then
+  On Error GoTo Failed
+  dp = FEMMatDonePtr()
+  If dp = 0 Or NumberOfElement < 1 Then Exit Function
+  b = VarPtr(Elem(0))
+  mHOff(0) = VarPtr(Elem(0).HourglassShapeGen) - b
+  mHOff(1) = VarPtr(Elem(0).Dmat(2, 2)) - b
+  mHOff(2) = VarPtr(Elem(0).HourglassKReady) - b
+  mHOff(3) = VarPtr(Elem(0).HourglassKScaledReady) - b
+  mHOff(4) = VarPtr(Elem(0).HourglassCachedScale) - b
+  mHOff(5) = VarPtr(Elem(0).HourglassKScaled(0, 0)) - b
+  mHOff(6) = VarPtr(Elem(0).HourglassScale) - b
+  mHOff(7) = VarPtr(Elem(0).HourglassModeCount) - b
+  If VarPtr(Elem(0).HourglassKScaled(1, 0)) - VarPtr(Elem(0).HourglassKScaled(0, 0)) <> 8 Then Exit Function
+  ReDim mHgDone(0 To NumberOfElement - 1): ReDim mUnsym(0 To NumberOfElement - 1)
+  FEMKernHgApply = SfmHgApply(FEMMatParamsPtr(), dp, VarPtr(mHgDone(0)), VarPtr(mUnsym(0)), VarPtr(mHOff(0)), P6HgShapeGeneration, P6HourglassFactor, IIf(applyHg, 1, 0))
+  If FEMKernHgApply < 0 Then Exit Function
+  FEMKernHgCalls = FEMKernHgCalls + 1: FEMKernHgApplied = FEMKernHgApplied + FEMKernHgApply
+  mHgOK = True
+  Exit Function
+Failed:
+  Err.Clear: FEMKernDeclines = FEMKernDeclines + 1: FEMKernHgApply = -1
+#End If
+End Function
+
+Public Function FEMKernHgDone(ByVal k As Long) As Boolean
+  If Not mHgOK Then Exit Function
+  FEMKernHgDone = (mHgDone(k) <> 0)
+End Function
+
+Public Function FEMKernUnsym(ByVal k As Long) As Boolean
+  If Not mHgOK Then Exit Function
+  FEMKernUnsym = (mUnsym(k) <> 0)
 End Function

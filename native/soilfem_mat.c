@@ -883,3 +883,53 @@ done:
   return rc;
 #undef ADDN
 }
+
+/* Q8 hourglass stabilization, cached-mode path of P6AddQ8HourglassStabilization
+ * (modes and HourglassKScaled already valid for the current shape generation
+ * and scale), followed by P3KmatIsUnsymmetric. Only for elements whose tangent
+ * this DLL just built (tdone). hgdone[k]=-1: handled (applied, or not required
+ * when applyHg=0); unsym[k]=-1 when the element operator is unsymmetric.
+ * H (int64 offsets): 0 HgShapeGen(i32) 1 Dmat(2,2) 2 HgKReady(i16) 3 HgKScaledReady(i16)
+ *                    4 HgCachedScale 5 HgKScaled(16x16) 6 HgScale 7 HgModeCount(i32)
+ * returns number of elements where hourglass stiffness was applied. */
+__declspec(dllexport) int32_t __stdcall sfm_hg_apply(const int64_t *P, const int16_t *tdone, int16_t *hgdone, int16_t *unsym,
+    const int64_t *H, int32_t shapeGen, double hgFactor, int32_t applyHg) {
+  char *base = (char *)(intptr_t)P[0]; const int64_t *off = (const int64_t *)(intptr_t)P[1];
+  int nElem = (int)P[2]; const double *mt = (const double *)(intptr_t)P[9]; int nMat = (int)P[10];
+  int k, i, j, applied = 0;
+  if (!g_ready) return -1;
+  fp_clear();
+  for (k = 0; k < nElem; k++) {
+    char *e = base + off[O_STRIDE] * (int64_t)k; double *K; int mat;
+    hgdone[k] = 0; unsym[k] = 0;
+    if (!tdone[k]) continue;
+    mat = *EP(e, off[O_MATNO], int32_t);
+    if (mat < 0 || mat >= nMat) continue;
+    K = EP(e, off[O_KMAT], double);
+    if (applyHg) {
+      double thick = mt[mat * MAT_STRIDE + M_THICK], shear, scale; const double *KS;
+      if (!(hgFactor > 0.0) || !(thick > 0.0)) continue;
+      if (*EP(e, H[7], int32_t) <= 0 || *EP(e, H[0], int32_t) != shapeGen) continue;
+      shear = ABS(*EP(e, H[1], double));
+      if (shear <= 1E-30) continue;
+      scale = (xd)hgFactor * shear * thick;
+      if (!*EP(e, H[2], int16_t) || !*EP(e, H[3], int16_t)) continue;
+      if (ABS((xd)*EP(e, H[4], double) - scale) > 0.0) continue;
+      *EP(e, H[6], double) = scale;
+      KS = EP(e, H[5], double);
+      for (j = 0; j < 16; j++) for (i = 0; i < 16; i++) { double v = KS[i + 16 * j]; if (ABS(v) > 0.0) K[i + 16 * j] = (xd)K[i + 16 * j] + v; }
+      applied++;
+    }
+    { double sc = 0.0, gap = 0.0;
+      for (i = 0; i < 16; i++) for (j = 0; j < 16; j++) {
+        double a = K[i + 16 * j], b = K[j + 16 * i];
+        if (ABS(a) > sc) sc = ABS(a);
+        if (ABS((xd)a - b) > gap) gap = ABS((xd)a - b);
+      }
+      if (sc < 1.0) sc = 1.0;
+      unsym[k] = ((xd)gap > (xd)0.0000001 * sc) ? -1 : 0; }
+    hgdone[k] = -1;
+  }
+  fp_clear();
+  return applied;
+}

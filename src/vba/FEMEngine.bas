@@ -1691,7 +1691,7 @@ Private Function P3RebuildTangentFromSpmat() As Boolean
   Dim hasSpmat As Boolean
   Dim t0 As Double
   Dim errNum As Long, errSrc As String, errDesc As String
-  Dim nativeTangent As Boolean
+  Dim nativeTangent As Boolean, hgApplied As Long, unsymFlag As Boolean
   P3RebuildTangentFromSpmat = False
   FEMLastProc = "P3RebuildTangentFromSpmat"
   t0 = Timer
@@ -1701,6 +1701,11 @@ Private Function P3RebuildTangentFromSpmat() As Boolean
   ' elements in one call; hourglass, checks and flags stay below in VBA.
   nativeTangent = False
   If FEMMatAvailable() Then nativeTangent = FEMMatTangent(P3IncoElasticCorrection, P3FlowPolicyIsInconsistent())
+  hgApplied = -1
+  If nativeTangent Then
+    hgApplied = FEMKernHgApply(Not (P3SrmEnabled And P3FlowPolicyIsInconsistent() And Not P3IncoElasticCorrection))
+    If hgApplied > 0 Then P6HourglassReuseCount = P6HourglassReuseCount + hgApplied
+  End If
   For k = 0 To NumberOfElement - 1
     If P3IsElementActive(k) Then
       materialIndex = Elem(k).MatNo
@@ -1737,8 +1742,14 @@ Private Function P3RebuildTangentFromSpmat() As Boolean
         End If
         ' Full Newton uses the material force's derivative. Retain numerical
         ' stabilization only in the elastic fallback correction operator.
-        If Not (P3SrmEnabled And P3FlowPolicyIsInconsistent() And Not P3IncoElasticCorrection) Then P6AddQ8HourglassStabilization Elem(k), Material(materialIndex).thickness, True
-        If Not P3FlowPolicyIsInconsistent() And P3KmatIsUnsymmetric(Elem(k).kmat) Then
+        If hgApplied >= 0 And FEMKernHgDone(k) Then
+          unsymFlag = FEMKernUnsym(k)
+        Else
+          If Not (P3SrmEnabled And P3FlowPolicyIsInconsistent() And Not P3IncoElasticCorrection) Then P6AddQ8HourglassStabilization Elem(k), Material(materialIndex).thickness, True
+          unsymFlag = False
+          If Not P3FlowPolicyIsInconsistent() Then unsymFlag = P3KmatIsUnsymmetric(Elem(k).kmat)
+        End If
+        If Not P3FlowPolicyIsInconsistent() And unsymFlag Then
           SetAnalysisFailure RESULT_MATERIAL_ERROR, "BAND対称ソルバは非対称接線に未対応です（非関連流れ φ≠ψ の塑性接線）。FLOW_POLICY=INCONSISTENT または DAVIS を指定してください。要素=" & CStr(k + 1), vbObjectError + 3240, k + 1, -1, CurrentIncrement, CurrentIteration
           GoTo TangentDone
         End If

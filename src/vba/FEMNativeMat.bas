@@ -277,6 +277,10 @@ End Function
 Public Function FEMMatOffset(ByVal i As Long) As LongLong
   FEMMatOffset = mOff(i)
 End Function
+Public Function FEMMatDonePtr() As LongPtr
+  FEMMatDonePtr = 0
+  If mTangentOK And mDoneReady Then FEMMatDonePtr = VarPtr(mDone(0))
+End Function
 Public Function FEMMatParamsPtr() As LongPtr
   FEMMatCommonParams 0
   FEMMatParamsPtr = VarPtr(mPar(0))
