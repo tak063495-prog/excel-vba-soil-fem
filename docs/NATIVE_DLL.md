@@ -105,3 +105,68 @@ python tests/native/compare_results.py srm.json
 | 全探索 | 2898 s以上経っても終わらず中止 | 1773 s で完了 | FOS=2.206 |
 
 残りの時間は、主に破壊荷重付近で収束しないNewton反復（1増分あたり100回、それぞれに直線探索）です。この部分の短縮は今後の課題です。
+
+## 9. Phase B/C: 材料点・接線・組立・GMRES/ILU・RCM などのDLL化（20261017_NATIVE_03/04）
+
+### 9.1 モード（設定キー `NATIVE_DLL`）
+
+| 値 | 内容 |
+|---|---|
+| `OFF` | 純VBA（従来どおり） |
+| `BAND` | 帯LU分解・求解・非対称帯LUのみDLL（PR #4 の版） |
+| `MAT` | BAND ＋ 材料点更新（Mohr–Coulomb応力戻し、内力、hourglass内力）と要素接線（Phase B） |
+| `AUTO`（既定） | MAT ＋ 以下のPhase Cカーネル |
+
+どのモードでも、DLLが見つからない／APIが合わない／DLLが要素や行列を受け付けないときは、その部分だけ従来のVBAコードで計算します（ログ・`SetAnalysisFailure` の挙動は従来どおり）。
+
+### 9.2 Phase Cで `soilfem_mat_x64.dll`（API 4）へ移した計算
+
+| 関数 | 対象のVBA処理 | 備考 |
+|---|---|---|
+| `sfm_band_scatter` | `SetTotalMat` の要素剛性→帯行列の足し込み | 散布表の順で加算（加算順も同一） |
+| `sfm_csr_scatter` | `P6AssembleCSRValuesDetailed`（非対称用CSR組立） | |
+| `sfm_csr_resnorm` | `P6CSRMatVecResidualNorm`（非対称帯LUの残差・反復改良） | u-p混合時はVBA |
+| `sfm_ilu0` | `P6BuildCSRILU`（ILU(0)） | |
+| `sfm_gmres` | `P6SolveCSRGMRES`（右前処理GMRES(m)＋ILU0、2回MGS、Givens） | 再始動ごとの `GMRES_RESTART` 等のイベントはDLLが記録し、VBAが同じ順・同じ書式で出力 |
+| `sfm_regularized` | `P6SolveResidualRecovery`（列スケーリングLM正規方程式・帯Cholesky・検証） | `REGULARIZED_SOLVE` イベントはVBA |
+| `sfm_residual` | `P3AccumulateResidualMetrics`（残差ノルム・反力・エネルギー誤差の集計） | u-p混合時はVBA |
+| `sfm_rcm` | `P6BuildRCMOrdering` ＋ `P6ComputeRCMCandidateBandwidth` | 同じ順序規則（次数→節点番号）で同一の置換を生成。`P6RcmSelfCheck` で全ケース一致を確認 |
+| `sfm_hg_apply` | `P6AddQ8HourglassStabilization` のキャッシュ済み経路 ＋ `P3KmatIsUnsymmetric` | モード再計算が必要な要素はVBA |
+
+VBA側のI/O改善（AUTOのみ）：`solver_events.csv` を1行ごとに開閉せず、メモリに貯めて512行ごと・他のCSV書込み前・解析終了時にまとめて書きます。出力ファイルはバイト単位で同一でした（INCONSISTENT Case1で SHA-256 一致、13.7 MB）。INCONSISTENTではイベントが約8万行出るため、これが残りの最大の待ち時間でした。
+
+全カーネルはPhase Bと同じx87方式（`-mfpmath=387`、VBAと同じ丸め位置、`Sqr`/`^` はVBAと同じMSVCR100の関数）で、純VBAとビット単位で一致します。
+
+### 9.3 Newton反復を1回の呼出しにしなかった理由
+
+1反復は「材料点更新＋内力（1呼出し）」「残差集計（1呼出し）」「接線＋hourglass＋組立（2〜3呼出し）」「分解・求解（1〜2呼出し）」の粗粒度呼出しになり、要素・行単位の呼出しはありません。反復1回分を完全に1呼出しにするには、接線再構築の判定・線探索・加速（Anderson等）・停滞判定・弾性補正ガードなど約3000行の分岐をDLLへ移す必要があり、ログと失敗時処理を従来どおり保つ要件と両立しないため見送りました。計測では呼出し回数由来のオーバーヘッドは誤差程度で、残りは分解（DLL内のx87演算）とVBAの制御ロジックです。
+
+### 9.4 RCM
+RCMは既存の `RCM_POLICY`（AUTO/ON/OFF）がそのまま切替えスイッチです。DLL版は順序をVBA版と同一に生成するため、RCMのON/OFFで結果が変わることはあっても、DLLとVBAの間で結果は変わりません（全ケースで置換・帯幅一致、変位もビット一致）。
+
+### 9.5 検証結果（Triela、Excel 64bit、1本ずつ実行）
+
+正しさ（OFFとの比較。変位はビット比較、増分数・分解回数・再利用回数・塑性点数・FOS文字列も比較）：
+
+| ケース | 比較 | 結果 |
+|---|---|---|
+| 小規模DAVIS SRM 8ケース | OFF / BAND / MAT / AUTO | 全ケース 170/170 ビット一致、FOS一致 |
+| 小規模INCONSISTENT Case1（加速なし）SRM | OFF（Phase B時の結果） / AUTO | 170/170 ビット一致、カウント一致、FOS 2.206 一致 |
+| 同梱モデル 固定Fs 2.00 | OFF / BAND / MAT / AUTO | 2010/2010 ビット一致 |
+| 同梱モデル 固定Fs 2.25 | 同上 | 2010/2010 ビット一致（全モードで同じ増分で未収束＝破壊側判定） |
+| 同梱モデル SRM全探索 | 同上 | 2010/2010 ビット一致、FOS 2.244 一致 |
+
+計算時間（秒）：
+
+| ケース | OFF | BAND | MAT | AUTO | OFF/AUTO |
+|---|---:|---:|---:|---:|---:|
+| 同梱 固定Fs 2.00 | 14.8 | 5.3 | 2.9 | 2.7 | 5.5倍 |
+| 同梱 固定Fs 2.25 | 122.7 | 42.5 | 11.7 | 9.5 | 12.9倍 |
+| 同梱 SRM全探索 | 574.4 | 184.6 | 49.2 | 36.4 | 15.8倍 |
+| 小規模INCONSISTENT Case1 SRM | 1753.8 | — | — | 140.8 | 12.5倍 |
+| 小規模DAVIS Case1 加速なし | 7.07 | 5.34 | 2.83 | 2.42 | 2.9倍 |
+
+INCONSISTENTの内訳：GMRES/ILUのDLL化で 1753.8 → 691.8 s、イベント出力のまとめ書きで → 142.7 s、hourglassのDLL化で → 140.8 s。
+同梱SRM（AUTO）の残り内訳：分解 11.2 s、材料点 4.9 s、接線＋組立 6.5 s、求解 2.1 s、その他（増分制御・ログ）約12 s。
+
+証跡：`docs/native-evidence/phaseC_*.json`。
