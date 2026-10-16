@@ -254,7 +254,7 @@ Public P3FailureLinearResidual As Double
 Public P3FailureCorrection As Double
 Public P3FailurePlasticPoints As Long
 Public P3FailureMaxDisp As Double
-Public Const FEM_BUILD_STAMP As String = "20261010_INCO_24"
+Public Const FEM_BUILD_STAMP As String = "20261016_NATIVE_01"
 Public Const P1_FORMULATION_PLANE_STRESS As String = "PLANE_STRESS_2D"
 Public Const P1_FORMULATION_PLANE_STRAIN As String = "PLANE_STRAIN_2D"
 Public Const P1_RESULT_COUNT As Long = 22

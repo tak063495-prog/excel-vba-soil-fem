@@ -1424,7 +1424,11 @@ Private Function P6SolveBandRHS() As Boolean
     GoTo SolveDone
   End If
   If P6BandKernelIsNew() Then
+    i = FEMNativeBandSolve(P6Packed, Force, Disp, n2, BandWidth, P6FactorPivotTolerance, j)
+    If i = 0 Then P6SolveBandRHS = True: GoTo SolveDone
+    If i = 1 Then P6BandSolveFailK = j: GoTo PackedSolveFailed
     If Not P6BandSolve1D(P6Packed, P6PackRowOff, Force, Disp, n2, BandWidth, P6FactorPivotTolerance) Then
+PackedSolveFailed:
       k = P6BandSolveFailK
       If k < 0 Then k = 0
       SetAnalysisFailure RESULT_GLOBAL_SINGULAR, "パックド帯域の求解でゼロまたは小さすぎるピボットです。自由度=" & CStr(k), vbObjectError + 3305, -1, -1, CurrentIncrement, CurrentIteration
@@ -1526,9 +1530,15 @@ Private Function P6FactorPackedProduction(ByVal n2 As Long, ByVal pivotTolerance
   Dim k As Long
   Dim FactorMs As Double
   P6FactorPackedProduction = False
+  Dim nativeRc As Long, nativeFailK As Long
   P6EnsurePackStorage n2, BandWidth
+  ' Native: pack + factor in one DLL call (bit-identical loop order).
+  nativeRc = FEMNativeBandFactor(P6FactoredBand, P6Packed, P6BandWorkAkj, n2, BandWidth, pivotTolerance, nativeFailK)
+  If nativeRc = 1 Then P6BandFactorFailK = nativeFailK: GoTo PackedFactorFailed
+  If nativeRc = 0 Then GoTo PackedFactorOk
   P6PackBand P6FactoredBand, P6Packed, P6PackRowOff, n2, BandWidth
   If Not P6BandFactor1D(P6Packed, P6PackRowOff, P6BandWorkAkj, P6BandWorkAik, n2, BandWidth, pivotTolerance) Then
+PackedFactorFailed:
     k = P6BandFactorFailK
     If k < 0 Then k = 0
     If k >= 0 And k <= lastDof Then
@@ -1540,6 +1550,7 @@ Private Function P6FactorPackedProduction(ByVal n2 As Long, ByVal pivotTolerance
     P6ProfFactorMs = P6ProfFactorMs + FactorMs
     Exit Function
   End If
+PackedFactorOk:
   For k = 0 To n2 - 1
     If NodeCond(k) = 0 Then P6RecordPivot P6Packed(P6PackRowOff(k)), False
   Next k
@@ -1562,6 +1573,7 @@ Public Sub P6ResetBandBench()
   P6BandBenchBw = 0
   P6BandBenchOnly = False
   P6KernelCached = False
+  FEMNativeRefresh
   Erase P6BandBenchSnap
   Erase P6BandBenchFree
 End Sub
@@ -3553,6 +3565,7 @@ Public Function P6SolveNonsymmetricBand() As Boolean
   Dim pivotRow As Long, lastRow As Long, lastColumn As Long, columnId As Long
   Dim pivot As Double, largest As Double, multiplier As Double, tmp As Double
   Dim normB As Double, residual As Double, memoryBytes As Double, startedAt As Double, factorDone As Boolean
+  Dim nativeRc As Long, nativeFailK As Long, nativeReason As Long
   P6SolveNonsymmetricBand = False
   P6BandRejectReason = "INPUT"
   P6IterativeLastResidual = 1E+100
@@ -3597,6 +3610,13 @@ Public Function P6SolveNonsymmetricBand() As Boolean
   If reused Then
     P6BandReplayForward rhs, pivotRows, lowerMult, b
   Else
+  nativeRc = FEMNativeNsFactor(a, rhs, pivotRows, lowerMult, nDof, b, nativeFailK, nativeReason, largest)
+  If nativeRc = 1 Then
+    k = nativeFailK: pivot = a(k, b)
+    If nativeReason = 2 Then P6BandRejectReason = "NONFINITE_MULTIPLIER" Else P6BandRejectReason = "ZERO_PIVOT"
+    GoTo Rejected
+  End If
+  If nativeRc = 0 Then k = lastDof + 1: GoTo NsFactorDone
   For k = 0 To lastDof
     lastRow = k + b: If lastRow > lastDof Then lastRow = lastDof
     lastColumn = k + upper: If lastColumn > lastDof Then lastColumn = lastDof
@@ -3629,18 +3649,23 @@ Public Function P6SolveNonsymmetricBand() As Boolean
       End If
     Next i
   Next k
+NsFactorDone:
     mBandCacheA = a: mBandCachePivots = pivotRows: mBandCacheLower = lowerMult
     mBandCacheRows = P6CSRRowPtr: mBandCacheColumns = P6CSRColumnIndex: mBandCacheValues = P6CSRValues
     mBandCacheN = nDof: mBandCacheBw = b: mBandCacheReady = True
   End If
   P6ProfFactorMs = P6ProfFactorMs + P6ElapsedMs(startedAt)
   factorDone = True: startedAt = Timer
+  nativeRc = FEMNativeNsBack(a, rhs, solution, nDof, b, False, nativeFailK)
+  If nativeRc = 2 Then GoTo Rejected
+  If nativeRc = 0 Then GoTo NsBackDone
   For i = lastDof To 0 Step -1
     tmp = rhs(i): lastColumn = i + upper: If lastColumn > lastDof Then lastColumn = lastDof
     For j = i + 1 To lastColumn: tmp = tmp - a(i, j - i + b) * solution(j): Next j
     solution(i) = tmp / a(i, b)
     If Not P2IsFinite(solution(i)) Then GoTo Rejected
   Next i
+NsBackDone:
   residual = P6CSRMatVecResidualNorm(solution, Force, residualVector, P6CSRValues)
   If Not P2IsFinite(residual) Or Not P2IsFinite(normB) Then P6BandRejectReason = "NONFINITE_RESIDUAL": GoTo Rejected
   If normB > 1E-30 Then
@@ -3650,6 +3675,13 @@ Public Function P6SolveNonsymmetricBand() As Boolean
       ReDim refineRhs(0 To lastDof): ReDim correction(0 To lastDof)
       For refineIter = 1 To 5
         For i = 0 To lastDof: refineRhs(i) = residualVector(i): correction(i) = 0#: Next i
+        nativeRc = FEMNativeNsForward(pivotRows, lowerMult, refineRhs, nDof, b)
+        If nativeRc = 0 Then
+          nativeRc = FEMNativeNsBack(a, refineRhs, correction, nDof, b, True, nativeFailK)
+          If nativeRc = 1 Then GoTo Rejected
+          If nativeRc = 0 Then GoTo NsRefineSolved
+          For i = 0 To lastDof: refineRhs(i) = residualVector(i): correction(i) = 0#: Next i
+        End If
         For k = 0 To lastDof
           pivotRow = pivotRows(k)
           If pivotRow <> k Then tmp = refineRhs(k): refineRhs(k) = refineRhs(pivotRow): refineRhs(pivotRow) = tmp
@@ -3664,6 +3696,7 @@ Public Function P6SolveNonsymmetricBand() As Boolean
           If Abs(a(i, b)) <= 1E-30 Then GoTo Rejected
           correction(i) = tmp / a(i, b)
         Next i
+NsRefineSolved:
         For i = 0 To lastDof
           solution(i) = solution(i) + correction(i)
           If Not P2IsFinite(solution(i)) Then GoTo Rejected
@@ -3731,6 +3764,7 @@ End Function
 
 Private Sub P6BandReplayForward(ByRef rhs() As Double, ByRef pivots() As Long, ByRef multipliers() As Double, ByVal b As Long)
   Dim k As Long, i As Long, p As Long, lastRow As Long, tmp As Double
+  If FEMNativeNsForward(pivots, multipliers, rhs, lastDof + 1, b) = 0 Then Exit Sub
   For k = 0 To lastDof
     p = pivots(k)
     If p <> k Then tmp = rhs(k): rhs(k) = rhs(p): rhs(p) = tmp

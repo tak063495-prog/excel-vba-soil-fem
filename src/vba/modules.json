@@ -113,5 +113,10 @@
         "name":  "FEMPractical",
         "file":  "FEMPractical.bas",
         "type":  1
+    },
+    {
+        "name":  "FEMNative",
+        "file":  "FEMNative.bas",
+        "type":  1
     }
 ]
