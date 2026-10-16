@@ -500,6 +500,11 @@
     "sha256": "cd38fa176b761121c13e0dd8f38fdf2e696e34f99e727f7501059e9dbbcd2876"
   },
   {
+    "path": "docs/native-evidence/smokesrm_davis_fixed_20261017.json",
+    "bytes": 131294,
+    "sha256": "7285c1671b046bb71ff91a712ebaf07e990d15c92ba2f419b5bf0488ff26e19e"
+  },
+  {
     "path": "docs/native-evidence/smokesrm_inconsistent_case1_20261017.json",
     "bytes": 14019,
     "sha256": "f8be31a8acc412520183a15b53faa18d42cfa145d03498070d264891b6487bdb"
