@@ -21,6 +21,9 @@ try {
   Write-Host 'Running test_issue1_regression.ps1'
   & (Join-Path $PSScriptRoot 'test_issue1_regression.ps1') -ExpectFixed
   if ($LASTEXITCODE -and $LASTEXITCODE -ne 0) { throw "Issue #1 regression failed with exit code $LASTEXITCODE" }
+  Write-Host 'Running test_issue2_3_regression.ps1'
+  & (Join-Path $PSScriptRoot 'test_issue2_3_regression.ps1') -ExpectFixed
+  if ($LASTEXITCODE -and $LASTEXITCODE -ne 0) { throw "Issue #2/#3 regression failed with exit code $LASTEXITCODE" }
   Write-Host 'Practical regression suite completed.'
 }
 finally {

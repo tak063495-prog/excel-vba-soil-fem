@@ -1099,6 +1099,9 @@ Sub ボタン5_Click()
     SetMaterialData
     If SuppressUserMessages Then SaveP0Progress "material_input_complete"
     SetElementData
+    ' 前回解析のBIRTH/DEATH後の有効要素集合を初期組立へ持ち越さない（新規起動直後と同じ状態から開始）。
+    ' 有効要素はP3RunAnalysisで材料の初期ON/OFFから再設定される。
+    P3ElementActiveReady = False
     If SuppressUserMessages Then SaveP0Progress "element_input_complete"
     TimeInput = TimerElapsed(stageStart)
     If SuppressUserMessages Then SaveP0Progress "input_complete"

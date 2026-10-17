@@ -5,7 +5,7 @@
 #>
 param([string]$Src,[string]$Dst,[string]$ModDir,[string]$Modules='')
 $ErrorActionPreference='Stop'
-$Required=@('FEMCore','FEMSolver','FEMIo','FEMEngine','FEMNative','FEMNativeMat','FEMNativeKern')
+$Required=@('CONTROL','FEMCore','FEMSolver','FEMIo','FEMEngine','FEMNative','FEMNativeMat','FEMNativeKern')
 $list=[Collections.Generic.List[string]]::new(); foreach($m in $Required){$list.Add($m)}
 foreach($m in ($Modules -split ',')){ $m=$m.Trim(); if($m -and -not $list.Contains($m)){$list.Add($m)} }
 if(-not (Test-Path -LiteralPath $Src -PathType Leaf)){throw "Src not found: $Src"}

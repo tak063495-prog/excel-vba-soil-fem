@@ -57,6 +57,7 @@ Public Function FEMKernBandScatter(ByRef band() As Double, ByVal ld As Long, ByV
   FEMKernBandScatter = True
   Exit Function
 Failed:
+  If Err.Number = 18 Then Err.Raise 18 ' ユーザー中断はDLL無効化・VBA代替へ進めず呼出側へ送る
   Err.Clear: FEMKernDeclines = FEMKernDeclines + 1
 #End If
 End Function
@@ -73,6 +74,7 @@ Public Function FEMKernCsrScatter(ByVal nnz As Long, ByRef st() As Long, ByRef p
   FEMKernCsrScatter = True
   Exit Function
 Failed:
+  If Err.Number = 18 Then Err.Raise 18 ' ユーザー中断はDLL無効化・VBA代替へ進めず呼出側へ送る
   Err.Clear: FEMKernDeclines = FEMKernDeclines + 1
 #End If
 End Function
@@ -87,6 +89,7 @@ Public Function FEMKernCsrResNorm(ByVal n As Long, ByRef rp() As Long, ByRef ci(
   FEMKernCsrResNorm = True
   Exit Function
 Failed:
+  If Err.Number = 18 Then Err.Raise 18 ' ユーザー中断はDLL無効化・VBA代替へ進めず呼出側へ送る
   Err.Clear: FEMKernDeclines = FEMKernDeclines + 1
 #End If
 End Function
@@ -104,6 +107,7 @@ Public Function FEMKernIlu0(ByVal n As Long, ByVal nnz As Long, ByRef rp() As Lo
   FEMKernIluCalls = FEMKernIluCalls + 1
   Exit Function
 Failed:
+  If Err.Number = 18 Then Err.Raise 18 ' ユーザー中断はDLL無効化・VBA代替へ進めず呼出側へ送る
   Err.Clear: FEMKernDeclines = FEMKernDeclines + 1: FEMKernIlu0 = -1
 #End If
 End Function
@@ -131,6 +135,7 @@ Public Function FEMKernGmres(ByVal n As Long, ByRef rp() As Long, ByRef ci() As 
   FEMKernGmresCalls = FEMKernGmresCalls + 1
   Exit Function
 Failed:
+  If Err.Number = 18 Then Err.Raise 18 ' ユーザー中断はDLL無効化・VBA代替へ進めず呼出側へ送る
   Err.Clear: FEMKernDeclines = FEMKernDeclines + 1: FEMKernGmres = -1
 #End If
 End Function
@@ -152,6 +157,7 @@ Public Function FEMKernRegularized(ByVal n As Long, ByVal bw As Long, ByRef rp()
   If FEMKernRegularized >= 0 Then FEMKernRegCalls = FEMKernRegCalls + 1
   Exit Function
 Failed:
+  If Err.Number = 18 Then Err.Raise 18 ' ユーザー中断はDLL無効化・VBA代替へ進めず呼出側へ送る
   Err.Clear: FEMKernDeclines = FEMKernDeclines + 1: FEMKernRegularized = -1
 #End If
 End Function
@@ -183,6 +189,7 @@ Public Function FEMKernResidual(ByRef internalForce() As Double, ByRef targetFor
   FEMKernResidual = True
   Exit Function
 Failed:
+  If Err.Number = 18 Then Err.Raise 18 ' ユーザー中断はDLL無効化・VBA代替へ進めず呼出側へ送る
   Err.Clear: FEMKernDeclines = FEMKernDeclines + 1
 #End If
 End Function
@@ -206,6 +213,7 @@ Public Function FEMKernRcm(ByRef oldToNew() As Long, ByRef newToOld() As Long, B
   FEMKernRcm = True
   Exit Function
 Failed:
+  If Err.Number = 18 Then Err.Raise 18 ' ユーザー中断はDLL無効化・VBA代替へ進めず呼出側へ送る
   Err.Clear: FEMKernDeclines = FEMKernDeclines + 1
 #End If
 End Function
@@ -238,6 +246,7 @@ Public Function FEMKernHgApply(ByVal applyHg As Boolean) As Long
   mHgOK = True
   Exit Function
 Failed:
+  If Err.Number = 18 Then Err.Raise 18 ' ユーザー中断はDLL無効化・VBA代替へ進めず呼出側へ送る
   Err.Clear: FEMKernDeclines = FEMKernDeclines + 1: FEMKernHgApply = -1
 #End If
 End Function
