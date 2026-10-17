@@ -2,7 +2,8 @@
 ' Optional x64 native kernels (soilfem_native_x64.dll next to the workbook).
 ' Coarse-grained: one call factors the whole band / solves the whole RHS.
 ' VBA owns every array. Any load/ABI/argument problem falls back to the
-' unchanged VBA kernels. Setting NATIVE_DLL: AUTO (default) / OFF.
+' unchanged VBA kernels. Setting NATIVE_DLL: AUTO (default, band + material DLL)
+' / BAND (band DLL only, 20261016 behaviour) / OFF.
 #If Win64 Then
 Private Declare PtrSafe Function LoadLibraryExW Lib "kernel32" (ByVal path As LongPtr, ByVal file As LongPtr, ByVal flags As Long) As LongPtr
 Private Declare PtrSafe Function GetProcAddress Lib "kernel32" (ByVal module As LongPtr, ByVal name As String) As LongPtr
@@ -20,16 +21,19 @@ Private mHandle As LongPtr
 Private Const SFN_DLL As String = "soilfem_native_x64.dll"
 Private Const SFN_ABI As Long = &H10001
 Private mChecked As Boolean, mAvailable As Boolean, mForcedOff As Boolean, mForcedSet As Boolean
+Private mForcedText As String
 Private mReason As String
 Public FEMNativeFactorCalls As Long, FEMNativeSolveCalls As Long, FEMNativeNsCalls As Long, FEMNativeFallbacks As Long
 
-' Test/diagnostic switch: "AUTO", "OFF" or "" (= follow NATIVE_DLL setting).
+' Test/diagnostic switch: "AUTO", "BAND", "OFF" or "" (= follow NATIVE_DLL setting).
 Public Sub FEMNativeSetMode(ByVal modeText As String)
   modeText = UCase$(Trim$(modeText))
-  mForcedSet = (modeText = "AUTO" Or modeText = "OFF")
+  mForcedSet = (modeText = "AUTO" Or modeText = "OFF" Or modeText = "BAND" Or modeText = "MAT")
   mForcedOff = (modeText = "OFF")
+  mForcedText = modeText
   mChecked = False: mAvailable = False
   FEMNativeResetCounts
+  FEMMatRefresh
 End Sub
 
 Public Sub FEMNativeResetCounts()
@@ -40,7 +44,27 @@ End Sub
 Public Sub FEMNativeRefresh()
   mChecked = False: mAvailable = False
   FEMNativeResetCounts
+  FEMMatRefresh
 End Sub
+
+' Effective mode: "OFF", "BAND" (band DLL only) or "AUTO" (band + material DLL).
+Public Function FEMNativeModeText() As String
+  Dim modeText As String
+  If mForcedSet Then
+    modeText = mForcedText
+  Else
+    modeText = UCase$(Trim$(P6ReadTextSetting("NATIVE_DLL", "AUTO")))
+  End If
+  If modeText = "OFF" Or modeText = "0" Or modeText = "VBA" Then
+    FEMNativeModeText = "OFF"
+  ElseIf modeText = "BAND" Then
+    FEMNativeModeText = "BAND"
+  ElseIf modeText = "MAT" Then
+    FEMNativeModeText = "MAT"
+  Else
+    FEMNativeModeText = "AUTO"
+  End If
+End Function
 
 Public Function FEMNativeReason() As String
   FEMNativeAvailable

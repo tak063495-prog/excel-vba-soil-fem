@@ -10,6 +10,8 @@ Excel上で2次元地盤FEM、強度低減法（SRM）、ジョイント、施�
 
 ## ネイティブDLL版（2026-10-17、20261017_NATIVE_02）
 
+**DLL高速化 第2弾（Phase B/C、レビュー中）**：[実行用ブック](workbook/2DSoilFEM_nativekern_20261017_0846.xlsm) と同じフォルダに [soilfem_native_x64.dll](workbook/soilfem_native_x64.dll) と [soilfem_mat_x64.dll](workbook/soilfem_mat_x64.dll) を置くと、材料点更新・要素接線・hourglass・全体組立・残差集計・ILU(0)/GMRES・正則化補正・RCMもDLLで計算します（`NATIVE_DLL`=OFF/BAND/MAT/AUTO）。純VBAとビット一致のまま、同梱モデルのSRM全探索は 574.4 s → 36.4 s（15.8倍）、INCONSISTENTの小規模SRMは 1753.8 s → 140.8 s（12.5倍）。詳細は [ネイティブDLLによる高速化](docs/NATIVE_DLL.md) の9章。
+
 [実行用ブック（DLL対応）](workbook/2DSoilFEM_native_20261017_0505.xlsm) と同じフォルダに [soilfem_native_x64.dll](workbook/soilfem_native_x64.dll) を置くと、帯LU分解と求解をDLLで計算します。行列全体を1回の呼出しで渡すため、呼出しのオーバーヘッドはほとんどありません。結果は純VBAとビット単位で一致します。同梱モデルのSRM全探索は 574.8 s → 189.3 s（3.04倍）、分解だけでは33.8倍速くなりました。DLLがない場合や読込みに失敗した場合は、自動で従来のVBAで計算します。INCONSISTENTのSRMで破壊付近の試行が極端に遅くなる問題も修正しました（弾性補正反復の収束速度判定）。設計・検証・制限は [ネイティブDLLによる高速化](docs/NATIVE_DLL.md) を参照してください。
 
 ## 説明書

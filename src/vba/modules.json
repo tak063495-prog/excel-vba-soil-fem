@@ -118,5 +118,10 @@
         "name":  "FEMNative",
         "file":  "FEMNative.bas",
         "type":  1
+    },
+    {
+        "name":  "FEMNativeMat",
+        "file":  "FEMNativeMat.bas",
+        "type":  1
     }
 ]

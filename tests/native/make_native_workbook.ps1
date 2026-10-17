@@ -10,8 +10,10 @@ try{
  $xl.EnableEvents=$false;$xl.DisplayAlerts=$false;$xl.AutomationSecurity=1
  $wb=$xl.Workbooks.Open($Dst,0,$false)
  foreach($m in $Modules.Split(',')){
-  $cm=$wb.VBProject.VBComponents.Item($m).CodeModule
-  $cm.DeleteLines(1,$cm.CountOfLines)
+  $c=$null; try{$c=$wb.VBProject.VBComponents.Item($m)}catch{}
+  if($null -eq $c){$c=$wb.VBProject.VBComponents.Add(1);$c.Name=$m}
+  $cm=$c.CodeModule
+  if($cm.CountOfLines -gt 0){$cm.DeleteLines(1,$cm.CountOfLines)}
   $cm.AddFromString((Get-Content (Join-Path $ModDir "$m.bas") -Raw -Encoding UTF8))
  }
  $c=$null; try{$c=$wb.VBProject.VBComponents.Item('FEMNative')}catch{}

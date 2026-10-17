@@ -1,4 +1,5 @@
 ﻿Option Explicit
+Public P6RCMNativeUsed As Boolean
 Private mAdaptiveGMRESBudgetStop As Boolean
 ' Global matrix assembly, RCM, BAND_LU / CSR iterative solve.
 Private P6LdltDim As Long
@@ -41,6 +42,19 @@ Private mPreActive As Long, mPreConstraint As Long
 Private mPreMaterial As Long, mPreStrength As Long, mPreGeometry As Long
 Private mPreFs As Double, mPreTol As Double
 Private mPrePacked() As Double, mPreOffsets() As Long
+' Test hook: VBA vs native RCM permutation equality.
+Public Function P6RcmSelfCheck() As String
+  Dim a1() As Long, b1() As Long, a2() As Long, b2() As Long, bw1 As Long, bw2 As Long, i As Long
+  If Not P6BuildRCMOrdering(a1, b1) Then P6RcmSelfCheck = "VBA_FAIL": Exit Function
+  bw1 = P6ComputeRCMCandidateBandwidth(a1)
+  If Not FEMKernRcm(a2, b2, bw2) Then P6RcmSelfCheck = "NATIVE_UNAVAILABLE": Exit Function
+  If bw1 <> bw2 Then P6RcmSelfCheck = "BW_DIFF " & CStr(bw1) & "/" & CStr(bw2): Exit Function
+  For i = 0 To NumberOfFreeNode - 1
+    If a1(i) <> a2(i) Or b1(i) <> b2(i) Then P6RcmSelfCheck = "PERM_DIFF at " & CStr(i): Exit Function
+  Next i
+  P6RcmSelfCheck = "SAME n=" & CStr(NumberOfFreeNode) & " bw=" & CStr(bw1)
+End Function
+
 Public Sub P6InvalidateCSRConstraintCache()
     P6CSRConstraintVersion = P6CSRConstraintVersion + 1
     If P6CSRConstraintVersion <= 0 Then P6CSRConstraintVersion = 1
@@ -419,11 +433,16 @@ Private Sub P6EvaluateRCMBandwidth(ByVal originalBandwidth As Long)
     End If
     Exit Sub
   End If
-  If Not P6BuildRCMOrdering(oldToNew, newToOld) Then
-    P6RCMStatus = "RCM候補: 順序を生成できないため未評価"
-    Exit Sub
+  If FEMKernRcm(oldToNew, newToOld, P6RCMCandidateBandwidth) Then
+    P6RCMNativeUsed = True
+  Else
+    P6RCMNativeUsed = False
+    If Not P6BuildRCMOrdering(oldToNew, newToOld) Then
+      P6RCMStatus = "RCM候補: 順序を生成できないため未評価"
+      Exit Sub
+    End If
+    P6RCMCandidateBandwidth = P6ComputeRCMCandidateBandwidth(oldToNew)
   End If
-  P6RCMCandidateBandwidth = P6ComputeRCMCandidateBandwidth(oldToNew)
   P6RCMCacheOriginalBandwidth = P6RCMOriginalBandwidth
   P6RCMCacheCandidateBandwidth = P6RCMCandidateBandwidth
   ReDim P6RCMOldToNew(0 To NumberOfFreeNode - 1)
@@ -695,7 +714,9 @@ If P6UseCSR Then
 Else
   ReDim OriginalMat(lastDof, BandWidth)
   P6EnsureBandScatter
-  For s = 0 To P6ScatterN - 1
+  s = 0
+  If FEMKernBandScatter(OriginalMat, lastDof + 1, P6ScatterN, P6ScatterRow, P6ScatterCol, P6ScatterElem, P6ScatterI, P6ScatterJ) Then s = P6ScatterN
+  For s = s To P6ScatterN - 1
     OriginalMat(P6ScatterRow(s), P6ScatterCol(s)) = OriginalMat(P6ScatterRow(s), P6ScatterCol(s)) + Elem(P6ScatterElem(s)).kmat(P6ScatterI(s), P6ScatterJ(s))
   Next s
   If P6PrepareBiotMixed() Then
@@ -1024,6 +1045,10 @@ Private Function P6AssembleCSRValuesDetailed() As Boolean
 
   ' CSR再組立時は、生成済み散布表にある有効非ゼロ項だけを加算する。
   useFlatKCache = False ' Always assemble the current element tangent, including plastic and joint terms.
+  If FEMKernCsrScatter(P6CSRNNZ, P6CSRScatterStart, P6CSRScatterPosition, P6CSRScatterLocalRow, P6CSRScatterLocalColumn, P6CSROriginalValues) Then
+    P6AssembleCSRValuesDetailed = True
+    Exit Function
+  End If
   For elementId = 0 To NumberOfElement - 1
     If Not P3IsElementActive(elementId) Then GoTo NextCsrDetailedElement
     For scatterIndex = P6CSRScatterStart(elementId) To P6CSRScatterStart(elementId + 1) - 1
@@ -2734,6 +2759,12 @@ Private Function P6CSRMatVecResidualNorm(ByRef inputVector() As Double, ByRef ba
                                          ByRef residualVector() As Double, ByRef matrixValues() As Double) As Double
   Dim rowNo As Long
   Dim residualValue As Double, sumSquares As Double
+  If Not P6MixedUP And P6KrylovLast = lastDof Then
+    If FEMKernCsrResNorm(lastDof + 1, P6CSRRowPtr, P6CSRColumnIndex, matrixValues, inputVector, baseVector, residualVector, residualValue) Then
+      P6CSRMatVecResidualNorm = residualValue
+      Exit Function
+    End If
+  End If
   P6CSRMatVec inputVector, residualVector, matrixValues
   sumSquares = 0#
   For rowNo = 0 To P6KrylovLast
@@ -3040,6 +3071,7 @@ Private Function P6SolveCSRGMRES() As Boolean
   Dim restart As Long, normB As Double, beta As Double, nextNorm As Double
   Dim inner As Double, rot As Double, tmp As Double, residual As Double, tol As Double
   Dim zBasis() As Double
+  Dim kRc As Long, kEv() As Double, kN As Long, kIt As Long, kRes As Double, kEvIt As Long
   P6SolveCSRGMRES = False
   P6IterativeLastResidual = 1E+100
   If P6CSRILUReady Then
@@ -3057,6 +3089,26 @@ Private Function P6SolveCSRGMRES() As Boolean
     tmp = P6CSRStorageBytes + CDbl(P6CSRNNZ) * 8# + CDbl(nDof) * (23# + 2# * restart) * 8# + CDbl(restart + 1) ^ 2 * 8#
     If tmp > P6SolverMemoryLimitBytes Then
       SetAnalysisFailure RESULT_CAPACITY_ERROR, "非対称GMRESの作業メモリが設定上限を超えます。", vbObjectError + 3511, -1, -1, CurrentIncrement, CurrentIteration
+      Exit Function
+    End If
+  End If
+  If P6CSRILUReady And Not P6MixedUP And P6KrylovLast = lastDof Then
+    kRc = FEMKernGmres(lastDof + 1, P6CSRRowPtr, P6CSRColumnIndex, P6CSRValues, P6CSRILUValues, Force, Disp, restart, P6IterativeMaxIterations, P6IterativeTolerance, kRes, kIt, kEv, kN)
+    If kRc >= 0 Then
+      P6CSRPreconditionerMode = "ILU0"
+      P6IterativeLastResidual = kRes: P6IterativeLastIterations = kIt
+      For i = 0 To kN - 1
+        kEvIt = CLng(kEv(3 * i + 1))
+        Select Case CLng(kEv(3 * i))
+          Case 1: P6SolverEvent "GMRES_RESTART", "restart=" & CStr(kEvIt \ restart) & ";iterations=" & CStr(kEvIt) & ";preconditioner=" & P6CSRPreconditionerMode & ";true_relres=" & Format$(kEv(3 * i + 2), "0.000E+00")
+          Case 2: P6SolverEvent "GMRES_BREAKDOWN", "reason=nonfinite_true_residual;iterations=" & CStr(kEvIt)
+          Case 3: P6CSRPreconditionerMode = "ILU0_APPLY_FAILED": P6SolverEvent "GMRES_BREAKDOWN", "reason=preconditioner_apply;preconditioner=" & P6CSRPreconditionerMode & ";iterations=" & CStr(kEvIt)
+          Case 4: P6SolverEvent "GMRES_BREAKDOWN", "reason=nonfinite_krylov_norm;iterations=" & CStr(kEvIt)
+          Case 5: P6SolverEvent "GMRES_BREAKDOWN", "reason=zero_givens_rotation;preconditioner=" & P6CSRPreconditionerMode & ";iterations=" & CStr(kEvIt)
+          Case 6: P6SolverEvent "GMRES_BREAKDOWN", "reason=zero_upper_triangular_diagonal;preconditioner=" & P6CSRPreconditionerMode & ";iterations=" & CStr(kEvIt)
+        End Select
+      Next i
+      P6SolveCSRGMRES = (kRc = 1)
       Exit Function
     End If
   End If
@@ -3197,6 +3249,11 @@ Private Function P6BuildCSRILU() As Boolean
   P6CSRILUFailRow = -1: P6CSRILUFailColumn = -1: P6CSRILUMinAbsDiag = 1E+308
   If P6CSRNNZ <= 0 Then Exit Function
   ReDim P6CSRILUValues(0 To P6CSRNNZ - 1)
+  Select Case FEMKernIlu0(lastDof + 1, P6CSRNNZ, P6CSRRowPtr, P6CSRColumnIndex, P6CSRDiagonalPosition, P6CSRValues, P6CSRILUValues, P6CSRILUFailRow, P6CSRILUFailColumn, P6CSRILUMinAbsDiag)
+    Case 1: P6CSRILUReady = True: P6BuildCSRILU = True: Exit Function
+    Case 0: Exit Function
+  End Select
+  P6CSRILUFailRow = -1: P6CSRILUFailColumn = -1: P6CSRILUMinAbsDiag = 1E+308
   For position = 0 To P6CSRNNZ - 1
     P6CSRILUValues(position) = P6CSRValues(position)
   Next position
@@ -3437,6 +3494,7 @@ Public Function P6SolveResidualRecovery(ByVal damping As Double) As Boolean
   Dim row As Long, col As Long, p As Long, q As Long, c1 As Long, c2 As Long
   Dim i As Long, j As Long, k As Long, firstCol As Long, bw As Long, lastRow As Long
   Dim v As Double, normB As Double, normalResidual As Double, tmp As Double, startedAt As Double, factorDone As Boolean
+  Dim kRr As Long, kNres As Double
   P6SolveResidualRecovery = False
   If Not P6CSRReady Or damping <= 0# Or Not P2IsFinite(damping) Then GoTo Rejected
   bw = 2 * BandWidth: If bw > lastDof Then bw = lastDof
@@ -3446,6 +3504,15 @@ Public Function P6SolveResidualRecovery(ByVal damping As Double) As Boolean
   On Error GoTo Failed
   startedAt = Timer
   P6FactorizationCount = P6FactorizationCount + 1
+  kRr = FEMKernRegularized(lastDof + 1, bw, P6CSRRowPtr, P6CSRColumnIndex, P6CSROriginalValues, NodeCond, Force, Disp, damping, P6IterativeTolerance, kNres, factorDone)
+  If kRr >= 0 Then
+    If kRr = 1 Then
+      P6SolverEvent "REGULARIZED_SOLVE", "damping=" & Format$(damping, "0.000E+00") & ";normal_relres=" & Format$(kNres, "0.000E+00")
+      P6SolveResidualRecovery = True
+    End If
+    GoTo Rejected
+  End If
+  factorDone = False
   ReDim a(0 To lastDof, 0 To bw)
   ReDim rhs(0 To lastDof): ReDim solution(0 To lastDof): ReDim columnScale(0 To lastDof)
   For row = 0 To lastDof
