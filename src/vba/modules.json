@@ -123,5 +123,10 @@
         "name":  "FEMNativeMat",
         "file":  "FEMNativeMat.bas",
         "type":  1
+    },
+    {
+        "name":  "FEMNativeKern",
+        "file":  "FEMNativeKern.bas",
+        "type":  1
     }
 ]

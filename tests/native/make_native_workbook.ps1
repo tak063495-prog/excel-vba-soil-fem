@@ -1,29 +1,66 @@
-﻿param([string]$Src,[string]$Dst,[string]$ModDir,[string]$Modules='FEMSolver,FEMIo,FEMCore')
+﻿<#
+  ネイティブ版ブックの再構築。元ブックは上書きしない（-Dst へコピーしてから更新）。
+  必須モジュール（$Required）は常に取り込む。-Modules は「追加分」として扱い、必須分を落とせない。
+  Excel起動前にソース欠落を検出し、保存前と保存後（開き直し）に埋込コードとソースを照合する。
+#>
+param([string]$Src,[string]$Dst,[string]$ModDir,[string]$Modules='')
 $ErrorActionPreference='Stop'
+$Required=@('FEMCore','FEMSolver','FEMIo','FEMEngine','FEMNative','FEMNativeMat','FEMNativeKern')
+$list=[Collections.Generic.List[string]]::new(); foreach($m in $Required){$list.Add($m)}
+foreach($m in ($Modules -split ',')){ $m=$m.Trim(); if($m -and -not $list.Contains($m)){$list.Add($m)} }
+if(-not (Test-Path -LiteralPath $Src -PathType Leaf)){throw "Src not found: $Src"}
+if(Test-Path -LiteralPath $Dst){throw "Dst already exists (refusing to overwrite): $Dst"}
+if((Resolve-Path -LiteralPath $Src).Path -eq [IO.Path]::GetFullPath($Dst)){throw "Dst must differ from Src"}
+function Norm([string]$s){ (($s -replace "`r`n","`n" -replace "`r","`n") -split "`n" | ?{ $_ -notmatch '^Attribute VB_' } | %{ $_.TrimEnd() }) -join "`n" -replace "`n+$","" }
+$srcText=@{}; $srcHash=@{}
+foreach($m in $list){
+ $p=Join-Path $ModDir "$m.bas"
+ if(-not (Test-Path -LiteralPath $p -PathType Leaf)){throw "Module source missing: $p"}
+ $srcText[$m]=Get-Content -LiteralPath $p -Raw -Encoding UTF8
+ $srcHash[$m]=(Get-FileHash -LiteralPath $p -Algorithm SHA256).Hash
+}
+function Verify($wb,$tag){
+ foreach($m in $list){
+  $c=$null; try{$c=$wb.VBProject.VBComponents.Item($m)}catch{}
+  if($null -eq $c){throw "[$tag] module not embedded: $m"}
+  $cm=$c.CodeModule; $code=$(if($cm.CountOfLines -gt 0){$cm.Lines(1,$cm.CountOfLines)}else{''})
+  if((Norm $code) -ne (Norm $srcText[$m])){throw "[$tag] embedded code differs from source: $m"}
+  "verify[$tag] $m OK sha256=$($srcHash[$m]) lines=$($cm.CountOfLines)"
+ }
+}
 $before=@(Get-Process EXCEL -ErrorAction SilentlyContinue|%{$_.Id})
 if($before.Count -gt 0){throw "Another Excel is running: $before"}
+"modules=$($list -join ',')"
 Copy-Item -LiteralPath $Src -Destination $Dst
 $xl=New-Object -ComObject Excel.Application
 $xpid=@(Get-Process EXCEL|%{$_.Id}|?{$before -notcontains $_})[0]
 Set-Content "$Dst.running" "pid=$xpid"
+$ok=$false
 try{
  $xl.EnableEvents=$false;$xl.DisplayAlerts=$false;$xl.AutomationSecurity=1
  $wb=$xl.Workbooks.Open($Dst,0,$false)
- foreach($m in $Modules.Split(',')){
+ foreach($m in $list){
   $c=$null; try{$c=$wb.VBProject.VBComponents.Item($m)}catch{}
   if($null -eq $c){$c=$wb.VBProject.VBComponents.Add(1);$c.Name=$m}
   $cm=$c.CodeModule
   if($cm.CountOfLines -gt 0){$cm.DeleteLines(1,$cm.CountOfLines)}
-  $cm.AddFromString((Get-Content (Join-Path $ModDir "$m.bas") -Raw -Encoding UTF8))
+  $cm.AddFromString($srcText[$m])
  }
- $c=$null; try{$c=$wb.VBProject.VBComponents.Item('FEMNative')}catch{}
- if($null -eq $c){$c=$wb.VBProject.VBComponents.Add(1);$c.Name='FEMNative'}
- $cm=$c.CodeModule; if($cm.CountOfLines -gt 0){$cm.DeleteLines(1,$cm.CountOfLines)}
- $cm.AddFromString((Get-Content (Join-Path $ModDir "FEMNative.bas") -Raw -Encoding UTF8))
+ Verify $wb 'pre-save'
  $ctl=$xl.VBE.CommandBars.FindControl(1,578)
  if($ctl.Enabled){$ctl.Execute()}
- "compile_enabled_after=$($xl.VBE.CommandBars.FindControl(1,578).Enabled)"
+ $compEnabled=$xl.VBE.CommandBars.FindControl(1,578).Enabled
+ "compile_enabled_after=$compEnabled"
+ if($compEnabled){throw "compile failed (Compile command still enabled)"}
  $wb.Save(); $wb.Close($false)
-} finally { $xl.Quit(); [Runtime.InteropServices.Marshal]::ReleaseComObject($xl)|Out-Null; Start-Sleep 3
+ $wb=$xl.Workbooks.Open($Dst,0,$true)
+ Verify $wb 'reopen'
+ $wb.Close($false)
+ $ok=$true
+} catch { "ERROR: $($_.Exception.Message)"; throw }
+finally { $xl.Quit(); [Runtime.InteropServices.Marshal]::ReleaseComObject($xl)|Out-Null; Start-Sleep 3
  if(Get-Process -Id $xpid -ErrorAction SilentlyContinue){Stop-Process -Id $xpid -Force}
- Remove-Item "$Dst.running" -ErrorAction SilentlyContinue }
+ Remove-Item "$Dst.running" -ErrorAction SilentlyContinue
+ if(-not $ok){ Remove-Item -LiteralPath $Dst -ErrorAction SilentlyContinue; "FAILED: output removed" } }
+"build=$([regex]::Match($srcText['FEMCore'],'FEM_BUILD_STAMP As String = "([^"]+)"').Groups[1].Value) (embedded FEMCore verified)"
+"OK $Dst"
