@@ -67,9 +67,12 @@ VBA↔DLL呼出しのオーバーヘッドを避けるため、**行列全体を
 ## 7. 再現方法
 
 ```powershell
-# 作業コピーに変更モジュールを反映（元ブックは上書きしない）
+# 作業コピーに変更モジュールを反映（元ブックは上書きしない。-Dst が既存ならエラー）
+# 必須モジュール FEMCore/FEMSolver/FEMIo/FEMEngine/FEMNative/FEMNativeMat/FEMNativeKern は常に取込み、
+# -Modules は追加分として扱う。保存前と開き直し後に埋込コードとソースを照合し、不一致・コンパイル失敗は出力を削除して失敗終了
 powershell -File tests/native/make_native_workbook.ps1 -Src <元.xlsm> -Dst <name_native_yyyyMMdd_HHmm.xlsm> -ModDir src/vba
 # DLLを同じフォルダに置き、VBA/DLLを交互に実行
+# smoke系は tests/fixtures/smoke_mesh.json（スクリプト基準）を自動で読む。ブック隣へのコピー不要。別fixtureは -MeshPath で指定
 powershell -File tests/native/run_native_compare.ps1 -Book <ブック> -Suite smoke -Flow DAVIS -Out smoke.json
 powershell -File tests/native/run_native_compare.ps1 -Book <ブック> -Suite builtin -FixedFs 0 -Modes AUTO,OFF -Out srm.json
 python tests/native/compare_results.py srm.json

@@ -1,6 +1,22 @@
-﻿param([string]$Book,[string]$Suite='smoke',[string]$Out,[double]$FixedFs=1.0,[string]$Modes='OFF,AUTO',[string]$Flow='')
+﻿# -MeshPath: smoke系のfixture。未指定時はリポジトリ追跡の tests/fixtures/smoke_mesh.json（スクリプト基準）。
+# 相対パス指定はカレントディレクトリ基準。ブック隣へのフォールバックはしない。
+param([string]$Book,[string]$Suite='smoke',[string]$Out,[double]$FixedFs=1.0,[string]$Modes='OFF,AUTO',[string]$Flow='',[string]$MeshPath='')
 $ErrorActionPreference='Stop'
+if(-not (Test-Path -LiteralPath $Book -PathType Leaf)){throw "Book not found: $Book"}
+$Book=(Resolve-Path -LiteralPath $Book).Path
 $root=Split-Path -Parent $Book
+$mesh=$null
+if($Suite -like 'smoke*'){
+ if($MeshPath -eq ''){$MeshPath=Join-Path $PSScriptRoot '../fixtures/smoke_mesh.json'}
+ if(-not (Test-Path -LiteralPath $MeshPath -PathType Leaf)){throw "smoke fixture not found: $([IO.Path]::GetFullPath($MeshPath))"}
+ $MeshPath=(Resolve-Path -LiteralPath $MeshPath).Path
+ try{$mesh=Get-Content -LiteralPath $MeshPath -Raw -Encoding UTF8|ConvertFrom-Json}catch{throw "smoke fixture is not valid JSON: $MeshPath ($($_.Exception.Message))"}
+ if($null -eq $mesh.nodes -or @($mesh.nodes).Count -eq 0){throw "smoke fixture has no nodes: $MeshPath"}
+ if($null -eq $mesh.elements -or @($mesh.elements).Count -eq 0){throw "smoke fixture has no elements: $MeshPath"}
+ foreach($n in $mesh.nodes){if(@($n).Count -ne 9){throw "smoke fixture node row must have 9 columns: $MeshPath"}}
+ foreach($e in $mesh.elements){if(@($e).Count -ne 10){throw "smoke fixture element row must have 10 columns: $MeshPath"}}
+ Write-Output "mesh=$MeshPath nodes=$(@($mesh.nodes).Count) elements=$(@($mesh.elements).Count) sha256=$((Get-FileHash -LiteralPath $MeshPath -Algorithm SHA256).Hash)"
+}
 $before=@(Get-Process EXCEL -ErrorAction SilentlyContinue|%{$_.Id})
 if($before.Count -gt 0){throw "Another Excel is running: $before"}
 $copy=Join-Path $root ("test_"+$Suite+"_"+(Get-Date -Format yyyyMMdd_HHmmss)+".xlsm")
@@ -46,7 +62,6 @@ try{
  if($Flow -ne ''){SetS $wb 'FLOW_POLICY' $Flow}
  $runs=@()
  if($Suite -like 'smoke*'){
-  $mesh=Get-Content (Join-Path $root 'smoke_mesh.json') -Raw|ConvertFrom-Json
   SetRows $wb '要素データ' $mesh.elements 10
   $wb.Worksheets.Item('載荷').Range('A2:F100').ClearContents()
   SetS $wb 'SOLVER_MAX_ITERATIONS' 2000
