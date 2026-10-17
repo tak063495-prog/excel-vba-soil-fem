@@ -68,7 +68,7 @@ VBA↔DLL呼出しのオーバーヘッドを避けるため、**行列全体を
 
 ```powershell
 # 作業コピーに変更モジュールを反映（元ブックは上書きしない。-Dst が既存ならエラー）
-# 必須モジュール FEMCore/FEMSolver/FEMIo/FEMEngine/FEMNative/FEMNativeMat/FEMNativeKern は常に取込み、
+# 必須モジュール CONTROL/FEMCore/FEMSolver/FEMIo/FEMEngine/FEMNative/FEMNativeMat/FEMNativeKern は常に取込み、
 # -Modules は追加分として扱う。保存前と開き直し後に埋込コードとソースを照合し、不一致・コンパイル失敗は出力を削除して失敗終了
 powershell -File tests/native/make_native_workbook.ps1 -Src <元.xlsm> -Dst <name_native_yyyyMMdd_HHmm.xlsm> -ModDir src/vba
 # DLLを同じフォルダに置き、VBA/DLLを交互に実行
@@ -109,7 +109,7 @@ python tests/native/compare_results.py srm.json
 
 残りの時間は、主に破壊荷重付近で収束しないNewton反復（1増分あたり100回、それぞれに直線探索）です。この部分の短縮は今後の課題です。
 
-## 9. Phase B/C: 材料点・接線・組立・GMRES/ILU・RCM などのDLL化（20261017_NATIVE_03/04）
+## 9. Phase B/C: 材料点・接線・組立・GMRES/ILU・RCM などのDLL化（20261017_NATIVE_03）
 
 ### 9.1 モード（設定キー `NATIVE_DLL`）
 
@@ -173,3 +173,28 @@ INCONSISTENTの内訳：GMRES/ILUのDLL化で 1753.8 → 691.8 s、イベント�
 同梱SRM（AUTO）の残り内訳：分解 11.2 s、材料点 4.9 s、接線＋組立 6.5 s、求解 2.1 s、その他（増分制御・ログ）約12 s。
 
 証跡：`docs/native-evidence/phaseC_*.json`。
+
+## 10. Issue #2 / #3 の修正（20261017_NATIVE_04）
+
+ブック：`workbook/2DSoilFEM_issue23_20261017_1031.xlsm`（`2DSoilFEM_nativekern_20261017_0846.xlsm` から `make_native_workbook.ps1` で再構築）。DLLは変更なし。
+
+- **#2 孤立DOF**：境界条件適用前のCSR対角検査（`P6CheckCSRDiagonalValues` の `allowConstrainedZero`）で、拘束DOF（DEATH後の孤立DOF保持を含む）の0対角を許容する。非有限値・対角位置欠落・自由DOFの0対角は従来どおり拒否し、解く行列は境界条件適用後に従来の厳格検査を行う。直接再組立経路も同じ検査を使う。DLLのCSR散布（`sfm_csr_scatter`）は無効要素を除外するだけで対角検査を持たないため変更不要。
+- **前回解析の有効要素集合の持越し**：DEATHを含む解析の後、同じExcelセッションで再解析すると、初期組立（`P0` の `SetTotalMat`）が前回終了時の無効要素で組み立てられ、INCONSISTENTでは0対角で停止していた。入力読込後に `P3ElementActiveReady=False` とし、新規起動直後と同じ状態から開始する。
+- **#3 ユーザー中断**：非対称帯域LU・GMRES・正則化残差回復、およびCSR散布/組立・LDLT影計算・帯域キャッシュ照合の下位ハンドラで、Err18を消去せず `P3UserCancel`/`P3SearchFatal` を立てて再送出する。DLLラッパー（FEMNative/FEMNativeMat/FEMNativeKern）もErr18をDLL無効化・VBA代替に変えず呼出側へ送る。外側の既存中断処理で `AnalysisErrorNumber=18` となり、代替ソルバ・damping再試行・PASS/Fs公開は行わない。
+
+回帰試験 `tests/test_issue2_3_regression.ps1`（`tests/run.ps1` に追加、OFF/AUTO両方）：
+
+| 区分 | 内容 | 修正前 | 修正後 |
+|---|---|---|---|
+| #2 | Q8 2要素、INCONSISTENT、GRAVITY→上側DEATH→GRAVITY、RCM OFF/ON | DEATHでCSR組立失敗 | PASS、孤立節点NodeCond=1・第1段階変位を保持、残存要素の変位が下側単独モデルと一致（差 2.2E-19） |
+| #2 | 初期OFF→BIRTH、RCM OFF/ON | 初期組立で0対角により失敗 | PASS、BIRTH後NodeCondが支持条件へ復帰 |
+| #2 | 対角検査の単体確認 | — | 拘束0対角=許容、厳格=拒否、非有限=拒否、自由DOFの0対角=拒否 |
+| #2 | 支持なし機構 | — | 引き続きPASSにならない（NONCONVERGED） |
+| #3 | LU本体でErr.Raise 18（SRM固定Fs中） | GMRESへ進みPASS・FIXED_FS_VERIFIED公開 | 中断（P3UserCancel=True、Err=18）、GMRES 0回、Fs公開なし |
+| #3 | GMRES本体でErr.Raise 18 | 残差回復へ進みPASS | 中断、残差回復 0回、Fs公開なし |
+| #3 | 残差回復本体でErr.Raise 18 | 次のdampingへ進みPASS | 中断、追加の残差回復なし、Fs公開なし |
+| #3 | 通常のLU失敗→GMRES、LU/GMRES失敗→残差回復 | PASS | 変化なし（PASS） |
+
+全ケースでOFF/AUTOの変位・状態・呼出回数がビット一致。smoke/smokesrm（DAVIS）8組×2もOFF/AUTOビット一致で、PR #8時点の結果とも同一。実ExcelでのCtrl+Breakは自動試験では未確認。
+
+証跡：`docs/native-evidence/issue23_*.json`。

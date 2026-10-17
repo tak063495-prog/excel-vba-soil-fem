@@ -118,6 +118,7 @@ Public Function FEMNativeAvailable() As Boolean
 #End If
   Exit Function
 LoadFailed:
+  If Err.Number = 18 Then mChecked = False: Err.Raise 18 ' ユーザー中断は利用可否を確定せず呼出側へ送る
   mReason = "DLL_ERROR_" & CStr(Err.Number)
   mAvailable = False
   FEMNativeAvailable = False
@@ -150,6 +151,7 @@ Public Function FEMNativeBandFactor(ByRef band() As Double, ByRef packed() As Do
   End If
   Exit Function
 Failed:
+  If Err.Number = 18 Then Err.Raise 18 ' ユーザー中断はDLL無効化・VBA代替へ進めず呼出側へ送る
   FEMNativeDisable "BAND_FACTOR_ERR_" & CStr(Err.Number)
   Err.Clear
 #End If
@@ -173,6 +175,7 @@ Public Function FEMNativeBandSolve(ByRef packed() As Double, ByRef rhs() As Doub
   End If
   Exit Function
 Failed:
+  If Err.Number = 18 Then Err.Raise 18 ' ユーザー中断はDLL無効化・VBA代替へ進めず呼出側へ送る
   FEMNativeDisable "BAND_SOLVE_ERR_" & CStr(Err.Number)
   Err.Clear
 #End If
@@ -201,6 +204,7 @@ Public Function FEMNativeNsFactor(ByRef a() As Double, ByRef rhs() As Double, By
   End If
   Exit Function
 Failed:
+  If Err.Number = 18 Then Err.Raise 18 ' ユーザー中断はDLL無効化・VBA代替へ進めず呼出側へ送る
   FEMNativeDisable "NS_FACTOR_ERR_" & CStr(Err.Number)
   Err.Clear
 #End If
@@ -219,6 +223,7 @@ Public Function FEMNativeNsForward(ByRef pivotRows() As Long, ByRef lower() As D
   If rc = 0 Then FEMNativeNsForward = 0 Else FEMNativeDisable "NS_FORWARD_RC_" & CStr(rc)
   Exit Function
 Failed:
+  If Err.Number = 18 Then Err.Raise 18 ' ユーザー中断はDLL無効化・VBA代替へ進めず呼出側へ送る
   FEMNativeDisable "NS_FORWARD_ERR_" & CStr(Err.Number)
   Err.Clear
 #End If
@@ -239,6 +244,7 @@ Public Function FEMNativeNsBack(ByRef a() As Double, ByRef rhs() As Double, ByRe
   If rc >= 0 And rc <= 2 Then FEMNativeNsBack = rc Else FEMNativeDisable "NS_BACK_RC_" & CStr(rc)
   Exit Function
 Failed:
+  If Err.Number = 18 Then Err.Raise 18 ' ユーザー中断はDLL無効化・VBA代替へ進めず呼出側へ送る
   FEMNativeDisable "NS_BACK_ERR_" & CStr(Err.Number)
   Err.Clear
 #End If

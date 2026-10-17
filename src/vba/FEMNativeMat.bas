@@ -93,6 +93,7 @@ Public Function FEMMatAvailable() As Boolean
 #End If
   Exit Function
 LoadFailed:
+  If Err.Number = 18 Then mChecked = False: Err.Raise 18 ' ユーザー中断は利用可否を確定せず呼出側へ送る
   mReason = "DLL_ERROR_" & CStr(Err.Number)
   mAvailable = False
   FEMMatAvailable = False
@@ -239,6 +240,7 @@ Public Function FEMMatEval(ByVal kStart As Long, ByRef incrementBase() As Double
   FEMMatEval = r
   Exit Function
 Failed:
+  If Err.Number = 18 Then Err.Raise 18 ' ユーザー中断はDLL無効化・VBA代替へ進めず呼出側へ送る
   FEMMatDisable "EVAL_ERR_" & CStr(Err.Number)
   Err.Clear
 #End If
@@ -268,6 +270,7 @@ Public Function FEMMatTangent(ByVal elasticCorrection As Boolean, ByVal inconsis
   FEMMatTangent = True
   Exit Function
 Failed:
+  If Err.Number = 18 Then Err.Raise 18 ' ユーザー中断はDLL無効化・VBA代替へ進めず呼出側へ送る
   FEMMatDisable "TANGENT_ERR_" & CStr(Err.Number)
   Err.Clear
 #End If

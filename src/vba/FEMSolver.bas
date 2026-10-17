@@ -1022,6 +1022,7 @@ Private Function P6EnsureCSRScatterList() As Boolean
   Exit Function
 
 ScatterBuildFailed:
+  If Err.Number = 18 Then P6RaiseUserCancel
   P6CSRScatterCount = 0
   P6CSRScatterElementCount = -1
   P6CSRScatterTangentGeneration = -1
@@ -1098,9 +1099,13 @@ NextCsrDirectElement:
   P6AssembleCSRValuesDirect = True
 End Function
 
-Private Function P6CheckCSRDiagonalValues(ByRef matrixValues() As Double) As Boolean
+Private Function P6CheckCSRDiagonalValues(ByRef matrixValues() As Double, Optional ByVal allowConstrainedZero As Boolean = False) As Boolean
+  ' allowConstrainedZero: 境界条件適用前の原行列検査。拘束DOF（NodeCond<>0、DEATH後の
+  ' 孤立DOF保持を含む）の0対角は境界処理で1に置換されるため許容する。非有限値と
+  ' 対角位置の欠落は拘束DOFでも拒否し、自由DOFの0対角は従来どおり拒否する。
+  ' 実際に解く行列の特異性は境界条件適用後の検査（allowConstrainedZero=False）で判定する。
   Dim rowNo As Long, diagonalPosition As Long
-  Dim diagonalValue As Double
+  Dim diagonalValue As Double, constrainedRow As Boolean
 
   P6CSRDiagonalZeroCount = 0
   P6CSRFirstZeroDiagonalDof = -1
@@ -1112,9 +1117,16 @@ Private Function P6CheckCSRDiagonalValues(ByRef matrixValues() As Double) As Boo
       If P6CSRFirstZeroDiagonalDof < 0 Then P6CSRFirstZeroDiagonalDof = rowNo
     Else
       diagonalValue = matrixValues(diagonalPosition)
-      If Not P2IsFinite(diagonalValue) Or Abs(diagonalValue) <= 1E-30 Then
+      constrainedRow = False
+      If allowConstrainedZero Then constrainedRow = (NodeCond(rowNo) <> 0)
+      If Not P2IsFinite(diagonalValue) Then
         P6CSRDiagonalZeroCount = P6CSRDiagonalZeroCount + 1
         If P6CSRFirstZeroDiagonalDof < 0 Then P6CSRFirstZeroDiagonalDof = rowNo
+      ElseIf Abs(diagonalValue) <= 1E-30 Then
+        If Not constrainedRow Then
+          P6CSRDiagonalZeroCount = P6CSRDiagonalZeroCount + 1
+          If P6CSRFirstZeroDiagonalDof < 0 Then P6CSRFirstZeroDiagonalDof = rowNo
+        End If
       ElseIf diagonalValue < P6CSRMinimumDiagonal Then
         P6CSRMinimumDiagonal = diagonalValue
       End If
@@ -1157,9 +1169,9 @@ Private Function P6BuildCSRFromElements() As Boolean
   P6CSRDeviatoricReady = False
   If Not P6EnsureCSRScatterList() Then Exit Function
   If Not P6AssembleCSRValuesDetailed() Then Exit Function
-  If Not P6CheckCSRDiagonalValues(P6CSROriginalValues) Then
+  If Not P6CheckCSRDiagonalValues(P6CSROriginalValues, True) Then
     If Not P6AssembleCSRValuesDirect() Then Exit Function
-    If Not P6CheckCSRDiagonalValues(P6CSROriginalValues) Then
+    If Not P6CheckCSRDiagonalValues(P6CSROriginalValues, True) Then
       SetAnalysisFailure RESULT_GLOBAL_SINGULAR, _
         "CSR数値組立後の対角成分が0または極小です。ゼロ対角数=" & CStr(P6CSRDiagonalZeroCount) & _
         "、最初の自由度=" & CStr(P6CSRFirstZeroDiagonalDof), vbObjectError + 3509, -1, -1, CurrentIncrement, CurrentIteration
@@ -1181,6 +1193,7 @@ Private Function P6BuildCSRFromElements() As Boolean
   P6BuildCSRFromElements = True
   Exit Function
 CSRBuildFailed:
+  If Err.Number = 18 Then P6RaiseUserCancel
   errorNumber = Err.Number
   errorDescription = Err.Description
   If errorNumber = 0 Then errorNumber = vbObjectError + 3504
@@ -3209,6 +3222,8 @@ Private Function P6SolveCSRGMRES() As Boolean
   P6SolveCSRGMRES = True
   Exit Function
 GMRESFailed:
+  ' ユーザー中断（Err18）は数値失敗として消去せず、既存の中断処理へ送る。
+  If Err.Number = 18 Then P6RaiseUserCancel
   If Err.Number = 7 Then SetAnalysisFailure RESULT_CAPACITY_ERROR, "非対称GMRESのメモリ確保に失敗しました。", Err.Number, -1, -1, CurrentIncrement, CurrentIteration
   Err.Clear
 End Function
@@ -3486,6 +3501,24 @@ Private Function P6SolveMixedUzawa() As Boolean
   P6IterativeFallbackStatus = "uzawa_stalled_relres=" & Format$(P6IterativeLastResidual, "0.000E+00") & "; iter=" & CStr(uzawaMax)
 End Function
 
+' ユーザー中断（Err18）を下位ハンドラから再送出する。中断状態を先に立て、
+' 途中の呼出側がエラーを消去しても代替ソルバ・damping再試行へ進まないようにする。
+' 診断（AnalysisErrorNumber=18、中断メッセージ）は外側の既存中断処理が設定する。
+Private Sub P6RaiseUserCancel()
+  P3UserCancel = True
+  P3SearchFatal = True
+  Err.Raise 18
+End Sub
+
+Private Sub P6AddSolveProfile(ByVal startedAt As Double, ByVal factorDone As Boolean)
+  If startedAt = 0# Then Exit Sub
+  If factorDone Then
+    P6ProfSolveMs = P6ProfSolveMs + P6ElapsedMs(startedAt)
+  Else
+    P6ProfFactorMs = P6ProfFactorMs + P6ElapsedMs(startedAt)
+  End If
+End Sub
+
 Public Function P6SolveResidualRecovery(ByVal damping As Double) As Boolean
   ' Column-scaled Levenberg-Marquardt direction for the current free residual.
   ' A = S^-1 K^T K S^-1 + damping*I, rhs = S^-1 K^T r.
@@ -3611,6 +3644,11 @@ Public Function P6SolveResidualRecovery(ByVal damping As Double) As Boolean
   P6SolveResidualRecovery = True
   GoTo Rejected
 Failed:
+  ' ユーザー中断（Err18）は次のdamping試行へ進めず、既存の中断処理へ送る。
+  If Err.Number = 18 Then
+    P6AddSolveProfile startedAt, factorDone
+    P6RaiseUserCancel
+  End If
   Err.Clear
 Rejected:
   If startedAt <> 0# Then
@@ -3785,6 +3823,12 @@ NsRefineSolved:
   P6SolveNonsymmetricBand = True
   GoTo Rejected
 Failed:
+  ' ユーザー中断（Err18）はGMRESへ切り替えず、既存の中断処理へ送る。
+  If Err.Number = 18 Then
+    P6ClearElasticRecoveryCSR
+    P6AddSolveProfile startedAt, factorDone
+    P6RaiseUserCancel
+  End If
   If Err.Number = 7 Then SetAnalysisFailure RESULT_CAPACITY_ERROR, "非対称帯域LUのメモリ確保に失敗しました。", Err.Number, -1, -1, CurrentIncrement, CurrentIteration
   Err.Clear
 Rejected:
@@ -3827,6 +3871,7 @@ Private Function P6BandCSRCacheMatches(ByVal b As Long) As Boolean
   Next i
   P6BandCSRCacheMatches = True
 NotMatching:
+  If Err.Number = 18 Then P6RaiseUserCancel
 End Function
 
 Private Sub P6BandReplayForward(ByRef rhs() As Double, ByRef pivots() As Long, ByRef multipliers() As Double, ByVal b As Long)
@@ -4199,6 +4244,7 @@ Private Sub P6ShadowBandLDLT()
   P6SolverEvent "LDLT_SHADOW", detailText
   Exit Sub
 ShadowFail:
+  If Err.Number = 18 Then P6RaiseUserCancel
   If Not counted Then
     P6LdltN = P6LdltN + 1
     P6LdltFail = P6LdltFail + 1
