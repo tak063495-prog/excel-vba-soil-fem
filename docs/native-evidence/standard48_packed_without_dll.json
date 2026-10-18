@@ -1,0 +1,1623 @@
+{
+  "capacity_boundaries": 8,
+  "mode_checks": 112,
+  "allocation_error7_fallback": true,
+  "source_sha256": "311B61DEAF4A00CFA4A926EFDCC859ECE78F091185294E7A420D16BBB9C43D1D",
+  "owned_excel_ended": true,
+  "failure": null,
+  "cases_sha256": "EAAA09DE460A5B2199DEE53CC87637464A6E75BB66F7F6F619154B5EF428AAEB",
+  "results": [
+    {
+      "native_calls": 0,
+      "case_index": 1,
+      "name": "nonsymmetric",
+      "relative_gap": 2.5225074571510085E-16,
+      "bits": [
+        "3FC76FC64A8BE51B",
+        "3FD120735E9E76CE",
+        "3FF073615793C697"
+      ],
+      "damping": 1E-08,
+      "accepted": true,
+      "route": "OFF"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 1,
+      "name": "nonsymmetric",
+      "relative_gap": 2.5225074571510085E-16,
+      "bits": [
+        "3FC76FC64A8BE51B",
+        "3FD120735E9E76CE",
+        "3FF073615793C697"
+      ],
+      "damping": 1E-08,
+      "accepted": true,
+      "route": "BAND"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 1,
+      "name": "nonsymmetric",
+      "relative_gap": 2.5225074571510085E-16,
+      "bits": [
+        "3FC76FC64A8BE51B",
+        "3FD120735E9E76CE",
+        "3FF073615793C697"
+      ],
+      "damping": 1E-08,
+      "accepted": true,
+      "route": "MAT"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 1,
+      "name": "nonsymmetric",
+      "relative_gap": 2.5225074571510085E-16,
+      "bits": [
+        "3FC76FC64A8BE51B",
+        "3FD120735E9E76CE",
+        "3FF073615793C697"
+      ],
+      "damping": 1E-08,
+      "accepted": true,
+      "route": "AUTO"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 2,
+      "name": "nonsymmetric",
+      "relative_gap": 2.359811085637957E-16,
+      "bits": [
+        "3FC76F0BB643BA8E",
+        "3FD12008A101A52B",
+        "3FF072FD38886D56"
+      ],
+      "damping": 0.0001,
+      "accepted": true,
+      "route": "OFF"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 2,
+      "name": "nonsymmetric",
+      "relative_gap": 2.359811085637957E-16,
+      "bits": [
+        "3FC76F0BB643BA8E",
+        "3FD12008A101A52B",
+        "3FF072FD38886D56"
+      ],
+      "damping": 0.0001,
+      "accepted": true,
+      "route": "BAND"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 2,
+      "name": "nonsymmetric",
+      "relative_gap": 2.359811085637957E-16,
+      "bits": [
+        "3FC76F0BB643BA8E",
+        "3FD12008A101A52B",
+        "3FF072FD38886D56"
+      ],
+      "damping": 0.0001,
+      "accepted": true,
+      "route": "MAT"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 2,
+      "name": "nonsymmetric",
+      "relative_gap": 2.359811085637957E-16,
+      "bits": [
+        "3FC76F0BB643BA8E",
+        "3FD12008A101A52B",
+        "3FF072FD38886D56"
+      ],
+      "damping": 0.0001,
+      "accepted": true,
+      "route": "AUTO"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 3,
+      "name": "nonsymmetric",
+      "relative_gap": 1.1611453289588965E-16,
+      "bits": [
+        "3FC4E4D409DCDA76",
+        "3FCF4B4BF23B24E7",
+        "3FEE1A492EF2795A"
+      ],
+      "damping": 0.1,
+      "accepted": true,
+      "route": "OFF"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 3,
+      "name": "nonsymmetric",
+      "relative_gap": 1.1611453289588965E-16,
+      "bits": [
+        "3FC4E4D409DCDA76",
+        "3FCF4B4BF23B24E7",
+        "3FEE1A492EF2795A"
+      ],
+      "damping": 0.1,
+      "accepted": true,
+      "route": "BAND"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 3,
+      "name": "nonsymmetric",
+      "relative_gap": 1.1611453289588965E-16,
+      "bits": [
+        "3FC4E4D409DCDA76",
+        "3FCF4B4BF23B24E7",
+        "3FEE1A492EF2795A"
+      ],
+      "damping": 0.1,
+      "accepted": true,
+      "route": "MAT"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 3,
+      "name": "nonsymmetric",
+      "relative_gap": 1.1611453289588965E-16,
+      "bits": [
+        "3FC4E4D409DCDA76",
+        "3FCF4B4BF23B24E7",
+        "3FEE1A492EF2795A"
+      ],
+      "damping": 0.1,
+      "accepted": true,
+      "route": "AUTO"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 4,
+      "name": "nonsymmetric",
+      "relative_gap": 4.992512913471023E-17,
+      "bits": [
+        "3FB4FA0070DD75E8",
+        "3FC1CCED78B24D03",
+        "3FE1061D42AD5BBC"
+      ],
+      "damping": 1.0,
+      "accepted": true,
+      "route": "OFF"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 4,
+      "name": "nonsymmetric",
+      "relative_gap": 4.992512913471023E-17,
+      "bits": [
+        "3FB4FA0070DD75E8",
+        "3FC1CCED78B24D03",
+        "3FE1061D42AD5BBC"
+      ],
+      "damping": 1.0,
+      "accepted": true,
+      "route": "BAND"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 4,
+      "name": "nonsymmetric",
+      "relative_gap": 4.992512913471023E-17,
+      "bits": [
+        "3FB4FA0070DD75E8",
+        "3FC1CCED78B24D03",
+        "3FE1061D42AD5BBC"
+      ],
+      "damping": 1.0,
+      "accepted": true,
+      "route": "MAT"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 4,
+      "name": "nonsymmetric",
+      "relative_gap": 4.992512913471023E-17,
+      "bits": [
+        "3FB4FA0070DD75E8",
+        "3FC1CCED78B24D03",
+        "3FE1061D42AD5BBC"
+      ],
+      "damping": 1.0,
+      "accepted": true,
+      "route": "AUTO"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 5,
+      "name": "nonsymmetric",
+      "relative_gap": 3.817561507845353E-17,
+      "bits": [
+        "3F573F90395041B0",
+        "3F67FF28D9C446B5",
+        "3F864A4A21D97612"
+      ],
+      "damping": 100.0,
+      "accepted": true,
+      "route": "OFF"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 5,
+      "name": "nonsymmetric",
+      "relative_gap": 3.817561507845353E-17,
+      "bits": [
+        "3F573F90395041B0",
+        "3F67FF28D9C446B5",
+        "3F864A4A21D97612"
+      ],
+      "damping": 100.0,
+      "accepted": true,
+      "route": "BAND"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 5,
+      "name": "nonsymmetric",
+      "relative_gap": 3.817561507845353E-17,
+      "bits": [
+        "3F573F90395041B0",
+        "3F67FF28D9C446B5",
+        "3F864A4A21D97612"
+      ],
+      "damping": 100.0,
+      "accepted": true,
+      "route": "MAT"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 5,
+      "name": "nonsymmetric",
+      "relative_gap": 3.817561507845353E-17,
+      "bits": [
+        "3F573F90395041B0",
+        "3F67FF28D9C446B5",
+        "3F864A4A21D97612"
+      ],
+      "damping": 100.0,
+      "accepted": true,
+      "route": "AUTO"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 6,
+      "name": "singular",
+      "relative_gap": 6.734067848456302E-09,
+      "bits": [
+        "3FDFFFFFFC9C5491",
+        "3FCFFFFFFE0547B9",
+        "0000000000000000"
+      ],
+      "damping": 1E-08,
+      "accepted": true,
+      "route": "OFF"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 6,
+      "name": "singular",
+      "relative_gap": 6.734067848456302E-09,
+      "bits": [
+        "3FDFFFFFFC9C5491",
+        "3FCFFFFFFE0547B9",
+        "0000000000000000"
+      ],
+      "damping": 1E-08,
+      "accepted": true,
+      "route": "BAND"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 6,
+      "name": "singular",
+      "relative_gap": 6.734067848456302E-09,
+      "bits": [
+        "3FDFFFFFFC9C5491",
+        "3FCFFFFFFE0547B9",
+        "0000000000000000"
+      ],
+      "damping": 1E-08,
+      "accepted": true,
+      "route": "MAT"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 6,
+      "name": "singular",
+      "relative_gap": 6.734067848456302E-09,
+      "bits": [
+        "3FDFFFFFFC9C5491",
+        "3FCFFFFFFE0547B9",
+        "0000000000000000"
+      ],
+      "damping": 1E-08,
+      "accepted": true,
+      "route": "AUTO"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 7,
+      "name": "singular",
+      "relative_gap": 2.177589292218609E-12,
+      "bits": [
+        "3FDFFF9725CC2A79",
+        "3FCFFF9725CBA5B8",
+        "0000000000000000"
+      ],
+      "damping": 0.0001,
+      "accepted": true,
+      "route": "OFF"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 7,
+      "name": "singular",
+      "relative_gap": 2.177589292218609E-12,
+      "bits": [
+        "3FDFFF9725CC2A79",
+        "3FCFFF9725CBA5B8",
+        "0000000000000000"
+      ],
+      "damping": 0.0001,
+      "accepted": true,
+      "route": "BAND"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 7,
+      "name": "singular",
+      "relative_gap": 2.177589292218609E-12,
+      "bits": [
+        "3FDFFF9725CC2A79",
+        "3FCFFF9725CBA5B8",
+        "0000000000000000"
+      ],
+      "damping": 0.0001,
+      "accepted": true,
+      "route": "MAT"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 7,
+      "name": "singular",
+      "relative_gap": 2.177589292218609E-12,
+      "bits": [
+        "3FDFFF9725CC2A79",
+        "3FCFFF9725CBA5B8",
+        "0000000000000000"
+      ],
+      "damping": 0.0001,
+      "accepted": true,
+      "route": "AUTO"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 8,
+      "name": "singular",
+      "relative_gap": 2.5646151868841126E-15,
+      "bits": [
+        "3FDE79E79E79E7AC",
+        "3FCE79E79E79E794",
+        "0000000000000000"
+      ],
+      "damping": 0.1,
+      "accepted": true,
+      "route": "OFF"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 8,
+      "name": "singular",
+      "relative_gap": 2.5646151868841126E-15,
+      "bits": [
+        "3FDE79E79E79E7AC",
+        "3FCE79E79E79E794",
+        "0000000000000000"
+      ],
+      "damping": 0.1,
+      "accepted": true,
+      "route": "BAND"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 8,
+      "name": "singular",
+      "relative_gap": 2.5646151868841126E-15,
+      "bits": [
+        "3FDE79E79E79E7AC",
+        "3FCE79E79E79E794",
+        "0000000000000000"
+      ],
+      "damping": 0.1,
+      "accepted": true,
+      "route": "MAT"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 8,
+      "name": "singular",
+      "relative_gap": 2.5646151868841126E-15,
+      "bits": [
+        "3FDE79E79E79E7AC",
+        "3FCE79E79E79E794",
+        "0000000000000000"
+      ],
+      "damping": 0.1,
+      "accepted": true,
+      "route": "AUTO"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 9,
+      "name": "singular",
+      "relative_gap": 1.6653345369377348E-16,
+      "bits": [
+        "3FD5555555555554",
+        "3FC5555555555556",
+        "0000000000000000"
+      ],
+      "damping": 1.0,
+      "accepted": true,
+      "route": "OFF"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 9,
+      "name": "singular",
+      "relative_gap": 1.6653345369377348E-16,
+      "bits": [
+        "3FD5555555555554",
+        "3FC5555555555556",
+        "0000000000000000"
+      ],
+      "damping": 1.0,
+      "accepted": true,
+      "route": "BAND"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 9,
+      "name": "singular",
+      "relative_gap": 1.6653345369377348E-16,
+      "bits": [
+        "3FD5555555555554",
+        "3FC5555555555556",
+        "0000000000000000"
+      ],
+      "damping": 1.0,
+      "accepted": true,
+      "route": "MAT"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 9,
+      "name": "singular",
+      "relative_gap": 1.6653345369377348E-16,
+      "bits": [
+        "3FD5555555555554",
+        "3FC5555555555556",
+        "0000000000000000"
+      ],
+      "damping": 1.0,
+      "accepted": true,
+      "route": "AUTO"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 10,
+      "name": "singular",
+      "relative_gap": 0.0,
+      "bits": [
+        "3F84141414141414",
+        "3F74141414141414",
+        "0000000000000000"
+      ],
+      "damping": 100.0,
+      "accepted": true,
+      "route": "OFF"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 10,
+      "name": "singular",
+      "relative_gap": 0.0,
+      "bits": [
+        "3F84141414141414",
+        "3F74141414141414",
+        "0000000000000000"
+      ],
+      "damping": 100.0,
+      "accepted": true,
+      "route": "BAND"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 10,
+      "name": "singular",
+      "relative_gap": 0.0,
+      "bits": [
+        "3F84141414141414",
+        "3F74141414141414",
+        "0000000000000000"
+      ],
+      "damping": 100.0,
+      "accepted": true,
+      "route": "MAT"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 10,
+      "name": "singular",
+      "relative_gap": 0.0,
+      "bits": [
+        "3F84141414141414",
+        "3F74141414141414",
+        "0000000000000000"
+      ],
+      "damping": 100.0,
+      "accepted": true,
+      "route": "AUTO"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 11,
+      "name": "scaled",
+      "relative_gap": 8.852554418677666E-17,
+      "bits": [
+        "3E8893383953C272",
+        "3E91F56E034DA38E",
+        "3EB13FF3C69B1E31"
+      ],
+      "damping": 1E-08,
+      "accepted": true,
+      "route": "OFF"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 11,
+      "name": "scaled",
+      "relative_gap": 8.852554418677666E-17,
+      "bits": [
+        "3E8893383953C272",
+        "3E91F56E034DA38E",
+        "3EB13FF3C69B1E31"
+      ],
+      "damping": 1E-08,
+      "accepted": true,
+      "route": "BAND"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 11,
+      "name": "scaled",
+      "relative_gap": 8.852554418677666E-17,
+      "bits": [
+        "3E8893383953C272",
+        "3E91F56E034DA38E",
+        "3EB13FF3C69B1E31"
+      ],
+      "damping": 1E-08,
+      "accepted": true,
+      "route": "MAT"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 11,
+      "name": "scaled",
+      "relative_gap": 8.852554418677666E-17,
+      "bits": [
+        "3E8893383953C272",
+        "3E91F56E034DA38E",
+        "3EB13FF3C69B1E31"
+      ],
+      "damping": 1E-08,
+      "accepted": true,
+      "route": "AUTO"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 12,
+      "name": "scaled",
+      "relative_gap": 1.4732923406508111E-16,
+      "bits": [
+        "3E88927494D8F7A8",
+        "3E91F4FE16525DFD",
+        "3EB13F8ACA820B97"
+      ],
+      "damping": 0.0001,
+      "accepted": true,
+      "route": "OFF"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 12,
+      "name": "scaled",
+      "relative_gap": 1.4732923406508111E-16,
+      "bits": [
+        "3E88927494D8F7A8",
+        "3E91F4FE16525DFD",
+        "3EB13F8ACA820B97"
+      ],
+      "damping": 0.0001,
+      "accepted": true,
+      "route": "BAND"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 12,
+      "name": "scaled",
+      "relative_gap": 1.4732923406508111E-16,
+      "bits": [
+        "3E88927494D8F7A8",
+        "3E91F4FE16525DFD",
+        "3EB13F8ACA820B97"
+      ],
+      "damping": 0.0001,
+      "accepted": true,
+      "route": "MAT"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 12,
+      "name": "scaled",
+      "relative_gap": 1.4732923406508111E-16,
+      "bits": [
+        "3E88927494D8F7A8",
+        "3E91F4FE16525DFD",
+        "3EB13F8ACA820B97"
+      ],
+      "damping": 0.0001,
+      "accepted": true,
+      "route": "AUTO"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 13,
+      "name": "scaled",
+      "relative_gap": 6.005472846151531E-17,
+      "bits": [
+        "3E85E8A7283E1AFE",
+        "3E90683A0964FC11",
+        "3EAF90A05CBE5AD8"
+      ],
+      "damping": 0.1,
+      "accepted": true,
+      "route": "OFF"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 13,
+      "name": "scaled",
+      "relative_gap": 6.005472846151531E-17,
+      "bits": [
+        "3E85E8A7283E1AFE",
+        "3E90683A0964FC11",
+        "3EAF90A05CBE5AD8"
+      ],
+      "damping": 0.1,
+      "accepted": true,
+      "route": "BAND"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 13,
+      "name": "scaled",
+      "relative_gap": 6.005472846151531E-17,
+      "bits": [
+        "3E85E8A7283E1AFE",
+        "3E90683A0964FC11",
+        "3EAF90A05CBE5AD8"
+      ],
+      "damping": 0.1,
+      "accepted": true,
+      "route": "MAT"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 13,
+      "name": "scaled",
+      "relative_gap": 6.005472846151531E-17,
+      "bits": [
+        "3E85E8A7283E1AFE",
+        "3E90683A0964FC11",
+        "3EAF90A05CBE5AD8"
+      ],
+      "damping": 0.1,
+      "accepted": true,
+      "route": "AUTO"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 14,
+      "name": "scaled",
+      "relative_gap": 0.0,
+      "bits": [
+        "3E75FEDADC6B80D6",
+        "3E82AA48F1C58FFB",
+        "3EA1D9D06628E8E6"
+      ],
+      "damping": 1.0,
+      "accepted": true,
+      "route": "OFF"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 14,
+      "name": "scaled",
+      "relative_gap": 0.0,
+      "bits": [
+        "3E75FEDADC6B80D6",
+        "3E82AA48F1C58FFB",
+        "3EA1D9D06628E8E6"
+      ],
+      "damping": 1.0,
+      "accepted": true,
+      "route": "BAND"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 14,
+      "name": "scaled",
+      "relative_gap": 0.0,
+      "bits": [
+        "3E75FEDADC6B80D6",
+        "3E82AA48F1C58FFB",
+        "3EA1D9D06628E8E6"
+      ],
+      "damping": 1.0,
+      "accepted": true,
+      "route": "MAT"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 14,
+      "name": "scaled",
+      "relative_gap": 0.0,
+      "bits": [
+        "3E75FEDADC6B80D6",
+        "3E82AA48F1C58FFB",
+        "3EA1D9D06628E8E6"
+      ],
+      "damping": 1.0,
+      "accepted": true,
+      "route": "AUTO"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 15,
+      "name": "scaled",
+      "relative_gap": 3.64071036133323E-17,
+      "bits": [
+        "3E1860AAA0DBF21B",
+        "3E292991D75A38AE",
+        "3E475F7A71F91C5E"
+      ],
+      "damping": 100.0,
+      "accepted": true,
+      "route": "OFF"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 15,
+      "name": "scaled",
+      "relative_gap": 3.64071036133323E-17,
+      "bits": [
+        "3E1860AAA0DBF21B",
+        "3E292991D75A38AE",
+        "3E475F7A71F91C5E"
+      ],
+      "damping": 100.0,
+      "accepted": true,
+      "route": "BAND"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 15,
+      "name": "scaled",
+      "relative_gap": 3.64071036133323E-17,
+      "bits": [
+        "3E1860AAA0DBF21B",
+        "3E292991D75A38AE",
+        "3E475F7A71F91C5E"
+      ],
+      "damping": 100.0,
+      "accepted": true,
+      "route": "MAT"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 15,
+      "name": "scaled",
+      "relative_gap": 3.64071036133323E-17,
+      "bits": [
+        "3E1860AAA0DBF21B",
+        "3E292991D75A38AE",
+        "3E475F7A71F91C5E"
+      ],
+      "damping": 100.0,
+      "accepted": true,
+      "route": "AUTO"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 16,
+      "name": "constrained",
+      "relative_gap": 2.5725397455290483E-17,
+      "bits": [
+        "0000000000000000",
+        "3FC7FFFFFDB17127",
+        "3FF0FFFFFD349E99"
+      ],
+      "damping": 1E-08,
+      "accepted": true,
+      "route": "OFF"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 16,
+      "name": "constrained",
+      "relative_gap": 2.5725397455290483E-17,
+      "bits": [
+        "0000000000000000",
+        "3FC7FFFFFDB17127",
+        "3FF0FFFFFD349E99"
+      ],
+      "damping": 1E-08,
+      "accepted": true,
+      "route": "BAND"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 16,
+      "name": "constrained",
+      "relative_gap": 2.5725397455290483E-17,
+      "bits": [
+        "0000000000000000",
+        "3FC7FFFFFDB17127",
+        "3FF0FFFFFD349E99"
+      ],
+      "damping": 1E-08,
+      "accepted": true,
+      "route": "MAT"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 16,
+      "name": "constrained",
+      "relative_gap": 2.5725397455290483E-17,
+      "bits": [
+        "0000000000000000",
+        "3FC7FFFFFDB17127",
+        "3FF0FFFFFD349E99"
+      ],
+      "damping": 1E-08,
+      "accepted": true,
+      "route": "AUTO"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 17,
+      "name": "constrained",
+      "relative_gap": 2.5727886112887848E-17,
+      "bits": [
+        "0000000000000000",
+        "3FC7FFA5E3ECAB6A",
+        "3FF0FF92DA3A96E3"
+      ],
+      "damping": 0.0001,
+      "accepted": true,
+      "route": "OFF"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 17,
+      "name": "constrained",
+      "relative_gap": 2.5727886112887848E-17,
+      "bits": [
+        "0000000000000000",
+        "3FC7FFA5E3ECAB6A",
+        "3FF0FF92DA3A96E3"
+      ],
+      "damping": 0.0001,
+      "accepted": true,
+      "route": "BAND"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 17,
+      "name": "constrained",
+      "relative_gap": 2.5727886112887848E-17,
+      "bits": [
+        "0000000000000000",
+        "3FC7FFA5E3ECAB6A",
+        "3FF0FF92DA3A96E3"
+      ],
+      "damping": 0.0001,
+      "accepted": true,
+      "route": "MAT"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 17,
+      "name": "constrained",
+      "relative_gap": 2.5727886112887848E-17,
+      "bits": [
+        "0000000000000000",
+        "3FC7FFA5E3ECAB6A",
+        "3FF0FF92DA3A96E3"
+      ],
+      "damping": 0.0001,
+      "accepted": true,
+      "route": "AUTO"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 18,
+      "name": "constrained",
+      "relative_gap": 2.2568478343352047E-16,
+      "bits": [
+        "0000000000000000",
+        "3FC6AA72668828E1",
+        "3FEEF8409E3FA10D"
+      ],
+      "damping": 0.1,
+      "accepted": true,
+      "route": "OFF"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 18,
+      "name": "constrained",
+      "relative_gap": 2.2568478343352047E-16,
+      "bits": [
+        "0000000000000000",
+        "3FC6AA72668828E1",
+        "3FEEF8409E3FA10D"
+      ],
+      "damping": 0.1,
+      "accepted": true,
+      "route": "BAND"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 18,
+      "name": "constrained",
+      "relative_gap": 2.2568478343352047E-16,
+      "bits": [
+        "0000000000000000",
+        "3FC6AA72668828E1",
+        "3FEEF8409E3FA10D"
+      ],
+      "damping": 0.1,
+      "accepted": true,
+      "route": "MAT"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 18,
+      "name": "constrained",
+      "relative_gap": 2.2568478343352047E-16,
+      "bits": [
+        "0000000000000000",
+        "3FC6AA72668828E1",
+        "3FEEF8409E3FA10D"
+      ],
+      "damping": 0.1,
+      "accepted": true,
+      "route": "AUTO"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 19,
+      "name": "constrained",
+      "relative_gap": 7.562532112671562E-17,
+      "bits": [
+        "0000000000000000",
+        "3FBD28866CB9D286",
+        "3FE13C4B1EA413C4"
+      ],
+      "damping": 1.0,
+      "accepted": true,
+      "route": "OFF"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 19,
+      "name": "constrained",
+      "relative_gap": 7.562532112671562E-17,
+      "bits": [
+        "0000000000000000",
+        "3FBD28866CB9D286",
+        "3FE13C4B1EA413C4"
+      ],
+      "damping": 1.0,
+      "accepted": true,
+      "route": "BAND"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 19,
+      "name": "constrained",
+      "relative_gap": 7.562532112671562E-17,
+      "bits": [
+        "0000000000000000",
+        "3FBD28866CB9D286",
+        "3FE13C4B1EA413C4"
+      ],
+      "damping": 1.0,
+      "accepted": true,
+      "route": "MAT"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 19,
+      "name": "constrained",
+      "relative_gap": 7.562532112671562E-17,
+      "bits": [
+        "0000000000000000",
+        "3FBD28866CB9D286",
+        "3FE13C4B1EA413C4"
+      ],
+      "damping": 1.0,
+      "accepted": true,
+      "route": "AUTO"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 20,
+      "name": "constrained",
+      "relative_gap": 1.5957477471693095E-16,
+      "bits": [
+        "0000000000000000",
+        "3F65C4E37D009EF0",
+        "3F864B4EF7F436AB"
+      ],
+      "damping": 100.0,
+      "accepted": true,
+      "route": "OFF"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 20,
+      "name": "constrained",
+      "relative_gap": 1.5957477471693095E-16,
+      "bits": [
+        "0000000000000000",
+        "3F65C4E37D009EF0",
+        "3F864B4EF7F436AB"
+      ],
+      "damping": 100.0,
+      "accepted": true,
+      "route": "BAND"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 20,
+      "name": "constrained",
+      "relative_gap": 1.5957477471693095E-16,
+      "bits": [
+        "0000000000000000",
+        "3F65C4E37D009EF0",
+        "3F864B4EF7F436AB"
+      ],
+      "damping": 100.0,
+      "accepted": true,
+      "route": "MAT"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 20,
+      "name": "constrained",
+      "relative_gap": 1.5957477471693095E-16,
+      "bits": [
+        "0000000000000000",
+        "3F65C4E37D009EF0",
+        "3F864B4EF7F436AB"
+      ],
+      "damping": 100.0,
+      "accepted": true,
+      "route": "AUTO"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 21,
+      "name": "band_fill",
+      "relative_gap": 1.9135623453440705E-16,
+      "bits": [
+        "BFC858240ED88B31",
+        "3FE007CA22AD7514",
+        "3FE222F283BE238F",
+        "3FF2B06BC679A08A",
+        "3FF072BC9E9B67EB"
+      ],
+      "damping": 1E-08,
+      "accepted": true,
+      "route": "OFF"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 21,
+      "name": "band_fill",
+      "relative_gap": 1.9135623453440705E-16,
+      "bits": [
+        "BFC858240ED88B31",
+        "3FE007CA22AD7514",
+        "3FE222F283BE238F",
+        "3FF2B06BC679A08A",
+        "3FF072BC9E9B67EB"
+      ],
+      "damping": 1E-08,
+      "accepted": true,
+      "route": "BAND"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 21,
+      "name": "band_fill",
+      "relative_gap": 1.9135623453440705E-16,
+      "bits": [
+        "BFC858240ED88B31",
+        "3FE007CA22AD7514",
+        "3FE222F283BE238F",
+        "3FF2B06BC679A08A",
+        "3FF072BC9E9B67EB"
+      ],
+      "damping": 1E-08,
+      "accepted": true,
+      "route": "MAT"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 21,
+      "name": "band_fill",
+      "relative_gap": 1.9135623453440705E-16,
+      "bits": [
+        "BFC858240ED88B31",
+        "3FE007CA22AD7514",
+        "3FE222F283BE238F",
+        "3FF2B06BC679A08A",
+        "3FF072BC9E9B67EB"
+      ],
+      "damping": 1E-08,
+      "accepted": true,
+      "route": "AUTO"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 22,
+      "name": "band_fill",
+      "relative_gap": 4.446962453741505E-16,
+      "bits": [
+        "BFC834348483A1BE",
+        "3FE001E8A571EFDB",
+        "3FE22005BB877857",
+        "3FF2AEFA8B31EC3E",
+        "3FF0721E896B27DB"
+      ],
+      "damping": 0.0001,
+      "accepted": true,
+      "route": "OFF"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 22,
+      "name": "band_fill",
+      "relative_gap": 4.446962453741505E-16,
+      "bits": [
+        "BFC834348483A1BE",
+        "3FE001E8A571EFDB",
+        "3FE22005BB877857",
+        "3FF2AEFA8B31EC3E",
+        "3FF0721E896B27DB"
+      ],
+      "damping": 0.0001,
+      "accepted": true,
+      "route": "BAND"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 22,
+      "name": "band_fill",
+      "relative_gap": 4.446962453741505E-16,
+      "bits": [
+        "BFC834348483A1BE",
+        "3FE001E8A571EFDB",
+        "3FE22005BB877857",
+        "3FF2AEFA8B31EC3E",
+        "3FF0721E896B27DB"
+      ],
+      "damping": 0.0001,
+      "accepted": true,
+      "route": "MAT"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 22,
+      "name": "band_fill",
+      "relative_gap": 4.446962453741505E-16,
+      "bits": [
+        "BFC834348483A1BE",
+        "3FE001E8A571EFDB",
+        "3FE22005BB877857",
+        "3FF2AEFA8B31EC3E",
+        "3FF0721E896B27DB"
+      ],
+      "damping": 0.0001,
+      "accepted": true,
+      "route": "AUTO"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 23,
+      "name": "band_fill",
+      "relative_gap": 2.525451680577561E-16,
+      "bits": [
+        "3FCFFF6F707E8DCD",
+        "3FC951223E37659D",
+        "3FD8B2B93D55FD35",
+        "3FEE93499ED0222D",
+        "3FED2518E95B6455"
+      ],
+      "damping": 0.1,
+      "accepted": true,
+      "route": "OFF"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 23,
+      "name": "band_fill",
+      "relative_gap": 2.525451680577561E-16,
+      "bits": [
+        "3FCFFF6F707E8DCD",
+        "3FC951223E37659D",
+        "3FD8B2B93D55FD35",
+        "3FEE93499ED0222D",
+        "3FED2518E95B6455"
+      ],
+      "damping": 0.1,
+      "accepted": true,
+      "route": "BAND"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 23,
+      "name": "band_fill",
+      "relative_gap": 2.525451680577561E-16,
+      "bits": [
+        "3FCFFF6F707E8DCD",
+        "3FC951223E37659D",
+        "3FD8B2B93D55FD35",
+        "3FEE93499ED0222D",
+        "3FED2518E95B6455"
+      ],
+      "damping": 0.1,
+      "accepted": true,
+      "route": "MAT"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 23,
+      "name": "band_fill",
+      "relative_gap": 2.525451680577561E-16,
+      "bits": [
+        "3FCFFF6F707E8DCD",
+        "3FC951223E37659D",
+        "3FD8B2B93D55FD35",
+        "3FEE93499ED0222D",
+        "3FED2518E95B6455"
+      ],
+      "damping": 0.1,
+      "accepted": true,
+      "route": "AUTO"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 24,
+      "name": "band_fill",
+      "relative_gap": 8.652767841473154E-17,
+      "bits": [
+        "3FD1F8BC98AE2372",
+        "3FA851090F2065E6",
+        "3FC0685CC1D24775",
+        "3FDC58FD818925C7",
+        "3FDE810FA6909E25"
+      ],
+      "damping": 1.0,
+      "accepted": true,
+      "route": "OFF"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 24,
+      "name": "band_fill",
+      "relative_gap": 8.652767841473154E-17,
+      "bits": [
+        "3FD1F8BC98AE2372",
+        "3FA851090F2065E6",
+        "3FC0685CC1D24775",
+        "3FDC58FD818925C7",
+        "3FDE810FA6909E25"
+      ],
+      "damping": 1.0,
+      "accepted": true,
+      "route": "BAND"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 24,
+      "name": "band_fill",
+      "relative_gap": 8.652767841473154E-17,
+      "bits": [
+        "3FD1F8BC98AE2372",
+        "3FA851090F2065E6",
+        "3FC0685CC1D24775",
+        "3FDC58FD818925C7",
+        "3FDE810FA6909E25"
+      ],
+      "damping": 1.0,
+      "accepted": true,
+      "route": "MAT"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 24,
+      "name": "band_fill",
+      "relative_gap": 8.652767841473154E-17,
+      "bits": [
+        "3FD1F8BC98AE2372",
+        "3FA851090F2065E6",
+        "3FC0685CC1D24775",
+        "3FDC58FD818925C7",
+        "3FDE810FA6909E25"
+      ],
+      "damping": 1.0,
+      "accepted": true,
+      "route": "AUTO"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 25,
+      "name": "band_fill",
+      "relative_gap": 1.2954755018966442E-16,
+      "bits": [
+        "3F7AF938F1D60A38",
+        "3F5AA9EEB2216A02",
+        "3F578130926131F3",
+        "3F7F9D03715BDFD5",
+        "3F82A4D9AB4E2E33"
+      ],
+      "damping": 100.0,
+      "accepted": true,
+      "route": "OFF"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 25,
+      "name": "band_fill",
+      "relative_gap": 1.2954755018966442E-16,
+      "bits": [
+        "3F7AF938F1D60A38",
+        "3F5AA9EEB2216A02",
+        "3F578130926131F3",
+        "3F7F9D03715BDFD5",
+        "3F82A4D9AB4E2E33"
+      ],
+      "damping": 100.0,
+      "accepted": true,
+      "route": "BAND"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 25,
+      "name": "band_fill",
+      "relative_gap": 1.2954755018966442E-16,
+      "bits": [
+        "3F7AF938F1D60A38",
+        "3F5AA9EEB2216A02",
+        "3F578130926131F3",
+        "3F7F9D03715BDFD5",
+        "3F82A4D9AB4E2E33"
+      ],
+      "damping": 100.0,
+      "accepted": true,
+      "route": "MAT"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 25,
+      "name": "band_fill",
+      "relative_gap": 1.2954755018966442E-16,
+      "bits": [
+        "3F7AF938F1D60A38",
+        "3F5AA9EEB2216A02",
+        "3F578130926131F3",
+        "3F7F9D03715BDFD5",
+        "3F82A4D9AB4E2E33"
+      ],
+      "damping": 100.0,
+      "accepted": true,
+      "route": "AUTO"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 26,
+      "name": "rejected",
+      "relative_gap": 0.0,
+      "bits": [
+        "4053400000000000",
+        "4053800000000000",
+        "4053C00000000000"
+      ],
+      "damping": 0,
+      "accepted": false,
+      "route": "OFF"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 26,
+      "name": "rejected",
+      "relative_gap": 0.0,
+      "bits": [
+        "4053400000000000",
+        "4053800000000000",
+        "4053C00000000000"
+      ],
+      "damping": 0,
+      "accepted": false,
+      "route": "BAND"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 26,
+      "name": "rejected",
+      "relative_gap": 0.0,
+      "bits": [
+        "4053400000000000",
+        "4053800000000000",
+        "4053C00000000000"
+      ],
+      "damping": 0,
+      "accepted": false,
+      "route": "MAT"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 26,
+      "name": "rejected",
+      "relative_gap": 0.0,
+      "bits": [
+        "4053400000000000",
+        "4053800000000000",
+        "4053C00000000000"
+      ],
+      "damping": 0,
+      "accepted": false,
+      "route": "AUTO"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 27,
+      "name": "rejected",
+      "relative_gap": 0.0,
+      "bits": [
+        "4053400000000000",
+        "4053800000000000",
+        "4053C00000000000"
+      ],
+      "damping": -1,
+      "accepted": false,
+      "route": "OFF"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 27,
+      "name": "rejected",
+      "relative_gap": 0.0,
+      "bits": [
+        "4053400000000000",
+        "4053800000000000",
+        "4053C00000000000"
+      ],
+      "damping": -1,
+      "accepted": false,
+      "route": "BAND"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 27,
+      "name": "rejected",
+      "relative_gap": 0.0,
+      "bits": [
+        "4053400000000000",
+        "4053800000000000",
+        "4053C00000000000"
+      ],
+      "damping": -1,
+      "accepted": false,
+      "route": "MAT"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 27,
+      "name": "rejected",
+      "relative_gap": 0.0,
+      "bits": [
+        "4053400000000000",
+        "4053800000000000",
+        "4053C00000000000"
+      ],
+      "damping": -1,
+      "accepted": false,
+      "route": "AUTO"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 28,
+      "name": "rejected",
+      "relative_gap": 0.0,
+      "bits": [
+        "4053400000000000",
+        "4053800000000000",
+        "4053C00000000000"
+      ],
+      "damping": 0.1,
+      "accepted": false,
+      "route": "OFF"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 28,
+      "name": "rejected",
+      "relative_gap": 0.0,
+      "bits": [
+        "4053400000000000",
+        "4053800000000000",
+        "4053C00000000000"
+      ],
+      "damping": 0.1,
+      "accepted": false,
+      "route": "BAND"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 28,
+      "name": "rejected",
+      "relative_gap": 0.0,
+      "bits": [
+        "4053400000000000",
+        "4053800000000000",
+        "4053C00000000000"
+      ],
+      "damping": 0.1,
+      "accepted": false,
+      "route": "MAT"
+    },
+    {
+      "native_calls": 0,
+      "case_index": 28,
+      "name": "rejected",
+      "relative_gap": 0.0,
+      "bits": [
+        "4053400000000000",
+        "4053800000000000",
+        "4053C00000000000"
+      ],
+      "damping": 0.1,
+      "accepted": false,
+      "route": "AUTO"
+    }
+  ],
+  "status": "PASS",
+  "error18_propagated": true,
+  "case_count": 28,
+  "without_dll": true
+}

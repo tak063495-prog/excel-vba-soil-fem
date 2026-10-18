@@ -1,0 +1,78 @@
+{
+  "status": "PASS_STANDARD48_NATIVE_INTEGRATION_SMALL_REGRESSION",
+  "date": "2026-10-18",
+  "base_commit": "093ff5802dcc889f08e07921a5b0967f6085086c",
+  "build": "20261018_STANDARD48_NATIVE_05",
+  "module_count": 26,
+  "source_scope": "Only FEMCore build stamp and FEMSolver regularized functions differ",
+  "native_dispatch_unchanged": true,
+  "dll_binaries_unchanged": true,
+  "legacy_body_matches_prior_vba_exact": true,
+  "packed_checks_with_dll": 112,
+  "packed_checks_without_dll": 112,
+  "capacity_boundaries_per_environment": 8,
+  "error7_fallback_and_error18_propagation": true,
+  "issue23_case_records": 26,
+  "issue23_assertion_failures": 0,
+  "small_fem_inconsistent_pairs": 8,
+  "small_fem_davis_pairs": 8,
+  "davis_reference_records_bit_exact": 16,
+  "default_flow_policy": "INCONSISTENT",
+  "default_native_dll": "AUTO",
+  "adoption_basis": "Explicit user selection of candidate48; not a passed all-case speed gate",
+  "merged_dll_whole_speed_measured": false,
+  "bindings": [
+    {
+      "path": "src/vba/FEMCore.bas",
+      "sha256": "c52b196be6084e664a2bf6a2012d12a5a1e3b91f2bf730bbcba26af84b7be43c"
+    },
+    {
+      "path": "src/vba/FEMSolver.bas",
+      "sha256": "8f753f2aa6531e2a969cb72f687628f8ae1f47ebcf17b06c83b22ad92cf1dac8"
+    },
+    {
+      "path": "tests/native/check_packed48.ps1",
+      "sha256": "ca72add26152629dc4a0f22b6899b824bce13f0af507391d59114ca005271ea0"
+    },
+    {
+      "path": "tests/native/build_standard48.ps1",
+      "sha256": "27181519cce2cf4aafda8edcd25fcca17fb25ecfde67536edc9a9c3bfb5f1367"
+    },
+    {
+      "path": "workbook/2DSoilFEM_standard48_native_20261018.xlsm",
+      "sha256": "311b61deaf4a00cfa4a926efdcc859ece78f091185294e7a420d16bbb9c43d1d"
+    },
+    {
+      "path": "workbook/soilfem_native_x64.dll",
+      "sha256": "1854071288c80ea60001eb51cfd3a01cc9a267b7c001e7ee1b54189f86d5728d"
+    },
+    {
+      "path": "workbook/soilfem_mat_x64.dll",
+      "sha256": "1dca348d6f17fed2e77c49c21666dd08838d005e953a5c001ec00890a92ab95a"
+    },
+    {
+      "path": "docs/native-evidence/standard48_build.json",
+      "sha256": "9bfd6e17b8b64e82a7818f663e5abcb5c90ccce4e9e20a68c14dd9a4f4881e79"
+    },
+    {
+      "path": "docs/native-evidence/standard48_issue23.json",
+      "sha256": "ce2893d9ac86c3394828df6b450a0967cd7f86d0dff89d0beb8f7987ee9de305"
+    },
+    {
+      "path": "docs/native-evidence/standard48_packed_with_dll.json",
+      "sha256": "d1a2b602ad6c0429fb1e1ebab8b1b4f262a45486ef37fd9172cd3fb87b6636e6"
+    },
+    {
+      "path": "docs/native-evidence/standard48_packed_without_dll.json",
+      "sha256": "bc942d325194a1f5ea6edd7c265820d37847d9c54d6414c9ab3194f2e695464a"
+    },
+    {
+      "path": "docs/native-evidence/standard48_smoke_davis.json",
+      "sha256": "76590286bdafe08b5f95c305c058a9abf5e0b86e0926f740517632cc68bbfe83"
+    },
+    {
+      "path": "docs/native-evidence/standard48_smoke_inconsistent.json",
+      "sha256": "d322166baef85b8eb1a11ec20a2cf6894c1cfd04836da672c1c7f0710e4d6e7a"
+    }
+  ]
+}

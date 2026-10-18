@@ -1,0 +1,12 @@
+{
+  "owned_excel_ended": true,
+  "source_sha256": "582914936087EF89E5D878EE8276BEBF21473FAE124CEDD35812AE9E9B701FE7",
+  "native_dll": "AUTO",
+  "module_count": 26,
+  "compile_pass": true,
+  "status": "PASS_BUILD_REOPEN_SOURCE_KEYS",
+  "failure": null,
+  "reopened_sources_exact": true,
+  "output_sha256": "311B61DEAF4A00CFA4A926EFDCC859ECE78F091185294E7A420D16BBB9C43D1D",
+  "flow_policy": "INCONSISTENT"
+}

@@ -16,8 +16,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 11444,
-    "sha256": "f724c8cddad6175946d7464ef04b3e2a02cde418fb06f1b26a905fb7e9545c87"
+    "bytes": 13239,
+    "sha256": "996d18ab813337452a4558dae8bba13d07ed2d046fa87d266168586ae9143964"
   },
   {
     "path": "docs/ACCELERATION_HISTORY.md",
@@ -51,8 +51,8 @@
   },
   {
     "path": "docs/NATIVE_DLL.md",
-    "bytes": 9773,
-    "sha256": "0cc9fa68e42682b4fb6a5d2c726de07fd95b1283541d593a0031e88d2f8c3a12"
+    "bytes": 19440,
+    "sha256": "3f81dbc48c8878bfc0a7f65a7fa5d9dff05095a7ba71fb621ecc9dc464898b70"
   },
   {
     "path": "docs/PRACTICAL_SRM_VALIDATION.md",
@@ -68,6 +68,11 @@
     "path": "docs/SETTINGS_REFERENCE.md",
     "bytes": 17086,
     "sha256": "298dc01a0f2d0630132dbb666dbf922a5a4bae4ee374da30a8f3d257d467b186"
+  },
+  {
+    "path": "docs/STANDARD48.md",
+    "bytes": 4252,
+    "sha256": "c90f8f698975322bb9513c8dea2cf99dc65136fb98ae610ef9051ba3c421797d"
   },
   {
     "path": "docs/TECHNICAL_OVERVIEW.md",
@@ -485,6 +490,91 @@
     "sha256": "92bedacab0c3ee44a2f00877aff18eabc841e7c5b0e0d7cc74cb2bdfdb1f24b8"
   },
   {
+    "path": "docs/native-evidence/issue23_after.json",
+    "bytes": 54720,
+    "sha256": "11c5155433bc68e3961ed21d2cf48e73c2c706a513c7b7707e9d31aef321bd94"
+  },
+  {
+    "path": "docs/native-evidence/issue23_before.json",
+    "bytes": 50739,
+    "sha256": "ab36aa22d26d06cae801a07f65da046e8f555d706ae1111b572ec4004a682fff"
+  },
+  {
+    "path": "docs/native-evidence/issue23_before3.json",
+    "bytes": 28112,
+    "sha256": "a19ebefc83e8b1082b4b10ab5272cf1247152a77aa2d14b5c3163427a8a0d9fa"
+  },
+  {
+    "path": "docs/native-evidence/issue23_smoke_davis.json",
+    "bytes": 129759,
+    "sha256": "8e26bb0e1d42988a972065f3a0d33b51c05771c568e0f6d9ca5b1256745a4797"
+  },
+  {
+    "path": "docs/native-evidence/issue23_smokesrm_davis.json",
+    "bytes": 132734,
+    "sha256": "4b8cd0b9eeb54d1d184e3a8186723f363c31026b18196045c2337aca24753982"
+  },
+  {
+    "path": "docs/native-evidence/phaseB_srm_inco_c1off_OFF.json",
+    "bytes": 6282,
+    "sha256": "9cf836a64934a7c369c275e08ce0ab7391b63626ec2245ae131ae65ef510a677"
+  },
+  {
+    "path": "docs/native-evidence/phaseC_c_bundled_fs200.json",
+    "bytes": 364735,
+    "sha256": "c47e6d8a7cc34d804848362a7946ba1050613a7f824a10e1a7cc5dc0bec2a659"
+  },
+  {
+    "path": "docs/native-evidence/phaseC_c_bundled_fs225.json",
+    "bytes": 364440,
+    "sha256": "4ffcd5cb04225926a8b72746eabf25363d26af8a836e4ed3fb8758571e9d2e76"
+  },
+  {
+    "path": "docs/native-evidence/phaseC_c_bundled_srm.json",
+    "bytes": 364706,
+    "sha256": "cc925c9add4674d13e95751744e32ac0103aa6e8c54b65717b73cd9bb74ba1fb"
+  },
+  {
+    "path": "docs/native-evidence/phaseC_c_inco_c1off_auto.json",
+    "bytes": 6600,
+    "sha256": "0b133da037627699fcfe84a0f13f03012e18a447ad5a26b6013c125ee5ebde1c"
+  },
+  {
+    "path": "docs/native-evidence/phaseC_c_inco_c1off_auto_buf.json",
+    "bytes": 6598,
+    "sha256": "398c8cc298845fa32035b350e1959853b15531ace864447307d1e88129acff58"
+  },
+  {
+    "path": "docs/native-evidence/phaseC_c_srm_davis.json",
+    "bytes": 266951,
+    "sha256": "6af51c139fe5369552ffb2754bae8d1c629706b6103d57ceb832a63948c14163"
+  },
+  {
+    "path": "docs/native-evidence/phaseC_d_bundled_fs200.json",
+    "bytes": 182435,
+    "sha256": "4ee81be6debbc9de99eda22edab190a64f1a1d7327b6cbf209d93768634c0c18"
+  },
+  {
+    "path": "docs/native-evidence/phaseC_d_bundled_fs225.json",
+    "bytes": 83214,
+    "sha256": "ebe27178559b9055031243da8de4c9994d8d79cee0128b1429ccaa8abeabd461"
+  },
+  {
+    "path": "docs/native-evidence/phaseC_d_bundled_srm.json",
+    "bytes": 83283,
+    "sha256": "6f7e542485bf9ee54cc79fd58435c778db994590f63fdb6b2d8a5c775ca02742"
+  },
+  {
+    "path": "docs/native-evidence/phaseC_d_inco_c1off.json",
+    "bytes": 6629,
+    "sha256": "7b91d67a597680a025831761413146687000ec6b68ac1cca8afc344ed2352e46"
+  },
+  {
+    "path": "docs/native-evidence/phaseC_d_srm_davis.json",
+    "bytes": 133975,
+    "sha256": "593648a603fe720292e778156bd54f67839b4a0c207232bc60bc2308bec3143c"
+  },
+  {
     "path": "docs/native-evidence/smoke_davis_20261016.json",
     "bytes": 126098,
     "sha256": "f60db7dd63cbda2175954bd4b90d32526bd2875e5ad7e34123eeb33a168feebd"
@@ -508,6 +598,41 @@
     "path": "docs/native-evidence/smokesrm_inconsistent_case1_20261017.json",
     "bytes": 14019,
     "sha256": "f8be31a8acc412520183a15b53faa18d42cfa145d03498070d264891b6487bdb"
+  },
+  {
+    "path": "docs/native-evidence/standard48_build.json",
+    "bytes": 419,
+    "sha256": "9bfd6e17b8b64e82a7818f663e5abcb5c90ccce4e9e20a68c14dd9a4f4881e79"
+  },
+  {
+    "path": "docs/native-evidence/standard48_issue23.json",
+    "bytes": 32793,
+    "sha256": "ce2893d9ac86c3394828df6b450a0967cd7f86d0dff89d0beb8f7987ee9de305"
+  },
+  {
+    "path": "docs/native-evidence/standard48_packed_with_dll.json",
+    "bytes": 37624,
+    "sha256": "d1a2b602ad6c0429fb1e1ebab8b1b4f262a45486ef37fd9172cd3fb87b6636e6"
+  },
+  {
+    "path": "docs/native-evidence/standard48_packed_without_dll.json",
+    "bytes": 37623,
+    "sha256": "bc942d325194a1f5ea6edd7c265820d37847d9c54d6414c9ab3194f2e695464a"
+  },
+  {
+    "path": "docs/native-evidence/standard48_smoke_davis.json",
+    "bytes": 87432,
+    "sha256": "76590286bdafe08b5f95c305c058a9abf5e0b86e0926f740517632cc68bbfe83"
+  },
+  {
+    "path": "docs/native-evidence/standard48_smoke_inconsistent.json",
+    "bytes": 74138,
+    "sha256": "d322166baef85b8eb1a11ec20a2cf6894c1cfd04836da672c1c7f0710e4d6e7a"
+  },
+  {
+    "path": "docs/native-evidence/standard48_summary.json",
+    "bytes": 2991,
+    "sha256": "506409a5a0e9a596d21233736a30642b9b40a5a9a4d108ea4a8c1390253aa847"
   },
   {
     "path": "docs/practical-evidence/check_nonsymmetric_solver.json",
@@ -775,9 +900,24 @@
     "sha256": "36f11fc429710d7d7b59fc3503268234ceb7068518c8e042c5227bb20c79273e"
   },
   {
+    "path": "native/build_mat.sh",
+    "bytes": 551,
+    "sha256": "8e1c127d225108c0dd0e63e2dd3f37583e8f3ec909d33aaf26fbd9eeea7f13cf"
+  },
+  {
     "path": "native/sfn_fp.asm",
     "bytes": 2261,
     "sha256": "13faa67021263e8e667c91ecd7a4b75607255ee2302e5c53405a1c1fe3ccdc11"
+  },
+  {
+    "path": "native/soilfem_mat.c",
+    "bytes": 47609,
+    "sha256": "842d9be7232a15aae66fddcfd2b6828c6b08a91bd8403028a4493e871e47c8c5"
+  },
+  {
+    "path": "native/soilfem_mat_x64.dll",
+    "bytes": 30208,
+    "sha256": "1dca348d6f17fed2e77c49c21666dd08838d005e953a5c001ec00890a92ab95a"
   },
   {
     "path": "native/soilfem_native.c",
@@ -786,8 +926,8 @@
   },
   {
     "path": "src/vba/CONTROL.bas",
-    "bytes": 102381,
-    "sha256": "7a4dddaeb0437b860f0c8f62dc4c2c118d25d866f59fb1dd71272df0aa99b895"
+    "bytes": 102672,
+    "sha256": "c6cbeeee3d5b52e2d195ba63662ea35f53c522139f62aca676088558630928fa"
   },
   {
     "path": "src/vba/FEM.bas",
@@ -806,13 +946,13 @@
   },
   {
     "path": "src/vba/FEMCore.bas",
-    "bytes": 54175,
-    "sha256": "7aa3b4d870e13c7aea10e8d42e8f43bc05b32e3f8ffcc4d21bbaecf7a5c1c399"
+    "bytes": 54186,
+    "sha256": "c52b196be6084e664a2bf6a2012d12a5a1e3b91f2bf730bbcba26af84b7be43c"
   },
   {
     "path": "src/vba/FEMEngine.bas",
-    "bytes": 285904,
-    "sha256": "ae0aa9f380afd6eb44fdd88a1d0b8beb13c6028f017ee1d83f9d9fd708b4b34e"
+    "bytes": 288254,
+    "sha256": "d6c9d0daae46c085d1af09b49d90d499eb802f1d1316d4a9bf30ee33d0aff68a"
   },
   {
     "path": "src/vba/FEMIncrementLog.bas",
@@ -821,13 +961,23 @@
   },
   {
     "path": "src/vba/FEMIo.bas",
-    "bytes": 163833,
-    "sha256": "59667e71f28470bc5691a86bbaee6f3e423e9585856341ec1180e6816ef73493"
+    "bytes": 165060,
+    "sha256": "3fae202c4f2796d33992fb996bf20d11d4260ab0b22417191cae84fb76a55524"
   },
   {
     "path": "src/vba/FEMNative.bas",
-    "bytes": 11370,
-    "sha256": "0e35e0662664477a31da5a773641c925ea71db21c6b93878d37b518fe6c2918e"
+    "bytes": 12879,
+    "sha256": "33b031cff178648cc277f62d545c0b2bce354d2c016b0ba378a9078a9649bdf5"
+  },
+  {
+    "path": "src/vba/FEMNativeKern.bas",
+    "bytes": 15326,
+    "sha256": "504fbde2f2b764e1b94a4878f741ec53536a6056f09a5254877f719d8beb4107"
+  },
+  {
+    "path": "src/vba/FEMNativeMat.bas",
+    "bytes": 14026,
+    "sha256": "3e831347ee6bb36a782078e74386c7d93f93da80b8c8906cc1fcba9134f49eed"
   },
   {
     "path": "src/vba/FEMPlasticLog.bas",
@@ -851,8 +1001,8 @@
   },
   {
     "path": "src/vba/FEMSolver.bas",
-    "bytes": 178704,
-    "sha256": "1d20d58e468a1d179bef4eb7a1dbd3b234e95ead6e21c01daf9b10d346bd4056"
+    "bytes": 192958,
+    "sha256": "8f753f2aa6531e2a969cb72f687628f8ae1f47ebcf17b06c83b22ad92cf1dac8"
   },
   {
     "path": "src/vba/FEMStepRecovery.bas",
@@ -906,8 +1056,8 @@
   },
   {
     "path": "src/vba/modules.json",
-    "bytes": 2454,
-    "sha256": "0d0d7b342429f83c24fe44d6e6a5799e668166549ead4c58de4a1b02b21e1669"
+    "bytes": 2670,
+    "sha256": "af421cc9dbe7f1bed57673b2911fb9cc3a1a6a3e0a6e15dec92bdd8e62482809"
   },
   {
     "path": "tests/fixtures/smoke_expected.json",
@@ -1150,24 +1300,44 @@
     "sha256": "0bd3d0819906c611d79d1036bdc588ba1c25e63d22ae1b3bfc527610f92eb853"
   },
   {
+    "path": "tests/native/build_standard48.ps1",
+    "bytes": 6022,
+    "sha256": "27181519cce2cf4aafda8edcd25fcca17fb25ecfde67536edc9a9c3bfb5f1367"
+  },
+  {
+    "path": "tests/native/check_packed48.ps1",
+    "bytes": 10237,
+    "sha256": "ca72add26152629dc4a0f22b6899b824bce13f0af507391d59114ca005271ea0"
+  },
+  {
+    "path": "tests/native/compare_modes.py",
+    "bytes": 1278,
+    "sha256": "a33fd6cd5c620f3612e870cd70e58de85d60b0853aa8065677a07a43d60d4e15"
+  },
+  {
     "path": "tests/native/compare_results.py",
     "bytes": 654,
     "sha256": "2de3e1470cb8d7bb3703fb6a8fbc2518cfd83503419d4c4cb4a5d912a944aca0"
   },
   {
+    "path": "tests/native/evidence/smoke_davis_3modes_20261017.json",
+    "bytes": 194492,
+    "sha256": "5f9e2e9156ede96a8de730ab58604aecc5bc700cb62ec5c02b53f29f82efb3a0"
+  },
+  {
     "path": "tests/native/make_native_workbook.ps1",
-    "bytes": 1548,
-    "sha256": "85d746cd6e323f7a6fe3dd287d341937368a69a177550f9e25c5dcb33ac0f76f"
+    "bytes": 3714,
+    "sha256": "3085855829c5b1b457d3e8298ac610354f844c04f81a2d1fe3d27510aea00cf6"
   },
   {
     "path": "tests/native/run_native_compare.ps1",
-    "bytes": 4860,
-    "sha256": "d426a1ac401cb165074982b65d3a929ec7c0d3df288bf287ca756b56513cf014"
+    "bytes": 6310,
+    "sha256": "b0ebc6255582aaf2a474fa4b660c1412fcd1c63ff86a5391bced97a41e386cce"
   },
   {
     "path": "tests/run.ps1",
-    "bytes": 1054,
-    "sha256": "c387f8fdb55d94edb48364c10ab1ee0670174ddf2a609697838113e32e724331"
+    "bytes": 1300,
+    "sha256": "e043a6c9d5db69569376de99bb8128f560e4af992110b918992851956cb12e11"
   },
   {
     "path": "tests/test_best03_defaults.ps1",
@@ -1188,6 +1358,11 @@
     "path": "tests/test_issue1_regression.ps1",
     "bytes": 14325,
     "sha256": "66eb7b193ae5f7975ce92667e85c08d7311c1146515fc7c58dba38f5e962463c"
+  },
+  {
+    "path": "tests/test_issue2_3_regression.ps1",
+    "bytes": 18668,
+    "sha256": "30b9b96738b462861ffe3d9545aa0c730aa1eab9810cab7ce97f21c714861ce3"
   },
   {
     "path": "tests/test_practical_final.ps1",
@@ -1220,6 +1395,11 @@
     "sha256": "83b1e4d527c0a9920603d052743df829abc552a582d319e29f20f8776a132856"
   },
   {
+    "path": "workbook/2DSoilFEM_issue23_20261017_1031.xlsm",
+    "bytes": 2999845,
+    "sha256": "582914936087ef89e5d878ee8276bebf21473fae124cedd35812ae9e9b701fe7"
+  },
+  {
     "path": "workbook/2DSoilFEM_native_20261016_2222.xlsm",
     "bytes": 2922890,
     "sha256": "f69faede03297f17802d7edd26c348b7614e81ab210d979c9f8a2ec64d79c6d6"
@@ -1228,6 +1408,21 @@
     "path": "workbook/2DSoilFEM_native_20261017_0505.xlsm",
     "bytes": 2927748,
     "sha256": "f7fc63095252e7bcb05752b2f83a5e9d9f7bbbc981e82e88642b66ff885e1a3c"
+  },
+  {
+    "path": "workbook/2DSoilFEM_nativekern_20261017_0846.xlsm",
+    "bytes": 2990453,
+    "sha256": "6ab1777224c294e48016311468e5540277059d88af0b37e4d994c4619f228dcf"
+  },
+  {
+    "path": "workbook/2DSoilFEM_standard48_native_20261018.xlsm",
+    "bytes": 3010374,
+    "sha256": "311b61deaf4a00cfa4a926efdcc859ece78f091185294e7a420d16bbb9c43d1d"
+  },
+  {
+    "path": "workbook/soilfem_mat_x64.dll",
+    "bytes": 30208,
+    "sha256": "1dca348d6f17fed2e77c49c21666dd08838d005e953a5c001ec00890a92ab95a"
   },
   {
     "path": "workbook/soilfem_native_x64.dll",

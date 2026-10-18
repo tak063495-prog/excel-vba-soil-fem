@@ -3528,9 +3528,19 @@ Public Function P6SolveResidualRecovery(ByVal damping As Double) As Boolean
   Dim i As Long, j As Long, k As Long, firstCol As Long, bw As Long, lastRow As Long
   Dim v As Double, normB As Double, normalResidual As Double, tmp As Double, startedAt As Double, factorDone As Boolean
   Dim kRr As Long, kNres As Double
+  Dim stride48 As Long, lowerI48 As Long, lowerJ48 As Long, diagonalI48 As Long
+  Dim positionI48 As Long, positionJ48 As Long
   P6SolveResidualRecovery = False
   If Not P6CSRReady Or damping <= 0# Or Not P2IsFinite(damping) Then GoTo Rejected
   bw = 2 * BandWidth: If bw > lastDof Then bw = lastDof
+  ' Flat storage has the same number of Doubles and work arrays as frozen32.
+  ' Keep the original 2D implementation for dimensions beyond a Long flat index.
+  If nDof <= 0 Then GoTo LegacyDimensions48
+  If lastDof < 0 Then GoTo LegacyDimensions48
+  If nDof - 1 <> lastDof Then GoTo LegacyDimensions48
+  If bw < 0 Then GoTo LegacyDimensions48
+  If Not P6RecoveryPackedIndexable48(nDof, bw) Then GoTo LegacyDimensions48
+  stride48 = bw + 1
   If P6SolverMemoryLimitBytes > 0# Then
     If P6CSRStorageBytes + CDbl(nDof) * (CDbl(bw + 1) * 8# + 32#) > P6SolverMemoryLimitBytes Then GoTo Rejected
   End If
@@ -3546,6 +3556,171 @@ Public Function P6SolveResidualRecovery(ByVal damping As Double) As Boolean
     GoTo Rejected
   End If
   factorDone = False
+  On Error GoTo AllocationFailed48
+  ReDim a(0 To lastDof * stride48 + bw)
+  ReDim rhs(0 To lastDof): ReDim solution(0 To lastDof): ReDim columnScale(0 To lastDof)
+  On Error GoTo Failed
+  For row = 0 To lastDof
+    If NodeCond(row) = 0 Then
+      If Not P2IsFinite(Force(row)) Then GoTo Rejected
+      For p = P6CSRRowPtr(row) To P6CSRRowPtr(row + 1) - 1
+        col = P6CSRColumnIndex(p)
+        If NodeCond(col) = 0 Then
+          v = P6CSROriginalValues(p)
+          If Not P2IsFinite(v) Then GoTo Rejected
+          columnScale(col) = columnScale(col) + v * v
+        End If
+      Next p
+    End If
+  Next row
+  For col = 0 To lastDof
+    columnScale(col) = Sqr(columnScale(col))
+    If columnScale(col) < 1E-30 Then columnScale(col) = 1#
+  Next col
+  For row = 0 To lastDof
+    If NodeCond(row) = 0 Then
+      For p = P6CSRRowPtr(row) To P6CSRRowPtr(row + 1) - 1
+        c1 = P6CSRColumnIndex(p)
+        If NodeCond(c1) = 0 And P6CSROriginalValues(p) <> 0# Then
+          v = P6CSROriginalValues(p) / columnScale(c1)
+          rhs(c1) = rhs(c1) + v * Force(row)
+          For q = p To P6CSRRowPtr(row + 1) - 1
+            c2 = P6CSRColumnIndex(q)
+            If NodeCond(c2) = 0 And P6CSROriginalValues(q) <> 0# Then
+              If c2 < c1 Or c2 - c1 > bw Then GoTo Rejected
+              positionI48 = c2 * stride48 + (bw - c2 + c1)
+              a(positionI48) = a(positionI48) + v * P6CSROriginalValues(q) / columnScale(c2)
+            End If
+          Next q
+        End If
+      Next p
+    End If
+  Next row
+  For i = 0 To lastDof
+    diagonalI48 = i * stride48 + bw
+    a(diagonalI48) = a(diagonalI48) + damping
+    If NodeCond(i) <> 0 Then a(diagonalI48) = 1#
+    normB = normB + rhs(i) * rhs(i)
+  Next i
+  If Not P2IsFinite(normB) Or normB <= 1E-60 Then GoTo Rejected
+  ' Cholesky in the lower band; positive damping makes the normal operator SPD.
+  For i = 0 To lastDof
+    firstCol = i - bw: If firstCol < 0 Then firstCol = 0
+    lowerI48 = i * stride48 + bw - i: diagonalI48 = lowerI48 + i
+    For j = firstCol To i
+      lowerJ48 = j * stride48 + bw - j
+      tmp = a(lowerI48 + j)
+      positionI48 = lowerI48 + firstCol: positionJ48 = lowerJ48 + firstCol
+      ' Same k sequence and one scalar subtraction per k; no unroll or regrouping.
+      ' j-k <= bw follows from k >= max(0,i-bw) and j <= i.
+      For k = firstCol To j - 1
+        tmp = tmp - a(positionI48) * a(positionJ48)
+        positionI48 = positionI48 + 1: positionJ48 = positionJ48 + 1
+      Next k
+      If i = j Then
+        If tmp <= 0# Or Not P2IsFinite(tmp) Then GoTo Rejected
+        a(diagonalI48) = Sqr(tmp)
+      Else
+        a(lowerI48 + j) = tmp / a(lowerJ48 + j)
+      End If
+    Next j
+    tmp = rhs(i)
+    For j = firstCol To i - 1: tmp = tmp - a(lowerI48 + j) * solution(j): Next j
+    solution(i) = tmp / a(diagonalI48)
+  Next i
+  P6ProfFactorMs = P6ProfFactorMs + P6ElapsedMs(startedAt)
+  factorDone = True: startedAt = Timer
+  For i = lastDof To 0 Step -1
+    tmp = solution(i): lastRow = i + bw: If lastRow > lastDof Then lastRow = lastDof
+    For j = i + 1 To lastRow: tmp = tmp - a(j * stride48 + (bw - j + i)) * solution(j): Next j
+    solution(i) = tmp / a(i * stride48 + bw)
+    If Not P2IsFinite(solution(i)) Then GoTo Rejected
+  Next i
+  ' Independently apply K^T K + damping to verify the regularized solve.
+  For row = 0 To lastDof
+    If NodeCond(row) = 0 Then
+      tmp = 0#
+      For p = P6CSRRowPtr(row) To P6CSRRowPtr(row + 1) - 1
+        col = P6CSRColumnIndex(p)
+        If NodeCond(col) = 0 Then tmp = tmp + P6CSROriginalValues(p) * solution(col) / columnScale(col)
+      Next p
+      For p = P6CSRRowPtr(row) To P6CSRRowPtr(row + 1) - 1
+        col = P6CSRColumnIndex(p)
+        If NodeCond(col) = 0 Then rhs(col) = rhs(col) - P6CSROriginalValues(p) * tmp / columnScale(col)
+      Next p
+    End If
+  Next row
+  For i = 0 To lastDof
+    tmp = rhs(i) - damping * solution(i)
+    normalResidual = normalResidual + tmp * tmp
+  Next i
+  If Not P2IsFinite(normalResidual) Then GoTo Rejected
+  If Sqr(normalResidual / normB) > P6IterativeTolerance Then GoTo Rejected
+  For i = 0 To lastDof
+    Disp(i) = solution(i) / columnScale(i)
+    If NodeCond(i) <> 0 Then Disp(i) = 0#
+  Next i
+  P6SolverEvent "REGULARIZED_SOLVE", "damping=" & Format$(damping, "0.000E+00") & ";normal_relres=" & Format$(Sqr(normalResidual / normB), "0.000E+00")
+  P6SolveResidualRecovery = True
+  GoTo Rejected
+LegacyDimensions48:
+  P6SolveResidualRecovery = P6SolveResidualRecoveryLegacy48(damping)
+  Exit Function
+AllocationFailed48:
+  ' Only allocation is covered: no operator or direction has been touched yet.
+  If Err.Number = 18 Then
+    P6AddSolveProfile startedAt, factorDone
+    P6RaiseUserCancel
+  End If
+  If Err.Number = 7 Then Resume LegacyAllocation48
+  Resume Failed
+LegacyAllocation48:
+  ' Release all partial work arrays before trying the original allocation layout.
+  Erase a: Erase rhs: Erase solution: Erase columnScale
+  P6FactorizationCount = P6FactorizationCount - 1
+  If startedAt <> 0# Then P6ProfFactorMs = P6ProfFactorMs + P6ElapsedMs(startedAt)
+  startedAt = 0#
+  P6SolveResidualRecovery = P6SolveResidualRecoveryLegacy48(damping)
+  Exit Function
+Failed:
+  ' ユーザー中断（Err18）は次のdamping試行へ進めず、既存の中断処理へ送る。
+  If Err.Number = 18 Then
+    P6AddSolveProfile startedAt, factorDone
+    P6RaiseUserCancel
+  End If
+  Err.Clear
+Rejected:
+  If startedAt <> 0# Then
+    If factorDone Then
+      P6ProfSolveMs = P6ProfSolveMs + P6ElapsedMs(startedAt)
+    Else
+      P6ProfFactorMs = P6ProfFactorMs + P6ElapsedMs(startedAt)
+    End If
+  End If
+End Function
+
+Private Function P6RecoveryPackedIndexable48(ByVal count48 As Long, ByVal width48 As Long) As Boolean
+  ' Double arithmetic avoids overflow in the capacity check itself.
+  P6RecoveryPackedIndexable48 = (CDbl(count48) * (CDbl(width48) + 1#) <= 2147483647#)
+End Function
+
+Private Function P6SolveResidualRecoveryLegacy48(ByVal damping As Double) As Boolean
+  ' Column-scaled Levenberg-Marquardt direction for the current free residual.
+  ' A = S^-1 K^T K S^-1 + damping*I, rhs = S^-1 K^T r.
+  ' The plastic operator, primary linear residual and committed state are unchanged.
+  Dim a() As Double, rhs() As Double, solution() As Double, columnScale() As Double
+  Dim row As Long, col As Long, p As Long, q As Long, c1 As Long, c2 As Long
+  Dim i As Long, j As Long, k As Long, firstCol As Long, bw As Long, lastRow As Long
+  Dim v As Double, normB As Double, normalResidual As Double, tmp As Double, startedAt As Double, factorDone As Boolean
+  P6SolveResidualRecoveryLegacy48 = False
+  If Not P6CSRReady Or damping <= 0# Or Not P2IsFinite(damping) Then GoTo Rejected
+  bw = 2 * BandWidth: If bw > lastDof Then bw = lastDof
+  If P6SolverMemoryLimitBytes > 0# Then
+    If P6CSRStorageBytes + CDbl(nDof) * (CDbl(bw + 1) * 8# + 32#) > P6SolverMemoryLimitBytes Then GoTo Rejected
+  End If
+  On Error GoTo Failed
+  startedAt = Timer
+  P6FactorizationCount = P6FactorizationCount + 1
   ReDim a(0 To lastDof, 0 To bw)
   ReDim rhs(0 To lastDof): ReDim solution(0 To lastDof): ReDim columnScale(0 To lastDof)
   For row = 0 To lastDof
@@ -3641,7 +3816,7 @@ Public Function P6SolveResidualRecovery(ByVal damping As Double) As Boolean
     If NodeCond(i) <> 0 Then Disp(i) = 0#
   Next i
   P6SolverEvent "REGULARIZED_SOLVE", "damping=" & Format$(damping, "0.000E+00") & ";normal_relres=" & Format$(Sqr(normalResidual / normB), "0.000E+00")
-  P6SolveResidualRecovery = True
+  P6SolveResidualRecoveryLegacy48 = True
   GoTo Rejected
 Failed:
   ' ユーザー中断（Err18）は次のdamping試行へ進めず、既存の中断処理へ送る。
