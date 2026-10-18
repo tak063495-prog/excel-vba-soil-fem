@@ -292,7 +292,8 @@ if($ExpectFixed -and $failures.Count -gt 0){ throw ("Issue #2/#3 regression fail
 } finally {
   if($null -ne $wbTask){try{$wbTask.Close($false)}catch{}}
   if($null -ne $xlTask){ try{$xlTask.Quit()}catch{}; [Runtime.InteropServices.Marshal]::FinalReleaseComObject($xlTask)|Out-Null; Start-Sleep 3
-    if($xpid -and (Get-Process -Id $xpid -ErrorAction SilentlyContinue)){Stop-Process -Id $xpid -Force} }
+    # Quit only the COM instance created by this test; never force-stop a PID.
+  }
   if($copyTask){Remove-Item -LiteralPath "$copyTask.running" -ErrorAction SilentlyContinue}
   Pop-Location
 }

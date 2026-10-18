@@ -1,5 +1,7 @@
 # ネイティブDLLによる高速化（20261016_NATIVE_01 / 20261017_NATIVE_02）
 
+現在の標準は [候補48を統合した `20261018_STANDARD48_NATIVE_05`](STANDARD48.md) です。DLLバイナリとAPIは本書の既存版を維持し、VBA正則化の代替経路を改善しています。以下の測定値と旧ブック名は当時の検証履歴です。
+
 [READMEへ](../README.md) · [高速化履歴](ACCELERATION_HISTORY.md) · [プログラムの概要](TECHNICAL_OVERVIEW.md)
 
 ## 1. 目的とボトルネック

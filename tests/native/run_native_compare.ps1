@@ -94,5 +94,5 @@ try{
  }
  $wb.Close($false)
 } finally { $xl.Quit(); [Runtime.InteropServices.Marshal]::ReleaseComObject($xl)|Out-Null; Start-Sleep 3
- if(Get-Process -Id $xpid -ErrorAction SilentlyContinue){Stop-Process -Id $xpid -Force}
+ # Quit only this COM instance; do not terminate a PID that may have been reused.
  Remove-Item "$copy.running" -ErrorAction SilentlyContinue }
