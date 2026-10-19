@@ -1,6 +1,6 @@
 ﻿# -MeshPath: smoke系のfixture。未指定時はリポジトリ追跡の tests/fixtures/smoke_mesh.json（スクリプト基準）。
 # 相対パス指定はカレントディレクトリ基準。ブック隣へのフォールバックはしない。
-param([string]$Book,[string]$Suite='smoke',[string]$Out,[double]$FixedFs=1.0,[string]$Modes='OFF,AUTO',[string]$Flow='',[string]$MeshPath='',[ValidateSet('STRICT','SSE2','AUTO','AVX2')][string]$Precision='STRICT',[string]$CaseName='',[ValidateSet('off','adaptive')][string[]]$Variants=@('off','adaptive'),[switch]$Profile,[ValidateSet(0,1)][int]$StateCopy=0,[ValidateSet(0,1)][int]$GmresSimd=0)
+param([string]$Book,[string]$Suite='smoke',[string]$Out,[double]$FixedFs=1.0,[string]$Modes='OFF,AUTO',[string]$Flow='',[string]$MeshPath='',[ValidateSet('STRICT','SSE2','AUTO','AVX2')][string]$Precision='STRICT',[string]$CaseName='',[ValidateSet('off','adaptive')][string[]]$Variants=@('off','adaptive'),[switch]$Profile,[ValidateSet(0,1)][int]$StateCopy=0,[ValidateSet(0,1)][int]$GmresSimd=0,[ValidateSet(0,1)][int]$IoFast=0)
 $ErrorActionPreference='Stop'
 if(Test-Path -LiteralPath $Out){throw "Preserve prior evidence: $Out"}
 if(-not (Test-Path -LiteralPath $Book -PathType Leaf)){throw "Book not found: $Book"}
@@ -78,6 +78,7 @@ try{
  SetS $wb 'NATIVE_PRECISION' $Precision
  SetS $wb 'NATIVE_STATE_COPY' $StateCopy
  SetS $wb 'NATIVE_GMRES_SIMD' $GmresSimd
+ SetS $wb 'IO_FAST_PATH' $IoFast
  if($Flow -ne ''){SetS $wb 'FLOW_POLICY' $Flow}
  $runs=@()
  if($Suite -like 'smoke*'){
@@ -123,7 +124,10 @@ try{
    }
    $dllHash=$null; $nativePath=Join-Path $root 'soilfem_native_x64.dll'
    if(Test-Path -LiteralPath $nativePath){$dllHash=(Get-FileHash -LiteralPath $nativePath).Hash}
-   $res.Add([PSCustomObject]@{Case=$name;Variant=$v;Mode=$mode;Precision=$Precision;StateCopy=$StateCopy;GmresSimd=$GmresSimd;ProfileCsv=$profilePath;NativeDllSha256=$dllHash;ExcelPid=$xpid;ExcelVersion=$excelNativeVersion;ExclusiveExcel=$exclusiveExcel;WallSeconds=$wallClock.Elapsed.TotalSeconds;Run=$t;Fos=$fos;Bracket=$bracket;Disp=$d})
+   $runOutput=Join-Path $root ([IO.Path]::GetFileNameWithoutExtension($copy)+'_out')
+   $eventFile=Join-Path $runOutput 'solver_events.csv';$eventHash=$null;$eventBytes=0
+   if(Test-Path -LiteralPath $eventFile){$eventHash=(Get-FileHash -LiteralPath $eventFile).Hash;$eventBytes=(Get-Item -LiteralPath $eventFile).Length}
+   $res.Add([PSCustomObject]@{Case=$name;Variant=$v;Mode=$mode;Precision=$Precision;StateCopy=$StateCopy;GmresSimd=$GmresSimd;IoFast=$IoFast;ProfileCsv=$profilePath;NativeDllSha256=$dllHash;ExcelPid=$xpid;ExcelVersion=$excelNativeVersion;ExclusiveExcel=$exclusiveExcel;WallSeconds=$wallClock.Elapsed.TotalSeconds;SolverEventsSha256=$eventHash;SolverEventsBytes=$eventBytes;RunOutputDirectory=$runOutput;Run=$t;Fos=$fos;Bracket=$bracket;Disp=$d})
    $res|ConvertTo-Json -Depth 4|Set-Content $Out -Encoding UTF8
    Write-Output "$name $v $mode $t FOS=$fos"
    if(-not $exclusiveExcel){throw 'Another Excel appeared during this test; preserve result but do not accept its timing.'}

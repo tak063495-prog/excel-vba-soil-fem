@@ -1,0 +1,84 @@
+{
+  "status": "PASS",
+  "build": "20261020_INCO_IO_01",
+  "source_sha256": {
+    "src/vba/FEMCore.bas": "f49e9438f67e31691c752f8350339ccd24e1d2c74b9d6c9b355463aab1d00cba",
+    "src/vba/FEMIo.bas": "0368f65ebaa375d826dac2cb73b2c6a512eb099d98132c9fea8d0b06ed0f2336",
+    "tests/native/build_io.ps1": "a9170efad7439333cc985eac14d9e59d5816d1a99b8a81519c9cb9de7236cb7f",
+    "tests/native/check_io_fast.ps1": "2c847ca31c895bc1708220cb05c551f8fb3ab82c3c01496e0fc8460dd539b81d",
+    "tests/native/summarize_io_benchmark.py": "326917b00a00b0694839842d2274f5aff940d2917e796e303903f2173abf8599",
+    "tests/native/summarize_io_regression.py": "7e5d2d2c1e2fb63bf51bb7fa0cd6677c74961be7f0097b5da4a6cb9f54ea0f37",
+    "tests/native/test_io_summary.py": "55bf1fb960d0c503b580bde4838a344c1e57a2d1a7ced391234150a9e3b954bf",
+    "workbook/SoilFEM_INCONSISTENT_IO_20261020.zip": "f181b45d62b87ac1d6e0b9ff3795c62f0c73cc28ae981dae60819c49a98aee16"
+  },
+  "package_build": {
+    "io_fast_path": 1,
+    "source_sha256_by_module": {
+      "FEMNativeMat": "3E831347EE6BB36A782078E74386C7D93F93DA80B8C8906CC1FCBA9134F49EED",
+      "FEMEngine": "37F597F787C742153BFB4A96894A437818B82CAE312C407799D75273F5C8398B",
+      "FEMSolver": "8F753F2AA6531E2A969CB72F687628F8AE1F47EBCF17B06C83B22AD92CF1DAC8",
+      "FEMNative": "9F2B71B8321513263BD2F3767AE1261A39BE6F2902971FA34BF35E9DFF60B8FA",
+      "FEMCore": "F49E9438F67E31691C752F8350339CCD24E1D2C74B9D6C9B355463AAB1D00CBA",
+      "FEMIo": "0368F65EBAA375D826DAC2CB73B2C6A512EB099D98132C9FEA8D0B06ED0F2336",
+      "CONTROL": "C6CBEEEE3D5B52E2D195BA63662EA35F53C522139F62ACA676088558630928FA",
+      "FEMNativeKern": "BB948C0AC20A821F3EC239F8DAFE65AFEAF1B37673E81EA61817F751B4BDDB7A"
+    },
+    "precision": "AUTO",
+    "build": "20261020_INCO_IO_01",
+    "source_workbook_sha256": "ADC9BA436F970241BF238817425B865FCEFDF66E08E4A9FDD73EF6D8225EA487",
+    "native_gmres_simd": 1,
+    "native_state_copy": 1,
+    "files": [
+      {
+        "name": "2DSoilFEM_inco_io_20261020.xlsm",
+        "sha256": "EC3BD88CA8BA5E4CAD0F9BD721AD240F780E77A7C2E9711665C421529F6E5279"
+      },
+      {
+        "name": "README.txt",
+        "sha256": "AAB678259E9D3F4C4AA6E7FC273C93937D81F9405682AC9046E887370A7444E9"
+      },
+      {
+        "name": "soilfem_mat_x64.dll",
+        "sha256": "1DCA348D6F17FED2E77C49C21666DD08838D005E953A5C001EC00890A92AB95A"
+      },
+      {
+        "name": "soilfem_native_x64.dll",
+        "sha256": "C015F439B037CD436098277561B43990BA98359F89B4876330CBF8ED2BEC3B01"
+      }
+    ]
+  },
+  "static_checks": {
+    "powershell_parse": [
+      "build_io.ps1",
+      "check_io_fast.ps1",
+      "run_inco_benchmark.ps1",
+      "run_native_compare.ps1"
+    ],
+    "python_compile": [
+      "instrument_profile.py",
+      "summarize_io_benchmark.py",
+      "summarize_io_regression.py",
+      "test_io_summary.py"
+    ]
+  },
+  "unit_checks": {
+    "test_io_summary.py": "PASS: 2 methods, positive and rejection gates",
+    "test_inco_summary.py": "PASS: 2 methods, unchanged legacy comparator regression"
+  },
+  "io_checks": {
+    "result": "io_lock_retry.json",
+    "passed": 24,
+    "feature_states": [
+      0,
+      1
+    ],
+    "production_code_diagnostic_rewrites": false
+  },
+  "package_checks": {
+    "zip_members": 5,
+    "zip_crc": "PASS",
+    "zip_member_bytes_match_package": true,
+    "both_dlls_identical_to_previous_package": true,
+    "source_book_unchanged": true
+  }
+}

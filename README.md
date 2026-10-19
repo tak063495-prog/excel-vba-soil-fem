@@ -1,5 +1,14 @@
 # VBA版 2D Soil FEM
 
+## INCONSISTENT I/O高速化版（2026-10-20）
+
+[一括ダウンロード（XLSM＋DLL 2個、ZIP）](workbook/SoilFEM_INCONSISTENT_IO_20261020.zip)。
+前版のDLLをそのまま使い、ログ出力先の再利用とフォルダ確認の集約で、
+小モデルSRM全探索の中央値を75.95秒→60.93秒（19.78%短縮）にしました。
+Double・収束条件を維持し、Fs区間・全170変位・最終残差・イベントCSV全体が完全一致しました。
+ロック解除後のログ再試行、保存先変更など24項目も確認しています。
+[処理時間の内訳・比較結果・ログ障害時の制限と再現手順](docs/INCONSISTENT_IO_PERF.md) を参照してください。
+
 ## INCONSISTENT高速化版（2026-10-20）
 
 [一括ダウンロード（XLSM＋DLL 2個、ZIP）](workbook/SoilFEM_INCONSISTENT_20261020.zip)。

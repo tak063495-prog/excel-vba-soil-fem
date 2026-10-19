@@ -1,5 +1,6 @@
 ﻿Option Explicit
 Private mEvBuf As String, mEvPath As String, mEvHeader As String, mEvCount As Long
+Private mIoFast As Boolean, mIoBookIdentity As String, mIoCachedDir As String, mIoSep As String
 ' Workbook layout, run.log, checkpoint export/resume, V0 performance log.
 ' Limit-state shadow for SRM only. Does not stop the analysis and does not change numerical PASS/FAIL.
 Private Const PHYS_REF_N As Long = 3
@@ -447,6 +448,10 @@ Public Sub FEMIoBegin()
   Dim folderPath As String
   P6ResetBandBench
   FEMIoClose
+  If mEvCount > 0 Then Err.Raise vbObjectError + 6210, "FEMIoBegin", "Previous solver-event log is still pending; unlock the output and retry."
+  mIoFast = (FEMReadSetting("IO_FAST_PATH", 0#) = 1#)
+  mIoBookIdentity = vbNullString: mIoCachedDir = vbNullString
+  mIoSep = Application.PathSeparator
   femIoMode = UCase$(Trim$(FEMReadTextSetting("DEBUG_MODE", "STAGE")))
   femIoExportMode = UCase$(Trim$(FEMReadTextSetting("EXPORT_MODE", "STAGE")))
   femIoFlushSec = FEMReadSetting("DEBUG_FLUSH", 5#)
@@ -491,6 +496,7 @@ End Sub
 Private Sub FEMIoResetMeasureFiles(ByVal folderPath As String)
   Dim sep As String
   FEMIoFlushEvents
+  If mEvCount > 0 Then Exit Sub
   If Len(folderPath) = 0 Then Exit Sub
   sep = Application.PathSeparator
   FEMIoWriteNewCsv folderPath, "perf_summary.csv", P6CsvHeaderSummary()
@@ -591,6 +597,7 @@ Private Sub FEMIoWriteLine(ByVal placeText As String, ByVal statusText As String
 End Sub
 
 Public Sub FEMIoClose()
+  FEMIoFlushEvents
   On Error Resume Next
   P6FlushBandBench
   P6PerfWriteSummary
@@ -833,44 +840,93 @@ End Function
 ' in blocks (same bytes, same order). Flushed every 512 lines, before any other
 ' CSV append, at measure-file reset and when the analysis ends.
 Public Sub FEMIoFlushEvents()
-  Dim fileNum As Integer
+  Dim fileNum As Integer, opened As Boolean, e As Long, description As String, source As String
+  Dim p As Long, folderPath As String
   If mEvCount = 0 Then Exit Sub
-  On Error Resume Next
+  On Error GoTo FlushFailed
+  p = InStrRev(mEvPath, Application.PathSeparator)
+  If p < 1 Then Exit Sub
+  folderPath = left$(mEvPath, p - 1)
+  If Not FEMIoEnsureDir(folderPath) Then Exit Sub
   fileNum = FreeFile
   Open mEvPath For Append As #fileNum
-  If Dir$(mEvPath) = vbNullString Or LOF(fileNum) = 0 Then Print #fileNum, mEvHeader
+  opened = True
+  If LOF(fileNum) = 0 Then Print #fileNum, mEvHeader
   Print #fileNum, mEvBuf;
   Close #fileNum
+  opened = False
   mEvBuf = vbNullString: mEvCount = 0
+  Exit Sub
+FlushFailed:
+  e = Err.Number: description = Err.Description: source = Err.source
+  On Error Resume Next
+  If fileNum <> 0 Then Close #fileNum
   Err.Clear
+  On Error GoTo 0
+  If e = 18 Then Err.Raise e, source, description
+  ' Keep the pending path, header and bytes for a later retry.
 End Sub
 
 Private Sub FEMIoAppendCsv(ByVal fileName As String, ByRef headerFlag As Boolean, ByVal headerText As String, ByVal lineText As String)
   Dim folderPath As String, pathText As String, fileNum As Integer, needHeader As Boolean
+  Dim buffered As Boolean, opened As Boolean, e As Long, description As String, source As String
   If femIoMode = "OFF" Then Exit Sub
-  On Error Resume Next
-  folderPath = FEMIoOutDir()
+  On Error GoTo WriteFailed
+  buffered = (fileName = "solver_events.csv" And FEMKernOn())
+  folderPath = FEMIoOutDir(Not (mIoFast And buffered))
   If Len(folderPath) = 0 Then Exit Sub
-  pathText = folderPath & Application.PathSeparator & fileName
-  If fileName = "solver_events.csv" And FEMKernOn() Then
-    If mEvCount > 0 And mEvPath <> pathText Then FEMIoFlushEvents
+  If mIoFast Then
+    pathText = folderPath & mIoSep & fileName
+  Else
+    pathText = folderPath & Application.PathSeparator & fileName
+  End If
+  If buffered Then
+    If mEvCount > 0 And mEvPath <> pathText Then
+      FEMIoFlushEvents
+      If mEvCount > 0 Then Exit Sub
+    End If
     mEvPath = pathText: mEvHeader = headerText
     mEvBuf = mEvBuf & lineText & vbCrLf: mEvCount = mEvCount + 1
     headerFlag = True
     If mEvCount >= 512 Then FEMIoFlushEvents
-    Err.Clear
     Exit Sub
   End If
-  If mEvCount > 0 Then FEMIoFlushEvents
+  If mEvCount > 0 Then
+    FEMIoFlushEvents
+    If mEvCount > 0 Then Exit Sub
+  End If
   needHeader = (Dir$(pathText) = vbNullString)
   fileNum = FreeFile
   Open pathText For Append As #fileNum
+  opened = True
   If needHeader Then Print #fileNum, headerText
   Print #fileNum, lineText
   Close #fileNum
+  opened = False
   headerFlag = True
+  Exit Sub
+WriteFailed:
+  e = Err.Number: description = Err.Description: source = Err.source
+  On Error Resume Next
+  If fileNum <> 0 Then Close #fileNum
   Err.Clear
+  On Error GoTo 0
+  If e = 18 Then Err.Raise e, source, description
 End Sub
+
+Private Function FEMIoEnsureDir(ByVal folderPath As String) As Boolean
+  Dim e As Long, description As String, source As String
+  On Error GoTo Failed
+  If Len(folderPath) = 0 Then Exit Function
+  If Dir$(folderPath, vbDirectory) = vbNullString Then MkDir folderPath
+  FEMIoEnsureDir = (Dir$(folderPath, vbDirectory) <> vbNullString)
+  Exit Function
+Failed:
+  e = Err.Number: description = Err.Description: source = Err.source
+  Err.Clear
+  On Error GoTo 0
+  If e = 18 Then Err.Raise e, source, description
+End Function
 
 Public Sub P6SolverEvent(ByVal eventName As String, ByVal detailText As String)
   Dim headerText As String, lineText As String
@@ -2016,9 +2072,29 @@ Private Sub P6PerfWriteSummary()
   Err.Clear
 End Sub
 
-Private Function FEMIoOutDir() As String
+Private Function FEMIoOutDir(Optional ByVal ensureExists As Boolean = True) As String
   Dim folderPath As String, baseName As String, fileName As String
+  Dim identity As String, p As Long
   FEMIoOutDir = vbNullString
+  If mIoFast Then
+    If Len(mIoSep) = 0 Then mIoSep = Application.PathSeparator
+    identity = ThisWorkbook.FullName
+    ' Include CurDir for an unsaved workbook; SaveAs changes FullName immediately.
+    If InStrRev(identity, mIoSep) = 0 Then identity = CurDir$() & mIoSep & identity
+    If identity = mIoBookIdentity And Len(mIoCachedDir) > 0 Then
+      folderPath = mIoCachedDir
+      GoTo EnsureOutput
+    End If
+    ' Cloud URLs keep the original resolver and error behavior.
+    If InStr(identity, "://") = 0 Then
+      p = InStrRev(identity, mIoSep)
+      fileName = mid$(identity, p + 1)
+      If InStrRev(fileName, ".") > 1 Then fileName = left$(fileName, InStrRev(fileName, ".") - 1)
+      folderPath = left$(identity, p) & fileName & "_out"
+      mIoBookIdentity = identity: mIoCachedDir = folderPath
+      GoTo EnsureOutput
+    End If
+  End If
   fileName = ThisWorkbook.name
   If InStrRev(fileName, ".") > 1 Then
     baseName = left$(fileName, InStrRev(fileName, ".") - 1)
@@ -2030,10 +2106,10 @@ Private Function FEMIoOutDir() As String
   Else
     folderPath = ThisWorkbook.path & Application.PathSeparator & baseName & "_out"
   End If
-  On Error Resume Next
-  If Dir$(folderPath, vbDirectory) = vbNullString Then MkDir folderPath
-  If Dir$(folderPath, vbDirectory) = vbNullString Then Exit Function
-  On Error GoTo 0
+EnsureOutput:
+  If ensureExists Then
+    If Not FEMIoEnsureDir(folderPath) Then Exit Function
+  End If
   FEMIoOutDir = folderPath
 End Function
 
