@@ -1,0 +1,315 @@
+{
+  "total_seconds": 61.8672001,
+  "exclusive_sum_seconds": 61.8672001,
+  "exclusive_partition_pass": true,
+  "ranking": [
+    {
+      "procedure": "FEMKernGmres",
+      "calls": 830,
+      "inclusive_seconds": 10.9089113,
+      "exclusive_seconds": 10.9011035,
+      "exclusive_percent": 17.620166230861965
+    },
+    {
+      "procedure": "SetTotalMat",
+      "calls": 7804,
+      "inclusive_seconds": 9.405734,
+      "exclusive_seconds": 9.2582179,
+      "exclusive_percent": 14.964662834321478
+    },
+    {
+      "procedure": "FEMMatEval",
+      "calls": 56583,
+      "inclusive_seconds": 7.9344591,
+      "exclusive_seconds": 7.5836205,
+      "exclusive_percent": 12.257901582328115
+    },
+    {
+      "procedure": "P6SolverEvent",
+      "calls": 109847,
+      "inclusive_seconds": 12.9545133,
+      "exclusive_seconds": 5.1392802,
+      "exclusive_percent": 8.306954560240394
+    },
+    {
+      "procedure": "P6SolveNonsymmetricBand",
+      "calls": 9039,
+      "inclusive_seconds": 5.2425639,
+      "exclusive_seconds": 4.355217,
+      "exclusive_percent": 7.039621953087222
+    },
+    {
+      "procedure": "P6SolveCSRGMRES",
+      "calls": 830,
+      "inclusive_seconds": 25.1278848,
+      "exclusive_seconds": 2.6080307,
+      "exclusive_percent": 4.215530516629926
+    },
+    {
+      "procedure": "FEMIoAppendCsv",
+      "calls": 109865,
+      "inclusive_seconds": 6.8897968,
+      "exclusive_seconds": 2.5882306,
+      "exclusive_percent": 4.18352632059714
+    },
+    {
+      "procedure": "P6SolveResidualRecovery",
+      "calls": 1752,
+      "inclusive_seconds": 2.5443293,
+      "exclusive_seconds": 2.3349978,
+      "exclusive_percent": 3.7742095912305555
+    },
+    {
+      "procedure": "FEMKernOn",
+      "calls": 208334,
+      "inclusive_seconds": 2.2257139,
+      "exclusive_seconds": 2.2257139,
+      "exclusive_percent": 3.597566879384283
+    },
+    {
+      "procedure": "FEMIoFlushEvents",
+      "calls": 233,
+      "inclusive_seconds": 1.9886268,
+      "exclusive_seconds": 1.9390598,
+      "exclusive_percent": 3.1342291179587423
+    },
+    {
+      "procedure": "P3RestoreCommittedMaterialState",
+      "calls": 45600,
+      "inclusive_seconds": 1.4057798,
+      "exclusive_seconds": 1.4057798,
+      "exclusive_percent": 2.2722537915531107
+    },
+    {
+      "procedure": "FEMMatTangent",
+      "calls": 7803,
+      "inclusive_seconds": 1.3503147,
+      "exclusive_seconds": 1.3027284,
+      "exclusive_percent": 2.1056850768974757
+    },
+    {
+      "procedure": "SaveP0Progress",
+      "calls": 228,
+      "inclusive_seconds": 1.1629323,
+      "exclusive_seconds": 1.1621425,
+      "exclusive_percent": 1.878446896128406
+    },
+    {
+      "procedure": "SetBoundaryCondition",
+      "calls": 9040,
+      "inclusive_seconds": 1.132285,
+      "exclusive_seconds": 1.132285,
+      "exclusive_percent": 1.830186266987699
+    },
+    {
+      "procedure": "P0_RunAnalysis",
+      "calls": 1,
+      "inclusive_seconds": 61.8672001,
+      "exclusive_seconds": 0.974202,
+      "exclusive_percent": 1.5746663796411242
+    },
+    {
+      "procedure": "FEMIoCsv",
+      "calls": 330134,
+      "inclusive_seconds": 0.9232582,
+      "exclusive_seconds": 0.9232582,
+      "exclusive_percent": 1.4923225853241742
+    },
+    {
+      "procedure": "P3ApplyLineSearch",
+      "calls": 6524,
+      "inclusive_seconds": 10.5837514,
+      "exclusive_seconds": 0.9174874,
+      "exclusive_percent": 1.4829948640265038
+    },
+    {
+      "procedure": "FEMIoBufferEvent",
+      "calls": 109847,
+      "inclusive_seconds": 0.7106518,
+      "exclusive_seconds": 0.7106518,
+      "exclusive_percent": 1.1486729621694969
+    },
+    {
+      "procedure": "P3EvaluateTrialState",
+      "calls": 56350,
+      "inclusive_seconds": 8.5662571,
+      "exclusive_seconds": 0.6297593,
+      "exclusive_percent": 1.0179211261897725
+    },
+    {
+      "procedure": "P3RunLoadStages",
+      "calls": 17,
+      "inclusive_seconds": 59.3407537,
+      "exclusive_seconds": 0.6012583,
+      "exclusive_percent": 0.9718530966782833
+    },
+    {
+      "procedure": "FEMIoOutDir",
+      "calls": 109884,
+      "inclusive_seconds": 0.5393326,
+      "exclusive_seconds": 0.5317851,
+      "exclusive_percent": 0.8595590218087145
+    },
+    {
+      "procedure": "P3RebuildTangentFromSpmat",
+      "calls": 7803,
+      "inclusive_seconds": 11.3588414,
+      "exclusive_seconds": 0.471309,
+      "exclusive_percent": 0.7618075478414934
+    },
+    {
+      "procedure": "FEMKernResidual",
+      "calls": 66193,
+      "inclusive_seconds": 1.1953954,
+      "exclusive_seconds": 0.419339,
+      "exclusive_percent": 0.6778050393782085
+    },
+    {
+      "procedure": "FEMMatCommonParams",
+      "calls": 79993,
+      "inclusive_seconds": 0.4943203,
+      "exclusive_seconds": 0.3149843,
+      "exclusive_percent": 0.509129715731228
+    },
+    {
+      "procedure": "P3AccumulateResidualMetrics",
+      "calls": 66193,
+      "inclusive_seconds": 1.4534844,
+      "exclusive_seconds": 0.258089,
+      "exclusive_percent": 0.41716612289360744
+    },
+    {
+      "procedure": "FEMMatBuildMaterialTable",
+      "calls": 79993,
+      "inclusive_seconds": 0.179336,
+      "exclusive_seconds": 0.179336,
+      "exclusive_percent": 0.28987250063058856
+    },
+    {
+      "procedure": "P6CsvHeaderEvent",
+      "calls": 109848,
+      "inclusive_seconds": 0.1656511,
+      "exclusive_seconds": 0.1656511,
+      "exclusive_percent": 0.26775270213012275
+    },
+    {
+      "procedure": "P6BuildCSRILU",
+      "calls": 830,
+      "inclusive_seconds": 0.1594557,
+      "exclusive_seconds": 0.1506385,
+      "exclusive_percent": 0.24348685532319736
+    },
+    {
+      "procedure": "P3TryNewtonWatchdog",
+      "calls": 709,
+      "inclusive_seconds": 10.8872408,
+      "exclusive_seconds": 0.1266404,
+      "exclusive_percent": 0.20469715745225714
+    },
+    {
+      "procedure": "P6PerfEmit",
+      "calls": 17,
+      "inclusive_seconds": 0.2744626,
+      "exclusive_seconds": 0.1055513,
+      "exclusive_percent": 0.17060946645296787
+    },
+    {
+      "procedure": "P3TryResidualRecovery",
+      "calls": 1531,
+      "inclusive_seconds": 6.4855929,
+      "exclusive_seconds": 0.0916392,
+      "exclusive_percent": 0.14812242973963197
+    },
+    {
+      "procedure": "P6SolveCSR",
+      "calls": 9039,
+      "inclusive_seconds": 30.7274875,
+      "exclusive_seconds": 0.0863991,
+      "exclusive_percent": 0.13965251354570352
+    },
+    {
+      "procedure": "P3InitializeTrialState",
+      "calls": 17,
+      "inclusive_seconds": 0.0706455,
+      "exclusive_seconds": 0.0706455,
+      "exclusive_percent": 0.11418893999697911
+    },
+    {
+      "procedure": "FEMIoEnsureDir",
+      "calls": 266,
+      "inclusive_seconds": 0.0571145,
+      "exclusive_seconds": 0.0571145,
+      "exclusive_percent": 0.0923179001275023
+    },
+    {
+      "procedure": "FEMAppendRunLog",
+      "calls": 75,
+      "inclusive_seconds": 0.0482145,
+      "exclusive_seconds": 0.047026,
+      "exclusive_percent": 0.07601119805646417
+    },
+    {
+      "procedure": "BandSolver",
+      "calls": 9039,
+      "inclusive_seconds": 30.7607068,
+      "exclusive_seconds": 0.0332193,
+      "exclusive_percent": 0.0536945262535002
+    },
+    {
+      "procedure": "P3CommitMaterialState",
+      "calls": 148,
+      "inclusive_seconds": 0.0329848,
+      "exclusive_seconds": 0.0329848,
+      "exclusive_percent": 0.053315488573403215
+    },
+    {
+      "procedure": "P3ShouldRebuildTangent",
+      "calls": 5783,
+      "inclusive_seconds": 0.0115684,
+      "exclusive_seconds": 0.0115684,
+      "exclusive_percent": 0.01869876118735168
+    },
+    {
+      "procedure": "SetAnalysisFailure",
+      "calls": 1198,
+      "inclusive_seconds": 0.0099122,
+      "exclusive_seconds": 0.0099122,
+      "exclusive_percent": 0.016021736855681628
+    },
+    {
+      "procedure": "P6PhysOnRebuild",
+      "calls": 3859,
+      "inclusive_seconds": 0.0062821,
+      "exclusive_seconds": 0.0062821,
+      "exclusive_percent": 0.010154168913165345
+    },
+    {
+      "procedure": "P3CaptureSrmSuccessSnapshot",
+      "calls": 13,
+      "inclusive_seconds": 0.001616,
+      "exclusive_seconds": 0.001616,
+      "exclusive_percent": 0.002612046443653428
+    },
+    {
+      "procedure": "FEMIoNativeGmresEvents",
+      "calls": 830,
+      "inclusive_seconds": 0.0014501,
+      "exclusive_seconds": 0.0014501,
+      "exclusive_percent": 0.0023438914281818293
+    },
+    {
+      "procedure": "GetDiagnosticSheet",
+      "calls": 35,
+      "inclusive_seconds": 0.0008055,
+      "exclusive_seconds": 0.0008055,
+      "exclusive_percent": 0.0013019823083928442
+    },
+    {
+      "procedure": "P3RestoreSrmSuccessSnapshot",
+      "calls": 1,
+      "inclusive_seconds": 0.0025233,
+      "exclusive_seconds": 0.0001891,
+      "exclusive_percent": 0.0003056546921379104
+    }
+  ]
+}

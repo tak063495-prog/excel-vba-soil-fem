@@ -1,5 +1,13 @@
 # VBA版 2D Soil FEM
 
+## INCONSISTENT ログ整形・バッファ高速化版（2026-10-20）
+
+[一括ダウンロード（XLSM＋DLL 2個、ZIP）](workbook/SoilFEM_INCONSISTENT_EVENT_20261020.zip)。
+ログの共通列とGMRESイベントの準備処理をまとめ、バッファを予約領域への追記へ変更しました。
+同条件の小モデルSRM全探索3組で中央値53.93秒→51.55秒（4.41%短縮）。
+Double・収束条件を維持し、Fs区間・全170変位・最終残差・イベントCSV全体が完全一致しました。
+DLL2個は前版と同一です。[内訳・全結果・再現手順](docs/INCONSISTENT_EVENT_PERF.md) を参照してください。
+
 ## INCONSISTENT I/O高速化版（2026-10-20）
 
 [一括ダウンロード（XLSM＋DLL 2個、ZIP）](workbook/SoilFEM_INCONSISTENT_IO_20261020.zip)。

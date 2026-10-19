@@ -32,6 +32,18 @@ class EvidenceChecks(unittest.TestCase):
             with self.subTest(key=key, value=value), self.assertRaises(AssertionError):
                 compare(r, c)
 
+    def test_event_scope(self):
+        r = dict(self.reference, IoFast=1, EventFast=0)
+        c = dict(self.candidate, IoFast=1, EventFast=1)
+        self.assertEqual(compare(r, c, 'events')['max_abs_displacement_delta'], 0)
+        self.assertTrue(regression([r], [c], 'events')[0]['logs_exact'])
+        for key, value in [('IoFast', 0), ('EventFast', 0), ('Disp', [0., 1.1]), ('SolverEventsSha256', 'wrong')]:
+            bad = dict(c, **{key: value})
+            with self.subTest(key=key), self.assertRaises(AssertionError):
+                compare(r, bad, 'events')
+        with self.assertRaises(AssertionError):
+            compare(r, c)
+
     def test_regression_accepts_noisy_time_but_rejects_changed_result(self):
         c = dict(self.candidate, WallSeconds=80)
         self.assertTrue(regression([self.reference], [c])[0]['logs_exact'])

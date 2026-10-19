@@ -1,0 +1,18 @@
+{
+  "build": "20261020_INCO_EVENT_01",
+  "accepted_for_publication": false,
+  "reason": "No end-to-end improvement; native event batch preparation was subsequently added",
+  "numerical_and_event_bytes_exact": true,
+  "reference_seconds": [
+    54.6215543,
+    67.193445,
+    51.866394
+  ],
+  "candidate_seconds": [
+    54.3279152,
+    56.4323694,
+    55.1709443
+  ],
+  "reference_median_seconds": 54.6215543,
+  "candidate_median_seconds": 55.1709443
+}

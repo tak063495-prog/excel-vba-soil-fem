@@ -1,0 +1,24 @@
+{
+  "precision": "AUTO -> AVX2_FMA",
+  "excel_version": "16.0.20430.20182",
+  "baseline_commit": "687cdef51b94c0c07e39a3dcb1608934b1b8a25b",
+  "io_fast_path": 1,
+  "os": "Microsoft Windows 11 Home",
+  "stopwatch_high_resolution": true,
+  "profile_timer": "QueryPerformanceCounter, exclusive partition",
+  "stopwatch_frequency": 10000000,
+  "build": "20261020_INCO_EVENT_02",
+  "comparison_flags": [
+    "EVENT_LOG_FAST"
+  ],
+  "source_sha256": {
+    "tests/fixtures/smoke_mesh.json": "4F6318675417457AECA365913CD680EA00943316AB427352E3B040426D821A9E",
+    "src/vba/FEMSolver.bas": "53D9D0255588744A1A6140E6E45598B222515475C2A3A8581B8BD248D3060A4F",
+    "src/vba/FEMCore.bas": "2133FAB59C5870ED9908A13FAC66C7DEAA9F2BA2552ED0E013F4B018554274EB",
+    "src/vba/FEMIo.bas": "475B9C330D39E2DA8AF1D82ACDCF96C46E346C4CFB96846BC6A8EC65BC1C999A"
+  },
+  "cpu": "AMD Ryzen 5 5600X 6-Core Processor             ",
+  "native_state_copy": 1,
+  "native_gmres_simd": 1,
+  "wall_timer": "System.Diagnostics.Stopwatch"
+}

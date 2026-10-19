@@ -1,6 +1,10 @@
 ﻿Option Explicit
 Private mEvBuf As String, mEvPath As String, mEvHeader As String, mEvCount As Long
 Private mIoFast As Boolean, mIoBookIdentity As String, mIoCachedDir As String, mIoSep As String
+Private mEventFast As Boolean, mEvUsed As Long
+Private mEventPrefixValid As Boolean, mEventStage As Long, mEventIncrement As Long
+Private mEventKind As String, mEventFs As Double, mEventPrefix As String
+Private mEventName As String, mEventNameCsv As String
 ' Workbook layout, run.log, checkpoint export/resume, V0 performance log.
 ' Limit-state shadow for SRM only. Does not stop the analysis and does not change numerical PASS/FAIL.
 Private Const PHYS_REF_N As Long = 3
@@ -449,6 +453,9 @@ Public Sub FEMIoBegin()
   P6ResetBandBench
   FEMIoClose
   If mEvCount > 0 Then Err.Raise vbObjectError + 6210, "FEMIoBegin", "Previous solver-event log is still pending; unlock the output and retry."
+  mEventFast = (FEMReadSetting("EVENT_LOG_FAST", 0#) = 1#)
+  mEvBuf = vbNullString: mEvUsed = 0
+  mEventPrefixValid = False: mEventName = vbNullString: mEventNameCsv = vbNullString
   mIoFast = (FEMReadSetting("IO_FAST_PATH", 0#) = 1#)
   mIoBookIdentity = vbNullString: mIoCachedDir = vbNullString
   mIoSep = Application.PathSeparator
@@ -852,10 +859,15 @@ Public Sub FEMIoFlushEvents()
   Open mEvPath For Append As #fileNum
   opened = True
   If LOF(fileNum) = 0 Then Print #fileNum, mEvHeader
-  Print #fileNum, mEvBuf;
+  If mEventFast Then
+    Print #fileNum, left$(mEvBuf, mEvUsed);
+  Else
+    Print #fileNum, mEvBuf;
+  End If
   Close #fileNum
   opened = False
-  mEvBuf = vbNullString: mEvCount = 0
+  If Not mEventFast Then mEvBuf = vbNullString
+  mEvUsed = 0: mEvCount = 0
   Exit Sub
 FlushFailed:
   e = Err.Number: description = Err.Description: source = Err.source
@@ -867,12 +879,16 @@ FlushFailed:
   ' Keep the pending path, header and bytes for a later retry.
 End Sub
 
-Private Sub FEMIoAppendCsv(ByVal fileName As String, ByRef headerFlag As Boolean, ByVal headerText As String, ByVal lineText As String)
+Private Sub FEMIoAppendCsv(ByVal fileName As String, ByRef headerFlag As Boolean, ByVal headerText As String, ByVal lineText As String, Optional ByVal kernelEventKnown As Boolean = False)
   Dim folderPath As String, pathText As String, fileNum As Integer, needHeader As Boolean
   Dim buffered As Boolean, opened As Boolean, e As Long, description As String, source As String
   If femIoMode = "OFF" Then Exit Sub
   On Error GoTo WriteFailed
-  buffered = (fileName = "solver_events.csv" And FEMKernOn())
+  If kernelEventKnown Then
+    buffered = True
+  Else
+    buffered = (fileName = "solver_events.csv" And FEMKernOn())
+  End If
   folderPath = FEMIoOutDir(Not (mIoFast And buffered))
   If Len(folderPath) = 0 Then Exit Sub
   If mIoFast Then
@@ -886,7 +902,8 @@ Private Sub FEMIoAppendCsv(ByVal fileName As String, ByRef headerFlag As Boolean
       If mEvCount > 0 Then Exit Sub
     End If
     mEvPath = pathText: mEvHeader = headerText
-    mEvBuf = mEvBuf & lineText & vbCrLf: mEvCount = mEvCount + 1
+    FEMIoBufferEvent lineText
+    mEvCount = mEvCount + 1
     headerFlag = True
     If mEvCount >= 512 Then FEMIoFlushEvents
     Exit Sub
@@ -914,6 +931,30 @@ WriteFailed:
   If e = 18 Then Err.Raise e, source, description
 End Sub
 
+Private Sub FEMIoBufferEvent(ByVal lineText As String)
+  Dim required As Long, capacity As Long, grown As Long, n As Long
+  If Not mEventFast Then
+    mEvBuf = mEvBuf & lineText & vbCrLf
+    Exit Sub
+  End If
+  n = Len(lineText): required = mEvUsed + n + 2: capacity = Len(mEvBuf)
+  If required > capacity Then
+    grown = capacity
+    If grown < 65536 Then grown = 65536
+    Do While grown < required
+      If grown > 1073741823 Then
+        grown = required
+      Else
+        grown = grown * 2
+      End If
+    Loop
+    mEvBuf = mEvBuf & Space$(grown - capacity)
+  End If
+  If n > 0 Then Mid$(mEvBuf, mEvUsed + 1, n) = lineText
+  Mid$(mEvBuf, mEvUsed + n + 1, 2) = vbCrLf
+  mEvUsed = required
+End Sub
+
 Private Function FEMIoEnsureDir(ByVal folderPath As String) As Boolean
   Dim e As Long, description As String, source As String
   On Error GoTo Failed
@@ -939,10 +980,83 @@ Public Sub P6SolverEvent(ByVal eventName As String, ByVal detailText As String)
     stageNo = P3RunLogStageNo
     kindText = P3RunLogKind
   End If
+  If mEventFast Then
+    If femIoMode = "OFF" Then Exit Sub
+    lineText = FEMIoEventPrefix(stageNo, kindText) & FEMIoEventName(eventName) & "," & FEMIoEventCsv(detailText)
+  Else
+    lineText = FEM_BUILD_STAMP & "," & CStr(stageNo) & "," & FEMIoCsv(kindText) & "," & Format$(P3CurrentStrengthFactor, "0.000") & "," & CStr(CurrentIncrement) & "," & FEMIoCsv(eventName) & "," & FEMIoCsv(detailText)
+  End If
   headerText = P6CsvHeaderEvent()
-  lineText = FEM_BUILD_STAMP & "," & CStr(stageNo) & "," & FEMIoCsv(kindText) & "," & Format$(P3CurrentStrengthFactor, "0.000") & "," & CStr(CurrentIncrement) & "," & FEMIoCsv(eventName) & "," & FEMIoCsv(detailText)
   FEMIoAppendCsv "solver_events.csv", P6CsvEventHeader, headerText, lineText
 End Sub
+
+Public Function FEMIoNativeGmresEvents(ByRef events() As Double, ByVal count As Long, ByVal restart As Long, ByRef preconditionerMode As String) As Boolean
+  Dim i As Long, iteration As Long, stageNo As Long, kindText As String
+  Dim prefixText As String, headerText As String, eventName As String, detailText As String, lineText As String
+  If Not mEventFast Then Exit Function
+  If femIoMode = "OFF" Then Exit Function
+  If Not FEMKernOn() Then Exit Function
+  If count <= 0 Then FEMIoNativeGmresEvents = True: Exit Function
+  ' No solver state changes between native event records, except the code-3
+  ' preconditioner status replayed below. Resolve the common columns once.
+  If P3SrmTrialRunning And P3SrmLogStageNo > 0 Then
+    stageNo = P3SrmLogStageNo: kindText = P3SrmLogKind
+    If Len(kindText) = 0 Then kindText = "SRM"
+  Else
+    stageNo = P3RunLogStageNo: kindText = P3RunLogKind
+  End If
+  prefixText = FEMIoEventPrefix(stageNo, kindText): headerText = P6CsvHeaderEvent()
+  For i = 0 To count - 1
+    iteration = CLng(events(3 * i + 1))
+    Select Case CLng(events(3 * i))
+      Case 1
+        eventName = "GMRES_RESTART"
+        detailText = "restart=" & CStr(iteration \ restart) & ";iterations=" & CStr(iteration) & ";preconditioner=" & preconditionerMode & ";true_relres=" & Format$(events(3 * i + 2), "0.000E+00")
+      Case 2
+        eventName = "GMRES_BREAKDOWN": detailText = "reason=nonfinite_true_residual;iterations=" & CStr(iteration)
+      Case 3
+        preconditionerMode = "ILU0_APPLY_FAILED"
+        eventName = "GMRES_BREAKDOWN": detailText = "reason=preconditioner_apply;preconditioner=" & preconditionerMode & ";iterations=" & CStr(iteration)
+      Case 4
+        eventName = "GMRES_BREAKDOWN": detailText = "reason=nonfinite_krylov_norm;iterations=" & CStr(iteration)
+      Case 5
+        eventName = "GMRES_BREAKDOWN": detailText = "reason=zero_givens_rotation;preconditioner=" & preconditionerMode & ";iterations=" & CStr(iteration)
+      Case 6
+        eventName = "GMRES_BREAKDOWN": detailText = "reason=zero_upper_triangular_diagonal;preconditioner=" & preconditionerMode & ";iterations=" & CStr(iteration)
+      Case Else
+        GoTo NextEvent
+    End Select
+    ' Event names above are fixed ASCII without CSV delimiters. The general
+    ' append still checks FullName for SaveAs and retains failed writes.
+    lineText = prefixText & eventName & "," & FEMIoEventCsv(detailText)
+    FEMIoAppendCsv "solver_events.csv", P6CsvEventHeader, headerText, lineText, True
+NextEvent:
+  Next i
+  FEMIoNativeGmresEvents = True
+End Function
+
+Private Function FEMIoEventPrefix(ByVal stageNo As Long, ByVal kindText As String) As String
+  If Not mEventPrefixValid Or mEventStage <> stageNo Or mEventKind <> kindText Or mEventFs <> P3CurrentStrengthFactor Or mEventIncrement <> CurrentIncrement Then
+    mEventPrefix = FEM_BUILD_STAMP & "," & CStr(stageNo) & "," & FEMIoEventCsv(kindText) & "," & Format$(P3CurrentStrengthFactor, "0.000") & "," & CStr(CurrentIncrement) & ","
+    mEventStage = stageNo: mEventKind = kindText: mEventFs = P3CurrentStrengthFactor: mEventIncrement = CurrentIncrement
+    mEventPrefixValid = True
+  End If
+  FEMIoEventPrefix = mEventPrefix
+End Function
+
+Private Function FEMIoEventName(ByVal eventName As String) As String
+  If eventName <> mEventName Then
+    mEventNameCsv = FEMIoEventCsv(eventName): mEventName = eventName
+  End If
+  FEMIoEventName = mEventNameCsv
+End Function
+
+Private Function FEMIoEventCsv(ByVal textValue As String) As String
+  If InStr(1, textValue, ",", vbBinaryCompare) > 0 Then textValue = Replace$(textValue, ",", ";")
+  If InStr(1, textValue, vbCr, vbBinaryCompare) > 0 Then textValue = Replace$(textValue, vbCr, " ")
+  If InStr(1, textValue, vbLf, vbBinaryCompare) > 0 Then textValue = Replace$(textValue, vbLf, " ")
+  FEMIoEventCsv = textValue
+End Function
 
 Private Sub P6WriteTrialCsv(ByVal statusText As String)
   Dim headerText As String, lineText As String

@@ -16,7 +16,7 @@ TARGETS = {
         "FEMMatBuildMaterialTable"],
     "FEMSolver.bas": ["SetTotalMat", "P6SolveNonsymmetricBand", "P6SolveResidualRecovery",
         "BandSolver", "SetBoundaryCondition", "P6SolveCSR", "P6SolveCSRGMRES", "P6BuildCSRILU"],
-    "FEMIo.bas": ["P6SolverEvent", "FEMIoAppendCsv", "FEMIoOutDir", "FEMIoFlushEvents", "FEMIoEnsureDir",
+    "FEMIo.bas": ["P6SolverEvent", "FEMIoAppendCsv", "FEMIoOutDir", "FEMIoFlushEvents", "FEMIoEnsureDir", "FEMIoBufferEvent", "FEMIoNativeGmresEvents", "FEMIoEventPrefix", "FEMIoEventName", "FEMIoEventCsv", "FEMIoCsv", "P6CsvHeaderEvent",
         "FEMAppendRunLog", "P6PerfEmit", "P6PhysOnRebuild", "GetDiagnosticSheet"],
     "FEMCore.bas": ["SetAnalysisFailure"],
     "FEM.bas": ["SaveP0Progress"],
