@@ -2,7 +2,8 @@ param(
  [Parameter(Mandatory=$true)][string]$Book,
  [Parameter(Mandatory=$true)][string]$OutputDirectory,
  [ValidateRange(1,10)][int]$Pairs=3,
- [switch]$Resume
+ [switch]$Resume,
+ [switch]$IoOnly
 )
 $ErrorActionPreference='Stop'
 $Book=(Resolve-Path -LiteralPath $Book).Path
@@ -15,7 +16,9 @@ for($pair=1;$pair -le $Pairs;$pair++){
  foreach($enabled in $order){
   $out=Join-Path $OutputDirectory ("pair${pair}_enabled${enabled}.json")
   if($Resume -and (Test-Path -LiteralPath $out)){Write-Output "Preserved $out";continue}
-  & pwsh -NoProfile -File (Join-Path $PSScriptRoot 'run_native_compare.ps1') -Book $Book -Out $out -Suite smokesrm -CaseName Case1 -Variants off -Modes AUTO -Flow INCONSISTENT -Precision AUTO -StateCopy $enabled -GmresSimd $enabled
+  $native=if($IoOnly){1}else{$enabled}
+  $io=if($IoOnly){$enabled}else{0}
+  & pwsh -NoProfile -File (Join-Path $PSScriptRoot 'run_native_compare.ps1') -Book $Book -Out $out -Suite smokesrm -CaseName Case1 -Variants off -Modes AUTO -Flow INCONSISTENT -Precision AUTO -StateCopy $native -GmresSimd $native -IoFast $io
   if($LASTEXITCODE -ne 0){throw "Benchmark failed: $out"}
   # The COM server can exit just after the child PowerShell releases its RCWs.
   for($wait=0;$wait -lt 20;$wait++){

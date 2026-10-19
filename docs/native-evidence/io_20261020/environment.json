@@ -1,0 +1,22 @@
+{
+  "stopwatch_frequency": 10000000,
+  "comparison_flags": [
+    "IO_FAST_PATH"
+  ],
+  "native_gmres_simd": 1,
+  "baseline_commit": "040c84c4bc9f38e42520c817327b6a292f458cf0",
+  "os": "Microsoft Windows 11 Home",
+  "source_sha256": {
+    "src/vba/FEMIo.bas": "0368F65EBAA375D826DAC2CB73B2C6A512EB099D98132C9FEA8D0B06ED0F2336",
+    "src/vba/FEMCore.bas": "F49E9438F67E31691C752F8350339CCD24E1D2C74B9D6C9B355463AAB1D00CBA",
+    "tests/fixtures/smoke_mesh.json": "4F6318675417457AECA365913CD680EA00943316AB427352E3B040426D821A9E"
+  },
+  "native_state_copy": 1,
+  "build": "20261020_INCO_IO_01",
+  "precision": "AUTO -> AVX2_FMA",
+  "cpu": "AMD Ryzen 5 5600X 6-Core Processor             ",
+  "stopwatch_high_resolution": true,
+  "excel_version": "16.0.20430.20182",
+  "wall_timer": "System.Diagnostics.Stopwatch",
+  "profile_timer": "QueryPerformanceCounter, 40 procedures, exclusive partition"
+}

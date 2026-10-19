@@ -1,0 +1,18 @@
+[
+  {
+    "enabled": 0,
+    "status": "PASS",
+    "new_folder": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\excel-vba-soil-fem\\tests\\results\\io_harness_08\\renamed0_out",
+    "checks": 12,
+    "pending_after": 0,
+    "old_folder": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\excel-vba-soil-fem\\tests\\results\\io_harness_08\\io_test_out"
+  },
+  {
+    "enabled": 1,
+    "status": "PASS",
+    "new_folder": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\excel-vba-soil-fem\\tests\\results\\io_harness_08\\renamed1_out",
+    "checks": 12,
+    "pending_after": 0,
+    "old_folder": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\excel-vba-soil-fem\\tests\\results\\io_harness_08\\renamed0_out"
+  }
+]
