@@ -1,0 +1,11 @@
+[
+  "dot",
+  "axpy",
+  "csr_matvec",
+  "csr_resnorm",
+  "ilu_apply",
+  "csr_matvec_tuned",
+  "ilu_apply_tuned",
+  "ilu_apply_prepared",
+  "gmres_impl"
+]

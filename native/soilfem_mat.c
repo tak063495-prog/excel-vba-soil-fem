@@ -103,9 +103,9 @@ typedef struct { double d00, d01, d22, sinPhi, cosPhi, sinPsi, young, poisson, c
 
 /* P2FillSpectralTangent */
 static int fill_tangent(double nF[3][2], double qF[3][2], double aM[2][2], int count, const int rank[3],
-                        const double pT[3], const double pC[3], double tA, const mp_mat *m, mp_out *o) {
+                        const double pT[3], const double pC[3], double c, double sn, const mp_mat *m, mp_out *o) {
   double iH[2][2] = {{0, 0}, {0, 0}}, aP[3][3] = {{0}}, tD[3], rD[3], reD[3], phD[3] = {0, 0, 0}, tg[3][3];
-  int i, j, f, g, col; double det, c, sn, dsx, dsy, dt, dsz, angD, gap;
+  int i, j, f, g, col; double det, dsx, dsy, dt, dsz, angD, gap;
   gap = (xd)pT[0] - pT[1];
   if (gap <= 0.000000000001 * (ABS(pT[0]) + ABS(pT[1]) + 1.0)) return 0;
   if (count == 1) iH[0][0] = 1.0 / (xd)aM[0][0];
@@ -119,7 +119,6 @@ static int fill_tangent(double nF[3][2], double qF[3][2], double aM[2][2], int c
     for (f = 0; f < count; f++) for (g = 0; g < count; g++)
       aP[i][j] = (xd)aP[i][j] - (xd)qF[i][f] * iH[f][g] * nF[j][g];
   }
-  c = c_cos(tA); sn = c_sin(tA);
   for (col = 0; col < 3; col++) {
     dsx = 0.0; dsy = 0.0; dt = 0.0; dsz = 0.0;
     if (col == 0) { dsx = m->d00; dsy = m->d01; dsz = m->d01; }
@@ -151,7 +150,7 @@ static int spectral(double tSx, double tSy, double tSz, double tTxy, const mp_ma
   double pT[3], pTr[3], cor[3], pC[3], nF[3][2], mF[3][2], qF[3][2], aM[2][2], fT[2], mu[2];
   int rank[3], i, j, f, g, cand, count, sw;
   double radius, center, det, sTol, lTol, sScale, cA, sA, fY, vmax, vmid, vmin, fAng;
-  double ex, ey, ez, gam, sX, sY, sZ, sXY;
+  double ex, ey, ez, gam, sX, sY, sZ, sXY, cA2, sA2;
   center = 0.5 * ((xd)tSx + tSy);
   radius = c_sqrt((xd)c_pow(0.5 * ((xd)tSx - tSy), 2.0) + c_pow(tTxy, 2.0));
   pT[0] = (xd)center + radius; pT[1] = (xd)center - radius; pT[2] = tSz;
@@ -219,8 +218,9 @@ static int spectral(double tSx, double tSy, double tSz, double tTxy, const mp_ma
       }
       if (bad) continue; }
     for (i = 0; i < 3; i++) pC[rank[i]] = cor[i];
-    sX = (xd)pC[0] * c_pow(cA, 2.0) + (xd)pC[1] * c_pow(sA, 2.0);
-    sY = (xd)pC[0] * c_pow(sA, 2.0) + (xd)pC[1] * c_pow(cA, 2.0);
+    cA2 = c_pow(cA, 2.0); sA2 = c_pow(sA, 2.0);
+    sX = (xd)pC[0] * cA2 + (xd)pC[1] * sA2;
+    sY = (xd)pC[0] * sA2 + (xd)pC[1] * cA2;
     sXY = ((xd)pC[0] - pC[1]) * cA * sA;
     sZ = pC[2];
     if (!eval_yield(sX, sY, sZ, sXY, m->sinPhi, m->coh, m->cosPhi, &fY, &vmax, &vmid, &vmin, &fAng)) continue;
@@ -242,7 +242,7 @@ static int spectral(double tSx, double tSy, double tSz, double tTxy, const mp_ma
     o->pr[0] = vmax; o->pr[1] = vmid; o->pr[2] = vmin;
     o->angle = (xd)fAng * 180.0 / PI_VBA;
     o->yieldf = fY; o->yielded = 1; o->elastic = 0;
-    fill_tangent(nF, qF, aM, count, rank, pT, pC, tA, m, o);
+    fill_tangent(nF, qF, aM, count, rank, pT, pC, cA, sA, m, o);
     return o->tanReady ? 1 : 0; /* without the algorithmic tangent VBA uses FD: decline */
   }
   return 0; /* no regular candidate: vertex return or failure, VBA */
@@ -273,19 +273,12 @@ static int mp_update(const double prev[4], const double de[3], const mp_mat *m, 
     *elasticFast = 1;
     return 1;
   }
-  /* Core (stepCount = 1, de/1 = de): same trial and yield, then spectral return */
+  /* PreferredSubsteps=1: reuse the identical rounded trial stress and yield
+   * result above. All spectral acceptance/tangent checks remain unchanged. */
   {
-    double cS[4], cyv, csmax, csmid, csmin, cang, cys; mp_out so;
+    mp_out so;
     memset(&so, 0, sizeof so);
-    cS[0] = (xd)prev[0] + (xd)m->d00 * de[0] + (xd)m->d01 * de[1];
-    cS[1] = (xd)prev[1] + (xd)m->d01 * de[0] + (xd)m->d00 * de[1];
-    cS[2] = (xd)prev[2] + (xd)m->d22 * de[2];
-    cS[3] = (xd)prev[3] + (xd)m->d01 * ((xd)de[0] + de[1]);
-    if (!eval_yield(cS[0], cS[1], cS[3], cS[2], m->sinPhi, m->coh, m->cosPhi, &cyv, &csmax, &csmid, &csmin, &cang)) return 0;
-    cys = ABS(csmax) + ABS(csmin) + 2.0 * (xd)m->coh * m->cosPhi;
-    if (cys < 1.0) cys = 1.0;
-    if (cyv <= (xd)P2_TOL * cys) return 0; /* cannot happen (same expressions); stay safe */
-    if (!spectral(cS[0], cS[1], cS[3], cS[2], m, cang, &so)) return 0;
+    if (!spectral(tS[0], tS[1], tS[3], tS[2], m, ang, &so)) return 0;
     /* wrapper accumulation from zero: 0# + x (normalises -0) */
     for (i = 0; i < 4; i++) o->stress[i] = so.stress[i];
     for (i = 0; i < 4; i++) o->plastic[i] = 0.0 + (xd)so.plastic[i];

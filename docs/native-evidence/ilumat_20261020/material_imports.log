@@ -1,0 +1,31 @@
+Microsoft (R) COFF/PE Dumper Version 14.51.36246.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+Dump of file native\soilfem_mat_x64.dll
+
+File Type: DLL
+
+  Section contains the following imports:
+
+    KERNEL32.dll
+             37279D058 Import Address Table
+             37279D028 Import Name Table
+                     0 time date stamp
+                     0 Index of first forwarder reference
+
+                           0 GetModuleHandleA
+                           0 GetProcAddress
+                           0 GetProcessHeap
+                           0 HeapAlloc
+                           0 HeapFree
+
+  Summary
+
+        1000 .bss
+        1000 .edata
+        1000 .idata
+        1000 .pdata
+        1000 .rdata
+        7000 .text
+        1000 .xdata

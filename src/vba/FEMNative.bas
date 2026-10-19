@@ -15,6 +15,7 @@ Private Declare PtrSafe Function SfnSetPrecision Lib "soilfem_native_x64.dll" Al
 Private Declare PtrSafe Function SfnGetPrecision Lib "soilfem_native_x64.dll" Alias "sfn_get_precision" () As Long
 Private Declare PtrSafe Function SfnCSRScatterList Lib "soilfem_native_x64.dll" Alias "sfn_csr_scatter_list" (ByVal params As LongPtr) As Long
 Private Declare PtrSafe Function SfnGmresTuned Lib "soilfem_native_x64.dll" Alias "sfn_gmres_tuned" (ByVal params As LongPtr, ByVal tol As Double) As Long
+Private Declare PtrSafe Function SfnGmresPrepared Lib "soilfem_native_x64.dll" Alias "sfn_gmres_prepared" (ByVal params As LongPtr, ByVal tol As Double) As Long
 Private Declare PtrSafe Function SfnGmres Lib "soilfem_native_x64.dll" Alias "sfn_gmres" (ByVal params As LongPtr, ByVal tol As Double) As Long
 Private Declare PtrSafe Function SfnRestoreCommitted Lib "soilfem_native_x64.dll" Alias "sfn_restore_committed" (ByVal n As Long, ByVal stride As LongLong, ByVal dst As LongPtr, ByVal src As LongPtr, ByVal active As LongPtr, ByVal activeLo As Long, ByVal activeHi As Long, ByVal plasticActive As LongPtr, ByRef activeCount As Long) As Long
 Private Declare PtrSafe Function SfnBandFactor Lib "soilfem_native_x64.dll" Alias "sfn_band_factor" (ByVal n As Long, ByVal bw As Long, ByVal ld As Long, ByVal band As LongPtr, ByVal packed As LongPtr, ByVal akj As LongPtr, ByVal tol As Double, ByRef failK As Long) As Long
@@ -35,6 +36,7 @@ Public FEMNativeFactorCalls As Long, FEMNativeSolveCalls As Long, FEMNativeNsCal
 Public FEMNativeStateCopies As Long
 Public FEMNativeGmresCalls As Long
 Public FEMNativeGmresTunedCalls As Long
+Public FEMNativeGmresPreparedCalls As Long
 Public FEMNativeAssemblyCalls As Long
 
 ' Test/diagnostic switch: "AUTO", "BAND", "OFF" or "" (= follow NATIVE_DLL setting).
@@ -53,6 +55,7 @@ Public Sub FEMNativeResetCounts()
   FEMNativeStateCopies = 0
   FEMNativeGmresCalls = 0
   FEMNativeGmresTunedCalls = 0
+  FEMNativeGmresPreparedCalls = 0
   FEMNativeAssemblyCalls = 0
 End Sub
 
@@ -66,7 +69,12 @@ Public Function FEMNativeGmres(ByVal params As LongPtr, ByVal tol As Double) As 
   If mPrecisionMode = 0 Or Not mPrecisionAPI Then Exit Function
   If GetProcAddress(mHandle, "sfn_gmres") = 0 Then Exit Function
   If P6ReadSetting("NATIVE_GMRES_TUNED", 0#) = 1# And GetProcAddress(mHandle, "sfn_gmres_tuned") <> 0 Then
-    FEMNativeGmres = SfnGmresTuned(params, tol)
+    If P6ReadSetting("NATIVE_GMRES_PREPARED", 0#) = 1# And GetProcAddress(mHandle, "sfn_gmres_prepared") <> 0 Then
+      FEMNativeGmres = SfnGmresPrepared(params, tol)
+      If FEMNativeGmres >= 0 Then FEMNativeGmresPreparedCalls = FEMNativeGmresPreparedCalls + 1
+    Else
+      FEMNativeGmres = SfnGmresTuned(params, tol)
+    End If
     If FEMNativeGmres >= 0 Then FEMNativeGmresTunedCalls = FEMNativeGmresTunedCalls + 1
   Else
     FEMNativeGmres = SfnGmres(params, tol)

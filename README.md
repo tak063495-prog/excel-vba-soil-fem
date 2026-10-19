@@ -1,5 +1,13 @@
 # VBA版 2D Soil FEM
 
+## INCONSISTENT ILU・材料評価内部の高速化版（2026-10-20）
+
+[一括ダウンロード（XLSM＋DLL 2個、ZIP）](workbook/SoilFEM_INCONSISTENT_ILUMAT_20261020.zip)。
+ILU対角逆数の再利用と、材料評価内の同じ試行応力・降伏判定・三角関数・二乗値の再計算削減を採用しました。
+同条件の全探索3組で中央値43.552秒→41.560秒（追加4.57%短縮）。Double・収束条件を維持し、Fs区間・全170変位・最終残差が完全一致しました。
+材料点20万件の全出力一致、回帰17組、VBA/DLLコンパイルと旧DLLへの切替を確認しています。
+途中のGMRES診断値には差があります。[内訳・全結果・不採用案・再現手順](docs/INCONSISTENT_ILUMAT_PERF.md) を参照してください。
+
 ## INCONSISTENT GMRES内部高速化版（2026-10-20）
 
 [一括ダウンロード（XLSM＋DLL 2個、ZIP）](workbook/SoilFEM_INCONSISTENT_GMRES_20261020.zip)。

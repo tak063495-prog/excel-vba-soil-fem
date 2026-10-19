@@ -1,0 +1,68 @@
+{
+  "status": "PASS",
+  "material_roots_seconds": 12.4129284,
+  "math_wrappers_outside_material_roots_seconds": 0.016460300000000316,
+  "note": "Shared c_sqrt/c_pow/etc wrappers also time other material-DLL exports. QPC overhead is included; use uninstrumented pairs for whole-run speed.",
+  "ranking": [
+    {
+      "procedure": "sfm_eval",
+      "calls": 56583,
+      "inclusive_seconds": 11.5064349,
+      "exclusive_seconds": 3.8497995
+    },
+    {
+      "procedure": "spectral",
+      "calls": 4213541,
+      "inclusive_seconds": 4.966847,
+      "exclusive_seconds": 2.6706044
+    },
+    {
+      "procedure": "c_pow",
+      "calls": 43153922,
+      "inclusive_seconds": 2.1202275,
+      "exclusive_seconds": 2.1202275
+    },
+    {
+      "procedure": "eval_yield",
+      "calls": 12895750,
+      "inclusive_seconds": 1.7322868,
+      "exclusive_seconds": 1.047987
+    },
+    {
+      "procedure": "sfm_tangent",
+      "calls": 7803,
+      "inclusive_seconds": 0.9064935,
+      "exclusive_seconds": 0.9064935
+    },
+    {
+      "procedure": "mp_update",
+      "calls": 4469142,
+      "inclusive_seconds": 6.6879366,
+      "exclusive_seconds": 0.5420297
+    },
+    {
+      "procedure": "c_sqrt",
+      "calls": 22387201,
+      "inclusive_seconds": 0.4601115,
+      "exclusive_seconds": 0.4601115
+    },
+    {
+      "procedure": "c_atan",
+      "calls": 12895750,
+      "inclusive_seconds": 0.4192795,
+      "exclusive_seconds": 0.4192795
+    },
+    {
+      "procedure": "c_cos",
+      "calls": 8426583,
+      "inclusive_seconds": 0.214367,
+      "exclusive_seconds": 0.214367
+    },
+    {
+      "procedure": "c_sin",
+      "calls": 8426583,
+      "inclusive_seconds": 0.1984891,
+      "exclusive_seconds": 0.1984891
+    }
+  ]
+}

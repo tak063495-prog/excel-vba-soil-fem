@@ -1,0 +1,32 @@
+{
+  "os": "Microsoft Windows 11 Home",
+  "event_log_fast": 1,
+  "native_gmres_simd": 1,
+  "wall_timer": "System.Diagnostics.Stopwatch",
+  "cpu": "AMD Ryzen 5 5600X 6-Core Processor             ",
+  "stopwatch_high_resolution": true,
+  "precision": "AUTO -> AVX2_FMA",
+  "baseline_commit": "b2014b749c695a7ddd91ecc69146411550ba64d2",
+  "build": "20261020_INCO_ILUMAT_01",
+  "source_sha256": {
+    "native/sfn_gmres.c": "918d7b95d3466b17fd1542bd0c6bb10a790deaf210b48b4f8ed86503af0ee676",
+    "native/soilfem_mat.c": "614c3d3619d4e50b106ab98b240232a7dc82959a77a6b8f22a50a2d3df4d9625",
+    "src/vba/FEMCore.bas": "ee1311ee6f0b1aad38e9ee508fe73b148cbf2460757522bf0f4b849d2ef567ee",
+    "src/vba/FEMNative.bas": "5a866de98876ccdac69a5bec28d00f2ee5d0d0d4b4bb579e4d328ab7fec85b4d",
+    "tests/fixtures/smoke_mesh.json": "4f6318675417457aeca365913cd680ea00943316ab427352e3b040426d821a9e"
+  },
+  "profile_timer": "QueryPerformanceCounter, hierarchical exclusive partition",
+  "native_state_copy": 1,
+  "comparison_flags": [
+    "NATIVE_GMRES_PREPARED",
+    "material DLL old/new"
+  ],
+  "stopwatch_frequency": 10000000,
+  "io_fast_path": 1,
+  "native_gmres_tuned": 1,
+  "native_assembly": 1,
+  "excel_version": "16.0.20430.20182",
+  "material_compiler": "w64devkit 2.1.0 / GCC 14.2.0",
+  "compiler_release": "https://github.com/skeeto/w64devkit/releases/tag/v2.1.0",
+  "compiler_download_sha256": "3839da025a192e9cacd5caa3ed5150153ab2255800d3672213a5c66e11d6e618"
+}

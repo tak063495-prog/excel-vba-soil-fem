@@ -1,0 +1,173 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "case": "Case1",
+      "variant": "off",
+      "reference_seconds": 2.5639306,
+      "candidate_seconds": 2.6093274,
+      "reduction_percent": -1.7705939466536424,
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_residual": 9.44350930474515e-16,
+      "bracket": [
+        0.5,
+        0.0,
+        0.5,
+        0.0,
+        false,
+        1
+      ],
+      "prepared_calls": 0,
+      "decision_events_equal": true,
+      "logs_exact": true
+    },
+    {
+      "case": "Case1",
+      "variant": "adaptive",
+      "reference_seconds": 1.9866702,
+      "candidate_seconds": 1.9825099,
+      "reduction_percent": 0.20941070138366102,
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_residual": 5.44705158019972e-15,
+      "bracket": [
+        0.5,
+        0.0,
+        0.5,
+        0.0,
+        false,
+        1
+      ],
+      "prepared_calls": 0,
+      "decision_events_equal": true,
+      "logs_exact": true
+    },
+    {
+      "case": "Case2",
+      "variant": "off",
+      "reference_seconds": 2.1120822,
+      "candidate_seconds": 1.9922967,
+      "reduction_percent": 5.671441196748884,
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_residual": 1.16074711137257e-13,
+      "bracket": [
+        1.1,
+        0.0,
+        1.1,
+        0.0,
+        false,
+        1
+      ],
+      "prepared_calls": 0,
+      "decision_events_equal": true,
+      "logs_exact": true
+    },
+    {
+      "case": "Case2",
+      "variant": "adaptive",
+      "reference_seconds": 2.0264554,
+      "candidate_seconds": 1.9749101,
+      "reduction_percent": 2.543618773943912,
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_residual": 1.25044219954582e-13,
+      "bracket": [
+        1.1,
+        0.0,
+        1.1,
+        0.0,
+        false,
+        1
+      ],
+      "prepared_calls": 0,
+      "decision_events_equal": true,
+      "logs_exact": true
+    },
+    {
+      "case": "Case3",
+      "variant": "off",
+      "reference_seconds": 1.9854678,
+      "candidate_seconds": 2.0088111,
+      "reduction_percent": -1.1757078105220309,
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_residual": 4.72993232520948e-12,
+      "bracket": [
+        0.9,
+        0.0,
+        0.9,
+        0.0,
+        false,
+        1
+      ],
+      "prepared_calls": 0,
+      "decision_events_equal": true,
+      "logs_exact": true
+    },
+    {
+      "case": "Case3",
+      "variant": "adaptive",
+      "reference_seconds": 1.9803137,
+      "candidate_seconds": 1.9805231,
+      "reduction_percent": -0.010574082277980956,
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_residual": 3.83477854615666e-11,
+      "bracket": [
+        0.9,
+        0.0,
+        0.9,
+        0.0,
+        false,
+        1
+      ],
+      "prepared_calls": 0,
+      "decision_events_equal": true,
+      "logs_exact": true
+    },
+    {
+      "case": "Case4",
+      "variant": "off",
+      "reference_seconds": 2.0046854,
+      "candidate_seconds": 1.9686309,
+      "reduction_percent": 1.7985116268118717,
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_residual": 7.54343291524163e-10,
+      "bracket": [
+        2.0,
+        0.0,
+        2.0,
+        0.0,
+        false,
+        1
+      ],
+      "prepared_calls": 0,
+      "decision_events_equal": true,
+      "logs_exact": true
+    },
+    {
+      "case": "Case4",
+      "variant": "adaptive",
+      "reference_seconds": 1.9856802,
+      "candidate_seconds": 2.0278582,
+      "reduction_percent": -2.124108403760072,
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_residual": 9.04295101600201e-10,
+      "bracket": [
+        2.0,
+        0.0,
+        2.0,
+        0.0,
+        false,
+        1
+      ],
+      "prepared_calls": 0,
+      "decision_events_equal": true,
+      "logs_exact": true
+    }
+  ]
+}
