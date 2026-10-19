@@ -1,0 +1,189 @@
+[
+  {
+    "flow": "INCONSISTENT",
+    "case": "Case1",
+    "variant": "off",
+    "status": "PASS",
+    "all_displacements_exact": true,
+    "raw_bracket_exact": true,
+    "residual": "9.44350930474515E-16",
+    "residual_exact": true,
+    "major_counts_equal": true
+  },
+  {
+    "flow": "INCONSISTENT",
+    "case": "Case1",
+    "variant": "adaptive",
+    "status": "PASS",
+    "all_displacements_exact": true,
+    "raw_bracket_exact": true,
+    "residual": "5.44705158019972E-15",
+    "residual_exact": true,
+    "major_counts_equal": true
+  },
+  {
+    "flow": "INCONSISTENT",
+    "case": "Case2",
+    "variant": "off",
+    "status": "PASS",
+    "all_displacements_exact": true,
+    "raw_bracket_exact": true,
+    "residual": "1.16074711137257E-13",
+    "residual_exact": true,
+    "major_counts_equal": true
+  },
+  {
+    "flow": "INCONSISTENT",
+    "case": "Case2",
+    "variant": "adaptive",
+    "status": "PASS",
+    "all_displacements_exact": true,
+    "raw_bracket_exact": true,
+    "residual": "1.25044219954582E-13",
+    "residual_exact": true,
+    "major_counts_equal": true
+  },
+  {
+    "flow": "INCONSISTENT",
+    "case": "Case3",
+    "variant": "off",
+    "status": "PASS",
+    "all_displacements_exact": true,
+    "raw_bracket_exact": true,
+    "residual": "4.72993232520948E-12",
+    "residual_exact": true,
+    "major_counts_equal": true
+  },
+  {
+    "flow": "INCONSISTENT",
+    "case": "Case3",
+    "variant": "adaptive",
+    "status": "PASS",
+    "all_displacements_exact": true,
+    "raw_bracket_exact": true,
+    "residual": "3.83477854615666E-11",
+    "residual_exact": true,
+    "major_counts_equal": true
+  },
+  {
+    "flow": "INCONSISTENT",
+    "case": "Case4",
+    "variant": "off",
+    "status": "PASS",
+    "all_displacements_exact": true,
+    "raw_bracket_exact": true,
+    "residual": "7.54343291524163E-10",
+    "residual_exact": true,
+    "major_counts_equal": true
+  },
+  {
+    "flow": "INCONSISTENT",
+    "case": "Case4",
+    "variant": "adaptive",
+    "status": "PASS",
+    "all_displacements_exact": true,
+    "raw_bracket_exact": true,
+    "residual": "9.04295101600201E-10",
+    "residual_exact": true,
+    "major_counts_equal": true
+  },
+  {
+    "flow": "DAVIS",
+    "case": "Case1",
+    "variant": "off",
+    "status": "PASS",
+    "all_displacements_exact": true,
+    "raw_bracket_exact": true,
+    "residual": "1.04568594300454E-15",
+    "residual_exact": true,
+    "major_counts_equal": true
+  },
+  {
+    "flow": "DAVIS",
+    "case": "Case1",
+    "variant": "adaptive",
+    "status": "PASS",
+    "all_displacements_exact": true,
+    "raw_bracket_exact": true,
+    "residual": "4.22509850511992E-15",
+    "residual_exact": true,
+    "major_counts_equal": true
+  },
+  {
+    "flow": "DAVIS",
+    "case": "Case2",
+    "variant": "off",
+    "status": "PASS",
+    "all_displacements_exact": true,
+    "raw_bracket_exact": true,
+    "residual": "2.71604079155516E-09",
+    "residual_exact": true,
+    "major_counts_equal": true
+  },
+  {
+    "flow": "DAVIS",
+    "case": "Case2",
+    "variant": "adaptive",
+    "status": "PASS",
+    "all_displacements_exact": true,
+    "raw_bracket_exact": true,
+    "residual": "5.629345789287E-08",
+    "residual_exact": true,
+    "major_counts_equal": true
+  },
+  {
+    "flow": "DAVIS",
+    "case": "Case3",
+    "variant": "off",
+    "status": "PASS",
+    "all_displacements_exact": true,
+    "raw_bracket_exact": true,
+    "residual": "1.46030210111931E-09",
+    "residual_exact": true,
+    "major_counts_equal": true
+  },
+  {
+    "flow": "DAVIS",
+    "case": "Case3",
+    "variant": "adaptive",
+    "status": "PASS",
+    "all_displacements_exact": true,
+    "raw_bracket_exact": true,
+    "residual": "5.35674041794885E-10",
+    "residual_exact": true,
+    "major_counts_equal": true
+  },
+  {
+    "flow": "DAVIS",
+    "case": "Case4",
+    "variant": "off",
+    "status": "PASS",
+    "all_displacements_exact": true,
+    "raw_bracket_exact": true,
+    "residual": "1.66834088132905E-10",
+    "residual_exact": true,
+    "major_counts_equal": true
+  },
+  {
+    "flow": "DAVIS",
+    "case": "Case4",
+    "variant": "adaptive",
+    "status": "PASS",
+    "all_displacements_exact": true,
+    "raw_bracket_exact": true,
+    "residual": "1.2320362171124E-10",
+    "residual_exact": true,
+    "major_counts_equal": true
+  },
+  {
+    "flow": "INCONSISTENT",
+    "case": "builtin_306_elements",
+    "variant": "fixed_Fs_1",
+    "status": "PASS",
+    "all_displacements_exact": true,
+    "raw_bracket_exact": true,
+    "residual": "1.05571945918321E-13",
+    "residual_exact": true,
+    "major_counts_equal": true
+  }
+]

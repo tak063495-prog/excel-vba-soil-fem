@@ -45,3 +45,4 @@ tests/tmp/
 tests/results/
 *_out/
 __pycache__/
+native/bin/

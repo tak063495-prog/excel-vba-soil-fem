@@ -1,0 +1,32 @@
+{
+  "cpu": "AMD Ryzen 5 5600X 6-Core Processor             ",
+  "os": "Microsoft Windows 11 Home",
+  "os_version": "10.0.26300",
+  "excel_file_version": "16.0.20430.20182",
+  "excel_product_version": "16.0.20430.20182",
+  "baseline_commit": "abf037bf557d11d119426f44b1c0463691ebf82b",
+  "build": "20261020_INCO_NATIVE_01",
+  "source_sha256": {
+    "native/soilfem_native.c": "d7f09d17a1027e9a774171c884a81288efbec5d769f90ef1e61be2fcc7c2bd6e",
+    "native/sfn_simd.c": "cd9c5dbcd8ffec2485e5b49b9cab32c8a053920621cf03ca6438bfc8ddd29cdc",
+    "native/sfn_gmres.c": "5c4e917f988495269cd3198a66b39fc24815b5dc57dbd3327e92a2b1a4e885c1",
+    "native/sfn_state.c": "70403674909c63d5c18417e4da241db9b634d432b7567544cb23f707974c3315",
+    "src/vba/FEMNative.bas": "9f2b71b8321513263bd2f3767ae1261a39be6f2902971fa34bf35e9dff60b8fa",
+    "src/vba/FEMEngine.bas": "37f597f787c742153bfb4a96894a437818b82cae312c407799d75273f5c8398b",
+    "src/vba/FEMNativeKern.bas": "bb948c0ac20a821f3ec239f8dafe65afeaf1b37673e81ea61817f751b4bddb7a",
+    "tests/fixtures/smoke_mesh.json": "4f6318675417457aeca365913cd680ea00943316ab427352e3b040426d821a9e"
+  },
+  "precision": "AUTO -> AVX2_FMA",
+  "wall_timer": "System.Diagnostics.Stopwatch (QPC)",
+  "profile_timer": "QueryPerformanceCounter; hierarchical exclusive partition",
+  "comparison_flags": [
+    "NATIVE_STATE_COPY",
+    "NATIVE_GMRES_SIMD"
+  ],
+  "io_source_changed": false,
+  "stopwatch_high_resolution": true,
+  "stopwatch_frequency": 10000000,
+  "measured_fem_native_sha256": "4be6d19c0601e0052f17afc7a2139933e39240c0bd24c892cdea5dc789f8ac27",
+  "source_refresh_note": "Three pairs used explicit keys 0/1. Final source changes absent-key defaults from 1 to 0 and a comment only; final release full-SRM rerun verified separately.",
+  "msvc_tools_version": "14.44.35207"
+}

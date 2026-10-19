@@ -1,0 +1,39 @@
+{
+  "dll": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\excel-vba-soil-fem\\workbook\\simd_20261019\\soilfem_native_x64.dll",
+  "dll_sha256": "eaa7298a2017827ad7ad4487f9ec434cfdd0f99ec66710ef82e1a975c7831a76",
+  "cpu_features": 3,
+  "benchmark_n": 600,
+  "benchmark_band": 64,
+  "benchmark_reps": 5,
+  "modes": {
+    "0": {
+      "sym_residual": 4.440892098500626e-16,
+      "ns_residual": 1.509903313490213e-14,
+      "ns_replay_delta": 0.0,
+      "tail_max": 4.440892098500626e-16,
+      "benchmark_factor_ms": 0.7388000003629713,
+      "benchmark_ns_factor_ms": 2.834900000380003
+    },
+    "1": {
+      "sym_residual": 4.440892098500626e-16,
+      "ns_residual": 1.509903313490213e-14,
+      "ns_replay_delta": 0.0,
+      "tail_max": 4.440892098500626e-16,
+      "benchmark_factor_ms": 0.3956000000471249,
+      "benchmark_ns_factor_ms": 2.3953999998411746
+    },
+    "2": {
+      "sym_residual": 4.440892098500626e-16,
+      "ns_residual": 1.509903313490213e-14,
+      "ns_replay_delta": 0.0,
+      "tail_max": 4.440892098500626e-16,
+      "benchmark_factor_ms": 0.226900000598107,
+      "benchmark_ns_factor_ms": 2.7074999998148996
+    }
+  },
+  "baseline": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\excel-vba-soil-fem\\workbook\\soilfem_native_x64.dll",
+  "strict_solution_max_delta": 0.0,
+  "strict_factor_rhs_solution_bytes_equal": true,
+  "baseline_factor_ms": 0.6796000006943359,
+  "baseline_ns_factor_ms": 2.7668000002449844
+}

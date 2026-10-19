@@ -2017,6 +2017,7 @@ End Sub
 Private Sub P3RestoreCommittedMaterialState(Optional ByVal invalidateFactor As Boolean = True)
   Dim i As Long, j As Long, k As Long, im As Long
   Dim trialActive As Boolean, committedActive As Boolean, historyYielded As Boolean
+  If FEMNativeRestoreState() Then GoTo StateCopyDone
   For k = 0 To NumberOfElement - 1
     For im = 0 To 3
       For i = 0 To 16
@@ -2048,6 +2049,7 @@ Private Sub P3RestoreCommittedMaterialState(Optional ByVal invalidateFactor As B
       Next i
     Next im
   Next k
+StateCopyDone:
   If P6MixedUP And P6PressureCount > 0 Then
     For k = 0 To P6PressureCount - 1
       P6Pressure(k) = P6CommittedPressure(k)

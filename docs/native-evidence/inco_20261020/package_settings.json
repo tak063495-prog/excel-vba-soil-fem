@@ -1,0 +1,18 @@
+{
+  "NATIVE_PRECISION": {
+    "sheet": "設定",
+    "cell": "C97",
+    "value": "AUTO"
+  },
+  "NATIVE_STATE_COPY": {
+    "sheet": "設定",
+    "cell": "C98",
+    "value": "1"
+  },
+  "NATIVE_GMRES_SIMD": {
+    "sheet": "設定",
+    "cell": "C99",
+    "value": "1"
+  },
+  "workbook_sha256": "adc9ba436f970241bf238817425b865fcefdf66e08e4a9fdd73ef6d8225ea487"
+}

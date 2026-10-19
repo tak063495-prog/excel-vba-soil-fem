@@ -1,0 +1,13 @@
+{
+  "release_dll_sha256": "eaa7298a2017827ad7ad4487f9ec434cfdd0f99ec66710ef82e1a975c7831a76",
+  "inconsistent_test_dll_sha256": "b36d1cfd748de55734e03cf06dc01993e24a884ea6b5a783b8ba03690b9ab893",
+  "text_section_sha256": "c4aaa809700648c6897334820a07297d00d1c96c7a83cda1f0484549bd888606",
+  "inconsistent_code_section_matches_release": true,
+  "source_sha256": {
+    "native/soilfem_native.c": "d7f09d17a1027e9a774171c884a81288efbec5d769f90ef1e61be2fcc7c2bd6e",
+    "native/sfn_simd.c": "cd9c5dbcd8ffec2485e5b49b9cab32c8a053920621cf03ca6438bfc8ddd29cdc",
+    "native/sfn_simd.h": "18d7ada306e24580b68cd8d7a4f26545d44f722b100c2d3bcabd88f41a5f3d12",
+    "src/vba/FEMNative.bas": "d681e46f12dbe062978778473c73146ea3c57f3806fec2a52e560c85442feda7",
+    "src/vba/FEMCore.bas": "cc5c5f45c86fe8d73de124f6cb0e5150c248014106fc12a54f883b8840ea400c"
+  }
+}

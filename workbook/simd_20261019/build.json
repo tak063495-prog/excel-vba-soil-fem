@@ -1,0 +1,24 @@
+{
+  "build": "20261019_SIMD_NATIVE_01",
+  "precision": "AUTO",
+  "native_status": "NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=0;fallback=0)",
+  "source_sha256": "311B61DEAF4A00CFA4A926EFDCC859ECE78F091185294E7A420D16BBB9C43D1D",
+  "files": [
+    {
+      "sha256": "8C31A29B8B69F870681592BB1E855F9E5F27D633A2BF04C7721C36387001B753",
+      "name": "2DSoilFEM_simd_20261019.xlsm"
+    },
+    {
+      "sha256": "0A51B7FA0D1AB906805A17F5AD5D128962BC66D237F1BDD120A0EDE10ABA6815",
+      "name": "README.txt"
+    },
+    {
+      "sha256": "1DCA348D6F17FED2E77C49C21666DD08838D005E953A5C001EC00890A92AB95A",
+      "name": "soilfem_mat_x64.dll"
+    },
+    {
+      "sha256": "EAA7298A2017827AD7AD4487F9EC434CFDD0F99EC66710EF82E1A975C7831A76",
+      "name": "soilfem_native_x64.dll"
+    }
+  ]
+}
