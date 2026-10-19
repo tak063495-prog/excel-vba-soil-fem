@@ -1,0 +1,100 @@
+{
+  "ids": {
+    "P0_RunAnalysis": 1,
+    "P3EvaluateTrialState": 2,
+    "P3RestoreCommittedMaterialState": 3,
+    "P3CommitMaterialState": 4,
+    "P3RebuildTangentFromSpmat": 5,
+    "P3ApplyLineSearch": 6,
+    "P3AccumulateResidualMetrics": 7,
+    "P3InitializeTrialState": 8,
+    "P3CaptureSrmSuccessSnapshot": 9,
+    "P3RestoreSrmSuccessSnapshot": 10,
+    "P3RunLoadStages": 11,
+    "P3TryResidualRecovery": 12,
+    "P3TryNewtonWatchdog": 13,
+    "P3ShouldRebuildTangent": 14,
+    "FEMMatEval": 15,
+    "FEMMatTangent": 16,
+    "FEMMatCommonParams": 17,
+    "FEMMatBuildMaterialTable": 18,
+    "SetTotalMat": 19,
+    "P6SolveNonsymmetricBand": 20,
+    "P6SolveResidualRecovery": 21,
+    "BandSolver": 22,
+    "SetBoundaryCondition": 23,
+    "P6SolveCSR": 24,
+    "P6SolveCSRGMRES": 25,
+    "P6BuildCSRILU": 26,
+    "P6SolverEvent": 27,
+    "FEMIoAppendCsv": 28,
+    "FEMIoOutDir": 29,
+    "FEMIoFlushEvents": 30,
+    "FEMAppendRunLog": 31,
+    "P6PerfEmit": 32,
+    "P6PhysOnRebuild": 33,
+    "GetDiagnosticSheet": 34,
+    "SetAnalysisFailure": 35,
+    "SaveP0Progress": 36,
+    "FEMKernResidual": 37,
+    "FEMKernOn": 38,
+    "FEMKernGmres": 39
+  },
+  "files": {
+    "CONTROL.bas": [
+      "P0_RunAnalysis"
+    ],
+    "FEMEngine.bas": [
+      "P3ShouldRebuildTangent",
+      "P3RebuildTangentFromSpmat",
+      "P3InitializeTrialState",
+      "P3RestoreCommittedMaterialState",
+      "P3CommitMaterialState",
+      "P3EvaluateTrialState",
+      "P3AccumulateResidualMetrics",
+      "P3ApplyLineSearch",
+      "P3RunLoadStages",
+      "P3CaptureSrmSuccessSnapshot",
+      "P3RestoreSrmSuccessSnapshot",
+      "P3TryNewtonWatchdog",
+      "P3TryResidualRecovery"
+    ],
+    "FEMNativeMat.bas": [
+      "FEMMatBuildMaterialTable",
+      "FEMMatCommonParams",
+      "FEMMatEval",
+      "FEMMatTangent"
+    ],
+    "FEMSolver.bas": [
+      "SetTotalMat",
+      "SetBoundaryCondition",
+      "P6SolveCSRGMRES",
+      "P6BuildCSRILU",
+      "P6SolveResidualRecovery",
+      "P6SolveNonsymmetricBand",
+      "P6SolveCSR",
+      "BandSolver"
+    ],
+    "FEMIo.bas": [
+      "FEMIoFlushEvents",
+      "FEMIoAppendCsv",
+      "P6SolverEvent",
+      "P6PhysOnRebuild",
+      "P6PerfEmit",
+      "FEMIoOutDir",
+      "FEMAppendRunLog",
+      "GetDiagnosticSheet"
+    ],
+    "FEMCore.bas": [
+      "SetAnalysisFailure"
+    ],
+    "FEM.bas": [
+      "SaveP0Progress"
+    ],
+    "FEMNativeKern.bas": [
+      "FEMKernOn",
+      "FEMKernGmres",
+      "FEMKernResidual"
+    ]
+  }
+}

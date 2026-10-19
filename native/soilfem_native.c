@@ -1,13 +1,16 @@
 /* soilfem_native_x64.dll : coarse-grained band kernels for VBA 2D Soil FEM.
  * One call factors the whole band, one call solves the whole RHS.
- * VBA owns every array (no allocation, no global state). Loop order and
- * arithmetic follow FEMSolver.bas exactly; every floating-point update goes
- * through x87 kernels (sfn_fp.asm) so results are bit-identical to VBA. VBA 2-D arrays are column-major: a(i,j) is
+ * VBA owns every array (no allocation). Strict mode follows FEMSolver.bas
+ * via x87 kernels; optional per-thread double modes use SSE2 or AVX2/FMA.
+ * VBA 2-D arrays are column-major: a(i,j) is
  * at a[i + j*ld].
  * SPDX-License-Identifier: Apache-2.0 (same as repository)
  */
 #include <stdint.h>
 #include <math.h>
+#include <intrin.h>
+#include <emmintrin.h>
+#include "sfn_simd.h"
 #pragma fp_contract(off)
 #define API __declspec(dllexport) int32_t __stdcall
 enum { SF_OK = 0, SF_PIVOT = 1, SF_NONFINITE = 2, SF_BAD = 100 };
@@ -23,6 +26,72 @@ extern void sfa_div(const double *a, const double *b, double *out);
 extern void sfa_subdiv(const double *r, const double *s, const double *p, double *out);
 extern void sfa_mulsub(const double *y, const double *s, const double *x, double *out);
 #define D8 ((int64_t)sizeof(double))
+
+/* Per-thread selection: old workbooks remain strict. No process FPU state
+ * changes, and baseline code is compiled without /arch:AVX2. */
+static __declspec(thread) int precision_mode;
+API sfn_cpu_features(void) {
+    int r[4], flags = 1;
+    __cpuid(r, 0);
+    if (r[0] < 7) return flags;
+    __cpuidex(r, 1, 0);
+    if ((r[2] & ((1 << 27) | (1 << 28) | (1 << 12))) != ((1 << 27) | (1 << 28) | (1 << 12))) return flags;
+    if ((_xgetbv(0) & 6) != 6) return flags;
+    __cpuidex(r, 7, 0);
+    if (r[1] & (1 << 5)) flags |= 2;
+    return flags;
+}
+API sfn_set_precision(int32_t mode) {
+    if (mode < 0 || mode > 2) return SF_BAD;
+    precision_mode = mode == 2 && !(sfn_cpu_features() & 2) ? 1 : mode;
+    return SF_OK;
+}
+API sfn_get_precision(void) { return precision_mode; }
+
+static void fp_axpy(int64_t n, double *y, int64_t ys, const double *x, int64_t xs, const double *s) {
+    int64_t i = 0; double scale = *s;
+    if (!precision_mode) { sfa_axpy_sub(n, y, ys, x, xs, s); return; }
+    /* Strided scatter is memory-bound; scalar SSE2 avoids gather/scatter
+     * overhead. AVX2/FMA is reserved for contiguous band row updates. */
+    if (precision_mode == 2 && ys == D8 && xs == D8) { sfv_axpy(n, y, x, scale); return; }
+    ys /= D8; xs /= D8;
+    if (ys == 1 && xs == 1) {
+        __m128d v = _mm_set1_pd(scale);
+        for (; i + 2 <= n; i += 2)
+            _mm_storeu_pd(y + i, _mm_sub_pd(_mm_loadu_pd(y + i), _mm_mul_pd(v, _mm_loadu_pd(x + i))));
+    }
+    for (; i < n; i++) y[i * ys] -= scale * x[i * xs];
+}
+static double fp_dot(int64_t n, const double *a, int64_t as, const double *b, int64_t bs) {
+    int64_t i; double sum = 0.0;
+    if (precision_mode == 2) return sfv_dot(n, a, as, b, bs);
+    as /= D8; bs /= D8;
+    for (i = 0; i < n; i++) sum += a[i * as] * b[i * bs];
+    return sum;
+}
+static void fp_dot_add(int64_t n, const double *a, int64_t as, const double *b, int64_t bs, double *s) {
+    if (!precision_mode) sfa_dot_add(n, a, as, b, bs, s);
+    else *s += fp_dot(n, a, as, b, bs);
+}
+static void fp_dot_sub(int64_t n, const double *a, int64_t as, const double *b, int64_t bs, double *s) {
+    if (!precision_mode) sfa_dot_sub(n, a, as, b, bs, s);
+    else *s -= fp_dot(n, a, as, b, bs);
+}
+static void fp_div(const double *a, const double *b, double *out) {
+    if (!precision_mode) sfa_div(a, b, out); else *out = *a / *b;
+}
+static void fp_subdiv(const double *r, const double *s, const double *p, double *out) {
+    if (!precision_mode) sfa_subdiv(r, s, p, out); else *out = *r - *s / *p;
+}
+static void fp_mulsub(const double *y, const double *s, const double *x, double *out) {
+    if (!precision_mode) sfa_mulsub(y, s, x, out); else *out = *y - *s * *x;
+}
+#define sfa_axpy_sub fp_axpy
+#define sfa_dot_add fp_dot_add
+#define sfa_dot_sub fp_dot_sub
+#define sfa_div fp_div
+#define sfa_subdiv fp_subdiv
+#define sfa_mulsub fp_mulsub
 
 API sfn_abi(void) { return SF_ABI; }
 

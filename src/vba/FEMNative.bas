@@ -11,6 +11,10 @@ Private Declare PtrSafe Function GetLastError Lib "kernel32" () As Long
 Private Declare PtrSafe Function GetModuleHandleW Lib "kernel32" (ByVal name As LongPtr) As LongPtr
 Private Declare PtrSafe Function GetModuleFileNameW Lib "kernel32" (ByVal module As LongPtr, ByVal buffer As LongPtr, ByVal size As Long) As Long
 Private Declare PtrSafe Function SfnAbi Lib "soilfem_native_x64.dll" Alias "sfn_abi" () As Long
+Private Declare PtrSafe Function SfnSetPrecision Lib "soilfem_native_x64.dll" Alias "sfn_set_precision" (ByVal mode As Long) As Long
+Private Declare PtrSafe Function SfnGetPrecision Lib "soilfem_native_x64.dll" Alias "sfn_get_precision" () As Long
+Private Declare PtrSafe Function SfnGmres Lib "soilfem_native_x64.dll" Alias "sfn_gmres" (ByVal params As LongPtr, ByVal tol As Double) As Long
+Private Declare PtrSafe Function SfnRestoreCommitted Lib "soilfem_native_x64.dll" Alias "sfn_restore_committed" (ByVal n As Long, ByVal stride As LongLong, ByVal dst As LongPtr, ByVal src As LongPtr, ByVal active As LongPtr, ByVal activeLo As Long, ByVal activeHi As Long, ByVal plasticActive As LongPtr, ByRef activeCount As Long) As Long
 Private Declare PtrSafe Function SfnBandFactor Lib "soilfem_native_x64.dll" Alias "sfn_band_factor" (ByVal n As Long, ByVal bw As Long, ByVal ld As Long, ByVal band As LongPtr, ByVal packed As LongPtr, ByVal akj As LongPtr, ByVal tol As Double, ByRef failK As Long) As Long
 Private Declare PtrSafe Function SfnBandSolve Lib "soilfem_native_x64.dll" Alias "sfn_band_solve" (ByVal n As Long, ByVal bw As Long, ByVal packed As LongPtr, ByVal rhs As LongPtr, ByVal x As LongPtr, ByVal tol As Double, ByRef failK As Long) As Long
 Private Declare PtrSafe Function SfnNsFactor Lib "soilfem_native_x64.dll" Alias "sfn_nsband_factor" (ByVal n As Long, ByVal b As Long, ByVal ld As Long, ByVal a As LongPtr, ByVal rhs As LongPtr, ByVal pivotRows As LongPtr, ByVal lower As LongPtr, ByRef failK As Long, ByRef reason As Long, ByRef largest As Double) As Long
@@ -23,7 +27,11 @@ Private Const SFN_ABI As Long = &H10001
 Private mChecked As Boolean, mAvailable As Boolean, mForcedOff As Boolean, mForcedSet As Boolean
 Private mForcedText As String
 Private mReason As String
+Private mPrecisionText As String
+Private mPrecisionAPI As Boolean, mPrecisionMode As Long
 Public FEMNativeFactorCalls As Long, FEMNativeSolveCalls As Long, FEMNativeNsCalls As Long, FEMNativeFallbacks As Long
+Public FEMNativeStateCopies As Long
+Public FEMNativeGmresCalls As Long
 
 ' Test/diagnostic switch: "AUTO", "BAND", "OFF" or "" (= follow NATIVE_DLL setting).
 Public Sub FEMNativeSetMode(ByVal modeText As String)
@@ -38,7 +46,88 @@ End Sub
 
 Public Sub FEMNativeResetCounts()
   FEMNativeFactorCalls = 0: FEMNativeSolveCalls = 0: FEMNativeNsCalls = 0: FEMNativeFallbacks = 0
+  FEMNativeStateCopies = 0
+  FEMNativeGmresCalls = 0
 End Sub
+
+#If Win64 Then
+Public Function FEMNativeGmres(ByVal params As LongPtr, ByVal tol As Double) As Long
+  FEMNativeGmres = -1
+  On Error GoTo FailedGmres
+  If P6ReadSetting("NATIVE_GMRES_SIMD", 0#) <> 1# Then Exit Function
+  If FEMNativeModeText() <> "AUTO" Then Exit Function
+  If Not FEMNativeAvailable() Then Exit Function
+  If mPrecisionMode = 0 Or Not mPrecisionAPI Then Exit Function
+  If GetProcAddress(mHandle, "sfn_gmres") = 0 Then Exit Function
+  FEMNativeGmres = SfnGmres(params, tol)
+  If FEMNativeGmres >= 0 Then FEMNativeGmresCalls = FEMNativeGmresCalls + 1
+  Exit Function
+FailedGmres:
+  If Err.Number = 18 Then Err.Raise 18
+  Err.Clear
+End Function
+#End If
+
+' Optional acceleration: packaged builds enable it explicitly; absent key stays OFF.
+' Exact byte copies of existing committed arrays; no floating-point operations.
+Public Function FEMNativeRestoreState() As Boolean
+#If Win64 Then
+  Dim dst(0 To 8) As LongLong, src(0 To 8) As LongLong, stride As LongLong
+  Dim activePtr As LongPtr, activeLo As Long, activeHi As Long, n As Long
+  Dim i As Long, rc As Long
+  On Error GoTo FailedState
+  If P6ReadSetting("NATIVE_STATE_COPY", 0#) <> 1# Then Exit Function
+  If FEMNativeModeText() <> "AUTO" Then Exit Function
+  If Not FEMNativeAvailable() Then Exit Function
+  If GetProcAddress(mHandle, "sfn_restore_committed") = 0 Then Exit Function
+  n = NumberOfElement
+  If n < 1 Or LBound(Elem) <> 0 Or UBound(Elem) < n - 1 Then Exit Function
+  If n > 1 Then stride = VarPtr(Elem(1)) - VarPtr(Elem(0))
+  If VarPtr(Elem(0).Stmat(0, 1)) - VarPtr(Elem(0).Stmat(0, 0)) <> 136 Then Exit Function
+  If VarPtr(Elem(0).Spmat(0, 0, 1)) - VarPtr(Elem(0).Spmat(0, 0, 0)) <> 384 Then Exit Function
+  If VarPtr(Elem(0).Dpmat(0, 0, 1)) - VarPtr(Elem(0).Dpmat(0, 0, 0)) <> 72 Then Exit Function
+  If VarPtr(Elem(0).P2Yielded(1)) - VarPtr(Elem(0).P2Yielded(0)) <> 2 Then Exit Function
+  ' Check all source dimensions before exposing their storage to the DLL.
+  If UBound(P3CommittedPlasticStrain, 1) <> 3 Or UBound(P3CommittedPlasticStrain, 2) <> 3 Or UBound(P3CommittedPlasticStrain, 3) < n - 1 Then Exit Function
+  If UBound(P3CommittedPlasticMultiplier, 1) <> 3 Or UBound(P3CommittedPlasticMultiplier, 2) < n - 1 Then Exit Function
+  If UBound(P3CommittedYieldFunction, 1) <> 3 Or UBound(P3CommittedYieldFunction, 2) < n - 1 Then Exit Function
+  If UBound(P3CommittedYielded, 1) <> 3 Or UBound(P3CommittedYielded, 2) < n - 1 Then Exit Function
+  If UBound(P3CommittedPrincipalStress, 1) <> 2 Or UBound(P3CommittedPrincipalStress, 2) <> 3 Or UBound(P3CommittedPrincipalStress, 3) < n - 1 Then Exit Function
+  If UBound(P3CommittedSpmatValid, 1) <> 3 Or UBound(P3CommittedSpmatValid, 2) < n - 1 Then Exit Function
+  If UBound(P3CommittedSpmat, 1) <> 2 Or UBound(P3CommittedSpmat, 2) <> 15 Or UBound(P3CommittedSpmat, 3) <> 3 Or UBound(P3CommittedSpmat, 4) < n - 1 Then Exit Function
+  If UBound(P3CommittedDpmat, 1) <> 2 Or UBound(P3CommittedDpmat, 2) <> 2 Or UBound(P3CommittedDpmat, 3) <> 3 Or UBound(P3CommittedDpmat, 4) < n - 1 Then Exit Function
+  If UBound(P3ActivePlasticPoint, 1) <> 3 Or UBound(P3ActivePlasticPoint, 2) < n - 1 Then Exit Function
+  For i = 1 To 2
+    If LBound(P3CommittedPlasticMultiplier, i) <> 0 Or LBound(P3CommittedYieldFunction, i) <> 0 Or LBound(P3CommittedYielded, i) <> 0 Then Exit Function
+    If LBound(P3CommittedSpmatValid, i) <> 0 Or LBound(P3ActivePlasticPoint, i) <> 0 Then Exit Function
+  Next i
+  For i = 1 To 3
+    If LBound(P3CommittedPlasticStrain, i) <> 0 Or LBound(P3CommittedPrincipalStress, i) <> 0 Then Exit Function
+  Next i
+  For i = 1 To 4
+    If LBound(P3CommittedSpmat, i) <> 0 Or LBound(P3CommittedDpmat, i) <> 0 Then Exit Function
+  Next i
+  dst(0) = VarPtr(Elem(0).Stmat(0, 0)): src(0) = VarPtr(Elem(0).mStmat(0, 0))
+  dst(1) = VarPtr(Elem(0).P2PlasticStrain(0, 0)): src(1) = VarPtr(P3CommittedPlasticStrain(0, 0, 0))
+  dst(2) = VarPtr(Elem(0).P2PlasticMultiplier(0)): src(2) = VarPtr(P3CommittedPlasticMultiplier(0, 0))
+  dst(3) = VarPtr(Elem(0).P2YieldFunction(0)): src(3) = VarPtr(P3CommittedYieldFunction(0, 0))
+  dst(4) = VarPtr(Elem(0).P2Yielded(0)): src(4) = VarPtr(P3CommittedYielded(0, 0))
+  dst(5) = VarPtr(Elem(0).P2PrincipalStress(0, 0)): src(5) = VarPtr(P3CommittedPrincipalStress(0, 0, 0))
+  dst(6) = VarPtr(Elem(0).SpmatValid(0)): src(6) = VarPtr(P3CommittedSpmatValid(0, 0))
+  dst(7) = VarPtr(Elem(0).Spmat(0, 0, 0)): src(7) = VarPtr(P3CommittedSpmat(0, 0, 0, 0))
+  dst(8) = VarPtr(Elem(0).Dpmat(0, 0, 0)): src(8) = VarPtr(P3CommittedDpmat(0, 0, 0, 0))
+  If P3ElementActiveReady Then
+    activeLo = LBound(P3ElementActive): activeHi = UBound(P3ElementActive)
+    activePtr = VarPtr(P3ElementActive(activeLo))
+  End If
+  rc = SfnRestoreCommitted(n, stride, VarPtr(dst(0)), VarPtr(src(0)), activePtr, activeLo, activeHi, VarPtr(P3ActivePlasticPoint(0, 0)), P3ActivePlasticPointCount)
+  If rc = 0 Then FEMNativeStateCopies = FEMNativeStateCopies + 1: FEMNativeRestoreState = True
+  Exit Function
+FailedState:
+  If Err.Number = 18 Then Err.Raise 18
+  Err.Clear
+#End If
+End Function
 
 ' Called at analysis start: re-read the setting, keep the loaded module.
 Public Sub FEMNativeRefresh()
@@ -73,7 +162,7 @@ End Function
 
 Public Function FEMNativeStatusText() As String
   If FEMNativeAvailable() Then
-    FEMNativeStatusText = "NATIVE(" & SFN_DLL & ";factor=" & CStr(FEMNativeFactorCalls) & ";solve=" & CStr(FEMNativeSolveCalls) & ";nonsym=" & CStr(FEMNativeNsCalls) & ";fallback=" & CStr(FEMNativeFallbacks) & ")"
+    FEMNativeStatusText = "NATIVE(" & SFN_DLL & ";precision=" & mPrecisionText & ";factor=" & CStr(FEMNativeFactorCalls) & ";solve=" & CStr(FEMNativeSolveCalls) & ";nonsym=" & CStr(FEMNativeNsCalls) & ";statecopy=" & CStr(FEMNativeStateCopies) & ";gmres_simd=" & CStr(FEMNativeGmresCalls) & ";fallback=" & CStr(FEMNativeFallbacks) & ")"
   Else
     FEMNativeStatusText = "VBA(" & mReason & ")"
   End If
@@ -82,7 +171,19 @@ End Function
 Public Function FEMNativeAvailable() As Boolean
   Dim path As String, loadedPath As String, size As Long, dllName As String, modeText As String
   Dim exportName As Variant
-  If mChecked Then FEMNativeAvailable = mAvailable: Exit Function
+  Dim precisionText As String, precisionMode As Long
+  On Error GoTo LoadFailed
+  If mChecked Then
+#If Win64 Then
+    ' Other workbooks may share this DLL on the Excel thread.
+    If mAvailable And mPrecisionAPI Then
+      If SfnGetPrecision() <> mPrecisionMode Then
+        If SfnSetPrecision(mPrecisionMode) <> 0 Then mAvailable = False: mReason = "DLL_PRECISION_REJECTED"
+      End If
+    End If
+#End If
+    FEMNativeAvailable = mAvailable: Exit Function
+  End If
   mChecked = True: mAvailable = False
   On Error GoTo LoadFailed
   If mForcedSet Then
@@ -110,6 +211,28 @@ Public Function FEMNativeAvailable() As Boolean
     If GetProcAddress(mHandle, CStr(exportName)) = 0 Then mReason = "DLL_ENTRY_MISSING_" & CStr(exportName): Exit Function
   Next exportName
   If SfnAbi() <> SFN_ABI Then mReason = "DLL_ABI_MISMATCH": Exit Function
+  ' Missing setting preserves the original VBA-compatible arithmetic.
+  precisionText = UCase$(Trim$(P6ReadTextSetting("NATIVE_PRECISION", "STRICT")))
+  Select Case precisionText
+    Case "STRICT": precisionMode = 0
+    Case "SSE2": precisionMode = 1
+    Case "AUTO", "AVX2": precisionMode = 2
+    Case Else: mReason = "INVALID_NATIVE_PRECISION": Exit Function
+  End Select
+  mPrecisionText = "STRICT_LEGACY"
+  mPrecisionAPI = False
+  If GetProcAddress(mHandle, "sfn_set_precision") <> 0 And GetProcAddress(mHandle, "sfn_get_precision") <> 0 Then
+    If SfnSetPrecision(precisionMode) <> 0 Then mReason = "DLL_PRECISION_REJECTED": Exit Function
+    Select Case SfnGetPrecision()
+      Case 0: mPrecisionText = "STRICT"
+      Case 1: mPrecisionText = "SSE2"
+      Case 2: mPrecisionText = "AVX2_FMA"
+      Case Else: mReason = "DLL_PRECISION_INVALID": Exit Function
+    End Select
+    mPrecisionMode = SfnGetPrecision(): mPrecisionAPI = True
+  ElseIf precisionMode <> 0 Then
+    mReason = "DLL_PRECISION_UNSUPPORTED": Exit Function
+  End If
   mReason = "OK"
   mAvailable = True
   FEMNativeAvailable = True

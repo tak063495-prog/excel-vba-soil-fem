@@ -1,0 +1,77 @@
+[
+  {
+    "x": [
+      0.09090909090909091,
+      0.6363636363636364
+    ],
+    "setting": -1,
+    "rc": 1,
+    "precision": "AUTO",
+    "iterations": 1,
+    "events": 2,
+    "simd_calls": 0,
+    "read_setting": -999.0,
+    "residual": 0.0,
+    "native_status": "NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=0;statecopy=0;gmres_simd=0;fallback=0)"
+  },
+  {
+    "x": [
+      0.09090909090909091,
+      0.6363636363636364
+    ],
+    "setting": 0,
+    "rc": 1,
+    "precision": "AUTO",
+    "iterations": 1,
+    "events": 2,
+    "simd_calls": 0,
+    "read_setting": 0.0,
+    "residual": 0.0,
+    "native_status": "NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=0;statecopy=0;gmres_simd=0;fallback=0)"
+  },
+  {
+    "x": [
+      0.09090909090909091,
+      0.6363636363636364
+    ],
+    "setting": 1,
+    "rc": 1,
+    "precision": "STRICT",
+    "iterations": 1,
+    "events": 2,
+    "simd_calls": 0,
+    "read_setting": 1.0,
+    "residual": 0.0,
+    "native_status": "NATIVE(soilfem_native_x64.dll;precision=STRICT;factor=0;solve=0;nonsym=0;statecopy=0;gmres_simd=0;fallback=0)"
+  },
+  {
+    "x": [
+      0.09090909090909091,
+      0.6363636363636364
+    ],
+    "setting": 1,
+    "rc": 1,
+    "precision": "SSE2",
+    "iterations": 1,
+    "events": 2,
+    "simd_calls": 0,
+    "read_setting": 1.0,
+    "residual": 0.0,
+    "native_status": "NATIVE(soilfem_native_x64.dll;precision=SSE2;factor=0;solve=0;nonsym=0;statecopy=0;gmres_simd=0;fallback=0)"
+  },
+  {
+    "x": [
+      0.09090909090909091,
+      0.6363636363636364
+    ],
+    "setting": 1,
+    "rc": 1,
+    "precision": "AUTO",
+    "iterations": 1,
+    "events": 2,
+    "simd_calls": 0,
+    "read_setting": 1.0,
+    "residual": 0.0,
+    "native_status": "NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=0;statecopy=0;gmres_simd=0;fallback=0)"
+  }
+]

@@ -1,0 +1,37 @@
+{
+  "build": "20261020_INCO_NATIVE_01",
+  "precision": "AUTO",
+  "state_copy": true,
+  "gmres_simd": true,
+  "native_status": "NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=0;statecopy=0;gmres_simd=0;fallback=0)",
+  "source_sha256": "311B61DEAF4A00CFA4A926EFDCC859ECE78F091185294E7A420D16BBB9C43D1D",
+  "files": [
+    {
+      "name": "2DSoilFEM_inco_native_20261020.xlsm",
+      "sha256": "adc9ba436f970241bf238817425b865fcefdf66e08e4a9fdd73ef6d8225ea487"
+    },
+    {
+      "name": "soilfem_native_x64.dll",
+      "sha256": "c015f439b037cd436098277561b43990ba98359f89b4876330cbf8ed2bec3b01"
+    },
+    {
+      "name": "soilfem_mat_x64.dll",
+      "sha256": "1dca348d6f17fed2e77c49c21666dd08838d005e953a5c001ec00890a92ab95a"
+    },
+    {
+      "name": "README.txt",
+      "sha256": "66472aa406c66f5928dbdb3ae8eb66a099c935e158a8c407ed694b718e46a5ad"
+    }
+  ],
+  "embedded_source_verified_after_reopen": true,
+  "source_sha256_by_module": {
+    "CONTROL": "c6cbeeee3d5b52e2d195ba63662ea35f53c522139f62aca676088558630928fa",
+    "FEMCore": "59571c1748a6aa1cc9516aa5e00fb9097033a2215871af3ff5e5810417a1fab8",
+    "FEMSolver": "8f753f2aa6531e2a969cb72f687628f8ae1f47ebcf17b06c83b22ad92cf1dac8",
+    "FEMIo": "3fae202c4f2796d33992fb996bf20d11d4260ab0b22417191cae84fb76a55524",
+    "FEMEngine": "37f597f787c742153bfb4a96894a437818b82cae312c407799d75273f5c8398b",
+    "FEMNative": "9f2b71b8321513263bd2f3767ae1261a39be6f2902971fa34bf35e9dff60b8fa",
+    "FEMNativeMat": "3e831347ee6bb36a782078e74386c7d93f93da80b8c8906cc1fcba9134f49eed",
+    "FEMNativeKern": "bb948c0ac20a821f3ec239f8dafe65afeaf1b37673e81ea61817f751b4bddb7a"
+  }
+}

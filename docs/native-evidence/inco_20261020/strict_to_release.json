@@ -1,0 +1,10 @@
+{
+  "reference": "20261019 strict x87 native",
+  "candidate": "20261020 release AUTO",
+  "max_abs_displacement_delta": 3.098410417123887e-12,
+  "relative_to_max_displacement": 2.3363157082871185e-12,
+  "reference_residual": 7.15571550756471e-13,
+  "candidate_residual": 6.5595364013624e-13,
+  "fos_equal": true,
+  "major_counts_equal": true
+}

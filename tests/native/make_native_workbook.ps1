@@ -32,8 +32,17 @@ $before=@(Get-Process EXCEL -ErrorAction SilentlyContinue|%{$_.Id})
 if($before.Count -gt 0){throw "Another Excel is running: $before"}
 "modules=$($list -join ',')"
 Copy-Item -LiteralPath $Src -Destination $Dst
+Add-Type -TypeDefinition @'
+using System;
+using System.Runtime.InteropServices;
+public static class NativeBuildIdentity {
+ [DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr hwnd, out uint pid);
+}
+'@
 $xl=New-Object -ComObject Excel.Application
-$xpid=@(Get-Process EXCEL|%{$_.Id}|?{$before -notcontains $_})[0]
+[uint32]$ownedBuildPid=0
+[void][NativeBuildIdentity]::GetWindowThreadProcessId([IntPtr]$xl.Hwnd,[ref]$ownedBuildPid)
+$xpid=[int]$ownedBuildPid
 Set-Content "$Dst.running" "pid=$xpid"
 $ok=$false
 try{
@@ -58,8 +67,16 @@ try{
  $wb.Close($false)
  $ok=$true
 } catch { "ERROR: $($_.Exception.Message)"; throw }
-finally { $xl.Quit(); [Runtime.InteropServices.Marshal]::ReleaseComObject($xl)|Out-Null; Start-Sleep 3
- if(Get-Process -Id $xpid -ErrorAction SilentlyContinue){Stop-Process -Id $xpid -Force}
+finally {
+ foreach($comRef in @($cm,$c,$ctl,$wb)){
+  if($null -ne $comRef -and [Runtime.InteropServices.Marshal]::IsComObject($comRef)){
+   try{[void][Runtime.InteropServices.Marshal]::FinalReleaseComObject($comRef)}catch{}
+  }
+ }
+ $cm=$null;$c=$null;$ctl=$null;$wb=$null
+ $xl.Quit(); [void][Runtime.InteropServices.Marshal]::FinalReleaseComObject($xl);$xl=$null
+ [GC]::Collect();[GC]::WaitForPendingFinalizers()
+ # Only Quit the COM instance we created. Never terminate an Excel PID.
  Remove-Item "$Dst.running" -ErrorAction SilentlyContinue
  if(-not $ok){ Remove-Item -LiteralPath $Dst -ErrorAction SilentlyContinue; "FAILED: output removed" } }
 "build=$([regex]::Match($srcText['FEMCore'],'FEM_BUILD_STAMP As String = "([^"]+)"').Groups[1].Value) (embedded FEMCore verified)"

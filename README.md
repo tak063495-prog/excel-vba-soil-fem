@@ -1,5 +1,25 @@
 # VBA版 2D Soil FEM
 
+## INCONSISTENT高速化版（2026-10-20）
+
+[一括ダウンロード（XLSM＋DLL 2個、ZIP）](workbook/SoilFEM_INCONSISTENT_20261020.zip)。
+[実行ブック](workbook/inco_native_20261020/2DSoilFEM_inco_native_20261020.xlsm) と
+[計算DLL](workbook/inco_native_20261020/soilfem_native_x64.dll)、
+[材料DLL](workbook/inco_native_20261020/soilfem_mat_x64.dll) を同じフォルダに置いてください。
+処理時間を高精度タイマーで分解し、最大のCSR/GMRES経路と材料状態の復元を高速化しました。
+INCONSISTENTの小モデルSRM全探索は3回の中央値で155.81秒→70.55秒（2.21倍）、Fs区間・全170変位・最終残差が一致しました。
+Double・収束条件・材料則・SRM探索条件を維持し、AUTOでCPUに応じてAVX2/FMAまたはSSE2を選びます。
+従来演算はSTRICTで選択できます。[速度・Fs区間・全変位・残差の比較と再現手順](docs/INCONSISTENT_NATIVE_PERF.md) を参照してください。
+
+## 倍精度SIMD試験版（2026-10-19）
+
+[SIMD版ブック](workbook/simd_20261019/2DSoilFEM_simd_20261019.xlsm) と同じフォルダに
+[帯行列DLL](workbook/simd_20261019/soilfem_native_x64.dll) と
+[材料DLL](workbook/simd_20261019/soilfem_mat_x64.dll) を置いてください。
+「高速化設定」の演算方式でSTRICT / SSE2 / AUTOを選べます。AUTOは倍精度を維持したまま
+対応CPUでAVX2・FMAを使います。従来DLLからの変更、精度比較、測定範囲は
+[SIMD DLLの説明](docs/SIMD_NATIVE.md) を参照してください。
+
 ## 現在の標準版：候補48＋DLL（2026-10-18）
 
 [標準ブックをダウンロード](workbook/2DSoilFEM_standard48_native_20261018.xlsm)。同じフォルダに [soilfem_native_x64.dll](workbook/soilfem_native_x64.dll) と [soilfem_mat_x64.dll](workbook/soilfem_mat_x64.dll) を置いてください。ビルドは `20261018_STANDARD48_NATIVE_05`、保存済み設定は `FLOW_POLICY=INCONSISTENT`、`NATIVE_DLL=AUTO` です。DLLを利用できない環境ではVBAへ自動で戻ります。

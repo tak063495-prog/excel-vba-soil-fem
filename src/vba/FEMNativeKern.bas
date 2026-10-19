@@ -122,6 +122,11 @@ Public Function FEMKernGmres(ByVal n As Long, ByRef rp() As Long, ByRef ci() As 
 #If Win64 Then
   On Error GoTo Failed
   need = CDbl(n) * (2# * restart + 5#) + CDbl(restart + 1) * restart + 4# * restart + 2#
+  If n < 1 Or restart < 1 Or maxIt < 1 Then Exit Function
+  If LBound(rp) <> 0 Or UBound(rp) < n Or LBound(ci) <> 0 Or LBound(vals) <> 0 Or LBound(ilu) <> 0 Then Exit Function
+  If LBound(rhs) <> 0 Or UBound(rhs) < n - 1 Or LBound(x) <> 0 Or UBound(x) < n - 1 Then Exit Function
+  If LBound(P6CSRDiagonalPosition) <> 0 Or UBound(P6CSRDiagonalPosition) < n - 1 Then Exit Function
+  If rp(n) < 1 Or UBound(ci) < rp(n) - 1 Or UBound(vals) < rp(n) - 1 Or UBound(ilu) < rp(n) - 1 Then Exit Function
   If need > 200000000# Then Exit Function
   ReDim mWork(0 To CLng(need))
   cap = maxIt + 8
@@ -129,7 +134,9 @@ Public Function FEMKernGmres(ByVal n As Long, ByRef rp() As Long, ByRef ci() As 
   mG(0) = n: mG(1) = VarPtr(rp(0)): mG(2) = VarPtr(ci(0)): mG(3) = VarPtr(vals(0)): mG(4) = VarPtr(ilu(0))
   mG(5) = VarPtr(rhs(0)): mG(6) = VarPtr(x(0)): mG(7) = VarPtr(mWork(0)): mG(8) = restart: mG(9) = maxIt
   mG(10) = VarPtr(ev(0)): mG(11) = cap: mG(12) = VarPtr(mOutD(0))
-  FEMKernGmres = SfmGmres(VarPtr(mG(0)), tol)
+  mG(13) = VarPtr(P6CSRDiagonalPosition(0)): mG(14) = UBound(mWork) + 1: mG(15) = rp(n)
+  FEMKernGmres = FEMNativeGmres(VarPtr(mG(0)), tol)
+  If FEMKernGmres < 0 Then FEMKernGmres = SfmGmres(VarPtr(mG(0)), tol)
   If FEMKernGmres < 0 Or mOutD(3) <> 0# Then FEMKernGmres = -1: FEMKernDeclines = FEMKernDeclines + 1: Exit Function
   lastRes = mOutD(0): iters = CLng(mOutD(1)): nEv = CLng(mOutD(2))
   FEMKernGmresCalls = FEMKernGmresCalls + 1

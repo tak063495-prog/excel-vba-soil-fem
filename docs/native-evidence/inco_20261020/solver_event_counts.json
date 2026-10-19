@@ -1,0 +1,20 @@
+[
+  {
+    "run": "test_smokesrm_20261020_001307_out",
+    "total_events": 117525,
+    "gmres_events": {
+      "GMRES_RESTART": 106656
+    },
+    "solver_events_sha256": "02d18113df49ebd1d85e5354853e473f0514b470e3f575a486eed94156e2b92c",
+    "solver_events_bytes": 14261023
+  },
+  {
+    "run": "test_smokesrm_20261020_002903_out",
+    "total_events": 109847,
+    "gmres_events": {
+      "GMRES_RESTART": 98978
+    },
+    "solver_events_sha256": "225c4d7f9808ec5fec15987e207e25e0b40ba297a274132255811f28a4db2224",
+    "solver_events_bytes": 13321667
+  }
+]
