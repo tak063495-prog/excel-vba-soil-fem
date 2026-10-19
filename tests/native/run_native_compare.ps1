@@ -1,7 +1,9 @@
-﻿# -MeshPath: smoke系のfixture。未指定時はリポジトリ追跡の tests/fixtures/smoke_mesh.json（スクリプト基準）。
+# -MeshPath: smoke系のfixture。未指定時はリポジトリ追跡の tests/fixtures/smoke_mesh.json（スクリプト基準）。
 # 相対パス指定はカレントディレクトリ基準。ブック隣へのフォールバックはしない。
-param([string]$Book,[string]$Suite='smoke',[string]$Out,[double]$FixedFs=1.0,[string]$Modes='OFF,AUTO',[string]$Flow='',[string]$MeshPath='',[ValidateSet('STRICT','SSE2','AUTO','AVX2')][string]$Precision='STRICT',[string]$CaseName='',[ValidateSet('off','adaptive')][string[]]$Variants=@('off','adaptive'),[switch]$Profile,[ValidateSet(0,1)][int]$StateCopy=0,[ValidateSet(0,1)][int]$GmresSimd=0,[ValidateSet(0,1)][int]$IoFast=0,[ValidateSet(0,1)][int]$EventFast=0,[ValidateSet(0,1)][int]$AssemblyFast=0,[switch]$NativeProfile,[ValidateSet(0,1)][int]$GmresTuned=0)
+param([string]$Book,[string]$Suite='smoke',[string]$Out,[double]$FixedFs=1.0,[string]$Modes='OFF,AUTO',[string]$Flow='',[string]$MeshPath='',[ValidateSet('STRICT','SSE2','AUTO','AVX2')][string]$Precision='STRICT',[string]$CaseName='',[ValidateSet('off','adaptive')][string[]]$Variants=@('off','adaptive'),[switch]$Profile,[ValidateSet(0,1)][int]$StateCopy=0,[ValidateSet(0,1)][int]$GmresSimd=0,[ValidateSet(0,1)][int]$IoFast=0,[ValidateSet(0,1)][int]$EventFast=0,[ValidateSet(0,1)][int]$AssemblyFast=0,[switch]$NativeProfile,[switch]$MaterialProfile,[switch]$BothProfiles,[ValidateSet(0,1)][int]$GmresTuned=0,[ValidateSet(0,1)][int]$GmresPrepared=0)
 $ErrorActionPreference='Stop'
+if($BothProfiles -and (-not $NativeProfile -or $MaterialProfile)){throw 'BothProfiles requires NativeProfile without MaterialProfile'}
+if($MaterialProfile -and -not $NativeProfile){throw 'MaterialProfile requires NativeProfile'}
 if(Test-Path -LiteralPath $Out){throw "Preserve prior evidence: $Out"}
 if(-not (Test-Path -LiteralPath $Book -PathType Leaf)){throw "Book not found: $Book"}
 $Book=(Resolve-Path -LiteralPath $Book).Path
@@ -51,6 +53,9 @@ End Function
 Public Function TTunedCalls() As Long
   TTunedCalls=FEMNativeGmresTunedCalls
 End Function
+Public Function TPreparedCalls() As Long
+  TPreparedCalls=FEMNativeGmresPreparedCalls
+End Function
 Public Function TAssemblyV() As Variant
   TAssemblyV = Array(FEMNativeAssemblyCalls, P6CSRScatterCount, MatrixSymmetryError)
 End Function
@@ -65,10 +70,29 @@ Private Declare PtrSafe Sub NativeProfileReset Lib "soilfem_native_x64.dll" Alia
 Private Declare PtrSafe Function NativeProfileRead Lib "soilfem_native_x64.dll" Alias "sfn_gmres_profile_read" (ByVal data As LongPtr, ByVal n As Long) As Long
 Public Function TNativeProfile() As Variant
  Dim d(0 To 31) As Double
- If NativeProfileRead(VarPtr(d(0)),32)<>0 Then Err.Raise vbObjectError+6301,"TNativeProfile","Unbalanced native profiler"
+ Dim rc As Long
+ rc=NativeProfileRead(VarPtr(d(0)),32)
+ If rc<>0 Then d(0)=-1#:d(1)=CDbl(rc)
  TNativeProfile=d
 End Function
 '@ + "`r`n" + $harness.Replace('  FEMNativeSetMode modeText',"  FEMNativeSetMode modeText`r`n  If Not FEMNativeAvailable() Then Err.Raise vbObjectError+6302`r`n  NativeProfileReset")
+}
+if($MaterialProfile){
+ $profileLibrary=Join-Path $root 'soilfem_mat_x64.dll'
+ $harness=$harness.Replace('Lib "soilfem_native_x64.dll"',('Lib "'+$profileLibrary+'"'))
+}
+if($BothProfiles){
+ $materialProfileLibrary=Join-Path $root 'soilfem_mat_x64.dll'
+ $declares='Private Declare PtrSafe Sub MaterialProfileReset Lib "'+$materialProfileLibrary+'" Alias "sfn_gmres_profile_reset" ()'+"`r`n"+
+  'Private Declare PtrSafe Function MaterialProfileRead Lib "'+$materialProfileLibrary+'" Alias "sfn_gmres_profile_read" (ByVal data As LongPtr, ByVal n As Long) As Long'+"`r`n"
+ $harness=$declares+$harness.Replace('  NativeProfileReset',"  NativeProfileReset`r`n  MaterialProfileReset")+"`r`n"+@'
+Public Function TMaterialProfile() As Variant
+ Dim d(0 To 31) As Double, rc As Long
+ rc=MaterialProfileRead(VarPtr(d(0)),32)
+ If rc<>0 Then d(0)=-1#:d(1)=CDbl(rc)
+ TMaterialProfile=d
+End Function
+'@
 }
 function SetS($wb,$k,$v){$m=$(if($v -is [string]){'FEMWriteTextSetting'}else{'FEMWriteNumericSetting'});$xl.Run("'"+$wb.Name+"'!"+$m,$k,$v)}
 function SetRows($wb,$sheet,$rows,$cols){$ws=$wb.Worksheets.Item($sheet);$ws.Range($ws.Cells(2,1),$ws.Cells($ws.UsedRange.Rows.Count,$cols)).ClearContents();$d=[object[,]]::new($rows.Count,$cols);for($r=0;$r -lt $rows.Count;$r++){for($c=0;$c -lt $cols;$c++){$d[$r,$c]=$rows[$r][$c]}};$ws.Range($ws.Cells(2,1),$ws.Cells($rows.Count+1,$cols)).Value2=$d}
@@ -128,6 +152,10 @@ try{
   if($GmresTuned -ne 0){throw 'Tuned GMRES requires the new wrapper.'}
   $harness=$harness.Replace('FEMNativeGmresTunedCalls','0')
  }
+ if($nativeModule.Lines(1,$nativeModule.CountOfLines) -notmatch 'Public FEMNativeGmresPreparedCalls As Long'){
+  if($GmresPrepared -eq 1){throw 'Prepared GMRES requires the new VBA wrapper.'}
+  $harness=$harness.Replace('FEMNativeGmresPreparedCalls','0')
+ }
  $h=$wb.VBProject.VBComponents.Add(1);$h.Name='TestHarness2';$h.CodeModule.AddFromString($harness)
  SetS $wb 'EXPORT_MODE' 'OFF'; SetS $wb 'EXPORT_LOAD' ''
  SetS $wb 'NATIVE_PRECISION' $Precision
@@ -137,6 +165,7 @@ try{
  SetS $wb 'EVENT_LOG_FAST' $EventFast
  SetS $wb 'NATIVE_ASSEMBLY' $AssemblyFast
  SetS $wb 'NATIVE_GMRES_TUNED' $GmresTuned
+ SetS $wb 'NATIVE_GMRES_PREPARED' $GmresPrepared
  if($Flow -ne ''){SetS $wb 'FLOW_POLICY' $Flow}
  $runs=@()
  if($Suite -like 'smoke*'){
@@ -169,6 +198,7 @@ try{
    $wallClock=[Diagnostics.Stopwatch]::StartNew()
    $t=$xl.Run("'"+$wb.Name+"'!TRun",$mode)
    $wallClock.Stop()
+   if([string]$t -like 'ERROR|*'){throw "Analysis harness failed: $t"}
    $d=@($xl.Run("'"+$wb.Name+"'!TDispV"))
    $fos=$xl.Run("'"+$wb.Name+"'!TFos")
    $assembly=@($xl.Run("'"+$wb.Name+"'!TAssemblyV"))
@@ -195,6 +225,14 @@ try{
     $decisionHash=[NativeCompareIdentity]::NonGmresDigest($eventFile,[ref]$nonGmresRows,[ref]$gmresRows,$true)
    }
    $res.Add([PSCustomObject]@{Case=$name;Variant=$v;Mode=$mode;Precision=$Precision;StateCopy=$StateCopy;GmresSimd=$GmresSimd;IoFast=$IoFast;EventFast=$EventFast;AssemblyFast=$AssemblyFast;Assembly=$assembly;Flow=$Flow;GmresTuned=$GmresTuned;TunedCalls=$tunedCalls;NativeProfile=$nativeProfileData;ProfileCsv=$profilePath;NativeDllSha256=$dllHash;ExcelPid=$xpid;ExcelVersion=$excelNativeVersion;ExclusiveExcel=$exclusiveExcel;WallSeconds=$wallClock.Elapsed.TotalSeconds;SolverEventsSha256=$eventHash;SolverEventsBytes=$eventBytes;DecisionEventsSha256=$decisionHash;NonGmresSolverEventsSha256=$nonGmresHash;NonGmresSolverEventsRows=$nonGmresRows;GmresEventRows=$gmresRows;RunOutputDirectory=$runOutput;Run=$t;Fos=$fos;Bracket=$bracket;Disp=$d})
+   $materialProfileData=$null
+   if($BothProfiles){$materialProfileData=@($xl.Run("'"+$wb.Name+"'!TMaterialProfile"))}
+   $preparedCalls=[int]$xl.Run("'"+$wb.Name+"'!TPreparedCalls")
+   $res[$res.Count-1] | Add-Member -NotePropertyMembers @{GmresPrepared=$GmresPrepared;PreparedCalls=$preparedCalls;MaterialNativeProfile=$materialProfileData}
+   $matPath=Join-Path $root 'soilfem_mat_x64.dll'
+   $matHash=if(Test-Path -LiteralPath $matPath){(Get-FileHash -LiteralPath $matPath).Hash}else{$null}
+   $profileTarget=if($MaterialProfile){'material'}elseif($NativeProfile){'native'}else{''}
+   $res[$res.Count-1] | Add-Member -NotePropertyMembers @{MaterialDllSha256=$matHash;NativeProfileTarget=$profileTarget}
    $res|ConvertTo-Json -Depth 4|Set-Content $Out -Encoding UTF8
    Write-Output "$name $v $mode $t FOS=$fos"
    if(-not $exclusiveExcel){throw 'Another Excel appeared during this test; preserve result but do not accept its timing.'}

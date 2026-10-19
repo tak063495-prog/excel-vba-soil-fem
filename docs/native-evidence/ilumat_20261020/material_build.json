@@ -1,0 +1,33 @@
+{
+  "source": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\excel-vba-soil-fem\\native\\soilfem_mat.c",
+  "options": [
+    "-O2",
+    "-std=c11",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-Wno-unused-parameter",
+    "-Wno-misleading-indentation",
+    "-mfpmath=387",
+    "-fexcess-precision=standard",
+    "-ffp-contract=off",
+    "-fno-fast-math",
+    "-fno-builtin",
+    "-fno-stack-protector",
+    "-mno-stack-arg-probe",
+    "-nostdlib",
+    "-nostartfiles",
+    "-shared",
+    "-Wl,--entry=DllMain",
+    "-Wl,--kill-at",
+    "-s",
+    "-o",
+    "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\excel-vba-soil-fem\\tests\\tmp\\mat_dedup_production\\soilfem_mat_x64.dll",
+    "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\excel-vba-soil-fem\\native\\soilfem_mat.c",
+    "-lkernel32",
+    "-lgcc"
+  ],
+  "dll_sha256": "C8C35C67C310860E6ED08A38C9F509B07A1146F182FEABA83196301DF1506EED",
+  "source_sha256": "614C3D3619D4E50B106AB98B240232A7DC82959A77A6B8F22A50A2D3DF4D9625",
+  "compiler": "gcc.exe (GCC) 14.2.0"
+}

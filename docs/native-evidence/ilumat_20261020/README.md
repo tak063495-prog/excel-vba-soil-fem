@@ -1,0 +1,24 @@
+# ILU・材料評価 検証記録 2026-10-20
+
+基点はPR #15のb2014b7。配布版は20261020_INCO_ILUMAT_01。
+benchmark_summary.jsonとpair1～3_enabled0/1.jsonが配布版の同条件全探索比較です。中央値4.57%短縮であり、追加10%とは扱いません。
+前版材料DLL＋PREPARED=0と新材料DLL＋PREPARED=1。VBAブックとnative DLLは両側同一です。Fs・全170変位・最終残差・主要回数は完全一致します。
+
+profile0/1.jsonは使い捨てのnative/材料DLLを同時に階層QPC計測した記録です。NativeProfileとMaterialNativeProfileが別々の配列で、名前対応は各profile_names.jsonに保存しています。
+native_profile*/material_profile*_summary.jsonで親子時間を分離しています。数学関数は材料以外のDLLエクスポートからも呼ばれるため、その時間を別計上します。
+NativeProfileの29～31は、ゼロ行による残差下界比が相対許容値を超えた呼出数・ゼロ行総数・残差下界の最大比です。全て0で、反復省略は採用していません。計測負荷を含む時間を配布版の速度比較に混ぜません。
+
+point_dedup_200k.jsonは制御語0x027f/0x037fの計20万点で、成功出力200バイト・処理可否・FPエラー判定が一致した結果です。point_dedup.jsonは初期6万点です。
+prepared_unit.json/tuned_unit.jsonは各87ケースの独立真残差・既知解・失敗時出力保護です。legacy_gmres_check.jsonは旧エクスポート120ケースの全配列バイト比較です。
+再現用legacy_export_check.pyはリポジトリ直下から実行してください。
+
+ilu_microbenchmark.jsonは人工因子での各10,000反復・5標本です。準備費用は分離し、現行SIMDと逆数版の比を主に使用します。Excel全体の速度へ換算しません。
+mat_rebuilt14.jsonとprevious_release_check.jsonは、無変更材料ソースをGCC 14.2で再ビルドして前版配布DLLとの全探索・CSV一致を確認した結果です。
+material_build/rebuild.jsonにコンパイラのオプションとソースSHAがあります。元ソースは親コミットで取得できます。mat_dedup_pilot.jsonは初期単発で、主3組へ混ぜません。
+
+INCONSISTENT/DAVIS/builtinの0/1とsummaryは固定Fs回帰17組です。全変位・残差・主要回数・ログが一致します。GMRES呼出0で、速度の根拠にはしません。
+dispatch_new/old.jsonは各5条件で新エクスポート・STRICT・旧DLLへの切替を確認します。
+log_verification.jsonは実CSVのハッシュ・件数・GMRES診断以外の全バイトを独立したPythonで照合した結果です。pair1の実CSVをsolver_events_pair1.zipへ保存しました。
+
+rejected_square/は不採用のpow→SSE2乗算試作と20万点の診断です。主応力がほぼ等しい点で表示角度の差が大きくなり、配布していません。現在のCはMSVCR100のpowを引き続き使います。
+各compile/exports/importsログ、environment.json、verification.jsonにビルド・入力・配布物の照合記録があります。配布物に計測器・点試験エクスポート・テスト用VBAは含みません。

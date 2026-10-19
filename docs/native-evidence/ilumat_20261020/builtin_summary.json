@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "case": "builtin",
+      "variant": "default",
+      "reference_seconds": 2.9209351,
+      "candidate_seconds": 2.8318627,
+      "reduction_percent": 3.049448103109176,
+      "displacement_count": 2010,
+      "max_abs_displacement_delta": 0.0,
+      "final_residual": 1.05571945918321e-13,
+      "bracket": [
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        false,
+        1
+      ],
+      "prepared_calls": 0,
+      "decision_events_equal": true,
+      "logs_exact": true
+    }
+  ]
+}

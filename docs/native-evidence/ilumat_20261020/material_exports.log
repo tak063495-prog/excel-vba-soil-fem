@@ -1,0 +1,41 @@
+Microsoft (R) COFF/PE Dumper Version 14.51.36246.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+Dump of file native\soilfem_mat_x64.dll
+
+File Type: DLL
+
+  Section contains the following exports for soilfem_mat_x64.dll
+
+    00000000 characteristics
+           0 time date stamp
+        0.00 version
+           1 ordinal base
+          12 number of functions
+          12 number of names
+
+    ordinal hint RVA      name
+
+          1    0 000044C0 sfm_band_scatter
+          2    1 00004710 sfm_csr_resnorm
+          3    2 00004580 sfm_csr_scatter
+          4    3 00001650 sfm_eval
+          5    4 00004A00 sfm_gmres
+          6    5 00007200 sfm_hg_apply
+          7    6 00004760 sfm_ilu0
+          8    7 00001570 sfm_init
+          9    8 00006750 sfm_rcm
+         10    9 00005930 sfm_regularized
+         11    A 00006440 sfm_residual
+         12    B 000040D0 sfm_tangent
+
+  Summary
+
+        1000 .bss
+        1000 .edata
+        1000 .idata
+        1000 .pdata
+        1000 .rdata
+        7000 .text
+        1000 .xdata

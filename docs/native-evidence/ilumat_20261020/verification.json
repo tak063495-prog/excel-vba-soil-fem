@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "build": "20261020_INCO_ILUMAT_01",
+  "production_vba_compile": true,
+  "source_modules_verified_after_reopen": 8,
+  "native_and_material_compile_warnings_as_errors": true,
+  "package_sha256": "666d153c7ce785367062768904ac7be840324499428c6e6bea13e27ecb328e18",
+  "package_members": [
+    "2DSoilFEM_inco_ilumat_20261020.xlsm",
+    "soilfem_native_x64.dll",
+    "soilfem_mat_x64.dll",
+    "README.txt",
+    "build.json"
+  ],
+  "all_package_bytes_verified": true,
+  "compiled_tested_workbook_sha256": "5fe45c3d6afd3b2a647e5f4a838f8df73dd84d8bfea5ce9bd7893a1c77337607",
+  "native_dll_sha256": "be1bf49d61d4172ceb2bcd0a7c8850718dbbf4f01eb68e9f42bfd5afb66482b7",
+  "material_dll_sha256": "c8c35c67c310860e6ed08a38c9f509b07a1146f182feaba83196301df1506eed",
+  "point_cases": 200000,
+  "point_success_output_bits_equal": true,
+  "prepared_cases": 87,
+  "tuned_cases": 87,
+  "legacy_export_cases": 120,
+  "regression_pairs": 17,
+  "dispatch_cases": 10,
+  "full_search_primary_results_exact": true,
+  "whole_full_search_logs_exact": false,
+  "documented_log_differences_only": true,
+  "source_workbook_unchanged": true,
+  "no_instrumentation_or_probe_exports_in_package": true
+}

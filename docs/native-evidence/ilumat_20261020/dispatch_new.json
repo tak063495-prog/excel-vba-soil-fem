@@ -1,0 +1,87 @@
+[
+  {
+    "read_setting": -999.0,
+    "tuned_calls": 0,
+    "setting": -1,
+    "residual": 0.0,
+    "iterations": 1,
+    "native_status": "NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=0;statecopy=0;gmres_simd=0;fallback=0)",
+    "rc": 1,
+    "prepared_calls": 0,
+    "events": 2,
+    "x": [
+      0.09090909090909091,
+      0.6363636363636364
+    ],
+    "precision": "AUTO",
+    "simd_calls": 0
+  },
+  {
+    "read_setting": 0.0,
+    "tuned_calls": 0,
+    "setting": 0,
+    "residual": 0.0,
+    "iterations": 1,
+    "native_status": "NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=0;statecopy=0;gmres_simd=0;fallback=0)",
+    "rc": 1,
+    "prepared_calls": 0,
+    "events": 2,
+    "x": [
+      0.09090909090909091,
+      0.6363636363636364
+    ],
+    "precision": "AUTO",
+    "simd_calls": 0
+  },
+  {
+    "read_setting": 1.0,
+    "tuned_calls": 0,
+    "setting": 1,
+    "residual": 0.0,
+    "iterations": 1,
+    "native_status": "NATIVE(soilfem_native_x64.dll;precision=STRICT;factor=0;solve=0;nonsym=0;statecopy=0;gmres_simd=0;fallback=0)",
+    "rc": 1,
+    "prepared_calls": 0,
+    "events": 2,
+    "x": [
+      0.09090909090909091,
+      0.6363636363636364
+    ],
+    "precision": "STRICT",
+    "simd_calls": 0
+  },
+  {
+    "read_setting": 1.0,
+    "tuned_calls": 1,
+    "setting": 1,
+    "residual": 0.0,
+    "iterations": 1,
+    "native_status": "NATIVE(soilfem_native_x64.dll;precision=SSE2;factor=0;solve=0;nonsym=0;statecopy=0;gmres_simd=1;fallback=0)",
+    "rc": 1,
+    "prepared_calls": 1,
+    "events": 2,
+    "x": [
+      0.09090909090909091,
+      0.6363636363636364
+    ],
+    "precision": "SSE2",
+    "simd_calls": 1
+  },
+  {
+    "read_setting": 1.0,
+    "tuned_calls": 1,
+    "setting": 1,
+    "residual": 0.0,
+    "iterations": 1,
+    "native_status": "NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=0;statecopy=0;gmres_simd=1;fallback=0)",
+    "rc": 1,
+    "prepared_calls": 1,
+    "events": 2,
+    "x": [
+      0.09090909090909091,
+      0.6363636363636364
+    ],
+    "precision": "AUTO",
+    "simd_calls": 1
+  }
+]

@@ -1,0 +1,42 @@
+Microsoft (R) COFF/PE Dumper Version 14.51.36246.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+Dump of file native\bin\soilfem_native_x64.dll
+
+File Type: DLL
+
+  Section contains the following exports for soilfem_native_x64.dll
+
+    00000000 characteristics
+    FFFFFFFF time date stamp
+        0.00 version
+           1 ordinal base
+          14 number of functions
+          14 number of names
+
+    ordinal hint RVA      name
+
+          1    0 00001350 sfn_abi
+          2    1 00001360 sfn_band_factor
+          3    2 00001680 sfn_band_solve
+          4    3 00001A10 sfn_cpu_features
+          5    4 00004FC0 sfn_csr_scatter_list
+          6    5 00001A80 sfn_get_precision
+          7    6 00004E70 sfn_gmres
+          8    7 00004E80 sfn_gmres_prepared
+          9    8 00004F60 sfn_gmres_tuned
+         10    9 00001AA0 sfn_nsband_back
+         11    A 00001CF0 sfn_nsband_factor
+         12    B 000022B0 sfn_nsband_forward
+         13    C 000027C0 sfn_restore_committed
+         14    D 000023E0 sfn_set_precision
+
+  Summary
+
+        2000 .data
+        1000 .fptable
+        2000 .pdata
+        B000 .rdata
+        1000 .reloc
+       12000 .text

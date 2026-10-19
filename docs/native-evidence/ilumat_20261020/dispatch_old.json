@@ -1,0 +1,87 @@
+[
+  {
+    "simd_calls": 0,
+    "setting": -1,
+    "read_setting": -999.0,
+    "rc": 1,
+    "residual": 0.0,
+    "native_status": "NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=0;statecopy=0;gmres_simd=0;fallback=0)",
+    "events": 2,
+    "tuned_calls": 0,
+    "x": [
+      0.09090909090909091,
+      0.6363636363636364
+    ],
+    "iterations": 1,
+    "precision": "AUTO",
+    "prepared_calls": 0
+  },
+  {
+    "simd_calls": 0,
+    "setting": 0,
+    "read_setting": 0.0,
+    "rc": 1,
+    "residual": 0.0,
+    "native_status": "NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=0;statecopy=0;gmres_simd=0;fallback=0)",
+    "events": 2,
+    "tuned_calls": 0,
+    "x": [
+      0.09090909090909091,
+      0.6363636363636364
+    ],
+    "iterations": 1,
+    "precision": "AUTO",
+    "prepared_calls": 0
+  },
+  {
+    "simd_calls": 0,
+    "setting": 1,
+    "read_setting": 1.0,
+    "rc": 1,
+    "residual": 0.0,
+    "native_status": "NATIVE(soilfem_native_x64.dll;precision=STRICT;factor=0;solve=0;nonsym=0;statecopy=0;gmres_simd=0;fallback=0)",
+    "events": 2,
+    "tuned_calls": 0,
+    "x": [
+      0.09090909090909091,
+      0.6363636363636364
+    ],
+    "iterations": 1,
+    "precision": "STRICT",
+    "prepared_calls": 0
+  },
+  {
+    "simd_calls": 1,
+    "setting": 1,
+    "read_setting": 1.0,
+    "rc": 1,
+    "residual": 0.0,
+    "native_status": "NATIVE(soilfem_native_x64.dll;precision=SSE2;factor=0;solve=0;nonsym=0;statecopy=0;gmres_simd=1;fallback=0)",
+    "events": 2,
+    "tuned_calls": 1,
+    "x": [
+      0.09090909090909091,
+      0.6363636363636364
+    ],
+    "iterations": 1,
+    "precision": "SSE2",
+    "prepared_calls": 0
+  },
+  {
+    "simd_calls": 1,
+    "setting": 1,
+    "read_setting": 1.0,
+    "rc": 1,
+    "residual": 0.0,
+    "native_status": "NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=0;statecopy=0;gmres_simd=1;fallback=0)",
+    "events": 2,
+    "tuned_calls": 1,
+    "x": [
+      0.09090909090909091,
+      0.6363636363636364
+    ],
+    "iterations": 1,
+    "precision": "AUTO",
+    "prepared_calls": 0
+  }
+]

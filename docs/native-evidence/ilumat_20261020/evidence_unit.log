@@ -1,0 +1,8 @@
+test_fixed_fs_requires_all_event_bytes (__main__.Checks.test_fixed_fs_requires_all_event_bytes) ... ok
+test_primary_and_path_guards (__main__.Checks.test_primary_and_path_guards) ... ok
+test_time_is_reported_even_if_a_pair_is_slower (__main__.Checks.test_time_is_reported_even_if_a_pair_is_slower) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+OK

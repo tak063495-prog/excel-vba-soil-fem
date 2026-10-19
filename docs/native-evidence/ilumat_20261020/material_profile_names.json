@@ -1,0 +1,12 @@
+[
+  "sfm_eval",
+  "sfm_tangent",
+  "mp_update",
+  "spectral",
+  "eval_yield",
+  "c_pow",
+  "c_sqrt",
+  "c_atan",
+  "c_sin",
+  "c_cos"
+]

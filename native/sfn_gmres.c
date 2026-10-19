@@ -7,6 +7,7 @@
 #include <stdint.h>
 #include <limits.h>
 #include <math.h>
+#include <stdlib.h>
 #include <emmintrin.h>
 #include "sfn_simd.h"
 #pragma fp_contract(off)
@@ -96,13 +97,27 @@ static int ilu_apply_tuned(int32_t n,const int32_t *rp,const int32_t *ci,const i
     return 1;
 }
 
+/* The factor is constant throughout one GMRES call. Prepare its diagonal
+ * reciprocals once; keep the same pivot rejection and scalar true residual. */
+static int ilu_apply_prepared(int32_t n,const int32_t *rp,const int32_t *ci,const int32_t *dp,
+    const double *ilu,const double *inverse,const double *in,double *out) {
+    int32_t r;
+    for(r=0;r<n;r++) out[r]=in[r]-indexed_dot(rp[r],dp[r],ci,ilu,out);
+    for(r=n-1;r>=0;r--) {
+        double value=out[r]-indexed_dot(dp[r]+1,rp[r+1],ci,ilu,out);
+        if(fabs(ilu[dp[r]])<=0.000000000001) return 0;
+        out[r]=value*inverse[r];
+    }
+    return 1;
+}
+
 enum { EV_RESTART = 1, EV_NONFIN_TRUE = 2, EV_PREC = 3, EV_NONFIN_KRYLOV = 4, EV_ZERO_GIVENS = 5, EV_ZERO_UPPER = 6 };
 static void ev_push(double *ev, int64_t cap, double *o, int t, double a, double b) {
   int64_t k = (int64_t)o[2];
   if (k >= cap) { o[3] = 1.0; return; }
   ev[3 * k] = t; ev[3 * k + 1] = a; ev[3 * k + 2] = b; o[2] = (double)(k + 1);
 }
-static int32_t gmres_impl(const int64_t *G, double dtol, int tuned) {
+static int32_t gmres_impl(const int64_t *G, double dtol, int tuned, double *inverse) {
   if (!G) return -1;
   int mode = sfn_get_precision();
   int32_t n = (int32_t)G[0]; const int32_t *rp = (const int32_t *)(intptr_t)G[1], *ci = (const int32_t *)(intptr_t)G[2];
@@ -124,6 +139,10 @@ static int32_t gmres_impl(const int64_t *G, double dtol, int tuned) {
     if(rp[i]<0 || rp[i+1]<rp[i] || rp[i+1]>G[15] || dp[i]<rp[i] || dp[i]>=rp[i+1] || ci[dp[i]]!=i) return -1;
     for(j=rp[i];j<rp[i+1];j++)
       if(ci[j]<0 || ci[j]>=n || (j>rp[i] && ci[j]<=ci[j-1])) return -1;
+  }
+  if(inverse) for(i=0;i<n;i++) {
+    double diagonal=ilu[dp[i]];
+    inverse[i]=(fabs(diagonal)<=0.000000000001) ? 0.0 : 1.0/diagonal;
   }
   o[0] = 1E+100; o[1] = 0; o[2] = 0; o[3] = 0;
   V = wk; Z = V + ld * (m + 1); H = Z + ld * m; cs = H + hl * m; sn = cs + m; g = sn + m; y = g + m + 1;
@@ -149,7 +168,9 @@ static int32_t gmres_impl(const int64_t *G, double dtol, int tuned) {
     g[0] = beta; used = 0;
     for (j = 0; j < m; j++) {
       double *zj = Z + ld * j;
-      if (!(tuned ? ilu_apply_tuned(n, rp, ci, dp, ilu, V + ld * j, zj) : ilu_apply(n, rp, ci, dp, ilu, V + ld * j, zj))) { ev_push(ev, cap, o, EV_PREC, total, 0); return 0; }
+      int applied=inverse ? ilu_apply_prepared(n,rp,ci,dp,ilu,inverse,V+ld*j,zj) :
+        (tuned ? ilu_apply_tuned(n,rp,ci,dp,ilu,V+ld*j,zj) : ilu_apply(n,rp,ci,dp,ilu,V+ld*j,zj));
+      if (!applied) { ev_push(ev, cap, o, EV_PREC, total, 0); return 0; }
       if (tuned) csr_matvec_tuned(n, rp, ci, A, zj, w);
       else csr_matvec(n, rp, ci, A, zj, w);
       for (k = 0; k <= m; k++) H[k + hl * j] = 0.0;
@@ -199,5 +220,13 @@ static int32_t gmres_impl(const int64_t *G, double dtol, int tuned) {
 }
 
 
-__declspec(dllexport) int32_t __stdcall sfn_gmres(const int64_t *G, double tol) { return gmres_impl(G,tol,0); }
-__declspec(dllexport) int32_t __stdcall sfn_gmres_tuned(const int64_t *G, double tol) { return gmres_impl(G,tol,1); }
+__declspec(dllexport) int32_t __stdcall sfn_gmres(const int64_t *G, double tol) { return gmres_impl(G,tol,0,NULL); }
+__declspec(dllexport) int32_t __stdcall sfn_gmres_tuned(const int64_t *G, double tol) { return gmres_impl(G,tol,1,NULL); }
+__declspec(dllexport) int32_t __stdcall sfn_gmres_prepared(const int64_t *G, double tol) {
+    double *inverse;int32_t rc;
+    if(!G || G[0]<1 || G[0]>INT32_MAX || G[14]<1 || G[14]>200000001 || G[0]>G[14]/7) return -1;
+    inverse=(double *)malloc((size_t)G[0]*sizeof(double));
+    if(!inverse) return gmres_impl(G,tol,1,NULL);
+    rc=gmres_impl(G,tol,1,inverse);
+    free(inverse);return rc;
+}

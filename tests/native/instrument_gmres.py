@@ -46,7 +46,9 @@ def instrument(source):
     # Process from the last function to the first to keep original offsets valid.
     names=[('dot','double'),('axpy','void'),('csr_matvec','void'),('csr_resnorm','double'),('ilu_apply','int')]
     if 'static int32_t gmres_impl(' in source:
-        names += [('csr_matvec_tuned','void'),('ilu_apply_tuned','int'),('gmres_impl','int32_t')]
+        names += [('csr_matvec_tuned','void'),('ilu_apply_tuned','int')]
+        if 'static int ilu_apply_prepared(' in source: names += [('ilu_apply_prepared','int')]
+        names += [('gmres_impl','int32_t')]
     else:
         names += [('sfn_gmres','int32_t')]
     spans=[]
@@ -70,11 +72,46 @@ def instrument(source):
     profiler=PROFILER.replace('[6]',f'[{len(names)}]').replace('i<6',f'i<{len(names)}').replace('n<20',f'n<{2+3*len(names)}')
     return source.replace('#pragma fp_contract(off)','#pragma fp_contract(off)\n'+profiler),[n for n,k in names]
 
+def diagnose_zero_rows(source):
+    """Three spare doubles report a possible exact-zero-row failure bound."""
+    marker='static __declspec(thread) LARGE_INTEGER qp_freq;'
+    assert marker in source
+    extra=r'''
+static __declspec(thread) double qp_zero_calls,qp_zero_rows,qp_zero_ratio;
+static void qp_zero_diagnose(int32_t n,const int32_t *rp,const double *A,const double *F,double tol) {
+    int32_t r,p;double total=0.0,lower=0.0,ratio;int zeros=0;
+    for(r=0;r<n;r++) {
+        int zero=1;
+        if(!isfinite(F[r])) return;
+        total+=F[r]*F[r];
+        for(p=rp[r];p<rp[r+1];p++) if(A[p]!=0.0) {zero=0;break;}
+        if(zero) {lower+=F[r]*F[r];zeros++;}
+    }
+    qp_zero_rows+=zeros;
+    if(total>0.0 && isfinite(total)) {
+        ratio=sqrt(lower)/sqrt(total);
+        if(ratio>qp_zero_ratio) qp_zero_ratio=ratio;
+        if(ratio>tol) qp_zero_calls++;
+    }
+}
+'''
+    source=source.replace(marker,marker+extra,1)
+    source=source.replace('int i; qp_depth=0; qp_bad=0;', 'int i; qp_depth=0; qp_bad=0; qp_zero_calls=qp_zero_rows=qp_zero_ratio=0.0;',1)
+    source=source.replace('  if(inverse) for(i=0;i<n;i++) {','  qp_zero_diagnose(n,rp,A,F,dtol);\n  if(inverse) for(i=0;i<n;i++) {',1)
+    marker='    return 0;\n}\n'
+    assert marker in source
+    source=source.replace(marker,'    out[29]=qp_zero_calls;out[30]=qp_zero_rows;out[31]=qp_zero_ratio;\n'+marker,1)
+    source=source.replace('n<29','n<32',1)
+    return source
+
 if __name__=='__main__':
-    ap=argparse.ArgumentParser(); ap.add_argument('--src',default='native/sfn_gmres.c'); ap.add_argument('--out',required=True);a=ap.parse_args()
+    ap=argparse.ArgumentParser(); ap.add_argument('--src',default='native/sfn_gmres.c'); ap.add_argument('--out',required=True);ap.add_argument('--diagnose',action='store_true');a=ap.parse_args()
     p=Path(a.out)
     if p.exists(): raise ValueError('Preserve existing source')
     p.parent.mkdir(parents=True,exist_ok=True)
     source,names=instrument(Path(a.src).read_text(encoding='utf-8-sig'))
+    if a.diagnose:
+        assert len(names)==9,'Diagnosis needs three spare doubles in the 32-double harness'
+        source=diagnose_zero_rows(source)
     p.write_text(source,encoding='utf-8',newline='\n')
     p.with_suffix('.profile.json').write_text(json.dumps(names,indent=2)+'\n',encoding='utf-8')

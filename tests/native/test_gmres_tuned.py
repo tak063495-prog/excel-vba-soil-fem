@@ -3,6 +3,7 @@ import argparse, ctypes as C, pathlib, unittest, os, sys, math, json
 from test_gmres_simd import grid
 DLL_PATH=pathlib.Path(__file__).parents[2]/'native'/'bin'/'soilfem_native_x64.dll'
 RESULTS=[]
+ENTRY='sfn_gmres_tuned'
 
 def arr(t, xs): return (t*len(xs))(*xs)
 
@@ -41,7 +42,7 @@ class TunedGMRES(unittest.TestCase):
         dll=DLL_PATH
         if not dll.exists() or os.name!='nt': raise unittest.SkipTest('native DLL unavailable')
         cls.d=C.WinDLL(str(dll));
-        for name in ('sfn_gmres','sfn_gmres_tuned'):
+        for name in ('sfn_gmres',ENTRY):
             f=getattr(cls.d,name); f.argtypes=[C.POINTER(C.c_int64),C.c_double]; f.restype=C.c_int32
         cls.d.sfn_set_precision.argtypes=[C.c_int32]; cls.d.sfn_set_precision.restype=C.c_int32
 
@@ -50,7 +51,7 @@ class TunedGMRES(unittest.TestCase):
         gb,ab=fixture(side,restart,max_iter,dense=dense); gt,at=fixture(side,restart,max_iter,dense=dense)
         if mutate: mutate(gb,ab); mutate(gt,at)
         before_b=snapshot(gb,ab); before_t=snapshot(gt,at)
-        rb=self.d.sfn_gmres(gb,1e-11); rt=self.d.sfn_gmres_tuned(gt,1e-11)
+        rb=self.d.sfn_gmres(gb,1e-11); rt=getattr(self.d,ENTRY)(gt,1e-11)
         self.assertEqual(rb,rt)
         residuals=[];delta=0.
         for g,a,before in ((gb,ab,before_b),(gt,at,before_t)):
@@ -98,9 +99,11 @@ class TunedGMRES(unittest.TestCase):
                 for restart in (1,3,5):self.ab(side,restart,mode,dense=True)
 
 if __name__=='__main__':
-    ap=argparse.ArgumentParser(); ap.add_argument('--dll'); ap.add_argument('--out'); args,rest=ap.parse_known_args()
+    ap=argparse.ArgumentParser(); ap.add_argument('--dll'); ap.add_argument('--out')
+    ap.add_argument('--entry',choices=('sfn_gmres_tuned','sfn_gmres_prepared'),default='sfn_gmres_tuned');args,rest=ap.parse_known_args()
+    ENTRY=args.entry
     if args.dll: DLL_PATH=pathlib.Path(args.dll).resolve()
     result=unittest.main(argv=[sys.argv[0]]+rest,exit=False)
     if args.out:
-        pathlib.Path(args.out).write_text(json.dumps(dict(status='PASS' if result.result.wasSuccessful() else 'FAIL',cases=RESULTS),indent=2)+'\n',encoding='utf-8')
+        pathlib.Path(args.out).write_text(json.dumps(dict(status='PASS' if result.result.wasSuccessful() else 'FAIL',entry=ENTRY,cases=RESULTS),indent=2)+'\n',encoding='utf-8')
     sys.exit(0 if result.result.wasSuccessful() else 1)
