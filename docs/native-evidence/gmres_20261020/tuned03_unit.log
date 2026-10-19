@@ -1,0 +1,7 @@
+test_modes_sides_restarts_and_failures (__main__.TunedGMRES.test_modes_sides_restarts_and_failures) ... ok
+test_wide_lower_upper_triangular_rows (__main__.TunedGMRES.test_wide_lower_upper_triangular_rows) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.071s
+
+OK

@@ -16,8 +16,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 16845,
-    "sha256": "29b967ddec31e023078e2c76518a94a8297ca58e111d635f222987d5b74ec1b0"
+    "bytes": 17589,
+    "sha256": "90a1805538120a66779424b6b17a72d843b96e8fd3afa4443bd0de68e3d74c1b"
   },
   {
     "path": "docs/ACCELERATION_HISTORY.md",
@@ -33,6 +33,11 @@
     "path": "docs/INCONSISTENT_EVENT_PERF.md",
     "bytes": 11328,
     "sha256": "25ceb3ffc1aff32764a51b184b3da836e5c6e785ffdacc71b591f02bfa98792b"
+  },
+  {
+    "path": "docs/INCONSISTENT_GMRES_PERF.md",
+    "bytes": 10665,
+    "sha256": "238621d5e07bce3f2eacd9b869ff3df78f841dc5d06bba468cbfcd86d958cab8"
   },
   {
     "path": "docs/INCONSISTENT_IO_PERF.md",
@@ -945,6 +950,246 @@
     "sha256": "bfa08a0561193aba3a964780e6ac50468c95da2a3efe6b14e01fc5b05224a5f8"
   },
   {
+    "path": "docs/native-evidence/gmres_20261020/DAVIS_0.json",
+    "bytes": 54348,
+    "sha256": "76acccfda31f7a268845a29aa9269a37f3e877c0b628190a29dda7b0cf64bb94"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/DAVIS_1.json",
+    "bytes": 54390,
+    "sha256": "b1c2793b0189b493775bafbe685a8393003168923fb9034706b042ef4f558927"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/DAVIS_summary.json",
+    "bytes": 4325,
+    "sha256": "2b8354e53dac8f2d075a2a43d85d9fec9c345a1fa5cc5820514da6e4956cb57b"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/INCONSISTENT_0.json",
+    "bytes": 47774,
+    "sha256": "49fda516e3fad487ecc88d69daa3db3e5760bcca3cb7a1f1435490c0c44ae05b"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/INCONSISTENT_1.json",
+    "bytes": 47747,
+    "sha256": "d218041384deaed1d942d154c0bf6ce9ef067d8efc63f6246c27458fba34f304"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/INCONSISTENT_summary.json",
+    "bytes": 4328,
+    "sha256": "006469b55af18f75a32b7f0fbc35fb71977944a591c0169b827d3f0cc9c475e4"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/README.md",
+    "bytes": 2518,
+    "sha256": "5297336075008ba156d946c08858790cbea5ec7370906275fd240157d797e812"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/benchmark_summary.json",
+    "bytes": 2224,
+    "sha256": "19e668e1c8e35da495e776a9e1fd3857da548013f77f8c93bc4483d83eadc417"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/builtin_0.json",
+    "bytes": 54224,
+    "sha256": "7741be53c0858f2076656e225b6ae7feb27655cf35ec7344bd902c0ddde41a0f"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/builtin_1.json",
+    "bytes": 54233,
+    "sha256": "cccfe1fb41aa848e7cb023a58eb8830861e1783c3a962607e32f0e36100fdc5a"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/builtin_summary.json",
+    "bytes": 584,
+    "sha256": "a538b2a96a82d485c76df6f26b92408efe32e22b3957296a06c2325cb8751b07"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/dispatch03.json",
+    "bytes": 2070,
+    "sha256": "1316b3c9590bd82e1e38076ea6fe15bb53fe3b8ebda360de041ea2eaf01401b0"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/dispatch_legacy03.json",
+    "bytes": 2070,
+    "sha256": "4c304e3379d447f3fde1ed65df48188722336b0e45a9451b0e435dd66b33c66b"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/environment.json",
+    "bytes": 1094,
+    "sha256": "98fe7df0b9a0432eedad620ae536aa9a673f4132837d4879f75bb4cc8fe3605f"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/evidence_unit.log",
+    "bytes": 617,
+    "sha256": "f5fa6534a5ae48bd348921b3a711c334a3d557a096c0ddfb82d42cef20862430"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/final03_book_compile.log",
+    "bytes": 2282,
+    "sha256": "c1b231882c6f9590f9094c5d455d05d724a3202f1320d331d0cc5fd5721a2a3a"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/gmres02_profile_names.json",
+    "bytes": 139,
+    "sha256": "3cd3b5daa0abe843e4936a21f00b62acf84083a2c889fdd1c1217319bd59f086"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/gmres03_profile_names.json",
+    "bytes": 139,
+    "sha256": "3cd3b5daa0abe843e4936a21f00b62acf84083a2c889fdd1c1217319bd59f086"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/gmres_unit.json",
+    "bytes": 2552,
+    "sha256": "5074f282ccef11434562caa4d92a729d3f7636f5ff78752dfa43a12ab2682645"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/gmres_unit.log",
+    "bytes": 2552,
+    "sha256": "5074f282ccef11434562caa4d92a729d3f7636f5ff78752dfa43a12ab2682645"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/initial_cli_failure.log",
+    "bytes": 234,
+    "sha256": "8404bf21991e7b9efa4e00f95d73dede93c31fa0dd4da037ba3d69784dad66ce"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/legacy_export_check.py",
+    "bytes": 1234,
+    "sha256": "16f79b61e235ee160bfa8351b604e762e810845e4fee0e62a050a31c74b42ce9"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/legacy_gmres_check.json",
+    "bytes": 13292,
+    "sha256": "1a6cff70ed378a18a27bd845a77bd4bab3dd79587c650e4d38ceb3612d112edd"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/log_verification.json",
+    "bytes": 5786,
+    "sha256": "9482e9438ba3a6d169adb6bc01f2af69cba1ed1dd339adc8efdc38b41005f585"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/native03_compile.log",
+    "bytes": 206,
+    "sha256": "1fb5cf1b4d3c2bf7f1d09821ea01eed9de7d79519c09900c0f8558f0c97384f4"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/native_profile02_summary.json",
+    "bytes": 1806,
+    "sha256": "cf2408c40b8802fb8fe2d46c6cbe60311970a8094a2537e4a88cb7f003cf29e7"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/native_profile02_tuned.json",
+    "bytes": 5750,
+    "sha256": "8cd6323e04b346ae726f13b65b955c3fd5cd061ca08c87255d846567c314c00c"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/native_profile03_summary.json",
+    "bytes": 1808,
+    "sha256": "bed47d4a8c3205581e473a831da10e346465673ac2c21fd4c18182169f0983d5"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/native_profile03_tuned.json",
+    "bytes": 6013,
+    "sha256": "41973fa95265e103c30bd4c182baeaf0f028633bad6e1b3eeebf0ca88fc0093b"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/native_profile_before.json",
+    "bytes": 5572,
+    "sha256": "38558776da5cf111300b7b476aa855cd30870a52262939da40a8e3067d8a7c1b"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/native_profile_before_summary.json",
+    "bytes": 1435,
+    "sha256": "e4205cbdd518eadfa8890525b014947d15f21aa0b464a24b812c2c213b325365"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/pair1_enabled0.json",
+    "bytes": 5553,
+    "sha256": "b49a9c0fc5aed66f38eb3214c6faf3b3fb023727857782bf75d9a6c6b3f6d72d"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/pair1_enabled1.json",
+    "bytes": 5550,
+    "sha256": "93c4875dd56a8b3f51816a67f2283a01f8470cefdb81a46c0db37a632ea5a717"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/pair2_enabled0.json",
+    "bytes": 5555,
+    "sha256": "796f15f46d7157c81ff202244e0f934e41bd399bb326de82430d4ad1ca9f57e3"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/pair2_enabled1.json",
+    "bytes": 5559,
+    "sha256": "fc91d57e9f74ae24a190fb097bd224b3969b8e929f8c98403840afae65864899"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/pair3_enabled0.json",
+    "bytes": 5558,
+    "sha256": "03ae162a25282567af8596cffeeb42558691776c33856f56f9606940be90e1a8"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/pair3_enabled1.json",
+    "bytes": 5558,
+    "sha256": "9734c25be136461670929508139e9ddf2cbade8155d026aa78d2636fb9720594"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/pilot/pair1_enabled0.json",
+    "bytes": 5300,
+    "sha256": "f8bb045d5f283e520a47f04cdad8b4c750555aed65dac8cc15c2b7abaf60eb7f"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/pilot/pair1_enabled1.json",
+    "bytes": 5306,
+    "sha256": "68d9dbcd1f13be1c75cedd0b2652b387691c55c6b3a9ed310485eeccd06e6898"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/pilot03/pair1_enabled0.json",
+    "bytes": 5293,
+    "sha256": "e283b1762d07336b76d307e1f71baef80f37361d8f0a2a22230fe1b850e80b30"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/pilot03/pair1_enabled1.json",
+    "bytes": 5298,
+    "sha256": "6326b189fb0f313f36a7d6cfddff1bac3de182b870bcf3cfde4dc954ce47cf66"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/previous_release_check.json",
+    "bytes": 158,
+    "sha256": "78cdb804434cc0f851dc1e5196a23e121769add594525b0d5f97cd1b2d034af2"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/simd_checks.json",
+    "bytes": 1500,
+    "sha256": "4615d88383b3fbb4685965cb95f09dcd807e8835b07506fff36c1ce3eca0c8a8"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/solver_events_pair1.zip",
+    "bytes": 1491684,
+    "sha256": "c4420954a140a42f93fa72434a8a6dce13bc1814685e317f7cc0788ad35c5120"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/state_checks.json",
+    "bytes": 115,
+    "sha256": "1880854767b7db26fa302b562d6d0880331bfff8266b2add45fa53aa6f6dd57d"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/tuned03_unit.json",
+    "bytes": 25904,
+    "sha256": "861f79625a819cac9dc4c479ad006a89b69be17fe19f64ce5f8d88ea1e79cccc"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/tuned03_unit.log",
+    "bytes": 317,
+    "sha256": "7d3cd12e847ffaa5fd9023e2ff38eab0488f8fd09bc02e11e54cceba7b544086"
+  },
+  {
+    "path": "docs/native-evidence/gmres_20261020/verification.json",
+    "bytes": 1067,
+    "sha256": "0a0a1fe7b73b54c8d6d55565a24e8a761b3de17cc6655572224b34e9e695f40f"
+  },
+  {
     "path": "docs/native-evidence/inco_20261020/README.md",
     "bytes": 2776,
     "sha256": "a4dce23bf06d9637f9e4a1898009558774520ec397dc21f6bebe62ea8a892372"
@@ -1771,8 +2016,8 @@
   },
   {
     "path": "native/sfn_gmres.c",
-    "bytes": 7940,
-    "sha256": "5c4e917f988495269cd3198a66b39fc24815b5dc57dbd3327e92a2b1a4e885c1"
+    "bytes": 9689,
+    "sha256": "6022b4f9ce30012073ae8bd8bc1f3ad5f9235db219fcad5ce6a440dbe9144930"
   },
   {
     "path": "native/sfn_simd.c",
@@ -1831,8 +2076,8 @@
   },
   {
     "path": "src/vba/FEMCore.bas",
-    "bytes": 54182,
-    "sha256": "cbed9a2de5613d3b3af58e702fda81c8b049c40f0570f9a3a2d265c7c6e5de80"
+    "bytes": 54179,
+    "sha256": "65bc1b6bde79dc5ba25a33e34ea9bdd60ef41877d4a7beac95991fc113272865"
   },
   {
     "path": "src/vba/FEMEngine.bas",
@@ -1851,8 +2096,8 @@
   },
   {
     "path": "src/vba/FEMNative.bas",
-    "bytes": 23362,
-    "sha256": "49d18195fc0a3872afbcad8801cc5b7e909c239a96f904a7fd180b2039b347c3"
+    "bytes": 23857,
+    "sha256": "ec9f5cb31d4ce0f6603736a75e9d707fa8d123aaeb636765eeb473d07386e2fb"
   },
   {
     "path": "src/vba/FEMNativeKern.bas",
@@ -2200,6 +2445,16 @@
     "sha256": "a990ca655340064754029cba544ec9f6ab76ccb0cda1b4603c87c63f2298d2d3"
   },
   {
+    "path": "tests/native/build_gmres.ps1",
+    "bytes": 5297,
+    "sha256": "787b215fa68228d606ca1e05ec48c4e4575a69217c4f92809105b980ddcdd161"
+  },
+  {
+    "path": "tests/native/build_gmres_profile.cmd",
+    "bytes": 815,
+    "sha256": "468daae0411c76f9b8e99a6189f1b88fde0695d36e1c630ef7c61db0ce748547"
+  },
+  {
     "path": "tests/native/build_io.ps1",
     "bytes": 4640,
     "sha256": "a9170efad7439333cc985eac14d9e59d5816d1a99b8a81519c9cb9de7236cb7f"
@@ -2226,13 +2481,18 @@
   },
   {
     "path": "tests/native/check_gmres_dispatch.ps1",
-    "bytes": 3971,
-    "sha256": "b441db668ab4b906360f58bab1cc97738e97731e33bc087999366c0f413eb44f"
+    "bytes": 4632,
+    "sha256": "225969571dedef4ba594914224260849f800760179f5a110fafbbf9872cfac88"
   },
   {
     "path": "tests/native/check_gmres_event_replay.ps1",
     "bytes": 7608,
     "sha256": "24ed81c63c0f1400776fc72e8b1abdcd6b2b12820fe6defa385ffb186a1c7e2d"
+  },
+  {
+    "path": "tests/native/check_gmres_logs.py",
+    "bytes": 2520,
+    "sha256": "c0d112a42948748d0085306ad41bdc43555cc3a4d2d2e97a396f7bd334182792"
   },
   {
     "path": "tests/native/check_io_fast.ps1",
@@ -2270,6 +2530,11 @@
     "sha256": "5f9e2e9156ede96a8de730ab58604aecc5bc700cb62ec5c02b53f29f82efb3a0"
   },
   {
+    "path": "tests/native/instrument_gmres.py",
+    "bytes": 3664,
+    "sha256": "8b3d8a765b4563720074061f857f4db35e0340d435ceddf8231c34f28dfe140f"
+  },
+  {
     "path": "tests/native/instrument_profile.py",
     "bytes": 7227,
     "sha256": "363363abd7ef2df6895230d6a9c3c95afadab940f7ea4af2d09546230132c910"
@@ -2290,14 +2555,24 @@
     "sha256": "cbb9de4df39747a5f182e662908f72e23bebec739edf4bccc0858249a64f451f"
   },
   {
+    "path": "tests/native/run_gmres_regression.ps1",
+    "bytes": 2086,
+    "sha256": "ead1e981dc11b101447025861da46f2a9469403ba35a54ced04f79297ee3c6a8"
+  },
+  {
     "path": "tests/native/run_inco_benchmark.ps1",
-    "bytes": 1776,
-    "sha256": "e4659206c22bbb19e127b1183f82f97d132581591f6c68401ebe22996bb3f028"
+    "bytes": 1934,
+    "sha256": "d72c7d3a27d299cd51d9d10b99cc62a2417f0a64a787e40d74c1c7a34f52d9d9"
   },
   {
     "path": "tests/native/run_native_compare.ps1",
-    "bytes": 10810,
-    "sha256": "268c7f91fb243e29a5eba342d0c2fad053462abb676b6519b13a3fcb44bbfd72"
+    "bytes": 14268,
+    "sha256": "d6c2b370da5693d456cc78855ecc77329c9ad3587e5324352b715b7a12950630"
+  },
+  {
+    "path": "tests/native/summarize_gmres_profile.py",
+    "bytes": 1481,
+    "sha256": "5bb8693eca1e7d7a88ef2db4dbec63c95019ea72a3a0a8b7a704128495ae44c1"
   },
   {
     "path": "tests/native/summarize_inco_benchmark.py",
@@ -2306,13 +2581,13 @@
   },
   {
     "path": "tests/native/summarize_io_benchmark.py",
-    "bytes": 3450,
-    "sha256": "e712d8f10cbc52c808a2b995816f985a8ebf0c2bf11da5901e7ab1ae85ee99bf"
+    "bytes": 4349,
+    "sha256": "59cf623511290808d322dab5f0ce321a056f2835fecfffe6c89d381f23e3e67e"
   },
   {
     "path": "tests/native/summarize_io_regression.py",
-    "bytes": 3127,
-    "sha256": "68b3fc04cfc69f2841d1f850ce2a54b23b7b6c68d346312d6b02891d91368898"
+    "bytes": 3884,
+    "sha256": "5e0166541e597e7f27d27012e82c646bd9255e23b19144bff31a38c1fd09c7bd"
   },
   {
     "path": "tests/native/summarize_profile.py",
@@ -2330,14 +2605,19 @@
     "sha256": "0e0b64ada288ab5bf5d92eae4f32b2da4173ed769af6c3708e6f6ebabd6bd338"
   },
   {
+    "path": "tests/native/test_gmres_tuned.py",
+    "bytes": 5918,
+    "sha256": "85890c78ab6b5c7dd24bdf154e8c32c7f1cd5804e06805c44fc142aca7b25711"
+  },
+  {
     "path": "tests/native/test_inco_summary.py",
     "bytes": 2156,
     "sha256": "a051893fa8ea9efc390d0f87dd35749143ee68b3e915d85986fc32829223569c"
   },
   {
     "path": "tests/native/test_io_summary.py",
-    "bytes": 4295,
-    "sha256": "1fba3bc2daffe8683a69577d0ec1ee7ee871b448a0cc521d3043b3132828a7fc"
+    "bytes": 5837,
+    "sha256": "e955e67f5ac7737bee77b435aa6af45d644e8b1095f4af0069eb529f7978bbfd"
   },
   {
     "path": "tests/native/test_native_state.py",
@@ -2450,6 +2730,11 @@
     "sha256": "47b5dd3daa4c99f9357b22c0a144e69e24c2d575eb39229548e7b25bf26dedab"
   },
   {
+    "path": "workbook/SoilFEM_INCONSISTENT_GMRES_20261020.zip",
+    "bytes": 2897915,
+    "sha256": "7d995ca2ea5640df2fbba100c035e6a1509efbf4fed2d676b99b63d94d5ee6d7"
+  },
+  {
     "path": "workbook/SoilFEM_INCONSISTENT_IO_20261020.zip",
     "bytes": 2887151,
     "sha256": "f181b45d62b87ac1d6e0b9ff3795c62f0c73cc28ae981dae60819c49a98aee16"
@@ -2503,6 +2788,31 @@
     "path": "workbook/inco_event_20261020/soilfem_native_x64.dll",
     "bytes": 121856,
     "sha256": "c015f439b037cd436098277561b43990ba98359f89b4876330cbf8ed2bec3b01"
+  },
+  {
+    "path": "workbook/inco_gmres_20261020/2DSoilFEM_inco_gmres_20261020.xlsm",
+    "bytes": 3047128,
+    "sha256": "99a48324378679ae3e37c2a41379a820b996887d61e3518a3894504c94a6ce18"
+  },
+  {
+    "path": "workbook/inco_gmres_20261020/README.txt",
+    "bytes": 892,
+    "sha256": "8e75ed01c96e61db4302bef8714580c560134f817a615a12a906390ef3b11cd8"
+  },
+  {
+    "path": "workbook/inco_gmres_20261020/build.json",
+    "bytes": 1617,
+    "sha256": "1581740deb7c676597b4058555a822ad0458af7446ee6f6c0fc406cf32b037ef"
+  },
+  {
+    "path": "workbook/inco_gmres_20261020/soilfem_mat_x64.dll",
+    "bytes": 30208,
+    "sha256": "1dca348d6f17fed2e77c49c21666dd08838d005e953a5c001ec00890a92ab95a"
+  },
+  {
+    "path": "workbook/inco_gmres_20261020/soilfem_native_x64.dll",
+    "bytes": 124928,
+    "sha256": "385b579cb260059091c6185a41f253fa169ede3b415d9d8f3beaf9224c7381f2"
   },
   {
     "path": "workbook/inco_io_20261020/2DSoilFEM_inco_io_20261020.xlsm",

@@ -1,0 +1,65 @@
+{
+  "status": "PASS",
+  "qpc_frequency": 10000000.0,
+  "total_gmres_seconds": 11.6467919,
+  "exclusive_partition_pass": true,
+  "note": "Per-call QPC overhead is present; compare whole-run speed only with uninstrumented builds.",
+  "ranking": [
+    {
+      "procedure": "ilu_apply_tuned",
+      "calls": 1660000,
+      "inclusive_seconds": 4.3222291,
+      "exclusive_seconds": 4.3222291,
+      "exclusive_percent": 37.110898323855174
+    },
+    {
+      "procedure": "csr_matvec_tuned",
+      "calls": 1660000,
+      "inclusive_seconds": 2.1290333,
+      "exclusive_seconds": 2.1290333,
+      "exclusive_percent": 18.279997773464125
+    },
+    {
+      "procedure": "dot",
+      "calls": 35800044,
+      "inclusive_seconds": 1.9832494,
+      "exclusive_seconds": 1.9832494,
+      "exclusive_percent": 17.02828913771525
+    },
+    {
+      "procedure": "gmres_impl",
+      "calls": 830,
+      "inclusive_seconds": 11.6467919,
+      "exclusive_seconds": 1.7503687,
+      "exclusive_percent": 15.028762555635602
+    },
+    {
+      "procedure": "axpy",
+      "calls": 35800044,
+      "inclusive_seconds": 1.228215,
+      "exclusive_seconds": 1.228215,
+      "exclusive_percent": 10.54552198189443
+    },
+    {
+      "procedure": "csr_matvec",
+      "calls": 99878,
+      "inclusive_seconds": 0.2185635,
+      "exclusive_seconds": 0.2185635,
+      "exclusive_percent": 1.8765983103038013
+    },
+    {
+      "procedure": "csr_resnorm",
+      "calls": 99878,
+      "inclusive_seconds": 0.2336964,
+      "exclusive_seconds": 0.0151329,
+      "exclusive_percent": 0.12993191713161803
+    },
+    {
+      "procedure": "ilu_apply",
+      "calls": 0,
+      "inclusive_seconds": 0.0,
+      "exclusive_seconds": 0.0,
+      "exclusive_percent": 0.0
+    }
+  ]
+}

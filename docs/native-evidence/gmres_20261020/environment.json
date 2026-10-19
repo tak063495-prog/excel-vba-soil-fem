@@ -1,0 +1,27 @@
+{
+  "os": "Microsoft Windows 11 Home",
+  "event_log_fast": 1,
+  "native_gmres_simd": 1,
+  "wall_timer": "System.Diagnostics.Stopwatch",
+  "cpu": "AMD Ryzen 5 5600X 6-Core Processor             ",
+  "stopwatch_high_resolution": true,
+  "precision": "AUTO -> AVX2_FMA",
+  "baseline_commit": "9dc8e8a725c53d71562e7b1b9d77e05c32f76c0c",
+  "build": "20261020_INCO_GMRES_03",
+  "source_sha256": {
+    "native/sfn_gmres.c": "6022b4f9ce30012073ae8bd8bc1f3ad5f9235db219fcad5ce6a440dbe9144930",
+    "src/vba/FEMNative.bas": "ec9f5cb31d4ce0f6603736a75e9d707fa8d123aaeb636765eeb473d07386e2fb",
+    "src/vba/FEMCore.bas": "65bc1b6bde79dc5ba25a33e34ea9bdd60ef41877d4a7beac95991fc113272865",
+    "tests/fixtures/smoke_mesh.json": "4f6318675417457aeca365913cd680ea00943316ab427352e3b040426d821a9e"
+  },
+  "profile_timer": "QueryPerformanceCounter, hierarchical exclusive partition",
+  "native_state_copy": 1,
+  "comparison_flags": [
+    "NATIVE_GMRES_TUNED"
+  ],
+  "stopwatch_frequency": 10000000,
+  "io_fast_path": 1,
+  "native_gmres_tuned": 1,
+  "native_assembly": 1,
+  "excel_version": "16.0.20430.20182"
+}

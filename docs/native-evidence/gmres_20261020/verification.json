@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "build": "20261020_INCO_GMRES_03",
+  "production_vba_compile": true,
+  "profile_vba_compile": true,
+  "native_compile_warnings_as_errors": true,
+  "source_modules_verified_before_save_and_after_reopen": 8,
+  "source_workbook_unchanged": true,
+  "material_dll_unchanged": true,
+  "compiled_and_tested_workbook_sha256": "99a48324378679ae3e37c2a41379a820b996887d61e3518a3894504c94a6ce18",
+  "native_dll_sha256": "385b579cb260059091c6185a41f253fa169ede3b415d9d8f3beaf9224c7381f2",
+  "package_sha256": "7d995ca2ea5640df2fbba100c035e6a1509efbf4fed2d676b99b63d94d5ee6d7",
+  "package_members": [
+    "2DSoilFEM_inco_gmres_20261020.xlsm",
+    "soilfem_native_x64.dll",
+    "soilfem_mat_x64.dll",
+    "README.txt",
+    "build.json"
+  ],
+  "all_package_bytes_verified": true,
+  "profile_instrumentation_not_in_package": true,
+  "primary_numerical_results_exact": true,
+  "whole_solver_logs_exact": false,
+  "documented_log_differences_only": true,
+  "regression_pairs": 17,
+  "native_tuned_cases": 87,
+  "old_export_cases": 120,
+  "dispatch_cases": 10
+}

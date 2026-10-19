@@ -7,7 +7,15 @@ from pathlib import Path
 from summarize_inco_benchmark import load
 
 def compare(reference,candidate,scope='io'):
-    if scope=='assembly':
+    if scope=='gmres':
+        assert reference['IoFast']==candidate['IoFast']==reference['EventFast']==candidate['EventFast']==1
+        assert reference['AssemblyFast']==candidate['AssemblyFast']==1
+        assert reference['Assembly']==candidate['Assembly']
+        assert reference['GmresTuned']==0 and candidate['GmresTuned']==1
+        assert reference['TunedCalls']==0 and candidate['TunedCalls']>0
+        assert reference['DecisionEventsSha256']==candidate['DecisionEventsSha256'] and candidate['DecisionEventsSha256']
+        assert reference['NonGmresSolverEventsRows']==candidate['NonGmresSolverEventsRows']>0
+    elif scope=='assembly':
         assert reference['IoFast']==candidate['IoFast']==reference['EventFast']==candidate['EventFast']==1
         assert reference['AssemblyFast']==0 and candidate['AssemblyFast']==1
         assert reference['Assembly'][0]==0 and candidate['Assembly'][0]>0
@@ -19,7 +27,9 @@ def compare(reference,candidate,scope='io'):
         assert scope=='io' and reference['IoFast']==0 and candidate['IoFast']==1
         assert reference.get('EventFast',0)==candidate.get('EventFast',0)==0
     assert all(r['StateCopy']==r['GmresSimd']==1 and r['ExclusiveExcel'] is True for r in (reference,candidate))
-    for key in ('Case','Variant','Mode','Precision','NativeDllSha256','Fos','Bracket','Disp','SolverEventsSha256','SolverEventsBytes'):
+    keys=['Case','Variant','Mode','Precision','NativeDllSha256','Fos','Bracket','Disp']
+    if scope!='gmres':keys+=['SolverEventsSha256','SolverEventsBytes']
+    for key in keys:
         assert reference[key]==candidate[key], ('Mismatch',key)
     assert reference['NativeDllSha256'], 'Native DLL hash missing'
     assert len(reference['Bracket'])==6 and all(math.isfinite(v) for v in reference['Bracket'][:4]), 'Incomplete raw Fs bracket'
@@ -35,11 +45,13 @@ def compare(reference,candidate,scope='io'):
     assert math.isfinite(rt) and math.isfinite(ct) and 0<ct<rt
     return dict(reference_seconds=rt,candidate_seconds=ct,displacement_count=len(reference['Disp']),
         max_abs_displacement_delta=0.0,residual=float(c[3]),raw_bracket=candidate['Bracket'],
-        solver_events_sha256=candidate['SolverEventsSha256'],solver_events_bytes=candidate['SolverEventsBytes'])
+        solver_events_sha256=candidate['SolverEventsSha256'],solver_events_bytes=candidate['SolverEventsBytes'],
+        logs_exact=reference['SolverEventsSha256']==candidate['SolverEventsSha256'],
+        decision_events_equal=(reference.get('DecisionEventsSha256')==candidate.get('DecisionEventsSha256')) if scope=='gmres' else True)
 
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('directory');ap.add_argument('--out',required=True)
-    ap.add_argument('--pairs',type=int,default=3);ap.add_argument('--scope',choices=('io','events','assembly'),default='io');a=ap.parse_args();d=Path(a.directory)
+    ap.add_argument('--pairs',type=int,default=3);ap.add_argument('--scope',choices=('io','events','assembly','gmres'),default='io');a=ap.parse_args();d=Path(a.directory)
     assert a.pairs>0
     rows=[dict(pair=i,**compare(load(d/f'pair{i}_enabled0.json'),load(d/f'pair{i}_enabled1.json'),a.scope)) for i in range(1,a.pairs+1)]
     r=[x['reference_seconds'] for x in rows];c=[x['candidate_seconds'] for x in rows]

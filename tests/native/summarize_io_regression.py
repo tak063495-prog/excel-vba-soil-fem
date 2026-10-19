@@ -2,6 +2,7 @@
 import argparse
 import json
 import math
+import re
 from pathlib import Path
 
 
@@ -14,7 +15,15 @@ def compare(reference, candidate, scope='io'):
     assert len(reference) == len(candidate) > 0
     report = []
     for r, c in zip(reference, candidate):
-        if scope == 'assembly':
+        if scope == 'gmres':
+            assert r['IoFast'] == c['IoFast'] == r['EventFast'] == c['EventFast'] == r['AssemblyFast'] == c['AssemblyFast'] == 1
+            assert r['GmresTuned']==0 and c['GmresTuned']==1 and r['TunedCalls']==0
+            assert r['Assembly']==c['Assembly'] and r['Flow']==c['Flow']
+            count=int(re.search(r'gmres_simd=(\d+)',c['Run']).group(1))
+            assert c['TunedCalls']==count
+            assert r['DecisionEventsSha256']==c['DecisionEventsSha256'] and c['DecisionEventsSha256']
+            assert r['NonGmresSolverEventsRows']==c['NonGmresSolverEventsRows']>=0
+        elif scope == 'assembly':
             assert r['IoFast'] == c['IoFast'] == r['EventFast'] == c['EventFast'] == 1
             assert r['AssemblyFast'] == 0 and c['AssemblyFast'] == 1
             assert r['Flow'] == c['Flow'] and c['Flow'] in ('INCONSISTENT','DAVIS')
@@ -31,8 +40,9 @@ def compare(reference, candidate, scope='io'):
             assert scope == 'io' and r['IoFast'] == 0 and c['IoFast'] == 1
             assert r.get('EventFast', 0) == c.get('EventFast', 0) == 0
         assert all(x['StateCopy'] == x['GmresSimd'] == 1 and x['ExclusiveExcel'] is True for x in (r, c))
-        for key in ('Case', 'Variant', 'Mode', 'Precision', 'NativeDllSha256', 'Fos', 'Bracket',
-                    'Disp', 'SolverEventsSha256', 'SolverEventsBytes'):
+        keys=['Case','Variant','Mode','Precision','NativeDllSha256','Fos','Bracket','Disp']
+        if scope!='gmres':keys+=['SolverEventsSha256','SolverEventsBytes']
+        for key in keys:
             assert r[key] == c[key], (r['Case'], r['Variant'], key)
         assert r['NativeDllSha256'] and r['SolverEventsSha256'] and r['SolverEventsBytes'] > 0
         assert len(r['Bracket']) == 6 and all(math.isfinite(v) for v in r['Bracket'][:4])
@@ -44,14 +54,15 @@ def compare(reference, candidate, scope='io'):
         report.append(dict(case=r['Case'], variant=r['Variant'], displacement_count=len(r['Disp']),
                            max_abs_displacement_delta=0, residual=float(b[3]), bracket=c['Bracket'],
                            reference_seconds=r['WallSeconds'], candidate_seconds=c['WallSeconds'],
-                           solver_events_sha256=c['SolverEventsSha256'], logs_exact=True))
+                           solver_events_sha256=c['SolverEventsSha256'], logs_exact=r['SolverEventsSha256']==c['SolverEventsSha256'],
+                           decision_events_equal=True))
     return report
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('reference'); ap.add_argument('candidate'); ap.add_argument('--out', required=True)
-    ap.add_argument('--scope', choices=('io', 'events', 'assembly'), default='io')
+    ap.add_argument('--scope', choices=('io', 'events', 'assembly', 'gmres'), default='io')
     args = ap.parse_args()
     result = dict(status='PASS', cases=compare(rows(args.reference), rows(args.candidate), args.scope))
     text = json.dumps(result, ensure_ascii=False, indent=2)

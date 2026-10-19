@@ -1,0 +1,4 @@
+usage: test_gmres_tuned.py [-h] [-v] [-q] [--locals] [--durations N] [-f] [-c]
+                           [-b] [-k TESTNAMEPATTERNS]
+                           [tests ...]
+test_gmres_tuned.py: error: unrecognized arguments: --dll

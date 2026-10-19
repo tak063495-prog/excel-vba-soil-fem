@@ -61,13 +61,48 @@ static int ilu_apply(int32_t n, const int32_t *rp, const int32_t *ci, const int3
     }
     return 1;
 }
+
+/* Binary64 SIMD reductions; caller retains the original scalar true-residual
+ * calculation, convergence tolerance, two-pass MGS and iteration limits. */
+static __forceinline double indexed_dot(int32_t start,int32_t end,const int32_t *ci,
+    const double *v,const double *x) {
+    int32_t p=start; double tmp[2], sum;
+    __m128d a=_mm_setzero_pd(), b=_mm_setzero_pd();
+    for(;end-p>=4;p+=4) {
+        __m128d x0=_mm_set_pd(x[ci[p+1]],x[ci[p]]);
+        __m128d x1=_mm_set_pd(x[ci[p+3]],x[ci[p+2]]);
+        a=_mm_add_pd(a,_mm_mul_pd(_mm_loadu_pd(v+p),x0));
+        b=_mm_add_pd(b,_mm_mul_pd(_mm_loadu_pd(v+p+2),x1));
+    }
+    _mm_storeu_pd(tmp,_mm_add_pd(a,b));sum=tmp[0]+tmp[1];
+    for(;p<end;p++) sum+=v[p]*x[ci[p]];
+    return sum;
+}
+static void csr_matvec_tuned(int32_t n,const int32_t *rp,const int32_t *ci,
+    const double *v,const double *x,double *y) {
+    int32_t r;
+    for(r=0;r<n;r++) y[r]=indexed_dot(rp[r],rp[r+1],ci,v,x);
+}
+static int ilu_apply_tuned(int32_t n,const int32_t *rp,const int32_t *ci,const int32_t *dp,
+    const double *ilu,const double *in,double *out) {
+    int32_t r;
+    for(r=0;r<n;r++) out[r]=in[r]-indexed_dot(rp[r],dp[r],ci,ilu,out);
+    for(r=n-1;r>=0;r--) {
+        double value=out[r]-indexed_dot(dp[r]+1,rp[r+1],ci,ilu,out);
+        double diag=ilu[dp[r]];
+        if(fabs(diag)<=0.000000000001) return 0;
+        out[r]=value/diag;
+    }
+    return 1;
+}
+
 enum { EV_RESTART = 1, EV_NONFIN_TRUE = 2, EV_PREC = 3, EV_NONFIN_KRYLOV = 4, EV_ZERO_GIVENS = 5, EV_ZERO_UPPER = 6 };
 static void ev_push(double *ev, int64_t cap, double *o, int t, double a, double b) {
   int64_t k = (int64_t)o[2];
   if (k >= cap) { o[3] = 1.0; return; }
   ev[3 * k] = t; ev[3 * k + 1] = a; ev[3 * k + 2] = b; o[2] = (double)(k + 1);
 }
-__declspec(dllexport) int32_t __stdcall sfn_gmres(const int64_t *G, double dtol) {
+static int32_t gmres_impl(const int64_t *G, double dtol, int tuned) {
   if (!G) return -1;
   int mode = sfn_get_precision();
   int32_t n = (int32_t)G[0]; const int32_t *rp = (const int32_t *)(intptr_t)G[1], *ci = (const int32_t *)(intptr_t)G[2];
@@ -114,8 +149,9 @@ __declspec(dllexport) int32_t __stdcall sfn_gmres(const int64_t *G, double dtol)
     g[0] = beta; used = 0;
     for (j = 0; j < m; j++) {
       double *zj = Z + ld * j;
-      if (!ilu_apply(n, rp, ci, dp, ilu, V + ld * j, zj)) { ev_push(ev, cap, o, EV_PREC, total, 0); return 0; }
-      csr_matvec(n, rp, ci, A, zj, w);
+      if (!(tuned ? ilu_apply_tuned(n, rp, ci, dp, ilu, V + ld * j, zj) : ilu_apply(n, rp, ci, dp, ilu, V + ld * j, zj))) { ev_push(ev, cap, o, EV_PREC, total, 0); return 0; }
+      if (tuned) csr_matvec_tuned(n, rp, ci, A, zj, w);
+      else csr_matvec(n, rp, ci, A, zj, w);
       for (k = 0; k <= m; k++) H[k + hl * j] = 0.0;
       for (pass = 1; pass <= 2; pass++) {
         for (k = 0; k <= j; k++) {
@@ -162,3 +198,6 @@ __declspec(dllexport) int32_t __stdcall sfn_gmres(const int64_t *G, double dtol)
   return 1;
 }
 
+
+__declspec(dllexport) int32_t __stdcall sfn_gmres(const int64_t *G, double tol) { return gmres_impl(G,tol,0); }
+__declspec(dllexport) int32_t __stdcall sfn_gmres_tuned(const int64_t *G, double tol) { return gmres_impl(G,tol,1); }
