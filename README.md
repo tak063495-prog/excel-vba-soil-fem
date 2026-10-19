@@ -1,5 +1,14 @@
 # VBA版 2D Soil FEM
 
+## INCONSISTENT 要素行列積・ILU構築の高速化版（2026-10-20）
+
+[一括ダウンロード（XLSM＋DLL 2個、ZIP）](workbook/SoilFEM_INCONSISTENT_ELEMENT_20261020.zip)。
+固定3項行列積のループ削減、ILU構築の列検索削減、浮動小数点設定を維持したO3最適化を検証しました。
+全探索5組の中央値40.934秒→40.453秒（追加1.18%短縮）。
+Double・収束条件を維持し、Fs区間・全170変位・最終残差・GMRES途中値を含むCSV全体が完全一致しました。
+VBA/材料DLLコンパイル、モデル17組、正則化回復112照合、材料点20万件も確認。
+[内訳・全結果・不採用試作・再現手順](docs/INCONSISTENT_ELEMENT_PERF.md) を参照してください。
+
 ## INCONSISTENT ILU・材料評価内部の高速化版（2026-10-20）
 
 [一括ダウンロード（XLSM＋DLL 2個、ZIP）](workbook/SoilFEM_INCONSISTENT_ILUMAT_20261020.zip)。

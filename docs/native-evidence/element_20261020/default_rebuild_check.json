@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "source_sha256": "8406009cb78c36085b4726faf8ef9097977ed1cb3a83f72ec22cb5077adf628a",
+  "packaged_sha256": "f11c8f4bb5a5f27778de9dbcfa88e9b6bb963806720e1694c26328c32add58cd",
+  "rebuild_sha256": "c1dac73c9b22aebd5e7e7ccf5e884a817ecb7c096541300cbe4ac77f0701560b",
+  "code_and_data_bytes_equal": true,
+  "differences_only_pe_imagebase_and_checksum": true,
+  "packaged_image_base": "0x39e1a0000",
+  "rebuild_image_base": "0x206770000"
+}

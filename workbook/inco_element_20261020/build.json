@@ -1,0 +1,83 @@
+{
+  "native_gmres_tuned": 1,
+  "native_assembly": 1,
+  "build": "20261020_INCO_ELEMENT_01",
+  "native_gmres_prepared": 1,
+  "source_workbook_sha256": "5FE45C3D6AFD3B2A647E5F4A838F8DF73DD84D8BFEA5CE9BD7893A1C77337607",
+  "native_state_copy": 1,
+  "io_fast_path": 1,
+  "event_log_fast": 1,
+  "files": [
+    {
+      "name": "2DSoilFEM_inco_element_20261020.xlsm",
+      "sha256": "ea0e2cafdaf3a45c277c02f7d9ce39c8cabac622c923b553e9bf937ff7fd81f3",
+      "bytes": 3051217
+    },
+    {
+      "name": "soilfem_native_x64.dll",
+      "sha256": "be1bf49d61d4172ceb2bcd0a7c8850718dbbf4f01eb68e9f42bfd5afb66482b7",
+      "bytes": 126464
+    },
+    {
+      "name": "soilfem_mat_x64.dll",
+      "sha256": "f11c8f4bb5a5f27778de9dbcfa88e9b6bb963806720e1694c26328c32add58cd",
+      "bytes": 46592
+    },
+    {
+      "name": "README.txt",
+      "sha256": "14ab800d2bb4043ea77bda51723d366b27345acb1651f1fe5f39c31fb80b876e",
+      "bytes": 1386
+    }
+  ],
+  "native_gmres_simd": 1,
+  "source_sha256_by_module": {
+    "FEMCore": "D5E1A5775280D52E6AD0CDA3DEF020814247F8C7FEBCC204CB7633548132B0C8",
+    "FEMNative": "5A866DE98876CCDAC69A5BEC28D00F2EE5D0D0D4B4BB579E4D328AB7FEC85B4D",
+    "FEMIo": "475B9C330D39E2DA8AF1D82ACDCF96C46E346C4CFB96846BC6A8EC65BC1C999A",
+    "FEMEngine": "37F597F787C742153BFB4A96894A437818B82CAE312C407799D75273F5C8398B",
+    "FEMSolver": "7F75CE008B2A41651F4393CB727271F34B45ACEFED1F8D356CE52EF0A5F37E85",
+    "FEMNativeKern": "BB948C0AC20A821F3EC239F8DAFE65AFEAF1B37673E81EA61817F751B4BDDB7A",
+    "CONTROL": "C6CBEEEE3D5B52E2D195BA63662EA35F53C522139F62ACA676088558630928FA",
+    "FEMNativeMat": "3E831347EE6BB36A782078E74386C7D93F93DA80B8C8906CC1FCBA9134F49EED"
+  },
+  "precision": "AUTO",
+  "material_build": {
+    "options": [
+      "-O3",
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wno-unused-parameter",
+      "-Wno-misleading-indentation",
+      "-mfpmath=387",
+      "-fexcess-precision=standard",
+      "-ffp-contract=off",
+      "-fno-fast-math",
+      "-fno-builtin",
+      "-fno-stack-protector",
+      "-mno-stack-arg-probe",
+      "-nostdlib",
+      "-nostartfiles",
+      "-shared",
+      "-Wl,--entry=DllMain",
+      "-Wl,--kill-at",
+      "-s",
+      "-o",
+      "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\excel-vba-soil-fem\\tests\\tmp\\element_o3_build\\soilfem_mat_x64.dll",
+      "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\excel-vba-soil-fem\\native\\soilfem_mat.c",
+      "-lkernel32",
+      "-lgcc"
+    ],
+    "dll_sha256": "F11C8F4BB5A5F27778DE9DBCFA88E9B6BB963806720E1694C26328C32ADD58CD",
+    "compiler": "gcc.exe (GCC) 14.2.0",
+    "source_sha256": "8406009CB78C36085B4726FAF8EF9097977ED1CB3A83F72EC22CB5077ADF628A",
+    "source": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\excel-vba-soil-fem\\native\\soilfem_mat.c"
+  },
+  "benchmark": {
+    "pairs": 5,
+    "reference_median_seconds": 40.9338684,
+    "candidate_median_seconds": 40.4526936,
+    "median_reduction_percent": 1.175493103407732
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "reference": "workbook\\inco_ilumat_20261020\\soilfem_mat_x64.dll",
+  "candidate": "tests\\tmp\\element_unroll_build\\soilfem_mat_x64.dll",
+  "reference_sha256": "c8c35c67c310860e6ed08a38c9f509b07a1146f182feaba83196301df1506eed",
+  "candidate_sha256": "0a51ab9f4e22efe962c1903e462973f35c82e72f9bbff452752e8789a6b68999",
+  "seed": "0x1A",
+  "cases": 1012,
+  "matches": 1012,
+  "windows_fp_control": "not changed; process default",
+  "benchmark": {
+    "169": {
+      "n": 169,
+      "nnz": 2801,
+      "calls": 100,
+      "reference_samples_s": [
+        4.176599999482278e-05,
+        4.14249999448657e-05,
+        4.161299999395851e-05,
+        4.259100001945626e-05,
+        4.186099999060389e-05
+      ],
+      "candidate_samples_s": [
+        3.0078999989200382e-05,
+        3.0329000001074746e-05,
+        3.0002999992575496e-05,
+        3.0145000055199487e-05,
+        2.9910000012023375e-05
+      ],
+      "reference_median_s": 4.176599999482278e-05,
+      "candidate_median_s": 3.0078999989200382e-05,
+      "reduction_pct": 27.982090712711518
+    },
+    "676": {
+      "n": 676,
+      "nnz": 27296,
+      "calls": 100,
+      "reference_samples_s": [
+        0.001794000000008964,
+        0.0018310509999719215,
+        0.0018140780000248924,
+        0.0018107250000321074,
+        0.0018343910000112374
+      ],
+      "candidate_samples_s": [
+        0.0006619299999874784,
+        0.0006726470000285189,
+        0.0006697839999833377,
+        0.0006854200000088894,
+        0.0006759859999874607
+      ],
+      "reference_median_s": 0.0018140780000248924,
+      "candidate_median_s": 0.0006726470000285189,
+      "reduction_pct": 62.92072336364319
+    }
+  }
+}

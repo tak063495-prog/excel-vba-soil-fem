@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "reference": "tests/tmp/element_abi/ref_build/soilfem_mat_x64.dll",
+  "candidate": "tests/tmp/element_abi/cand_o3_build/soilfem_mat_x64.dll",
+  "reference_sha256": "f71afb092f7a05f64e2aee4d039615a26e00a60ef16e04ccfc40afbe928039aa",
+  "candidate_sha256": "072e4b262faf52955c060a9530ec3c8abec05a59d2a65e05ff70a4bdf8233721",
+  "cases": 5200,
+  "matches": 5200,
+  "x87_control_words": [
+    639,
+    895
+  ],
+  "statuses": {
+    "(2, 0)": 1356,
+    "(-99, 0)": 2400,
+    "(1, 0)": 872,
+    "(1, 1)": 200,
+    "(-99, 1)": 200,
+    "(0, 0)": 172
+  },
+  "complete_output_bytes_equal": true
+}

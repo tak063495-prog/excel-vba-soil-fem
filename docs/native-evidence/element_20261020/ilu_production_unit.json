@@ -1,0 +1,63 @@
+{
+  "reference": "workbook\\inco_ilumat_20261020\\soilfem_mat_x64.dll",
+  "candidate": "tests\\tmp\\element_release01\\soilfem_mat_x64.dll",
+  "reference_sha256": "c8c35c67c310860e6ed08a38c9f509b07a1146f182feaba83196301df1506eed",
+  "candidate_sha256": "f11c8f4bb5a5f27778de9dbcfa88e9b6bb963806720e1694c26328c32add58cd",
+  "seed": "0x1A",
+  "cases": 1012,
+  "matches": 1012,
+  "x87_control_words": [
+    null
+  ],
+  "fp_control_restored": true,
+  "benchmark": {
+    "169": {
+      "n": 169,
+      "nnz": 2801,
+      "calls": 100,
+      "reference_samples_s": [
+        4.660700004023965e-05,
+        4.122599995753262e-05,
+        4.500199996982701e-05,
+        4.124399994907435e-05,
+        4.136099996685516e-05
+      ],
+      "candidate_samples_s": [
+        3.448399998887908e-05,
+        2.9162999999243767e-05,
+        3.078599998843856e-05,
+        2.907399997639004e-05,
+        3.253099996072706e-05
+      ],
+      "reference_median_s": 4.136099996685516e-05,
+      "candidate_median_s": 3.078599998843856e-05,
+      "reduction_pct": 25.56756361521947
+    },
+    "676": {
+      "n": 676,
+      "nnz": 27296,
+      "calls": 100,
+      "reference_samples_s": [
+        0.0018844379999791272,
+        0.0017554240000026767,
+        0.0018120619999535848,
+        0.0017435680000198771,
+        0.0017364839999936522
+      ],
+      "candidate_samples_s": [
+        0.0006733990000066114,
+        0.0006512040000234265,
+        0.0006522119999863207,
+        0.0006505920000199695,
+        0.0006604849999712315
+      ],
+      "reference_median_s": 0.0017554240000026767,
+      "candidate_median_s": 0.0006522119999863207,
+      "reduction_pct": 62.84589933911544
+    }
+  },
+  "return_code_counts": {
+    "0": 202,
+    "1": 810
+  }
+}

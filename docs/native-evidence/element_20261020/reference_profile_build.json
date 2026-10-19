@@ -1,0 +1,33 @@
+{
+  "options": [
+    "-O2",
+    "-std=c11",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-Wno-unused-parameter",
+    "-Wno-misleading-indentation",
+    "-mfpmath=387",
+    "-fexcess-precision=standard",
+    "-ffp-contract=off",
+    "-fno-fast-math",
+    "-fno-builtin",
+    "-fno-stack-protector",
+    "-mno-stack-arg-probe",
+    "-nostdlib",
+    "-nostartfiles",
+    "-shared",
+    "-Wl,--entry=DllMain",
+    "-Wl,--kill-at",
+    "-s",
+    "-o",
+    "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\excel-vba-soil-fem\\tests\\tmp\\element_profile0c\\build\\soilfem_mat_x64.dll",
+    "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\excel-vba-soil-fem\\tests\\tmp\\element_profile0c\\material.c",
+    "-lkernel32",
+    "-lgcc"
+  ],
+  "source_sha256": "BA669B1452B469FBC44A7F586A1E131DAAFD36B8CE985682CA7A27AA435E1637",
+  "compiler": "gcc.exe (GCC) 14.2.0",
+  "dll_sha256": "3DED3A05A9BBDC443345D406C2CF11E001210158A878407984886C7EAA101538",
+  "source": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\excel-vba-soil-fem\\tests\\tmp\\element_profile0c\\material.c"
+}
