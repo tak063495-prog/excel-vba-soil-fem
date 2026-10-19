@@ -1,5 +1,14 @@
 # VBA版 2D Soil FEM
 
+## INCONSISTENT GMRES内部高速化版（2026-10-20）
+
+[一括ダウンロード（XLSM＋DLL 2個、ZIP）](workbook/SoilFEM_INCONSISTENT_GMRES_20261020.zip)。
+GMRESの内訳を計測し、ILU前処理とCSR行列積を倍精度SIMD化しました。
+小モデルSRM全探索3組で中央値48.452秒→44.359秒（8.45%短縮）。今回は10%に届いていません。
+Double・収束条件を維持し、Fs区間・全170変位・最終残差が完全一致。途中のGMRES診断値には差があります。
+VBAとDLLのコンパイル、独立GMRES87ケース、回帰17組、旧DLLへの切替を確認しています。
+[内訳・全結果・制限・再現手順](docs/INCONSISTENT_GMRES_PERF.md) を参照してください。
+
 ## INCONSISTENT 行列組立高速化版（2026-10-20）
 
 [一括ダウンロード（XLSM＋DLL 2個、ZIP）](workbook/SoilFEM_INCONSISTENT_ASSEMBLY_20261020.zip)。

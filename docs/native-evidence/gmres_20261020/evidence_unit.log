@@ -1,0 +1,10 @@
+test_assembly_scope (__main__.EvidenceChecks.test_assembly_scope) ... ok
+test_event_scope (__main__.EvidenceChecks.test_event_scope) ... ok
+test_exact_comparison_and_rejections (__main__.EvidenceChecks.test_exact_comparison_and_rejections) ... ok
+test_gmres_scope_and_real_path_gate (__main__.EvidenceChecks.test_gmres_scope_and_real_path_gate) ... ok
+test_regression_accepts_noisy_time_but_rejects_changed_result (__main__.EvidenceChecks.test_regression_accepts_noisy_time_but_rejects_changed_result) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.001s
+
+OK

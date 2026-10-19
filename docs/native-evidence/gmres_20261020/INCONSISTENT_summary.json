@@ -1,0 +1,165 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "case": "Case1",
+      "variant": "off",
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0,
+      "residual": 9.44350930474515e-16,
+      "bracket": [
+        0.5,
+        0.0,
+        0.5,
+        0.0,
+        false,
+        1
+      ],
+      "reference_seconds": 2.1760876,
+      "candidate_seconds": 2.1861491,
+      "solver_events_sha256": "3EA89D5FBAADC34496B4786674148208B6D36983A3978F7BB77329AE35F099EB",
+      "logs_exact": true,
+      "decision_events_equal": true
+    },
+    {
+      "case": "Case1",
+      "variant": "adaptive",
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0,
+      "residual": 5.44705158019972e-15,
+      "bracket": [
+        0.5,
+        0.0,
+        0.5,
+        0.0,
+        false,
+        1
+      ],
+      "reference_seconds": 1.5689367,
+      "candidate_seconds": 1.5838715,
+      "solver_events_sha256": "3EA89D5FBAADC34496B4786674148208B6D36983A3978F7BB77329AE35F099EB",
+      "logs_exact": true,
+      "decision_events_equal": true
+    },
+    {
+      "case": "Case2",
+      "variant": "off",
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0,
+      "residual": 1.16074711137257e-13,
+      "bracket": [
+        1.1,
+        0.0,
+        1.1,
+        0.0,
+        false,
+        1
+      ],
+      "reference_seconds": 1.5814701,
+      "candidate_seconds": 1.5604771,
+      "solver_events_sha256": "0AC7AB9457FB603F60A8EEE61BBA64880AE44C0E92E9F8007E6AF86352EACE93",
+      "logs_exact": true,
+      "decision_events_equal": true
+    },
+    {
+      "case": "Case2",
+      "variant": "adaptive",
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0,
+      "residual": 1.25044219954582e-13,
+      "bracket": [
+        1.1,
+        0.0,
+        1.1,
+        0.0,
+        false,
+        1
+      ],
+      "reference_seconds": 1.5617839,
+      "candidate_seconds": 1.6197395,
+      "solver_events_sha256": "0AC7AB9457FB603F60A8EEE61BBA64880AE44C0E92E9F8007E6AF86352EACE93",
+      "logs_exact": true,
+      "decision_events_equal": true
+    },
+    {
+      "case": "Case3",
+      "variant": "off",
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0,
+      "residual": 4.72993232520948e-12,
+      "bracket": [
+        0.9,
+        0.0,
+        0.9,
+        0.0,
+        false,
+        1
+      ],
+      "reference_seconds": 1.6133781,
+      "candidate_seconds": 1.6487303,
+      "solver_events_sha256": "9EC6AEC4480CF6C69E967E797B854ECF72F1D878A4C0FF9E7F14660A2DDB6F9E",
+      "logs_exact": true,
+      "decision_events_equal": true
+    },
+    {
+      "case": "Case3",
+      "variant": "adaptive",
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0,
+      "residual": 3.83477854615666e-11,
+      "bracket": [
+        0.9,
+        0.0,
+        0.9,
+        0.0,
+        false,
+        1
+      ],
+      "reference_seconds": 1.6975646,
+      "candidate_seconds": 1.5891193,
+      "solver_events_sha256": "9EC6AEC4480CF6C69E967E797B854ECF72F1D878A4C0FF9E7F14660A2DDB6F9E",
+      "logs_exact": true,
+      "decision_events_equal": true
+    },
+    {
+      "case": "Case4",
+      "variant": "off",
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0,
+      "residual": 7.54343291524163e-10,
+      "bracket": [
+        2.0,
+        0.0,
+        2.0,
+        0.0,
+        false,
+        1
+      ],
+      "reference_seconds": 1.577383,
+      "candidate_seconds": 1.5848643,
+      "solver_events_sha256": "952BD961D8718F7CB03B8D5B68202A2F0AAB03D6FD37DF14DE59BC581D0CC43E",
+      "logs_exact": true,
+      "decision_events_equal": true
+    },
+    {
+      "case": "Case4",
+      "variant": "adaptive",
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0,
+      "residual": 9.04295101600201e-10,
+      "bracket": [
+        2.0,
+        0.0,
+        2.0,
+        0.0,
+        false,
+        1
+      ],
+      "reference_seconds": 1.5914356,
+      "candidate_seconds": 1.5609376,
+      "solver_events_sha256": "952BD961D8718F7CB03B8D5B68202A2F0AAB03D6FD37DF14DE59BC581D0CC43E",
+      "logs_exact": true,
+      "decision_events_equal": true
+    }
+  ]
+}

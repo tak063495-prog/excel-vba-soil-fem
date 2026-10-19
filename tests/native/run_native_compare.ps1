@@ -1,6 +1,6 @@
 ﻿# -MeshPath: smoke系のfixture。未指定時はリポジトリ追跡の tests/fixtures/smoke_mesh.json（スクリプト基準）。
 # 相対パス指定はカレントディレクトリ基準。ブック隣へのフォールバックはしない。
-param([string]$Book,[string]$Suite='smoke',[string]$Out,[double]$FixedFs=1.0,[string]$Modes='OFF,AUTO',[string]$Flow='',[string]$MeshPath='',[ValidateSet('STRICT','SSE2','AUTO','AVX2')][string]$Precision='STRICT',[string]$CaseName='',[ValidateSet('off','adaptive')][string[]]$Variants=@('off','adaptive'),[switch]$Profile,[ValidateSet(0,1)][int]$StateCopy=0,[ValidateSet(0,1)][int]$GmresSimd=0,[ValidateSet(0,1)][int]$IoFast=0,[ValidateSet(0,1)][int]$EventFast=0,[ValidateSet(0,1)][int]$AssemblyFast=0)
+param([string]$Book,[string]$Suite='smoke',[string]$Out,[double]$FixedFs=1.0,[string]$Modes='OFF,AUTO',[string]$Flow='',[string]$MeshPath='',[ValidateSet('STRICT','SSE2','AUTO','AVX2')][string]$Precision='STRICT',[string]$CaseName='',[ValidateSet('off','adaptive')][string[]]$Variants=@('off','adaptive'),[switch]$Profile,[ValidateSet(0,1)][int]$StateCopy=0,[ValidateSet(0,1)][int]$GmresSimd=0,[ValidateSet(0,1)][int]$IoFast=0,[ValidateSet(0,1)][int]$EventFast=0,[ValidateSet(0,1)][int]$AssemblyFast=0,[switch]$NativeProfile,[ValidateSet(0,1)][int]$GmresTuned=0)
 $ErrorActionPreference='Stop'
 if(Test-Path -LiteralPath $Out){throw "Preserve prior evidence: $Out"}
 if(-not (Test-Path -LiteralPath $Book -PathType Leaf)){throw "Book not found: $Book"}
@@ -48,6 +48,9 @@ End Function
 Public Function TDispV() As Variant
   TDispV = TDisp
 End Function
+Public Function TTunedCalls() As Long
+  TTunedCalls=FEMNativeGmresTunedCalls
+End Function
 Public Function TAssemblyV() As Variant
   TAssemblyV = Array(FEMNativeAssemblyCalls, P6CSRScatterCount, MatrixSymmetryError)
 End Function
@@ -56,6 +59,17 @@ Public Function TBracketV() As Variant
 End Function
 '@
 if($Profile){$harness=$harness.Replace('  FEMNativeSetMode modeText',"  FEMProfileStart`r`n  FEMNativeSetMode modeText")}
+if($NativeProfile){
+ $harness=@'
+Private Declare PtrSafe Sub NativeProfileReset Lib "soilfem_native_x64.dll" Alias "sfn_gmres_profile_reset" ()
+Private Declare PtrSafe Function NativeProfileRead Lib "soilfem_native_x64.dll" Alias "sfn_gmres_profile_read" (ByVal data As LongPtr, ByVal n As Long) As Long
+Public Function TNativeProfile() As Variant
+ Dim d(0 To 31) As Double
+ If NativeProfileRead(VarPtr(d(0)),32)<>0 Then Err.Raise vbObjectError+6301,"TNativeProfile","Unbalanced native profiler"
+ TNativeProfile=d
+End Function
+'@ + "`r`n" + $harness.Replace('  FEMNativeSetMode modeText',"  FEMNativeSetMode modeText`r`n  If Not FEMNativeAvailable() Then Err.Raise vbObjectError+6302`r`n  NativeProfileReset")
+}
 function SetS($wb,$k,$v){$m=$(if($v -is [string]){'FEMWriteTextSetting'}else{'FEMWriteNumericSetting'});$xl.Run("'"+$wb.Name+"'!"+$m,$k,$v)}
 function SetRows($wb,$sheet,$rows,$cols){$ws=$wb.Worksheets.Item($sheet);$ws.Range($ws.Cells(2,1),$ws.Cells($ws.UsedRange.Rows.Count,$cols)).ClearContents();$d=[object[,]]::new($rows.Count,$cols);for($r=0;$r -lt $rows.Count;$r++){for($c=0;$c -lt $cols;$c++){$d[$r,$c]=$rows[$r][$c]}};$ws.Range($ws.Cells(2,1),$ws.Cells($rows.Count+1,$cols)).Value2=$d}
 Add-Type -TypeDefinition @'
@@ -63,6 +77,34 @@ using System;
 using System.Runtime.InteropServices;
 public static class NativeCompareIdentity {
  [DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr hwnd, out uint pid);
+ public static string NonGmresDigest(string path, out int nonGmres, out int gmres, bool normalize) {
+  byte[] data=System.IO.File.ReadAllBytes(path); nonGmres=0; gmres=0;
+  using(var kept=new System.IO.MemoryStream()) {
+   int start=0;
+   for(int end=0;end<=data.Length;end++) {
+    if(end<data.Length && data[end]!=10) continue;
+    if(end==start) { start=end+1;continue; }
+    int e=start,commas=0;
+    while(e<end && commas<5) { if(data[e++]==44) commas++; }
+    bool isGmres=commas==5 && end-e>=6 && data[e]==71 && data[e+1]==77 && data[e+2]==82 && data[e+3]==69 && data[e+4]==83 && data[e+5]==95;
+    if(isGmres) gmres++; else {
+     int length=end-start+(end<data.Length?1:0),ee=e;
+     while(ee<end && data[ee]!=44) ee++;
+     string eventName=System.Text.Encoding.ASCII.GetString(data,e,ee-e);
+     if(normalize && eventName=="REGULARIZED_CORRECTION_REQUEST") {
+      var encoding=System.Text.Encoding.GetEncoding(28591);
+      string line=encoding.GetString(data,start,length);
+      line=System.Text.RegularExpressions.Regex.Replace(line,@"(?<=;linear_relres=)[^;\r\n]*","<gmres_residual>");
+      byte[] normalized=encoding.GetBytes(line);kept.Write(normalized,0,normalized.Length);
+     } else kept.Write(data,start,length);
+     nonGmres++;
+    }
+    start=end+1;
+   }
+   nonGmres--; // Header is included in the digest, excluded from the row count.
+   using(var sha=System.Security.Cryptography.SHA256.Create()) return BitConverter.ToString(sha.ComputeHash(kept.ToArray())).Replace("-","");
+  }
+ }
 }
 '@
 $xl=New-Object -ComObject Excel.Application
@@ -82,6 +124,10 @@ try{
   if($AssemblyFast -ne 0){throw 'Assembly acceleration requires the new wrapper.'}
   $harness=$harness.Replace('FEMNativeAssemblyCalls','0')
  }
+ if($nativeModule.Lines(1,$nativeModule.CountOfLines) -notmatch 'Public FEMNativeGmresTunedCalls As Long'){
+  if($GmresTuned -ne 0){throw 'Tuned GMRES requires the new wrapper.'}
+  $harness=$harness.Replace('FEMNativeGmresTunedCalls','0')
+ }
  $h=$wb.VBProject.VBComponents.Add(1);$h.Name='TestHarness2';$h.CodeModule.AddFromString($harness)
  SetS $wb 'EXPORT_MODE' 'OFF'; SetS $wb 'EXPORT_LOAD' ''
  SetS $wb 'NATIVE_PRECISION' $Precision
@@ -90,6 +136,7 @@ try{
  SetS $wb 'IO_FAST_PATH' $IoFast
  SetS $wb 'EVENT_LOG_FAST' $EventFast
  SetS $wb 'NATIVE_ASSEMBLY' $AssemblyFast
+ SetS $wb 'NATIVE_GMRES_TUNED' $GmresTuned
  if($Flow -ne ''){SetS $wb 'FLOW_POLICY' $Flow}
  $runs=@()
  if($Suite -like 'smoke*'){
@@ -126,6 +173,9 @@ try{
    $fos=$xl.Run("'"+$wb.Name+"'!TFos")
    $assembly=@($xl.Run("'"+$wb.Name+"'!TAssemblyV"))
    $bracket=@($xl.Run("'"+$wb.Name+"'!TBracketV"))
+   $tunedCalls=[int]$xl.Run("'"+$wb.Name+"'!TTunedCalls")
+   $nativeProfileData=$null
+   if($NativeProfile){$nativeProfileData=@($xl.Run("'"+$wb.Name+"'!TNativeProfile"))}
    $liveNativePids=@(Get-Process EXCEL -ErrorAction SilentlyContinue | ForEach-Object {$_.Id})
    $exclusiveExcel=($liveNativePids.Count -eq 1 -and $liveNativePids[0] -eq $xpid)
    $profilePath=$null
@@ -138,8 +188,13 @@ try{
    if(Test-Path -LiteralPath $nativePath){$dllHash=(Get-FileHash -LiteralPath $nativePath).Hash}
    $runOutput=Join-Path $root ([IO.Path]::GetFileNameWithoutExtension($copy)+'_out')
    $eventFile=Join-Path $runOutput 'solver_events.csv';$eventHash=$null;$eventBytes=0
+   $nonGmresHash=$null;$decisionHash=$null;[int]$nonGmresRows=0;[int]$gmresRows=0
    if(Test-Path -LiteralPath $eventFile){$eventHash=(Get-FileHash -LiteralPath $eventFile).Hash;$eventBytes=(Get-Item -LiteralPath $eventFile).Length}
-   $res.Add([PSCustomObject]@{Case=$name;Variant=$v;Mode=$mode;Precision=$Precision;StateCopy=$StateCopy;GmresSimd=$GmresSimd;IoFast=$IoFast;EventFast=$EventFast;AssemblyFast=$AssemblyFast;Assembly=$assembly;Flow=$Flow;ProfileCsv=$profilePath;NativeDllSha256=$dllHash;ExcelPid=$xpid;ExcelVersion=$excelNativeVersion;ExclusiveExcel=$exclusiveExcel;WallSeconds=$wallClock.Elapsed.TotalSeconds;SolverEventsSha256=$eventHash;SolverEventsBytes=$eventBytes;RunOutputDirectory=$runOutput;Run=$t;Fos=$fos;Bracket=$bracket;Disp=$d})
+   if(Test-Path -LiteralPath $eventFile){
+    $nonGmresHash=[NativeCompareIdentity]::NonGmresDigest($eventFile,[ref]$nonGmresRows,[ref]$gmresRows,$false)
+    $decisionHash=[NativeCompareIdentity]::NonGmresDigest($eventFile,[ref]$nonGmresRows,[ref]$gmresRows,$true)
+   }
+   $res.Add([PSCustomObject]@{Case=$name;Variant=$v;Mode=$mode;Precision=$Precision;StateCopy=$StateCopy;GmresSimd=$GmresSimd;IoFast=$IoFast;EventFast=$EventFast;AssemblyFast=$AssemblyFast;Assembly=$assembly;Flow=$Flow;GmresTuned=$GmresTuned;TunedCalls=$tunedCalls;NativeProfile=$nativeProfileData;ProfileCsv=$profilePath;NativeDllSha256=$dllHash;ExcelPid=$xpid;ExcelVersion=$excelNativeVersion;ExclusiveExcel=$exclusiveExcel;WallSeconds=$wallClock.Elapsed.TotalSeconds;SolverEventsSha256=$eventHash;SolverEventsBytes=$eventBytes;DecisionEventsSha256=$decisionHash;NonGmresSolverEventsSha256=$nonGmresHash;NonGmresSolverEventsRows=$nonGmresRows;GmresEventRows=$gmresRows;RunOutputDirectory=$runOutput;Run=$t;Fos=$fos;Bracket=$bracket;Disp=$d})
    $res|ConvertTo-Json -Depth 4|Set-Content $Out -Encoding UTF8
    Write-Output "$name $v $mode $t FOS=$fos"
    if(-not $exclusiveExcel){throw 'Another Excel appeared during this test; preserve result but do not accept its timing.'}

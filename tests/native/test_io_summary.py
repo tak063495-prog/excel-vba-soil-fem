@@ -66,6 +66,26 @@ class EvidenceChecks(unittest.TestCase):
         with self.assertRaises(AssertionError):
             regression([self.reference], [c])
 
+    def test_gmres_scope_and_real_path_gate(self):
+        r=dict(self.reference,IoFast=1,EventFast=1,AssemblyFast=1,Assembly=[7804,5120,.01],
+               Flow='INCONSISTENT',GmresTuned=0,TunedCalls=0,DecisionEventsSha256='decision',NonGmresSolverEventsRows=100)
+        c=dict(r,GmresTuned=1,TunedCalls=830,WallSeconds=55)
+        self.assertEqual(compare(r,c,'gmres')['max_abs_displacement_delta'],0)
+        self.assertTrue(regression([r],[c],'gmres')[0]['logs_exact'])
+        for key,value in [('GmresTuned',0),('TunedCalls',0),('AssemblyFast',0),('Assembly',[7805,5120,.01]),('Disp',[0.,1.1]),('DecisionEventsSha256','changed'),('NonGmresSolverEventsRows',99)]:
+            with self.subTest(key=key),self.assertRaises(AssertionError):
+                compare(r,dict(c,**{key:value}),'gmres')
+        with self.assertRaises(AssertionError):
+            regression([r],[dict(c,TunedCalls=0)],'gmres')
+        r=dict(r,Run=r['Run'].replace('gmres_simd=830','gmres_simd=0'))
+        c=dict(c,Run=r['Run'],TunedCalls=0)
+        self.assertTrue(regression([r],[c],'gmres')[0]['logs_exact'])
+        self.assertTrue(regression([dict(r,NonGmresSolverEventsRows=0)],[dict(c,NonGmresSolverEventsRows=0)],'gmres')[0]['logs_exact'])
+        with self.assertRaises(AssertionError):
+            regression([dict(r,NonGmresSolverEventsRows=-1)],[dict(c,NonGmresSolverEventsRows=-1)],'gmres')
+        changed=dict(c,SolverEventsSha256='different',SolverEventsBytes=110)
+        self.assertFalse(regression([r],[changed],'gmres')[0]['logs_exact'])
+
 
 if __name__ == '__main__':
     unittest.main()
