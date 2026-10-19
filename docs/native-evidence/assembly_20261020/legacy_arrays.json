@@ -1,0 +1,488 @@
+[
+  {
+    "route": "AUTO",
+    "count": 0,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 1,
+    "style": 0,
+    "enabled": -1
+  },
+  {
+    "route": "OFF",
+    "count": 0,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 1,
+    "style": 0,
+    "enabled": -1
+  },
+  {
+    "route": "AUTO",
+    "count": 0,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 1,
+    "style": 0,
+    "enabled": 0
+  },
+  {
+    "route": "OFF",
+    "count": 0,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 1,
+    "style": 0,
+    "enabled": 0
+  },
+  {
+    "route": "AUTO",
+    "count": 0,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 1,
+    "style": 0,
+    "enabled": 1
+  },
+  {
+    "route": "OFF",
+    "count": 0,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 1,
+    "style": 0,
+    "enabled": 1
+  },
+  {
+    "route": "AUTO",
+    "count": 52,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 1,
+    "style": 1,
+    "enabled": -1
+  },
+  {
+    "route": "OFF",
+    "count": 52,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 1,
+    "style": 1,
+    "enabled": -1
+  },
+  {
+    "route": "AUTO",
+    "count": 52,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 1,
+    "style": 1,
+    "enabled": 0
+  },
+  {
+    "route": "OFF",
+    "count": 52,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 1,
+    "style": 1,
+    "enabled": 0
+  },
+  {
+    "route": "AUTO",
+    "count": 52,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 1,
+    "style": 1,
+    "enabled": 1
+  },
+  {
+    "route": "OFF",
+    "count": 52,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 1,
+    "style": 1,
+    "enabled": 1
+  },
+  {
+    "route": "AUTO",
+    "count": 256,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 1,
+    "style": 2,
+    "enabled": -1
+  },
+  {
+    "route": "OFF",
+    "count": 256,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 1,
+    "style": 2,
+    "enabled": -1
+  },
+  {
+    "route": "AUTO",
+    "count": 256,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 1,
+    "style": 2,
+    "enabled": 0
+  },
+  {
+    "route": "OFF",
+    "count": 256,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 1,
+    "style": 2,
+    "enabled": 0
+  },
+  {
+    "route": "AUTO",
+    "count": 256,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 1,
+    "style": 2,
+    "enabled": 1
+  },
+  {
+    "route": "OFF",
+    "count": 256,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 1,
+    "style": 2,
+    "enabled": 1
+  },
+  {
+    "route": "AUTO",
+    "count": 0,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 2,
+    "style": 0,
+    "enabled": -1
+  },
+  {
+    "route": "OFF",
+    "count": 0,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 2,
+    "style": 0,
+    "enabled": -1
+  },
+  {
+    "route": "AUTO",
+    "count": 0,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 2,
+    "style": 0,
+    "enabled": 0
+  },
+  {
+    "route": "OFF",
+    "count": 0,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 2,
+    "style": 0,
+    "enabled": 0
+  },
+  {
+    "route": "AUTO",
+    "count": 0,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 2,
+    "style": 0,
+    "enabled": 1
+  },
+  {
+    "route": "OFF",
+    "count": 0,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 2,
+    "style": 0,
+    "enabled": 1
+  },
+  {
+    "route": "AUTO",
+    "count": 103,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 2,
+    "style": 1,
+    "enabled": -1
+  },
+  {
+    "route": "OFF",
+    "count": 103,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 2,
+    "style": 1,
+    "enabled": -1
+  },
+  {
+    "route": "AUTO",
+    "count": 103,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 2,
+    "style": 1,
+    "enabled": 0
+  },
+  {
+    "route": "OFF",
+    "count": 103,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 2,
+    "style": 1,
+    "enabled": 0
+  },
+  {
+    "route": "AUTO",
+    "count": 103,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 2,
+    "style": 1,
+    "enabled": 1
+  },
+  {
+    "route": "OFF",
+    "count": 103,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 2,
+    "style": 1,
+    "enabled": 1
+  },
+  {
+    "route": "AUTO",
+    "count": 512,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 2,
+    "style": 2,
+    "enabled": -1
+  },
+  {
+    "route": "OFF",
+    "count": 512,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 2,
+    "style": 2,
+    "enabled": -1
+  },
+  {
+    "route": "AUTO",
+    "count": 512,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 2,
+    "style": 2,
+    "enabled": 0
+  },
+  {
+    "route": "OFF",
+    "count": 512,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 2,
+    "style": 2,
+    "enabled": 0
+  },
+  {
+    "route": "AUTO",
+    "count": 512,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 2,
+    "style": 2,
+    "enabled": 1
+  },
+  {
+    "route": "OFF",
+    "count": 512,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 2,
+    "style": 2,
+    "enabled": 1
+  },
+  {
+    "route": "AUTO",
+    "count": 0,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 20,
+    "style": 0,
+    "enabled": -1
+  },
+  {
+    "route": "OFF",
+    "count": 0,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 20,
+    "style": 0,
+    "enabled": -1
+  },
+  {
+    "route": "AUTO",
+    "count": 0,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 20,
+    "style": 0,
+    "enabled": 0
+  },
+  {
+    "route": "OFF",
+    "count": 0,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 20,
+    "style": 0,
+    "enabled": 0
+  },
+  {
+    "route": "AUTO",
+    "count": 0,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 20,
+    "style": 0,
+    "enabled": 1
+  },
+  {
+    "route": "OFF",
+    "count": 0,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 20,
+    "style": 0,
+    "enabled": 1
+  },
+  {
+    "route": "AUTO",
+    "count": 1024,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 20,
+    "style": 1,
+    "enabled": -1
+  },
+  {
+    "route": "OFF",
+    "count": 1024,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 20,
+    "style": 1,
+    "enabled": -1
+  },
+  {
+    "route": "AUTO",
+    "count": 1024,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 20,
+    "style": 1,
+    "enabled": 0
+  },
+  {
+    "route": "OFF",
+    "count": 1024,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 20,
+    "style": 1,
+    "enabled": 0
+  },
+  {
+    "route": "AUTO",
+    "count": 1024,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 20,
+    "style": 1,
+    "enabled": 1
+  },
+  {
+    "route": "OFF",
+    "count": 1024,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 20,
+    "style": 1,
+    "enabled": 1
+  },
+  {
+    "route": "AUTO",
+    "count": 5120,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 20,
+    "style": 2,
+    "enabled": -1
+  },
+  {
+    "route": "OFF",
+    "count": 5120,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 20,
+    "style": 2,
+    "enabled": -1
+  },
+  {
+    "route": "AUTO",
+    "count": 5120,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 20,
+    "style": 2,
+    "enabled": 0
+  },
+  {
+    "route": "OFF",
+    "count": 5120,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 20,
+    "style": 2,
+    "enabled": 0
+  },
+  {
+    "route": "AUTO",
+    "count": 5120,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 20,
+    "style": 2,
+    "enabled": 1
+  },
+  {
+    "route": "OFF",
+    "count": 5120,
+    "exact_arrays_and_udt": true,
+    "native_calls": 0,
+    "n": 20,
+    "style": 2,
+    "enabled": 1
+  }
+]

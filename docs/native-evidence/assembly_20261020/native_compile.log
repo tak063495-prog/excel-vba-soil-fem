@@ -1,0 +1,7 @@
+ Assembling: sfn_fp.asm
+sfn_simd.c
+sfn_state.c
+sfn_gmres.c
+sfn_assembly.c
+soilfem_native.c
+   ライブラリ bin\soilfem_native_x64.lib とオブジェクト bin\soilfem_native_x64.exp を作成中

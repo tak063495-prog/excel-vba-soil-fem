@@ -1,0 +1,8 @@
+test_decline_before_any_output_write (test_assembly.AssemblyTests.test_decline_before_any_output_write) ... ok
+test_nonfinite_and_invalid_positions_both_passes (test_assembly.AssemblyTests.test_nonfinite_and_invalid_positions_both_passes) ... ok
+test_order_all_values_and_input_immutability (test_assembly.AssemblyTests.test_order_all_values_and_input_immutability) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.105s
+
+OK

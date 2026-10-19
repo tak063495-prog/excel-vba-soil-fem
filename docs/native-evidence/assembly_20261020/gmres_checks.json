@@ -1,0 +1,124 @@
+{
+  "status": "PASS",
+  "solutions": [
+    {
+      "mode": 1,
+      "side": 1,
+      "relative_residual": 0.0,
+      "iterations": 1,
+      "events": 2
+    },
+    {
+      "mode": 1,
+      "side": 2,
+      "relative_residual": 2.0863484511615337e-16,
+      "iterations": 3,
+      "events": 2
+    },
+    {
+      "mode": 1,
+      "side": 3,
+      "relative_residual": 2.079205053524513e-13,
+      "iterations": 9,
+      "events": 4
+    },
+    {
+      "mode": 1,
+      "side": 5,
+      "relative_residual": 1.7020617025780815e-12,
+      "iterations": 10,
+      "events": 5
+    },
+    {
+      "mode": 1,
+      "side": 8,
+      "relative_residual": 4.7478349408974125e-12,
+      "iterations": 10,
+      "events": 5
+    },
+    {
+      "mode": 1,
+      "side": 8,
+      "tolerance": 1e-08,
+      "relative_residual": 8.014676775616325e-10,
+      "iterations": 8,
+      "events": 5
+    },
+    {
+      "mode": 1,
+      "side": 8,
+      "tolerance": 1e-10,
+      "relative_residual": 7.486697090314717e-11,
+      "iterations": 9,
+      "events": 6
+    },
+    {
+      "mode": 1,
+      "side": 8,
+      "tolerance": 1e-12,
+      "relative_residual": 7.471854144402287e-13,
+      "iterations": 11,
+      "events": 7
+    },
+    {
+      "mode": 2,
+      "side": 1,
+      "relative_residual": 0.0,
+      "iterations": 1,
+      "events": 2
+    },
+    {
+      "mode": 2,
+      "side": 2,
+      "relative_residual": 2.0863484511615337e-16,
+      "iterations": 3,
+      "events": 2
+    },
+    {
+      "mode": 2,
+      "side": 3,
+      "relative_residual": 2.0788190634674028e-13,
+      "iterations": 9,
+      "events": 4
+    },
+    {
+      "mode": 2,
+      "side": 5,
+      "relative_residual": 1.7020648025678458e-12,
+      "iterations": 10,
+      "events": 5
+    },
+    {
+      "mode": 2,
+      "side": 8,
+      "relative_residual": 4.747886615941337e-12,
+      "iterations": 10,
+      "events": 5
+    },
+    {
+      "mode": 2,
+      "side": 8,
+      "tolerance": 1e-08,
+      "relative_residual": 8.014676275821173e-10,
+      "iterations": 8,
+      "events": 5
+    },
+    {
+      "mode": 2,
+      "side": 8,
+      "tolerance": 1e-10,
+      "relative_residual": 7.486695636429976e-11,
+      "iterations": 9,
+      "events": 6
+    },
+    {
+      "mode": 2,
+      "side": 8,
+      "tolerance": 1e-12,
+      "relative_residual": 7.472168515333642e-13,
+      "iterations": 11,
+      "events": 7
+    }
+  ],
+  "checked_failure_transactionality": true
+}

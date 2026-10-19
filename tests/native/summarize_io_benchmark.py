@@ -1,4 +1,4 @@
-"""I/O-only pairs must preserve the full numerical result AND event CSV bytes."""
+"""Paired I/O/assembly changes must preserve numerical results and event bytes."""
 import argparse
 import json
 import math
@@ -7,7 +7,12 @@ from pathlib import Path
 from summarize_inco_benchmark import load
 
 def compare(reference,candidate,scope='io'):
-    if scope=='events':
+    if scope=='assembly':
+        assert reference['IoFast']==candidate['IoFast']==reference['EventFast']==candidate['EventFast']==1
+        assert reference['AssemblyFast']==0 and candidate['AssemblyFast']==1
+        assert reference['Assembly'][0]==0 and candidate['Assembly'][0]>0
+        assert reference['Assembly'][1:]==candidate['Assembly'][1:]
+    elif scope=='events':
         assert reference['IoFast']==candidate['IoFast']==1
         assert reference['EventFast']==0 and candidate['EventFast']==1
     else:
@@ -34,7 +39,7 @@ def compare(reference,candidate,scope='io'):
 
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('directory');ap.add_argument('--out',required=True)
-    ap.add_argument('--pairs',type=int,default=3);ap.add_argument('--scope',choices=('io','events'),default='io');a=ap.parse_args();d=Path(a.directory)
+    ap.add_argument('--pairs',type=int,default=3);ap.add_argument('--scope',choices=('io','events','assembly'),default='io');a=ap.parse_args();d=Path(a.directory)
     assert a.pairs>0
     rows=[dict(pair=i,**compare(load(d/f'pair{i}_enabled0.json'),load(d/f'pair{i}_enabled1.json'),a.scope)) for i in range(1,a.pairs+1)]
     r=[x['reference_seconds'] for x in rows];c=[x['candidate_seconds'] for x in rows]

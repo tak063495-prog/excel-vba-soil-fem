@@ -14,5 +14,7 @@ cl /nologo /O2 /fp:strict /MT /c /W4 /WX /std:c11 /Fo:bin\sfn_state.obj sfn_stat
 if errorlevel 1 exit /b 1
 cl /nologo /O2 /fp:strict /MT /c /W4 /WX /std:c11 /Fo:bin\sfn_gmres.obj sfn_gmres.c
 if errorlevel 1 exit /b 1
-cl /nologo /O2 /fp:strict /MT /LD /W4 /WX /std:c11 /Fo:bin\ soilfem_native.c bin\sfn_fp.obj bin\sfn_simd.obj bin\sfn_state.obj bin\sfn_gmres.obj /Fe:bin\soilfem_native_x64.dll /link /INCREMENTAL:NO
+cl /nologo /O2 /fp:strict /MT /c /W4 /WX /std:c11 /Fo:bin\sfn_assembly.obj sfn_assembly.c
+if errorlevel 1 exit /b 1
+cl /nologo /O2 /fp:strict /MT /LD /W4 /WX /std:c11 /Fo:bin\ soilfem_native.c bin\sfn_fp.obj bin\sfn_simd.obj bin\sfn_state.obj bin\sfn_gmres.obj bin\sfn_assembly.obj /Fe:bin\soilfem_native_x64.dll /link /INCREMENTAL:NO
 exit /b %errorlevel%

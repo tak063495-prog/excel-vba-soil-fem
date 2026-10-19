@@ -13,6 +13,7 @@ Private Declare PtrSafe Function GetModuleFileNameW Lib "kernel32" (ByVal module
 Private Declare PtrSafe Function SfnAbi Lib "soilfem_native_x64.dll" Alias "sfn_abi" () As Long
 Private Declare PtrSafe Function SfnSetPrecision Lib "soilfem_native_x64.dll" Alias "sfn_set_precision" (ByVal mode As Long) As Long
 Private Declare PtrSafe Function SfnGetPrecision Lib "soilfem_native_x64.dll" Alias "sfn_get_precision" () As Long
+Private Declare PtrSafe Function SfnCSRScatterList Lib "soilfem_native_x64.dll" Alias "sfn_csr_scatter_list" (ByVal params As LongPtr) As Long
 Private Declare PtrSafe Function SfnGmres Lib "soilfem_native_x64.dll" Alias "sfn_gmres" (ByVal params As LongPtr, ByVal tol As Double) As Long
 Private Declare PtrSafe Function SfnRestoreCommitted Lib "soilfem_native_x64.dll" Alias "sfn_restore_committed" (ByVal n As Long, ByVal stride As LongLong, ByVal dst As LongPtr, ByVal src As LongPtr, ByVal active As LongPtr, ByVal activeLo As Long, ByVal activeHi As Long, ByVal plasticActive As LongPtr, ByRef activeCount As Long) As Long
 Private Declare PtrSafe Function SfnBandFactor Lib "soilfem_native_x64.dll" Alias "sfn_band_factor" (ByVal n As Long, ByVal bw As Long, ByVal ld As Long, ByVal band As LongPtr, ByVal packed As LongPtr, ByVal akj As LongPtr, ByVal tol As Double, ByRef failK As Long) As Long
@@ -32,6 +33,7 @@ Private mPrecisionAPI As Boolean, mPrecisionMode As Long
 Public FEMNativeFactorCalls As Long, FEMNativeSolveCalls As Long, FEMNativeNsCalls As Long, FEMNativeFallbacks As Long
 Public FEMNativeStateCopies As Long
 Public FEMNativeGmresCalls As Long
+Public FEMNativeAssemblyCalls As Long
 
 ' Test/diagnostic switch: "AUTO", "BAND", "OFF" or "" (= follow NATIVE_DLL setting).
 Public Sub FEMNativeSetMode(ByVal modeText As String)
@@ -48,6 +50,7 @@ Public Sub FEMNativeResetCounts()
   FEMNativeFactorCalls = 0: FEMNativeSolveCalls = 0: FEMNativeNsCalls = 0: FEMNativeFallbacks = 0
   FEMNativeStateCopies = 0
   FEMNativeGmresCalls = 0
+  FEMNativeAssemblyCalls = 0
 End Sub
 
 #If Win64 Then
@@ -124,6 +127,59 @@ Public Function FEMNativeRestoreState() As Boolean
   If rc = 0 Then FEMNativeStateCopies = FEMNativeStateCopies + 1: FEMNativeRestoreState = True
   Exit Function
 FailedState:
+  If Err.Number = 18 Then Err.Raise 18
+  Err.Clear
+#End If
+End Function
+
+
+' Build the current nonzero scatter list without changing matrix arithmetic.
+' Missing setting/export or a rejected layout keeps the original VBA path.
+Public Function FEMNativeCSRScatterList() As Boolean
+#If Win64 Then
+  Dim p(0 To 12) As LongLong, n As Long, count As Long, stride As LongLong
+  On Error GoTo FailedAssembly
+  If P6ReadSetting("NATIVE_ASSEMBLY", 0#) <> 1# Then Exit Function
+  If FEMNativeModeText() <> "AUTO" Then Exit Function
+  If Not FEMNativeAvailable() Then Exit Function
+  If GetProcAddress(mHandle, "sfn_csr_scatter_list") = 0 Then Exit Function
+  n = NumberOfElement
+  If n < 1 Or n > 8388607 Or P6CSRNNZ < 1 Then Exit Function
+  If LBound(Elem) <> 0 Or UBound(Elem) < n - 1 Then Exit Function
+  If LBound(P6CSRElementPosition, 1) <> 0 Or UBound(P6CSRElementPosition, 1) <> n - 1 Then Exit Function
+  If LBound(P6CSRElementPosition, 2) <> 0 Or UBound(P6CSRElementPosition, 2) <> 15 Then Exit Function
+  If LBound(P6CSRElementPosition, 3) <> 0 Or UBound(P6CSRElementPosition, 3) <> 15 Then Exit Function
+  stride = LenB(Elem(0))
+  If n > 1 Then
+    If VarPtr(Elem(1)) - VarPtr(Elem(0)) <> stride Then Exit Function
+  End If
+  If VarPtr(Elem(0).kmat(1, 0)) - VarPtr(Elem(0).kmat(0, 0)) <> 8 Then Exit Function
+  If VarPtr(Elem(0).kmat(0, 1)) - VarPtr(Elem(0).kmat(0, 0)) <> 128 Then Exit Function
+  ReDim P6CSRScatterStart(0 To n)
+  p(0) = VarPtr(Elem(0)): p(1) = stride: p(2) = n
+  p(3) = VarPtr(Elem(0).kmat(0, 0)) - VarPtr(Elem(0))
+  p(4) = VarPtr(P6CSRElementPosition(0, 0, 0)): p(5) = P6CSRNNZ
+  p(6) = VarPtr(P6CSRScatterStart(0)): p(7) = -1: p(12) = VarPtr(count)
+  If SfnCSRScatterList(VarPtr(p(0))) <> 0 Then Exit Function
+  If count < 0 Or count > n * 256 Then Exit Function
+  If count > 0 Then
+    ReDim P6CSRScatterLocalRow(0 To count - 1)
+    ReDim P6CSRScatterLocalColumn(0 To count - 1)
+    ReDim P6CSRScatterPosition(0 To count - 1)
+    ReDim P6CSRScatterValueIndex(0 To count - 1)
+    p(7) = count
+    p(8) = VarPtr(P6CSRScatterLocalRow(0)): p(9) = VarPtr(P6CSRScatterLocalColumn(0))
+    p(10) = VarPtr(P6CSRScatterPosition(0)): p(11) = VarPtr(P6CSRScatterValueIndex(0))
+    If SfnCSRScatterList(VarPtr(p(0))) <> 0 Then Exit Function
+  Else
+    Erase P6CSRScatterLocalRow: Erase P6CSRScatterLocalColumn
+    Erase P6CSRScatterPosition: Erase P6CSRScatterValueIndex
+  End If
+  P6CSRScatterCount = count
+  FEMNativeAssemblyCalls = FEMNativeAssemblyCalls + 1
+  FEMNativeCSRScatterList = True
+  Exit Function
+FailedAssembly:
   If Err.Number = 18 Then Err.Raise 18
   Err.Clear
 #End If

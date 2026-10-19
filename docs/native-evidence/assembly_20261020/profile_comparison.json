@@ -1,0 +1,554 @@
+{
+  "reference_total_seconds": 54.3282922,
+  "candidate_total_seconds": 52.1132214,
+  "numerical_and_log_check": {
+    "reference_seconds": 54.334947,
+    "candidate_seconds": 52.121155,
+    "displacement_count": 170,
+    "max_abs_displacement_delta": 0.0,
+    "residual": 6.5595364013624e-13,
+    "raw_bracket": [
+      2.200000000000001,
+      2.2125000000000012,
+      2.206250000000001,
+      0.012500000000000178,
+      true,
+      17
+    ],
+    "solver_events_sha256": "471C64B436C1A307197CA01908F232F129FAD500364C299860319DBE8452BB34",
+    "solver_events_bytes": 13541361
+  },
+  "changes": [
+    {
+      "procedure": "FEMKernGmres",
+      "reference_calls": 830,
+      "candidate_calls": 830,
+      "reference_inclusive_seconds": 10.9857695,
+      "candidate_inclusive_seconds": 11.0084532,
+      "reference_exclusive_seconds": 10.9812595,
+      "candidate_exclusive_seconds": 11.0024864
+    },
+    {
+      "procedure": "FEMMatEval",
+      "reference_calls": 56583,
+      "candidate_calls": 56583,
+      "reference_inclusive_seconds": 8.029396,
+      "candidate_inclusive_seconds": 8.0065331,
+      "reference_exclusive_seconds": 7.6695354,
+      "candidate_exclusive_seconds": 7.6498858
+    },
+    {
+      "procedure": "P6EnsureCSRScatterList",
+      "reference_calls": 7804,
+      "candidate_calls": 7804,
+      "reference_inclusive_seconds": 4.9367228,
+      "candidate_inclusive_seconds": 0.5281756,
+      "reference_exclusive_seconds": 4.8741522,
+      "candidate_exclusive_seconds": 0.0338092
+    },
+    {
+      "procedure": "P6SolveNonsymmetricBand",
+      "reference_calls": 9039,
+      "candidate_calls": 9039,
+      "reference_inclusive_seconds": 5.0278047,
+      "candidate_inclusive_seconds": 5.161639,
+      "reference_exclusive_seconds": 4.3245189,
+      "candidate_exclusive_seconds": 4.3359134
+    },
+    {
+      "procedure": "FEMIoNativeGmresEvents",
+      "reference_calls": 830,
+      "candidate_calls": 830,
+      "reference_inclusive_seconds": 7.6291288,
+      "candidate_inclusive_seconds": 7.7508654,
+      "reference_exclusive_seconds": 3.0957389,
+      "candidate_exclusive_seconds": 3.2018403
+    },
+    {
+      "procedure": "AssemblySymmetryScan",
+      "reference_calls": 7804,
+      "candidate_calls": 7804,
+      "reference_inclusive_seconds": 2.429791,
+      "candidate_inclusive_seconds": 2.4328164,
+      "reference_exclusive_seconds": 2.429791,
+      "candidate_exclusive_seconds": 2.4328164
+    },
+    {
+      "procedure": "P6SolveResidualRecovery",
+      "reference_calls": 1752,
+      "candidate_calls": 1752,
+      "reference_inclusive_seconds": 2.5346035,
+      "candidate_inclusive_seconds": 2.5913939,
+      "reference_exclusive_seconds": 2.3505146,
+      "candidate_exclusive_seconds": 2.3649415
+    },
+    {
+      "procedure": "FEMIoAppendCsv",
+      "reference_calls": 109865,
+      "candidate_calls": 109865,
+      "reference_inclusive_seconds": 5.1244087,
+      "candidate_inclusive_seconds": 5.1825338,
+      "reference_exclusive_seconds": 2.2857308,
+      "candidate_exclusive_seconds": 2.3431401
+    },
+    {
+      "procedure": "P0_RunAnalysis",
+      "reference_calls": 1,
+      "candidate_calls": 1,
+      "reference_inclusive_seconds": 54.3282922,
+      "candidate_inclusive_seconds": 52.1132214,
+      "reference_exclusive_seconds": 2.1975616,
+      "candidate_exclusive_seconds": 2.1522319
+    },
+    {
+      "procedure": "FEMIoFlushEvents",
+      "reference_calls": 233,
+      "candidate_calls": 233,
+      "reference_inclusive_seconds": 2.0803189,
+      "candidate_inclusive_seconds": 2.0652613,
+      "reference_exclusive_seconds": 2.0281031,
+      "candidate_exclusive_seconds": 2.0123275
+    },
+    {
+      "procedure": "FEMMatTangent",
+      "reference_calls": 7803,
+      "candidate_calls": 7803,
+      "reference_inclusive_seconds": 1.3478245,
+      "candidate_inclusive_seconds": 1.3440025,
+      "reference_exclusive_seconds": 1.2988236,
+      "candidate_exclusive_seconds": 1.2959492
+    },
+    {
+      "procedure": "P3RestoreCommittedMaterialState",
+      "reference_calls": 45600,
+      "candidate_calls": 45600,
+      "reference_inclusive_seconds": 1.1862778,
+      "candidate_inclusive_seconds": 2.0203057,
+      "reference_exclusive_seconds": 1.1862778,
+      "candidate_exclusive_seconds": 2.0203057
+    },
+    {
+      "procedure": "SetBoundaryCondition",
+      "reference_calls": 9040,
+      "candidate_calls": 9040,
+      "reference_inclusive_seconds": 1.162971,
+      "candidate_inclusive_seconds": 1.1584686,
+      "reference_exclusive_seconds": 1.0054595,
+      "candidate_exclusive_seconds": 0.9997071
+    },
+    {
+      "procedure": "P3ApplyLineSearch",
+      "reference_calls": 6524,
+      "candidate_calls": 6524,
+      "reference_inclusive_seconds": 10.1106285,
+      "candidate_inclusive_seconds": 11.2521691,
+      "reference_exclusive_seconds": 0.918913,
+      "candidate_exclusive_seconds": 1.0939009
+    },
+    {
+      "procedure": "P3EvaluateTrialState",
+      "reference_calls": 56350,
+      "candidate_calls": 56350,
+      "reference_inclusive_seconds": 8.6675785,
+      "candidate_inclusive_seconds": 8.64087,
+      "reference_exclusive_seconds": 0.6362381,
+      "candidate_exclusive_seconds": 0.632496
+    },
+    {
+      "procedure": "FEMKernOn",
+      "reference_calls": 110186,
+      "candidate_calls": 110186,
+      "reference_inclusive_seconds": 0.5703202,
+      "candidate_inclusive_seconds": 0.960149,
+      "reference_exclusive_seconds": 0.5703202,
+      "candidate_exclusive_seconds": 0.960149
+    },
+    {
+      "procedure": "P3RunLoadStages",
+      "reference_calls": 17,
+      "candidate_calls": 17,
+      "reference_inclusive_seconds": 51.7369186,
+      "candidate_inclusive_seconds": 49.5756064,
+      "reference_exclusive_seconds": 0.5475985,
+      "candidate_exclusive_seconds": 0.5794465
+    },
+    {
+      "procedure": "FEMIoOutDir",
+      "reference_calls": 109884,
+      "candidate_calls": 109884,
+      "reference_inclusive_seconds": 0.5144546,
+      "candidate_inclusive_seconds": 0.5063343,
+      "reference_exclusive_seconds": 0.5072244,
+      "candidate_exclusive_seconds": 0.4989345
+    },
+    {
+      "procedure": "AssemblyCopyValues",
+      "reference_calls": 7804,
+      "candidate_calls": 7804,
+      "reference_inclusive_seconds": 0.4893133,
+      "candidate_inclusive_seconds": 0.4842525,
+      "reference_exclusive_seconds": 0.4893133,
+      "candidate_exclusive_seconds": 0.4842525
+    },
+    {
+      "procedure": "P6SolverEvent",
+      "reference_calls": 10869,
+      "candidate_calls": 10869,
+      "reference_inclusive_seconds": 1.2153916,
+      "candidate_inclusive_seconds": 1.3694944,
+      "reference_exclusive_seconds": 0.4772781,
+      "candidate_exclusive_seconds": 0.5647769
+    },
+    {
+      "procedure": "P3RebuildTangentFromSpmat",
+      "reference_calls": 7803,
+      "candidate_calls": 7803,
+      "reference_inclusive_seconds": 11.0545724,
+      "candidate_inclusive_seconds": 7.2665576,
+      "reference_exclusive_seconds": 0.4457276,
+      "candidate_exclusive_seconds": 0.4485894
+    },
+    {
+      "procedure": "FEMKernResidual",
+      "reference_calls": 66193,
+      "candidate_calls": 66193,
+      "reference_inclusive_seconds": 0.7564945,
+      "candidate_inclusive_seconds": 1.0069845,
+      "reference_exclusive_seconds": 0.4287928,
+      "candidate_exclusive_seconds": 0.4283627
+    },
+    {
+      "procedure": "AssemblyZeroValues",
+      "reference_calls": 7804,
+      "candidate_calls": 7804,
+      "reference_inclusive_seconds": 0.3691182,
+      "candidate_inclusive_seconds": 0.3629005,
+      "reference_exclusive_seconds": 0.3691182,
+      "candidate_exclusive_seconds": 0.3629005
+    },
+    {
+      "procedure": "P6CheckCSRDiagonalValues",
+      "reference_calls": 14920,
+      "candidate_calls": 14920,
+      "reference_inclusive_seconds": 0.3227695,
+      "candidate_inclusive_seconds": 0.3251829,
+      "reference_exclusive_seconds": 0.3227695,
+      "candidate_exclusive_seconds": 0.3251829
+    },
+    {
+      "procedure": "FEMMatCommonParams",
+      "reference_calls": 79993,
+      "candidate_calls": 79993,
+      "reference_inclusive_seconds": 0.5061938,
+      "candidate_inclusive_seconds": 0.5001099,
+      "reference_exclusive_seconds": 0.3224691,
+      "candidate_exclusive_seconds": 0.3178889
+    },
+    {
+      "procedure": "P3AccumulateResidualMetrics",
+      "reference_calls": 66193,
+      "candidate_calls": 66193,
+      "reference_inclusive_seconds": 1.0190236,
+      "candidate_inclusive_seconds": 1.2698431,
+      "reference_exclusive_seconds": 0.2625291,
+      "candidate_exclusive_seconds": 0.2628586
+    },
+    {
+      "procedure": "P6SelectSolverMode",
+      "reference_calls": 7804,
+      "candidate_calls": 7804,
+      "reference_inclusive_seconds": 0.2079186,
+      "candidate_inclusive_seconds": 0.6316255,
+      "reference_exclusive_seconds": 0.2079186,
+      "candidate_exclusive_seconds": 0.6316255
+    },
+    {
+      "procedure": "FEMIoEventCsv",
+      "reference_calls": 117415,
+      "candidate_calls": 117415,
+      "reference_inclusive_seconds": 0.2040945,
+      "candidate_inclusive_seconds": 0.203159,
+      "reference_exclusive_seconds": 0.2040945,
+      "candidate_exclusive_seconds": 0.203159
+    },
+    {
+      "procedure": "FEMIoBufferEvent",
+      "reference_calls": 109847,
+      "candidate_calls": 109847,
+      "reference_inclusive_seconds": 0.1871663,
+      "candidate_inclusive_seconds": 0.185764,
+      "reference_exclusive_seconds": 0.1871663,
+      "candidate_exclusive_seconds": 0.185764
+    },
+    {
+      "procedure": "FEMMatBuildMaterialTable",
+      "reference_calls": 79993,
+      "candidate_calls": 79993,
+      "reference_inclusive_seconds": 0.1837247,
+      "candidate_inclusive_seconds": 0.182221,
+      "reference_exclusive_seconds": 0.1837247,
+      "candidate_exclusive_seconds": 0.182221
+    },
+    {
+      "procedure": "AssemblyMeshPolicy",
+      "reference_calls": 7804,
+      "candidate_calls": 7804,
+      "reference_inclusive_seconds": 0.1549386,
+      "candidate_inclusive_seconds": 0.3103537,
+      "reference_exclusive_seconds": 0.1546534,
+      "candidate_exclusive_seconds": 0.3100312
+    },
+    {
+      "procedure": "P6BuildCSRILU",
+      "reference_calls": 830,
+      "candidate_calls": 830,
+      "reference_inclusive_seconds": 0.1582901,
+      "candidate_inclusive_seconds": 0.1598106,
+      "reference_exclusive_seconds": 0.1534548,
+      "candidate_exclusive_seconds": 0.1527113
+    },
+    {
+      "procedure": "P3TryNewtonWatchdog",
+      "reference_calls": 709,
+      "candidate_calls": 709,
+      "reference_inclusive_seconds": 10.4519924,
+      "candidate_inclusive_seconds": 8.6059766,
+      "reference_exclusive_seconds": 0.1270826,
+      "candidate_exclusive_seconds": 0.12704
+    },
+    {
+      "procedure": "P6PerfEmit",
+      "reference_calls": 17,
+      "candidate_calls": 17,
+      "reference_inclusive_seconds": 0.2802941,
+      "candidate_inclusive_seconds": 0.2806151,
+      "reference_exclusive_seconds": 0.1073886,
+      "candidate_exclusive_seconds": 0.1064047
+    },
+    {
+      "procedure": "FEMKernCsrScatter",
+      "reference_calls": 7804,
+      "candidate_calls": 7804,
+      "reference_inclusive_seconds": 0.1967956,
+      "candidate_inclusive_seconds": 0.2205911,
+      "reference_exclusive_seconds": 0.1052161,
+      "candidate_exclusive_seconds": 0.1032872
+    },
+    {
+      "procedure": "P6SolveCSR",
+      "reference_calls": 9039,
+      "candidate_calls": 9039,
+      "reference_inclusive_seconds": 24.0319778,
+      "candidate_inclusive_seconds": 24.3305268,
+      "reference_exclusive_seconds": 0.0893807,
+      "candidate_exclusive_seconds": 0.0861041
+    },
+    {
+      "procedure": "P6BuildCSRFromElements",
+      "reference_calls": 7804,
+      "candidate_calls": 7804,
+      "reference_inclusive_seconds": 6.3123294,
+      "candidate_inclusive_seconds": 1.9145779,
+      "reference_exclusive_seconds": 0.08811,
+      "candidate_exclusive_seconds": 0.0858934
+    },
+    {
+      "procedure": "P3TryResidualRecovery",
+      "reference_calls": 1531,
+      "candidate_calls": 1531,
+      "reference_inclusive_seconds": 6.4201003,
+      "candidate_inclusive_seconds": 6.8448061,
+      "reference_exclusive_seconds": 0.0840984,
+      "candidate_exclusive_seconds": 0.078212
+    },
+    {
+      "procedure": "SetTotalMat",
+      "reference_calls": 7804,
+      "candidate_calls": 7804,
+      "reference_inclusive_seconds": 9.1810722,
+      "candidate_inclusive_seconds": 5.3644841,
+      "reference_exclusive_seconds": 0.0760946,
+      "candidate_exclusive_seconds": 0.0751106
+    },
+    {
+      "procedure": "P3InitializeTrialState",
+      "reference_calls": 17,
+      "candidate_calls": 17,
+      "reference_inclusive_seconds": 0.0715493,
+      "candidate_inclusive_seconds": 0.0703619,
+      "reference_exclusive_seconds": 0.0715493,
+      "candidate_exclusive_seconds": 0.0703619
+    },
+    {
+      "procedure": "FEMNativeCSRScatterList",
+      "reference_calls": 7804,
+      "candidate_calls": 7804,
+      "reference_inclusive_seconds": 0.0625706,
+      "candidate_inclusive_seconds": 0.4943664,
+      "reference_exclusive_seconds": 0.0625706,
+      "candidate_exclusive_seconds": 0.4943664
+    },
+    {
+      "procedure": "FEMIoEventName",
+      "reference_calls": 10869,
+      "candidate_calls": 10869,
+      "reference_inclusive_seconds": 0.07616,
+      "candidate_inclusive_seconds": 0.0909519,
+      "reference_exclusive_seconds": 0.062501,
+      "candidate_exclusive_seconds": 0.0773352
+    },
+    {
+      "procedure": "FEMIoEnsureDir",
+      "reference_calls": 266,
+      "candidate_calls": 266,
+      "reference_inclusive_seconds": 0.059446,
+      "candidate_inclusive_seconds": 0.0603336,
+      "reference_exclusive_seconds": 0.059446,
+      "candidate_exclusive_seconds": 0.0603336
+    },
+    {
+      "procedure": "P6AssembleCSRValuesDetailed",
+      "reference_calls": 7804,
+      "candidate_calls": 7804,
+      "reference_inclusive_seconds": 0.6060434,
+      "candidate_inclusive_seconds": 0.6232934,
+      "reference_exclusive_seconds": 0.0401296,
+      "candidate_exclusive_seconds": 0.0398018
+    },
+    {
+      "procedure": "FEMAppendRunLog",
+      "reference_calls": 75,
+      "candidate_calls": 75,
+      "reference_inclusive_seconds": 0.0412939,
+      "candidate_inclusive_seconds": 0.0434882,
+      "reference_exclusive_seconds": 0.0400857,
+      "candidate_exclusive_seconds": 0.042345
+    },
+    {
+      "procedure": "BandSolver",
+      "reference_calls": 9039,
+      "candidate_calls": 9039,
+      "reference_inclusive_seconds": 24.0656148,
+      "candidate_inclusive_seconds": 24.3633529,
+      "reference_exclusive_seconds": 0.033637,
+      "candidate_exclusive_seconds": 0.0328261
+    },
+    {
+      "procedure": "P3CommitMaterialState",
+      "reference_calls": 148,
+      "candidate_calls": 148,
+      "reference_inclusive_seconds": 0.033039,
+      "candidate_inclusive_seconds": 0.0328958,
+      "reference_exclusive_seconds": 0.033039,
+      "candidate_exclusive_seconds": 0.0328958
+    },
+    {
+      "procedure": "P6SolveCSRGMRES",
+      "reference_calls": 830,
+      "candidate_calls": 830,
+      "reference_inclusive_seconds": 18.6451208,
+      "candidate_inclusive_seconds": 18.7900315,
+      "reference_exclusive_seconds": 0.0302225,
+      "candidate_exclusive_seconds": 0.0307129
+    },
+    {
+      "procedure": "P6EnsureCSRValueWorkspace",
+      "reference_calls": 14920,
+      "candidate_calls": 14920,
+      "reference_inclusive_seconds": 0.0234697,
+      "candidate_inclusive_seconds": 0.0231693,
+      "reference_exclusive_seconds": 0.0234697,
+      "candidate_exclusive_seconds": 0.0231693
+    },
+    {
+      "procedure": "FEMIoEventPrefix",
+      "reference_calls": 11699,
+      "candidate_calls": 11699,
+      "reference_inclusive_seconds": 0.0217453,
+      "candidate_inclusive_seconds": 0.0216783,
+      "reference_exclusive_seconds": 0.0216064,
+      "candidate_exclusive_seconds": 0.0215453
+    },
+    {
+      "procedure": "P6CsvHeaderEvent",
+      "reference_calls": 11700,
+      "candidate_calls": 11700,
+      "reference_inclusive_seconds": 0.0183192,
+      "candidate_inclusive_seconds": 0.0182201,
+      "reference_exclusive_seconds": 0.0183192,
+      "candidate_exclusive_seconds": 0.0182201
+    },
+    {
+      "procedure": "P3ShouldRebuildTangent",
+      "reference_calls": 5783,
+      "candidate_calls": 5783,
+      "reference_inclusive_seconds": 0.0117335,
+      "candidate_inclusive_seconds": 0.0116191,
+      "reference_exclusive_seconds": 0.0117335,
+      "candidate_exclusive_seconds": 0.0116191
+    },
+    {
+      "procedure": "SetAnalysisFailure",
+      "reference_calls": 1198,
+      "candidate_calls": 1198,
+      "reference_inclusive_seconds": 0.0108788,
+      "candidate_inclusive_seconds": 0.0103709,
+      "reference_exclusive_seconds": 0.0108788,
+      "candidate_exclusive_seconds": 0.0103709
+    },
+    {
+      "procedure": "P6PhysOnRebuild",
+      "reference_calls": 3859,
+      "candidate_calls": 3859,
+      "reference_inclusive_seconds": 0.0063701,
+      "candidate_inclusive_seconds": 0.006327,
+      "reference_exclusive_seconds": 0.0063701,
+      "candidate_exclusive_seconds": 0.006327
+    },
+    {
+      "procedure": "P6BuildCSRPattern",
+      "reference_calls": 1,
+      "candidate_calls": 1,
+      "reference_inclusive_seconds": 0.0034122,
+      "candidate_inclusive_seconds": 0.0033723,
+      "reference_exclusive_seconds": 0.0034122,
+      "candidate_exclusive_seconds": 0.0033723
+    },
+    {
+      "procedure": "FEMIoCsv",
+      "reference_calls": 593,
+      "candidate_calls": 593,
+      "reference_inclusive_seconds": 0.0025038,
+      "candidate_inclusive_seconds": 0.0023583,
+      "reference_exclusive_seconds": 0.0025038,
+      "candidate_exclusive_seconds": 0.0023583
+    },
+    {
+      "procedure": "P3CaptureSrmSuccessSnapshot",
+      "reference_calls": 13,
+      "candidate_calls": 13,
+      "reference_inclusive_seconds": 0.0015998,
+      "candidate_inclusive_seconds": 0.0015461,
+      "reference_exclusive_seconds": 0.0015998,
+      "candidate_exclusive_seconds": 0.0015461
+    },
+    {
+      "procedure": "GetDiagnosticSheet",
+      "reference_calls": 35,
+      "candidate_calls": 35,
+      "reference_inclusive_seconds": 0.0008452,
+      "candidate_inclusive_seconds": 0.000857,
+      "reference_exclusive_seconds": 0.0008452,
+      "candidate_exclusive_seconds": 0.000857
+    },
+    {
+      "procedure": "P3RestoreSrmSuccessSnapshot",
+      "reference_calls": 1,
+      "candidate_calls": 1,
+      "reference_inclusive_seconds": 0.0024909,
+      "candidate_inclusive_seconds": 0.0019766,
+      "reference_exclusive_seconds": 0.0002307,
+      "candidate_exclusive_seconds": 0.0001995
+    }
+  ]
+}

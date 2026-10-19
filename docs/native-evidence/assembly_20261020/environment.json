@@ -1,0 +1,27 @@
+{
+  "os": "Microsoft Windows 11 Home",
+  "event_log_fast": 1,
+  "native_gmres_simd": 1,
+  "wall_timer": "System.Diagnostics.Stopwatch",
+  "cpu": "AMD Ryzen 5 5600X 6-Core Processor             ",
+  "stopwatch_high_resolution": true,
+  "precision": "AUTO -> AVX2_FMA",
+  "baseline_commit": "87d4f13ddb80584d0a43fecad9030a8a6430122f",
+  "build": "20261020_INCO_ASSEMBLY_01",
+  "source_sha256": {
+    "src/vba/FEMNative.bas": "49D18195FC0A3872AFBCAD8801CC5B7E909C239A96F904A7FD180B2039B347C3",
+    "src/vba/FEMSolver.bas": "7F75CE008B2A41651F4393CB727271F34B45ACEFED1F8D356CE52EF0A5F37E85",
+    "tests/fixtures/smoke_mesh.json": "4F6318675417457AECA365913CD680EA00943316AB427352E3B040426D821A9E",
+    "src/vba/FEMCore.bas": "CBED9A2DE5613D3B3AF58E702FDA81C8B049C40F0570F9A3A2D265C7C6E5DE80",
+    "native/sfn_assembly.h": "07240118109ED46ED7E33AE56307EB6B798E1ACE5C1ECD46F8DBBF917ABE68D3",
+    "native/sfn_assembly.c": "AF1DAE5A38F5EA1B5267C68CB034C5017566DD56FCA1192A9637024F28C94456"
+  },
+  "profile_timer": "QueryPerformanceCounter, hierarchical exclusive partition",
+  "native_state_copy": 1,
+  "comparison_flags": [
+    "NATIVE_ASSEMBLY"
+  ],
+  "stopwatch_frequency": 10000000,
+  "io_fast_path": 1,
+  "excel_version": "16.0.20430.20182"
+}
