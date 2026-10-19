@@ -317,6 +317,15 @@ static int elem_active(const int64_t *P, int k) {
   return a[k - P[7]] != 0;
 }
 
+/* Fixed three-term products keep a Double rounding after each addition. */
+static inline double dot3_rounded(const double *a, const double *b) {
+  double s = 0.0;
+  s = (xd)s + (xd)a[0] * b[0];
+  s = (xd)s + (xd)a[1] * b[1];
+  s = (xd)s + (xd)a[2] * b[2];
+  return s;
+}
+
 typedef struct { double st[17][4]; double sp[3][16][4]; double dp[3][3][4]; mp_out o[4]; int ef[4]; } elem_work;
 
 /* returns the first element index NOT processed (nElem when finished) */
@@ -327,7 +336,7 @@ __declspec(dllexport) int32_t __stdcall sfm_eval(const int64_t *P, int32_t kStar
   const double *mt = (const double *)(intptr_t)P[9]; int nMat = (int)P[10];
   int16_t *app = (int16_t *)(intptr_t)P[11]; int flags = (int)P[12]; int64_t *out = (int64_t *)(intptr_t)P[13];
   int zeroOK = flags & 1, trialInit = (flags >> 1) & 1, skipHg = (flags >> 2) & 1;
-  int k, j, im, i, kk; static elem_work W;
+  int k, j, im, i; static elem_work W;
   if (!g_ready) { out[9] = 1; return kStart; }
   for (k = kStart; k < nElem; k++) {
     char *e = base + off[O_STRIDE] * (int64_t)k;
@@ -379,7 +388,7 @@ __declspec(dllexport) int32_t __stdcall sfm_eval(const int64_t *P, int32_t kStar
         W.st[16][im] = o->stress[3];
         for (i = 0; i < 3; i++) {
           for (j = 0; j < 3; j++) W.dp[i][j][im] = o->tangent[i][j];
-          for (j = 0; j < 16; j++) { double s = 0.0; for (kk = 0; kk < 3; kk++) s = (xd)s + (xd)o->tangent[i][kk] * B[BIX(kk, j, im)]; W.sp[i][j][im] = s; }
+          for (j = 0; j < 16; j++) W.sp[i][j][im] = dot3_rounded(o->tangent[i], B + BIX(0, j, im));
         }
       }
     }
@@ -462,7 +471,7 @@ __declspec(dllexport) int32_t __stdcall sfm_tangent(const int64_t *P, int16_t *d
   int nElem = (int)P[2]; const double *mt = (const double *)(intptr_t)P[9]; int nMat = (int)P[10];
   int flags = (int)P[12]; int64_t *out = (int64_t *)(intptr_t)P[13]; const double *gN = (const double *)(intptr_t)P[14];
   int elasticCorr = (flags >> 3) & 1, inco = (flags >> 4) & 1;
-  int k, im, i, j, kk; int64_t cnt = 0;
+  int k, im, i, j; int64_t cnt = 0;
   if (!g_ready) return 1;
   fp_clear();
   for (k = 0; k < nElem; k++) {
@@ -483,8 +492,7 @@ __declspec(dllexport) int32_t __stdcall sfm_tangent(const int64_t *P, int16_t *d
     *ew = 0.0;
     for (im = 0; im < 4; im++) for (i = 0; i < 16; i++) {
       for (j = 0; j < 16; j++) {
-        double s = 0.0;
-        for (kk = 0; kk < 3; kk++) s = (xd)s + (xd)B[BIX(kk, i, im)] * S[BIX(kk, j, im)];
+        double s = dot3_rounded(B + BIX(0, i, im), S + BIX(0, j, im));
         K[i + 16 * j] = (xd)K[i + 16 * j] + (xd)s * dj[im] * thick;
       }
       if (i <= 7) *ew = (xd)*ew + (xd)weight * thick * gN[im + 4 * i] * dj[im];
@@ -564,9 +572,15 @@ __declspec(dllexport) int32_t __stdcall sfm_csr_resnorm(int32_t n, const int32_t
 /* P6BuildCSRILU. out: [0]=failRow [1]=failCol ; minAbs. returns 1 ready, 0 failed */
 __declspec(dllexport) int32_t __stdcall sfm_ilu0(int32_t n, int32_t nnz, const int32_t *rp, const int32_t *ci, const int32_t *dp,
     const double *vals, double *ilu, int32_t *fail, double *minAbs) {
-  int32_t r, p, kp, u, c, kc; double dk, m;
+  int32_t r, p, kp, u, c, kc; int sorted = 1; double dk, m;
   fail[0] = -1; fail[1] = -1; *minAbs = 1E+308;
   if (nnz <= 0) return 0;
+  /* A monotone merge replaces repeated row-head searches only for strictly
+   * sorted CSR. Keep the original search for unsorted/duplicate input rows.
+   * No numeric update, pivot test or update order is changed. */
+  for (r = 0; r < n && sorted; r++)
+    for (p = rp[r] + 1; p < rp[r + 1]; p++)
+      if (ci[p] <= ci[p - 1]) { sorted = 0; break; }
   for (p = 0; p < nnz; p++) ilu[p] = vals[p];
   for (r = 0; r < n; r++) {
     for (p = rp[r]; p < rp[r + 1]; p++) {
@@ -577,12 +591,18 @@ __declspec(dllexport) int32_t __stdcall sfm_ilu0(int32_t n, int32_t nnz, const i
         m = (xd)ilu[p] / dk;
         if (!vfin(m)) { fail[0] = r; fail[1] = c; *minAbs = ABS(dk); return 0; }
         ilu[p] = m;
+        u = rp[r];
         for (kp = rp[c]; kp < rp[c + 1]; kp++) {
           kc = ci[kp];
           if (kc > c) {
-            int32_t q; u = -1;
-            for (q = rp[r]; q < rp[r + 1]; q++) if (ci[q] == kc) { u = q; break; }
-            if (u >= 0) ilu[u] = (xd)ilu[u] - (xd)m * ilu[kp];
+            if (sorted) {
+              while (u < rp[r + 1] && ci[u] < kc) u++;
+              if (u < rp[r + 1] && ci[u] == kc) ilu[u] = (xd)ilu[u] - (xd)m * ilu[kp];
+            } else {
+              int32_t q, found = -1;
+              for (q = rp[r]; q < rp[r + 1]; q++) if (ci[q] == kc) { found = q; break; }
+              if (found >= 0) ilu[found] = (xd)ilu[found] - (xd)m * ilu[kp];
+            }
           }
         }
       }

@@ -1,0 +1,12 @@
+/* Build in a VS developer prompt: cl /nologo /LD /O2 /fp:strict /W4 /WX resnorm_probe.c */
+#include <stdint.h>
+#include <math.h>
+#include <string.h>
+#include <windows.h>
+__declspec(noinline) static double oldr(int n,const int32_t*rp,const int32_t*ci,const double*v,const double*x,const double*b,double*r){int i,p;double ss=0,rv;for(i=0;i<n;i++){r[i]=0;for(p=rp[i];p<rp[i+1];p++)r[i]+=v[p]*x[ci[p]];}for(i=0;i<n;i++){rv=b[i]-r[i];r[i]=rv;ss+=rv*rv;}return sqrt(ss);}
+__declspec(noinline) static double newr(int n,const int32_t*rp,const int32_t*ci,const double*v,const double*x,const double*b,double*r){int i,p;double ss=0,rv,s;for(i=0;i<n;i++){s=0;for(p=rp[i];p<rp[i+1];p++)s+=v[p]*x[ci[p]];rv=b[i]-s;r[i]=rv;ss+=rv*rv;}return sqrt(ss);}
+static void drop(int32_t*,int32_t*,double*,double*,double*,double*);
+static int mk(int n,int bw,int32_t**rp,int32_t**ci,double**v,double**x,double**b,double**r){int nn=n*(2*bw+1),i,p,k=0;HANDLE h=GetProcessHeap();*rp=HeapAlloc(h,0,(n+1)*4);*ci=HeapAlloc(h,0,nn*4);*v=HeapAlloc(h,0,nn*8);*x=HeapAlloc(h,0,n*8);*b=HeapAlloc(h,0,n*8);*r=HeapAlloc(h,0,n*8);if(!*rp||!*ci||!*v||!*x||!*b||!*r){drop(*rp,*ci,*v,*x,*b,*r);return 0;}for(i=0;i<n;i++){(*rp)[i]=k;for(p=i-bw;p<=i+bw;p++)if(p>=0&&p<n){(*ci)[k]=p;(*v)[k]=.01*(p+1)+.1*(i+1);k++;}(*x)[i]=.2+i*.001;(*b)[i]=.3-i*.002;}(*rp)[n]=k;return 1;}
+static void drop(int32_t*rp,int32_t*ci,double*v,double*x,double*b,double*r){HANDLE h=GetProcessHeap();HeapFree(h,0,rp);HeapFree(h,0,ci);HeapFree(h,0,v);HeapFree(h,0,x);HeapFree(h,0,b);HeapFree(h,0,r);}
+__declspec(dllexport) double __stdcall resnorm_check(int n,int bw){int32_t*rp,*ci;double*v,*x,*b,*a,*z,u,w;if(n<1||n>4096||bw<0||bw>64||bw>=n||!mk(n,bw,&rp,&ci,&v,&x,&b,&a))return 0.;z=HeapAlloc(GetProcessHeap(),0,n*8);if(!z){drop(rp,ci,v,x,b,a);return 0.;}u=oldr(n,rp,ci,v,x,b,a);w=newr(n,rp,ci,v,x,b,z);int ok=memcmp(a,z,n*8)==0&&memcmp(&u,&w,8)==0;drop(rp,ci,v,x,b,a);HeapFree(GetProcessHeap(),0,z);return ok?1.:0.;}
+__declspec(dllexport) double __stdcall resnorm_bench(int mode,int n,int bw,int reps){int32_t*rp,*ci;double*v,*x,*b,*r;volatile double sink=0.;LARGE_INTEGER q,t,f;int i;if(n<1||n>4096||bw<0||bw>64||bw>=n||reps<1||reps>1000000||!mk(n,bw,&rp,&ci,&v,&x,&b,&r))return -1.;QueryPerformanceFrequency(&f);if(f.QuadPart<=0){drop(rp,ci,v,x,b,r);return -1.;}QueryPerformanceCounter(&q);for(i=0;i<reps;i++)sink+=(mode?newr:oldr)(n,rp,ci,v,x,b,r);QueryPerformanceCounter(&t);volatile double keep=sink;(void)keep;drop(rp,ci,v,x,b,r);return(double)(t.QuadPart-q.QuadPart)/(double)f.QuadPart;}

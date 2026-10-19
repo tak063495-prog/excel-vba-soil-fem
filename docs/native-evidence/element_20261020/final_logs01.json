@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "gmres_rows_excluded": false,
+  "pairs": [
+    {
+      "pair": 1,
+      "bytes": 13415684,
+      "sha256": "86ebb842467e56aaaffa289784c0a68241a3e75e886414ee7c7e4a6fe0244b7c",
+      "all_bytes_equal": true
+    },
+    {
+      "pair": 2,
+      "bytes": 13415684,
+      "sha256": "86ebb842467e56aaaffa289784c0a68241a3e75e886414ee7c7e4a6fe0244b7c",
+      "all_bytes_equal": true
+    },
+    {
+      "pair": 3,
+      "bytes": 13415684,
+      "sha256": "86ebb842467e56aaaffa289784c0a68241a3e75e886414ee7c7e4a6fe0244b7c",
+      "all_bytes_equal": true
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "zip": {
+    "path": "workbook\\SoilFEM_INCONSISTENT_ELEMENT_20261020.zip",
+    "bytes": 2909427,
+    "sha256": "f652e94abf809af2a94863e1ff605cfa645eef3b33563cbd1ff788b0865d9002"
+  },
+  "files": [
+    {
+      "name": "2DSoilFEM_inco_element_20261020.xlsm",
+      "sha256": "ea0e2cafdaf3a45c277c02f7d9ce39c8cabac622c923b553e9bf937ff7fd81f3",
+      "bytes": 3051217
+    },
+    {
+      "name": "soilfem_native_x64.dll",
+      "sha256": "be1bf49d61d4172ceb2bcd0a7c8850718dbbf4f01eb68e9f42bfd5afb66482b7",
+      "bytes": 126464
+    },
+    {
+      "name": "soilfem_mat_x64.dll",
+      "sha256": "f11c8f4bb5a5f27778de9dbcfa88e9b6bb963806720e1694c26328c32add58cd",
+      "bytes": 46592
+    },
+    {
+      "name": "README.txt",
+      "sha256": "14ab800d2bb4043ea77bda51723d366b27345acb1651f1fe5f39c31fb80b876e",
+      "bytes": 1386
+    }
+  ]
+}

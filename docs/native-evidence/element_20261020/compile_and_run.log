@@ -1,0 +1,484 @@
+modules=CONTROL,FEMCore,FEMSolver,FEMIo,FEMEngine,FEMNative,FEMNativeMat,FEMNativeKern
+verify[pre-save] CONTROL OK sha256=C6CBEEEE3D5B52E2D195BA63662EA35F53C522139F62ACA676088558630928FA lines=2251
+verify[pre-save] FEMCore OK sha256=D5E1A5775280D52E6AD0CDA3DEF020814247F8C7FEBCC204CB7633548132B0C8 lines=1549
+verify[pre-save] FEMSolver OK sha256=7F75CE008B2A41651F4393CB727271F34B45ACEFED1F8D356CE52EF0A5F37E85 lines=4770
+verify[pre-save] FEMIo OK sha256=475B9C330D39E2DA8AF1D82ACDCF96C46E346C4CFB96846BC6A8EC65BC1C999A lines=3931
+verify[pre-save] FEMEngine OK sha256=37F597F787C742153BFB4A96894A437818B82CAE312C407799D75273F5C8398B lines=6335
+verify[pre-save] FEMNative OK sha256=5A866DE98876CCDAC69A5BEC28D00F2EE5D0D0D4B4BB579E4D328AB7FEC85B4D lines=448
+verify[pre-save] FEMNativeMat OK sha256=3E831347EE6BB36A782078E74386C7D93F93DA80B8C8906CC1FCBA9134F49EED lines=298
+verify[pre-save] FEMNativeKern OK sha256=BB948C0AC20A821F3EC239F8DAFE65AFEAF1B37673E81EA61817F751B4BDDB7A lines=271
+compile_enabled_after=False
+verify[reopen] CONTROL OK sha256=C6CBEEEE3D5B52E2D195BA63662EA35F53C522139F62ACA676088558630928FA lines=2251
+verify[reopen] FEMCore OK sha256=D5E1A5775280D52E6AD0CDA3DEF020814247F8C7FEBCC204CB7633548132B0C8 lines=1549
+verify[reopen] FEMSolver OK sha256=7F75CE008B2A41651F4393CB727271F34B45ACEFED1F8D356CE52EF0A5F37E85 lines=4770
+verify[reopen] FEMIo OK sha256=475B9C330D39E2DA8AF1D82ACDCF96C46E346C4CFB96846BC6A8EC65BC1C999A lines=3931
+verify[reopen] FEMEngine OK sha256=37F597F787C742153BFB4A96894A437818B82CAE312C407799D75273F5C8398B lines=6335
+verify[reopen] FEMNative OK sha256=5A866DE98876CCDAC69A5BEC28D00F2EE5D0D0D4B4BB579E4D328AB7FEC85B4D lines=448
+verify[reopen] FEMNativeMat OK sha256=3E831347EE6BB36A782078E74386C7D93F93DA80B8C8906CC1FCBA9134F49EED lines=298
+verify[reopen] FEMNativeKern OK sha256=BB948C0AC20A821F3EC239F8DAFE65AFEAF1B37673E81EA61817F751B4BDDB7A lines=271
+build=20261020_INCO_ELEMENT_01 (embedded FEMCore verified)
+OK C:\Users\link_\Downloads\VBASoilFEM\work2\excel-vba-soil-fem\tests\tmp\element_release01\2DSoilFEM_inco_element_20261020.xlsm
+Built and verified C:\Users\link_\Downloads\VBASoilFEM\work2\excel-vba-soil-fem\tests\tmp\element_release01\2DSoilFEM_inco_element_20261020.xlsm (fixed-triplet products and monotone ILU construction)
+mesh=C:\Users\link_\Downloads\VBASoilFEM\work2\excel-vba-soil-fem\tests\fixtures\smoke_mesh.json nodes=85 elements=20 sha256=4F6318675417457AECA365913CD680EA00943316AB427352E3B040426D821A9E
+Case1 off AUTO 44.572265625|PASS|True|6.5595364013624E-13|7|6713|4078|76|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=4961;statecopy=45600;gmres_simd=830;fallback=0)|2869.140625|3984.375|6718.75|6910.15625||NATIVE(soilfem_mat_x64.dll;eval_calls=56583;eval_elements=1122226;declined=499[joint=0,material=0,substep=0,point=499,fp=0,dof=0];tangent_calls=7803;tangent_elements=156060;fallback=0) FOS=GRAVITY::1:自重;SRM::2.20625:FOS_PASS=2.200 FOS_FAIL=2.213 FOS_MID=2.206 FOS_WIDTH=0.013 FOS=2.206 ± 0.006 試行=17 判定=NUMERICAL_BRACKET（収束境界の推定。物理破壊・設計安全率の確定値ではありません）;
+mesh=C:\Users\link_\Downloads\VBASoilFEM\work2\excel-vba-soil-fem\tests\fixtures\smoke_mesh.json nodes=85 elements=20 sha256=4F6318675417457AECA365913CD680EA00943316AB427352E3B040426D821A9E
+Case1 off AUTO 40.447265625|PASS|True|6.5595364013624E-13|7|6713|4078|76|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=4961;statecopy=45600;gmres_simd=830;fallback=0)|3015.625|3560.546875|6033.203125|5191.40625||NATIVE(soilfem_mat_x64.dll;eval_calls=56583;eval_elements=1122226;declined=499[joint=0,material=0,substep=0,point=499,fp=0,dof=0];tangent_calls=7803;tangent_elements=156060;fallback=0) FOS=GRAVITY::1:自重;SRM::2.20625:FOS_PASS=2.200 FOS_FAIL=2.213 FOS_MID=2.206 FOS_WIDTH=0.013 FOS=2.206 ± 0.006 試行=17 判定=NUMERICAL_BRACKET（収束境界の推定。物理破壊・設計安全率の確定値ではありません）;
+mesh=C:\Users\link_\Downloads\VBASoilFEM\work2\excel-vba-soil-fem\tests\fixtures\smoke_mesh.json nodes=85 elements=20 sha256=4F6318675417457AECA365913CD680EA00943316AB427352E3B040426D821A9E
+Case1 off AUTO 40.0078125|PASS|True|6.5595364013624E-13|7|6713|4078|76|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=4961;statecopy=45600;gmres_simd=830;fallback=0)|2941.40625|3648.4375|6115.234375|5658.203125||NATIVE(soilfem_mat_x64.dll;eval_calls=56583;eval_elements=1122226;declined=499[joint=0,material=0,substep=0,point=499,fp=0,dof=0];tangent_calls=7803;tangent_elements=156060;fallback=0) FOS=GRAVITY::1:自重;SRM::2.20625:FOS_PASS=2.200 FOS_FAIL=2.213 FOS_MID=2.206 FOS_WIDTH=0.013 FOS=2.206 ± 0.006 試行=17 判定=NUMERICAL_BRACKET（収束境界の推定。物理破壊・設計安全率の確定値ではありません）;
+mesh=C:\Users\link_\Downloads\VBASoilFEM\work2\excel-vba-soil-fem\tests\fixtures\smoke_mesh.json nodes=85 elements=20 sha256=4F6318675417457AECA365913CD680EA00943316AB427352E3B040426D821A9E
+Case1 off AUTO 40.921875|PASS|True|6.5595364013624E-13|7|6713|4078|76|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=4961;statecopy=45600;gmres_simd=830;fallback=0)|2886.71875|3378.90625|6642.578125|6103.515625||NATIVE(soilfem_mat_x64.dll;eval_calls=56583;eval_elements=1122226;declined=499[joint=0,material=0,substep=0,point=499,fp=0,dof=0];tangent_calls=7803;tangent_elements=156060;fallback=0) FOS=GRAVITY::1:自重;SRM::2.20625:FOS_PASS=2.200 FOS_FAIL=2.213 FOS_MID=2.206 FOS_WIDTH=0.013 FOS=2.206 ± 0.006 試行=17 判定=NUMERICAL_BRACKET（収束境界の推定。物理破壊・設計安全率の確定値ではありません）;
+mesh=C:\Users\link_\Downloads\VBASoilFEM\work2\excel-vba-soil-fem\tests\fixtures\smoke_mesh.json nodes=85 elements=20 sha256=4F6318675417457AECA365913CD680EA00943316AB427352E3B040426D821A9E
+Case1 off AUTO 39.501953125|PASS|True|6.5595364013624E-13|7|6713|4078|76|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=4961;statecopy=45600;gmres_simd=830;fallback=0)|2843.75|3353.515625|7027.34375|5851.5625||NATIVE(soilfem_mat_x64.dll;eval_calls=56583;eval_elements=1122226;declined=499[joint=0,material=0,substep=0,point=499,fp=0,dof=0];tangent_calls=7803;tangent_elements=156060;fallback=0) FOS=GRAVITY::1:自重;SRM::2.20625:FOS_PASS=2.200 FOS_FAIL=2.213 FOS_MID=2.206 FOS_WIDTH=0.013 FOS=2.206 ± 0.006 試行=17 判定=NUMERICAL_BRACKET（収束境界の推定。物理破壊・設計安全率の確定値ではありません）;
+mesh=C:\Users\link_\Downloads\VBASoilFEM\work2\excel-vba-soil-fem\tests\fixtures\smoke_mesh.json nodes=85 elements=20 sha256=4F6318675417457AECA365913CD680EA00943316AB427352E3B040426D821A9E
+Case1 off AUTO 38.900390625|PASS|True|6.5595364013624E-13|7|6713|4078|76|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=4961;statecopy=45600;gmres_simd=830;fallback=0)|2937.5|3376.953125|6021.484375|5578.125||NATIVE(soilfem_mat_x64.dll;eval_calls=56583;eval_elements=1122226;declined=499[joint=0,material=0,substep=0,point=499,fp=0,dof=0];tangent_calls=7803;tangent_elements=156060;fallback=0) FOS=GRAVITY::1:自重;SRM::2.20625:FOS_PASS=2.200 FOS_FAIL=2.213 FOS_MID=2.206 FOS_WIDTH=0.013 FOS=2.206 ± 0.006 試行=17 判定=NUMERICAL_BRACKET（収束境界の推定。物理破壊・設計安全率の確定値ではありません）;
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "case": "Case1",
+      "variant": "off",
+      "reference_seconds": 44.5820785,
+      "candidate_seconds": 40.4526936,
+      "reduction_percent": 9.262432436836699,
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_residual": 6.5595364013624e-13,
+      "bracket": [
+        2.200000000000001,
+        2.2125000000000012,
+        2.206250000000001,
+        0.012500000000000178,
+        true,
+        17
+      ],
+      "logs_exact": true,
+      "prepared_calls": 830
+    },
+    {
+      "case": "Case1",
+      "variant": "off",
+      "reference_seconds": 40.9338684,
+      "candidate_seconds": 40.024546,
+      "reduction_percent": 2.221442623292358,
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_residual": 6.5595364013624e-13,
+      "bracket": [
+        2.200000000000001,
+        2.2125000000000012,
+        2.206250000000001,
+        0.012500000000000178,
+        true,
+        17
+      ],
+      "logs_exact": true,
+      "prepared_calls": 830
+    },
+    {
+      "case": "Case1",
+      "variant": "off",
+      "reference_seconds": 39.5087236,
+      "candidate_seconds": 38.9063759,
+      "reduction_percent": 1.5245941784867045,
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_residual": 6.5595364013624e-13,
+      "bracket": [
+        2.200000000000001,
+        2.2125000000000012,
+        2.206250000000001,
+        0.012500000000000178,
+        true,
+        17
+      ],
+      "logs_exact": true,
+      "prepared_calls": 830
+    }
+  ],
+  "reference_median_seconds": 40.9338684,
+  "candidate_median_seconds": 40.024546,
+  "median_reduction_percent": 2.221442623292358
+}
+mesh=C:\Users\link_\Downloads\VBASoilFEM\work2\excel-vba-soil-fem\tests\fixtures\smoke_mesh.json nodes=85 elements=20 sha256=4F6318675417457AECA365913CD680EA00943316AB427352E3B040426D821A9E
+Case1 off AUTO 2.158203125|PASS|True|9.44350930474515E-16|6|4|10|0|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=4;statecopy=0;gmres_simd=0;fallback=0)|1.953125|0|0|13.671875||NATIVE(soilfem_mat_x64.dll;eval_calls=16;eval_elements=320;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=14;tangent_elements=280;fallback=0) FOS=GRAVITY::1:自重;SRM::0.5:FOS_PASS=0.500 FOS_FAIL=NA FOS_MID=0.500 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+Case1 adaptive AUTO 1.583984375|PASS|True|5.44705158019972E-15|6|4|0|0|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=4;statecopy=0;gmres_simd=0;fallback=0)|3.90625|0|0|1.953125||NATIVE(soilfem_mat_x64.dll;eval_calls=16;eval_elements=320;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=4;tangent_elements=80;fallback=0) FOS=GRAVITY::1:自重;SRM::0.5:FOS_PASS=0.500 FOS_FAIL=NA FOS_MID=0.500 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+Case2 off AUTO 1.5859375|PASS|True|1.16074711137257E-13|6|6|10|8|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=6;statecopy=0;gmres_simd=0;fallback=0)|7.8125|0|0|21.484375||NATIVE(soilfem_mat_x64.dll;eval_calls=18;eval_elements=360;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=16;tangent_elements=320;fallback=0) FOS=GRAVITY::1:自重;SRM::1.1:FOS_PASS=1.100 FOS_FAIL=NA FOS_MID=1.100 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+Case2 adaptive AUTO 1.60546875|PASS|True|1.25044219954582E-13|6|5|1|8|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=5;statecopy=0;gmres_simd=0;fallback=0)|1.953125|0|0|0||NATIVE(soilfem_mat_x64.dll;eval_calls=18;eval_elements=360;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=6;tangent_elements=120;fallback=0) FOS=GRAVITY::1:自重;SRM::1.1:FOS_PASS=1.100 FOS_FAIL=NA FOS_MID=1.100 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+Case3 off AUTO 1.60546875|PASS|True|4.72993232520948E-12|6|24|6|37|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=24;statecopy=0;gmres_simd=0;fallback=0)|35.15625|1.953125|1.953125|23.4375||NATIVE(soilfem_mat_x64.dll;eval_calls=32;eval_elements=640;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=30;tangent_elements=600;fallback=0) FOS=GRAVITY::1:自重;SRM::0.9:FOS_PASS=0.900 FOS_FAIL=NA FOS_MID=0.900 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+Case3 adaptive AUTO 1.576171875|PASS|True|3.83477854615666E-11|6|21|0|37|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=21;statecopy=0;gmres_simd=0;fallback=0)|27.34375|1.953125|0|7.8125||NATIVE(soilfem_mat_x64.dll;eval_calls=33;eval_elements=660;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=21;tangent_elements=420;fallback=0) FOS=GRAVITY::1:自重;SRM::0.9:FOS_PASS=0.900 FOS_FAIL=NA FOS_MID=0.900 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+Case4 off AUTO 1.587890625|PASS|True|7.54343291524163E-10|6|8|10|37|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=8;statecopy=0;gmres_simd=0;fallback=0)|1.953125|1.953125|0|37.109375||NATIVE(soilfem_mat_x64.dll;eval_calls=20;eval_elements=400;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=18;tangent_elements=360;fallback=0) FOS=GRAVITY::1:自重;SRM::2:FOS_PASS=2.000 FOS_FAIL=NA FOS_MID=2.000 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+Case4 adaptive AUTO 1.5625|PASS|True|9.04295101600201E-10|6|7|1|37|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=7;statecopy=0;gmres_simd=0;fallback=0)|1.953125|0|17.578125|7.8125||NATIVE(soilfem_mat_x64.dll;eval_calls=20;eval_elements=400;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=8;tangent_elements=160;fallback=0) FOS=GRAVITY::1:自重;SRM::2:FOS_PASS=2.000 FOS_FAIL=NA FOS_MID=2.000 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+mesh=C:\Users\link_\Downloads\VBASoilFEM\work2\excel-vba-soil-fem\tests\fixtures\smoke_mesh.json nodes=85 elements=20 sha256=4F6318675417457AECA365913CD680EA00943316AB427352E3B040426D821A9E
+Case1 off AUTO 2.123046875|PASS|True|9.44350930474515E-16|6|4|10|0|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=4;statecopy=0;gmres_simd=0;fallback=0)|3.90625|0|0|7.8125||NATIVE(soilfem_mat_x64.dll;eval_calls=16;eval_elements=320;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=14;tangent_elements=280;fallback=0) FOS=GRAVITY::1:自重;SRM::0.5:FOS_PASS=0.500 FOS_FAIL=NA FOS_MID=0.500 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+Case1 adaptive AUTO 1.568359375|PASS|True|5.44705158019972E-15|6|4|0|0|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=4;statecopy=0;gmres_simd=0;fallback=0)|0|0|0|3.90625||NATIVE(soilfem_mat_x64.dll;eval_calls=16;eval_elements=320;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=4;tangent_elements=80;fallback=0) FOS=GRAVITY::1:自重;SRM::0.5:FOS_PASS=0.500 FOS_FAIL=NA FOS_MID=0.500 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+Case2 off AUTO 1.5703125|PASS|True|1.16074711137257E-13|6|6|10|8|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=6;statecopy=0;gmres_simd=0;fallback=0)|1.953125|1.953125|1.953125|25.390625||NATIVE(soilfem_mat_x64.dll;eval_calls=18;eval_elements=360;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=16;tangent_elements=320;fallback=0) FOS=GRAVITY::1:自重;SRM::1.1:FOS_PASS=1.100 FOS_FAIL=NA FOS_MID=1.100 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+Case2 adaptive AUTO 1.576171875|PASS|True|1.25044219954582E-13|6|5|1|8|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=5;statecopy=0;gmres_simd=0;fallback=0)|1.953125|0|0|3.90625||NATIVE(soilfem_mat_x64.dll;eval_calls=18;eval_elements=360;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=6;tangent_elements=120;fallback=0) FOS=GRAVITY::1:自重;SRM::1.1:FOS_PASS=1.100 FOS_FAIL=NA FOS_MID=1.100 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+Case3 off AUTO 1.6171875|PASS|True|4.72993232520948E-12|6|24|6|37|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=24;statecopy=0;gmres_simd=0;fallback=0)|3.90625|1.953125|3.90625|31.25||NATIVE(soilfem_mat_x64.dll;eval_calls=32;eval_elements=640;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=30;tangent_elements=600;fallback=0) FOS=GRAVITY::1:自重;SRM::0.9:FOS_PASS=0.900 FOS_FAIL=NA FOS_MID=0.900 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+Case3 adaptive AUTO 1.56640625|PASS|True|3.83477854615666E-11|6|21|0|37|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=21;statecopy=0;gmres_simd=0;fallback=0)|1.953125|0|13.671875|23.4375||NATIVE(soilfem_mat_x64.dll;eval_calls=33;eval_elements=660;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=21;tangent_elements=420;fallback=0) FOS=GRAVITY::1:自重;SRM::0.9:FOS_PASS=0.900 FOS_FAIL=NA FOS_MID=0.900 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+Case4 off AUTO 1.634765625|PASS|True|7.54343291524163E-10|6|8|10|37|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=8;statecopy=0;gmres_simd=0;fallback=0)|0|3.90625|1.953125|3.90625||NATIVE(soilfem_mat_x64.dll;eval_calls=20;eval_elements=400;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=18;tangent_elements=360;fallback=0) FOS=GRAVITY::1:自重;SRM::2:FOS_PASS=2.000 FOS_FAIL=NA FOS_MID=2.000 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+Case4 adaptive AUTO 1.572265625|PASS|True|9.04295101600201E-10|6|7|1|37|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=7;statecopy=0;gmres_simd=0;fallback=0)|7.8125|0|1.953125|3.90625||NATIVE(soilfem_mat_x64.dll;eval_calls=20;eval_elements=400;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=8;tangent_elements=160;fallback=0) FOS=GRAVITY::1:自重;SRM::2:FOS_PASS=2.000 FOS_FAIL=NA FOS_MID=2.000 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+mesh=C:\Users\link_\Downloads\VBASoilFEM\work2\excel-vba-soil-fem\tests\fixtures\smoke_mesh.json nodes=85 elements=20 sha256=4F6318675417457AECA365913CD680EA00943316AB427352E3B040426D821A9E
+Case1 off AUTO 2.169921875|PASS|True|1.04568594300454E-15|6|3|12|0|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=3;solve=15;nonsym=0;statecopy=0;gmres_simd=0;fallback=0)|1.953125|0|1.953125|1.953125||NATIVE(soilfem_mat_x64.dll;eval_calls=17;eval_elements=340;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=3;tangent_elements=5;fallback=0) FOS=GRAVITY::1:自重;SRM::0.5:FOS_PASS=0.500 FOS_FAIL=NA FOS_MID=0.500 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+Case1 adaptive AUTO 1.560546875|PASS|True|4.22509850511992E-15|6|3|2|0|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=3;solve=5;nonsym=0;statecopy=0;gmres_simd=0;fallback=0)|1.953125|0|0|3.90625||NATIVE(soilfem_mat_x64.dll;eval_calls=17;eval_elements=340;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=3;tangent_elements=5;fallback=0) FOS=GRAVITY::1:自重;SRM::0.5:FOS_PASS=0.500 FOS_FAIL=NA FOS_MID=0.500 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+Case2 off AUTO 1.56640625|PASS|True|2.71604079155516E-09|7|16|16|28|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=16;solve=32;nonsym=0;statecopy=2;gmres_simd=0;fallback=0)|1.953125|0|0|13.671875||NATIVE(soilfem_mat_x64.dll;eval_calls=36;eval_elements=720;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=16;tangent_elements=119;fallback=0) FOS=GRAVITY::1:自重;SRM::1.1:FOS_PASS=1.100 FOS_FAIL=NA FOS_MID=1.100 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+Case2 adaptive AUTO 1.560546875|PASS|True|5.629345789287E-08|7|13|7|28|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=13;solve=20;nonsym=0;statecopy=0;gmres_simd=0;fallback=0)|0|0|0|19.53125||NATIVE(soilfem_mat_x64.dll;eval_calls=32;eval_elements=640;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=13;tangent_elements=96;fallback=0) FOS=GRAVITY::1:自重;SRM::1.1:FOS_PASS=1.100 FOS_FAIL=NA FOS_MID=1.100 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+Case3 off AUTO 1.5859375|PASS|True|1.46030210111931E-09|7|24|26|36|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=24;solve=50;nonsym=0;statecopy=5;gmres_simd=0;fallback=0)|0|15.625|15.625|5.859375||NATIVE(soilfem_mat_x64.dll;eval_calls=57;eval_elements=1140;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=24;tangent_elements=264;fallback=0) FOS=GRAVITY::1:自重;SRM::0.9:FOS_PASS=0.900 FOS_FAIL=NA FOS_MID=0.900 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+Case3 adaptive AUTO 1.578125|PASS|True|5.35674041794885E-10|6|14|15|36|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=14;solve=29;nonsym=0;statecopy=4;gmres_simd=0;fallback=0)|1.953125|0|5.859375|7.8125||NATIVE(soilfem_mat_x64.dll;eval_calls=45;eval_elements=900;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=14;tangent_elements=142;fallback=0) FOS=GRAVITY::1:自重;SRM::0.9:FOS_PASS=0.900 FOS_FAIL=NA FOS_MID=0.900 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+Case4 off AUTO 1.564453125|PASS|True|1.66834088132905E-10|7|14|16|42|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=14;solve=30;nonsym=0;statecopy=0;gmres_simd=0;fallback=0)|1.953125|0|9.765625|19.53125||NATIVE(soilfem_mat_x64.dll;eval_calls=32;eval_elements=640;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=14;tangent_elements=129;fallback=0) FOS=GRAVITY::1:自重;SRM::2:FOS_PASS=2.000 FOS_FAIL=NA FOS_MID=2.000 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+Case4 adaptive AUTO 1.671875|PASS|True|1.2320362171124E-10|7|13|10|42|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=13;solve=23;nonsym=0;statecopy=4;gmres_simd=0;fallback=0)|3.90625|0|1.953125|5.859375||NATIVE(soilfem_mat_x64.dll;eval_calls=39;eval_elements=780;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=13;tangent_elements=133;fallback=0) FOS=GRAVITY::1:自重;SRM::2:FOS_PASS=2.000 FOS_FAIL=NA FOS_MID=2.000 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+mesh=C:\Users\link_\Downloads\VBASoilFEM\work2\excel-vba-soil-fem\tests\fixtures\smoke_mesh.json nodes=85 elements=20 sha256=4F6318675417457AECA365913CD680EA00943316AB427352E3B040426D821A9E
+Case1 off AUTO 2.306640625|PASS|True|1.04568594300454E-15|6|3|12|0|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=3;solve=15;nonsym=0;statecopy=0;gmres_simd=0;fallback=0)|0|0|0|1.953125||NATIVE(soilfem_mat_x64.dll;eval_calls=17;eval_elements=340;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=3;tangent_elements=5;fallback=0) FOS=GRAVITY::1:自重;SRM::0.5:FOS_PASS=0.500 FOS_FAIL=NA FOS_MID=0.500 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+Case1 adaptive AUTO 1.673828125|PASS|True|4.22509850511992E-15|6|3|2|0|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=3;solve=5;nonsym=0;statecopy=0;gmres_simd=0;fallback=0)|9.765625|0|3.90625|0||NATIVE(soilfem_mat_x64.dll;eval_calls=17;eval_elements=340;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=3;tangent_elements=5;fallback=0) FOS=GRAVITY::1:自重;SRM::0.5:FOS_PASS=0.500 FOS_FAIL=NA FOS_MID=0.500 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+Case2 off AUTO 1.57421875|PASS|True|2.71604079155516E-09|7|16|16|28|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=16;solve=32;nonsym=0;statecopy=2;gmres_simd=0;fallback=0)|0|0|3.90625|11.71875||NATIVE(soilfem_mat_x64.dll;eval_calls=36;eval_elements=720;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=16;tangent_elements=119;fallback=0) FOS=GRAVITY::1:自重;SRM::1.1:FOS_PASS=1.100 FOS_FAIL=NA FOS_MID=1.100 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+Case2 adaptive AUTO 1.55859375|PASS|True|5.629345789287E-08|7|13|7|28|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=13;solve=20;nonsym=0;statecopy=0;gmres_simd=0;fallback=0)|0|0|0|9.765625||NATIVE(soilfem_mat_x64.dll;eval_calls=32;eval_elements=640;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=13;tangent_elements=96;fallback=0) FOS=GRAVITY::1:自重;SRM::1.1:FOS_PASS=1.100 FOS_FAIL=NA FOS_MID=1.100 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+Case3 off AUTO 1.564453125|PASS|True|1.46030210111931E-09|7|24|26|36|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=24;solve=50;nonsym=0;statecopy=5;gmres_simd=0;fallback=0)|1.953125|0|3.90625|15.625||NATIVE(soilfem_mat_x64.dll;eval_calls=57;eval_elements=1140;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=24;tangent_elements=264;fallback=0) FOS=GRAVITY::1:自重;SRM::0.9:FOS_PASS=0.900 FOS_FAIL=NA FOS_MID=0.900 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+Case3 adaptive AUTO 1.568359375|PASS|True|5.35674041794885E-10|6|14|15|36|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=14;solve=29;nonsym=0;statecopy=4;gmres_simd=0;fallback=0)|7.8125|0|3.90625|7.8125||NATIVE(soilfem_mat_x64.dll;eval_calls=45;eval_elements=900;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=14;tangent_elements=142;fallback=0) FOS=GRAVITY::1:自重;SRM::0.9:FOS_PASS=0.900 FOS_FAIL=NA FOS_MID=0.900 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+Case4 off AUTO 1.568359375|PASS|True|1.66834088132905E-10|7|14|16|42|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=14;solve=30;nonsym=0;statecopy=0;gmres_simd=0;fallback=0)|1.953125|0|1.953125|0||NATIVE(soilfem_mat_x64.dll;eval_calls=32;eval_elements=640;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=14;tangent_elements=129;fallback=0) FOS=GRAVITY::1:自重;SRM::2:FOS_PASS=2.000 FOS_FAIL=NA FOS_MID=2.000 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+Case4 adaptive AUTO 1.5703125|PASS|True|1.2320362171124E-10|7|13|10|42|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=13;solve=23;nonsym=0;statecopy=4;gmres_simd=0;fallback=0)|7.8125|0|0|9.765625||NATIVE(soilfem_mat_x64.dll;eval_calls=39;eval_elements=780;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=13;tangent_elements=133;fallback=0) FOS=GRAVITY::1:自重;SRM::2:FOS_PASS=2.000 FOS_FAIL=NA FOS_MID=2.000 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+builtin default AUTO 3.041015625|PASS|True|1.05571945918321E-13|6|1|1|0|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=1;statecopy=0;gmres_simd=0;fallback=0)|25.390625|0|19.53125|21.484375||NATIVE(soilfem_mat_x64.dll;eval_calls=14;eval_elements=4284;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=2;tangent_elements=612;fallback=0) FOS=GRAVITY::1:自重;SRM::1:FOS_PASS=1.000 FOS_FAIL=NA FOS_MID=1.000 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+builtin default AUTO 2.771484375|PASS|True|1.05571945918321E-13|6|1|1|0|NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=1;statecopy=0;gmres_simd=0;fallback=0)|35.15625|0|15.625|21.484375||NATIVE(soilfem_mat_x64.dll;eval_calls=14;eval_elements=4284;declined=0[joint=0,material=0,substep=0,point=0,fp=0,dof=0];tangent_calls=2;tangent_elements=612;fallback=0) FOS=GRAVITY::1:自重;SRM::1:FOS_PASS=1.000 FOS_FAIL=NA FOS_MID=1.000 FOS_WIDTH=NA 試行=1 判定=FIXED_FS_VERIFIED;
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "case": "Case1",
+      "variant": "off",
+      "reference_seconds": 2.1639304,
+      "candidate_seconds": 2.1310883,
+      "reduction_percent": 1.5177059299134488,
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_residual": 9.44350930474515e-16,
+      "bracket": [
+        0.5,
+        0.0,
+        0.5,
+        0.0,
+        false,
+        1
+      ],
+      "logs_exact": true,
+      "prepared_calls": 0
+    },
+    {
+      "case": "Case1",
+      "variant": "adaptive",
+      "reference_seconds": 1.5916435,
+      "candidate_seconds": 1.57322,
+      "reduction_percent": 1.157514229788259,
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_residual": 5.44705158019972e-15,
+      "bracket": [
+        0.5,
+        0.0,
+        0.5,
+        0.0,
+        false,
+        1
+      ],
+      "logs_exact": true,
+      "prepared_calls": 0
+    },
+    {
+      "case": "Case2",
+      "variant": "off",
+      "reference_seconds": 1.5914886,
+      "candidate_seconds": 1.5698869,
+      "reduction_percent": 1.357326719148344,
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_residual": 1.16074711137257e-13,
+      "bracket": [
+        1.1,
+        0.0,
+        1.1,
+        0.0,
+        false,
+        1
+      ],
+      "logs_exact": true,
+      "prepared_calls": 0
+    },
+    {
+      "case": "Case2",
+      "variant": "adaptive",
+      "reference_seconds": 1.6061684,
+      "candidate_seconds": 1.5759962,
+      "reduction_percent": 1.8785203344804935,
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_residual": 1.25044219954582e-13,
+      "bracket": [
+        1.1,
+        0.0,
+        1.1,
+        0.0,
+        false,
+        1
+      ],
+      "logs_exact": true,
+      "prepared_calls": 0
+    },
+    {
+      "case": "Case3",
+      "variant": "off",
+      "reference_seconds": 1.6109045,
+      "candidate_seconds": 1.6228639,
+      "reduction_percent": -0.742402792965069,
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_residual": 4.72993232520948e-12,
+      "bracket": [
+        0.9,
+        0.0,
+        0.9,
+        0.0,
+        false,
+        1
+      ],
+      "logs_exact": true,
+      "prepared_calls": 0
+    },
+    {
+      "case": "Case3",
+      "variant": "adaptive",
+      "reference_seconds": 1.5753091,
+      "candidate_seconds": 1.5753114,
+      "reduction_percent": -0.00014600309234946707,
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_residual": 3.83477854615666e-11,
+      "bracket": [
+        0.9,
+        0.0,
+        0.9,
+        0.0,
+        false,
+        1
+      ],
+      "logs_exact": true,
+      "prepared_calls": 0
+    },
+    {
+      "case": "Case4",
+      "variant": "off",
+      "reference_seconds": 1.5779053,
+      "candidate_seconds": 1.6466382,
+      "reduction_percent": -4.355958497636059,
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_residual": 7.54343291524163e-10,
+      "bracket": [
+        2.0,
+        0.0,
+        2.0,
+        0.0,
+        false,
+        1
+      ],
+      "logs_exact": true,
+      "prepared_calls": 0
+    },
+    {
+      "case": "Case4",
+      "variant": "adaptive",
+      "reference_seconds": 1.5741773,
+      "candidate_seconds": 1.5613023,
+      "reduction_percent": 0.817887540367912,
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_residual": 9.04295101600201e-10,
+      "bracket": [
+        2.0,
+        0.0,
+        2.0,
+        0.0,
+        false,
+        1
+      ],
+      "logs_exact": true,
+      "prepared_calls": 0
+    },
+    {
+      "case": "Case1",
+      "variant": "off",
+      "reference_seconds": 2.173798,
+      "candidate_seconds": 2.3137685,
+      "reduction_percent": -6.4389837510201,
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_residual": 1.04568594300454e-15,
+      "bracket": [
+        0.5,
+        0.0,
+        0.5,
+        0.0,
+        false,
+        1
+      ],
+      "logs_exact": true,
+      "prepared_calls": 0
+    },
+    {
+      "case": "Case1",
+      "variant": "adaptive",
+      "reference_seconds": 1.5754855,
+      "candidate_seconds": 1.6820577,
+      "reduction_percent": -6.764403734594837,
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_residual": 4.22509850511992e-15,
+      "bracket": [
+        0.5,
+        0.0,
+        0.5,
+        0.0,
+        false,
+        1
+      ],
+      "logs_exact": true,
+      "prepared_calls": 0
+    },
+    {
+      "case": "Case2",
+      "variant": "off",
+      "reference_seconds": 1.5758265,
+      "candidate_seconds": 1.5734523,
+      "reduction_percent": 0.1506637945230649,
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_residual": 2.71604079155516e-09,
+      "bracket": [
+        1.1,
+        0.0,
+        1.1,
+        0.0,
+        false,
+        1
+      ],
+      "logs_exact": true,
+      "prepared_calls": 0
+    },
+    {
+      "case": "Case2",
+      "variant": "adaptive",
+      "reference_seconds": 1.5623077,
+      "candidate_seconds": 1.559087,
+      "reduction_percent": 0.20615017131390134,
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_residual": 5.629345789287e-08,
+      "bracket": [
+        1.1,
+        0.0,
+        1.1,
+        0.0,
+        false,
+        1
+      ],
+      "logs_exact": true,
+      "prepared_calls": 0
+    },
+    {
+      "case": "Case3",
+      "variant": "off",
+      "reference_seconds": 1.5901518,
+      "candidate_seconds": 1.5646657,
+      "reduction_percent": 1.6027463541531062,
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_residual": 1.46030210111931e-09,
+      "bracket": [
+        0.9,
+        0.0,
+        0.9,
+        0.0,
+        false,
+        1
+      ],
+      "logs_exact": true,
+      "prepared_calls": 0
+    },
+    {
+      "case": "Case3",
+      "variant": "adaptive",
+      "reference_seconds": 1.5764411,
+      "candidate_seconds": 1.5700302,
+      "reduction_percent": 0.40666917400212776,
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_residual": 5.35674041794885e-10,
+      "bracket": [
+        0.9,
+        0.0,
+        0.9,
+        0.0,
+        false,
+        1
+      ],
+      "logs_exact": true,
+      "prepared_calls": 0
+    },
+    {
+      "case": "Case4",
+      "variant": "off",
+      "reference_seconds": 1.5552876,
+      "candidate_seconds": 1.5696775,
+      "reduction_percent": -0.925224376507594,
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_residual": 1.66834088132905e-10,
+      "bracket": [
+        2.0,
+        0.0,
+        2.0,
+        0.0,
+        false,
+        1
+      ],
+      "logs_exact": true,
+      "prepared_calls": 0
+    },
+    {
+      "case": "Case4",
+      "variant": "adaptive",
+      "reference_seconds": 1.6644314,
+      "candidate_seconds": 1.5691629,
+      "reduction_percent": 5.7237865135204675,
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_residual": 1.2320362171124e-10,
+      "bracket": [
+        2.0,
+        0.0,
+        2.0,
+        0.0,
+        false,
+        1
+      ],
+      "logs_exact": true,
+      "prepared_calls": 0
+    },
+    {
+      "case": "builtin",
+      "variant": "default",
+      "reference_seconds": 3.043485,
+      "candidate_seconds": 2.7801986,
+      "reduction_percent": 8.650819701756385,
+      "displacement_count": 2010,
+      "max_abs_displacement_delta": 0.0,
+      "final_residual": 1.05571945918321e-13,
+      "bracket": [
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        false,
+        1
+      ],
+      "logs_exact": true,
+      "prepared_calls": 0
+    }
+  ]
+}

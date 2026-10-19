@@ -1,0 +1,68 @@
+{
+  "status": "PASS",
+  "instrumented_roots_seconds": 10.5653897,
+  "partition_exact": true,
+  "procedures": [
+    {
+      "procedure": "sfm_eval",
+      "calls": 56583,
+      "inclusive_seconds": 7.1626728,
+      "exclusive_seconds": 0.5160627
+    },
+    {
+      "procedure": "sfm_tangent",
+      "calls": 7803,
+      "inclusive_seconds": 0.8979073,
+      "exclusive_seconds": 0.8979073
+    },
+    {
+      "procedure": "strain",
+      "calls": 4469142,
+      "inclusive_seconds": 0.8123837,
+      "exclusive_seconds": 0.8123837
+    },
+    {
+      "procedure": "mp_update",
+      "calls": 4469142,
+      "inclusive_seconds": 3.0726672,
+      "exclusive_seconds": 3.0726672
+    },
+    {
+      "procedure": "state_display",
+      "calls": 4468643,
+      "inclusive_seconds": 0.774241,
+      "exclusive_seconds": 0.774241
+    },
+    {
+      "procedure": "stress_B",
+      "calls": 4468643,
+      "inclusive_seconds": 0.8617569,
+      "exclusive_seconds": 0.8617569
+    },
+    {
+      "procedure": "internal_force",
+      "calls": 1122226,
+      "inclusive_seconds": 0.8928917,
+      "exclusive_seconds": 0.8928917
+    },
+    {
+      "procedure": "commit",
+      "calls": 1122226,
+      "inclusive_seconds": 0.2326696,
+      "exclusive_seconds": 0.2326696
+    },
+    {
+      "procedure": "sfm_ilu0",
+      "calls": 830,
+      "inclusive_seconds": 0.1460448,
+      "exclusive_seconds": 0.1460448
+    },
+    {
+      "procedure": "sfm_regularized",
+      "calls": 1752,
+      "inclusive_seconds": 2.3587648,
+      "exclusive_seconds": 2.3587648
+    }
+  ],
+  "note": "QPC calls and inhibited inlining affect timings. These times are diagnostic; use production-DLL pairs for total speed."
+}
