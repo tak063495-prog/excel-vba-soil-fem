@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "case": "builtin",
+      "variant": "default",
+      "displacement_count": 2010,
+      "max_abs_displacement_delta": 0,
+      "residual": 1.05571945918321e-13,
+      "bracket": [
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        false,
+        1
+      ],
+      "reference_seconds": 2.8110071,
+      "candidate_seconds": 2.9113442,
+      "solver_events_sha256": "5083C5E2ABB0493C004BFF55AA4D34CAE69BCE7567DA0BC664660660FFB65AF5",
+      "logs_exact": true
+    }
+  ]
+}

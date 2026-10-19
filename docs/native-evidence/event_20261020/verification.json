@@ -1,0 +1,85 @@
+{
+  "status": "PASS",
+  "build": "20261020_INCO_EVENT_02",
+  "source_sha256": {
+    "src/vba/FEMCore.bas": "2133fab59c5870ed9908a13fac66c7deaa9f2ba2552ed0e013f4b018554274eb",
+    "src/vba/FEMIo.bas": "475b9c330d39e2da8af1d82acdcf96c46e346c4cfb96846bc6a8ec65bc1c999a",
+    "src/vba/FEMSolver.bas": "53d9d0255588744a1a6140e6e45598b222515475c2a3a8581b8bd248d3060a4f",
+    "tests/native/build_event.ps1": "a990ca655340064754029cba544ec9f6ab76ccb0cda1b4603c87c63f2298d2d3",
+    "tests/native/check_event_log.ps1": "88de4c160ff7a3980ec17db7f9179da5af7865b272b144b9d789724ea7984ff0",
+    "tests/native/check_gmres_event_replay.ps1": "24ed81c63c0f1400776fc72e8b1abdcd6b2b12820fe6defa385ffb186a1c7e2d",
+    "tests/native/measure_event_buffer.ps1": "811e63bce75916cbecf7cd43789558f74d9384af38819084c8f5a2aa75a71171",
+    "tests/native/check_io_fast.ps1": "713013de4e88b296bfbc50218b21b0cf250c0abe4f7c84f22b5508affbd8dd46",
+    "tests/native/summarize_io_benchmark.py": "1fa4865d00d00130ba033fda86cbf28f93ad1e826a2bae18feb9a8649b2625d4",
+    "tests/native/summarize_io_regression.py": "84a8ea09ae9331df6731412d5936e055515acdfe2f26e84908306f46d65a49de",
+    "tests/native/test_io_summary.py": "d62648b5411075a020f9c2aa5d45a8691aa7fcf5334bb5d2b0f48efef83f27fe",
+    "tests/native/instrument_profile.py": "02af351c6940809cb76c542b75d929a1e79db2048c190e25d40ac117b0ea466c",
+    "workbook/SoilFEM_INCONSISTENT_EVENT_20261020.zip": "47b5dd3daa4c99f9357b22c0a144e69e24c2d575eb39229548e7b25bf26dedab"
+  },
+  "package_build": {
+    "event_log_fast": 1,
+    "native_state_copy": 1,
+    "precision": "AUTO",
+    "build": "20261020_INCO_EVENT_02",
+    "source_workbook_sha256": "EC3BD88CA8BA5E4CAD0F9BD721AD240F780E77A7C2E9711665C421529F6E5279",
+    "files": [
+      {
+        "sha256": "093A6D0D7CB769E2F225753FD5F13B72CDB37577629E8302E1B43BD969083476",
+        "name": "2DSoilFEM_inco_event_20261020.xlsm"
+      },
+      {
+        "sha256": "B503BDFF8059339EBC77FFD5BD6F652EC65710637CBE01C4D6CEC775BF0FEA9F",
+        "name": "README.txt"
+      },
+      {
+        "sha256": "1DCA348D6F17FED2E77C49C21666DD08838D005E953A5C001EC00890A92AB95A",
+        "name": "soilfem_mat_x64.dll"
+      },
+      {
+        "sha256": "C015F439B037CD436098277561B43990BA98359F89B4876330CBF8ED2BEC3B01",
+        "name": "soilfem_native_x64.dll"
+      }
+    ],
+    "io_fast_path": 1,
+    "native_gmres_simd": 1,
+    "source_sha256_by_module": {
+      "FEMIo": "475B9C330D39E2DA8AF1D82ACDCF96C46E346C4CFB96846BC6A8EC65BC1C999A",
+      "FEMEngine": "37F597F787C742153BFB4A96894A437818B82CAE312C407799D75273F5C8398B",
+      "FEMNative": "9F2B71B8321513263BD2F3767AE1261A39BE6F2902971FA34BF35E9DFF60B8FA",
+      "FEMNativeMat": "3E831347EE6BB36A782078E74386C7D93F93DA80B8C8906CC1FCBA9134F49EED",
+      "CONTROL": "C6CBEEEE3D5B52E2D195BA63662EA35F53C522139F62ACA676088558630928FA",
+      "FEMSolver": "53D9D0255588744A1A6140E6E45598B222515475C2A3A8581B8BD248D3060A4F",
+      "FEMNativeKern": "BB948C0AC20A821F3EC239F8DAFE65AFEAF1B37673E81EA61817F751B4BDDB7A",
+      "FEMCore": "2133FAB59C5870ED9908A13FAC66C7DEAA9F2BA2552ED0E013F4B018554274EB"
+    }
+  },
+  "compile_checks": {
+    "production": "PASS before save",
+    "reopen_source_verification": "PASS, all8 required modules",
+    "profile_workbook": "PASS, all required and2 additional modules",
+    "private_preconditioner_state": "Passed by reference from FEMSolver; actual replay/state/array tests passed"
+  },
+  "static_checks": {
+    "powershell_parse": "PASS7 scripts",
+    "python_summary_tests": "PASS3 event/I-O comparator methods and2 existing INCO comparator methods"
+  },
+  "io_checks": {
+    "format_boundaries": "format_boundaries.json",
+    "native_event_replay": "native_event_replay.json",
+    "retry_fast": "io_retry_fast.json",
+    "retry_legacy": "io_retry_legacy.json",
+    "retry_assertions": 48
+  },
+  "package_checks": {
+    "zip_members": 5,
+    "zip_crc": "PASS",
+    "zip_member_bytes_match_package": true,
+    "both_dlls_identical_to_previous_package": true,
+    "source_book_unchanged": true
+  },
+  "regression_checks": {
+    "fixed_fs_pairs": 16,
+    "builtin_displacements": 2010,
+    "numerical_and_event_bytes_exact": true
+  }
+}

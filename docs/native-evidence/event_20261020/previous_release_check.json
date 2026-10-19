@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "reference_commit": "687cdef51b94c0c07e39a3dcb1608934b1b8a25b",
+  "displacement_count": 170,
+  "max_abs_displacement_delta": 0,
+  "residual": 6.5595364013624e-13,
+  "bracket": [
+    2.200000000000001,
+    2.2125000000000012,
+    2.206250000000001,
+    0.012500000000000178,
+    true,
+    17
+  ],
+  "previous_log_bytes": 12882279,
+  "new_log_bytes": 13211820,
+  "previous_log_sha256": "0a594bf70e58bd3b92947b6cda1773453a4eb2980955f187a0efe8e260ec8191",
+  "new_log_sha256": "b5a22cbc0e32e9685fc4d3667b885e11042b4c5f7ebb93432076a85d294d78c5",
+  "events": 109847,
+  "event_counts": {
+    "SRM_MATERIAL_FORCE": 17,
+    "NEWTON_WATCHDOG_ACCEPT": 22,
+    "REGULARIZED_SOLVE": 1526,
+    "REGULARIZED_CORRECTION_ACCEPT": 1506,
+    "ELASTIC_CORRECTION_RETRY": 46,
+    "ELASTIC_SLOW_CONTRACTION": 37,
+    "REJECTED_ATTEMPT": 46,
+    "CUTBACK": 46,
+    "NONSYM_BAND_REFINEMENT_START": 884,
+    "NONSYM_BAND_REFINEMENT": 4217,
+    "NONSYM_BAND_REJECT": 830,
+    "CSR_ILU": 830,
+    "GMRES_RESTART": 98978,
+    "REGULARIZED_CORRECTION_REQUEST": 862
+  },
+  "comparison": "Exact after excluding first build-stamp column. Same-version EVENT_LOG_FAST0/1 checks require all bytes identical."
+}

@@ -10,11 +10,16 @@ def rows(path):
     return data if isinstance(data, list) else [data]
 
 
-def compare(reference, candidate):
+def compare(reference, candidate, scope='io'):
     assert len(reference) == len(candidate) > 0
     report = []
     for r, c in zip(reference, candidate):
-        assert r['IoFast'] == 0 and c['IoFast'] == 1
+        if scope == 'events':
+            assert r['IoFast'] == c['IoFast'] == 1
+            assert r['EventFast'] == 0 and c['EventFast'] == 1
+        else:
+            assert scope == 'io' and r['IoFast'] == 0 and c['IoFast'] == 1
+            assert r.get('EventFast', 0) == c.get('EventFast', 0) == 0
         assert all(x['StateCopy'] == x['GmresSimd'] == 1 and x['ExclusiveExcel'] is True for x in (r, c))
         for key in ('Case', 'Variant', 'Mode', 'Precision', 'NativeDllSha256', 'Fos', 'Bracket',
                     'Disp', 'SolverEventsSha256', 'SolverEventsBytes'):
@@ -36,8 +41,9 @@ def compare(reference, candidate):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('reference'); ap.add_argument('candidate'); ap.add_argument('--out', required=True)
+    ap.add_argument('--scope', choices=('io', 'events'), default='io')
     args = ap.parse_args()
-    result = dict(status='PASS', cases=compare(rows(args.reference), rows(args.candidate)))
+    result = dict(status='PASS', cases=compare(rows(args.reference), rows(args.candidate), args.scope))
     text = json.dumps(result, ensure_ascii=False, indent=2)
     Path(args.out).write_text(text + '\n', encoding='utf-8')
     print(text)

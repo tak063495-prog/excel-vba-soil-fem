@@ -1,0 +1,20 @@
+[
+  {
+    "pending_after": 0,
+    "enabled": 0,
+    "event_fast": 0,
+    "new_folder": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\excel-vba-soil-fem\\tests\\results\\event2_io_legacy\\renamed0_out",
+    "status": "PASS",
+    "old_folder": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\excel-vba-soil-fem\\tests\\results\\event2_io_legacy\\io_test_out",
+    "checks": 12
+  },
+  {
+    "pending_after": 0,
+    "enabled": 1,
+    "event_fast": 0,
+    "new_folder": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\excel-vba-soil-fem\\tests\\results\\event2_io_legacy\\renamed1_out",
+    "status": "PASS",
+    "old_folder": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\excel-vba-soil-fem\\tests\\results\\event2_io_legacy\\renamed0_out",
+    "checks": 12
+  }
+]

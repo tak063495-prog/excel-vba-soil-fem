@@ -1,0 +1,28 @@
+{
+  "runs": [
+    {
+      "result": "PASS|codes1-6,unknown,zero,OFF,native-OFF,array,status",
+      "event_fast": 0,
+      "bytes": 150030,
+      "sha256": "8B25EB9600F6DDB6E95FA723878096F73C6142BA568DF571781942AA862092B5"
+    },
+    {
+      "result": "PASS|codes1-6,unknown,zero,OFF,native-OFF,array,status",
+      "event_fast": 1,
+      "bytes": 150030,
+      "sha256": "8B25EB9600F6DDB6E95FA723878096F73C6142BA568DF571781942AA862092B5"
+    }
+  ],
+  "status": "PASS",
+  "cases": [
+    "native event codes1-6",
+    "unknown event ignored",
+    "zero records",
+    "OFF mode fallback",
+    "non-native fallback",
+    "input array unchanged",
+    "code3 preconditioner state",
+    "exact CSV bytes",
+    "1100 locked batch records and unlock retry"
+  ]
+}

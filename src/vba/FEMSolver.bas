@@ -3110,6 +3110,7 @@ Private Function P6SolveCSRGMRES() As Boolean
     If kRc >= 0 Then
       P6CSRPreconditionerMode = "ILU0"
       P6IterativeLastResidual = kRes: P6IterativeLastIterations = kIt
+      If Not FEMIoNativeGmresEvents(kEv, kN, restart, P6CSRPreconditionerMode) Then
       For i = 0 To kN - 1
         kEvIt = CLng(kEv(3 * i + 1))
         Select Case CLng(kEv(3 * i))
@@ -3121,6 +3122,7 @@ Private Function P6SolveCSRGMRES() As Boolean
           Case 6: P6SolverEvent "GMRES_BREAKDOWN", "reason=zero_upper_triangular_diagonal;preconditioner=" & P6CSRPreconditionerMode & ";iterations=" & CStr(kEvIt)
         End Select
       Next i
+      End If
       P6SolveCSRGMRES = (kRc = 1)
       Exit Function
     End If

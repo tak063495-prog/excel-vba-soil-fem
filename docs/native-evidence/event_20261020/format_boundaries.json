@@ -1,0 +1,26 @@
+{
+  "cases": [
+    "2200 changing contexts and escaped fields",
+    "512-row boundaries",
+    "70000/140000-character rows",
+    "OFF logging",
+    "1100 locked rows with capacity growth",
+    "unlock retry",
+    "empty flush without duplication"
+  ],
+  "runs": [
+    {
+      "sha256": "BD81B1E5EE9B5568A18E9F6219B42862F99979CA2943822B6233C9D5906E9EB7",
+      "event_fast": 0,
+      "bytes": 494313,
+      "result": "PASS|2200|1100|0"
+    },
+    {
+      "sha256": "BD81B1E5EE9B5568A18E9F6219B42862F99979CA2943822B6233C9D5906E9EB7",
+      "event_fast": 1,
+      "bytes": 494313,
+      "result": "PASS|2200|1100|262144"
+    }
+  ],
+  "status": "PASS"
+}

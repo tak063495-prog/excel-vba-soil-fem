@@ -1,0 +1,128 @@
+[
+  {
+    "pair": 1,
+    "width": 128,
+    "characters": 8519680.0,
+    "method": 0,
+    "seconds": 0.1726717
+  },
+  {
+    "pair": 1,
+    "width": 128,
+    "characters": 8519680.0,
+    "method": 1,
+    "seconds": 0.0099825
+  },
+  {
+    "pair": 1,
+    "width": 128,
+    "characters": 8519680.0,
+    "method": 2,
+    "seconds": 0.0132541
+  },
+  {
+    "pair": 2,
+    "width": 128,
+    "characters": 8519680.0,
+    "method": 2,
+    "seconds": 0.0136456
+  },
+  {
+    "pair": 2,
+    "width": 128,
+    "characters": 8519680.0,
+    "method": 1,
+    "seconds": 0.0099746
+  },
+  {
+    "pair": 2,
+    "width": 128,
+    "characters": 8519680.0,
+    "method": 0,
+    "seconds": 0.1686944
+  },
+  {
+    "pair": 3,
+    "width": 128,
+    "characters": 8519680.0,
+    "method": 0,
+    "seconds": 0.170359
+  },
+  {
+    "pair": 3,
+    "width": 128,
+    "characters": 8519680.0,
+    "method": 1,
+    "seconds": 0.0145711
+  },
+  {
+    "pair": 3,
+    "width": 128,
+    "characters": 8519680.0,
+    "method": 2,
+    "seconds": 0.0182618
+  },
+  {
+    "pair": 1,
+    "width": 512,
+    "characters": 33685504.0,
+    "method": 0,
+    "seconds": 0.9001301
+  },
+  {
+    "pair": 1,
+    "width": 512,
+    "characters": 33685504.0,
+    "method": 1,
+    "seconds": 0.0232089
+  },
+  {
+    "pair": 1,
+    "width": 512,
+    "characters": 33685504.0,
+    "method": 2,
+    "seconds": 0.0163127
+  },
+  {
+    "pair": 2,
+    "width": 512,
+    "characters": 33685504.0,
+    "method": 2,
+    "seconds": 0.0174701
+  },
+  {
+    "pair": 2,
+    "width": 512,
+    "characters": 33685504.0,
+    "method": 1,
+    "seconds": 0.0250117
+  },
+  {
+    "pair": 2,
+    "width": 512,
+    "characters": 33685504.0,
+    "method": 0,
+    "seconds": 0.7371486
+  },
+  {
+    "pair": 3,
+    "width": 512,
+    "characters": 33685504.0,
+    "method": 0,
+    "seconds": 0.7495564
+  },
+  {
+    "pair": 3,
+    "width": 512,
+    "characters": 33685504.0,
+    "method": 1,
+    "seconds": 0.0242697
+  },
+  {
+    "pair": 3,
+    "width": 512,
+    "characters": 33685504.0,
+    "method": 2,
+    "seconds": 0.0166207
+  }
+]
