@@ -44,6 +44,21 @@ class EvidenceChecks(unittest.TestCase):
         with self.assertRaises(AssertionError):
             compare(r, c)
 
+    def test_assembly_scope(self):
+        r = dict(self.reference, IoFast=1, EventFast=1, AssemblyFast=0, Assembly=[0, 1024, .01],Flow='INCONSISTENT')
+        c = dict(self.candidate, IoFast=1, EventFast=1, AssemblyFast=1, Assembly=[7804, 1024, .01],Flow='INCONSISTENT')
+        self.assertEqual(compare(r, c, 'assembly')['max_abs_displacement_delta'], 0)
+        self.assertTrue(regression([r], [c], 'assembly')[0]['logs_exact'])
+        for key,value in [('IoFast',0),('EventFast',0),('AssemblyFast',0),
+                          ('Assembly',[0,1024,.01]),('Assembly',[7804,1025,.01]),
+                          ('Assembly',[7804,1024,.02]),('Disp',[0.,1.1])]:
+            with self.subTest(key=key,value=value), self.assertRaises(AssertionError):
+                compare(r,dict(c,**{key:value}),'assembly')
+        self.assertTrue(regression([r],[dict(c,WallSeconds=90)],'assembly')[0]['logs_exact'])
+        with self.assertRaises(AssertionError):
+            regression([r],[dict(c,Assembly=[0,1024,.01])],'assembly')
+        self.assertTrue(regression([dict(r,Flow='DAVIS')],[dict(c,Flow='DAVIS',Assembly=[0,1024,.01])],'assembly'))
+
     def test_regression_accepts_noisy_time_but_rejects_changed_result(self):
         c = dict(self.candidate, WallSeconds=80)
         self.assertTrue(regression([self.reference], [c])[0]['logs_exact'])

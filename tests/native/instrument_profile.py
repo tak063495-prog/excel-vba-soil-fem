@@ -71,14 +71,49 @@ def main():
     parser=argparse.ArgumentParser()
     parser.add_argument('--src',required=True)
     parser.add_argument('--dst',required=True)
+    parser.add_argument('--assembly-sections',action='store_true')
     args=parser.parse_args()
     src=Path(args.src).resolve(); dst=Path(args.dst).resolve()
     if dst.exists() or src==dst or src in dst.parents:
         raise ValueError('Use a new disposable output directory')
-    ids={name:i+1 for i,name in enumerate(name for values in TARGETS.values() for name in values)}
+    targets={filename:list(names) for filename,names in TARGETS.items()}
+    sections=['AssemblyMeshPolicy','AssemblySymmetryScan','AssemblyZeroValues','AssemblyCopyValues'] if args.assembly_sections else []
+    if args.assembly_sections:
+        targets['FEMSolver.bas'] += ['P6SelectSolverMode','P6EnsureBandScatter','P6BuildCSRFromElements','P6AssembleCSRValuesDetailed',
+            'P6EnsureCSRScatterList','P6CheckCSRDiagonalValues','P6EnsureCSRValueWorkspace','P6BuildCSRPattern']
+        targets['FEMNativeKern.bas'] += ['FEMKernBandScatter','FEMKernCsrScatter']
+        if 'Public Function FEMNativeCSRScatterList()' in (src/'FEMNative.bas').read_text(encoding='utf-8-sig'):
+            targets.setdefault('FEMNative.bas',[]).append('FEMNativeCSRScatterList')
+    ids={name:i+1 for i,name in enumerate([name for values in targets.values() for name in values]+sections)}
+    if len(ids)>64: raise ValueError('Profile node capacity exceeded')
     prepared={}; report={}
-    for filename,names in TARGETS.items():
-        text,found=inject((src/filename).read_text(encoding='utf-8-sig'),names,ids)
+    for filename,names in targets.items():
+        original=(src/filename).read_text(encoding='utf-8-sig')
+        if args.assembly_sections and filename=='FEMSolver.bas':
+            start=original.index('Sub SetTotalMat()')
+            end=original.index('End Sub',start)
+            part=original[start:end]
+            replacements=[
+                (' rcmPolicy = UCase$', f' FEMProfileEnter {ids["AssemblyMeshPolicy"]}\n rcmPolicy = UCase$'),
+                ('   matrixMax = 0#', f' FEMProfileLeave {ids["AssemblyMeshPolicy"]}\n FEMProfileEnter {ids["AssemblySymmetryScan"]}\n   matrixMax = 0#'),
+                (' P6SelectSolverMode\n', f' FEMProfileLeave {ids["AssemblySymmetryScan"]}\n P6SelectSolverMode\n'),
+            ]
+            for old,new in replacements:
+                if part.count(old)!=1: raise ValueError(f'Assembly marker mismatch: {old}')
+                part=part.replace(old,new)
+            original=original[:start]+part+original[end:]
+            for name,section,first,last in [
+                ('P6AssembleCSRValuesDetailed','AssemblyZeroValues','  For position = 0 To P6CSRNNZ - 1','  Next position'),
+                ('P6BuildCSRFromElements','AssemblyCopyValues','  For position = 0 To P6CSRNNZ - 1','  Next position'),
+            ]:
+                start=original.index('Private Function '+name+'(')
+                end=original.index('End Function',start)
+                part=original[start:end]
+                if part.count(first)!=1 or part.count(last)!=1: raise ValueError(f'{name}: section markers')
+                part=part.replace(first,f'  FEMProfileEnter {ids[section]}\n'+first)
+                part=part.replace(last,last+f'\n  FEMProfileLeave {ids[section]}')
+                original=original[:start]+part+original[end:]
+        text,found=inject(original,names,ids)
         if set(found)!=set(names):
             raise ValueError(f'{filename}: requested {names}, found {found}')
         prepared[filename]=text; report[filename]=found

@@ -963,6 +963,7 @@ Private Function P6EnsureCSRScatterList() As Boolean
   End If
 
   On Error GoTo ScatterBuildFailed
+  If FEMNativeCSRScatterList() Then GoTo ScatterListReady
   useFlatKCache = False ' Always assemble the current element tangent, including plastic and joint terms.
   ReDim P6CSRScatterStart(0 To NumberOfElement)
   P6CSRScatterStart(0) = 0
@@ -1014,6 +1015,7 @@ Private Function P6EnsureCSRScatterList() As Boolean
     Erase P6CSRScatterPosition
     Erase P6CSRScatterValueIndex
   End If
+ScatterListReady:
   P6CSRScatterElementCount = NumberOfElement
   P6CSRScatterTangentGeneration = P6TangentGeneration
   P6CSRScatterMaterialGeneration = P6MaterialGeneration

@@ -1,0 +1,9 @@
+test_assembly_scope (test_io_summary.EvidenceChecks.test_assembly_scope) ... ok
+test_event_scope (test_io_summary.EvidenceChecks.test_event_scope) ... ok
+test_exact_comparison_and_rejections (test_io_summary.EvidenceChecks.test_exact_comparison_and_rejections) ... ok
+test_regression_accepts_noisy_time_but_rejects_changed_result (test_io_summary.EvidenceChecks.test_regression_accepts_noisy_time_but_rejects_changed_result) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.001s
+
+OK

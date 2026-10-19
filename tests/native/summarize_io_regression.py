@@ -1,4 +1,4 @@
-"""Exact numerical/log comparison for paired I/O fixed-Fs regression runs."""
+"""Exact numerical/log comparison for paired I/O or assembly fixed-Fs runs."""
 import argparse
 import json
 import math
@@ -14,7 +14,17 @@ def compare(reference, candidate, scope='io'):
     assert len(reference) == len(candidate) > 0
     report = []
     for r, c in zip(reference, candidate):
-        if scope == 'events':
+        if scope == 'assembly':
+            assert r['IoFast'] == c['IoFast'] == r['EventFast'] == c['EventFast'] == 1
+            assert r['AssemblyFast'] == 0 and c['AssemblyFast'] == 1
+            assert r['Flow'] == c['Flow'] and c['Flow'] in ('INCONSISTENT','DAVIS')
+            assert r['Assembly'][0] == 0
+            if c['Flow'] == 'INCONSISTENT' and c['Mode'] == 'AUTO':
+                assert c['Assembly'][0] > 0, 'Native assembly was not exercised'
+            else:
+                assert c['Assembly'][0] == 0
+            assert r['Assembly'][1:] == c['Assembly'][1:]
+        elif scope == 'events':
             assert r['IoFast'] == c['IoFast'] == 1
             assert r['EventFast'] == 0 and c['EventFast'] == 1
         else:
@@ -41,7 +51,7 @@ def compare(reference, candidate, scope='io'):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('reference'); ap.add_argument('candidate'); ap.add_argument('--out', required=True)
-    ap.add_argument('--scope', choices=('io', 'events'), default='io')
+    ap.add_argument('--scope', choices=('io', 'events', 'assembly'), default='io')
     args = ap.parse_args()
     result = dict(status='PASS', cases=compare(rows(args.reference), rows(args.candidate), args.scope))
     text = json.dumps(result, ensure_ascii=False, indent=2)

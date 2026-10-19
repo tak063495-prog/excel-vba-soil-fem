@@ -1,5 +1,13 @@
 # VBA版 2D Soil FEM
 
+## INCONSISTENT 行列組立高速化版（2026-10-20）
+
+[一括ダウンロード（XLSM＋DLL 2個、ZIP）](workbook/SoilFEM_INCONSISTENT_ASSEMBLY_20261020.zip)。
+行列組立を分解計測し、最大のCSR散布表作成をDLLへ移しました。
+同条件の小モデルSRM全探索3組で中央値53.72秒→45.30秒（15.67%短縮）。
+Double・収束条件を維持し、Fs区間・全170変位・最終残差・イベントCSV全体が完全一致しました。
+VBAとDLLのコンパイルを確認しています。[内訳・比較結果・再現手順](docs/INCONSISTENT_ASSEMBLY_PERF.md) を参照してください。
+
 ## INCONSISTENT ログ整形・バッファ高速化版（2026-10-20）
 
 [一括ダウンロード（XLSM＋DLL 2個、ZIP）](workbook/SoilFEM_INCONSISTENT_EVENT_20261020.zip)。
