@@ -242,6 +242,8 @@ Private Function ErrorStatus(ByVal errorNumber As Long) As String
     Select Case localNumber
         Case 3001 To 3008
             ErrorStatus = RESULT_INPUT_ERROR
+        Case 3820 To 3829
+            ErrorStatus = RESULT_INPUT_ERROR
         Case 3023 To 3029
             ErrorStatus = RESULT_INPUT_ERROR
         Case 3401 To 3419
@@ -1064,12 +1066,14 @@ Sub ボタン5_Click()
     End If
     AnalysisRunning = True
     On Error GoTo ErrorHandler
+    SaveApplicationState
+    FEMLastProc = "入力設定の検査"
+    ResetAnalysisState
+    FEMUiValidateSettings
     FEMViewerMarkDirty
     P1ClearViewerLayers
-    SaveApplicationState
     FEMProgressBegin
     FEMLastProc = "P0_RunAnalysis"
-    ResetAnalysisState
     FEMInvalidateSettingCache
     FEMValidateAnalysisScope
     FEMWriteBuildStamp

@@ -47,7 +47,7 @@ Public Sub FEMWriteBuildStamp(Optional ByVal applyLayout As Boolean = True)
   FEMRebuildSettingsLayout ws
   FEMEnsureStageSheets
   If applyLayout Then FEMEnsureWorkbookLayout
-  FEMUiAfterLayout
+  FEMUiUpdateLayout
 End Sub
 
 Private Sub FEMRebuildSettingsLayout(ByVal ws As Worksheet)
@@ -172,8 +172,18 @@ Private Sub FEMRebuildSettingsLayout(ByVal ws As Worksheet)
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ADAPT_MARK_FRACTION", "適応", "細分化割合", 0.15, "0～1", False
   writeRow = writeRow + 1
   FEMPutSection ws, writeRow, "高速化追加（増分幅回復）"
-  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ACCEL_STEP_RECOVERY", "高速化", "増分幅の緩やかな回復", 0, "0=従来幅 / 1=1.1倍試用後8成功増分の採算を確認。C47=1時のみ", False
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ACCEL_STEP_RECOVERY", "高速化", "増分幅の緩やかな回復", 0, "0=従来幅 / 1=1.1倍試用後8成功増分の採算を確認。自動選別=1時のみ", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ACCEL_STEP_FRESH_LU", "高速化", "回復直後のfresh LU試験", 0, "0=既存V2a条件 / 1=回復直後1回だけfresh LU。回復ON時のみ", False
+  FEMPutSection ws, writeRow, "DLL・I/O（推奨値。倍精度と収束条件を維持）"
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NATIVE_DLL", "DLL・I/O", "DLLの使用", "AUTO", "AUTO=利用可能なDLLを使用 / BAND=行列DLLのみ / OFF=VBA。未対応CPUでは対応経路へ復帰。", True
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NATIVE_PRECISION", "DLL・I/O", "DLLの演算精度（倍精度）", "AUTO", "全方式Double。AUTO=CPU対応命令を選択 / STRICT=従来VBA互換 / SSE2・AVX2=方式指定。微小な丸め差あり。", True
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NATIVE_STATE_COPY", "DLL・I/O", "状態配列のDLL転送", 1, "1=検証済み一括転送 / 0=比較用VBA経路。", False
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NATIVE_ASSEMBLY", "DLL・I/O", "行列組立のDLL処理", 1, "1=検証済みDLL組立 / 0=比較用VBA経路。収束条件は同じ。", False
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NATIVE_GMRES_SIMD", "DLL・I/O", "GMRESのCPU拡張命令", 1, "1=CPU対応命令を使用。非対応命令を無理に実行しません。", False
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NATIVE_GMRES_TUNED", "DLL・I/O", "GMRESの転送・更新最適化", 1, "1=検証済み最適化 / 0=比較用経路。真の残差による判定を維持。", False
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NATIVE_GMRES_PREPARED", "DLL・I/O", "GMRESの作業領域再利用", 1, "1=準備済み作業領域を再利用 / 0=比較用経路。", False
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "IO_FAST_PATH", "DLL・I/O", "ログの整形・バッファ処理", 1, "1=検証済み一括整形・バッファ処理 / 0=比較用経路。記録内容は同じ。", False
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "EVENT_LOG_FAST", "DLL・I/O", "診断イベントの整形処理", 1, "1=検証済み高速経路 / 0=比較用経路。記録内容は同じ。", False
   extraFlag = False
   For i = 1 To cacheN
     foundFlag = False
@@ -3464,7 +3474,7 @@ End Sub
 Private Sub FEMApplyLoadValidation(ByVal ws As Worksheet)
   Dim targetRange As range
   On Error Resume Next
-  Set targetRange = ws.range("B2:B100")
+  Set targetRange = ws.range("B2:B2000")
   targetRange.Validation.Delete
   targetRange.Validation.Add Type:=3, AlertStyle:=1, Operator:=1, Formula1:="TOP,BOTTOM,LEFT,RIGHT,BOX"
   targetRange.Validation.IgnoreBlank = True
@@ -3683,15 +3693,15 @@ Private Sub FEMApplyNumericValidation(ByVal targetRange As range, ByVal ruleText
 End Sub
 
 Private Sub FEMApplyStageValidation(ByVal ws As Worksheet)
-  FEMApplyListValidation ws.range("B2:B100"), "GRAVITY,LOAD,UNLOAD,BIRTH,DEATH,SRM,RESET_U,RESET_STRESS,MATSET"
-  FEMApplyListValidation ws.range("E2:E100"), "1,0"
+  FEMApplyListValidation ws.range("B2:B2000"), "GRAVITY,LOAD,UNLOAD,BIRTH,DEATH,SRM,RESET_U,RESET_STRESS,MATSET"
+  FEMApplyListValidation ws.range("E2:E2000"), "1,0"
 End Sub
 
 Private Sub FEMApplyMaterialValidation(ByVal ws As Worksheet)
-  FEMApplyListValidation ws.range("I2:I100"), "1,0"
-  FEMApplyListValidation ws.range("J2:J100"), "ON,OFF"
-  FEMApplyListValidation ws.range("K2:K100"), "SOIL,STRUCT,JOINT"
-  FEMApplyListValidation ws.range("M2:M100"), "0,1"
+  FEMApplyListValidation ws.range("I2:I2000"), "1,0"
+  FEMApplyListValidation ws.range("J2:J2000"), "ON,OFF"
+  FEMApplyListValidation ws.range("K2:K2000"), "SOIL,STRUCT,JOINT"
+  FEMApplyListValidation ws.range("M2:M2000"), "0,1"
 End Sub
 
 Private Sub FEMSpecPut(ByVal ws As Worksheet, ByRef rowNo As Long, ByVal classText As String, ByVal itemText As String, ByVal valueText As String, ByVal meaningText As String)

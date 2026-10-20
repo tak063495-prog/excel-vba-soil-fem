@@ -1,5 +1,14 @@
 # VBA版 2D Soil FEM
 
+## 入出力を整理した最新ブック（2026-10-20）
+
+[一括ダウンロード（XLSM＋DLL 2個、ZIP）](workbook/SoilFEM_UI_20261020.zip)。
+「操作ガイド」に対応機能・入力順・結果の読み方をまとめ、83設定に入力値と推奨・目安を並べました。
+通常使うDLL・I/O設定9項目はAUTO/1を入力済みです。材料・荷重・支持・Fs条件を一括変更しません。
+入力813項目、保存・互換性407項目、VBAコンパイル・再読込を確認しています。
+Double・収束条件を維持し、SRM全探索のFs区間・全170変位・残差・診断CSV全体が元版と完全一致しました。
+[操作・対応機能・検証記録](docs/WORKBOOK_UI_20261020.md) / [現在の83設定と入力済み値](docs/UI_SETTINGS_20261020.md)。
+
 ## INCONSISTENT 要素行列積・ILU構築の高速化版（2026-10-20）
 
 [一括ダウンロード（XLSM＋DLL 2個、ZIP）](workbook/SoilFEM_INCONSISTENT_ELEMENT_20261020.zip)。
@@ -71,7 +80,7 @@ Double・収束条件・材料則・SRM探索条件を維持し、AUTOでCPUに�
 対応CPUでAVX2・FMAを使います。従来DLLからの変更、精度比較、測定範囲は
 [SIMD DLLの説明](docs/SIMD_NATIVE.md) を参照してください。
 
-## 現在の標準版：候補48＋DLL（2026-10-18）
+## 旧標準版：候補48＋DLL（2026-10-18）
 
 [標準ブックをダウンロード](workbook/2DSoilFEM_standard48_native_20261018.xlsm)。同じフォルダに [soilfem_native_x64.dll](workbook/soilfem_native_x64.dll) と [soilfem_mat_x64.dll](workbook/soilfem_mat_x64.dll) を置いてください。ビルドは `20261018_STANDARD48_NATIVE_05`、保存済み設定は `FLOW_POLICY=INCONSISTENT`、`NATIVE_DLL=AUTO` です。DLLを利用できない環境ではVBAへ自動で戻ります。
 
@@ -119,7 +128,7 @@ Excel上で2次元地盤FEM、強度低減法（SRM）、ジョイント、施�
 
 ## 使用方法
 
-1. [標準ブック](workbook/2DSoilFEM_standard48_native_20261018.xlsm) とDLL 2個を同じローカルフォルダに保存し、デスクトップ版Excelで開きます。信頼するファイルとしてマクロを有効にしてください。
+1. [最新ZIP](workbook/SoilFEM_UI_20261020.zip)を展開し、XLSMとDLL 2個を同じローカルフォルダに保存し、デスクトップ版Excelで開きます。信頼するファイルとしてマクロを有効にしてください。
 2. 「操作パネル」から、形状・メッシュ、材料、載荷、接合、施工ステージを設定します。「解析設定」「高速化設定」「メッシュ設定」「出力・表示」「詳細設定」で用途別に設定できます。
 3. 初期図・全体図で形状と要素の有効状態を確認し、解析を実行します。結果図、結果節点、結果要素、ステージ結果、接合結果を確認します。
 
@@ -135,7 +144,7 @@ Excel上で2次元地盤FEM、強度低減法（SRM）、ジョイント、施�
 
 ## 高速化の版と履歴
 
-計算部の版は `20261010_INCO_24`、操作シートは `20261008_UI_01`、実務修正は `20261009_PRACTICAL_04` です。V1〜V5の単独・組合せとADAPT_01〜07の結果、見送り理由、出典は [高速化履歴](docs/ACCELERATION_HISTORY.md) と [比較CSV](docs/benchmark-summary.csv) にまとめています。
+最新の計算部は `20261020_INCO_ELEMENT_01`、操作シートは `20261020_UI_01`、実務修正は `20261009_PRACTICAL_04` です。V1〜V5の単独・組合せとADAPT_01〜07の結果、見送り理由、出典は [高速化履歴](docs/ACCELERATION_HISTORY.md) と [比較CSV](docs/benchmark-summary.csv) にまとめています。
 
 ADAPT_07は3770.916秒で、実測最速のADAPT_03（2929.445秒）より28.72%遅くなりました。今回の版ではADAPT_03の選別ロジックと採算推定を復元し、V1/V2a/V4・適応選別をON、増分幅の追加回復とfresh LU試験をOFFにしています。実務上の修正と診断ログは保持しています。[今回の評価と復元内容](docs/evidence/adaptive_policy7_evaluation_and_restore_20261008.txt) に内訳を記載しています。
 

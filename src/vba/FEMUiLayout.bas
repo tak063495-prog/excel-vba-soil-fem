@@ -1,5 +1,44 @@
 ﻿Option Explicit
-Public Const FEM_UI_STAMP As String = "20261008_UI_01"
+Public Const FEM_UI_STAMP As String = "20261020_UI_01"
+
+Private mUiSessionReady As Boolean
+Private mUiSessionBook As String
+
+Public Sub FEMUiInvalidateLayout()
+  mUiSessionReady = False
+End Sub
+
+' Rebuild presentation once per session, not on every Newton/SRM analysis.
+' Settings are always rebound after the legacy registry has been rebuilt.
+Public Sub FEMUiUpdateLayout()
+  Dim eventsSaved As Boolean, screenSaved As Boolean, activeName As String
+  Dim errorNo As Long, errorText As String
+  If Not FEMUiInstalled() Then Exit Sub
+  If Not mUiSessionReady Or mUiSessionBook <> ThisWorkbook.name Then
+    FEMUiAfterLayout
+    Exit Sub
+  End If
+  eventsSaved = Application.EnableEvents: screenSaved = Application.ScreenUpdating
+  activeName = ThisWorkbook.ActiveSheet.name
+  On Error GoTo Failed
+  Application.EnableEvents = False: Application.ScreenUpdating = False
+  FEMUiBindSettings
+  FEMUiOrderTabs
+  With ThisWorkbook.Worksheets("接合結果")
+    .Visible = xlSheetVisible: .Move After:=ThisWorkbook.Worksheets("ステージ結果")
+  End With
+  ThisWorkbook.Worksheets("操作ガイド").Move After:=ThisWorkbook.Worksheets("操作パネル")
+  If FEMUiWorksheetExists(activeName) Then
+    If ThisWorkbook.Worksheets(activeName).Visible = xlSheetVisible Then ThisWorkbook.Worksheets(activeName).Activate
+  End If
+  Application.EnableEvents = eventsSaved: Application.ScreenUpdating = screenSaved
+  FEMInvalidateSettingCache
+  Exit Sub
+Failed:
+  errorNo = Err.Number: errorText = Err.Description: mUiSessionReady = False
+  Application.EnableEvents = eventsSaved: Application.ScreenUpdating = screenSaved
+  Err.Raise errorNo, "FEMUiUpdateLayout", errorText
+End Sub
 
 Public Sub FEMUiAfterLayout()
   Dim eventsSaved As Boolean, screenSaved As Boolean, activeName As String
@@ -15,18 +54,22 @@ Public Sub FEMUiAfterLayout()
   For Each p In pageNames
     ThisWorkbook.Worksheets(CStr(p)).Unprotect
   Next p
+  uiPhase = "設定画面の更新": FEMUiPrepareInputs
   uiPhase = "設定連携": FEMUiBindSettings
   For Each p In pageNames
     Set ws = ThisWorkbook.Worksheets(CStr(p))
     ws.Unprotect
     ws.columns(6).Hidden = True
-    ws.range("A1:F100").locked = True
+    ws.range("A1:G200").locked = True
     maxRow = ws.Cells(ws.rows.count, 6).End(xlUp).row
     For r = 1 To maxRow
-      If Len(CStr(ws.Cells(r, 6).value2)) > 0 Then ws.Cells(r, 3).MergeArea.locked = False
+      If Len(CStr(ws.Cells(r, 6).value2)) > 0 Then
+        If left$(CStr(ws.Cells(r, 6).value2), 14) <> "MESH_GEN_LAST_" Then ws.Cells(r, 3).MergeArea.locked = False
+      End If
     Next r
   Next p
   uiPhase = "入力説明": FEMUiRestoreGuides
+  uiPhase = "入力規則": FEMUiApplyInputValidation
   uiPhase = "リンク": FEMUiMakeLinks
   uiPhase = "ボタン": FEMUiMakeButtons
   uiPhase = "シート順": FEMUiOrderTabs
@@ -39,10 +82,13 @@ Public Sub FEMUiAfterLayout()
   End If
   Application.EnableEvents = eventsSaved: Application.ScreenUpdating = screenSaved
   FEMPracticalAfterLayout
+  FEMUiFinishInputs
+  mUiSessionReady = True: mUiSessionBook = ThisWorkbook.name
   FEMInvalidateSettingCache
   Exit Sub
 Failed:
   errorNo = Err.Number: errorSource = Err.source: errorText = Err.Description
+  mUiSessionReady = False
   Application.EnableEvents = eventsSaved: Application.ScreenUpdating = screenSaved
   Err.Raise errorNo, "FEMUiAfterLayout:" & uiPhase, uiPhase & ": " & errorText
 End Sub
