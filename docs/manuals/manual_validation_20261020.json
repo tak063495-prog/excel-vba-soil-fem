@@ -1,5 +1,5 @@
 {
-  "pages": 94,
+  "pages": 102,
   "chapters": [
     [
       "第1章 / はじめに",
@@ -15,43 +15,43 @@
     ],
     [
       "第4章 / 施工例A：掘削と再盛土",
-      33
-    ],
-    [
-      "第5章 / 施工例B：擁壁とSRM",
       41
     ],
     [
-      "第6章 / 施工例C：アンカー相当力",
-      47
-    ],
-    [
-      "第7章 / 施工例D：トンネル",
+      "第5章 / 施工例B：擁壁とSRM",
       49
     ],
     [
+      "第6章 / 施工例C：アンカー相当力",
+      55
+    ],
+    [
+      "第7章 / 施工例D：トンネル",
+      57
+    ],
+    [
       "第8章 / 施工例E：水平・斜面の支持力",
-      53
+      61
     ],
     [
       "第9章 / 結果と増分図の読み方",
-      59
+      67
     ],
     [
       "第10章 / 保存・比較・トラブル対応",
-      68
+      76
     ],
     [
       "付録A / 設定一覧",
-      75
+      83
     ],
     [
       "付録B / 根拠と再現",
-      86
+      94
     ],
     [
       "付録C / 用語集",
-      90
+      98
     ]
   ],
   "page_plan": [
@@ -207,321 +207,361 @@
     },
     {
       "page": 31,
-      "title": "既存Case1：Fs図の計算条件",
+      "title": "斜面SRMの検証例：使う記録と入力条件",
       "chapter": "第3章 / 解析条件と収束"
     },
     {
       "page": 32,
-      "title": "既存Case1：Fs区間の数値例",
+      "title": "斜面の形状：同じ材料でも高さ・基盤が違う",
       "chapter": "第3章 / 解析条件と収束"
     },
     {
       "page": 33,
+      "title": "c・φ・ψを分けて読む：強度と塑性流れ",
+      "chapter": "第3章 / 解析条件と収束"
+    },
+    {
+      "page": 34,
+      "title": "関連・非関連流れ則：φとψの関係",
+      "chapter": "第3章 / 解析条件と収束"
+    },
+    {
+      "page": 35,
+      "title": "8ケースの実測：Fs区間と独立残差",
+      "chapter": "第3章 / 解析条件と収束"
+    },
+    {
+      "page": 36,
+      "title": "斜面の実図：最後の収束状態を比べる",
+      "chapter": "第3章 / 解析条件と収束"
+    },
+    {
+      "page": 37,
+      "title": "Fsが近くても変位の適用範囲は別に調べる",
+      "chapter": "第3章 / 解析条件と収束"
+    },
+    {
+      "page": 38,
+      "title": "文献との比較とログの開き方",
+      "chapter": "第3章 / 解析条件と収束"
+    },
+    {
+      "page": 39,
+      "title": "既存Case1：Fs図の計算条件",
+      "chapter": "第3章 / 解析条件と収束"
+    },
+    {
+      "page": 40,
+      "title": "既存Case1：Fs区間の数値例",
+      "chapter": "第3章 / 解析条件と収束"
+    },
+    {
+      "page": 41,
       "title": "道路拡幅：掘削して別材料で再盛土",
       "chapter": "第4章 / 施工例A：掘削と再盛土"
     },
     {
-      "page": 34,
+      "page": 42,
       "title": "入力①：18点と8つの外側境界",
       "chapter": "第4章 / 施工例A：掘削と再盛土"
     },
     {
-      "page": 35,
+      "page": 43,
       "title": "入力②：材料と初期状態",
       "chapter": "第4章 / 施工例A：掘削と再盛土"
     },
     {
-      "page": 36,
+      "page": 44,
       "title": "入力③：11工程をそのまま並べる",
       "chapter": "第4章 / 施工例A：掘削と再盛土"
     },
     {
-      "page": 37,
+      "page": 45,
       "title": "入力④：メッシュ・計算・工程図の比較",
       "chapter": "第4章 / 施工例A：掘削と再盛土"
     },
     {
-      "page": 38,
+      "page": 46,
       "title": "道路拡幅：現行ブックで11工程を実解析",
       "chapter": "第4章 / 施工例A：掘削と再盛土"
     },
     {
-      "page": 39,
+      "page": 47,
       "title": "道路拡幅：掘削から再盛土までの実計算図",
       "chapter": "第4章 / 施工例A：掘削と再盛土"
     },
     {
-      "page": 40,
+      "page": 48,
       "title": "道路拡幅：再盛土完了の応力と増分を読む",
       "chapter": "第4章 / 施工例A：掘削と再盛土"
     },
     {
-      "page": 41,
+      "page": 49,
       "title": "斜面上のL型擁壁：モデルと材料",
       "chapter": "第5章 / 施工例B：擁壁とSRM"
     },
     {
-      "page": 42,
+      "page": 50,
       "title": "擁壁施工からSRMまでの入力",
       "chapter": "第5章 / 施工例B：擁壁とSRM"
     },
     {
-      "page": 43,
+      "page": 51,
       "title": "擁壁の施工3工程を図で比較する",
       "chapter": "第5章 / 施工例B：擁壁とSRM"
     },
     {
-      "page": 44,
+      "page": 52,
       "title": "擁壁施工後SRM：結果とせん断帯",
       "chapter": "第5章 / 施工例B：擁壁とSRM"
     },
     {
-      "page": 45,
+      "page": 53,
       "title": "同一メッシュでDAVISとINCONSISTENTを実測",
       "chapter": "第5章 / 施工例B：擁壁とSRM"
     },
     {
-      "page": 46,
+      "page": 54,
       "title": "流れ則比較：全変位と結果の解釈",
       "chapter": "第5章 / 施工例B：擁壁とSRM"
     },
     {
-      "page": 47,
+      "page": 55,
       "title": "アンカー補強：等価節点力の入力",
       "chapter": "第6章 / 施工例C：アンカー相当力"
     },
     {
-      "page": 48,
+      "page": 56,
       "title": "アンカー相当力を加えた結果",
       "chapter": "第6章 / 施工例C：アンカー相当力"
     },
     {
-      "page": 49,
+      "page": 57,
       "title": "トンネル：地山・空洞・支保占有域",
       "chapter": "第7章 / 施工例D：トンネル"
     },
     {
-      "page": 50,
+      "page": 58,
       "title": "トンネル：上半掘削・支保から下半へ",
       "chapter": "第7章 / 施工例D：トンネル"
     },
     {
-      "page": 51,
+      "page": 59,
       "title": "トンネル：4段階の実計算図と数値",
       "chapter": "第7章 / 施工例D：トンネル"
     },
     {
-      "page": 52,
+      "page": 60,
       "title": "トンネル：施工に伴う変位を読み分ける",
       "chapter": "第7章 / 施工例D：トンネル"
     },
     {
-      "page": 53,
+      "page": 61,
       "title": "支持力解析：水平地盤と斜面上の入力例",
       "chapter": "第8章 / 施工例E：水平・斜面の支持力"
     },
     {
-      "page": 54,
+      "page": 62,
       "title": "支持力解析：自重後の追加沈下を入力する",
       "chapter": "第8章 / 施工例E：水平・斜面の支持力"
     },
     {
-      "page": 55,
+      "page": 63,
       "title": "支持力解析：載荷シートの実入力例",
       "chapter": "第8章 / 施工例E：水平・斜面の支持力"
     },
     {
-      "page": 56,
+      "page": 64,
       "title": "水平・斜面：平均圧力と追加沈下の実計算",
       "chapter": "第8章 / 施工例E：水平・斜面の支持力"
     },
     {
-      "page": 57,
+      "page": 65,
       "title": "支持力解析：応力とせん断増分の実図",
       "chapter": "第8章 / 施工例E：水平・斜面の支持力"
     },
     {
-      "page": 58,
+      "page": 66,
       "title": "支持力解析：実計算から得られた注意点",
       "chapter": "第8章 / 施工例E：水平・斜面の支持力"
     },
     {
-      "page": 59,
+      "page": 67,
       "title": "内容名で結果を選び、増分図を重ねる",
       "chapter": "第9章 / 結果と増分図の読み方"
     },
     {
-      "page": 60,
+      "page": 68,
       "title": "実画面：表示する量と変形倍率を選ぶ",
       "chapter": "第9章 / 結果と増分図の読み方"
     },
     {
-      "page": 61,
+      "page": 69,
       "title": "実画面：増分図を個別にON/OFFする",
       "chapter": "第9章 / 結果と増分図の読み方"
     },
     {
-      "page": 62,
+      "page": 70,
       "title": "増分図：実際の操作順",
       "chapter": "第9章 / 結果と増分図の読み方"
     },
     {
-      "page": 63,
+      "page": 71,
       "title": "増分値の定義・集計・誤読しやすい点",
       "chapter": "第9章 / 結果と増分図の読み方"
     },
     {
-      "page": 64,
+      "page": 72,
       "title": "A：応力に増分等値線と塑性クロスを重ねる",
       "chapter": "第9章 / 結果と増分図の読み方"
     },
     {
-      "page": 65,
+      "page": 73,
       "title": "B：増分カラーでせん断集中域を見る",
       "chapter": "第9章 / 結果と増分図の読み方"
     },
     {
-      "page": 66,
+      "page": 74,
       "title": "結果表・Fs・残差を対応させる",
       "chapter": "第9章 / 結果と増分図の読み方"
     },
     {
-      "page": 67,
+      "page": 75,
       "title": "実画面：結果表と図のFsを照合する",
       "chapter": "第9章 / 結果と増分図の読み方"
     },
     {
-      "page": 68,
+      "page": 76,
       "title": "保存・ログ・チェックポイント再開",
       "chapter": "第10章 / 保存・比較・トラブル対応"
     },
     {
-      "page": 69,
+      "page": 77,
       "title": "実画面：結果を残す設定を解析前に決める",
       "chapter": "第10章 / 保存・比較・トラブル対応"
     },
     {
-      "page": 70,
+      "page": 78,
       "title": "整理する図表から必要な出力を決める",
       "chapter": "第10章 / 保存・比較・トラブル対応"
     },
     {
-      "page": 71,
+      "page": 79,
       "title": "整理例：施工段階の変位と鉛直反力",
       "chapter": "第10章 / 保存・比較・トラブル対応"
     },
     {
-      "page": 72,
+      "page": 80,
       "title": "整理例：SRMの成否・変位・残差を並べる",
       "chapter": "第10章 / 保存・比較・トラブル対応"
     },
     {
-      "page": 73,
+      "page": 81,
       "title": "よくある問題と切り分け",
       "chapter": "第10章 / 保存・比較・トラブル対応"
     },
     {
-      "page": 74,
+      "page": 82,
       "title": "ケース比較と結果を残すチェック表",
       "chapter": "第10章 / 保存・比較・トラブル対応"
     },
     {
-      "page": 75,
+      "page": 83,
       "title": "メッシュ設定：使う値・使わない値",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 76,
+      "page": 84,
       "title": "形状入力と旧設定の互換性",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 77,
+      "page": 85,
       "title": "解析設定：設定一覧 1～9",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 78,
+      "page": 86,
       "title": "高速化設定：設定一覧 1～8",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 79,
+      "page": 87,
       "title": "高速化設定：設定一覧 9～15",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 80,
+      "page": 88,
       "title": "高速化設定：設定一覧 16～22",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 81,
+      "page": 89,
       "title": "出力・表示：保存・再開・変位倍率",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 82,
+      "page": 90,
       "title": "出力・表示：内容名・増分オプション",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 83,
+      "page": 91,
       "title": "詳細設定：設定一覧 1～7",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 84,
+      "page": 92,
       "title": "詳細設定：設定一覧 8～14",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 85,
+      "page": 93,
       "title": "詳細設定：設定一覧 15～21",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 86,
+      "page": 94,
       "title": "出典・作図方法・検証記録",
       "chapter": "付録B / 根拠と再現"
     },
     {
-      "page": 87,
+      "page": 95,
       "title": "版の識別・計算結果を伝える項目",
       "chapter": "付録B / 根拠と再現"
     },
     {
-      "page": 88,
+      "page": 96,
       "title": "既存の回帰図・入力UI検証の出典",
       "chapter": "付録B / 根拠と再現"
     },
     {
-      "page": 89,
+      "page": 97,
       "title": "支持力解析の参考資料と再現入力",
       "chapter": "付録B / 根拠と再現"
     },
     {
-      "page": 90,
+      "page": 98,
       "title": "用語集 1-9",
       "chapter": "付録C / 用語集"
     },
     {
-      "page": 91,
+      "page": 99,
       "title": "用語集 10-18",
       "chapter": "付録C / 用語集"
     },
     {
-      "page": 92,
+      "page": 100,
       "title": "用語集 19-27",
       "chapter": "付録C / 用語集"
     },
     {
-      "page": 93,
+      "page": 101,
       "title": "用語集 28-36",
       "chapter": "付録C / 用語集"
     },
     {
-      "page": 94,
+      "page": 102,
       "title": "用語集 37-43",
       "chapter": "付録C / 用語集"
     }
@@ -607,8 +647,8 @@
     }
   ],
   "glossary_entries": 43,
-  "pdf_sha256": "c9b7ac298dbdffa70b00876c7656439caee321b9c69b6c41853cf32fe3258f4f",
-  "revision": "94-page unified manual with purpose-based output settings, actual Excel captures and data-organization examples",
+  "pdf_sha256": "9ed4685f3038716658781cde73e05ccea96fc918c83aa7ab5bf0addaa768a3f7",
+  "revision": "102 pages; 8 historical INCO24 slope SRM examples, c/phi/psi and flow-rule explanation; original input-mesh cover",
   "reference_main": "f144d88008c1575cb8042ea48005202c0208d7bb",
   "book_sha256": "1e46355ca510b05509b92beaef712118417bceea171ff40ce02b0226cd5e9a06",
   "dll_sha256": "ad5c2ae81512ba8e977002415a6a5339b621c00a1bbabe5092559f8a7f9e0797",
@@ -4404,6 +4444,56 @@
       "path": "docs/manuals/construction-evidence/20261021/output-guide/stages.png",
       "bytes": 188911,
       "sha256": "404e64a9dbc7e0f468ec20477f711861e7e88f751de3050beb9bd272dbb2f56e"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/slope-srm-guide/brackets.png",
+      "bytes": 44480,
+      "sha256": "071ebe49b75750747f38dd803e324f5f228a7973218071a2fcdcbd014706e52a"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/slope-srm-guide/cases.csv",
+      "bytes": 1670,
+      "sha256": "df2c1f5346feaeddc8d139676e9453ad9103ae4250a8e0da58e65c3b7b02da51"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/slope-srm-guide/cover_initial_mesh.png",
+      "bytes": 77244,
+      "sha256": "8b2a67e33441885152ede4d5a448544f00dc218e1d33095e10b927abbbdd7c9e"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/slope-srm-guide/flow_concept.png",
+      "bytes": 71369,
+      "sha256": "9198d2186cc8e80065b8fc6261062b3e5ba5d31fbe4807ae70f1b6bcbc0dc590"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/slope-srm-guide/meshes.png",
+      "bytes": 198538,
+      "sha256": "67a9a5fd3945470f7636a0886910dcd27a2dfefa3b3c7ffe6257d95851002f5c"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/slope-srm-guide/README.md",
+      "bytes": 2239,
+      "sha256": "2bd218ca277db300bd400e505602f8042e9dbace4d347356e8ba4751d7c7504c"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/slope-srm-guide/rebuild_slope_srm.py",
+      "bytes": 8142,
+      "sha256": "9a59db3d3bd5acd64c13c3927082a8d0c0307fb97d07c3c0bd271fbed0ea30d3"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/slope-srm-guide/strength_and_phi.png",
+      "bytes": 89975,
+      "sha256": "89888f5e395abb0047eab5c914c6f3763cc4a874bcedf968b3711d9545aef8c2"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/slope-srm-guide/summary.json",
+      "bytes": 5543,
+      "sha256": "188b499eeced8668dabf82be7b4dd98dbcf0814397e7a78ec554d20f5c3e8209"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/slope-srm-guide/total_shear.png",
+      "bytes": 183614,
+      "sha256": "17bb7ac4c7f08bdbccb5beb9ccf15c283d13fe9747d96e139d762c7f61f88ec9"
     }
   ],
   "bearing_comparison": {
@@ -5903,29 +5993,27 @@
     }
   ],
   "visual_review": {
-    "pages_rendered": 94,
-    "contact_sheets_reviewed": 6,
+    "pages_rendered": 102,
+    "contact_sheets_reviewed": 7,
     "new_pages_full_size_reviewed": [
-      7,
-      12,
-      17,
-      18,
-      21,
-      24,
-      60,
-      61,
-      67,
-      69,
-      70,
-      71,
-      72
+      1,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      53,
+      94
     ],
     "checks": [
-      "All 94 pages rendered and visually inspected; new captures checked for legibility and cropping",
-      "TOC, chapter starts, footer numbering and final glossary checked",
-      "Output-purpose settings and result columns checked against VBA implementation",
-      "New plots rebuilt from published archives; road 4-stage values and SRM 12 trial identities reconciled",
-      "Screenshots from actual Excel; capture copy closed without saving; no application code or convergence changes"
+      "All pages rendered and visually inspected; cover, new chapter pages and changed cover references checked full size",
+      "TOC, chapter starts, footer numbering and glossary-at-end checked",
+      "8 material/Fs/residual/elapsed/deformation records reconciled with archived inputs/results and independent audits",
+      "P H7 phi-only change asserted; no claim of c-only experiment or new associated-phi>0 calculation",
+      "Two plotted deformed states checked at dense Q8 points and displacement norm reconciled"
     ]
   },
   "output_guide_capture": {
@@ -5987,5 +6075,192 @@
     "capture_source_local": "tests/tmp/manual_v2/wall_davis08/2DSoilFEM_ui_20261020.xlsm",
     "source_calculation_record": "docs/manuals/construction-evidence/20261020/wall_davis08/result.json.gz",
     "original_application_workbook_sha256": "1e46355ca510b05509b92beaef712118417bceea171ff40ce02b0226cd5e9a06"
+  },
+  "historical_slope_srm": {
+    "scope": "Historical completed INCO24 runs, not new UI04 runs. All values from public archives.",
+    "cases": [
+      {
+        "fixture": "griffiths_1999_coarse",
+        "label": "G φ20 粗",
+        "c_kPa": 10,
+        "phi_deg": 20,
+        "psi_deg": 0,
+        "E_kPa": 100000,
+        "nu": 0.3,
+        "gamma_kN_m3": 20,
+        "nodes": 661,
+        "elements": 200,
+        "fs_pass": 1.3500000000000003,
+        "fs_fail": 1.3625000000000003,
+        "material_residual": 5.708418027566539e-10,
+        "max_vector_mm": 12.44153911308569,
+        "max_small_strain": 0.008730540263847737,
+        "seconds": 14277.2709585,
+        "build": "20261010_INCO_24"
+      },
+      {
+        "fixture": "griffiths_1999_fine",
+        "label": "G φ20 細",
+        "c_kPa": 10,
+        "phi_deg": 20,
+        "psi_deg": 0,
+        "E_kPa": 100000,
+        "nu": 0.3,
+        "gamma_kN_m3": 20,
+        "nodes": 1441,
+        "elements": 450,
+        "fs_pass": 1.3375000000000004,
+        "fs_fail": 1.3500000000000003,
+        "material_residual": 1.4712175181620588e-06,
+        "max_vector_mm": 10.523546243936213,
+        "max_small_strain": 0.005694240897660707,
+        "seconds": 36422.9819428,
+        "build": "20261010_INCO_24"
+      },
+      {
+        "fixture": "griffiths_1999_phi0_coarse",
+        "label": "G φ0 粗",
+        "c_kPa": 50,
+        "phi_deg": 0,
+        "psi_deg": 0,
+        "E_kPa": 100000,
+        "nu": 0.3,
+        "gamma_kN_m3": 20,
+        "nodes": 641,
+        "elements": 192,
+        "fs_pass": 1.4625000000000004,
+        "fs_fail": 1.4750000000000005,
+        "material_residual": 1.0165163583806459e-10,
+        "max_vector_mm": 1046.640288119161,
+        "max_small_strain": 0.8617838120370976,
+        "seconds": 6164.1439241,
+        "build": "20261010_INCO_24"
+      },
+      {
+        "fixture": "griffiths_1999_phi0_fine",
+        "label": "G φ0 細",
+        "c_kPa": 50,
+        "phi_deg": 0,
+        "psi_deg": 0,
+        "E_kPa": 100000,
+        "nu": 0.3,
+        "gamma_kN_m3": 20,
+        "nodes": 1393,
+        "elements": 432,
+        "fs_pass": 1.4500000000000004,
+        "fs_fail": 1.4625000000000004,
+        "material_residual": 2.1041328744832495e-08,
+        "max_vector_mm": 77.54892640592753,
+        "max_small_strain": 0.06634545471112434,
+        "seconds": 18483.815384999998,
+        "build": "20261010_INCO_24"
+      },
+      {
+        "fixture": "griffiths_1999_foundation",
+        "label": "G 基礎地盤",
+        "c_kPa": 10,
+        "phi_deg": 20,
+        "psi_deg": 0,
+        "E_kPa": 100000,
+        "nu": 0.3,
+        "gamma_kN_m3": 20,
+        "nodes": 789,
+        "elements": 240,
+        "fs_pass": 1.3500000000000003,
+        "fs_fail": 1.3625000000000003,
+        "material_residual": 4.0495010510415995e-09,
+        "max_vector_mm": 27.085162557692733,
+        "max_small_strain": 0.011706086447817095,
+        "seconds": 10466.1691206,
+        "build": "20261010_INCO_24"
+      },
+      {
+        "fixture": "pruska_h7_phi10",
+        "label": "P H7 φ10",
+        "c_kPa": 20,
+        "phi_deg": 10,
+        "psi_deg": 0,
+        "E_kPa": 5000,
+        "nu": 0.3,
+        "gamma_kN_m3": 24,
+        "nodes": 789,
+        "elements": 240,
+        "fs_pass": 1.225,
+        "fs_fail": 1.2375000000000003,
+        "material_residual": 3.3526233524998757e-09,
+        "max_vector_mm": 780.6064112762951,
+        "max_small_strain": 0.24373887267941427,
+        "seconds": 15884.5692549,
+        "build": "20261010_INCO_24"
+      },
+      {
+        "fixture": "pruska_h7_phi20",
+        "label": "P H7 φ20",
+        "c_kPa": 20,
+        "phi_deg": 20,
+        "psi_deg": 0,
+        "E_kPa": 5000,
+        "nu": 0.3,
+        "gamma_kN_m3": 24,
+        "nodes": 789,
+        "elements": 240,
+        "fs_pass": 1.6625000000000005,
+        "fs_fail": 1.6750000000000007,
+        "material_residual": 3.770894586202946e-11,
+        "max_vector_mm": 1024.143638524148,
+        "max_small_strain": 0.5461472306190287,
+        "seconds": 8511.7672726,
+        "build": "20261010_INCO_24"
+      },
+      {
+        "fixture": "pruska_h10.5_phi10",
+        "label": "P H10.5 φ10",
+        "c_kPa": 20,
+        "phi_deg": 10,
+        "psi_deg": 0,
+        "E_kPa": 5000,
+        "nu": 0.3,
+        "gamma_kN_m3": 24,
+        "nodes": 789,
+        "elements": 240,
+        "fs_pass": 0.8125,
+        "fs_fail": 0.8250000000000001,
+        "material_residual": 5.70519024392607e-08,
+        "max_vector_mm": 949.158969469691,
+        "max_small_strain": 0.3572695841601146,
+        "seconds": 15075.5923912,
+        "build": "20261010_INCO_24"
+      }
+    ],
+    "display_geometry": [
+      {
+        "fixture": "griffiths_1999_coarse",
+        "min_deformed_jacobian_11x11": 0.14992651219414585,
+        "max_vector_mm": 12.44153911308569
+      },
+      {
+        "fixture": "griffiths_1999_fine",
+        "min_deformed_jacobian_11x11": 0.06664970438216748,
+        "max_vector_mm": 10.523546243936213
+      }
+    ],
+    "source_files": [
+      {
+        "path": "docs/inconsistent-evidence24/fixtures.json",
+        "sha256": "cb706a29d979c0552126baf3107cd8579d55fc95d9af2a94f892b7c2dc2d88e9"
+      },
+      {
+        "path": "docs/inconsistent-evidence24/practical_comparison.json",
+        "sha256": "66409f119ffeb0e4c7b05c4227c21e74fb9cff5cef1a4e4a3e5fc5ffd96dde17"
+      },
+      {
+        "path": "docs/inconsistent-evidence24/material_force_audit.json",
+        "sha256": "68e34fb5e6b6236e3809af6e6bf947a4b516fdbe4acc9bc28f4a4cf53930d351"
+      },
+      {
+        "path": "docs/inconsistent-evidence24/srm_cases_INCO24.zip",
+        "sha256": "bc569a2ae9db3074d2a124e386a5807072ec955295ed889d8a2833824b40f2bb"
+      }
+    ]
   }
 }

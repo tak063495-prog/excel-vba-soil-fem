@@ -16,8 +16,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 22037,
-    "sha256": "9e139e03a64dd9131c378e829df02d927e1597cc5858541900397b6fb4f27e36"
+    "bytes": 22095,
+    "sha256": "85ec5d9bf7e4f4a6f29903d6a744706044fc1fa2f35c87766312807cd5c43875"
   },
   {
     "path": "docs/ACCELERATION_HISTORY.md",
@@ -541,13 +541,13 @@
   },
   {
     "path": "docs/manuals/2DSoilFEM_Detailed_Manual_20261020.pdf",
-    "bytes": 7670898,
-    "sha256": "c9b7ac298dbdffa70b00876c7656439caee321b9c69b6c41853cf32fe3258f4f"
+    "bytes": 8422267,
+    "sha256": "9ed4685f3038716658781cde73e05ccea96fc918c83aa7ab5bf0addaa768a3f7"
   },
   {
     "path": "docs/manuals/README.md",
-    "bytes": 9059,
-    "sha256": "b969ceb3d186d52854330b8fbcf18562931429b77970bf21d7c6f5276c23f25f"
+    "bytes": 9985,
+    "sha256": "28fdefdeb765c4e63f7cee1bce45c99eb6a305791bbf1e4ba07b99cb77bfe49a"
   },
   {
     "path": "docs/manuals/construction-evidence/20261020/anchor09/adaptive_v2a.csv.gz",
@@ -2855,6 +2855,56 @@
     "sha256": "bd48acd61a9e7729d8a92f23691d05e2f72b4bd9837514602f9736fe9c7cc436"
   },
   {
+    "path": "docs/manuals/construction-evidence/20261021/slope-srm-guide/README.md",
+    "bytes": 2239,
+    "sha256": "2bd218ca277db300bd400e505602f8042e9dbace4d347356e8ba4751d7c7504c"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/slope-srm-guide/brackets.png",
+    "bytes": 44480,
+    "sha256": "071ebe49b75750747f38dd803e324f5f228a7973218071a2fcdcbd014706e52a"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/slope-srm-guide/cases.csv",
+    "bytes": 1670,
+    "sha256": "df2c1f5346feaeddc8d139676e9453ad9103ae4250a8e0da58e65c3b7b02da51"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/slope-srm-guide/cover_initial_mesh.png",
+    "bytes": 77244,
+    "sha256": "8b2a67e33441885152ede4d5a448544f00dc218e1d33095e10b927abbbdd7c9e"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/slope-srm-guide/flow_concept.png",
+    "bytes": 71369,
+    "sha256": "9198d2186cc8e80065b8fc6261062b3e5ba5d31fbe4807ae70f1b6bcbc0dc590"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/slope-srm-guide/meshes.png",
+    "bytes": 198538,
+    "sha256": "67a9a5fd3945470f7636a0886910dcd27a2dfefa3b3c7ffe6257d95851002f5c"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/slope-srm-guide/rebuild_slope_srm.py",
+    "bytes": 8142,
+    "sha256": "9a59db3d3bd5acd64c13c3927082a8d0c0307fb97d07c3c0bd271fbed0ea30d3"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/slope-srm-guide/strength_and_phi.png",
+    "bytes": 89975,
+    "sha256": "89888f5e395abb0047eab5c914c6f3763cc4a874bcedf968b3711d9545aef8c2"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/slope-srm-guide/summary.json",
+    "bytes": 5543,
+    "sha256": "188b499eeced8668dabf82be7b4dd98dbcf0814397e7a78ec554d20f5c3e8209"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/slope-srm-guide/total_shear.png",
+    "bytes": 183614,
+    "sha256": "17bb7ac4c7f08bdbccb5beb9ccf15c283d13fe9747d96e139d762c7f61f88ec9"
+  },
+  {
     "path": "docs/manuals/construction-evidence/20261021/template_disabled_check/adaptive_v2a.csv.gz",
     "bytes": 224,
     "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
@@ -2946,8 +2996,8 @@
   },
   {
     "path": "docs/manuals/manual_validation_20261020.json",
-    "bytes": 238184,
-    "sha256": "11f6367f983c6f42130d3062875c7f884dbef39fae5675bd930c8cd21b15e49c"
+    "bytes": 247543,
+    "sha256": "51ef01b60831ecf71ec93cd23e552e2d15e9155f990bd2d0d06a7b32570025b7"
   },
   {
     "path": "docs/native-evidence/assembly_20261020/DAVIS_0.json",
