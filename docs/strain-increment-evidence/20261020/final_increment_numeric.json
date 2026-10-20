@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "gauss_rows": 80,
+  "elements": 20,
+  "fs": 2.200000000000001,
+  "lambda_final": 1,
+  "max_abs_formula_error": 8.326672684688674e-16,
+  "nonzero_total": 80,
+  "nonzero_plastic": 76
+}

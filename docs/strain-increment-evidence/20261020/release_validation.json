@@ -1,0 +1,91 @@
+{
+  "status": "PASS",
+  "workbook_sha256": "1E46355CA510B05509B92BEAEF712118417BCEEA171FF40CE02B0226CD5E9A06",
+  "ui_stamp": "20261020_UI_04",
+  "compiled_modules": {
+    "CONTROL": "DE81B9EA8BB8A6261452258D991D524581AADD62CEA7F0547440F430378A8413",
+    "FEMCore": "D5E1A5775280D52E6AD0CDA3DEF020814247F8C7FEBCC204CB7633548132B0C8",
+    "FEMSolver": "7F75CE008B2A41651F4393CB727271F34B45ACEFED1F8D356CE52EF0A5F37E85",
+    "FEMIo": "3E1B8AB4A47C09EA6E76CECA4CDF5361754F7ABE26211BE6BF7C7357BB294469",
+    "FEMEngine": "56844C27F12325F7347EA1E1908564B31B2742E478CE9F9DB5800825597AA392",
+    "FEMNative": "5A866DE98876CCDAC69A5BEC28D00F2EE5D0D0D4B4BB579E4D328AB7FEC85B4D",
+    "FEMNativeMat": "5194075D64F1ED2D88FF16F821078DB3993DCFF525E13BF03EFC6746E85D88AB",
+    "FEMNativeKern": "B8B93AFD8D51299E7F71AC7FAB15BFA3CA5EC230F3A0F776AF5D1C45094AE71E",
+    "FEMUiInputs": "3F01951320016D5EC9B6BB60412E65F563BA129FA405DB984C93E5B48F3CFD5B",
+    "FEMUiValidation": "E9B00CE0632AE8401DCF1CBCEAB238EA166236013DF191DAE5BF170D27CD66B3",
+    "FEMUiLayout": "5EA25CDA63DEA4F321CDE3CEAD0B4F04B43FAE8B1D34BB50BB8DE55B5AED33E2",
+    "FEMUi": "157D4F4203F869A85687166C63D0394017707CDF4DE5046A38F03F0F953B6F8D",
+    "FEMViewer": "B71DF4ECAB2B46C90D98F959899DA82CA0244E752E35DB6A677C842BB9CFD70C",
+    "ThisWorkbook": "B83F2CCF6A603A1C1AE54D2DB3BD44EEB8EFEC19B7A5CDFB3BF474DC3E8B9858",
+    "FEMUiMeshWorkflow": "3A03692B3FDB830D664AD1808CF0DDDE41A2D3C319AF9B8DC342BAA25B7A65D7",
+    "FEMUiGeometry": "B1DB2F9C7DD5064CE7DC4526DF0A7641C4315E602BAA45EF04D590ED4164572E",
+    "FEMPractical": "2F9E8B7EDF183F567CE5404B6FBF0DEA9149B7204B8C44CA887A4BEB99551745",
+    "MeshAdapt": "10914837955F7F06D2529E39FE0181E7B4BDDDA2DDCF21913DF1DD8980408BF0",
+    "FEMResultOptions": "2C4A1E215EA3A59EF382FB6F310DFB9BA53158AD95C6792F90C85931CEB08943",
+    "FEMStrainMath": "7C9EE0C970B68210B9A7D47DF21D66DC3716F52716132E23182EB05222C278F0",
+    "FEMViewIncrement": "4A286B40C9FC054A1FCCE36C082EB9115CDF73D0ED3311903D1DB35EBAAE64B9",
+    "FEMIncrementSvg": "28729F432869ECF18412FB5A1778DB4928B6C6F849B910F27D99B9F8A6098706"
+  },
+  "analysis_to_release_changes": [
+    "FEMIncrementSvg",
+    "FEMResultOptions"
+  ],
+  "unchanged_modules": 20,
+  "analysis_equivalence": "Only two display modules changed after the final SRM run; all calculation/capture/read modules are byte-identical. Display tests applied those exact two release sources to the saved calculation results.",
+  "checks": {
+    "inputs": 813,
+    "increment_options_math_svg": 290,
+    "actual_increment_display": 34,
+    "mesh_workflow": 91,
+    "persistence": 406,
+    "legacy_viewer": 108,
+    "fixed_numeric_cases": 8,
+    "srm_full_search": 1
+  },
+  "evidence": [
+    {
+      "path": "release_inputs.json",
+      "sha256": "27f9e3ed5925cd369b7cb87412fe748f52f0d7ecbbc4d59565c39aafe0e25d40"
+    },
+    {
+      "path": "release_increment_display.json",
+      "sha256": "b79775e0850f538cfa722b8989cb4488710f87940d5fd9f7344f45e9dae30b5c"
+    },
+    {
+      "path": "release_shape_workflow.json",
+      "sha256": "3a1cefb5331c382c561aa5329c5d8fd8dab53226128b0fb21fb85e98199f75a6"
+    },
+    {
+      "path": "release_results/display_results.json",
+      "sha256": "2ccaca62a90b47d7a8fb17483c54f95da06f9b2201275ae6b8bbb1f612ddf7a3"
+    },
+    {
+      "path": "persistence.json",
+      "sha256": "a3e18e087f4090d10264d89343115177a10961c4f6e32005ac725df2322f28e9"
+    },
+    {
+      "path": "viewer.json",
+      "sha256": "bc08e4f040b630bd94f503bfe0115def5e0b50d19bba03db989e64d2fb279d4e"
+    },
+    {
+      "path": "final_srm_exact.json",
+      "sha256": "cb578ab38c5d2435c9166450f65d6dacf8073a7618baea3b3a0da38c1801bd93"
+    },
+    {
+      "path": "fixed_exact.json",
+      "sha256": "0e2985ed3a6da9be2b250eac32db4cb2f04fd24fb5e0b4a7c0cd4e424aa0d27f"
+    },
+    {
+      "path": "final_increment_numeric.json",
+      "sha256": "8247e874e8be9e504939192bbfa29a8e5aac18d2681be8362e790669ba8917c0"
+    },
+    {
+      "path": "screen_inspection.json",
+      "sha256": "906410b777e1a8278c041626ced4295b300db00796d970ab507d3b7ee3e48546"
+    },
+    {
+      "path": "embedded_svg_checks.json",
+      "sha256": "a647ee275730a534fc378a926ae0dbcb8acca248a15fc2a57888cfcb73dda88f"
+    }
+  ]
+}

@@ -153,7 +153,7 @@ Public Sub FEMUiValidateSettings()
           value = ws.Cells(r, 3).Value2: listText = FEMUiValidationList(keyName): ruleText = FEMUiValidationRule(keyName, r)
           If IsError(value) Then Err.Raise vbObjectError + 3820, "FEMUiValidateSettings", CStr(page) & "!C" & CStr(r) & " (" & keyName & ") の値がエラーです。"
           If keyName = "VIEW_COLOR_RESULT" Then
-            If Not FEMUiValidResultId(value) Then Err.Raise vbObjectError + 3821, "FEMUiValidateSettings", CStr(page) & "!C" & CStr(r) & " (" & keyName & ") は表示量一覧の番号を指定してください。"
+            If Not FEMUiValidResultId(value) Then Err.Raise vbObjectError + 3821, "FEMUiValidateSettings", CStr(page) & "!C" & CStr(r) & " (" & keyName & ") は表示量一覧の内容名を選択してください。"
           End If
           If Not IsError(value) Then values(keyName) = value
           If keyName = "EXPORT_LOAD" And FEMUiValidationValueBlank(value) Then GoTo NextCell
@@ -179,15 +179,5 @@ NextCell:
 End Sub
 
 Private Function FEMUiValidResultId(ByVal value As Variant) As Boolean
-  Dim candidate As range
-  If IsError(value) Then Exit Function
-  If Not IsNumeric(value) Then Exit Function
-  If Len(Trim$(CStr(value))) = 0 Then Exit Function
-  On Error GoTo Unavailable
-  For Each candidate In ThisWorkbook.names("FEMViewerSelectionIDs").RefersToRange.Cells
-    If IsNumeric(candidate.value2) Then
-      If CDbl(candidate.value2) = CDbl(value) Then FEMUiValidResultId = True: Exit Function
-    End If
-  Next candidate
-Unavailable:
+  FEMUiValidResultId = (FEMResultChoiceId(value) > 0)
 End Function

@@ -143,5 +143,25 @@
         "name":  "FEMUiMeshWorkflow",
         "file":  "FEMUiMeshWorkflow.bas",
         "type":  1
+    },
+    {
+        "name":  "FEMResultOptions",
+        "file":  "FEMResultOptions.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMStrainMath",
+        "file":  "FEMStrainMath.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMViewIncrement",
+        "file":  "FEMViewIncrement.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMIncrementSvg",
+        "file":  "FEMIncrementSvg.bas",
+        "type":  1
     }
 ]

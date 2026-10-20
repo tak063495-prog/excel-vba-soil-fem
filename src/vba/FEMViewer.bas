@@ -124,6 +124,7 @@ End Function
 
 Public Function FEMViewerResultUnit(ByVal selection As Long) As String
     Dim item As Long
+    If selection >= 69 Then FEMViewerResultUnit = "無次元": Exit Function
     item = (selection - 1) Mod 17 + 1
     If item = 7 Then
         FEMViewerResultUnit = "deg"
@@ -154,54 +155,7 @@ Private Function SavedElementValues(ByRef rows As Variant, ByVal selection As Lo
     Set SavedElementValues = values
 End Function
 Public Sub FEMViewerSetupSelector()
-    Dim ws As Worksheet, Table As Worksheet, i As Long, row As Long, last As Long, column As String
-    Dim data(1 To 69, 1 To 4) As Variant, oldEvents As Boolean
-    oldEvents = Application.EnableEvents: Application.EnableEvents = False
-    On Error GoTo Failed
-    Set ws = ThisWorkbook.Worksheets("設定")
-    On Error Resume Next: Set Table = ThisWorkbook.Worksheets("表示量一覧"): On Error GoTo Failed
-    If Table Is Nothing Then Set Table = ThisWorkbook.Worksheets.Add(After:=ThisWorkbook.Worksheets(ThisWorkbook.Worksheets.count)): Table.name = "表示量一覧"
-    data(1, 1) = "選択番号": data(1, 2) = "結果要素の列": data(1, 3) = "表示物理量（積分点別）": data(1, 4) = "単位"
-    For i = 1 To 68
-        column = Split(ThisWorkbook.Worksheets("結果要素").Cells(1, i + 4).address, "$")(1)
-        data(i + 1, 1) = i: data(i + 1, 2) = column
-        data(i + 1, 3) = ThisWorkbook.Worksheets("結果要素").Cells(1, i + 4).value2
-        data(i + 1, 4) = FEMViewerResultUnit(i)
-    Next i
-    Table.range("A2:D70").value2 = data
-    For i = 1 To 68
-        column = CStr(data(i + 1, 2))
-        Table.Cells(i + 2, 3).formula = "='結果要素'!" & column & "$1"
-    Next i
-    Table.range("A1").value2 = "C45で番号を選び、変形・応力表示を押してください。各積分点の値を要素の色として表示します。"
-    Table.range("A1:D70").Font.name = "メイリオ": Table.range("A1:D70").Font.size = 10
-    Table.columns("A:B").ColumnWidth = 14: Table.columns("C").ColumnWidth = 34: Table.columns("D").ColumnWidth = 18
-    Table.range("A2:D2").Interior.Color = RGB(31, 70, 105): Table.range("A2:D2").Font.Color = vbWhite
-    Table.range("A2:D2").Font.bOld = True: Table.range("A2:D70").RowHeight = 21
-    Table.range("A3:A70").NumberFormat = "0": Table.range("A3:B70").HorizontalAlignment = xlCenter
-    On Error Resume Next: ThisWorkbook.names("FEMViewerSelectionIDs").Delete: On Error GoTo Failed
-    ThisWorkbook.names.Add name:="FEMViewerSelectionIDs", RefersTo:="='表示量一覧'!$A$3:$A$70"
-    last = ws.Cells(ws.rows.count, 5).End(xlUp).row
-    For row = 2 To last
-        If UCase$(CStr(ws.Cells(row, 5).value2)) = "VIEW_COLOR_RESULT" Then
-            ws.Cells(row, 2).value2 = "色付け（結果要素列）"
-            ws.Cells(row, 4).formula = "=IF(AND(ISNUMBER(C" & row & "),C" & row & ">=1,C" & row & "<=68,C" & row & "=INT(C" & row & ")),INDEX('結果要素'!$E$1:$BT$1,1,C" & row & "),""1～68を選択"")"
-            With ws.Cells(row, 3).Validation
-                .Delete
-                .Add Type:=xlValidateList, AlertStyle:=xlValidAlertStop, Formula1:="=FEMViewerSelectionIDs"
-                .IgnoreBlank = False: .InCellDropdown = True: .ShowError = True: .ShowInput = True
-                .InputTitle = "結果要素 E=1 ～ BT=68": .InputMessage = "番号と物理量の対応は「表示量一覧」を参照してください。"
-                .ErrorTitle = "表示番号": .ErrorMessage = "1～68の整数を選択してください。"
-            End With
-        End If
-    Next row
-    ws.Activate
-Finish:
-    Application.EnableEvents = oldEvents
-    Exit Sub
-Failed:
-    Application.EnableEvents = oldEvents
-    Err.Raise Err.Number, "FEMViewerSetupSelector", Err.Description
+    FEMResultOptionsInstall
 End Sub
 
 Private Sub WriteSvg(ByVal path As String, ByVal svg As String)
@@ -229,6 +183,9 @@ Private Sub DrawView(ByVal mode As String)
     Dim low As Double, high As Double, value As Double, bound As Double, dscale As Double, drawScale As Double
     Dim minX As Double, minY As Double, maxX As Double, maxY As Double, sx As Double, sy As Double
     Dim originX As Double, originY As Double, x As Double, y As Double, firstPoint As Boolean
+    Dim increments As Object, overlayCells As Object, entry As Variant, overlayLegend As String, overlaySvg As String
+    Dim shearOn As Boolean, crossOn As Boolean, overlayA As Boolean, incrementPaint As Boolean
+    Dim vectorScale As Double, baseResultId As Long, incrementCaption As String
     Dim resultId As Long, fill As String, stroke As String, points As String, title As String, subtitle As String
     Dim svg As String, parts() As String, partCount As Long, tempPath As String, labels As Object, showLabels As Boolean
     Dim ws As Worksheet, picture As Object, oldScreen As Boolean, oldEvents As Boolean, oldStatus As Variant
@@ -366,12 +323,33 @@ NextPlan:
             End If
         Next r
         resultId = 18
-        If config.Exists("VIEW_COLOR_RESULT") Then
-            value = Number(config("VIEW_COLOR_RESULT"), "色付け番号")
-            If value < 1# Or value > 68# Or value <> Fix(value) Then Err.Raise vbObjectError + 3703, "FEMViewer", "色付けは1～68の整数を指定してください。"
-            resultId = CLng(value)
+        If config.Exists("VIEW_COLOR_RESULT") Then resultId = FEMResultChoiceId(config("VIEW_COLOR_RESULT"))
+        If resultId = 0 Then Err.Raise vbObjectError + 3703, , "表示する結果は内容名から選択してください。"
+        baseResultId = resultId
+        overlayA = True: vectorScale = 1#
+        If FEMUiInstalled() Then
+            shearOn = FEMShearOverlayOn(): crossOn = FEMPlasticCrossOn()
+            overlayA = FEMOverlayModeA()
+            If crossOn Then vectorScale = FEMPlasticCrossScale()
         End If
-        Set values = SavedElementValues(elementResults, resultId, Stage, active, jointElements)
+        If shearOn Or crossOn Or resultId >= 69 Then
+            Set increments = FEMIncrementRead(Stage)
+            Set overlayCells = CreateObject("Scripting.Dictionary")
+        End If
+        If shearOn And Not overlayA Then resultId = 69
+        incrementPaint = (resultId >= 69)
+        If incrementPaint Then
+            Set values = CreateObject("Scripting.Dictionary")
+            For Each key In active.Keys
+                e = CLng(key)
+                If Not jointElements.Exists(e) Then
+                    If Not increments.Exists(e) Then Err.Raise vbObjectError + 3912, , "有効要素の増分結果がありません。再解析してください。"
+                    entry = increments(e): values(e) = entry(resultId - 69)
+                End If
+            Next key
+        Else
+            Set values = SavedElementValues(elementResults, resultId, Stage, active, jointElements)
+        End If
         dscale = 1#
         If config.Exists("VIEW_DISP_SCALE") Then dscale = Number(config("VIEW_DISP_SCALE"), "変位倍率")
         If dscale < 0# Then Err.Raise vbObjectError + 3711, "FEMViewer", "変位倍率は0以上で指定してください。"
@@ -452,10 +430,31 @@ NextElement:
             If originY - minY * drawScale + 80# > canvasH Then canvasH = originY - minY * drawScale + 80#
         End If
     End If
+    If mode = "RESULT" Then
+        If shearOn Or crossOn Then
+            For r = 2 To UBound(elements, 1)
+                If selected(r) And Not jointRow(r) Then
+                    e = id(elements(r, 1))
+                    If Not increments.Exists(e) Then Err.Raise vbObjectError + 3912, , "有効要素の増分結果がありません。再解析してください。"
+                    entry = increments(e)
+                    overlayCells(e) = Array(originX + drawScale * px(r, 0), originY - drawScale * py(r, 0), originX + drawScale * px(r, 1), originY - drawScale * py(r, 1), originX + drawScale * px(r, 2), originY - drawScale * py(r, 2), originX + drawScale * px(r, 3), originY - drawScale * py(r, 3), entry(0), entry(2), entry(3), entry(4))
+                End If
+            Next r
+            overlaySvg = FEMIncrementOverlaySvg(overlayCells, shearOn, crossOn, overlayA, vectorScale, overlayLegend)
+        End If
+        If Not increments Is Nothing Then
+            For Each key In increments.Keys
+                entry = increments(key)
+                incrementCaption = "最終収束増分 / Fs=" & Format$(entry(5), "0.0000") & " / 増分=" & CStr(entry(6)) & " / 荷重係数=" & Format$(entry(7), "0.0000")
+                Exit For
+            Next key
+        End If
+        If incrementPaint Then low = 0#
+    End If
     Select Case mode
         Case "ALL": title = "図形表示（全メッシュ）": subtitle = "全ステージの要素を表示。色は有効なステージの予定。"
         Case "INITIAL": title = "初期表示": subtitle = "初期状態ONのみ。BIRTH待ち（OFF）は表示しません。"
-        Case "RESULT": title = "変形・応力表示": subtitle = "最終ステージ " & CStr(Stage) & " / 変位倍率 " & Format$(dscale, "0.###") & " / " & CStr(elementResults(1, resultId + 4)) & " [" & FEMViewerResultUnit(resultId) & "] / 結果要素 " & Split(ThisWorkbook.Worksheets("結果要素").Cells(1, resultId + 4).address, "$")(1) & "列（番号 " & resultId & "）"
+        Case "RESULT": title = "変形・結果表示": subtitle = "最終ステージ " & CStr(Stage) & " / 変位倍率 " & Format$(dscale, "0.###") & " / " & FEMResultChoiceLabel(resultId) & " [" & FEMViewerResultUnit(resultId) & "]"
     End Select
     If jointElements.count > 0 Then subtitle = subtitle & " / 接合は紫線：数値は接合結果"
     ReDim parts(0 To count + labels.count + nodeMap.count + 100)
@@ -464,6 +463,10 @@ NextElement:
     If mode <> "RESULT" Then
         parts(partCount) = SvgText(30, 72, "X/Yは拘束方向（赤）。灰：通常 / 青：BIRTH予定 / 赤：DEATH予定", 10): partCount = partCount + 1
         If Len(FEMUiMeshQualityNote) > 0 Then parts(partCount) = SvgText(30, 87, FEMUiMeshQualityNote, 10): partCount = partCount + 1
+    End If
+    If mode = "RESULT" And Len(incrementCaption) > 0 Then
+        parts(partCount) = SvgText(30, 72, incrementCaption, 10): partCount = partCount + 1
+        If Len(overlayLegend) > 0 Then parts(partCount) = SvgText(30, 87, overlayLegend, 9): partCount = partCount + 1
     End If
     order = Array(0, 4, 1, 5, 2, 6, 3, 7)
     For r = 2 To UBound(elements, 1)
@@ -482,6 +485,7 @@ NextElement:
             fill = "#e2e8ef": stroke = "#718096"
             If mode = "RESULT" Then
                 fill = Color(CDbl(values(e)), low, high): stroke = "#4b5563"
+                If incrementPaint Then fill = FEMIncrementFill(CDbl(values(e)), high)
             Else
                 flag = 0
                 If IsNumeric(elements(r, 10)) Then
@@ -499,6 +503,7 @@ NextElement:
         End If
 NextDrawElement:
     Next r
+    If Len(overlaySvg) > 0 Then parts(partCount) = overlaySvg: partCount = partCount + 1
     If mode <> "RESULT" Then
         For r = 2 To UBound(nodes, 1)
             If Not IsEmpty(nodes(r, 1)) Then
@@ -526,7 +531,7 @@ NextDrawElement:
     If count = 0 Then parts(partCount) = SvgText(40, 120, "表示対象の要素はありません。", 15): partCount = partCount + 1
     If mode = "RESULT" Then
         For j = 0 To 39
-            parts(partCount) = "<rect x=""" & num(40# + j * 10#) & """ y=""" & num(canvasH - 48#) & """ width=""10.1"" height=""13"" fill=""" & Color(low + (high - low) * j / 39#, low, high) & """/>"
+            parts(partCount) = "<rect x=""" & num(40# + j * 10#) & """ y=""" & num(canvasH - 48#) & """ width=""10.1"" height=""13"" fill=""" & FEMViewerKeyColor(low + (high - low) * j / 39#, low, high, incrementPaint) & """/>"
             partCount = partCount + 1
         Next j
         parts(partCount) = SvgText(40, canvasH - 17#, Format$(low, "0.000E+00")) & SvgText(355, canvasH - 17#, Format$(high, "0.000E+00"))
@@ -577,3 +582,16 @@ Finish:
     On Error GoTo 0
     If Len(errorText) > 0 And Not SuppressUserMessages Then MsgBox "表示できませんでした。" & vbCrLf & errorText, vbExclamation
 End Sub
+
+Private Function FEMViewerKeyColor(ByVal value As Double, ByVal low As Double, ByVal high As Double, ByVal incrementPaint As Boolean) As String
+    If incrementPaint Then FEMViewerKeyColor = FEMIncrementFill(value, high) Else FEMViewerKeyColor = Color(value, low, high)
+End Function
+
+Private Function FEMIncrementFill(ByVal value As Double, ByVal high As Double) As String
+    Dim t As Double, g As Long, b As Long
+    If high > 0# Then t = value / high
+    If t < 0# Then t = 0#
+    If t > 1# Then t = 1#
+    g = CLng(255# - 220# * t): b = CLng(229# - 209# * t)
+    FEMIncrementFill = "#FF" & Right$("0" & Hex$(g), 2) & Right$("0" & Hex$(b), 2)
+End Function

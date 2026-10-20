@@ -1,5 +1,5 @@
 ﻿Option Explicit
-Public Const FEM_UI_STAMP As String = "20261020_UI_03"
+Public Const FEM_UI_STAMP As String = "20261020_UI_04"
 
 Private mUiSessionReady As Boolean
 Private mUiSessionBook As String
@@ -83,6 +83,7 @@ Public Sub FEMUiAfterLayout()
   Application.EnableEvents = eventsSaved: Application.ScreenUpdating = screenSaved
   FEMPracticalAfterLayout
   FEMUiFinishInputs
+  FEMResultOptionsInstall
   mUiSessionReady = True: mUiSessionBook = ThisWorkbook.name
   FEMInvalidateSettingCache
   Exit Sub

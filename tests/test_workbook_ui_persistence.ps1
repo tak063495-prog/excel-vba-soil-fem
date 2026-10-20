@@ -34,6 +34,14 @@ try{
    $k=[string]$legacyData.GetValue($r,3)
    if($k -and -not $dict.ContainsKey($k)){$dict[$k]=@{page='設定';row=$r;value=$legacyData.GetValue($r,1)}}
   }
+  # Content labels preserve the legacy result ID; compare only this key numerically.
+  if($dict.ContainsKey('VIEW_COLOR_RESULT')){
+   $entry=$dict['VIEW_COLOR_RESULT'];$number=0.0
+   if(-not [double]::TryParse([string]$entry.value,[ref]$number)){
+    $labels=$book.Worksheets.Item('表示量一覧').Range('F3:F72').Value2
+    for($i=1;$i -le 70;$i++){if([string]$labels.GetValue($i,1) -ceq [string]$entry.value){$entry.value=[double]$i;break}}
+   }
+  }
   return $dict
  }
  if($CaptureBaselineOnly){
@@ -187,4 +195,3 @@ End Function
  @{status='PASS';count=$checks.Count;checks=$checks;book=$Book;baseline=$Baseline;book_sha256=$sourceHash}|ConvertTo-Json -Depth 5|Set-Content -LiteralPath $outPath -Encoding utf8
  "PASS persistence/input preservation checks=$($checks.Count)"
 }finally{Pop-Location}
-
