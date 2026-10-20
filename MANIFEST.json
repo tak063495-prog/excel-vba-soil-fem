@@ -1,8 +1,8 @@
 [
   {
     "path": ".gitattributes",
-    "bytes": 112,
-    "sha256": "45d2517c522805e7e574f25d2b6ed6449329ab10ae4c157bd104e2190791a4a6"
+    "bytes": 125,
+    "sha256": "9e55f8104219b65533ded1166d8b6dc60e5ed39e15e5651d7ffdca99ebf5a273"
   },
   {
     "path": ".gitignore",
@@ -16,8 +16,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 19986,
-    "sha256": "50d67de8eba67d42c86a9a98ceb43abc5d98d0ef6ba90560bf5f31a6210e2b90"
+    "bytes": 20230,
+    "sha256": "c048d4bff8f35b19ab1191524c0b911f0400a4f079872ae953bc2f3ac08172b5"
   },
   {
     "path": "docs/ACCELERATION_HISTORY.md",
@@ -523,6 +523,16 @@
     "path": "docs/literature-evidence/viewer_checks.json",
     "bytes": 5795,
     "sha256": "a98c5f7cb13325baf83e553d2a47e6791f25f6aed2abab2b251936366f0b7446"
+  },
+  {
+    "path": "docs/manuals/2DSoilFEM_Detailed_Manual_20261020.pdf",
+    "bytes": 1528105,
+    "sha256": "ff076d8a24de89b146eaea5408e984a194e9be448b865e0022b73effae9ac38f"
+  },
+  {
+    "path": "docs/manuals/manual_validation_20261020.json",
+    "bytes": 2769,
+    "sha256": "6e47eeb983a541a90ca29e740df0f6e86241d181a2f2934c5d30fc4fbea54ea5"
   },
   {
     "path": "docs/native-evidence/assembly_20261020/DAVIS_0.json",
