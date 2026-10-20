@@ -1,18 +1,18 @@
 Option Explicit
-' Phase C native kernels in soilfem_mat_x64.dll (API 4), active only in
+' Phase C native kernels in soilfem_native_x64.dll (API 4), active only in
 ' NATIVE_DLL=AUTO (MAT = Phase B material kernels only, BAND, OFF).
 ' Each wrapper returns False (or -1) when it did not handle the request; the
 ' caller then runs the unchanged VBA code, so logs/failures stay identical.
 #If Win64 Then
-Private Declare PtrSafe Function SfmBandScatter Lib "soilfem_mat_x64.dll" Alias "sfm_band_scatter" (ByVal n As Long, ByVal r As LongPtr, ByVal c As LongPtr, ByVal e As LongPtr, ByVal li As LongPtr, ByVal lj As LongPtr, ByVal band As LongPtr, ByVal ld As LongLong, ByVal elemBase As LongPtr, ByVal stride As LongLong, ByVal kmatOff As LongLong) As Long
-Private Declare PtrSafe Function SfmCsrScatter Lib "soilfem_mat_x64.dll" Alias "sfm_csr_scatter" (ByVal params As LongPtr, ByVal nnz As Long, ByVal st As LongPtr, ByVal pos As LongPtr, ByVal lr As LongPtr, ByVal lc As LongPtr, ByVal vals As LongPtr, ByVal kmatOff As LongLong) As Long
-Private Declare PtrSafe Function SfmCsrResNorm Lib "soilfem_mat_x64.dll" Alias "sfm_csr_resnorm" (ByVal n As Long, ByVal rp As LongPtr, ByVal ci As LongPtr, ByVal v As LongPtr, ByVal x As LongPtr, ByVal b As LongPtr, ByVal r As LongPtr, ByRef norm As Double) As Long
-Private Declare PtrSafe Function SfmIlu0 Lib "soilfem_mat_x64.dll" Alias "sfm_ilu0" (ByVal n As Long, ByVal nnz As Long, ByVal rp As LongPtr, ByVal ci As LongPtr, ByVal dp As LongPtr, ByVal vals As LongPtr, ByVal ilu As LongPtr, ByVal fail As LongPtr, ByRef minAbs As Double) As Long
-Private Declare PtrSafe Function SfmGmres Lib "soilfem_mat_x64.dll" Alias "sfm_gmres" (ByVal params As LongPtr, ByVal tol As Double) As Long
-Private Declare PtrSafe Function SfmRegularized Lib "soilfem_mat_x64.dll" Alias "sfm_regularized" (ByVal params As LongPtr, ByVal damping As Double, ByVal itTol As Double) As Long
-Private Declare PtrSafe Function SfmResidual Lib "soilfem_mat_x64.dll" Alias "sfm_residual" (ByVal params As LongPtr, ByVal forceRef As Double) As Long
-Private Declare PtrSafe Function SfmRcm Lib "soilfem_mat_x64.dll" Alias "sfm_rcm" (ByVal nNode As Long, ByVal nElem As Long, ByVal nodes As LongPtr, ByVal elnode As LongPtr, ByVal o2n As LongPtr, ByVal n2o As LongPtr, ByRef candBw As Long) As Long
-Private Declare PtrSafe Function SfmHgApply Lib "soilfem_mat_x64.dll" Alias "sfm_hg_apply" (ByVal params As LongPtr, ByVal tdone As LongPtr, ByVal hgdone As LongPtr, ByVal unsym As LongPtr, ByVal hoff As LongPtr, ByVal shapeGen As Long, ByVal hgFactor As Double, ByVal applyHg As Long) As Long
+Private Declare PtrSafe Function SfmBandScatter Lib "soilfem_native_x64.dll" Alias "sfm_band_scatter" (ByVal n As Long, ByVal r As LongPtr, ByVal c As LongPtr, ByVal e As LongPtr, ByVal li As LongPtr, ByVal lj As LongPtr, ByVal band As LongPtr, ByVal ld As LongLong, ByVal elemBase As LongPtr, ByVal stride As LongLong, ByVal kmatOff As LongLong) As Long
+Private Declare PtrSafe Function SfmCsrScatter Lib "soilfem_native_x64.dll" Alias "sfm_csr_scatter" (ByVal params As LongPtr, ByVal nnz As Long, ByVal st As LongPtr, ByVal pos As LongPtr, ByVal lr As LongPtr, ByVal lc As LongPtr, ByVal vals As LongPtr, ByVal kmatOff As LongLong) As Long
+Private Declare PtrSafe Function SfmCsrResNorm Lib "soilfem_native_x64.dll" Alias "sfm_csr_resnorm" (ByVal n As Long, ByVal rp As LongPtr, ByVal ci As LongPtr, ByVal v As LongPtr, ByVal x As LongPtr, ByVal b As LongPtr, ByVal r As LongPtr, ByRef norm As Double) As Long
+Private Declare PtrSafe Function SfmIlu0 Lib "soilfem_native_x64.dll" Alias "sfm_ilu0" (ByVal n As Long, ByVal nnz As Long, ByVal rp As LongPtr, ByVal ci As LongPtr, ByVal dp As LongPtr, ByVal vals As LongPtr, ByVal ilu As LongPtr, ByVal fail As LongPtr, ByRef minAbs As Double) As Long
+Private Declare PtrSafe Function SfmGmres Lib "soilfem_native_x64.dll" Alias "sfm_gmres" (ByVal params As LongPtr, ByVal tol As Double) As Long
+Private Declare PtrSafe Function SfmRegularized Lib "soilfem_native_x64.dll" Alias "sfm_regularized" (ByVal params As LongPtr, ByVal damping As Double, ByVal itTol As Double) As Long
+Private Declare PtrSafe Function SfmResidual Lib "soilfem_native_x64.dll" Alias "sfm_residual" (ByVal params As LongPtr, ByVal forceRef As Double) As Long
+Private Declare PtrSafe Function SfmRcm Lib "soilfem_native_x64.dll" Alias "sfm_rcm" (ByVal nNode As Long, ByVal nElem As Long, ByVal nodes As LongPtr, ByVal elnode As LongPtr, ByVal o2n As LongPtr, ByVal n2o As LongPtr, ByRef candBw As Long) As Long
+Private Declare PtrSafe Function SfmHgApply Lib "soilfem_native_x64.dll" Alias "sfm_hg_apply" (ByVal params As LongPtr, ByVal tdone As LongPtr, ByVal hgdone As LongPtr, ByVal unsym As LongPtr, ByVal hoff As LongPtr, ByVal shapeGen As Long, ByVal hgFactor As Double, ByVal applyHg As Long) As Long
 Private mG(0 To 15) As LongLong
 Private mHOff(0 To 7) As LongLong
 Private mOutD(0 To 15) As Double

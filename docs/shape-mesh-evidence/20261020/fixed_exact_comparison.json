@@ -1,0 +1,179 @@
+{
+  "status": "PASS",
+  "combined_dll_sha256": "AD5C2AE81512BA8E977002415A6A5339B621C00A1BBABE5092559F8A7F9E0797",
+  "comparisons": 8,
+  "allowed_changes": [
+    "two expected DLL hashes to the verified combined hash",
+    "material status library name"
+  ],
+  "runs": [
+    {
+      "case": "Case1",
+      "flow": "INCONSISTENT",
+      "status": "PASS",
+      "bracket": [
+        0.5,
+        0.0,
+        0.5,
+        0.0,
+        false,
+        1
+      ],
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_relative_residual": 9.44350930474515e-16,
+      "baseline_seconds": 4.7383303,
+      "candidate_seconds": 4.3901646,
+      "full_solver_csv_sha256": "543FDA3BB1478F3C2CD651673B85F4795D3C6658FD1C56E24B2479B39E74FB3C",
+      "full_solver_csv_bytes": 366,
+      "full_solver_csv_equal": true
+    },
+    {
+      "case": "Case2",
+      "flow": "INCONSISTENT",
+      "status": "PASS",
+      "bracket": [
+        1.1,
+        0.0,
+        1.1,
+        0.0,
+        false,
+        1
+      ],
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_relative_residual": 1.16074711137257e-13,
+      "baseline_seconds": 1.6398144,
+      "candidate_seconds": 1.4675635,
+      "full_solver_csv_sha256": "D4DD6AC58A31ACB45E79A7EAA55D2A529DEB23A699D44C3BFC45129DB0CBED2C",
+      "full_solver_csv_bytes": 366,
+      "full_solver_csv_equal": true
+    },
+    {
+      "case": "Case3",
+      "flow": "INCONSISTENT",
+      "status": "PASS",
+      "bracket": [
+        0.9,
+        0.0,
+        0.9,
+        0.0,
+        false,
+        1
+      ],
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_relative_residual": 4.72993232520948e-12,
+      "baseline_seconds": 1.6575456,
+      "candidate_seconds": 1.4424615,
+      "full_solver_csv_sha256": "1C75CD2AC19CFAA60F6F03DD6E397E137CC6D443B46FC087C9A49A38C7334F04",
+      "full_solver_csv_bytes": 366,
+      "full_solver_csv_equal": true
+    },
+    {
+      "case": "Case4",
+      "flow": "INCONSISTENT",
+      "status": "PASS",
+      "bracket": [
+        2.0,
+        0.0,
+        2.0,
+        0.0,
+        false,
+        1
+      ],
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_relative_residual": 7.54343291524163e-10,
+      "baseline_seconds": 1.698149,
+      "candidate_seconds": 1.4537536,
+      "full_solver_csv_sha256": "FFA972EE61563D1A1A670F4FFC40284B1EBD67BDE435D91ADAE1780DBCCF521C",
+      "full_solver_csv_bytes": 366,
+      "full_solver_csv_equal": true
+    },
+    {
+      "case": "Case1",
+      "flow": "DAVIS",
+      "status": "PASS",
+      "bracket": [
+        0.5,
+        0.0,
+        0.5,
+        0.0,
+        false,
+        1
+      ],
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_relative_residual": 1.04568594300454e-15,
+      "baseline_seconds": 4.720866,
+      "candidate_seconds": 4.3505881,
+      "full_solver_csv_sha256": "40D7C5BB6090304B0C425EB592C88EFCC8D313D6D165D9683023F6EA23F8758E",
+      "full_solver_csv_bytes": 36,
+      "full_solver_csv_equal": true
+    },
+    {
+      "case": "Case2",
+      "flow": "DAVIS",
+      "status": "PASS",
+      "bracket": [
+        1.1,
+        0.0,
+        1.1,
+        0.0,
+        false,
+        1
+      ],
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_relative_residual": 2.71604079155516e-09,
+      "baseline_seconds": 1.6579469,
+      "candidate_seconds": 1.4626102,
+      "full_solver_csv_sha256": "2DC4EF3216B42A922F0445BE2B609D538F71AB9522DDD4ABB27A611548740F52",
+      "full_solver_csv_bytes": 239,
+      "full_solver_csv_equal": true
+    },
+    {
+      "case": "Case3",
+      "flow": "DAVIS",
+      "status": "PASS",
+      "bracket": [
+        0.9,
+        0.0,
+        0.9,
+        0.0,
+        false,
+        1
+      ],
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_relative_residual": 1.46030210111931e-09,
+      "baseline_seconds": 1.6461865,
+      "candidate_seconds": 1.448925,
+      "full_solver_csv_sha256": "6148AE97DC3916FD805D3A668D5F42EFCAF0C6ADDF5ADE12F9EA79F49E9A4531",
+      "full_solver_csv_bytes": 1234,
+      "full_solver_csv_equal": true
+    },
+    {
+      "case": "Case4",
+      "flow": "DAVIS",
+      "status": "PASS",
+      "bracket": [
+        2.0,
+        0.0,
+        2.0,
+        0.0,
+        false,
+        1
+      ],
+      "displacement_count": 170,
+      "max_abs_displacement_delta": 0.0,
+      "final_relative_residual": 1.66834088132905e-10,
+      "baseline_seconds": 1.635803,
+      "candidate_seconds": 1.4615686,
+      "full_solver_csv_sha256": "AA0E3DB6E7FEF3631C18566C716C4EEC465210A2FF43500C3BDE990CC20838FB",
+      "full_solver_csv_bytes": 236,
+      "full_solver_csv_equal": true
+    }
+  ]
+}

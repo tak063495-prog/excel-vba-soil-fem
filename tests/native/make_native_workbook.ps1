@@ -5,7 +5,7 @@
 #>
 param([string]$Src,[string]$Dst,[string]$ModDir,[string]$Modules='')
 $ErrorActionPreference='Stop'
-$Required=@('CONTROL','FEMCore','FEMSolver','FEMIo','FEMEngine','FEMNative','FEMNativeMat','FEMNativeKern','FEMUiInputs','FEMUiValidation','FEMUiLayout','FEMUi','FEMViewer','ThisWorkbook')
+$Required=@('CONTROL','FEMCore','FEMSolver','FEMIo','FEMEngine','FEMNative','FEMNativeMat','FEMNativeKern','FEMUiInputs','FEMUiValidation','FEMUiLayout','FEMUi','FEMViewer','ThisWorkbook','FEMUiMeshWorkflow','FEMUiGeometry','FEMPractical','MeshAdapt')
 $list=[Collections.Generic.List[string]]::new(); foreach($m in $Required){$list.Add($m)}
 foreach($m in ($Modules -split ',')){ $m=$m.Trim(); if($m -and -not $list.Contains($m)){$list.Add($m)} }
 if(-not (Test-Path -LiteralPath $Src -PathType Leaf)){throw "Src not found: $Src"}
@@ -25,7 +25,10 @@ function Verify($wb,$tag){
   $c=$null; try{$c=$wb.VBProject.VBComponents.Item($m)}catch{}
   if($null -eq $c){throw "[$tag] module not embedded: $m"}
   $cm=$c.CodeModule; $code=$(if($cm.CountOfLines -gt 0){$cm.Lines(1,$cm.CountOfLines)}else{''})
-  if((Norm $code) -ne (Norm $srcText[$m])){throw "[$tag] embedded code differs from source: $m"}
+  if((Norm $code) -ne (Norm $srcText[$m])){
+   [IO.File]::WriteAllText($Dst+'.'+$m+'.actual.txt',$code,[Text.UTF8Encoding]::new($false))
+   throw "[$tag] embedded code differs from source: $m"
+  }
   "verify[$tag] $m OK sha256=$($srcHash[$m]) lines=$($cm.CountOfLines)"
  }
 }

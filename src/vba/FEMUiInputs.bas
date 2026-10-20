@@ -223,6 +223,7 @@ Public Sub FEMUiFinishInputs()
   Set shp = Nothing
   On Error Resume Next: Set shp = ws.Shapes("UI_RecommendedRuntime"): On Error GoTo 0
   If shp Is Nothing Then Set shp = ws.Shapes.AddShape(msoShapeRoundedRectangle, target.left, target.Top, target.width, target.Height)
+  shp.Left = target.Left: shp.Top = target.Top: shp.Width = target.Width: shp.Height = target.Height
   shp.name = "UI_RecommendedRuntime": shp.TextFrame2.TextRange.text = "DLL・I/Oだけ推奨値に戻す"
   shp.OnAction = "'" & Replace(ThisWorkbook.name, "'", "''") & "'!FEMUiApplyRecommendedRuntime"
   shp.fill.ForeColor.RGB = RGB(49, 91, 79): shp.line.Visible = msoFalse
@@ -231,6 +232,7 @@ Public Sub FEMUiFinishInputs()
   Set target = ws.range("B22:D23"): Set shp = Nothing
   On Error Resume Next: Set shp = ws.Shapes("UI_CheckSettings"): On Error GoTo 0
   If shp Is Nothing Then Set shp = ws.Shapes.AddShape(msoShapeRoundedRectangle, target.left, target.Top, target.width, target.Height)
+  shp.Left = target.Left: shp.Top = target.Top: shp.Width = target.Width: shp.Height = target.Height
   shp.name = "UI_CheckSettings": shp.TextFrame2.TextRange.text = "設定の形式・範囲をチェック"
   shp.OnAction = "'" & Replace(ThisWorkbook.name, "'", "''") & "'!FEMUiCheckSettings"
   shp.fill.ForeColor.RGB = RGB(49, 91, 79): shp.line.Visible = msoFalse
@@ -239,6 +241,7 @@ Public Sub FEMUiFinishInputs()
   Set target = ws.range("B43:D44"): Set shp = Nothing
   On Error Resume Next: Set shp = ws.Shapes("UI_ElementResults"): On Error GoTo 0
   If shp Is Nothing Then Set shp = ws.Shapes.AddShape(msoShapeRoundedRectangle, target.left, target.Top, target.width, target.Height)
+  shp.Left = target.Left: shp.Top = target.Top: shp.Width = target.Width: shp.Height = target.Height
   shp.name = "UI_ElementResults": shp.TextFrame2.TextRange.text = "要素の応力・ひずみ・塑性"
   shp.OnAction = "'" & Replace(ThisWorkbook.name, "'", "''") & "'!FEMUiShowElementResults"
   shp.fill.ForeColor.RGB = RGB(49, 91, 79): shp.line.Visible = msoFalse
@@ -279,11 +282,11 @@ Private Sub FEMUiWriteGuide()
   ws.Hyperlinks.Add Anchor:=ws.range("B4"), address:="", SubAddress:="'操作パネル'!B2", TextToDisplay:="操作パネルへ戻る"
   sections = Array( _
     Array("1 材料・単位", "材料データ：E、ν、γ、c、φ、ψとSOIL/STRUCT/JOINTを確認。全シートで単位を統一（例 m・kN・kPa、角度deg）。物性・荷重に汎用の推奨値はありません。"), _
-    Array("2 メッシュ・支持", "メッシュ設定：簡易作成①は3/4点＋nx/ny。形状作成②は形状入力の座標・境界を使用。底面・側面支持はモデル依存。節点/要素を直接入力する操作も可能。"), _
+    Array("2 メッシュ・支持", "形状入力の座標・境界・格子間隔からメッシュを作成し、図で拘束と品質を確認。底面・側面支持はモデル依存。節点/要素を直接入力する操作も可能。"), _
     Array("3 接合（任意）", "接合：材料A/Bの共有辺にJOINTを生成。材料種別JOINT、Kn/Ks、psi=0。履歴なし応力上限モデルで、塑性すべり・除荷履歴は未対応。"), _
     Array("4 ステージ・載荷", "ステージは上から有効=1だけ実行。GRAVITY/LOAD/UNLOAD/BIRTH/DEATH/SRM/RESET_U/RESET_STRESS/MATSET。LOAD対象・BOX範囲・符号は載荷で指定。"), _
     Array("5 解析・Fs", "2D平面ひずみ・小ひずみ・全応力。INCONSISTENTまたはDAVIS。最終SRMはFs区間探索、途中SRMは必要Fs判定。Fs許容幅・ψ方針は物理/評価条件として現値を維持。"), _
-    Array("6 設定・実行", "黄色C列が正規入力、緑G列が目安。設定チェック後、操作パネルの解析を実行。入力規則を回避した貼り付けも解析入口で検査。材料・メッシュの整合性も既存検証で確認。"), _
+    Array("6 設定・実行", "黄色C列が正規入力、緑G列が目安。設定チェック後、操作パネルでメッシュを表示し、図の下の解析開始を押します。入力規則を回避した貼り付けも解析入口で検査。材料・メッシュの整合性も既存検証で確認。"), _
     Array("推奨設定の範囲", "配布版はDLL=AUTO・演算=AUTO・DLL/I/O高速化=1を入力済み。すべて倍精度。ボタンはこの9項目だけを復元し、モデル・Fs・収束条件は変更しません。既存ブックの設定は再表示で上書きしません。"), _
     Array("結果の判定", "ステージ結果：成功/失敗・Fs PASS/FAIL区間を先に確認。点推定だけで安全率を断定しない。診断：残差・収束・停止理由。入力変更後は古い数値や図を現在の結果として使わず再解析。"), _
     Array("変位・応力・図", "結果節点：全節点変位。結果要素：応力・ひずみ・塑性。接合結果：開口・すべり状態。図：表示量一覧の番号で選択。変位倍率と平滑化の有無を併記して読みます。"), _

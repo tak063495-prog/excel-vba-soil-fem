@@ -1,4 +1,4 @@
-param([string]$Book='workbook/ui_20261020/2DSoilFEM_ui_20261020.xlsm',[string]$Out='tests/results/viewer_display_settings.json',[switch]$ExpectDirtyBug,[switch]$UseSource)
+param([string]$Book='workbook/ui_20261020/2DSoilFEM_ui_20261020.xlsm',[string]$Out='tests/results/viewer_display_settings.json',[switch]$ExpectDirtyBug,[switch]$UseSource,[switch]$PreviewStart)
 $ErrorActionPreference='Stop'
 $repo=Split-Path -Parent $PSScriptRoot
 Push-Location $repo
@@ -86,6 +86,14 @@ Bad:
  VRun="ERROR|" & CStr(Err.Number) & "|" & Err.Description
 End Function
 '@)
+ if($PreviewStart){
+  $cm=$h.CodeModule;$code=$cm.Lines(1,$cm.CountOfLines)
+  $code=$code.Replace(' Call P0_RunAnalysis'," Call FEMUiPreviewMesh`r`n If Len(FEMUiMeshPreviewError) > 0 Then Err.Raise vbObjectError + 7002, , FEMUiMeshPreviewError`r`n Call FEMUiStartFromMesh")
+  $cm.DeleteLines(1,$cm.CountOfLines);$cm.AddFromString($code)
+ }
+ $compile=$app.VBE.CommandBars.FindControl(1,578)
+ if($compile.Enabled){$compile.Execute()}
+ if($app.VBE.CommandBars.FindControl(1,578).Enabled){throw 'Viewer test VBA compile failed.'}
  $checks=[Collections.Generic.List[string]]::new()
  function Check($ok,[string]$label){if(-not $ok){throw "FAIL $label"};$checks.Add($label);if($checks.Count % 25 -eq 0){Write-Output ("checked "+$checks.Count+" "+$label)}}
  function FindSetting([string]$key){foreach($p in 'メッシュ設定','解析設定','高速化設定','出力・表示','詳細設定'){$ws=$wb.Worksheets.Item($p);for($r=8;$r -le $ws.Cells($ws.Rows.Count,6).End(-4162).Row;$r++){if([string]$ws.Cells($r,6).Value2 -ceq $key){return $ws.Cells($r,3)}}};throw "Missing key $key"}
@@ -128,7 +136,7 @@ End Function
   Check ([string]$app.Run($prefix+'VDraw','RESULT') -like '*再解析*') 'reopened changed material still blocks stale result'
  }
  Check ((Get-FileHash -LiteralPath $Book).Hash -ceq $hash) 'source workbook unchanged'
- $result=@{status='PASS';book=$Book;source_sha256=$hash;expected_dirty_bug=[bool]$ExpectDirtyBug;use_source=[bool]$UseSource;checks=$checks.ToArray();count=$checks.Count}
+ $result=@{status='PASS';book=$Book;source_sha256=$hash;expected_dirty_bug=[bool]$ExpectDirtyBug;use_source=[bool]$UseSource;preview_start=[bool]$PreviewStart;checks=$checks.ToArray();count=$checks.Count}
  $result|ConvertTo-Json -Depth 5|Set-Content -LiteralPath $Out -Encoding UTF8
  Write-Output ("PASS "+$checks.Count+" viewer checks")
 }finally{

@@ -923,6 +923,7 @@ End Sub
 
 Public Sub MeshApplyCandidateUI()
     If MeshApplyCandidate() Then
+        FEMUiPreviewMesh
         If Not SuppressUserMessages Then MsgBox "候補を採用しました。計算実行で初期状態から再解析してください。" & vbCrLf & "元のブック：" & MeshAdaptLastBackup, vbInformation
     ElseIf Not SuppressUserMessages Then
         MsgBox MeshAdaptLastError, vbExclamation
@@ -930,7 +931,7 @@ Public Sub MeshApplyCandidateUI()
 End Sub
 
 Public Sub MeshCancelCandidateUI()
-    ThisWorkbook.Worksheets("設定").Activate
+    ThisWorkbook.Worksheets("メッシュ設定").Activate
     MeshCancelCandidate
 End Sub
 

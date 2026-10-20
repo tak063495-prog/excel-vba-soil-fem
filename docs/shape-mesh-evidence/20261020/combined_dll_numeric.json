@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "scope": "one-DLL native/material numerical regression; Excel not started",
+  "combined_dll": {
+    "path": "native/bin/combined/soilfem_native_x64.dll",
+    "sha256": "AD5C2AE81512BA8E977002415A6A5339B621C00A1BBABE5092559F8A7F9E0797"
+  },
+  "material_points": {
+    "test": "tests/native/test_material_points.py",
+    "count_per_control_word": 100000,
+    "total_cases": 200000,
+    "x87_control_words": ["0x27f", "0x37f"],
+    "all_handled_output_bytes_equal": true,
+    "decline_and_fp_flags_equal": true,
+    "point_output_bytes": 200
+  },
+  "material_gmres": {"test": "tests/native/test_material_gmres_exact.py", "cases": 240, "all_buffer_bytes_equal": true},
+  "sfn_gmres_simd": {"test": "tests/native/test_gmres_simd.py", "status": "PASS", "precision_modes": [1, 2]},
+  "sfn_gmres_tuned": {"test": "tests/native/test_gmres_tuned.py", "status": "PASS", "entries": ["sfn_gmres_tuned", "sfn_gmres_prepared"]},
+  "runtime_abi": {"sfm_init": 4, "sfn_abi": 65537},
+  "raw_results": [
+    "native/material_compare_200000.json",
+    "native/material_gmres_exact.json",
+    "native/sfn_gmres_simd.json",
+    "native/sfn_gmres_tuned.json",
+    "native/sfn_gmres_prepared.json"
+  ],
+  "note": "The SHA-256 is from the final build after linker timestamp generation. The material source retained the existing x87/GCC flags and no -ffloat-store or -march was introduced."
+}

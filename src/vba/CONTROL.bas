@@ -284,6 +284,7 @@ Private Sub CreateMeshFromGeometryDefinition()
 
     On Error GoTo ErrorHandler
     currentStage = "開始"
+    FEMShapeGenerationOK = False
     If AnalysisRunning Then
         If Not SuppressUserMessages Then MsgBox "解析処理中です。", vbExclamation
         MeshPerfLeave "CONTROL.CreateMeshFromGeometryDefinition": Exit Sub
@@ -340,6 +341,7 @@ Private Sub CreateMeshFromGeometryDefinition()
     MeshInsertJointsIfNeeded
 
     P5ReleaseGeometryDefinitionWorkspace
+    FEMShapeGenerationOK = True
     If stateWasSaved Then RestoreApplicationState
     MeshPerfLeave "CONTROL.CreateMeshFromGeometryDefinition": Exit Sub
 ErrorHandler:
@@ -871,59 +873,8 @@ Private Sub MeshCreateTriangleQuadratic(ByRef pointX() As Double, ByRef pointY()
 End Sub
 
 Sub ボタン1_Click()
-    Dim pointX(1 To 4) As Double, pointY(1 To 4) As Double
-    Dim uniqueX(1 To 4) As Double, uniqueY(1 To 4) As Double
-    Dim i As Long, uniqueCount As Long
-    Dim nx As Long, my As Long
-    Dim tolerance As Double
-    Dim errorNumber As Long, errorDescription As String
-
-    On Error GoTo ErrorHandler
-    FEMWriteBuildStamp
-    FEMInvalidateSettingCache
-    For i = 1 To 4
-        pointX(i) = FEMReadSetting("MESH_POINT" & CStr(i) & "_X", 0#)
-        pointY(i) = FEMReadSetting("MESH_POINT" & CStr(i) & "_Y", 0#)
-    Next i
-    nx = CLng(FEMReadSetting("MESH_NX", 1#))
-    my = CLng(FEMReadSetting("MESH_NY", 1#))
-    If nx <= 0 Or my <= 0 Then
-        MsgBox "設定シートのMESH_NX/MESH_NYは1以上にしてください。", vbExclamation
-        Exit Sub
-    End If
-
-    tolerance = MeshCoordinateTolerance(pointX, pointY, 4)
-    uniqueCount = MeshUniquePointCount(pointX, pointY, 4, tolerance, uniqueX, uniqueY)
-    If uniqueCount <= 2 Then
-        MsgBox "要素作成①: 重複を除いた有効な座標点が2点以下です。3点または4点を入力してください。", vbCritical
-        Exit Sub
-    End If
-
-    ClearElementInputData
-    If uniqueCount = 3 Then
-        For i = 1 To 3
-            pointX(i) = uniqueX(i)
-            pointY(i) = uniqueY(i)
-        Next i
-        MeshNormalizeCounterClockwise pointX, pointY, 3, tolerance
-        MeshCreateTriangleQuadratic pointX, pointY, nx, my
-    Else
-        MeshNormalizeCounterClockwise pointX, pointY, 4, tolerance
-        MeshCreateQuadrilateral pointX, pointY, nx, my
-    End If
-    If uniqueCount = 3 Then
-        Call P5EvaluateCurrentSheet("要素作成①-三角形")
-    Else
-        Call P5EvaluateCurrentSheet("要素作成①-四辺形")
-    End If
-    If Not P5QualityMeetsSettings() And Not SuppressUserMessages Then
-        MsgBox "要素作成①はメッシュ品質の目標値を下回っています。設定値を確認し、要素修正を実行してください。" & vbCrLf & P5QualitySummary(), vbExclamation
-    End If
-    Exit Sub
-ErrorHandler:
-    errorNumber = Err.Number
-    errorDescription = Err.Description
-    MsgBox "要素作成①に失敗しました [" & CStr(errorNumber) & "] " & errorDescription, vbCritical
+    ' Legacy button entry now uses the single supported shape-mesh workflow.
+    FEMUiGenerateShape
 End Sub
 Sub ボタン2_Click()
     MsgBox "旧形式の要素読込はQ8統一のため使用できません。要素作成①または要素作成②を使用してください。", vbExclamation

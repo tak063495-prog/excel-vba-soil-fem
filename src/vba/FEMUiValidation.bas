@@ -149,6 +149,7 @@ Public Sub FEMUiValidateSettings()
       For r = 1 To lastRow
         keyName = UCase$(Trim$(CStr(ws.Cells(r, 6).Value2)))
         If Len(keyName) > 0 Then
+          If FEMUiRetiredMeshKey(keyName) Then GoTo NextCell
           value = ws.Cells(r, 3).Value2: listText = FEMUiValidationList(keyName): ruleText = FEMUiValidationRule(keyName, r)
           If IsError(value) Then Err.Raise vbObjectError + 3820, "FEMUiValidateSettings", CStr(page) & "!C" & CStr(r) & " (" & keyName & ") の値がエラーです。"
           If keyName = "VIEW_COLOR_RESULT" Then

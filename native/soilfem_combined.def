@@ -1,0 +1,14 @@
+LIBRARY soilfem_native_x64
+EXPORTS
+    sfm_init
+    sfm_eval
+    sfm_tangent
+    sfm_band_scatter
+    sfm_csr_scatter
+    sfm_csr_resnorm
+    sfm_ilu0
+    sfm_gmres
+    sfm_regularized
+    sfm_residual
+    sfm_rcm
+    sfm_hg_apply

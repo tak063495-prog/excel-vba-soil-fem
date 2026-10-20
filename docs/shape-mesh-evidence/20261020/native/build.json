@@ -1,0 +1,52 @@
+{
+  "artifact": "soilfem_native_x64.dll",
+  "artifact_sha256": "AD5C2AE81512BA8E977002415A6A5339B621C00A1BBABE5092559F8A7F9E0797",
+  "toolchains": {
+    "msvc": "Visual Studio 18 Professional (cl/ml64 x64)",
+    "mingw": "x86_64-w64-mingw32-gcc 14.2.0 (w64devkit toolchain14)"
+  },
+  "native_flags": {
+    "general": [
+      "/O2",
+      "/fp:strict",
+      "/MT",
+      "/std:c11"
+    ],
+    "simd_object": [
+      "/O2",
+      "/fp:precise",
+      "/arch:AVX2",
+      "/MT",
+      "/std:c11"
+    ]
+  },
+  "material_flags": [
+    "-O3",
+    "-mfpmath=387",
+    "-fexcess-precision=standard",
+    "-ffp-contract=off",
+    "-fno-fast-math",
+    "-fno-builtin",
+    "-fno-stack-protector",
+    "-mno-stack-arg-probe"
+  ],
+  "source_sha256": {
+    "soilfem_mat.c": "8406009CB78C36085B4726FAF8EF9097977ED1CB3A83F72EC22CB5077ADF628A",
+    "soilfem_native.c": "D7F09D17A1027E9A774171C884A81288EFBEC5D769F90EF1E61BE2FCC7C2BD6E",
+    "sfn_assembly.c": "AF1DAE5A38F5EA1B5267C68CB034C5017566DD56FCA1192A9637024F28C94456",
+    "sfn_gmres.c": "918D7B95D3466B17FD1542BD0C6BB10A790DEAF210B48B4F8ED86503AF0EE676",
+    "sfn_simd.c": "CD9C5DBCD8FFEC2485E5B49B9CAB32C8A053920621CF03CA6438BFC8DDD29CDC",
+    "sfn_state.c": "70403674909C63D5C18417E4DA241DB9B634D432B7567544CB23F707974C3315",
+    "sfn_fp.asm": "13FAA67021263E8E667C91ECD7A4B75607255EE2302E5C53405A1C1FE3CCDC11",
+    "soilfem_combined.def": "39DB9849279ACF8945CB306F50C965469619EA40958396E16BE61F0911AFB910"
+  },
+  "exports_verified": true,
+  "runtime_abi_test": {
+    "sfm_init": 4,
+    "sfn_abi": 65537,
+    "old_material_sfm_init": 4,
+    "status": "PASS"
+  },
+  "numeric_comparison": "PASS: paired_srm_exact.json, fixed_exact_comparison.json, combined_dll_numeric.json",
+  "link_warning": "LNK4078: MinGW COFF .drectve section attributes differ; link succeeded and all exports were verified."
+}

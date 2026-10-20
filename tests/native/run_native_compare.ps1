@@ -232,6 +232,9 @@ try{
    $preparedCalls=[int]$xl.Run("'"+$wb.Name+"'!TPreparedCalls")
    $res[$res.Count-1] | Add-Member -NotePropertyMembers @{GmresPrepared=$GmresPrepared;PreparedCalls=$preparedCalls;MaterialNativeProfile=$materialProfileData}
    $matPath=Join-Path $root 'soilfem_mat_x64.dll'
+   # Read the embedded wrapper so a combined package records its actual material binary.
+   $matSource=$wb.VBProject.VBComponents.Item('FEMNativeMat').CodeModule
+   if($matSource.Lines(1,$matSource.CountOfLines) -match 'SFM_DLL\s+As\s+String\s*=\s*"soilfem_native_x64.dll"'){$matPath=$nativePath}
    $matHash=if(Test-Path -LiteralPath $matPath){(Get-FileHash -LiteralPath $matPath).Hash}else{$null}
    $profileTarget=if($MaterialProfile){'material'}elseif($NativeProfile){'native'}else{''}
    $res[$res.Count-1] | Add-Member -NotePropertyMembers @{MaterialDllSha256=$matHash;NativeProfileTarget=$profileTarget;UiPrewarmed=[bool]$WarmUi}

@@ -222,6 +222,7 @@ Private Sub DrawView(ByVal mode As String)
     Dim r As Long, j As Long, n As Long, e As Long, mat As Long, flag As Long, Stage As Long, count As Long
     Dim selected() As Boolean, px() As Double, py() As Double, elementIds As Object, key As Variant
     Dim jointMaterials As Object, jointElements As Object, jointRow() As Boolean
+    Dim visibleNodes As Object, supportX As Boolean, supportY As Boolean, supportLabel As String
     Dim nodeLimit As Long, continuumCount As Long, kind As String
     Dim stageResults As Variant, geometryMoved As Boolean, resultX As Double, resultY As Double
     Dim node As Variant, displacement As Variant, current As Variant, order As Variant
@@ -246,7 +247,7 @@ Private Sub DrawView(ByVal mode As String)
     Application.StatusBar = "メッシュ表示を準備しています"
     viewPhase = "表示設定の読込"
     decimalMark = Application.International(xlDecimalSeparator)
-    nodes = ReadTable("節点データ", 3)
+    nodes = ReadTable("節点データ", 5)
     elements = ReadTable("要素データ", 10)
     materials = ReadTable("材料データ", 13)
     stages = ReadTable("ステージ", 5)
@@ -263,6 +264,7 @@ Private Sub DrawView(ByVal mode As String)
     Set elementIds = CreateObject("Scripting.Dictionary")
     Set config = CreateObject("Scripting.Dictionary")
     Set labels = CreateObject("Scripting.Dictionary")
+    Set visibleNodes = CreateObject("Scripting.Dictionary")
     For r = 2 To UBound(settings, 1)
         If Len(CStr(settings(r, 5))) > 0 Then config(UCase$(CStr(settings(r, 5)))) = settings(r, 3)
     Next r
@@ -399,6 +401,7 @@ NextPlan:
             n = id(elements(r, j + 2))
             If Not nodeMap.Exists(n) Then Err.Raise vbObjectError + 3714, "FEMViewer", "接続節点がありません。要素=" & CStr(e)
             node = nodeMap(n): x = node(0): y = node(1)
+            visibleNodes(n) = True
             If mode = "RESULT" Then
                 If Not displacements.Exists(n) Then Err.Raise vbObjectError + 3715, "FEMViewer", "有効要素の変位がありません。節点=" & CStr(n)
                 displacement = displacements(n)
@@ -455,9 +458,14 @@ NextElement:
         Case "RESULT": title = "変形・応力表示": subtitle = "最終ステージ " & CStr(Stage) & " / 変位倍率 " & Format$(dscale, "0.###") & " / " & CStr(elementResults(1, resultId + 4)) & " [" & FEMViewerResultUnit(resultId) & "] / 結果要素 " & Split(ThisWorkbook.Worksheets("結果要素").Cells(1, resultId + 4).address, "$")(1) & "列（番号 " & resultId & "）"
     End Select
     If jointElements.count > 0 Then subtitle = subtitle & " / 接合は紫線：数値は接合結果"
-    ReDim parts(0 To count + labels.count + 90)
+    ReDim parts(0 To count + labels.count + nodeMap.count + 100)
     parts(0) = "<svg xmlns=""http://www.w3.org/2000/svg"" width=""" & num(canvasW) & """ height=""" & num(canvasH) & """ viewBox=""0 0 " & num(canvasW) & " " & num(canvasH) & """><g font-family=""Meiryo, sans-serif""><rect width=""100%"" height=""100%"" fill=""white""/>" & SvgText(30, 28, title & "  " & CStr(count) & "要素", 18) & SvgText(30, 51, subtitle, 11)
-    partCount = 1: order = Array(0, 4, 1, 5, 2, 6, 3, 7)
+    partCount = 1
+    If mode <> "RESULT" Then
+        parts(partCount) = SvgText(30, 72, "X/Yは拘束方向（赤）。灰：通常 / 青：BIRTH予定 / 赤：DEATH予定", 10): partCount = partCount + 1
+        If Len(FEMUiMeshQualityNote) > 0 Then parts(partCount) = SvgText(30, 87, FEMUiMeshQualityNote, 10): partCount = partCount + 1
+    End If
+    order = Array(0, 4, 1, 5, 2, 6, 3, 7)
     For r = 2 To UBound(elements, 1)
         If selected(r) Then
             e = id(elements(r, 1)): points = ""
@@ -491,6 +499,25 @@ NextElement:
         End If
 NextDrawElement:
     Next r
+    If mode <> "RESULT" Then
+        For r = 2 To UBound(nodes, 1)
+            If Not IsEmpty(nodes(r, 1)) Then
+                n = id(nodes(r, 1))
+                If visibleNodes.Exists(n) Then
+                    supportX = False: supportY = False
+                    If Not IsEmpty(nodes(r, 4)) Then supportX = (Number(nodes(r, 4), "X拘束") <> 0#)
+                    If Not IsEmpty(nodes(r, 5)) Then supportY = (Number(nodes(r, 5), "Y拘束") <> 0#)
+                    If supportX Or supportY Then
+                        node = nodeMap(n): x = originX + drawScale * node(0): y = originY - drawScale * node(1)
+                        supportLabel = "": If supportX Then supportLabel = "X"
+                        If supportY Then supportLabel = supportLabel & "Y"
+                        parts(partCount) = "<g data-node=""" & CStr(n) & """ data-support=""" & supportLabel & """><rect x=""" & num(x - 2#) & """ y=""" & num(y - 2#) & """ width=""4"" height=""4"" fill=""#be3333""/>" & SvgText(x + 4#, y - 3#, supportLabel, 8) & "</g>"
+                        partCount = partCount + 1
+                    End If
+                End If
+            End If
+        Next r
+    End If
     For Each key In labels.Keys
         node = labels(key)
         parts(partCount) = SvgText(originX + drawScale * node(0) + 2#, originY - drawScale * node(1) - 2#, CStr(key), 9)
@@ -520,6 +547,12 @@ NextDrawElement:
     picture.name = "P1Agg_ViewSVG"
     picture.AlternativeText = title & " / " & CStr(count) & "要素"
     picture.Placement = xlFreeFloating
+    If mode = "RESULT" Then
+        On Error Resume Next
+        ws.Shapes("UI_MeshStart").Visible = msoFalse
+        ws.Shapes("UI_MeshRepair").Visible = msoFalse
+        On Error GoTo Failed
+    End If
     FEMViewerElementCount = count
     viewPhase = "図シートの表示"
     ws.Activate

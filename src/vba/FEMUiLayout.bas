@@ -1,5 +1,5 @@
 ﻿Option Explicit
-Public Const FEM_UI_STAMP As String = "20261020_UI_02"
+Public Const FEM_UI_STAMP As String = "20261020_UI_03"
 
 Private mUiSessionReady As Boolean
 Private mUiSessionBook As String
@@ -242,18 +242,18 @@ End Sub
 Private Sub FEMUiMakeButtons()
   Dim ws As Worksheet, shp As shape, actionText As String, marker As Long
   On Error GoTo Failed
-  FEMUiButton "操作パネル", "UI_Run", "B18:D19", "解析を実行", "FEMUiRun", True
+  FEMUiButton "操作パネル", "UI_Run", "B18:D19", "解析前：メッシュを確認", "FEMUiRun", True
   FEMUiButton "操作パネル", "UI_Nodes", "B31:C31", "節点・拘束", "FEMUiShowNodes", False
   FEMUiButton "操作パネル", "UI_Elements", "D31", "要素", "FEMUiShowElements", False
   FEMUiButton "操作パネル", "UI_Results", "F31:G31", "数値結果", "FEMUiShowResults", False
   FEMUiButton "操作パネル", "UI_Diagnostic", "H31", "診断", "FEMUiShowDiagnostic", False
   FEMUiButton "操作パネル", "UI_Quantities", "B33:C33", "表示項目一覧", "FEMUiShowQuantities", False
   FEMUiButton "操作パネル", "UI_Spec", "D33", "仕様・制約", "FEMUiShowSpecs", False
-  FEMUiButton "メッシュ設定", "UI_Mesh1", "B35:C35", "簡易メッシュを作成①", "ボタン1_Click", False
-  FEMUiButton "メッシュ設定", "UI_Mesh2", "E35", "形状メッシュを作成②", "FEMUiGenerateShape", False
-  FEMUiButton "メッシュ設定", "UI_Repair", "B37:C37", "メッシュ品質を修正", "ボタン20_Click", False
-  FEMUiButton "メッシュ設定", "UI_ViewMesh", "E37", "現在の形状を表示", "FEMViewInitial", False
-  FEMUiButton "メッシュ設定", "UI_Remesh", "B39:C39", "塑性域から再メッシュ候補", "MeshPlasticRemesh", False
+  FEMUiShapeOnlyPage
+  FEMUiButton "メッシュ設定", "UI_Mesh2", "B35:C36", "形状メッシュを作成", "FEMUiGenerateShape", False
+  FEMUiButton "メッシュ設定", "UI_Repair", "B40:C41", "メッシュ品質を修正", "ボタン20_Click", False
+  FEMUiButton "メッシュ設定", "UI_ViewMesh", "E35:G36", "解析前：メッシュ・拘束を確認", "FEMUiPreviewMesh", False
+  FEMUiButton "メッシュ設定", "UI_Remesh", "E40:G41", "塑性域から再メッシュ候補", "MeshPlasticRemesh", False
   FEMUiButton "出力・表示", "UI_ResultFigure", "B37:C38", "変形・応力図を表示", "FEMViewResult", False
   ' Qualify all retained action buttons against this copy, including remesh adoption.
   For Each ws In ThisWorkbook.Worksheets
@@ -277,7 +277,8 @@ End Sub
 
 Private Sub FEMUiOrderTabs()
   Dim names As Variant, p As Variant, previous As Worksheet, ws As Worksheet
-  names = Array("操作パネル", "材料データ", "メッシュ設定", "形状入力", "接合", "ステージ", "載荷", "解析設定", "図", "ステージ結果", "高速化設定", "出力・表示", "詳細設定")
+  If Not FEMUiWorksheetExists("操作ガイド") Then ThisWorkbook.Worksheets.Add(After:=ThisWorkbook.Worksheets("操作パネル")).name = "操作ガイド"
+  names = Array("操作パネル", "操作ガイド", "材料データ", "形状入力", "メッシュ設定", "接合", "載荷", "ステージ", "解析設定", "高速化設定", "出力・表示", "詳細設定", "図", "ステージ結果", "接合結果")
   For Each p In names
     Set ws = ThisWorkbook.Worksheets(CStr(p)): ws.Visible = xlSheetVisible
     If previous Is Nothing Then ws.Move Before:=ThisWorkbook.Worksheets(1) Else ws.Move After:=previous
@@ -341,4 +342,4 @@ Public Sub FEMUiShowResults(): FEMUiOpen "結果節点": End Sub
 Public Sub FEMUiShowDiagnostic(): FEMUiOpen "診断": End Sub
 Public Sub FEMUiShowQuantities(): FEMUiOpen "表示量一覧": End Sub
 Public Sub FEMUiShowSpecs(): FEMUiOpen "仕様": End Sub
-Public Sub FEMUiRun(): Call ボタン5_Click: End Sub
+Public Sub FEMUiRun(): Call FEMUiPreviewMesh: End Sub

@@ -16,8 +16,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 20506,
-    "sha256": "3f4e3f68fcde53832b8ab01f9a4bbf9c71b5bc3ff0c848705da00e4c1d8be381"
+    "bytes": 21237,
+    "sha256": "1de59884b0803ca5d2f09de78f6ec7eeaa75ed0c0cb1296800322a8de6d933f8"
   },
   {
     "path": "docs/ACCELERATION_HISTORY.md",
@@ -105,6 +105,11 @@
     "sha256": "16bf01e5be31533364414559d4bcf47d1415340cd1a5695ef56bc8f843dbe84d"
   },
   {
+    "path": "docs/SHAPE_MESH_UI_20261020.md",
+    "bytes": 6775,
+    "sha256": "b7939167dc139e3bedecf9f8093759b722e2440c5e017a49e59ba1bde837b280"
+  },
+  {
     "path": "docs/SIMD_NATIVE.md",
     "bytes": 7293,
     "sha256": "9bd0e86280a4942e5d2fadee41740c9f93aa82e7f12bdf3cbd5a493816d5e81c"
@@ -121,8 +126,8 @@
   },
   {
     "path": "docs/UI_SETTINGS_20261020.md",
-    "bytes": 7189,
-    "sha256": "bd5dcaff41f99b6be26719dcdc6437c09d5c4993071fbddd575ce2f33eba727a"
+    "bytes": 7442,
+    "sha256": "3ae98163172b82a4fe23cd9a689f07e35c5c6cbcc90a33476e70eb0606627da1"
   },
   {
     "path": "docs/USER_GUIDE.md",
@@ -141,8 +146,8 @@
   },
   {
     "path": "docs/WORKBOOK_UI_20261020.md",
-    "bytes": 10447,
-    "sha256": "37d2fbb10f2eae1e40cb6f7ad920f889daedb4f1b6da630143a8c098b3bb6110"
+    "bytes": 10680,
+    "sha256": "5714c3d27ecddacbe52cb71817cd3f6a4e975031e983e1cebf6bae57dc4fbfac"
   },
   {
     "path": "docs/benchmark-summary.csv",
@@ -2510,6 +2515,131 @@
     "sha256": "a9cb0cec504f81b95a7b05e5644459ddba542996c13e7c9399faefeb66c4b895"
   },
   {
+    "path": "docs/shape-mesh-evidence/20261020/combined_dll_numeric.json",
+    "bytes": 1391,
+    "sha256": "5bdddd3e4f030d3313bcef25cb1428d2422fb110c0bed530727f3d74c34a3216"
+  },
+  {
+    "path": "docs/shape-mesh-evidence/20261020/final_inputs.json",
+    "bytes": 102247,
+    "sha256": "e05ce2030e79d2a84c91a5ba3161a6b4a210ebdad0e6384a44b047e8adcef8f5"
+  },
+  {
+    "path": "docs/shape-mesh-evidence/20261020/final_persistence.json",
+    "bytes": 22765,
+    "sha256": "6b2d0f9237a036f067c74774cbd0d58d25aad3358a98e2622efa6952fb988997"
+  },
+  {
+    "path": "docs/shape-mesh-evidence/20261020/final_shape_workflow.json",
+    "bytes": 4475,
+    "sha256": "9af5e70552b25a2ab604663b92ae58fa32e666fabdaddfc90a06510f7b80a825"
+  },
+  {
+    "path": "docs/shape-mesh-evidence/20261020/final_srm_exact.json",
+    "bytes": 945,
+    "sha256": "9f7218b161d146bd3dc8842e399bcae9e20900c942bb525a60b079948da7c4b9"
+  },
+  {
+    "path": "docs/shape-mesh-evidence/20261020/final_unified_srm.json",
+    "bytes": 5785,
+    "sha256": "be33ff11f50a81bc28fd9a223ad8065c21250ac966bd077c8dca4b37876be25d"
+  },
+  {
+    "path": "docs/shape-mesh-evidence/20261020/final_viewer_preview_start.json",
+    "bytes": 4516,
+    "sha256": "c4a4ce340eaf26ff4b052c5b1d7c07fab2cf916bcc2474da7056fc4a69aad945"
+  },
+  {
+    "path": "docs/shape-mesh-evidence/20261020/fixed_exact_comparison.json",
+    "bytes": 4991,
+    "sha256": "d367a86812876567fc2ba7e2ec5386fda66f450b220cc87cb56420dfe64a9ebe"
+  },
+  {
+    "path": "docs/shape-mesh-evidence/20261020/mesh_preview.svg",
+    "bytes": 70489,
+    "sha256": "332257b9fb4912c0cb0f2f321cca194c0c1d8b57c8d63a6f05fc1edec4321cff"
+  },
+  {
+    "path": "docs/shape-mesh-evidence/20261020/native/build.json",
+    "bytes": 1896,
+    "sha256": "9faeb9e3ffc085234995737c1c75efbbda0be089d9a022a775842e811219f1d8"
+  },
+  {
+    "path": "docs/shape-mesh-evidence/20261020/native/material_compare_200000.json",
+    "bytes": 481,
+    "sha256": "2d1f84f7bf108f36696499f5a6ec2ba736a94019c1765edc48f5a4aa8e29ce5b"
+  },
+  {
+    "path": "docs/shape-mesh-evidence/20261020/native/material_gmres_exact.json",
+    "bytes": 41907,
+    "sha256": "598f7a495b2597bf57b87b1a98aeb509e5a73e20ea8f35e9876165d4c214f32e"
+  },
+  {
+    "path": "docs/shape-mesh-evidence/20261020/native/runtime_abi.json",
+    "bytes": 379,
+    "sha256": "4a781dcb6428d186f0cef6c14a59196ae3c46364c3e43d4c929f649f6d558452"
+  },
+  {
+    "path": "docs/shape-mesh-evidence/20261020/native/sfn_gmres_prepared.json",
+    "bytes": 25924,
+    "sha256": "634fa81b8dfa271babfb35a7bf168203614e1f9b6666f2013919ced68d20aca4"
+  },
+  {
+    "path": "docs/shape-mesh-evidence/20261020/native/sfn_gmres_simd.json",
+    "bytes": 2552,
+    "sha256": "5074f282ccef11434562caa4d92a729d3f7636f5ff78752dfa43a12ab2682645"
+  },
+  {
+    "path": "docs/shape-mesh-evidence/20261020/native/sfn_gmres_tuned.json",
+    "bytes": 25935,
+    "sha256": "a928ef8907a174f1ac253ca721df41df7f1c6525c7d53eea0be5ce61c525b10a"
+  },
+  {
+    "path": "docs/shape-mesh-evidence/20261020/package.json",
+    "bytes": 375,
+    "sha256": "bd80746a0c9f9c15aa61dfc6aa8d2489c8452a63f931289955215c6e5c767b47"
+  },
+  {
+    "path": "docs/shape-mesh-evidence/20261020/paired_split_srm.json",
+    "bytes": 5776,
+    "sha256": "9ef5e8eeb28632c3caad13e100d0dd5468e12fb602dff27f2d618295673dc837"
+  },
+  {
+    "path": "docs/shape-mesh-evidence/20261020/paired_srm_exact.json",
+    "bytes": 945,
+    "sha256": "62b6e4d9a0d25a7d7504fd16bfd2d26983fd263b0d4c7723da21b1eedbfdfd8a"
+  },
+  {
+    "path": "docs/shape-mesh-evidence/20261020/release_shape_workflow.json",
+    "bytes": 4475,
+    "sha256": "f746f7a64d260241a87b479702c97b18f3f2d59557870e79b12f594a2d77375f"
+  },
+  {
+    "path": "docs/shape-mesh-evidence/20261020/screen_inspection.json",
+    "bytes": 840,
+    "sha256": "f891198d664cc85bf7797090816c47cd8d5a435b9bb4e46267a63bba090a267a"
+  },
+  {
+    "path": "docs/shape-mesh-evidence/20261020/unified_fixed_DAVIS.json",
+    "bytes": 28617,
+    "sha256": "aa7eb5de0e6a78e856082ec444662a62a20569d20dddebaff31983f2b5e72340"
+  },
+  {
+    "path": "docs/shape-mesh-evidence/20261020/unified_fixed_INCONSISTENT.json",
+    "bytes": 24838,
+    "sha256": "fb97a68eb6ae1d2d3ee361f53a2dc19a81b56b99951f643fc3b5c525cc15bc95"
+  },
+  {
+    "path": "docs/shape-mesh-evidence/20261020/unified_srm.json",
+    "bytes": 5787,
+    "sha256": "a0feeae80399f7cb9a4a2854bcc7fe0e5dd955eb5a35e5494a2da85891cc7a56"
+  },
+  {
+    "path": "docs/shape-mesh-evidence/20261020/workflow_compile.json",
+    "bytes": 213,
+    "sha256": "122ee42a66f8a516b369c5157e9447ab39515eb1ca909251051601df93f86204"
+  },
+  {
     "path": "docs/test-results/issue1_after_20261009.json",
     "bytes": 14379,
     "sha256": "86f572e3d6d27baf590e6f4be1b432fd823f699d0ecfca28edea4a5ae3536767"
@@ -2730,6 +2860,11 @@
     "sha256": "6500ad3dba257cdc6660126bb4cf1cf4ae10634039af0b9c450681eb5863d893"
   },
   {
+    "path": "native/build_combined.cmd",
+    "bytes": 2817,
+    "sha256": "31770ff80e7983eef1e1440cd36cd6b7065c62d81a603be37078d1ea28762c27"
+  },
+  {
     "path": "native/build_mat.sh",
     "bytes": 551,
     "sha256": "4d5fb8ea59aff4a83f8dde45737c156e7233e763f0babc7e5dbf6f5cb7d9dfab"
@@ -2775,6 +2910,11 @@
     "sha256": "6cfb3d15a9e09a09d10fa22f1bb9d8e67e49e6d3ef093956e08e375551812509"
   },
   {
+    "path": "native/soilfem_combined.def",
+    "bytes": 231,
+    "sha256": "39db9849279acf8945cb306f50c965469619ea40958396e16be61f0911afb910"
+  },
+  {
     "path": "native/soilfem_mat.c",
     "bytes": 47842,
     "sha256": "8406009cb78c36085b4726faf8ef9097977ed1cb3a83f72ec22cb5077adf628a"
@@ -2791,8 +2931,8 @@
   },
   {
     "path": "src/vba/CONTROL.bas",
-    "bytes": 102815,
-    "sha256": "1cd40434430a4e6550841ce9bb18c5427259e7bf65ea315f3709ee2857d3e215"
+    "bytes": 100698,
+    "sha256": "c5efe766e5612b32648246d31fd0081b2aee731bb25ce267e79692521630ecc1"
   },
   {
     "path": "src/vba/FEM.bas",
@@ -2836,13 +2976,13 @@
   },
   {
     "path": "src/vba/FEMNativeKern.bas",
-    "bytes": 15992,
-    "sha256": "bb948c0ac20a821f3ec239f8dafe65afeaf1b37673e81ea61817f751b4bddb7a"
+    "bytes": 16022,
+    "sha256": "b8b93afd8d51299e7f71ac7fab15bfa3ca5ec230f3a0f776af5d1c45094ae71e"
   },
   {
     "path": "src/vba/FEMNativeMat.bas",
-    "bytes": 14026,
-    "sha256": "3e831347ee6bb36a782078e74386c7d93f93da80b8c8906cc1fcba9134f49eed"
+    "bytes": 14041,
+    "sha256": "5194075d64f1ed2d88ff16f821078db3993dcff525e13bf03efc6746e85d88ab"
   },
   {
     "path": "src/vba/FEMPlasticLog.bas",
@@ -2856,8 +2996,8 @@
   },
   {
     "path": "src/vba/FEMPractical.bas",
-    "bytes": 5092,
-    "sha256": "929837b65e91e5359d8297bc6866be0d21e9c5b32fb6f2ac89f073502ed71121"
+    "bytes": 5212,
+    "sha256": "2f9e8b7edf183f567ce5404b6fbf0dea9149b7204b8c44ca887a4beb99551745"
   },
   {
     "path": "src/vba/FEMProgress.bas",
@@ -2876,33 +3016,38 @@
   },
   {
     "path": "src/vba/FEMUi.bas",
-    "bytes": 6534,
-    "sha256": "7b747d3aabfefdb0606f3c5feb6cc93cb1aaaa5f6965089941348fede448a2f3"
+    "bytes": 6570,
+    "sha256": "8bab4e1fdc5047779b6e2467c5761771a28033f19411c0a71a6e78eb66f3c0a6"
   },
   {
     "path": "src/vba/FEMUiGeometry.bas",
-    "bytes": 9713,
-    "sha256": "dd9c8b5f51e39f086c0df74c9c4582a8eb27554a45457051245a5a3d495e6932"
+    "bytes": 9973,
+    "sha256": "b1db2f9c7dd5064ce7dc4526df0a7641c4315e602baa45ef04d590ed4164572e"
   },
   {
     "path": "src/vba/FEMUiInputs.bas",
-    "bytes": 20784,
-    "sha256": "18c18e684e1277cb699cba7dccc580679b24994902ff5cc34c7f658d36bbdde1"
+    "bytes": 21136,
+    "sha256": "4cb67cf96bef541ac89be72c3961fee1b142c5dcda0713c6ead1bc51f1d49b96"
   },
   {
     "path": "src/vba/FEMUiLayout.bas",
-    "bytes": 18886,
-    "sha256": "3c9c92d3c08d88f8fa19e83ee6df6dd8d70da029bc6ab9bcbad7f2f6c2890a0c"
+    "bytes": 19025,
+    "sha256": "e7fd14ba369f3d0edb8040714363d7a1326cf12a43130a73b7f5cb98fd8ad0d3"
+  },
+  {
+    "path": "src/vba/FEMUiMeshWorkflow.bas",
+    "bytes": 7338,
+    "sha256": "3a03692b3fdb830d664ad1808cf0ddde41a2d3c319af9b8dc342baa25b7a65d7"
   },
   {
     "path": "src/vba/FEMUiValidation.bas",
-    "bytes": 13730,
-    "sha256": "461023e3bd6ce417959fc5f3af27b0a4848599eca9c93b3b58e1b3dc60592397"
+    "bytes": 13792,
+    "sha256": "1ec2bb409eef0e5ef182b9f83af053863f19e037ed4fd5d2760792d9df5f26fa"
   },
   {
     "path": "src/vba/FEMViewer.bas",
-    "bytes": 30238,
-    "sha256": "f998abb370c92fe7220ee83a7890a546589a82ba061e0cf9746f23e0fb2879ef"
+    "bytes": 32207,
+    "sha256": "a74112bc7cafe9a4b3ce722c694400c8b69fc8357fcb177aaab172b88a0e7d10"
   },
   {
     "path": "src/vba/Mesh.bas",
@@ -2911,8 +3056,8 @@
   },
   {
     "path": "src/vba/MeshAdapt.bas",
-    "bytes": 88125,
-    "sha256": "bc751d1fb574a0e6a6167ef327fecd30e6dc452b612540f3d86a9146d89f1289"
+    "bytes": 88163,
+    "sha256": "10914837955f7f06d2529e39fe0181e7b4bddda2ddcf21913df1dd8980408bf0"
   },
   {
     "path": "src/vba/MeshAngle.bas",
@@ -2926,18 +3071,18 @@
   },
   {
     "path": "src/vba/ThisWorkbook.cls",
-    "bytes": 2567,
-    "sha256": "5b6ef636b9ee479c0830cdc727e6cf9c12d89a9b5efe362cde2b0fd900f43fc2"
+    "bytes": 2631,
+    "sha256": "b83f2ccf6a603a1c1ae54d2db3bd44eeb8efec19b7a5cdfb3bf474dc3e8b9858"
   },
   {
     "path": "src/vba/modules.json",
-    "bytes": 2888,
-    "sha256": "dfb925b230e5b9c790b43e9c819da17ee7c2f8dd52a971da111be4bb7c2b4bc4"
+    "bytes": 3002,
+    "sha256": "b42db92344775b8fa5c6db973d4417d851e9929529c4823deb78a5c913d21533"
   },
   {
     "path": "tests/build_workbook_ui.ps1",
-    "bytes": 3561,
-    "sha256": "8ef869cfe94e5c76d7a2cf26538635b826136cd924e726f6d6ade48d44e755d1"
+    "bytes": 4195,
+    "sha256": "ff0d613c690007df7b410cba57ff6b679fa00dc96c46c606f0629a51753f7928"
   },
   {
     "path": "tests/fixtures/smoke_expected.json",
@@ -3075,6 +3220,11 @@
     "sha256": "56bdf97f79533e80ecb29a13be9e44ef7ec1583be32a0fb7e3332d3fdb03bc38"
   },
   {
+    "path": "tests/inspect_workbook_ui.ps1",
+    "bytes": 2077,
+    "sha256": "5546e164cadddf509593717e075b5adc97ae381eb334084f56a1a9da58b48bdd"
+  },
+  {
     "path": "tests/inspect_workbook_ui.py",
     "bytes": 5827,
     "sha256": "970d80c91cc874b5a34f77d1b394bf530e711d743cec63f004494ff0f3da6835"
@@ -3205,6 +3355,11 @@
     "sha256": "461383aaf3b308f4a0c55826606d458a972387e93e57c9a4c12a0210775b4b61"
   },
   {
+    "path": "tests/native/build_combined_probes.ps1",
+    "bytes": 3084,
+    "sha256": "6ba1d7fad71489eab632104039caf17b88298f1836c4c5c782467eb1121e4973"
+  },
+  {
     "path": "tests/native/build_element.ps1",
     "bytes": 6506,
     "sha256": "95c2720c1ea11bb643d486a48ea85a124d7f1bd41ad8fb9e9c965861e37d6d02"
@@ -3295,6 +3450,11 @@
     "sha256": "3f9f8f5b46f33eb5867cbf5899d7d0d819d10b1e0e70e2dc521e3f884d06f666"
   },
   {
+    "path": "tests/native/compare_combined_results.py",
+    "bytes": 2189,
+    "sha256": "21bb5d55b62ac5236a778946c98e3098179fd54700fc03782193906e365972c3"
+  },
+  {
     "path": "tests/native/compare_modes.py",
     "bytes": 1278,
     "sha256": "a33fd6cd5c620f3612e870cd70e58de85d60b0853aa8065677a07a43d60d4e15"
@@ -3341,8 +3501,8 @@
   },
   {
     "path": "tests/native/make_native_workbook.ps1",
-    "bytes": 4464,
-    "sha256": "450dd39cb7647168b49370681f884fa8e063053864c860b03f241e8df0d4cfb9"
+    "bytes": 4627,
+    "sha256": "2ef235a4c7d6c12993f7543150d157d528b49feee87d9861208187a27bd67f1f"
   },
   {
     "path": "tests/native/measure_event_buffer.ps1",
@@ -3386,8 +3546,8 @@
   },
   {
     "path": "tests/native/run_native_compare.ps1",
-    "bytes": 16845,
-    "sha256": "78daa27c07e5a5146c52ca35f374b085318ad0d15ae09ea496b6ea4b15797e82"
+    "bytes": 17145,
+    "sha256": "2c526ab32d1e779674c6fc0cafff2aa05844618eeb635c3d2086d0700bc6f0b7"
   },
   {
     "path": "tests/native/summarize_element.py",
@@ -3438,6 +3598,16 @@
     "path": "tests/native/test_assembly.py",
     "bytes": 4789,
     "sha256": "56055fb29f02c484381fc9433c1aa28fa03d03a7262fde6764e5660ddb47cf75"
+  },
+  {
+    "path": "tests/native/test_combined_exports.ps1",
+    "bytes": 1381,
+    "sha256": "65022e682a28eac2388a9945cdb5ad5595dcb46f204dc4d945beebfa0bfc442c"
+  },
+  {
+    "path": "tests/native/test_combined_runtime.py",
+    "bytes": 1360,
+    "sha256": "73dde42ae046f5381aecc7cee84d1b9b2dc7f93708850b6f5219eee8e298a1e1"
   },
   {
     "path": "tests/native/test_element_exact.py",
@@ -3560,14 +3730,19 @@
     "sha256": "38b45931027e583f19bde7593434f195fea6e9203f0bd44e48003ea8bc4d83aa"
   },
   {
+    "path": "tests/test_shape_mesh_workflow.ps1",
+    "bytes": 12181,
+    "sha256": "f4d5acdb5812b0974d849898c82e3d4ab3778637e70cd7f0e624bfe9e6332125"
+  },
+  {
     "path": "tests/test_viewer_display_settings.ps1",
-    "bytes": 9793,
-    "sha256": "154d19a24cdca5617d453ebee625554b7d2b60485a6c68cc0fb519e8f388ec1e"
+    "bytes": 10375,
+    "sha256": "6817fc54ec0615b8d63ff0235e75fe7c18a8c6896050e72e63acea76d4e3d9b4"
   },
   {
     "path": "tests/test_workbook_inputs.ps1",
-    "bytes": 12775,
-    "sha256": "8e55de3895bfc7f127f2c5cccbb5b27edea8cb3126a766cc65261d7f45259d33"
+    "bytes": 12808,
+    "sha256": "73b7d64b1d0331dc6af6c804696b34e5f12e9de403a99a4ae109f320270e22b2"
   },
   {
     "path": "tests/test_workbook_ui_persistence.ps1",
@@ -3641,8 +3816,8 @@
   },
   {
     "path": "workbook/SoilFEM_UI_20261020.zip",
-    "bytes": 2993894,
-    "sha256": "7db56b5f91b9b2672ee7494966ab7f8823f7321da200ca4422c708deda452fb0"
+    "bytes": 2974710,
+    "sha256": "9ac05fd4f4b6eca0c5dbf4f8a32b2b357342aa31274bd7e2c4d87381122d569b"
   },
   {
     "path": "workbook/inco_assembly_20261020/2DSoilFEM_inco_assembly_20261020.xlsm",
@@ -3856,28 +4031,23 @@
   },
   {
     "path": "workbook/ui_20261020/2DSoilFEM_ui_20261020.xlsm",
-    "bytes": 3149007,
-    "sha256": "91915d4719ac660f0f8a9da07e4e00d0077dfc061f85c023d9d27f2d1fa31766"
+    "bytes": 3131506,
+    "sha256": "768f75aa877b52b122f0691557cd2b777d0dd008e03d51b9dde88a9997cd7e12"
   },
   {
     "path": "workbook/ui_20261020/BUILD_RECORD.json",
-    "bytes": 741,
-    "sha256": "e860528a10236fc307f162e6a23d795e3775c4494574534df4660f9fc7631692"
+    "bytes": 1282,
+    "sha256": "19a4c571908dc4ff0090139623ece45949b7a6ef017823d870030b99866f53ca"
   },
   {
     "path": "workbook/ui_20261020/README.txt",
-    "bytes": 2714,
-    "sha256": "37b33c58d7d2f78fbe4d6be03a3bb0e8ccc05e697a53517b056b5453061c0492"
-  },
-  {
-    "path": "workbook/ui_20261020/soilfem_mat_x64.dll",
-    "bytes": 46592,
-    "sha256": "f11c8f4bb5a5f27778de9dbcfa88e9b6bb963806720e1694c26328c32add58cd"
+    "bytes": 3084,
+    "sha256": "cd171cf59512c53cbac93da899ee5fe1412eab7b3cc81a2ba9bcf0b047a98ec2"
   },
   {
     "path": "workbook/ui_20261020/soilfem_native_x64.dll",
-    "bytes": 126464,
-    "sha256": "be1bf49d61d4172ceb2bcd0a7c8850718dbbf4f01eb68e9f42bfd5afb66482b7"
+    "bytes": 170496,
+    "sha256": "ad5c2ae81512ba8e977002415a6a5339b621c00a1bbabe5092559f8a7f9e0797"
   },
   {
     "path": "workbook/validation/literature_cases_20261009.zip",
