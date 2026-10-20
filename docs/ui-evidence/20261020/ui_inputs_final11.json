@@ -1,0 +1,4073 @@
+{
+  "book": "tests\\tmp\\ui_reorg\\build11\\2DSoilFEM_ui_20261020.xlsm",
+  "copy": "tests\\tmp\\workbook_inputs\\2DSoilFEM_ui_20261020_test.xlsm",
+  "checks": [
+    {
+      "name": "recommended settings validate",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "メッシュ設定!F9=MESH_MATERIAL"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "メッシュ設定!MESH_MATERIAL"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "MESH_MATERIAL"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "MESH_MATERIAL"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "MESH_MATERIAL"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "メッシュ設定!F10=MESH_BC_BOTTOM"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "メッシュ設定!MESH_BC_BOTTOM"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "MESH_BC_BOTTOM"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "MESH_BC_BOTTOM"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "MESH_BC_BOTTOM"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "メッシュ設定!F11=MESH_BC_LEFT"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "メッシュ設定!MESH_BC_LEFT"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "MESH_BC_LEFT"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "MESH_BC_LEFT"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "MESH_BC_LEFT"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "メッシュ設定!F12=MESH_BC_RIGHT"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "メッシュ設定!MESH_BC_RIGHT"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "MESH_BC_RIGHT"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "MESH_BC_RIGHT"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "MESH_BC_RIGHT"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "メッシュ設定!F13=MESH_BC_TOP"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "メッシュ設定!MESH_BC_TOP"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "MESH_BC_TOP"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "MESH_BC_TOP"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "MESH_BC_TOP"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "メッシュ設定!F14=MESH_BC_PIN_CORNER"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "メッシュ設定!MESH_BC_PIN_CORNER"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "MESH_BC_PIN_CORNER"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "MESH_BC_PIN_CORNER"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "MESH_BC_PIN_CORNER"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "メッシュ設定!F17=MESH_POINT1_X"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "メッシュ設定!MESH_POINT1_X"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "MESH_POINT1_X"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "MESH_POINT1_X"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "MESH_POINT1_X"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "メッシュ設定!F18=MESH_POINT1_Y"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "メッシュ設定!MESH_POINT1_Y"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "MESH_POINT1_Y"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "MESH_POINT1_Y"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "MESH_POINT1_Y"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "メッシュ設定!F19=MESH_POINT2_X"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "メッシュ設定!MESH_POINT2_X"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "MESH_POINT2_X"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "MESH_POINT2_X"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "MESH_POINT2_X"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "メッシュ設定!F20=MESH_POINT2_Y"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "メッシュ設定!MESH_POINT2_Y"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "MESH_POINT2_Y"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "MESH_POINT2_Y"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "MESH_POINT2_Y"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "メッシュ設定!F21=MESH_POINT3_X"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "メッシュ設定!MESH_POINT3_X"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "MESH_POINT3_X"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "MESH_POINT3_X"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "MESH_POINT3_X"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "メッシュ設定!F22=MESH_POINT3_Y"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "メッシュ設定!MESH_POINT3_Y"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "MESH_POINT3_Y"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "MESH_POINT3_Y"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "MESH_POINT3_Y"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "メッシュ設定!F23=MESH_POINT4_X"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "メッシュ設定!MESH_POINT4_X"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "MESH_POINT4_X"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "MESH_POINT4_X"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "MESH_POINT4_X"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "メッシュ設定!F24=MESH_POINT4_Y"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "メッシュ設定!MESH_POINT4_Y"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "MESH_POINT4_Y"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "MESH_POINT4_Y"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "MESH_POINT4_Y"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "メッシュ設定!F25=MESH_NX"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "メッシュ設定!MESH_NX"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "MESH_NX"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "MESH_NX"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "MESH_NX"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "メッシュ設定!F26=MESH_NY"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "メッシュ設定!MESH_NY"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "MESH_NY"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "MESH_NY"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "MESH_NY"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "メッシュ設定!F29=MESH_GEN_COMPARE"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "メッシュ設定!MESH_GEN_COMPARE"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "MESH_GEN_COMPARE"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "MESH_GEN_COMPARE"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "MESH_GEN_COMPARE"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "解析設定!F9=WEIGHT_MODE"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "解析設定!WEIGHT_MODE"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "WEIGHT_MODE"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "WEIGHT_MODE"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "WEIGHT_MODE"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "解析設定!F10=FLOW_POLICY"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "解析設定!FLOW_POLICY"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "FLOW_POLICY"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "FLOW_POLICY"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "FLOW_POLICY"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "解析設定!F11=Q8_HOURGLASS_FACTOR"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "解析設定!Q8_HOURGLASS_FACTOR"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "Q8_HOURGLASS_FACTOR"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "Q8_HOURGLASS_FACTOR"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "Q8_HOURGLASS_FACTOR"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "解析設定!F12=RCM_POLICY"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "解析設定!RCM_POLICY"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "RCM_POLICY"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "RCM_POLICY"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "RCM_POLICY"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "解析設定!F15=SRM_FMAX"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "解析設定!SRM_FMAX"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "SRM_FMAX"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "SRM_FMAX"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "SRM_FMAX"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "解析設定!F16=SRM_TOL"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "解析設定!SRM_TOL"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "SRM_TOL"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "SRM_TOL"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "SRM_TOL"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "解析設定!F17=SRM_PSI_POLICY"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "解析設定!SRM_PSI_POLICY"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "SRM_PSI_POLICY"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "SRM_PSI_POLICY"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "SRM_PSI_POLICY"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "解析設定!F18=SRM_MODE"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "解析設定!SRM_MODE"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "SRM_MODE"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "SRM_MODE"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "SRM_MODE"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "解析設定!F19=SRM_FIXED_FS"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "解析設定!SRM_FIXED_FS"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "SRM_FIXED_FS"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "SRM_FIXED_FS"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "SRM_FIXED_FS"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "高速化設定!F9=NATIVE_DLL"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "高速化設定!NATIVE_DLL"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "NATIVE_DLL"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "NATIVE_DLL"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "NATIVE_DLL"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "高速化設定!F10=NATIVE_PRECISION"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "高速化設定!NATIVE_PRECISION"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "NATIVE_PRECISION"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "NATIVE_PRECISION"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "NATIVE_PRECISION"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "高速化設定!F11=NATIVE_STATE_COPY"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "高速化設定!NATIVE_STATE_COPY"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "NATIVE_STATE_COPY"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "NATIVE_STATE_COPY"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "NATIVE_STATE_COPY"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "高速化設定!F12=NATIVE_ASSEMBLY"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "高速化設定!NATIVE_ASSEMBLY"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "NATIVE_ASSEMBLY"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "NATIVE_ASSEMBLY"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "NATIVE_ASSEMBLY"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "高速化設定!F13=NATIVE_GMRES_SIMD"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "高速化設定!NATIVE_GMRES_SIMD"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "NATIVE_GMRES_SIMD"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "NATIVE_GMRES_SIMD"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "NATIVE_GMRES_SIMD"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "高速化設定!F14=NATIVE_GMRES_TUNED"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "高速化設定!NATIVE_GMRES_TUNED"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "NATIVE_GMRES_TUNED"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "NATIVE_GMRES_TUNED"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "NATIVE_GMRES_TUNED"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "高速化設定!F15=NATIVE_GMRES_PREPARED"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "高速化設定!NATIVE_GMRES_PREPARED"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "NATIVE_GMRES_PREPARED"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "NATIVE_GMRES_PREPARED"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "NATIVE_GMRES_PREPARED"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "高速化設定!F16=IO_FAST_PATH"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "高速化設定!IO_FAST_PATH"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "IO_FAST_PATH"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "IO_FAST_PATH"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "IO_FAST_PATH"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "高速化設定!F17=EVENT_LOG_FAST"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "高速化設定!EVENT_LOG_FAST"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "EVENT_LOG_FAST"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "EVENT_LOG_FAST"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "EVENT_LOG_FAST"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "高速化設定!F20=ACCEL_ADAPTIVE"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "高速化設定!ACCEL_ADAPTIVE"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "ACCEL_ADAPTIVE"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "ACCEL_ADAPTIVE"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "ACCEL_ADAPTIVE"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "高速化設定!F21=ACCEL_V1_PREDICTOR"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "高速化設定!ACCEL_V1_PREDICTOR"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "ACCEL_V1_PREDICTOR"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "ACCEL_V1_PREDICTOR"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "ACCEL_V1_PREDICTOR"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "高速化設定!F22=ACCEL_V2A_REUSE"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "高速化設定!ACCEL_V2A_REUSE"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "ACCEL_V2A_REUSE"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "ACCEL_V2A_REUSE"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "ACCEL_V2A_REUSE"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "高速化設定!F23=ACCEL_V2B_COST"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "高速化設定!ACCEL_V2B_COST"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "ACCEL_V2B_COST"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "ACCEL_V2B_COST"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "ACCEL_V2B_COST"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "高速化設定!F24=ACCEL_V3_COST_SEARCH"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "高速化設定!ACCEL_V3_COST_SEARCH"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "ACCEL_V3_COST_SEARCH"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "ACCEL_V3_COST_SEARCH"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "ACCEL_V3_COST_SEARCH"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "高速化設定!F25=ACCEL_V4_ANDERSON"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "高速化設定!ACCEL_V4_ANDERSON"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "ACCEL_V4_ANDERSON"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "ACCEL_V4_ANDERSON"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "ACCEL_V4_ANDERSON"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "高速化設定!F26=ACCEL_V5_GMRES_LU"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "高速化設定!ACCEL_V5_GMRES_LU"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "ACCEL_V5_GMRES_LU"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "ACCEL_V5_GMRES_LU"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "ACCEL_V5_GMRES_LU"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "高速化設定!F27=ACCEL_STEP_RECOVERY"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "高速化設定!ACCEL_STEP_RECOVERY"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "ACCEL_STEP_RECOVERY"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "ACCEL_STEP_RECOVERY"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "ACCEL_STEP_RECOVERY"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "高速化設定!F28=ACCEL_STEP_FRESH_LU"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "高速化設定!ACCEL_STEP_FRESH_LU"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "ACCEL_STEP_FRESH_LU"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "ACCEL_STEP_FRESH_LU"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "ACCEL_STEP_FRESH_LU"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "高速化設定!F29=ACCEL_TRACE"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "高速化設定!ACCEL_TRACE"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "ACCEL_TRACE"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "ACCEL_TRACE"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "ACCEL_TRACE"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "高速化設定!F30=ACCEL_PREDICT_BETA"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "高速化設定!ACCEL_PREDICT_BETA"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "ACCEL_PREDICT_BETA"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "ACCEL_PREDICT_BETA"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "ACCEL_PREDICT_BETA"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "高速化設定!F31=ACCEL_PREDICT_MAX_RATIO"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "高速化設定!ACCEL_PREDICT_MAX_RATIO"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "ACCEL_PREDICT_MAX_RATIO"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "ACCEL_PREDICT_MAX_RATIO"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "ACCEL_PREDICT_MAX_RATIO"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "高速化設定!F32=ACCEL_TANGENT_CHANGE"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "高速化設定!ACCEL_TANGENT_CHANGE"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "ACCEL_TANGENT_CHANGE"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "ACCEL_TANGENT_CHANGE"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "ACCEL_TANGENT_CHANGE"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "出力・表示!F9=OUTPUT_STAGE_MODE"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "出力・表示!OUTPUT_STAGE_MODE"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "OUTPUT_STAGE_MODE"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "OUTPUT_STAGE_MODE"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "OUTPUT_STAGE_MODE"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "出力・表示!F10=OUTPUT_INACTIVE_ELEMENTS"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "出力・表示!OUTPUT_INACTIVE_ELEMENTS"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "OUTPUT_INACTIVE_ELEMENTS"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "OUTPUT_INACTIVE_ELEMENTS"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "OUTPUT_INACTIVE_ELEMENTS"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "出力・表示!F11=DEBUG_MODE"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "出力・表示!DEBUG_MODE"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "DEBUG_MODE"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "DEBUG_MODE"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "DEBUG_MODE"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "出力・表示!F12=DEBUG_FLUSH"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "出力・表示!DEBUG_FLUSH"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "DEBUG_FLUSH"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "DEBUG_FLUSH"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "DEBUG_FLUSH"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "出力・表示!F13=EXPORT_MODE"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "出力・表示!EXPORT_MODE"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "EXPORT_MODE"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "EXPORT_MODE"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "EXPORT_MODE"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "出力・表示!F14=EXPORT_LOAD"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "出力・表示!EXPORT_LOAD"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "EXPORT_LOAD"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "EXPORT_LOAD"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "EXPORT_LOAD"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "出力・表示!F17=VIEW_DISP_SCALE"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "出力・表示!VIEW_DISP_SCALE"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "VIEW_DISP_SCALE"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "VIEW_DISP_SCALE"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "VIEW_DISP_SCALE"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "出力・表示!F18=VIEW_COLOR_RESULT"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "出力・表示!VIEW_COLOR_RESULT"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "VIEW_COLOR_RESULT"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "VIEW_COLOR_RESULT"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "VIEW_COLOR_RESULT"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "出力・表示!F19=VIEW_SCALE_MODE"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "出力・表示!VIEW_SCALE_MODE"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "VIEW_SCALE_MODE"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "VIEW_SCALE_MODE"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "VIEW_SCALE_MODE"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "出力・表示!F20=VIEW_RESULT_SOURCE"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "出力・表示!VIEW_RESULT_SOURCE"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "VIEW_RESULT_SOURCE"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "VIEW_RESULT_SOURCE"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "VIEW_RESULT_SOURCE"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "出力・表示!F21=VIEW_DETAIL_MODE"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "出力・表示!VIEW_DETAIL_MODE"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "VIEW_DETAIL_MODE"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "VIEW_DETAIL_MODE"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "VIEW_DETAIL_MODE"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "出力・表示!F22=VIEW_SCALE"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "出力・表示!VIEW_SCALE"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "VIEW_SCALE"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "VIEW_SCALE"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "VIEW_SCALE"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "出力・表示!F23=VIEW_MIN_X"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "出力・表示!VIEW_MIN_X"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "VIEW_MIN_X"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "VIEW_MIN_X"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "VIEW_MIN_X"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "出力・表示!F24=VIEW_MAX_Y"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "出力・表示!VIEW_MAX_Y"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "VIEW_MAX_Y"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "VIEW_MAX_Y"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "VIEW_MAX_Y"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "詳細設定!F9=SOLVER"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "詳細設定!SOLVER"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "SOLVER"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "SOLVER"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "SOLVER"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "詳細設定!F10=BAND_LU_KERNEL"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "詳細設定!BAND_LU_KERNEL"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "BAND_LU_KERNEL"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "BAND_LU_KERNEL"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "BAND_LU_KERNEL"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "詳細設定!F11=PHYSICAL_FAILURE_MODE"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "詳細設定!PHYSICAL_FAILURE_MODE"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "PHYSICAL_FAILURE_MODE"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "PHYSICAL_FAILURE_MODE"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "PHYSICAL_FAILURE_MODE"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "詳細設定!F14=MESH_QUALITY_MIN_AREA_RATIO"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "詳細設定!MESH_QUALITY_MIN_AREA_RATIO"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "MESH_QUALITY_MIN_AREA_RATIO"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "MESH_QUALITY_MIN_AREA_RATIO"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "MESH_QUALITY_MIN_AREA_RATIO"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "詳細設定!F15=MESH_QUALITY_MIN_JACOBIAN_RATIO"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "詳細設定!MESH_QUALITY_MIN_JACOBIAN_RATIO"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "MESH_QUALITY_MIN_JACOBIAN_RATIO"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "MESH_QUALITY_MIN_JACOBIAN_RATIO"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "MESH_QUALITY_MIN_JACOBIAN_RATIO"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "詳細設定!F16=MESH_QUALITY_MIN_ANGLE_DEG"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "詳細設定!MESH_QUALITY_MIN_ANGLE_DEG"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "MESH_QUALITY_MIN_ANGLE_DEG"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "MESH_QUALITY_MIN_ANGLE_DEG"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "MESH_QUALITY_MIN_ANGLE_DEG"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "詳細設定!F17=MESH_QUALITY_MAX_ANGLE_DEG"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "詳細設定!MESH_QUALITY_MAX_ANGLE_DEG"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "MESH_QUALITY_MAX_ANGLE_DEG"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "MESH_QUALITY_MAX_ANGLE_DEG"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "MESH_QUALITY_MAX_ANGLE_DEG"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "詳細設定!F18=MESH_QUALITY_MAX_ASPECT_RATIO"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "詳細設定!MESH_QUALITY_MAX_ASPECT_RATIO"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "MESH_QUALITY_MAX_ASPECT_RATIO"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "MESH_QUALITY_MAX_ASPECT_RATIO"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "MESH_QUALITY_MAX_ASPECT_RATIO"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "詳細設定!F21=MESH_REPAIR_MAX_ITERATIONS"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "詳細設定!MESH_REPAIR_MAX_ITERATIONS"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "MESH_REPAIR_MAX_ITERATIONS"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "MESH_REPAIR_MAX_ITERATIONS"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "MESH_REPAIR_MAX_ITERATIONS"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "詳細設定!F22=MESH_REPAIR_DAMPING"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "詳細設定!MESH_REPAIR_DAMPING"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "MESH_REPAIR_DAMPING"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "MESH_REPAIR_DAMPING"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "MESH_REPAIR_DAMPING"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "詳細設定!F23=MESH_REPAIR_IMPROVEMENT_TOLERANCE"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "詳細設定!MESH_REPAIR_IMPROVEMENT_TOLERANCE"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "MESH_REPAIR_IMPROVEMENT_TOLERANCE"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "MESH_REPAIR_IMPROVEMENT_TOLERANCE"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "MESH_REPAIR_IMPROVEMENT_TOLERANCE"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "詳細設定!F24=MESH_REPAIR_ANGLE_ITERATIONS"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "詳細設定!MESH_REPAIR_ANGLE_ITERATIONS"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "MESH_REPAIR_ANGLE_ITERATIONS"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "MESH_REPAIR_ANGLE_ITERATIONS"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "MESH_REPAIR_ANGLE_ITERATIONS"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "詳細設定!F25=MESH_REPAIR_TERRAIN_COMPARE"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "詳細設定!MESH_REPAIR_TERRAIN_COMPARE"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "MESH_REPAIR_TERRAIN_COMPARE"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "MESH_REPAIR_TERRAIN_COMPARE"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "MESH_REPAIR_TERRAIN_COMPARE"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "詳細設定!F26=MESH_TERRAIN_COUNT_MIN"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "詳細設定!MESH_TERRAIN_COUNT_MIN"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "MESH_TERRAIN_COUNT_MIN"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "MESH_TERRAIN_COUNT_MIN"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "MESH_TERRAIN_COUNT_MIN"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "詳細設定!F27=MESH_TERRAIN_COUNT_MAX"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "詳細設定!MESH_TERRAIN_COUNT_MAX"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "MESH_TERRAIN_COUNT_MAX"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "MESH_TERRAIN_COUNT_MAX"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "MESH_TERRAIN_COUNT_MAX"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "詳細設定!F28=ADAPT_MAX_ELEMENT_RATIO"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "詳細設定!ADAPT_MAX_ELEMENT_RATIO"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "ADAPT_MAX_ELEMENT_RATIO"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "ADAPT_MAX_ELEMENT_RATIO"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "ADAPT_MAX_ELEMENT_RATIO"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "詳細設定!F29=ADAPT_MARK_FRACTION"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "詳細設定!ADAPT_MARK_FRACTION"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "ADAPT_MARK_FRACTION"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "ADAPT_MARK_FRACTION"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "ADAPT_MARK_FRACTION"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "詳細設定!F32=MESH_GEN_LAST_METHOD"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "詳細設定!MESH_GEN_LAST_METHOD"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "MESH_GEN_LAST_METHOD"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "MESH_GEN_LAST_METHOD"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "MESH_GEN_LAST_METHOD"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "詳細設定!F33=MESH_GEN_LAST_COMPARE"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "詳細設定!MESH_GEN_LAST_COMPARE"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "MESH_GEN_LAST_COMPARE"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "MESH_GEN_LAST_COMPARE"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "MESH_GEN_LAST_COMPARE"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "詳細設定!F34=BAND_LU_BENCH"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "詳細設定!BAND_LU_BENCH"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "BAND_LU_BENCH"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "BAND_LU_BENCH"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "BAND_LU_BENCH"
+    },
+    {
+      "name": "UI keys unique",
+      "status": "PASS",
+      "detail": "詳細設定!F35=BAND_LU_BENCH_N"
+    },
+    {
+      "name": "recommended help present",
+      "status": "PASS",
+      "detail": "詳細設定!BAND_LU_BENCH_N"
+    },
+    {
+      "name": "legacy key exists",
+      "status": "PASS",
+      "detail": "BAND_LU_BENCH_N"
+    },
+    {
+      "name": "legacy binding formula",
+      "status": "PASS",
+      "detail": "BAND_LU_BENCH_N"
+    },
+    {
+      "name": "legacy formula targets exact input",
+      "status": "PASS",
+      "detail": "BAND_LU_BENCH_N"
+    },
+    {
+      "name": "native key exposed",
+      "status": "PASS",
+      "detail": "NATIVE_DLL"
+    },
+    {
+      "name": "native key exposed",
+      "status": "PASS",
+      "detail": "NATIVE_PRECISION"
+    },
+    {
+      "name": "native key exposed",
+      "status": "PASS",
+      "detail": "NATIVE_STATE_COPY"
+    },
+    {
+      "name": "native key exposed",
+      "status": "PASS",
+      "detail": "NATIVE_ASSEMBLY"
+    },
+    {
+      "name": "native key exposed",
+      "status": "PASS",
+      "detail": "NATIVE_GMRES_SIMD"
+    },
+    {
+      "name": "native key exposed",
+      "status": "PASS",
+      "detail": "NATIVE_GMRES_TUNED"
+    },
+    {
+      "name": "native key exposed",
+      "status": "PASS",
+      "detail": "NATIVE_GMRES_PREPARED"
+    },
+    {
+      "name": "native key exposed",
+      "status": "PASS",
+      "detail": "IO_FAST_PATH"
+    },
+    {
+      "name": "native key exposed",
+      "status": "PASS",
+      "detail": "EVENT_LOG_FAST"
+    },
+    {
+      "name": "native DLL recommended AUTO",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "native precision recommended AUTO",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "native flag recommended 1",
+      "status": "PASS",
+      "detail": "NATIVE_STATE_COPY"
+    },
+    {
+      "name": "native flag recommended 1",
+      "status": "PASS",
+      "detail": "NATIVE_ASSEMBLY"
+    },
+    {
+      "name": "native flag recommended 1",
+      "status": "PASS",
+      "detail": "NATIVE_GMRES_SIMD"
+    },
+    {
+      "name": "native flag recommended 1",
+      "status": "PASS",
+      "detail": "NATIVE_GMRES_TUNED"
+    },
+    {
+      "name": "native flag recommended 1",
+      "status": "PASS",
+      "detail": "NATIVE_GMRES_PREPARED"
+    },
+    {
+      "name": "native flag recommended 1",
+      "status": "PASS",
+      "detail": "IO_FAST_PATH"
+    },
+    {
+      "name": "native flag recommended 1",
+      "status": "PASS",
+      "detail": "EVENT_LOG_FAST"
+    },
+    {
+      "name": "enum accepted",
+      "status": "PASS",
+      "detail": "FLOW_POLICY=INCONSISTENT"
+    },
+    {
+      "name": "enum accepted",
+      "status": "PASS",
+      "detail": "FLOW_POLICY=DAVIS"
+    },
+    {
+      "name": "enum accepted",
+      "status": "PASS",
+      "detail": "RCM_POLICY=AUTO"
+    },
+    {
+      "name": "enum accepted",
+      "status": "PASS",
+      "detail": "RCM_POLICY=ON"
+    },
+    {
+      "name": "enum accepted",
+      "status": "PASS",
+      "detail": "RCM_POLICY=OFF"
+    },
+    {
+      "name": "enum accepted",
+      "status": "PASS",
+      "detail": "NATIVE_DLL=AUTO"
+    },
+    {
+      "name": "enum accepted",
+      "status": "PASS",
+      "detail": "NATIVE_DLL=BAND"
+    },
+    {
+      "name": "enum accepted",
+      "status": "PASS",
+      "detail": "NATIVE_DLL=OFF"
+    },
+    {
+      "name": "enum accepted",
+      "status": "PASS",
+      "detail": "NATIVE_PRECISION=STRICT"
+    },
+    {
+      "name": "enum accepted",
+      "status": "PASS",
+      "detail": "NATIVE_PRECISION=SSE2"
+    },
+    {
+      "name": "enum accepted",
+      "status": "PASS",
+      "detail": "NATIVE_PRECISION=AUTO"
+    },
+    {
+      "name": "enum accepted",
+      "status": "PASS",
+      "detail": "NATIVE_PRECISION=AVX2"
+    },
+    {
+      "name": "invalid native enum rejected",
+      "status": "PASS",
+      "detail": "ERROR|-2147217684|高速化設定!C9 (NATIVE_DLL) の値が不正です。 value=ON key=高速化設定!C9"
+    },
+    {
+      "name": "numeric validation and runtime agree",
+      "status": "PASS",
+      "detail": "MESH_NX=1 result=PASS validation=True"
+    },
+    {
+      "name": "numeric validation and runtime agree",
+      "status": "PASS",
+      "detail": "MESH_NX=0 result=ERROR|-2147217683|メッシュ設定!C25 (MESH_NX) の値が範囲外または形式不正です。 validation=False"
+    },
+    {
+      "name": "numeric validation and runtime agree",
+      "status": "PASS",
+      "detail": "MESH_NX=1.5 result=ERROR|-2147217683|メッシュ設定!C25 (MESH_NX) の値が範囲外または形式不正です。 validation=False"
+    },
+    {
+      "name": "numeric validation and runtime agree",
+      "status": "PASS",
+      "detail": "MESH_NX= result=ERROR|-2147217683|メッシュ設定!C25 (MESH_NX) の値が範囲外または形式不正です。 validation=False"
+    },
+    {
+      "name": "numeric validation and runtime agree",
+      "status": "PASS",
+      "detail": "MESH_NX=2147483648 result=ERROR|-2147217683|メッシュ設定!C25 (MESH_NX) の値が範囲外または形式不正です。 validation=False"
+    },
+    {
+      "name": "numeric validation and runtime agree",
+      "status": "PASS",
+      "detail": "Q8_HOURGLASS_FACTOR=0 result=PASS validation=True"
+    },
+    {
+      "name": "numeric validation and runtime agree",
+      "status": "PASS",
+      "detail": "Q8_HOURGLASS_FACTOR=1 result=PASS validation=True"
+    },
+    {
+      "name": "numeric validation and runtime agree",
+      "status": "PASS",
+      "detail": "Q8_HOURGLASS_FACTOR=-1 result=ERROR|-2147217683|解析設定!C11 (Q8_HOURGLASS_FACTOR) の値が範囲外または形式不正です。 validation=False"
+    },
+    {
+      "name": "numeric validation and runtime agree",
+      "status": "PASS",
+      "detail": "Q8_HOURGLASS_FACTOR=1.1 result=ERROR|-2147217683|解析設定!C11 (Q8_HOURGLASS_FACTOR) の値が範囲外または形式不正です。 validation=False"
+    },
+    {
+      "name": "numeric validation and runtime agree",
+      "status": "PASS",
+      "detail": "SRM_TOL=0 result=ERROR|-2147217683|解析設定!C16 (SRM_TOL) の値が範囲外または形式不正です。 validation=False"
+    },
+    {
+      "name": "numeric validation and runtime agree",
+      "status": "PASS",
+      "detail": "SRM_TOL=0.0125 result=PASS validation=True"
+    },
+    {
+      "name": "numeric validation and runtime agree",
+      "status": "PASS",
+      "detail": "VIEW_DISP_SCALE=0 result=PASS validation=True"
+    },
+    {
+      "name": "numeric validation and runtime agree",
+      "status": "PASS",
+      "detail": "DEBUG_FLUSH=0 result=PASS validation=True"
+    },
+    {
+      "name": "numeric validation and runtime agree",
+      "status": "PASS",
+      "detail": "MESH_POINT1_X=-2.5 result=PASS validation=True"
+    },
+    {
+      "name": "numeric validation and runtime agree",
+      "status": "PASS",
+      "detail": "MESH_POINT1_Y=-3 result=PASS validation=True"
+    },
+    {
+      "name": "numeric validation and runtime agree",
+      "status": "PASS",
+      "detail": "NATIVE_STATE_COPY=0 result=PASS validation=True"
+    },
+    {
+      "name": "numeric validation and runtime agree",
+      "status": "PASS",
+      "detail": "NATIVE_STATE_COPY=1 result=PASS validation=True"
+    },
+    {
+      "name": "numeric validation and runtime agree",
+      "status": "PASS",
+      "detail": "NATIVE_STATE_COPY=0.5 result=ERROR|-2147217684|高速化設定!C11 (NATIVE_STATE_COPY) の値が不正です。 validation=False"
+    },
+    {
+      "name": "numeric validation and runtime agree",
+      "status": "PASS",
+      "detail": "MESH_NX=1 result=ERROR|-2147217683|メッシュ設定!C25 (MESH_NX) の値が範囲外または形式不正です。 validation=False"
+    },
+    {
+      "name": "numeric validation and runtime agree",
+      "status": "PASS",
+      "detail": "VIEW_COLOR_RESULT=99999 result=ERROR|-2147217683|出力・表示!C18 (VIEW_COLOR_RESULT) は表示量一覧の番号を指定してください。 validation=False"
+    },
+    {
+      "name": "numeric validation and runtime agree",
+      "status": "PASS",
+      "detail": "MESH_REPAIR_TERRAIN_COMPARE=0.5 result=ERROR|-2147217684|詳細設定!C25 (MESH_REPAIR_TERRAIN_COMPARE) の値が不正です。 validation=False"
+    },
+    {
+      "name": "numeric validation and runtime agree",
+      "status": "PASS",
+      "detail": "MESH_REPAIR_TERRAIN_COMPARE=0 result=PASS validation=True"
+    },
+    {
+      "name": "numeric validation and runtime agree",
+      "status": "PASS",
+      "detail": "MESH_REPAIR_TERRAIN_COMPARE=1 result=PASS validation=True"
+    },
+    {
+      "name": "formula error rejected",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "resume error value rejected with key",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "MESH_POINT2_Y"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "SRM_FMAX"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "RCM_POLICY"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "MESH_GEN_LAST_COMPARE"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "VIEW_DISP_SCALE"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "VIEW_SCALE_MODE"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "OUTPUT_STAGE_MODE"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "SRM_TOL"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "DEBUG_FLUSH"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "EXPORT_MODE"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "MESH_BC_RIGHT"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "IO_FAST_PATH"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "EVENT_LOG_FAST"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "BAND_LU_BENCH"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "MESH_BC_BOTTOM"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "MESH_MATERIAL"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "VIEW_SCALE"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "ACCEL_ADAPTIVE"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "MESH_REPAIR_IMPROVEMENT_TOLERANCE"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "ACCEL_TANGENT_CHANGE"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "NATIVE_GMRES_TUNED"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "ACCEL_STEP_RECOVERY"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "WEIGHT_MODE"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "MESH_TERRAIN_COUNT_MAX"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "ACCEL_V2B_COST"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "NATIVE_PRECISION"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "MESH_POINT3_X"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "MESH_NX"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "MESH_REPAIR_MAX_ITERATIONS"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "MESH_POINT1_Y"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "VIEW_COLOR_RESULT"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "NATIVE_STATE_COPY"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "BAND_LU_KERNEL"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "VIEW_DETAIL_MODE"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "DEBUG_MODE"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "NATIVE_DLL"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "NATIVE_GMRES_PREPARED"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "NATIVE_GMRES_SIMD"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "MESH_QUALITY_MIN_ANGLE_DEG"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "MESH_QUALITY_MAX_ANGLE_DEG"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "MESH_QUALITY_MAX_ASPECT_RATIO"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "MESH_GEN_COMPARE"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "MESH_POINT1_X"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "MESH_QUALITY_MIN_JACOBIAN_RATIO"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "ACCEL_V2A_REUSE"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "MESH_BC_LEFT"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "BAND_LU_BENCH_N"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "VIEW_MIN_X"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "SRM_MODE"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "ACCEL_TRACE"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "FLOW_POLICY"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "ACCEL_PREDICT_BETA"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "Q8_HOURGLASS_FACTOR"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "PHYSICAL_FAILURE_MODE"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "MESH_TERRAIN_COUNT_MIN"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "MESH_REPAIR_DAMPING"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "ACCEL_V5_GMRES_LU"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "NATIVE_ASSEMBLY"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "MESH_NY"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "MESH_POINT4_Y"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "ACCEL_STEP_FRESH_LU"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "MESH_QUALITY_MIN_AREA_RATIO"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "MESH_BC_PIN_CORNER"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "ACCEL_V3_COST_SEARCH"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "SRM_PSI_POLICY"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "ACCEL_PREDICT_MAX_RATIO"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "VIEW_MAX_Y"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "VIEW_RESULT_SOURCE"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "SRM_FIXED_FS"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "SOLVER"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "MESH_GEN_LAST_METHOD"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "MESH_POINT4_X"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "MESH_REPAIR_TERRAIN_COMPARE"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "MESH_POINT2_X"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "EXPORT_LOAD"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "ACCEL_V4_ANDERSON"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "MESH_BC_TOP"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "ACCEL_V1_PREDICTOR"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "ADAPT_MAX_ELEMENT_RATIO"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "MESH_POINT3_Y"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "OUTPUT_INACTIVE_ELEMENTS"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "ADAPT_MARK_FRACTION"
+    },
+    {
+      "name": "layout preserves setting",
+      "status": "PASS",
+      "detail": "MESH_REPAIR_ANGLE_ITERATIONS"
+    },
+    {
+      "name": "manual formula begins valid",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "manual setting formula has stale cached value before validation",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "validation recalculates manual formula and rejects new invalid value",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "recommended model validates",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "invalid model input rejected",
+      "status": "PASS",
+      "detail": "材料データ!B2"
+    },
+    {
+      "name": "invalid model input rejected",
+      "status": "PASS",
+      "detail": "材料データ!C2"
+    },
+    {
+      "name": "invalid model input rejected",
+      "status": "PASS",
+      "detail": "要素データ!B2"
+    },
+    {
+      "name": "invalid model input rejected",
+      "status": "PASS",
+      "detail": "節点データ!A3"
+    },
+    {
+      "name": "invalid model input rejected",
+      "status": "PASS",
+      "detail": "節点データ!D2"
+    },
+    {
+      "name": "duplicate geometry rejected",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "geometry legacy data unchanged after rejected input",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "メッシュ設定!C9"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "メッシュ設定!F9/G9"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "MESH_MATERIAL"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "メッシュ設定!C10"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "メッシュ設定!F10/G10"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "MESH_BC_BOTTOM"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "メッシュ設定!C11"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "メッシュ設定!F11/G11"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "MESH_BC_LEFT"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "メッシュ設定!C12"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "メッシュ設定!F12/G12"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "MESH_BC_RIGHT"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "メッシュ設定!C13"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "メッシュ設定!F13/G13"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "MESH_BC_TOP"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "メッシュ設定!C14"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "メッシュ設定!F14/G14"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "MESH_BC_PIN_CORNER"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "メッシュ設定!C17"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "メッシュ設定!F17/G17"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "MESH_POINT1_X"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "メッシュ設定!C18"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "メッシュ設定!F18/G18"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "MESH_POINT1_Y"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "メッシュ設定!C19"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "メッシュ設定!F19/G19"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "MESH_POINT2_X"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "メッシュ設定!C20"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "メッシュ設定!F20/G20"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "MESH_POINT2_Y"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "メッシュ設定!C21"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "メッシュ設定!F21/G21"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "MESH_POINT3_X"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "メッシュ設定!C22"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "メッシュ設定!F22/G22"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "MESH_POINT3_Y"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "メッシュ設定!C23"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "メッシュ設定!F23/G23"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "MESH_POINT4_X"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "メッシュ設定!C24"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "メッシュ設定!F24/G24"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "MESH_POINT4_Y"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "メッシュ設定!C25"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "メッシュ設定!F25/G25"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "MESH_NX"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "メッシュ設定!C26"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "メッシュ設定!F26/G26"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "MESH_NY"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "メッシュ設定!C29"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "メッシュ設定!F29/G29"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "MESH_GEN_COMPARE"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "解析設定!C9"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "解析設定!F9/G9"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "WEIGHT_MODE"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "解析設定!C10"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "解析設定!F10/G10"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "FLOW_POLICY"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "解析設定!C11"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "解析設定!F11/G11"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "Q8_HOURGLASS_FACTOR"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "解析設定!C12"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "解析設定!F12/G12"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "RCM_POLICY"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "解析設定!C15"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "解析設定!F15/G15"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "SRM_FMAX"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "解析設定!C16"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "解析設定!F16/G16"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "SRM_TOL"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "解析設定!C17"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "解析設定!F17/G17"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "SRM_PSI_POLICY"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "解析設定!C18"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "解析設定!F18/G18"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "SRM_MODE"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "解析設定!C19"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "解析設定!F19/G19"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "SRM_FIXED_FS"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "高速化設定!C9"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "高速化設定!F9/G9"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "NATIVE_DLL"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "高速化設定!C10"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "高速化設定!F10/G10"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "NATIVE_PRECISION"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "高速化設定!C11"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "高速化設定!F11/G11"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "NATIVE_STATE_COPY"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "高速化設定!C12"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "高速化設定!F12/G12"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "NATIVE_ASSEMBLY"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "高速化設定!C13"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "高速化設定!F13/G13"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "NATIVE_GMRES_SIMD"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "高速化設定!C14"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "高速化設定!F14/G14"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "NATIVE_GMRES_TUNED"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "高速化設定!C15"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "高速化設定!F15/G15"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "NATIVE_GMRES_PREPARED"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "高速化設定!C16"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "高速化設定!F16/G16"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "IO_FAST_PATH"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "高速化設定!C17"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "高速化設定!F17/G17"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "EVENT_LOG_FAST"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "高速化設定!C20"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "高速化設定!F20/G20"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "ACCEL_ADAPTIVE"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "高速化設定!C21"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "高速化設定!F21/G21"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "ACCEL_V1_PREDICTOR"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "高速化設定!C22"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "高速化設定!F22/G22"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "ACCEL_V2A_REUSE"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "高速化設定!C23"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "高速化設定!F23/G23"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "ACCEL_V2B_COST"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "高速化設定!C24"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "高速化設定!F24/G24"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "ACCEL_V3_COST_SEARCH"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "高速化設定!C25"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "高速化設定!F25/G25"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "ACCEL_V4_ANDERSON"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "高速化設定!C26"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "高速化設定!F26/G26"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "ACCEL_V5_GMRES_LU"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "高速化設定!C27"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "高速化設定!F27/G27"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "ACCEL_STEP_RECOVERY"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "高速化設定!C28"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "高速化設定!F28/G28"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "ACCEL_STEP_FRESH_LU"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "高速化設定!C29"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "高速化設定!F29/G29"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "ACCEL_TRACE"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "高速化設定!C30"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "高速化設定!F30/G30"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "ACCEL_PREDICT_BETA"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "高速化設定!C31"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "高速化設定!F31/G31"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "ACCEL_PREDICT_MAX_RATIO"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "高速化設定!C32"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "高速化設定!F32/G32"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "ACCEL_TANGENT_CHANGE"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "出力・表示!C9"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "出力・表示!F9/G9"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "OUTPUT_STAGE_MODE"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "出力・表示!C10"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "出力・表示!F10/G10"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "OUTPUT_INACTIVE_ELEMENTS"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "出力・表示!C11"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "出力・表示!F11/G11"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "DEBUG_MODE"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "出力・表示!C12"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "出力・表示!F12/G12"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "DEBUG_FLUSH"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "出力・表示!C13"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "出力・表示!F13/G13"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "EXPORT_MODE"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "出力・表示!C14"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "出力・表示!F14/G14"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "出力・表示!C17"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "出力・表示!F17/G17"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "VIEW_DISP_SCALE"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "出力・表示!C18"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "出力・表示!F18/G18"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "VIEW_COLOR_RESULT"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "出力・表示!C19"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "出力・表示!F19/G19"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "VIEW_SCALE_MODE"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "出力・表示!C20"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "出力・表示!F20/G20"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "VIEW_RESULT_SOURCE"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "出力・表示!C21"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "出力・表示!F21/G21"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "VIEW_DETAIL_MODE"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "出力・表示!C22"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "出力・表示!F22/G22"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "VIEW_SCALE"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "出力・表示!C23"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "出力・表示!F23/G23"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "VIEW_MIN_X"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "出力・表示!C24"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "出力・表示!F24/G24"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "VIEW_MAX_Y"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "詳細設定!C9"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "詳細設定!F9/G9"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "SOLVER"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "詳細設定!C10"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "詳細設定!F10/G10"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "BAND_LU_KERNEL"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "詳細設定!C11"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "詳細設定!F11/G11"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "PHYSICAL_FAILURE_MODE"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "詳細設定!C14"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "詳細設定!F14/G14"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "MESH_QUALITY_MIN_AREA_RATIO"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "詳細設定!C15"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "詳細設定!F15/G15"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "MESH_QUALITY_MIN_JACOBIAN_RATIO"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "詳細設定!C16"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "詳細設定!F16/G16"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "MESH_QUALITY_MIN_ANGLE_DEG"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "詳細設定!C17"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "詳細設定!F17/G17"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "MESH_QUALITY_MAX_ANGLE_DEG"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "詳細設定!C18"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "詳細設定!F18/G18"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "MESH_QUALITY_MAX_ASPECT_RATIO"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "詳細設定!C21"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "詳細設定!F21/G21"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "MESH_REPAIR_MAX_ITERATIONS"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "詳細設定!C22"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "詳細設定!F22/G22"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "MESH_REPAIR_DAMPING"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "詳細設定!C23"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "詳細設定!F23/G23"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "MESH_REPAIR_IMPROVEMENT_TOLERANCE"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "詳細設定!C24"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "詳細設定!F24/G24"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "MESH_REPAIR_ANGLE_ITERATIONS"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "詳細設定!C25"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "詳細設定!F25/G25"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "MESH_REPAIR_TERRAIN_COMPARE"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "詳細設定!C26"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "詳細設定!F26/G26"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "MESH_TERRAIN_COUNT_MIN"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "詳細設定!C27"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "詳細設定!F27/G27"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "MESH_TERRAIN_COUNT_MAX"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "詳細設定!C28"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "詳細設定!F28/G28"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "ADAPT_MAX_ELEMENT_RATIO"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "詳細設定!C29"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "詳細設定!F29/G29"
+    },
+    {
+      "name": "validation stop style",
+      "status": "PASS",
+      "detail": "ADAPT_MARK_FRACTION"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "詳細設定!C32"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "詳細設定!F32/G32"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "詳細設定!C33"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "詳細設定!F33/G33"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "詳細設定!C34"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "詳細設定!F34/G34"
+    },
+    {
+      "name": "input or automatic output lock",
+      "status": "PASS",
+      "detail": "詳細設定!C35"
+    },
+    {
+      "name": "setting metadata locked",
+      "status": "PASS",
+      "detail": "詳細設定!F35/G35"
+    },
+    {
+      "name": "stage validation stop",
+      "status": "PASS",
+      "detail": "B101"
+    },
+    {
+      "name": "material validation stop K101",
+      "status": "PASS",
+      "detail": "K101"
+    },
+    {
+      "name": "joint validation stop D101",
+      "status": "PASS",
+      "detail": "D101"
+    }
+  ],
+  "count": 813,
+  "status": "PASS"
+}

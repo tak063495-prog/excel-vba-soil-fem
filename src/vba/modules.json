@@ -128,5 +128,15 @@
         "name":  "FEMNativeKern",
         "file":  "FEMNativeKern.bas",
         "type":  1
+    },
+    {
+        "name":  "FEMUiInputs",
+        "file":  "FEMUiInputs.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMUiValidation",
+        "file":  "FEMUiValidation.bas",
+        "type":  1
     }
 ]

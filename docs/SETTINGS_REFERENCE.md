@@ -1,5 +1,7 @@
 # 設定一覧とKEY対応
 
+> 最新UI版（2026-10-20）は [操作ガイド・検証記録](WORKBOOK_UI_20261020.md) と [83設定の現在値・推奨目安](UI_SETTINGS_20261020.md) を参照してください。以下は旧配布版の画面・保存例です。
+
 [READMEへ](../README.md) · [操作説明書](USER_GUIDE.md) · [入力仕様](MODEL_INPUTS.md) · [結果・対処法](RESULTS_AND_TROUBLESHOOTING.md)
 
 対象は `2DSoilFEM_20261008_practical.xlsm`（`20261010_INCO_24`）です。以下の74項目の「配布保存値」は配布XLSMの用途別シートC列から確認した値です。プログラムがKEY欠落時に使う既定値や、すべての案件に推奨する値とは区別してください。
