@@ -1,0 +1,7 @@
+{
+  "harness": "ShapeMeshWorkflowTests",
+  "status": "PASS",
+  "source_sha256": "9EFF9AEA069EB6C113C2D5390E5D6BA83505E513E8CF64172E7C87366AF61A0D",
+  "compile": "PASS",
+  "compile_command_enabled": false
+}

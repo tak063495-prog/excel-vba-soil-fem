@@ -16,6 +16,8 @@ Public Sub FEMPracticalAfterLayout()
     Set shp = ws.Shapes.AddShape(msoShapeRoundedRectangle, target.left + 2, target.Top + 2, target.width - 4, target.Height - 4)
     shp.name = "UI_JointResults"
   End If
+  shp.Left = target.Left + 2: shp.Top = target.Top + 2
+  shp.Width = target.Width - 4: shp.Height = target.Height - 4
   shp.TextFrame2.TextRange.text = "接合結果"
   shp.TextFrame2.TextRange.Font.name = "Arial"
   shp.TextFrame2.TextRange.Font.size = 11

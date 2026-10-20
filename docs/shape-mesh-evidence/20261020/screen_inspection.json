@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "source_book_sha256": "768f75aa877b52b122f0691557cd2b777d0dd008e03d51b9dde88a9997cd7e12",
+  "inspected_in_excel": true,
+  "quality": "品質目標=PASS / 最小面積=2.540E-01、最小Jacobian=6.349E-02、最小角度=45.0°、最大アスペクト比=1.91",
+  "support_markers": 105,
+  "preview_svg_sha256": "332257b9fb4912c0cb0f2f321cca194c0c1d8b57c8d63a6f05fc1edec4321cff",
+  "screen_checks": [
+    "VBE corrected CandidateFlow and disabled compile command",
+    "home upper/lower buttons and visible workflow tab order",
+    "mesh creation/preview/repair buttons",
+    "mesh preview supports/quality/start and repair buttons",
+    "output figure button",
+    "runtime recommendation button",
+    "analysis validation button"
+  ],
+  "button_cell_rectangle_check": "final_shape_workflow.json"
+}

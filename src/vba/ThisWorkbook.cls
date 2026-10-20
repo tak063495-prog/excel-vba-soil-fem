@@ -29,6 +29,7 @@ Private Sub Workbook_SheetChange(ByVal Sh As Object, ByVal target As range)
   If sheetName = "節点データ" Or sheetName = "材料データ" Or sheetName = "要素データ" _
      Or sheetName = "形状入力" Or sheetName = "ステージ" Or sheetName = "載荷" Or sheetName = "図形定義" Or sheetName = "接合" Then
     FEMViewerMarkDirty
+    FEMUiInvalidateMeshPreview
     AnalysisOK = False
     ResultRevision = 0
     P1ResultReady = False
@@ -66,6 +67,7 @@ Private Sub Workbook_SheetChange(ByVal Sh As Object, ByVal target As range)
   If invalidateSettings Then FEMInvalidateSettingCache
   If invalidateAnalysis Then
     FEMViewerMarkDirty
+    FEMUiInvalidateMeshPreview
     AnalysisOK = False
     ResultRevision = 0
     P1ResultReady = False

@@ -1,4 +1,4 @@
-﻿[
+[
     {
         "name":  "ThisWorkbook",
         "file":  "ThisWorkbook.cls",
@@ -137,6 +137,11 @@
     {
         "name":  "FEMUiValidation",
         "file":  "FEMUiValidation.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMUiMeshWorkflow",
+        "file":  "FEMUiMeshWorkflow.bas",
         "type":  1
     }
 ]

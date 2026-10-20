@@ -1,5 +1,5 @@
 ﻿Option Explicit
-' Optional x64 native material kernels (soilfem_mat_x64.dll next to the workbook).
+' Optional x64 native material kernels (soilfem_native_x64.dll next to the workbook).
 ' Coarse-grained: one call evaluates every element it can (material-point
 ' update, stresses, algorithmic tangent, internal force) directly on the Elem()
 ' array; one call builds every element tangent. The DLL stops at the first
@@ -13,15 +13,15 @@ Private Declare PtrSafe Function GetProcAddress Lib "kernel32" (ByVal module As 
 Private Declare PtrSafe Function GetLastError Lib "kernel32" () As Long
 Private Declare PtrSafe Function GetModuleHandleW Lib "kernel32" (ByVal name As LongPtr) As LongPtr
 Private Declare PtrSafe Function GetModuleFileNameW Lib "kernel32" (ByVal module As LongPtr, ByVal buffer As LongPtr, ByVal size As Long) As Long
-Private Declare PtrSafe Function SfmInit Lib "soilfem_mat_x64.dll" Alias "sfm_init" () As Long
-Private Declare PtrSafe Function SfmEval Lib "soilfem_mat_x64.dll" Alias "sfm_eval" (ByVal params As LongPtr, ByVal kStart As Long) As Long
-Private Declare PtrSafe Function SfmTangent Lib "soilfem_mat_x64.dll" Alias "sfm_tangent" (ByVal params As LongPtr, ByVal doneFlags As LongPtr) As Long
+Private Declare PtrSafe Function SfmInit Lib "soilfem_native_x64.dll" Alias "sfm_init" () As Long
+Private Declare PtrSafe Function SfmEval Lib "soilfem_native_x64.dll" Alias "sfm_eval" (ByVal params As LongPtr, ByVal kStart As Long) As Long
+Private Declare PtrSafe Function SfmTangent Lib "soilfem_native_x64.dll" Alias "sfm_tangent" (ByVal params As LongPtr, ByVal doneFlags As LongPtr) As Long
 Private mHandle As LongPtr
 Private mOff(0 To 25) As LongLong
 Private mPar(0 To 15) As LongLong
 Private mOut(0 To 15) As LongLong
 #End If
-Private Const SFM_DLL As String = "soilfem_mat_x64.dll"
+Private Const SFM_DLL As String = "soilfem_native_x64.dll"
 Private Const SFM_API As Long = 4
 Private Const SFM_MAT_STRIDE As Long = 16
 Private mChecked As Boolean, mAvailable As Boolean, mReason As String

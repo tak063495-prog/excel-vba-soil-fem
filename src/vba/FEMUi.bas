@@ -140,6 +140,7 @@ Public Sub FEMUiSettingsChanged(ByVal Sh As Object, ByVal target As range)
     FEMInvalidateSettingCache
     If invalidateAnalysis Then
         FEMViewerMarkDirty
+        FEMUiInvalidateMeshPreview
         AnalysisOK = False
         ResultRevision = 0
         P1ResultReady = False

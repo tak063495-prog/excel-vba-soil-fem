@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "cases": 200000,
+  "x87_control_words": {
+    "0x27f": {
+      "handled": 69556,
+      "elastic": 15936,
+      "plastic": 53620,
+      "declined": 30444,
+      "fp_bad": 925
+    },
+    "0x37f": {
+      "handled": 69556,
+      "elastic": 15936,
+      "plastic": 53620,
+      "declined": 30444,
+      "fp_bad": 925
+    }
+  },
+  "all_handled_output_bytes_equal": true,
+  "decline_and_fp_flags_equal": true,
+  "point_output_bytes": 200
+}

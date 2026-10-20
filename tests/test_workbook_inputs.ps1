@@ -1,4 +1,4 @@
-[CmdletBinding()]
+﻿[CmdletBinding()]
 param(
   [Parameter(Mandatory=$true)][string]$Book,
   [string]$Out = "tests/results/workbook_inputs.json"
@@ -91,10 +91,10 @@ End Sub
     $nativeCell = $keys['NATIVE_DLL']; $nws=$wb.Worksheets.Item(($nativeCell -split '!')[0]); $na=($nativeCell -split '!')[1]; $old=$nws.Range($na).Value2; $nws.Range($na).Value2='ON'; $nativeRejectResult=[string]$xl.Run($prefix+'TValidateSettings'); Check ($nativeRejectResult.StartsWith('ERROR|')) 'invalid native enum rejected' ($nativeRejectResult+' value='+[string]$nws.Range($na).Value2+' key='+$nativeCell); $nws.Range($na).Value2=$old
 
     $numericCases = @(
-      @('MESH_NX',1,$true),@('MESH_NX',0,$false),@('MESH_NX',1.5,$false),@('MESH_NX','',$false),@('MESH_NX',2147483648,$false),
+      @('MESH_MATERIAL',1,$true),@('MESH_MATERIAL',0,$false),@('MESH_MATERIAL',1.5,$false),@('MESH_MATERIAL','',$false),@('MESH_MATERIAL',2147483648,$false),
       @('Q8_HOURGLASS_FACTOR',0,$true),@('Q8_HOURGLASS_FACTOR',1,$true),@('Q8_HOURGLASS_FACTOR',-1,$false),@('Q8_HOURGLASS_FACTOR',1.1,$false),
       @('SRM_TOL',0,$false),@('SRM_TOL',0.0125,$true),@('VIEW_DISP_SCALE',0,$true),@('DEBUG_FLUSH',0,$true),
-      @('MESH_POINT1_X',-2.5,$true),@('MESH_POINT1_Y',-3,$true),@('NATIVE_STATE_COPY',0,$true),@('NATIVE_STATE_COPY',1,$true),@('NATIVE_STATE_COPY',0.5,$false),@('MESH_NX','1',$false),@('VIEW_COLOR_RESULT',99999,$false),@('MESH_REPAIR_TERRAIN_COMPARE',0.5,$false),@('MESH_REPAIR_TERRAIN_COMPARE',0,$true),@('MESH_REPAIR_TERRAIN_COMPARE',1,$true)
+      @('VIEW_MIN_X',-2.5,$true),@('VIEW_MAX_Y',-3,$true),@('NATIVE_STATE_COPY',0,$true),@('NATIVE_STATE_COPY',1,$true),@('NATIVE_STATE_COPY',0.5,$false),@('MESH_MATERIAL','1',$false),@('VIEW_COLOR_RESULT',99999,$false),@('MESH_REPAIR_TERRAIN_COMPARE',0.5,$false),@('MESH_REPAIR_TERRAIN_COMPARE',0,$true),@('MESH_REPAIR_TERRAIN_COMPARE',1,$true)
     )
     foreach ($case in $numericCases) {
       $key=$case[0]; $cell=$keys[$key]; $ws=$wb.Worksheets.Item(($cell -split '!')[0]); $addr=($cell -split '!')[1]; $oldFormula=$ws.Range($addr).Formula; $oldFormat=$ws.Range($addr).NumberFormat; if($case[1] -is [string]){$ws.Range($addr).NumberFormat='@'}; if($case[1] -is [ValueType]){$ws.Range($addr).Value2=[double]$case[1]}else{$ws.Range($addr).Value2=[string]$case[1]}

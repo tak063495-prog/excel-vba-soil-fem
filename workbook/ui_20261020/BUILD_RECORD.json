@@ -1,24 +1,36 @@
 {
   "compile": "PASS",
-  "reopen": "PASS",
   "source_sha256": "EA0E2CAFDAF3A45C277C02F7D9CE39C8CABAC622C923B553E9BF937FF7FD81F3",
+  "dll_layout": "single",
+  "material_available": true,
+  "reopen": "PASS",
   "files": [
     {
-      "bytes": 3149007,
       "name": "2DSoilFEM_ui_20261020.xlsm",
-      "sha256": "91915D4719AC660F0F8A9DA07E4E00D0077DFC061F85C023D9D27F2D1FA31766"
+      "bytes": 3131506,
+      "sha256": "768F75AA877B52B122F0691557CD2B777D0DD008E03D51B9DDE88A9997CD7E12"
     },
     {
-      "bytes": 46592,
-      "name": "soilfem_mat_x64.dll",
-      "sha256": "F11C8F4BB5A5F27778DE9DBCFA88E9B6BB963806720E1694C26328C32ADD58CD"
+      "name": "README.txt",
+      "bytes": 3084,
+      "sha256": "CD171CF59512C53CBAC93DA899EE5FE1412EAB7B3CC81A2BA9BCF0B047A98EC2"
     },
     {
-      "bytes": 126464,
       "name": "soilfem_native_x64.dll",
-      "sha256": "BE1BF49D61D4172CEB2BCD0A7C8850718DBBF4F01EB68E9F42BFD5AFB66482B7"
+      "bytes": 170496,
+      "sha256": "AD5C2AE81512BA8E977002415A6A5339B621C00A1BBABE5092559F8A7F9E0797"
     }
   ],
-  "ui_stamp": "20261020_UI_02",
-  "source": "workbook/inco_element_20261020/2DSoilFEM_inco_element_20261020.xlsm"
+  "ui_stamp": "20261020_UI_03",
+  "solver_available": true,
+  "source": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\excel-vba-soil-fem\\workbook\\inco_element_20261020\\2DSoilFEM_inco_element_20261020.xlsm",
+  "validation": {
+    "input_checks": 813,
+    "persistence_checks": 406,
+    "mesh_checks": 91,
+    "viewer_checks": 108,
+    "srm_exact": "docs/shape-mesh-evidence/20261020/paired_srm_exact.json",
+    "fixed_exact": "docs/shape-mesh-evidence/20261020/fixed_exact_comparison.json",
+    "screen": "docs/shape-mesh-evidence/20261020/screen_inspection.json"
+  }
 }

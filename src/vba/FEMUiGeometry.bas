@@ -107,7 +107,8 @@ Public Sub FEMUiBuildGeometry()
     legacyPage.range(legacyPage.Cells(legacyRow, 7), legacyPage.Cells(legacyRow, 6 + count)).value2 = memberData
   Next record
   legacyPage.Cells(1, 14).value2 = spacing / boundaries.count
-FEMInvalidateInputCache:   FEMViewerMarkDirty
+  Call FEMInvalidateInputCache
+  Call FEMViewerMarkDirty
   AnalysisOK = False: ResultRevision = 0: P1ResultReady = False
   Application.EnableEvents = eventsSaved
   Exit Sub
@@ -126,9 +127,14 @@ End Function
 
 Public Sub FEMUiGenerateShape()
   On Error GoTo Failed
+  If AnalysisRunning Then Exit Sub
+  FEMShapeGenerationOK = False
+  FEMUiMeshPreviewError = ""
   FEMUiBuildGeometry
   Call ボタン19_Click
+  If FEMShapeGenerationOK Then FEMUiPreviewMesh
   Exit Sub
 Failed:
-  MsgBox "形状入力を確認してください。" & vbCrLf & Err.Description, vbExclamation
+  FEMUiMeshPreviewError = CStr(Err.Number) & " " & Err.Description
+  If Not SuppressUserMessages Then MsgBox "形状入力を確認してください。" & vbCrLf & Err.Description, vbExclamation
 End Sub

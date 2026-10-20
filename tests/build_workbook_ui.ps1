@@ -1,6 +1,7 @@
 param(
  [string]$SourceWorkbook=(Join-Path $PSScriptRoot '../workbook/inco_element_20261020/2DSoilFEM_inco_element_20261020.xlsm'),
- [Parameter(Mandatory=$true)][string]$OutputDirectory
+ [Parameter(Mandatory=$true)][string]$OutputDirectory,
+ [string]$NativeDll=(Join-Path $PSScriptRoot '../native/bin/combined/soilfem_native_x64.dll')
 )
 $ErrorActionPreference='Stop'
 if(Get-Process EXCEL -ErrorAction SilentlyContinue){throw 'Another Excel is running.'}
@@ -10,9 +11,8 @@ $OutputDirectory=[IO.Path]::GetFullPath($OutputDirectory)
 if(Test-Path -LiteralPath $OutputDirectory){throw 'Preserve existing output; choose a new directory.'}
 $sourceHash=(Get-FileHash -LiteralPath $SourceWorkbook).Hash
 New-Item -ItemType Directory -Path $OutputDirectory | Out-Null
-foreach($dll in 'soilfem_native_x64.dll','soilfem_mat_x64.dll'){
- Copy-Item -LiteralPath (Join-Path (Split-Path $SourceWorkbook) $dll) -Destination $OutputDirectory
-}
+$NativeDll=(Resolve-Path -LiteralPath $NativeDll).Path
+Copy-Item -LiteralPath $NativeDll -Destination (Join-Path $OutputDirectory 'soilfem_native_x64.dll')
 $bookPath=Join-Path $OutputDirectory '2DSoilFEM_ui_20261020.xlsm'
 & pwsh -NoProfile -File (Join-Path $PSScriptRoot 'native/make_native_workbook.ps1') -Src $SourceWorkbook -Dst $bookPath -ModDir (Join-Path $repo 'src/vba') -Modules FEMUiLayout
 if($LASTEXITCODE -ne 0){throw 'VBA source verification/compilation failed.'}
@@ -29,6 +29,13 @@ try{
  $layoutResult=[string]$app.Run($macro+'FEMUiRefreshInputs')
  if($layoutResult -cne 'PASS'){throw $layoutResult}
  $app.Run($macro+'FEMUiValidateSettings')
+ if(-not [bool]$app.Run($macro+'FEMNativeAvailable')){throw 'Unified solver DLL unavailable.'}
+ # The material ABI needs the actual Elem() layout, which is allocated at input setup.
+ $app.Run($macro+'ValidateInputData')
+ $app.Run($macro+'SetNodeData')
+ $app.Run($macro+'SetMaterialData')
+ $app.Run($macro+'SetElementData')
+ if(-not [bool]$app.Run($macro+'FEMMatAvailable')){throw ('Unified material/kernel exports unavailable: '+[string]$app.Run($macro+'FEMMatStatusText'))}
  $app.Run($macro+'FEMUiShowHome')
  $book.Save();$book.Close($false)
  $book=$app.Workbooks.Open($bookPath,0,$true);$macro="'"+$book.Name+"'!"
@@ -52,5 +59,5 @@ try{
 }
 if((Get-FileHash -LiteralPath $SourceWorkbook).Hash -cne $sourceHash){throw 'Source workbook changed.'}
 $files=@(Get-ChildItem -LiteralPath $OutputDirectory -File | ForEach-Object {@{name=$_.Name;bytes=$_.Length;sha256=(Get-FileHash -LiteralPath $_.FullName).Hash}})
-@{source=$SourceWorkbook;source_sha256=$sourceHash;files=$files;compile='PASS';reopen='PASS';ui_stamp='20261020_UI_02'} | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $OutputDirectory 'BUILD_RECORD.json') -Encoding UTF8
+@{source=$SourceWorkbook;source_sha256=$sourceHash;files=$files;compile='PASS';reopen='PASS';ui_stamp='20261020_UI_03';dll_layout='single';solver_available=$true;material_available=$true} | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $OutputDirectory 'BUILD_RECORD.json') -Encoding UTF8
 Write-Output "PASS $bookPath"
