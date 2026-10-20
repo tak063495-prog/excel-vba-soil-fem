@@ -1,0 +1,7 @@
+{
+  "case": "tunnel10",
+  "comparison": "stage9 minus stage1, both Fs=1",
+  "vertical_closure_mm": 23.787078637421363,
+  "horizontal_closure_mm": -1.6917643438159975,
+  "surface_settlement_increment_mm": 5.689765260165306
+}

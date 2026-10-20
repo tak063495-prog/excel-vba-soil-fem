@@ -1,0 +1,78 @@
+{
+  "case": "anchor_inco",
+  "material_areas_m2": {
+    "1": 415.0000000000001,
+    "2": 2.800000000000001,
+    "3": 19.98
+  },
+  "stage_balance": [
+    {
+      "stage": 1,
+      "type": "GRAVITY",
+      "expected_weight_kN": 8300.000000000002,
+      "reaction_y_kN": 8300.000000000002,
+      "difference_kN": 0.0,
+      "relative_support_weight_gap": 0.0,
+      "free_residual_sum_y_kN": -2.4624746686185972e-12,
+      "global_equilibrium_closure_y_kN": -2.4624746686185972e-12,
+      "global_equilibrium_closure_x_kN": -7.859182013523956e-14,
+      "support_only_roundoff_check": true
+    },
+    {
+      "stage": 2,
+      "type": "BIRTH",
+      "expected_weight_kN": 8367.200000000003,
+      "reaction_y_kN": 8367.200000000008,
+      "difference_kN": 5.4569682106375694e-12,
+      "relative_support_weight_gap": 6.521857025812181e-16,
+      "free_residual_sum_y_kN": -9.335629491680209e-12,
+      "global_equilibrium_closure_y_kN": -3.878661281042639e-12,
+      "global_equilibrium_closure_x_kN": -4.925214124360446e-13,
+      "support_only_roundoff_check": true
+    },
+    {
+      "stage": 3,
+      "type": "BIRTH",
+      "expected_weight_kN": 8746.820000000002,
+      "reaction_y_kN": 8746.820000000002,
+      "difference_kN": 0.0,
+      "relative_support_weight_gap": 0.0,
+      "free_residual_sum_y_kN": 2.08305594995295e-14,
+      "global_equilibrium_closure_y_kN": 2.08305594995295e-14,
+      "global_equilibrium_closure_x_kN": -2.1631852584252262e-13,
+      "support_only_roundoff_check": true
+    },
+    {
+      "stage": 4,
+      "type": "LOAD",
+      "expected_weight_kN": 8746.820000000002,
+      "reaction_y_kN": 8746.81999999987,
+      "difference_kN": -1.3096723705530167e-10,
+      "relative_support_weight_gap": 1.4973125896646054e-14,
+      "free_residual_sum_y_kN": 1.293155027504156e-10,
+      "global_equilibrium_closure_y_kN": -1.6517343048860766e-12,
+      "global_equilibrium_closure_x_kN": 5.806774611727427e-14,
+      "support_only_roundoff_check": true
+    },
+    {
+      "stage": 5,
+      "type": "SRM",
+      "expected_weight_kN": 8746.820000000002,
+      "reaction_y_kN": 8746.820000000005,
+      "difference_kN": 3.637978807091713e-12,
+      "relative_support_weight_gap": 4.1592016379572374e-16,
+      "free_residual_sum_y_kN": -7.135209090236572e-12,
+      "global_equilibrium_closure_y_kN": -3.4972302831448587e-12,
+      "global_equilibrium_closure_x_kN": -7.447459801156397e-13,
+      "support_only_roundoff_check": true
+    }
+  ],
+  "anchor_balance": {
+    "net_Fx_kN": 7.105427357601002e-15,
+    "net_Fy_kN": 3.1086244689504383e-15,
+    "net_M_kNm": 7.993605777301127e-14
+  },
+  "plastic_shear_eigen_max_error": 1.0842021724855044e-19,
+  "struct_max_plastic_increment": 0.0,
+  "struct_max_yield_function": -19999434.500359554
+}

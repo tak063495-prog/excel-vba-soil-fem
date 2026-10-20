@@ -1,0 +1,22 @@
+{
+  "case": "tunnel10",
+  "status": "PASS",
+  "stage": 10,
+  "nodes": 497,
+  "elements": 160,
+  "active_elements": 112,
+  "seconds": 15.1538297,
+  "max_displacement_m": 0.07681333938607011,
+  "relative_residual": 7.100012514792456e-06,
+  "reaction_y_kN": 49598.05125790799,
+  "min_reference_jacobian": 0.08484577318466237,
+  "min_deformed_jacobian_scale1": 0.08479352237516664,
+  "dense_11x11_jacobian": {
+    "reference": 0.07483729767971592,
+    "deformed": 0.0747853580927833
+  },
+  "deformed_geometry_valid": true,
+  "invalid_deformed_elements": [],
+  "max_shear_increment": 4.583216821223032e-06,
+  "fixed_disp_max": 0.0
+}

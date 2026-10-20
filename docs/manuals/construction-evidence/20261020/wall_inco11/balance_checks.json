@@ -1,0 +1,62 @@
+{
+  "case": "wall_inco11",
+  "material_areas_m2": {
+    "1": 415.0,
+    "2": 2.8000000000000025,
+    "3": 19.98000000000002
+  },
+  "stage_balance": [
+    {
+      "stage": 1,
+      "type": "GRAVITY",
+      "expected_weight_kN": 8300.0,
+      "reaction_y_kN": 8299.999999999996,
+      "difference_kN": -3.637978807091713e-12,
+      "relative_support_weight_gap": 4.3831069964960395e-16,
+      "free_residual_sum_y_kN": -8.296974218779951e-13,
+      "global_equilibrium_closure_y_kN": -4.467676228969708e-12,
+      "global_equilibrium_closure_x_kN": -1.1640755493571977e-13,
+      "support_only_roundoff_check": true
+    },
+    {
+      "stage": 2,
+      "type": "BIRTH",
+      "expected_weight_kN": 8367.2,
+      "reaction_y_kN": 8367.200000000003,
+      "difference_kN": 1.8189894035458565e-12,
+      "relative_support_weight_gap": 2.173952341937394e-16,
+      "free_residual_sum_y_kN": -3.0622171465211068e-12,
+      "global_equilibrium_closure_y_kN": -1.2432277429752503e-12,
+      "global_equilibrium_closure_x_kN": 3.8009595970335047e-13,
+      "support_only_roundoff_check": true
+    },
+    {
+      "stage": 3,
+      "type": "BIRTH",
+      "expected_weight_kN": 8746.82,
+      "reaction_y_kN": 8746.820000000002,
+      "difference_kN": 1.8189894035458565e-12,
+      "relative_support_weight_gap": 2.0796008189786192e-16,
+      "free_residual_sum_y_kN": -1.5064338665382593e-13,
+      "global_equilibrium_closure_y_kN": 1.6683460168920305e-12,
+      "global_equilibrium_closure_x_kN": -1.883966960649435e-13,
+      "support_only_roundoff_check": true
+    },
+    {
+      "stage": 4,
+      "type": "SRM",
+      "expected_weight_kN": 8746.82,
+      "reaction_y_kN": 8746.820000009857,
+      "difference_kN": 9.857103577814996e-09,
+      "relative_support_weight_gap": 1.1269356838045136e-12,
+      "free_residual_sum_y_kN": -9.859958058355822e-09,
+      "global_equilibrium_closure_y_kN": -2.854480540825932e-12,
+      "global_equilibrium_closure_x_kN": 3.483723899140913e-13,
+      "support_only_roundoff_check": true
+    }
+  ],
+  "anchor_balance": null,
+  "plastic_shear_eigen_max_error": 1.0842021724855044e-19,
+  "struct_max_plastic_increment": 0.0,
+  "struct_max_yield_function": -19999564.276327487
+}

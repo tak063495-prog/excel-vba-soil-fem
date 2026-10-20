@@ -1,0 +1,82 @@
+[
+  {
+    "case": "wall_davis08",
+    "status": "PASS",
+    "stage": 1,
+    "nodes": 1857,
+    "elements": 580,
+    "active_elements": 455,
+    "seconds": 111.9453357,
+    "max_displacement_m": 0.009676231190209978,
+    "min_reference_jacobian": 0.004012769207712201,
+    "min_deformed_jacobian_scale1": 0.03173261228908726,
+    "dense_11x11_jacobian": {
+      "reference": 0.001428502615121116,
+      "deformed": 0.024800792784742138
+    },
+    "deformed_geometry_valid": true,
+    "invalid_deformed_elements": [],
+    "max_shear_increment": 0.00016707675607074044,
+    "fixed_disp_max": 9.490005756304054e-36
+  },
+  {
+    "case": "wall_davis08",
+    "status": "PASS",
+    "stage": 2,
+    "nodes": 1857,
+    "elements": 580,
+    "active_elements": 495,
+    "seconds": 111.9453357,
+    "max_displacement_m": 0.009670617042250277,
+    "min_reference_jacobian": 0.004012769207712201,
+    "min_deformed_jacobian_scale1": 0.0040127670766048115,
+    "dense_11x11_jacobian": {
+      "reference": 0.001428502615121116,
+      "deformed": 0.0014285021168243595
+    },
+    "deformed_geometry_valid": true,
+    "invalid_deformed_elements": [],
+    "max_shear_increment": 4.701831997293058e-05,
+    "fixed_disp_max": 0.0
+  },
+  {
+    "case": "wall_davis08",
+    "status": "PASS",
+    "stage": 3,
+    "nodes": 1857,
+    "elements": 580,
+    "active_elements": 580,
+    "seconds": 111.9453357,
+    "max_displacement_m": 0.009690243490840736,
+    "min_reference_jacobian": 0.004012769207712201,
+    "min_deformed_jacobian_scale1": 0.0040127762040225905,
+    "dense_11x11_jacobian": {
+      "reference": 0.001428502615121116,
+      "deformed": 0.0014285027716583612
+    },
+    "deformed_geometry_valid": true,
+    "invalid_deformed_elements": [],
+    "max_shear_increment": 0.0005356810796865203,
+    "fixed_disp_max": 1.4526154852096935e-35
+  },
+  {
+    "case": "wall_davis08",
+    "status": "PASS",
+    "stage": 4,
+    "nodes": 1857,
+    "elements": 580,
+    "active_elements": 580,
+    "seconds": 111.9453357,
+    "max_displacement_m": 0.035442277788496825,
+    "min_reference_jacobian": 0.004012769207712201,
+    "min_deformed_jacobian_scale1": 0.004012774890132767,
+    "dense_11x11_jacobian": {
+      "reference": 0.001428502615121116,
+      "deformed": 0.001428503219399488
+    },
+    "deformed_geometry_valid": true,
+    "invalid_deformed_elements": [],
+    "max_shear_increment": 0.00010361482311451257,
+    "fixed_disp_max": 3.4908179328670823e-35
+  }
+]

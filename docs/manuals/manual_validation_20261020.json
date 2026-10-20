@@ -1,199 +1,2213 @@
 {
-  "pdf": "2DSoilFEM_Detailed_Manual_20261020.pdf",
-  "pages": 63,
-  "revision": "2026-10-20 UI_04 construction / increment documentation only",
-  "pdf_sha256": "5883d9fe152e4e6e396a644b34daf40316449bb554c9c4bc61337761a53b146a",
-  "reference_main": "f144d88008c1575cb8042ea48005202c0208d7bb",
-  "book_sha256": "1e46355ca510b05509b92beaef712118417bceea171ff40ce02b0226cd5e9a06",
-  "scope": "PDF, documentation and existing evidence only; no Excel automation or application code edits in this revision",
-  "application_files_unchanged_count": 70,
-  "application_files_unchanged": "PASS SHA-256 before/after",
-  "replaced_pages": [
-    1,
-    2,
-    3,
-    4,
-    11,
-    12,
-    14,
-    27,
-    31,
-    32,
-    37,
-    38,
-    47
+  "pages": 71,
+  "chapters": [
+    [
+      "第1章 / はじめに",
+      3
+    ],
+    [
+      "第2章 / モデル入力",
+      10
+    ],
+    [
+      "第3章 / 解析条件と収束",
+      17
+    ],
+    [
+      "第4章 / 施工例A：掘削と再盛土",
+      26
+    ],
+    [
+      "第5章 / 施工例B：擁壁とSRM",
+      32
+    ],
+    [
+      "第6章 / 施工例C：アンカー相当力",
+      38
+    ],
+    [
+      "第7章 / 施工例D：トンネル",
+      40
+    ],
+    [
+      "第8章 / 結果と増分図の読み方",
+      44
+    ],
+    [
+      "第9章 / 保存・比較・トラブル対応",
+      50
+    ],
+    [
+      "付録A / 設定一覧",
+      53
+    ],
+    [
+      "付録B / 根拠と再現",
+      64
+    ],
+    [
+      "付録C / 用語集",
+      67
+    ]
   ],
-  "added_pages": [
+  "page_plan": [
+    {
+      "page": 1,
+      "title": "2D Soil FEM\n図でわかる詳細操作説明書",
+      "chapter": "表紙"
+    },
+    {
+      "page": 2,
+      "title": "目的別の読み方と目次",
+      "chapter": "目次"
+    },
+    {
+      "page": 3,
+      "title": "できること・モデルの適用範囲",
+      "chapter": "第1章 / はじめに"
+    },
+    {
+      "page": 4,
+      "title": "機能の掲載範囲と検証の深さ",
+      "chapter": "第1章 / はじめに"
+    },
+    {
+      "page": 5,
+      "title": "起動・配布ファイル・DLL",
+      "chapter": "第1章 / はじめに"
+    },
+    {
+      "page": 6,
+      "title": "操作パネルから解析へ進む",
+      "chapter": "第1章 / はじめに"
+    },
+    {
+      "page": 7,
+      "title": "入力と出力を見分ける",
+      "chapter": "第1章 / はじめに"
+    },
+    {
+      "page": 8,
+      "title": "添付ケースで最初の計算を試す",
+      "chapter": "第1章 / はじめに"
+    },
+    {
+      "page": 9,
+      "title": "単位・座標・符号をそろえる",
+      "chapter": "第1章 / はじめに"
+    },
+    {
+      "page": 10,
+      "title": "材料データ A:M",
+      "chapter": "第2章 / モデル入力"
+    },
+    {
+      "page": 11,
+      "title": "節点・拘束とQ8要素",
+      "chapter": "第2章 / モデル入力"
+    },
+    {
+      "page": 12,
+      "title": "形状メッシュを作り、解析前に見る",
+      "chapter": "第2章 / モデル入力"
+    },
+    {
+      "page": 13,
+      "title": "共有境界・品質・作り直しの注意",
+      "chapter": "第2章 / モデル入力"
+    },
+    {
+      "page": 14,
+      "title": "載荷 A:Jと合力の落とし穴",
+      "chapter": "第2章 / モデル入力"
+    },
+    {
+      "page": 15,
+      "title": "施工ステージ A:F の入力",
+      "chapter": "第2章 / モデル入力"
+    },
+    {
+      "page": 16,
+      "title": "接合JOINTと材料の切替",
+      "chapter": "第2章 / モデル入力"
+    },
+    {
+      "page": 17,
+      "title": "解析設定と推奨値の範囲",
+      "chapter": "第3章 / 解析条件と収束"
+    },
+    {
+      "page": 18,
+      "title": "高速化設定とDLLなしの計算",
+      "chapter": "第3章 / 解析条件と収束"
+    },
+    {
+      "page": 19,
+      "title": "実行前の検査・エラー修正",
+      "chapter": "第3章 / 解析条件と収束"
+    },
+    {
+      "page": 20,
+      "title": "増分・反復・収束を図で理解する",
+      "chapter": "第3章 / 解析条件と収束"
+    },
+    {
+      "page": 21,
+      "title": "SRMの仕組みとFsの意味",
+      "chapter": "第3章 / 解析条件と収束"
+    },
+    {
+      "page": 22,
+      "title": "DAVISとINCONSISTENT：流れ則の違い",
+      "chapter": "第3章 / 解析条件と収束"
+    },
+    {
+      "page": 23,
+      "title": "流れ則の選択・対象材料・比較条件",
+      "chapter": "第3章 / 解析条件と収束"
+    },
+    {
+      "page": 24,
+      "title": "既存Case1：Fs図の計算条件",
+      "chapter": "第3章 / 解析条件と収束"
+    },
+    {
+      "page": 25,
+      "title": "既存Case1：Fs区間の数値例",
+      "chapter": "第3章 / 解析条件と収束"
+    },
+    {
+      "page": 26,
+      "title": "道路拡幅：掘削して別材料で再盛土",
+      "chapter": "第4章 / 施工例A：掘削と再盛土"
+    },
+    {
+      "page": 27,
+      "title": "入力①：18点と8つの外側境界",
+      "chapter": "第4章 / 施工例A：掘削と再盛土"
+    },
+    {
+      "page": 28,
+      "title": "入力②：材料と初期状態",
+      "chapter": "第4章 / 施工例A：掘削と再盛土"
+    },
+    {
+      "page": 29,
+      "title": "入力③：11工程をそのまま並べる",
+      "chapter": "第4章 / 施工例A：掘削と再盛土"
+    },
+    {
+      "page": 30,
+      "title": "入力④：メッシュ・計算・工程図の比較",
+      "chapter": "第4章 / 施工例A：掘削と再盛土"
+    },
+    {
+      "page": 31,
+      "title": "再盛土例の結果を確認する",
+      "chapter": "第4章 / 施工例A：掘削と再盛土"
+    },
+    {
+      "page": 32,
+      "title": "斜面上のL型擁壁：モデルと材料",
+      "chapter": "第5章 / 施工例B：擁壁とSRM"
+    },
+    {
+      "page": 33,
+      "title": "擁壁施工からSRMまでの入力",
+      "chapter": "第5章 / 施工例B：擁壁とSRM"
+    },
+    {
+      "page": 34,
+      "title": "擁壁の施工3工程を図で比較する",
+      "chapter": "第5章 / 施工例B：擁壁とSRM"
+    },
+    {
+      "page": 35,
+      "title": "擁壁施工後SRM：結果とせん断帯",
+      "chapter": "第5章 / 施工例B：擁壁とSRM"
+    },
+    {
+      "page": 36,
+      "title": "同一メッシュでDAVISとINCONSISTENTを実測",
+      "chapter": "第5章 / 施工例B：擁壁とSRM"
+    },
+    {
+      "page": 37,
+      "title": "流れ則比較：全変位と結果の解釈",
+      "chapter": "第5章 / 施工例B：擁壁とSRM"
+    },
+    {
+      "page": 38,
+      "title": "アンカー補強：等価節点力の入力",
+      "chapter": "第6章 / 施工例C：アンカー相当力"
+    },
+    {
+      "page": 39,
+      "title": "アンカー相当力を加えた結果",
+      "chapter": "第6章 / 施工例C：アンカー相当力"
+    },
+    {
+      "page": 40,
+      "title": "トンネル：地山・空洞・支保占有域",
+      "chapter": "第7章 / 施工例D：トンネル"
+    },
+    {
+      "page": 41,
+      "title": "トンネル：上半掘削・支保から下半へ",
+      "chapter": "第7章 / 施工例D：トンネル"
+    },
+    {
+      "page": 42,
+      "title": "トンネル：4段階の実計算図と数値",
+      "chapter": "第7章 / 施工例D：トンネル"
+    },
+    {
+      "page": 43,
+      "title": "トンネル：施工に伴う変位を読み分ける",
+      "chapter": "第7章 / 施工例D：トンネル"
+    },
+    {
+      "page": 44,
+      "title": "内容名で結果を選び、増分図を重ねる",
+      "chapter": "第8章 / 結果と増分図の読み方"
+    },
+    {
+      "page": 45,
+      "title": "増分図：実際の操作順",
+      "chapter": "第8章 / 結果と増分図の読み方"
+    },
+    {
+      "page": 46,
+      "title": "増分値の定義・集計・誤読しやすい点",
+      "chapter": "第8章 / 結果と増分図の読み方"
+    },
+    {
+      "page": 47,
+      "title": "A：応力に増分等値線と塑性クロスを重ねる",
+      "chapter": "第8章 / 結果と増分図の読み方"
+    },
     {
       "page": 48,
-      "title": "道路拡幅：掘削して別材料で再盛土"
+      "title": "B：増分カラーでせん断集中域を見る",
+      "chapter": "第8章 / 結果と増分図の読み方"
     },
     {
       "page": 49,
-      "title": "入力①：18点と8つの外側境界"
+      "title": "結果表・Fs・残差を対応させる",
+      "chapter": "第8章 / 結果と増分図の読み方"
     },
     {
       "page": 50,
-      "title": "入力②：材料と初期状態"
+      "title": "保存・ログ・チェックポイント再開",
+      "chapter": "第9章 / 保存・比較・トラブル対応"
     },
     {
       "page": 51,
-      "title": "入力③：11工程をそのまま並べる"
+      "title": "よくある問題と切り分け",
+      "chapter": "第9章 / 保存・比較・トラブル対応"
     },
     {
       "page": 52,
-      "title": "入力④：メッシュ・計算・工程図の比較"
+      "title": "ケース比較と結果を残すチェック表",
+      "chapter": "第9章 / 保存・比較・トラブル対応"
     },
     {
       "page": 53,
-      "title": "増分図：実際の操作順"
+      "title": "メッシュ設定：使う値・使わない値",
+      "chapter": "付録A / 設定一覧"
     },
     {
       "page": 54,
-      "title": "実計算A：応力と増分の集中を同時に見る"
+      "title": "形状入力と旧設定の互換性",
+      "chapter": "付録A / 設定一覧"
     },
     {
       "page": 55,
-      "title": "実計算B：増分カラーで集中位置を見る"
+      "title": "解析設定：設定一覧 1～9",
+      "chapter": "付録A / 設定一覧"
     },
     {
       "page": 56,
-      "title": "増分値の定義・集計・誤読しやすい点"
+      "title": "高速化設定：設定一覧 1～8",
+      "chapter": "付録A / 設定一覧"
     },
     {
       "page": 57,
-      "title": "再盛土例：既存の計算記録をどう読むか"
+      "title": "高速化設定：設定一覧 9～15",
+      "chapter": "付録A / 設定一覧"
     },
     {
       "page": 58,
-      "title": "L型擁壁：道路拡幅の土留めを施工する"
+      "title": "高速化設定：設定一覧 16～22",
+      "chapter": "付録A / 設定一覧"
     },
     {
       "page": 59,
-      "title": "L型擁壁：材料・工程と弾性の確認"
+      "title": "出力・表示：保存・再開・変位倍率",
+      "chapter": "付録A / 設定一覧"
     },
     {
       "page": 60,
-      "title": "アンカー付き掘削：現行では等価荷重例"
+      "title": "出力・表示：内容名・増分オプション",
+      "chapter": "付録A / 設定一覧"
     },
     {
       "page": 61,
-      "title": "トンネル：上半・下半掘削と支保"
+      "title": "詳細設定：設定一覧 1～7",
+      "chapter": "付録A / 設定一覧"
     },
     {
       "page": 62,
-      "title": "斜面上の擁壁施工を含めたSRM"
+      "title": "詳細設定：設定一覧 8～14",
+      "chapter": "付録A / 設定一覧"
     },
     {
       "page": 63,
-      "title": "追補用語と検証範囲"
+      "title": "詳細設定：設定一覧 15～21",
+      "chapter": "付録A / 設定一覧"
+    },
+    {
+      "page": 64,
+      "title": "出典・作図方法・検証記録",
+      "chapter": "付録B / 根拠と再現"
+    },
+    {
+      "page": 65,
+      "title": "版の識別・計算結果を伝える項目",
+      "chapter": "付録B / 根拠と再現"
+    },
+    {
+      "page": 66,
+      "title": "既存の回帰図・入力UI検証の出典",
+      "chapter": "付録B / 根拠と再現"
+    },
+    {
+      "page": 67,
+      "title": "用語集 1-9",
+      "chapter": "付録C / 用語集"
+    },
+    {
+      "page": 68,
+      "title": "用語集 10-18",
+      "chapter": "付録C / 用語集"
+    },
+    {
+      "page": 69,
+      "title": "用語集 19-27",
+      "chapter": "付録C / 用語集"
+    },
+    {
+      "page": 70,
+      "title": "用語集 28-36",
+      "chapter": "付録C / 用語集"
+    },
+    {
+      "page": 71,
+      "title": "用語集 37-42",
+      "chapter": "付録C / 用語集"
     }
   ],
-  "render_check": "PASS all 63 pages rendered with Poppler; contact sheets inspected, updated pages and actual figures inspected at full size",
-  "text_check": "PASS 63 numbered pages, no replacement glyphs or near-empty pages",
-  "source_review": "PASS current main stage, material, load, strain display paths and workbook XML labels/cells",
-  "actual_figures": [
+  "cases": [
     {
-      "path": "docs/strain-increment-evidence/20261020/actual_A.svg",
-      "sha256": "8161d7e5b6dd5a2016204647b44633924e849a0769254d76d6be486fa9529183"
+      "case": "wall_davis08",
+      "status": "PASS",
+      "stage": 4,
+      "nodes": 1857,
+      "elements": 580,
+      "active_elements": 580,
+      "seconds": 111.9453357,
+      "max_displacement_m": 0.035442277788496825,
+      "relative_residual": 2.694406018493536e-06,
+      "reaction_y_kN": 8746.819999999596,
+      "min_reference_jacobian": 0.004012769207712201,
+      "min_deformed_jacobian_scale1": 0.004012774890132767,
+      "dense_11x11_jacobian": {
+        "reference": 0.001428502615121116,
+        "deformed": 0.001428503219399488
+      },
+      "deformed_geometry_valid": true,
+      "invalid_deformed_elements": [],
+      "max_shear_increment": 0.00010361482311451257,
+      "fixed_disp_max": 3.4908179328670823e-35,
+      "fs_pass": 1.7000000000000006,
+      "fs_fail": 1.7125000000000006,
+      "fos_interpretation": "NUMERICAL_BRACKET",
+      "note": "FOS_PASS=1.700 FOS_FAIL=1.713 FOS_MID=1.706 FOS_WIDTH=0.013 FOS=1.706 ± 0.006 試行=12 判定=NUMERICAL_BRACKET（収束境界の推定。物理破壊・設計安全率の確定値ではありません）"
     },
     {
-      "path": "docs/strain-increment-evidence/20261020/actual_B.svg",
-      "sha256": "4948780a02482729305c8f910052141aae24a3a4e8a1664ab91781abc0d858b7"
+      "case": "anchor_inco",
+      "status": "PASS",
+      "stage": 5,
+      "nodes": 1857,
+      "elements": 580,
+      "active_elements": 580,
+      "seconds": 3865.8058969,
+      "max_displacement_m": 0.023523660004540765,
+      "relative_residual": 4.6568024874516776e-08,
+      "reaction_y_kN": 8746.820000000005,
+      "min_reference_jacobian": 0.004012769207712201,
+      "min_deformed_jacobian_scale1": 0.004012754285955705,
+      "dense_11x11_jacobian": {
+        "reference": 0.001428502615121116,
+        "deformed": 0.001428508097544448
+      },
+      "deformed_geometry_valid": true,
+      "invalid_deformed_elements": [],
+      "max_shear_increment": 0.00013517724750175905,
+      "fixed_disp_max": 0.0,
+      "fs_pass": 1.7250000000000005,
+      "fs_fail": 1.7375000000000007,
+      "fos_interpretation": "NUMERICAL_BRACKET",
+      "note": "FOS_PASS=1.725 FOS_FAIL=1.738 FOS_MID=1.731 FOS_WIDTH=0.013 FOS=1.731 ± 0.006 試行=12 判定=NUMERICAL_BRACKET（収束境界の推定。物理破壊・設計安全率の確定値ではありません）"
+    },
+    {
+      "case": "tunnel10",
+      "status": "PASS",
+      "stage": 10,
+      "nodes": 497,
+      "elements": 160,
+      "active_elements": 112,
+      "seconds": 15.1538297,
+      "max_displacement_m": 0.07681333938607011,
+      "relative_residual": 7.100012514792456e-06,
+      "reaction_y_kN": 49598.05125790799,
+      "min_reference_jacobian": 0.08484577318466237,
+      "min_deformed_jacobian_scale1": 0.08479352237516664,
+      "dense_11x11_jacobian": {
+        "reference": 0.07483729767971592,
+        "deformed": 0.0747853580927833
+      },
+      "deformed_geometry_valid": true,
+      "invalid_deformed_elements": [],
+      "max_shear_increment": 4.583216821223032e-06,
+      "fixed_disp_max": 0.0,
+      "fs_pass": 3.0,
+      "fs_fail": null,
+      "fos_interpretation": "LOWER_BOUND",
+      "note": "FOS_PASS=3.000 FOS_FAIL=NA FOS_MID=3.000 FOS_WIDTH=NA 試行=21 判定=LOWER_BOUND FMAXまで収束"
     }
   ],
-  "historical_construction_evidence": [
+  "glossary_entries": 42,
+  "pdf_sha256": "18f2e0275b2c4dae3230dcccb1dd59e240600872991c753c0e2124d3a5a78b0d",
+  "revision": "Unified chapters; actual wall/anchor/tunnel copies; matched DAVIS and INCONSISTENT SRM",
+  "reference_main": "f144d88008c1575cb8042ea48005202c0208d7bb",
+  "book_sha256": "1e46355ca510b05509b92beaef712118417bceea171ff40ce02b0226cd5e9a06",
+  "dll_sha256": "ad5c2ae81512ba8e977002415a6a5339b621c00a1bbabe5092559f8a7f9e0797",
+  "scope": "Documentation, reproduction fixtures/harness/checker and calculated copies. No public workbook/VBA/DLL edits.",
+  "excel_compile": "PASS before every run",
+  "application_modules": "All nonempty embedded VBA modules unchanged in every completed run",
+  "runtime_cutoff": false,
+  "quality_limitations": [
+    "Fine-mesh INCONSISTENT final deformed geometry invalid at scale1; numerical result only, excluded from example figures",
+    "Anchor DAVIS failed at LOAD4; VBA OFF reproduces failure; use independently verified INCONSISTENT example",
+    "Tunnel Fs3 is LOWER_BOUND; support-only weight gap is accounted for by free-DOF residuals"
+  ],
+  "full_case_records": [
     {
-      "path": "docs/manuals/construction-evidence/native_11_stages.json.gz",
-      "sha256": "733d8aa2c0b62ab6f9b67395fc83766256dc76b2152e0054bd5cd23e9cc78938"
+      "case": "wall_davis08",
+      "status": "PASS",
+      "seconds": 111.9453357,
+      "nodes": 1857,
+      "elements": 580,
+      "application_code_unchanged": true,
+      "native_dll_policy": "AUTO",
+      "input": "tests/manual_cases/slope_wall_shape.json",
+      "input_sha256": "0cdbc76415494b1f21c2927e63576f64818dc216a453661be51dd6dca105bbb1"
     },
     {
-      "path": "docs/manuals/construction-evidence/vba_11_stages.json.gz",
-      "sha256": "ef9249f855455571658b579c933b0b11932c4a789d614d8af100d44f50aa37b7"
+      "case": "wall_inco11",
+      "status": "PASS",
+      "seconds": 15503.8652446,
+      "nodes": 3383,
+      "elements": 1074,
+      "application_code_unchanged": true,
+      "native_dll_policy": "AUTO",
+      "input": "tests/manual_cases/slope_wall_fine_mesh.json",
+      "input_sha256": "2ef82137f0640667b0a4d898ad59b6ea75fab44cde7da0b899f6356fe2aa5c74"
     },
     {
-      "path": "docs/manuals/construction-evidence/history_probes.json.gz",
-      "sha256": "10b70b425a7f26a03bba2ff18e2f8602c68ecb3938e5de882eaebaef1a2480e7"
+      "case": "wall_davis12",
+      "status": "PASS",
+      "seconds": 299.8932427,
+      "nodes": 3383,
+      "elements": 1074,
+      "application_code_unchanged": true,
+      "native_dll_policy": "AUTO",
+      "input": "tests/manual_cases/slope_wall_fine_mesh.json",
+      "input_sha256": "2ef82137f0640667b0a4d898ad59b6ea75fab44cde7da0b899f6356fe2aa5c74"
     },
     {
-      "path": "docs/manuals/construction-evidence/optional_srm_undetermined.json.gz",
-      "sha256": "045e47f7b81a5ab5ef9d84bea799829bc24c05d46374ce8daebe224a11db54bb"
+      "case": "anchor09",
+      "status": "NONCONVERGED",
+      "seconds": 5.7736844,
+      "nodes": 1857,
+      "elements": 580,
+      "application_code_unchanged": true,
+      "native_dll_policy": "AUTO",
+      "input": "tests/manual_cases/slope_wall_mesh.json",
+      "input_sha256": "ad7b8727cfd70526a65e8e4d67daaf3e556b09a43ff1a4765d5dbac88b7b00f2"
     },
     {
-      "path": "docs/manuals/construction-evidence/numeric_comparison.json",
-      "sha256": "76069a12b8229a0c8b5d1775c925bb7ebc8b8959b0f62f19070fbbf5e8defbc2"
+      "case": "anchor_vba",
+      "status": "NONCONVERGED",
+      "seconds": 122.7253846,
+      "nodes": 1857,
+      "elements": 580,
+      "application_code_unchanged": true,
+      "native_dll_policy": "OFF",
+      "input": "tests/manual_cases/slope_wall_mesh.json",
+      "input_sha256": "ad7b8727cfd70526a65e8e4d67daaf3e556b09a43ff1a4765d5dbac88b7b00f2"
+    },
+    {
+      "case": "anchor_inco",
+      "status": "PASS",
+      "seconds": 3865.8058969,
+      "nodes": 1857,
+      "elements": 580,
+      "application_code_unchanged": true,
+      "native_dll_policy": "AUTO",
+      "input": "tests/manual_cases/slope_wall_mesh.json",
+      "input_sha256": "ad7b8727cfd70526a65e8e4d67daaf3e556b09a43ff1a4765d5dbac88b7b00f2"
+    },
+    {
+      "case": "tunnel10",
+      "status": "PASS",
+      "seconds": 15.1538297,
+      "nodes": 497,
+      "elements": 160,
+      "application_code_unchanged": true,
+      "native_dll_policy": "AUTO",
+      "input": "tests/manual_cases/tunnel_mesh.json",
+      "input_sha256": "b10da259b5a3e73a1e695c778ce41656373bd6dcbae56fb2f196714483e40c1c"
     }
   ],
-  "limitations": [
-    "Structural/anchor/tunnel/slope-wall examples are uncomputed input plans and schematics, not verified result cases.",
-    "STRUCT does not disable plasticity by label; flags and state require checking.",
-    "Dedicated anchors, beams, tunnel stress release and 3D face effects unsupported.",
-    "Optional historical post-refill SRM is UNDETERMINED, not an Fs bracket."
-  ],
-  "previous_47_page_edition": {
-    "pdf": "2DSoilFEM_Detailed_Manual_20261020.pdf",
-    "pages": 47,
-    "figures": 19,
-    "canonical_settings": 83,
-    "glossary_entries": 36,
-    "book_sha256": "cd71e11dc7cc0e3e6a92150effc30c619a6b9257ccab076b88b6929fb252dfa1",
-    "source_solver_csv_sha256": "86EBB842467E56AAAFFA289784C0A68241A3E75E886414EE7C7E4A6FE0244B7C",
-    "rcm_original_bandwidth": 69,
-    "rcm_candidate_bandwidth": 33,
-    "fixed_displacement_max_m": 0.0034253620146453227,
-    "boundary_components_checked": 50,
-    "planned_pages": [
-      "2D Soil FEM\n図でわかる詳細操作説明書",
-      "目的別の読み方と目次",
-      "できること・できないこと",
-      "起動・フォルダー・DLLの選び方",
-      "操作パネルと画面の役割",
-      "入力と出力を見分ける",
-      "既存モデルで最初の解析",
-      "単位・座標・符号をそろえる",
-      "材料データ A:M",
-      "節点・拘束とQ8要素",
-      "簡易メッシュ①を作る",
-      "形状メッシュ②と品質・再メッシュ",
-      "載荷 A:Jと合力の落とし穴",
-      "施工ステージ A:F",
-      "接合JOINTと材料の切替",
-      "解析設定と推奨値の範囲",
-      "高速化設定・DLLなしの運用",
-      "実行前の検査・エラー修正",
-      "増分・反復・収束を図で理解する",
-      "SRMの仕組みとFsの意味",
-      "Fs区間を点の安全率にしない",
-      "計算例の条件を固定する",
-      "変形図と変位分布を読む",
-      "局所変位・Fs・残差を併せて読む",
-      "残差と比較検証の実例",
-      "結果表と図の対応",
-      "応力・ひずみの色図を読み違えない",
-      "保存・ログ・チェックポイント再開",
-      "よくある問題と切り分け",
-      "ケース比較と結果を残すチェック表",
-      "メッシュ設定：設定一覧 1～9",
-      "メッシュ設定：設定一覧 10～17",
-      "解析設定：設定一覧 1～9",
-      "高速化設定：設定一覧 1～8",
-      "高速化設定：設定一覧 9～15",
-      "高速化設定：設定一覧 16～22",
-      "出力・表示：設定一覧 1～7",
-      "出力・表示：設定一覧 8～14",
-      "詳細設定：設定一覧 1～7",
-      "詳細設定：設定一覧 8～14",
-      "詳細設定：設定一覧 15～21",
-      "用語集 1～9",
-      "用語集 10～18",
-      "用語集 19～27",
-      "用語集 28～36",
-      "出典・図の作り方・検証範囲",
-      "参照先・版の識別"
+  "matched_flow_comparison": {
+    "same_mesh_material_stages_loads": true,
+    "setting_differences": {
+      "FLOW_POLICY": [
+        "INCONSISTENT",
+        "DAVIS"
+      ]
+    },
+    "runs": [
+      {
+        "case": "wall_inco11",
+        "status": "PASS",
+        "seconds": 15503.8652446,
+        "Fs_PASS": 1.7125000000000006,
+        "Fs_FAIL": 1.7250000000000005,
+        "interpretation": "NUMERICAL_BRACKET",
+        "note": "FOS_PASS=1.713 FOS_FAIL=1.725 FOS_MID=1.719 FOS_WIDTH=0.013 FOS=1.719 ± 0.006 試行=12 判定=NUMERICAL_BRACKET（収束境界の推定。物理破壊・設計安全率の確定値ではありません）",
+        "relative_residual": 2.223571414422596e-06,
+        "trials": [
+          {
+            "ver": "20261020_INCO_ELEMENT_01",
+            "fs": "1.000",
+            "numerical_status": "CONVERGED",
+            "mechanical_status": "STABLE",
+            "elapsed_s": "21.750",
+            "inc": "18",
+            "newton": "19",
+            "factor": "18",
+            "reuse": "1",
+            "umax": "9.656E-03",
+            "umax_over_H": "6.035E-04",
+            "limit_candidate": "0",
+            "first_candidate_inc": "NA",
+            "first_candidate_umax": "NA",
+            "max_compliance_ratio": "NA",
+            "relres": "1.087E-06",
+            "energy": "4.621E-08",
+            "newton_policy": "ROBUST_SRM",
+            "ls50_enabled": "1",
+            "ls50_tried": "0",
+            "ls50_ok": "0",
+            "ls50_saved": "0",
+            "ls50_gate_policy_reject": "0",
+            "ls50_gate_disabled": "0",
+            "ls50_gate_alpha_reject": "0",
+            "ls50_gate_qls_reject": "0",
+            "ls50_gate_cutback_reject": "0",
+            "ls50_gate_active_reject": "0",
+            "ls50_gate_residual_reject": "0",
+            "ls50_gate_factor_invalid": "1",
+            "band_kernel": "NEW",
+            "factor_avg_ms": "1063.802",
+            "trial_classification": "CONVERGED",
+            "failure_kind": "NONE",
+            "failure_lambda": "0.000000000000",
+            "failure_relres": "0.000E+00",
+            "failure_linear_relres": "0.000E+00",
+            "failure_correction": "0.000E+00",
+            "failure_plastic_points": "0",
+            "failure_umax": "0.000E+00"
+          },
+          {
+            "ver": "20261020_INCO_ELEMENT_01",
+            "fs": "1.100",
+            "numerical_status": "CONVERGED",
+            "mechanical_status": "STABLE",
+            "elapsed_s": "30.688",
+            "inc": "20",
+            "newton": "28",
+            "factor": "27",
+            "reuse": "1",
+            "umax": "9.683E-03",
+            "umax_over_H": "6.052E-04",
+            "limit_candidate": "0",
+            "first_candidate_inc": "NA",
+            "first_candidate_umax": "NA",
+            "max_compliance_ratio": "NA",
+            "relres": "9.540E-09",
+            "energy": "5.027E-10",
+            "newton_policy": "ROBUST_SRM",
+            "ls50_enabled": "1",
+            "ls50_tried": "0",
+            "ls50_ok": "0",
+            "ls50_saved": "0",
+            "ls50_gate_policy_reject": "0",
+            "ls50_gate_disabled": "0",
+            "ls50_gate_alpha_reject": "0",
+            "ls50_gate_qls_reject": "0",
+            "ls50_gate_cutback_reject": "0",
+            "ls50_gate_active_reject": "0",
+            "ls50_gate_residual_reject": "0",
+            "ls50_gate_factor_invalid": "1",
+            "band_kernel": "NEW",
+            "factor_avg_ms": "1017.940",
+            "trial_classification": "CONVERGED",
+            "failure_kind": "NONE",
+            "failure_lambda": "0.000000000000",
+            "failure_relres": "0.000E+00",
+            "failure_linear_relres": "0.000E+00",
+            "failure_correction": "0.000E+00",
+            "failure_plastic_points": "0",
+            "failure_umax": "0.000E+00"
+          },
+          {
+            "ver": "20261020_INCO_ELEMENT_01",
+            "fs": "1.200",
+            "numerical_status": "CONVERGED",
+            "mechanical_status": "STABLE",
+            "elapsed_s": "48.156",
+            "inc": "21",
+            "newton": "52",
+            "factor": "52",
+            "reuse": "0",
+            "umax": "9.965E-03",
+            "umax_over_H": "6.228E-04",
+            "limit_candidate": "0",
+            "first_candidate_inc": "NA",
+            "first_candidate_umax": "NA",
+            "max_compliance_ratio": "NA",
+            "relres": "2.934E-08",
+            "energy": "1.950E-09",
+            "newton_policy": "ROBUST_SRM",
+            "ls50_enabled": "1",
+            "ls50_tried": "0",
+            "ls50_ok": "0",
+            "ls50_saved": "0",
+            "ls50_gate_policy_reject": "0",
+            "ls50_gate_disabled": "0",
+            "ls50_gate_alpha_reject": "0",
+            "ls50_gate_qls_reject": "0",
+            "ls50_gate_cutback_reject": "0",
+            "ls50_gate_active_reject": "0",
+            "ls50_gate_residual_reject": "0",
+            "ls50_gate_factor_invalid": "5",
+            "band_kernel": "NEW",
+            "factor_avg_ms": "839.093",
+            "trial_classification": "CONVERGED",
+            "failure_kind": "NONE",
+            "failure_lambda": "0.000000000000",
+            "failure_relres": "0.000E+00",
+            "failure_linear_relres": "0.000E+00",
+            "failure_correction": "0.000E+00",
+            "failure_plastic_points": "0",
+            "failure_umax": "0.000E+00"
+          },
+          {
+            "ver": "20261020_INCO_ELEMENT_01",
+            "fs": "1.300",
+            "numerical_status": "CONVERGED",
+            "mechanical_status": "STABLE",
+            "elapsed_s": "133.969",
+            "inc": "27",
+            "newton": "144",
+            "factor": "144",
+            "reuse": "0",
+            "umax": "1.044E-02",
+            "umax_over_H": "6.523E-04",
+            "limit_candidate": "0",
+            "first_candidate_inc": "NA",
+            "first_candidate_umax": "NA",
+            "max_compliance_ratio": "NA",
+            "relres": "2.027E-09",
+            "energy": "4.699E-12",
+            "newton_policy": "ROBUST_SRM",
+            "ls50_enabled": "1",
+            "ls50_tried": "0",
+            "ls50_ok": "0",
+            "ls50_saved": "0",
+            "ls50_gate_policy_reject": "0",
+            "ls50_gate_disabled": "0",
+            "ls50_gate_alpha_reject": "0",
+            "ls50_gate_qls_reject": "0",
+            "ls50_gate_cutback_reject": "0",
+            "ls50_gate_active_reject": "0",
+            "ls50_gate_residual_reject": "0",
+            "ls50_gate_factor_invalid": "22",
+            "band_kernel": "NEW",
+            "factor_avg_ms": "659.017",
+            "trial_classification": "CONVERGED",
+            "failure_kind": "NONE",
+            "failure_lambda": "0.000000000000",
+            "failure_relres": "0.000E+00",
+            "failure_linear_relres": "0.000E+00",
+            "failure_correction": "0.000E+00",
+            "failure_plastic_points": "0",
+            "failure_umax": "0.000E+00"
+          },
+          {
+            "ver": "20261020_INCO_ELEMENT_01",
+            "fs": "1.400",
+            "numerical_status": "CONVERGED",
+            "mechanical_status": "STABLE",
+            "elapsed_s": "233.313",
+            "inc": "32",
+            "newton": "282",
+            "factor": "237",
+            "reuse": "45",
+            "umax": "1.102E-02",
+            "umax_over_H": "6.888E-04",
+            "limit_candidate": "0",
+            "first_candidate_inc": "NA",
+            "first_candidate_umax": "NA",
+            "max_compliance_ratio": "NA",
+            "relres": "1.658E-06",
+            "energy": "3.107E-08",
+            "newton_policy": "ROBUST_SRM",
+            "ls50_enabled": "1",
+            "ls50_tried": "0",
+            "ls50_ok": "0",
+            "ls50_saved": "0",
+            "ls50_gate_policy_reject": "0",
+            "ls50_gate_disabled": "0",
+            "ls50_gate_alpha_reject": "0",
+            "ls50_gate_qls_reject": "0",
+            "ls50_gate_cutback_reject": "0",
+            "ls50_gate_active_reject": "0",
+            "ls50_gate_residual_reject": "0",
+            "ls50_gate_factor_invalid": "26",
+            "band_kernel": "NEW",
+            "factor_avg_ms": "630.604",
+            "trial_classification": "CONVERGED",
+            "failure_kind": "NONE",
+            "failure_lambda": "0.000000000000",
+            "failure_relres": "0.000E+00",
+            "failure_linear_relres": "0.000E+00",
+            "failure_correction": "0.000E+00",
+            "failure_plastic_points": "0",
+            "failure_umax": "0.000E+00"
+          },
+          {
+            "ver": "20261020_INCO_ELEMENT_01",
+            "fs": "1.500",
+            "numerical_status": "CONVERGED",
+            "mechanical_status": "STABLE",
+            "elapsed_s": "166.719",
+            "inc": "29",
+            "newton": "175",
+            "factor": "175",
+            "reuse": "0",
+            "umax": "1.164E-02",
+            "umax_over_H": "7.276E-04",
+            "limit_candidate": "0",
+            "first_candidate_inc": "NA",
+            "first_candidate_umax": "NA",
+            "max_compliance_ratio": "NA",
+            "relres": "8.318E-09",
+            "energy": "4.939E-11",
+            "newton_policy": "ROBUST_SRM",
+            "ls50_enabled": "1",
+            "ls50_tried": "0",
+            "ls50_ok": "0",
+            "ls50_saved": "0",
+            "ls50_gate_policy_reject": "0",
+            "ls50_gate_disabled": "0",
+            "ls50_gate_alpha_reject": "0",
+            "ls50_gate_qls_reject": "0",
+            "ls50_gate_cutback_reject": "0",
+            "ls50_gate_active_reject": "0",
+            "ls50_gate_residual_reject": "0",
+            "ls50_gate_factor_invalid": "27",
+            "band_kernel": "NEW",
+            "factor_avg_ms": "674.286",
+            "trial_classification": "CONVERGED",
+            "failure_kind": "NONE",
+            "failure_lambda": "0.000000000000",
+            "failure_relres": "0.000E+00",
+            "failure_linear_relres": "0.000E+00",
+            "failure_correction": "0.000E+00",
+            "failure_plastic_points": "0",
+            "failure_umax": "0.000E+00"
+          },
+          {
+            "ver": "20261020_INCO_ELEMENT_01",
+            "fs": "1.600",
+            "numerical_status": "CONVERGED",
+            "mechanical_status": "STABLE",
+            "elapsed_s": "91.445",
+            "inc": "30",
+            "newton": "113",
+            "factor": "113",
+            "reuse": "0",
+            "umax": "1.237E-02",
+            "umax_over_H": "7.734E-04",
+            "limit_candidate": "0",
+            "first_candidate_inc": "NA",
+            "first_candidate_umax": "NA",
+            "max_compliance_ratio": "NA",
+            "relres": "1.664E-07",
+            "energy": "4.431E-10",
+            "newton_policy": "ROBUST_SRM",
+            "ls50_enabled": "1",
+            "ls50_tried": "0",
+            "ls50_ok": "0",
+            "ls50_saved": "0",
+            "ls50_gate_policy_reject": "0",
+            "ls50_gate_disabled": "0",
+            "ls50_gate_alpha_reject": "0",
+            "ls50_gate_qls_reject": "0",
+            "ls50_gate_cutback_reject": "0",
+            "ls50_gate_active_reject": "0",
+            "ls50_gate_residual_reject": "0",
+            "ls50_gate_factor_invalid": "11",
+            "band_kernel": "NEW",
+            "factor_avg_ms": "738.385",
+            "trial_classification": "CONVERGED",
+            "failure_kind": "NONE",
+            "failure_lambda": "0.000000000000",
+            "failure_relres": "0.000E+00",
+            "failure_linear_relres": "0.000E+00",
+            "failure_correction": "0.000E+00",
+            "failure_plastic_points": "0",
+            "failure_umax": "0.000E+00"
+          },
+          {
+            "ver": "20261020_INCO_ELEMENT_01",
+            "fs": "1.700",
+            "numerical_status": "CONVERGED",
+            "mechanical_status": "STABLE",
+            "elapsed_s": "583.102",
+            "inc": "32",
+            "newton": "458",
+            "factor": "359",
+            "reuse": "99",
+            "umax": "1.789E-02",
+            "umax_over_H": "1.118E-03",
+            "limit_candidate": "0",
+            "first_candidate_inc": "NA",
+            "first_candidate_umax": "NA",
+            "max_compliance_ratio": "NA",
+            "relres": "1.708E-06",
+            "energy": "3.868E-09",
+            "newton_policy": "ROBUST_SRM",
+            "ls50_enabled": "1",
+            "ls50_tried": "0",
+            "ls50_ok": "0",
+            "ls50_saved": "0",
+            "ls50_gate_policy_reject": "0",
+            "ls50_gate_disabled": "0",
+            "ls50_gate_alpha_reject": "0",
+            "ls50_gate_qls_reject": "0",
+            "ls50_gate_cutback_reject": "0",
+            "ls50_gate_active_reject": "0",
+            "ls50_gate_residual_reject": "0",
+            "ls50_gate_factor_invalid": "28",
+            "band_kernel": "NEW",
+            "factor_avg_ms": "550.923",
+            "trial_classification": "CONVERGED",
+            "failure_kind": "NONE",
+            "failure_lambda": "0.000000000000",
+            "failure_relres": "0.000E+00",
+            "failure_linear_relres": "0.000E+00",
+            "failure_correction": "0.000E+00",
+            "failure_plastic_points": "0",
+            "failure_umax": "0.000E+00"
+          },
+          {
+            "ver": "20261020_INCO_ELEMENT_01",
+            "fs": "1.800",
+            "numerical_status": "FAILED",
+            "mechanical_status": "UNKNOWN",
+            "elapsed_s": "5370.738",
+            "inc": "54",
+            "newton": "2519",
+            "factor": "1879",
+            "reuse": "641",
+            "umax": "2.232E-01",
+            "umax_over_H": "1.395E-02",
+            "limit_candidate": "0",
+            "first_candidate_inc": "NA",
+            "first_candidate_umax": "NA",
+            "max_compliance_ratio": "NA",
+            "relres": "1.012E-05",
+            "energy": "1.174E-04",
+            "newton_policy": "ROBUST_SRM",
+            "ls50_enabled": "1",
+            "ls50_tried": "0",
+            "ls50_ok": "0",
+            "ls50_saved": "0",
+            "ls50_gate_policy_reject": "0",
+            "ls50_gate_disabled": "0",
+            "ls50_gate_alpha_reject": "0",
+            "ls50_gate_qls_reject": "0",
+            "ls50_gate_cutback_reject": "0",
+            "ls50_gate_active_reject": "0",
+            "ls50_gate_residual_reject": "0",
+            "ls50_gate_factor_invalid": "594",
+            "band_kernel": "NEW",
+            "factor_avg_ms": "384.926",
+            "trial_classification": "NONCONVERGENCE_BOUNDARY",
+            "failure_kind": "LINE_SEARCH",
+            "failure_lambda": "0.911994079620",
+            "failure_relres": "1.012E-05",
+            "failure_linear_relres": "4.585E-13",
+            "failure_correction": "3.176E-09",
+            "failure_plastic_points": "1144",
+            "failure_umax": "2.232E-01"
+          },
+          {
+            "ver": "20261020_INCO_ELEMENT_01",
+            "fs": "1.750",
+            "numerical_status": "FAILED",
+            "mechanical_status": "UNKNOWN",
+            "elapsed_s": "4092.487",
+            "inc": "27",
+            "newton": "2334",
+            "factor": "1573",
+            "reuse": "761",
+            "umax": "2.088E-01",
+            "umax_over_H": "1.305E-02",
+            "limit_candidate": "0",
+            "first_candidate_inc": "NA",
+            "first_candidate_umax": "NA",
+            "max_compliance_ratio": "NA",
+            "relres": "1.009E-05",
+            "energy": "1.153E-04",
+            "newton_policy": "ROBUST_SRM",
+            "ls50_enabled": "1",
+            "ls50_tried": "0",
+            "ls50_ok": "0",
+            "ls50_saved": "0",
+            "ls50_gate_policy_reject": "0",
+            "ls50_gate_disabled": "0",
+            "ls50_gate_alpha_reject": "0",
+            "ls50_gate_qls_reject": "0",
+            "ls50_gate_cutback_reject": "0",
+            "ls50_gate_active_reject": "0",
+            "ls50_gate_residual_reject": "0",
+            "ls50_gate_factor_invalid": "443",
+            "band_kernel": "NEW",
+            "factor_avg_ms": "405.629",
+            "trial_classification": "NONCONVERGENCE_BOUNDARY",
+            "failure_kind": "LINE_SEARCH",
+            "failure_lambda": "0.960873306824",
+            "failure_relres": "1.009E-05",
+            "failure_linear_relres": "4.097E-13",
+            "failure_correction": "1.670E-09",
+            "failure_plastic_points": "1062",
+            "failure_umax": "2.088E-01"
+          },
+          {
+            "ver": "20261020_INCO_ELEMENT_01",
+            "fs": "1.725",
+            "numerical_status": "FAILED",
+            "mechanical_status": "UNKNOWN",
+            "elapsed_s": "4292.492",
+            "inc": "25",
+            "newton": "2140",
+            "factor": "1465",
+            "reuse": "677",
+            "umax": "2.123E-01",
+            "umax_over_H": "1.327E-02",
+            "limit_candidate": "0",
+            "first_candidate_inc": "NA",
+            "first_candidate_umax": "NA",
+            "max_compliance_ratio": "NA",
+            "relres": "1.013E-05",
+            "energy": "1.148E-04",
+            "newton_policy": "ROBUST_SRM",
+            "ls50_enabled": "1",
+            "ls50_tried": "0",
+            "ls50_ok": "0",
+            "ls50_saved": "0",
+            "ls50_gate_policy_reject": "0",
+            "ls50_gate_disabled": "0",
+            "ls50_gate_alpha_reject": "0",
+            "ls50_gate_qls_reject": "0",
+            "ls50_gate_cutback_reject": "0",
+            "ls50_gate_active_reject": "0",
+            "ls50_gate_residual_reject": "0",
+            "ls50_gate_factor_invalid": "447",
+            "band_kernel": "NEW",
+            "factor_avg_ms": "377.306",
+            "trial_classification": "NONCONVERGENCE_BOUNDARY",
+            "failure_kind": "LINE_SEARCH",
+            "failure_lambda": "0.987589131970",
+            "failure_relres": "1.013E-05",
+            "failure_linear_relres": "4.317E-13",
+            "failure_correction": "6.532E-09",
+            "failure_plastic_points": "1104",
+            "failure_umax": "2.123E-01"
+          },
+          {
+            "ver": "20261020_INCO_ELEMENT_01",
+            "fs": "1.713",
+            "numerical_status": "CONVERGED",
+            "mechanical_status": "STABLE",
+            "elapsed_s": "412.384",
+            "inc": "50",
+            "newton": "682",
+            "factor": "405",
+            "reuse": "277",
+            "umax": "1.770E-01",
+            "umax_over_H": "1.106E-02",
+            "limit_candidate": "0",
+            "first_candidate_inc": "NA",
+            "first_candidate_umax": "NA",
+            "max_compliance_ratio": "NA",
+            "relres": "2.211E-06",
+            "energy": "3.509E-08",
+            "newton_policy": "ROBUST_SRM",
+            "ls50_enabled": "1",
+            "ls50_tried": "0",
+            "ls50_ok": "0",
+            "ls50_saved": "0",
+            "ls50_gate_policy_reject": "0",
+            "ls50_gate_disabled": "0",
+            "ls50_gate_alpha_reject": "0",
+            "ls50_gate_qls_reject": "0",
+            "ls50_gate_cutback_reject": "0",
+            "ls50_gate_active_reject": "0",
+            "ls50_gate_residual_reject": "0",
+            "ls50_gate_factor_invalid": "50",
+            "band_kernel": "NEW",
+            "factor_avg_ms": "600.075",
+            "trial_classification": "CONVERGED",
+            "failure_kind": "NONE",
+            "failure_lambda": "0.000000000000",
+            "failure_relres": "0.000E+00",
+            "failure_linear_relres": "0.000E+00",
+            "failure_correction": "0.000E+00",
+            "failure_plastic_points": "0",
+            "failure_umax": "0.000E+00"
+          }
+        ],
+        "geometry": {
+          "case": "wall_inco11",
+          "status": "PASS",
+          "stage": 4,
+          "nodes": 3383,
+          "elements": 1074,
+          "active_elements": 1074,
+          "seconds": 15503.8652446,
+          "max_displacement_m": 0.18034918131169564,
+          "relative_residual": 2.223571414422596e-06,
+          "reaction_y_kN": 8746.820000009857,
+          "min_reference_jacobian": 0.0055324126404232305,
+          "min_deformed_jacobian_scale1": 0.0005818204650496377,
+          "dense_11x11_jacobian": {
+            "reference": 0.004217222876129239,
+            "deformed": -0.008373986984189931
+          },
+          "deformed_geometry_valid": false,
+          "invalid_deformed_elements": [
+            887,
+            940,
+            941,
+            980,
+            981,
+            989,
+            990
+          ],
+          "max_shear_increment": 0.00021921582943227054,
+          "fixed_disp_max": 0.0
+        }
+      },
+      {
+        "case": "wall_davis12",
+        "status": "PASS",
+        "seconds": 299.8932427,
+        "Fs_PASS": 1.6625000000000005,
+        "Fs_FAIL": 1.6750000000000007,
+        "interpretation": "NUMERICAL_BRACKET",
+        "note": "FOS_PASS=1.663 FOS_FAIL=1.675 FOS_MID=1.669 FOS_WIDTH=0.013 FOS=1.669 ± 0.006 試行=11 判定=NUMERICAL_BRACKET（収束境界の推定。物理破壊・設計安全率の確定値ではありません）",
+        "relative_residual": 3.587809220456177e-06,
+        "trials": [
+          {
+            "ver": "20261020_INCO_ELEMENT_01",
+            "fs": "1.000",
+            "numerical_status": "CONVERGED",
+            "mechanical_status": "STABLE",
+            "elapsed_s": "5.904",
+            "inc": "21",
+            "newton": "55",
+            "factor": "31",
+            "reuse": "24",
+            "umax": "9.691E-03",
+            "umax_over_H": "6.057E-04",
+            "limit_candidate": "0",
+            "first_candidate_inc": "NA",
+            "first_candidate_umax": "NA",
+            "max_compliance_ratio": "NA",
+            "relres": "3.753E-06",
+            "energy": "1.950E-09",
+            "newton_policy": "ROBUST_SRM",
+            "ls50_enabled": "1",
+            "ls50_tried": "5",
+            "ls50_ok": "5",
+            "ls50_saved": "5",
+            "ls50_gate_policy_reject": "0",
+            "ls50_gate_disabled": "0",
+            "ls50_gate_alpha_reject": "2",
+            "ls50_gate_qls_reject": "2",
+            "ls50_gate_cutback_reject": "0",
+            "ls50_gate_active_reject": "0",
+            "ls50_gate_residual_reject": "0",
+            "ls50_gate_factor_invalid": "0",
+            "band_kernel": "NEW",
+            "factor_avg_ms": "84.488",
+            "trial_classification": "CONVERGED",
+            "failure_kind": "NONE",
+            "failure_lambda": "0.000000000000",
+            "failure_relres": "0.000E+00",
+            "failure_linear_relres": "0.000E+00",
+            "failure_correction": "0.000E+00",
+            "failure_plastic_points": "0",
+            "failure_umax": "0.000E+00"
+          },
+          {
+            "ver": "20261020_INCO_ELEMENT_01",
+            "fs": "1.100",
+            "numerical_status": "CONVERGED",
+            "mechanical_status": "STABLE",
+            "elapsed_s": "8.501",
+            "inc": "25",
+            "newton": "81",
+            "factor": "52",
+            "reuse": "29",
+            "umax": "9.805E-03",
+            "umax_over_H": "6.128E-04",
+            "limit_candidate": "0",
+            "first_candidate_inc": "NA",
+            "first_candidate_umax": "NA",
+            "max_compliance_ratio": "NA",
+            "relres": "6.305E-09",
+            "energy": "3.610E-10",
+            "newton_policy": "ROBUST_SRM",
+            "ls50_enabled": "1",
+            "ls50_tried": "6",
+            "ls50_ok": "4",
+            "ls50_saved": "4",
+            "ls50_gate_policy_reject": "0",
+            "ls50_gate_disabled": "0",
+            "ls50_gate_alpha_reject": "0",
+            "ls50_gate_qls_reject": "0",
+            "ls50_gate_cutback_reject": "6",
+            "ls50_gate_active_reject": "2",
+            "ls50_gate_residual_reject": "0",
+            "ls50_gate_factor_invalid": "0",
+            "band_kernel": "NEW",
+            "factor_avg_ms": "82.369",
+            "trial_classification": "CONVERGED",
+            "failure_kind": "NONE",
+            "failure_lambda": "0.000000000000",
+            "failure_relres": "0.000E+00",
+            "failure_linear_relres": "0.000E+00",
+            "failure_correction": "0.000E+00",
+            "failure_plastic_points": "0",
+            "failure_umax": "0.000E+00"
+          },
+          {
+            "ver": "20261020_INCO_ELEMENT_01",
+            "fs": "1.200",
+            "numerical_status": "CONVERGED",
+            "mechanical_status": "STABLE",
+            "elapsed_s": "14.105",
+            "inc": "40",
+            "newton": "169",
+            "factor": "90",
+            "reuse": "79",
+            "umax": "9.975E-03",
+            "umax_over_H": "6.234E-04",
+            "limit_candidate": "0",
+            "first_candidate_inc": "NA",
+            "first_candidate_umax": "NA",
+            "max_compliance_ratio": "NA",
+            "relres": "1.242E-09",
+            "energy": "4.603E-12",
+            "newton_policy": "ROBUST_SRM",
+            "ls50_enabled": "1",
+            "ls50_tried": "19",
+            "ls50_ok": "15",
+            "ls50_saved": "15",
+            "ls50_gate_policy_reject": "0",
+            "ls50_gate_disabled": "0",
+            "ls50_gate_alpha_reject": "4",
+            "ls50_gate_qls_reject": "3",
+            "ls50_gate_cutback_reject": "0",
+            "ls50_gate_active_reject": "0",
+            "ls50_gate_residual_reject": "0",
+            "ls50_gate_factor_invalid": "0",
+            "band_kernel": "NEW",
+            "factor_avg_ms": "82.509",
+            "trial_classification": "CONVERGED",
+            "failure_kind": "NONE",
+            "failure_lambda": "0.000000000000",
+            "failure_relres": "0.000E+00",
+            "failure_linear_relres": "0.000E+00",
+            "failure_correction": "0.000E+00",
+            "failure_plastic_points": "0",
+            "failure_umax": "0.000E+00"
+          },
+          {
+            "ver": "20261020_INCO_ELEMENT_01",
+            "fs": "1.300",
+            "numerical_status": "CONVERGED",
+            "mechanical_status": "STABLE",
+            "elapsed_s": "21.799",
+            "inc": "64",
+            "newton": "271",
+            "factor": "148",
+            "reuse": "123",
+            "umax": "1.019E-02",
+            "umax_over_H": "6.367E-04",
+            "limit_candidate": "0",
+            "first_candidate_inc": "NA",
+            "first_candidate_umax": "NA",
+            "max_compliance_ratio": "NA",
+            "relres": "3.398E-06",
+            "energy": "1.933E-08",
+            "newton_policy": "ROBUST_SRM",
+            "ls50_enabled": "1",
+            "ls50_tried": "30",
+            "ls50_ok": "23",
+            "ls50_saved": "23",
+            "ls50_gate_policy_reject": "0",
+            "ls50_gate_disabled": "0",
+            "ls50_gate_alpha_reject": "9",
+            "ls50_gate_qls_reject": "4",
+            "ls50_gate_cutback_reject": "0",
+            "ls50_gate_active_reject": "2",
+            "ls50_gate_residual_reject": "0",
+            "ls50_gate_factor_invalid": "0",
+            "band_kernel": "NEW",
+            "factor_avg_ms": "83.397",
+            "trial_classification": "CONVERGED",
+            "failure_kind": "NONE",
+            "failure_lambda": "0.000000000000",
+            "failure_relres": "0.000E+00",
+            "failure_linear_relres": "0.000E+00",
+            "failure_correction": "0.000E+00",
+            "failure_plastic_points": "0",
+            "failure_umax": "0.000E+00"
+          },
+          {
+            "ver": "20261020_INCO_ELEMENT_01",
+            "fs": "1.400",
+            "numerical_status": "CONVERGED",
+            "mechanical_status": "STABLE",
+            "elapsed_s": "25.469",
+            "inc": "80",
+            "newton": "333",
+            "factor": "171",
+            "reuse": "162",
+            "umax": "1.043E-02",
+            "umax_over_H": "6.520E-04",
+            "limit_candidate": "0",
+            "first_candidate_inc": "NA",
+            "first_candidate_umax": "NA",
+            "max_compliance_ratio": "NA",
+            "relres": "1.699E-08",
+            "energy": "1.572E-10",
+            "newton_policy": "ROBUST_SRM",
+            "ls50_enabled": "1",
+            "ls50_tried": "40",
+            "ls50_ok": "31",
+            "ls50_saved": "31",
+            "ls50_gate_policy_reject": "0",
+            "ls50_gate_disabled": "0",
+            "ls50_gate_alpha_reject": "5",
+            "ls50_gate_qls_reject": "4",
+            "ls50_gate_cutback_reject": "0",
+            "ls50_gate_active_reject": "1",
+            "ls50_gate_residual_reject": "0",
+            "ls50_gate_factor_invalid": "0",
+            "band_kernel": "NEW",
+            "factor_avg_ms": "83.042",
+            "trial_classification": "CONVERGED",
+            "failure_kind": "NONE",
+            "failure_lambda": "0.000000000000",
+            "failure_relres": "0.000E+00",
+            "failure_linear_relres": "0.000E+00",
+            "failure_correction": "0.000E+00",
+            "failure_plastic_points": "0",
+            "failure_umax": "0.000E+00"
+          },
+          {
+            "ver": "20261020_INCO_ELEMENT_01",
+            "fs": "1.500",
+            "numerical_status": "CONVERGED",
+            "mechanical_status": "STABLE",
+            "elapsed_s": "23.673",
+            "inc": "66",
+            "newton": "301",
+            "factor": "161",
+            "reuse": "140",
+            "umax": "1.072E-02",
+            "umax_over_H": "6.698E-04",
+            "limit_candidate": "0",
+            "first_candidate_inc": "NA",
+            "first_candidate_umax": "NA",
+            "max_compliance_ratio": "NA",
+            "relres": "9.247E-08",
+            "energy": "1.952E-09",
+            "newton_policy": "ROBUST_SRM",
+            "ls50_enabled": "1",
+            "ls50_tried": "42",
+            "ls50_ok": "34",
+            "ls50_saved": "34",
+            "ls50_gate_policy_reject": "0",
+            "ls50_gate_disabled": "0",
+            "ls50_gate_alpha_reject": "5",
+            "ls50_gate_qls_reject": "9",
+            "ls50_gate_cutback_reject": "0",
+            "ls50_gate_active_reject": "1",
+            "ls50_gate_residual_reject": "0",
+            "ls50_gate_factor_invalid": "0",
+            "band_kernel": "NEW",
+            "factor_avg_ms": "82.668",
+            "trial_classification": "CONVERGED",
+            "failure_kind": "NONE",
+            "failure_lambda": "0.000000000000",
+            "failure_relres": "0.000E+00",
+            "failure_linear_relres": "0.000E+00",
+            "failure_correction": "0.000E+00",
+            "failure_plastic_points": "0",
+            "failure_umax": "0.000E+00"
+          },
+          {
+            "ver": "20261020_INCO_ELEMENT_01",
+            "fs": "1.600",
+            "numerical_status": "CONVERGED",
+            "mechanical_status": "STABLE",
+            "elapsed_s": "28.926",
+            "inc": "84",
+            "newton": "369",
+            "factor": "199",
+            "reuse": "170",
+            "umax": "1.104E-02",
+            "umax_over_H": "6.900E-04",
+            "limit_candidate": "0",
+            "first_candidate_inc": "NA",
+            "first_candidate_umax": "NA",
+            "max_compliance_ratio": "NA",
+            "relres": "7.710E-10",
+            "energy": "1.221E-12",
+            "newton_policy": "ROBUST_SRM",
+            "ls50_enabled": "1",
+            "ls50_tried": "46",
+            "ls50_ok": "39",
+            "ls50_saved": "39",
+            "ls50_gate_policy_reject": "0",
+            "ls50_gate_disabled": "0",
+            "ls50_gate_alpha_reject": "7",
+            "ls50_gate_qls_reject": "7",
+            "ls50_gate_cutback_reject": "0",
+            "ls50_gate_active_reject": "1",
+            "ls50_gate_residual_reject": "0",
+            "ls50_gate_factor_invalid": "0",
+            "band_kernel": "NEW",
+            "factor_avg_ms": "83.145",
+            "trial_classification": "CONVERGED",
+            "failure_kind": "NONE",
+            "failure_lambda": "0.000000000000",
+            "failure_relres": "0.000E+00",
+            "failure_linear_relres": "0.000E+00",
+            "failure_correction": "0.000E+00",
+            "failure_plastic_points": "0",
+            "failure_umax": "0.000E+00"
+          },
+          {
+            "ver": "20261020_INCO_ELEMENT_01",
+            "fs": "1.700",
+            "numerical_status": "FAILED",
+            "mechanical_status": "LIMIT_CANDIDATE",
+            "elapsed_s": "36.595",
+            "inc": "109",
+            "newton": "502",
+            "factor": "266",
+            "reuse": "236",
+            "umax": "4.070E-02",
+            "umax_over_H": "2.544E-03",
+            "limit_candidate": "1",
+            "first_candidate_inc": "100",
+            "first_candidate_umax": "3.008E-02",
+            "max_compliance_ratio": "1.485E+02",
+            "relres": "1.248E-05",
+            "energy": "0.000E+00",
+            "newton_policy": "ROBUST_SRM",
+            "ls50_enabled": "1",
+            "ls50_tried": "72",
+            "ls50_ok": "55",
+            "ls50_saved": "55",
+            "ls50_gate_policy_reject": "0",
+            "ls50_gate_disabled": "0",
+            "ls50_gate_alpha_reject": "13",
+            "ls50_gate_qls_reject": "16",
+            "ls50_gate_cutback_reject": "0",
+            "ls50_gate_active_reject": "1",
+            "ls50_gate_residual_reject": "0",
+            "ls50_gate_factor_invalid": "0",
+            "band_kernel": "NEW",
+            "factor_avg_ms": "83.059",
+            "trial_classification": "NONCONVERGENCE_BOUNDARY",
+            "failure_kind": "LINE_SEARCH",
+            "failure_lambda": "0.979795653662",
+            "failure_relres": "1.248E-05",
+            "failure_linear_relres": "0.000E+00",
+            "failure_correction": "0.000E+00",
+            "failure_plastic_points": "1762",
+            "failure_umax": "4.070E-02"
+          },
+          {
+            "ver": "20261020_INCO_ELEMENT_01",
+            "fs": "1.650",
+            "numerical_status": "CONVERGED",
+            "mechanical_status": "STABLE",
+            "elapsed_s": "43.282",
+            "inc": "134",
+            "newton": "577",
+            "factor": "301",
+            "reuse": "276",
+            "umax": "1.121E-02",
+            "umax_over_H": "7.004E-04",
+            "limit_candidate": "0",
+            "first_candidate_inc": "NA",
+            "first_candidate_umax": "NA",
+            "max_compliance_ratio": "4.189E-03",
+            "relres": "6.415E-06",
+            "energy": "4.548E-09",
+            "newton_policy": "ROBUST_SRM",
+            "ls50_enabled": "1",
+            "ls50_tried": "77",
+            "ls50_ok": "62",
+            "ls50_saved": "62",
+            "ls50_gate_policy_reject": "0",
+            "ls50_gate_disabled": "0",
+            "ls50_gate_alpha_reject": "7",
+            "ls50_gate_qls_reject": "15",
+            "ls50_gate_cutback_reject": "8",
+            "ls50_gate_active_reject": "0",
+            "ls50_gate_residual_reject": "0",
+            "ls50_gate_factor_invalid": "0",
+            "band_kernel": "NEW",
+            "factor_avg_ms": "83.251",
+            "trial_classification": "CONVERGED",
+            "failure_kind": "LINE_SEARCH",
+            "failure_lambda": "0.100000000000",
+            "failure_relres": "3.411E-02",
+            "failure_linear_relres": "0.000E+00",
+            "failure_correction": "0.000E+00",
+            "failure_plastic_points": "837",
+            "failure_umax": "1.116E-02"
+          },
+          {
+            "ver": "20261020_INCO_ELEMENT_01",
+            "fs": "1.675",
+            "numerical_status": "FAILED",
+            "mechanical_status": "UNKNOWN",
+            "elapsed_s": "43.616",
+            "inc": "127",
+            "newton": "564",
+            "factor": "308",
+            "reuse": "256",
+            "umax": "2.447E-02",
+            "umax_over_H": "1.530E-03",
+            "limit_candidate": "0",
+            "first_candidate_inc": "NA",
+            "first_candidate_umax": "NA",
+            "max_compliance_ratio": "1.212E+01",
+            "relres": "2.033E-05",
+            "energy": "0.000E+00",
+            "newton_policy": "ROBUST_SRM",
+            "ls50_enabled": "1",
+            "ls50_tried": "81",
+            "ls50_ok": "65",
+            "ls50_saved": "65",
+            "ls50_gate_policy_reject": "0",
+            "ls50_gate_disabled": "0",
+            "ls50_gate_alpha_reject": "10",
+            "ls50_gate_qls_reject": "21",
+            "ls50_gate_cutback_reject": "3",
+            "ls50_gate_active_reject": "1",
+            "ls50_gate_residual_reject": "0",
+            "ls50_gate_factor_invalid": "0",
+            "band_kernel": "NEW",
+            "factor_avg_ms": "82.294",
+            "trial_classification": "NONCONVERGENCE_BOUNDARY",
+            "failure_kind": "LINE_SEARCH",
+            "failure_lambda": "0.100195312500",
+            "failure_relres": "2.033E-05",
+            "failure_linear_relres": "0.000E+00",
+            "failure_correction": "0.000E+00",
+            "failure_plastic_points": "879",
+            "failure_umax": "2.447E-02"
+          },
+          {
+            "ver": "20261020_INCO_ELEMENT_01",
+            "fs": "1.663",
+            "numerical_status": "CONVERGED",
+            "mechanical_status": "STABLE",
+            "elapsed_s": "36.753",
+            "inc": "113",
+            "newton": "489",
+            "factor": "252",
+            "reuse": "237",
+            "umax": "1.248E-02",
+            "umax_over_H": "7.798E-04",
+            "limit_candidate": "0",
+            "first_candidate_inc": "NA",
+            "first_candidate_umax": "NA",
+            "max_compliance_ratio": "4.382E-02",
+            "relres": "3.568E-06",
+            "energy": "5.495E-09",
+            "newton_policy": "ROBUST_SRM",
+            "ls50_enabled": "1",
+            "ls50_tried": "70",
+            "ls50_ok": "52",
+            "ls50_saved": "52",
+            "ls50_gate_policy_reject": "0",
+            "ls50_gate_disabled": "0",
+            "ls50_gate_alpha_reject": "11",
+            "ls50_gate_qls_reject": "15",
+            "ls50_gate_cutback_reject": "1",
+            "ls50_gate_active_reject": "0",
+            "ls50_gate_residual_reject": "0",
+            "ls50_gate_factor_invalid": "0",
+            "band_kernel": "NEW",
+            "factor_avg_ms": "83.171",
+            "trial_classification": "CONVERGED",
+            "failure_kind": "LINE_SEARCH",
+            "failure_lambda": "0.100000000000",
+            "failure_relres": "4.664E-02",
+            "failure_linear_relres": "0.000E+00",
+            "failure_correction": "0.000E+00",
+            "failure_plastic_points": "887",
+            "failure_umax": "1.194E-02"
+          }
+        ],
+        "geometry": {
+          "case": "wall_davis12",
+          "status": "PASS",
+          "stage": 4,
+          "nodes": 3383,
+          "elements": 1074,
+          "active_elements": 1074,
+          "seconds": 299.8932427,
+          "max_displacement_m": 0.012671646594601045,
+          "relative_residual": 3.587809220456177e-06,
+          "reaction_y_kN": 8746.820000000354,
+          "min_reference_jacobian": 0.0055324126404232305,
+          "min_deformed_jacobian_scale1": 0.005530939655299663,
+          "dense_11x11_jacobian": {
+            "reference": 0.004217222876129239,
+            "deformed": 0.004216076054433881
+          },
+          "deformed_geometry_valid": true,
+          "invalid_deformed_elements": [],
+          "max_shear_increment": 8.131584346058848e-06,
+          "fixed_disp_max": 5.5300255055411296e-34
+        }
+      }
     ],
-    "pdf_sha256": "ff076d8a24de89b146eaea5408e984a194e9be448b865e0022b73effae9ac38f",
-    "visual_review": "PASS all 47 pages rendered and reviewed",
-    "content_audit": "PASS current VBA and workbook settings",
-    "page_boundary_check": "PASS"
-  }
+    "displacements": {
+      "construction_Fs1": {
+        "nodes": 3383,
+        "components": 6766,
+        "max_abs_component_delta_m": 0.0002129614037743137,
+        "l2_delta_m": 0.001464106060574424,
+        "max_norm_INCO_m": 0.009656020099737919,
+        "max_norm_DAVIS_m": 0.00969065726700898
+      },
+      "final_saved_SRM": {
+        "nodes": 3383,
+        "components": 6766,
+        "max_abs_component_delta_m": 0.1694275257838672,
+        "l2_delta_m": 2.086910116958523,
+        "max_norm_INCO_m": 0.18034918131169564,
+        "max_norm_DAVIS_m": 0.012671646594601045
+      }
+    }
+  },
+  "evidence_files": [
+    {
+      "path": "docs/manuals/construction-evidence/20261020/legacy_case1/perf_summary.csv.gz",
+      "bytes": 1178,
+      "sha256": "aa5b47b4c9d1eecc9c2d15aa1b01238ea65e8fc6b09952d3fb15552d9095f841"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/legacy_case1/increment_summary.csv.gz",
+      "bytes": 12226,
+      "sha256": "f443c417ddc0069cc28ebb07e6f73ed4b13b658460c67b6fd8c712e84a7583e2"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/legacy_case1/solver_events.csv.gz",
+      "bytes": 747979,
+      "sha256": "7b95c0427ac255d5c53b269e0a3876ad8704ced128c46f77fae797a202c3c53e"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_davis08/result.json.gz",
+      "bytes": 2560898,
+      "sha256": "bbe1ff8d344b2c8ca6833553c68280d78bb8cf24e2bf7bd8192b5f50d95117c2"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_davis08/independent_checks.json",
+      "bytes": 679,
+      "sha256": "127344b4be4d6bd16a1a08a3fa535b70687f89c8b710638335d31cfd57d8b4fd"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_davis08/balance_checks.json",
+      "bytes": 2300,
+      "sha256": "15cac7c52cf790d6882b61db7944ec9ebb244c75b552f80bc6165b642d6c9a85"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_davis08/display_stage_checks.json",
+      "bytes": 2528,
+      "sha256": "8a5ce963109c4a8c598f977f707e93886d1d0ac76f690376225fec280af82750"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_davis08/adaptive_v2a.csv.gz",
+      "bytes": 7471,
+      "sha256": "5958929424784ccdbffe37fc06426d05d4ba6b7eaa1c8d6e1e2d77cb7c345a39"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_davis08/adaptive_v2a_gates.csv.gz",
+      "bytes": 576,
+      "sha256": "b9d8b94964b3b097ab9c2967a68b5cd739a05e765d791ffe92c96d997cbf2ae6"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_davis08/increment_summary.csv.gz",
+      "bytes": 51467,
+      "sha256": "450bd6f9a1ce76dca7316fa073a88c1ac3cb1c9b430f1f4abd437291abba762d"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_davis08/manifest.csv.gz",
+      "bytes": 125,
+      "sha256": "cf391cad61878c83b7c31571a6029b48a2cedd080bf548aaf1cc01bbd2f67fac"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_davis08/perf_summary.csv.gz",
+      "bytes": 1209,
+      "sha256": "cb55907710d859ee4b1203f1134eca277b3901205ad5a03df16d0adba8c77484"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_davis08/perf_summary.txt.gz",
+      "bytes": 1983,
+      "sha256": "9204d8e6a02d5b51a6187c768900af4142a43b098dee847d614dc22521da0db5"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_davis08/perf_trace.csv.gz",
+      "bytes": 1407,
+      "sha256": "ca0c556a62752d20330037e6f983ced079a887f5047774cd3d894b96af965f27"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_davis08/run.log.gz",
+      "bytes": 18110,
+      "sha256": "8c9a90c355dd5b4a8b48b0d0a10b2339ed1bb4b05aee2e7397604df9e0088a75"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_davis08/solver_events.csv.gz",
+      "bytes": 17917,
+      "sha256": "5b5b91e1ce0dea150cd5e6fc3b14aacae8b6fab19dda43977276a2c5c75474d4"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_davis08_workbook.zip",
+      "bytes": 7412918,
+      "sha256": "b2e41f27093244017d537a6f828f2e91166c9902f24ff5c250bb7e16d1ee2871"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_inco11/result.json.gz",
+      "bytes": 4537878,
+      "sha256": "8c1c5859eb55467b303fbccd399b4157a4b4b648ba1c776edd1ec25f012333d4"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_inco11/independent_checks.json",
+      "bytes": 739,
+      "sha256": "f92e13f9056edac7db219c28a422494a7e630f38666d4f7441f227d6fbbe2eae"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_inco11/balance_checks.json",
+      "bytes": 2266,
+      "sha256": "7303a014aac110a5e9ffe3f919b8886adee6f21a551630ddaea2c060a46373c7"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_inco11/adaptive_v2a.csv.gz",
+      "bytes": 224,
+      "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_inco11/adaptive_v2a_gates.csv.gz",
+      "bytes": 68,
+      "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_inco11/increment_summary.csv.gz",
+      "bytes": 24530,
+      "sha256": "d205c8c81ab011afc4f0f6e533581d3dcd36cdb65874a27b3fd33472d088773a"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_inco11/manifest.csv.gz",
+      "bytes": 134,
+      "sha256": "52a692423d23d8dd34f31bc6ee1c345da112cf71538c6f97da14c8dd8e5ddda6"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_inco11/perf_summary.csv.gz",
+      "bytes": 1121,
+      "sha256": "bdbe6d4164bf65a20388420dd6502134b03c809523960b5c8cbf815eb2e58288"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_inco11/perf_summary.txt.gz",
+      "bytes": 1885,
+      "sha256": "0fca07bc43402c97500f9de9d61ae2d618aa99a68cc79cbe78f6f78501afaacf"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_inco11/perf_trace.csv.gz",
+      "bytes": 448,
+      "sha256": "b5edd8b887aae5cd345e8b75c2bd4c5268cadb4160088829c97e52e2ba01617d"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_inco11/run.log.gz",
+      "bytes": 14038,
+      "sha256": "1d35c353b18d7c84a10be564e905215d6abb64dff3054e22c270b07b18a48768"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_inco11/solver_events.csv.gz",
+      "bytes": 29252,
+      "sha256": "df55f1abd74cf2848269bdb16fd7ac1517bb4563db48289602e91fd279243c4f"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_davis12/result.json.gz",
+      "bytes": 4631132,
+      "sha256": "28e1b825843aa00f89bca6ae650c5e60ec2a0e77e53ecd29850ca5a2d67d144d"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_davis12/independent_checks.json",
+      "bytes": 681,
+      "sha256": "2bdaca7b3bea8c64906cd566b9a649c9660ca910ad0709e4de885adc77776026"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_davis12/balance_checks.json",
+      "bytes": 2212,
+      "sha256": "82f0625c7d4a39d5af24af362b4f7ed625b03cb8dff0cb2da4dc77606378aae9"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_davis12/adaptive_v2a.csv.gz",
+      "bytes": 8796,
+      "sha256": "fd19ccb87ca3ea1f4e69c86c19596989ceb3b501587b7b8286eb49223a2d251d"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_davis12/adaptive_v2a_gates.csv.gz",
+      "bytes": 522,
+      "sha256": "2b0334a953eef148a0e1a5ebc343c81cf822eb5220bbdda3bb75c2affc2059f0"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_davis12/increment_summary.csv.gz",
+      "bytes": 57742,
+      "sha256": "195ceb25c3335a427d7ec93273975abf57869dd0c4009b9bbf2d4b4ee4d1c82c"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_davis12/manifest.csv.gz",
+      "bytes": 125,
+      "sha256": "dd7dca65582e69eb5218fe9de6fbdbd4592819910f8c545b05a6d8a6bc59f40d"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_davis12/perf_summary.csv.gz",
+      "bytes": 1181,
+      "sha256": "0a7a177764a8629f24cca68515e8c72d32788a1369ba0ed273dc251d5a447b9b"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_davis12/perf_summary.txt.gz",
+      "bytes": 2025,
+      "sha256": "c1caa742066c0b23a4952106cbc91f6d480d782c0e1cb12eff586381ce1b9d25"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_davis12/perf_trace.csv.gz",
+      "bytes": 1488,
+      "sha256": "693ffe9b594a8ea9f05f487bb56aa1b2d5f3d2fdba4ee44782efd089aff1166a"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_davis12/run.log.gz",
+      "bytes": 18119,
+      "sha256": "5d8c1c9302aeb4d836985f73ececfa85a75ad1bb05d4d4f52db25fe812ed1fd0"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/wall_davis12/solver_events.csv.gz",
+      "bytes": 16763,
+      "sha256": "c8b7d01599503dd063cd1a24a36230501d86fe62653421ae0ec7fd3cb7425af8"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor09/result.json.gz",
+      "bytes": 1832494,
+      "sha256": "d6041d7ee6b84e083f0bc9dd860e6c2fd263bfd0efcc04e775ca68f1316b00ea"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor09/adaptive_v2a.csv.gz",
+      "bytes": 224,
+      "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor09/adaptive_v2a_gates.csv.gz",
+      "bytes": 154,
+      "sha256": "22fa051d92d49cd44eb105e0740e622f77266948963f0a629cd24cf04c6be521"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor09/increment_summary.csv.gz",
+      "bytes": 2110,
+      "sha256": "02f117f481fcf20b6ba40a45fcb7cb2179b209b608e6710fb310ae09fbe67e07"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor09/manifest.csv.gz",
+      "bytes": 131,
+      "sha256": "c8f07f9240db23ba88a3714c5cd2cb7bde79702085bccdef54456ad3bf3b7a23"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor09/perf_summary.csv.gz",
+      "bytes": 429,
+      "sha256": "96804f20a8672051d7f759e311d804c5d413bd5d9c8cdc3438cfe211c67cf5bc"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor09/perf_summary.txt.gz",
+      "bytes": 1846,
+      "sha256": "1b708b42dda61fe575459a97bc2a4f118da6da4e29a9048a494b20840b86a2f0"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor09/perf_trace.csv.gz",
+      "bytes": 124,
+      "sha256": "b08f0c3fe2925304c61b372f67a03e36ceafb3797d10943c130c1fc009b4cbfb"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor09/run.log.gz",
+      "bytes": 3911,
+      "sha256": "04c6d00b1e4639feb2b4a73b1519e83b250f566819344b34fa5609b5ef8bb2c0"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor09/solver_events.csv.gz",
+      "bytes": 669,
+      "sha256": "2f622f1e7b15f67d338b6b1ef3e8c485dcc56e7ab65e2c8254b3114d1ebc2241"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor_vba/result.json.gz",
+      "bytes": 1831078,
+      "sha256": "83b923ea7140987193682294b7567696be6b49c52f65584e395d1f2effe65740"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor_vba/adaptive_v2a.csv.gz",
+      "bytes": 224,
+      "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor_vba/adaptive_v2a_gates.csv.gz",
+      "bytes": 154,
+      "sha256": "22fa051d92d49cd44eb105e0740e622f77266948963f0a629cd24cf04c6be521"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor_vba/increment_summary.csv.gz",
+      "bytes": 2180,
+      "sha256": "4cb827581b5e1c5441f7c650acb661e0b7a893aa7188e394955cca58d28e933d"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor_vba/manifest.csv.gz",
+      "bytes": 134,
+      "sha256": "3418b173f1700f01379be9e6574918ec8db445c6b50382fb54b9cd80e4043a1e"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor_vba/perf_summary.csv.gz",
+      "bytes": 433,
+      "sha256": "426a22823ef39656f4904eba30d87b261c13b495c261678f96b6f3d3f8031428"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor_vba/perf_summary.txt.gz",
+      "bytes": 1702,
+      "sha256": "fcfd0021669c9f11ac3507cbece50510a31d44b6d57d4a37d19e673e707d14bf"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor_vba/perf_trace.csv.gz",
+      "bytes": 124,
+      "sha256": "b08f0c3fe2925304c61b372f67a03e36ceafb3797d10943c130c1fc009b4cbfb"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor_vba/run.log.gz",
+      "bytes": 3855,
+      "sha256": "21c4f308a954ede7d8e99d9acf5e1a0e32e9833a28a64e1dd840ab47f8862b0d"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor_vba/solver_events.csv.gz",
+      "bytes": 644,
+      "sha256": "4eeb2db155ca39ba913b793fa7d4bf5c1130cdd2c3e2de769e79803b56a75f5a"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor_inco/result.json.gz",
+      "bytes": 3126302,
+      "sha256": "fa557a141fdc304063715862a5503462d72d28ea05a81c1ebf8326965601eafc"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor_inco/independent_checks.json",
+      "bytes": 661,
+      "sha256": "b44e5443b74995640926ec0ca0a89ec28f561cff67e1710ddcfc6955d2d3c193"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor_inco/balance_checks.json",
+      "bytes": 2842,
+      "sha256": "479a59fdb030479c1b8d606b552c32ada783b46731e422c94685fa116f424de7"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor_inco/display_stage_checks.json",
+      "bytes": 1851,
+      "sha256": "235ab46157f99396254dc3224254514791aa4e7f28d09093d7b507332578adcb"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor_inco/adaptive_v2a.csv.gz",
+      "bytes": 224,
+      "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor_inco/adaptive_v2a_gates.csv.gz",
+      "bytes": 68,
+      "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor_inco/increment_summary.csv.gz",
+      "bytes": 28797,
+      "sha256": "c9755c4b40cedf58408768e6b52ca0f2768f540fce6ccfa0029bc86dc00e48cd"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor_inco/manifest.csv.gz",
+      "bytes": 141,
+      "sha256": "bd9b072e5cde79d4a9f35c6a6e9ce2754746aa2a112210b04c29edb518e90772"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor_inco/perf_summary.csv.gz",
+      "bytes": 1115,
+      "sha256": "22162ed051571c0bdacca298121ad7ef207cb93cf6f2fb2171e9a11625a747b9"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor_inco/perf_summary.txt.gz",
+      "bytes": 1878,
+      "sha256": "ca87e1f237794d84cdcecce3a8b85ceb2e8bacd8228f96369f7377079199b578"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor_inco/perf_trace.csv.gz",
+      "bytes": 483,
+      "sha256": "fbcb40513439137b7d8a6ae74e7e8a07c1c682763d631e60fd0e1cf25fa48b9c"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor_inco/run.log.gz",
+      "bytes": 16181,
+      "sha256": "daa9460344eae0881b114f8a0e51e35b0e9f276e9c70a1136e925da85012964e"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor_inco/solver_events.csv.gz",
+      "bytes": 25809,
+      "sha256": "367d53cfa83c0e0b4dbb6b47dff3843987f57d61ba17d78962e17e216dfb11f2"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/anchor_inco_workbook.zip",
+      "bytes": 8401690,
+      "sha256": "3704bdc2f7f05edc6d2b00faa44f13207918e8ef06caad2039e489b7708b8b58"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/tunnel10/result.json.gz",
+      "bytes": 1282131,
+      "sha256": "37f77a89fc5edfc68d2a3fe009c360fb8c34d0985e25304da508a2bf2bbc7a8d"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/tunnel10/independent_checks.json",
+      "bytes": 648,
+      "sha256": "1ce6a8c24ed856bf981b454aa8058371b7d272952c07801e6a60ca0f3dd3057b"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/tunnel10/balance_checks.json",
+      "bytes": 5309,
+      "sha256": "b2f967817d0ce031d27bd362251097622a058794c5b9d1f9c555f7e6e6c6101b"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/tunnel10/construction_displacements.json",
+      "bytes": 229,
+      "sha256": "36c640b376edb4c881e7622124d5430bd847eb281a8d23f620e70a6d0295ec3e"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/tunnel10/display_stage_checks.json",
+      "bytes": 3026,
+      "sha256": "0fc9c2dd4ab2c227813b182196ebdd6bffb0240385986867f39ce67699c14e67"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/tunnel10/adaptive_v2a.csv.gz",
+      "bytes": 224,
+      "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/tunnel10/adaptive_v2a_gates.csv.gz",
+      "bytes": 68,
+      "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/tunnel10/increment_summary.csv.gz",
+      "bytes": 8299,
+      "sha256": "b9f03748d2e590b150f529d26168997807db9e73ebddf64e7bb4cf76c9b75373"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/tunnel10/manifest.csv.gz",
+      "bytes": 173,
+      "sha256": "2ec70cacc7d89028c7430287311398582d172b2ec1362e829d847699a2e65bcc"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/tunnel10/perf_summary.csv.gz",
+      "bytes": 1099,
+      "sha256": "53a4a4de9a4baffdf648e16539619794f81ba5c79a9b5ad250bdf5086b62bfe2"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/tunnel10/perf_summary.txt.gz",
+      "bytes": 1768,
+      "sha256": "89fbe18b1c3a0fe0e14770f739784cfc7891a0a394b92f8393902c1a167de04f"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/tunnel10/perf_trace.csv.gz",
+      "bytes": 369,
+      "sha256": "a90910e762481654fcfb1c7d6e9f7663f9a387922e4f10f5e8385c91ebcf2583"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/tunnel10/run.log.gz",
+      "bytes": 8046,
+      "sha256": "919944a4e4a0cbb7a170df3c7a2c8683d7e92d78f9be40489fb9803473f1d2c1"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/tunnel10/solver_events.csv.gz",
+      "bytes": 1114,
+      "sha256": "83e3d4c4d7e88ce3fc9e7b2edfd148f94d0d5d346353a224f775f7b960f7df0c"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/tunnel10_workbook.zip",
+      "bytes": 4950118,
+      "sha256": "2b12787157f2923d18bf0c14620edf7764ceb96475cac90fe50e1b14263de6df"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/flow_comparison.json",
+      "bytes": 39138,
+      "sha256": "bcd8b3d540d0777d7592e61fda78c69c7a0555e703f960c3e2cbece58492717b"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/construction_Fs1_all_displacements.csv.gz",
+      "bytes": 254952,
+      "sha256": "4c98776dc402d042d23db755565155ccd21172ff999cc2b7fd6b6da2da4a9958"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/final_saved_SRM_all_displacements.csv.gz",
+      "bytes": 254141,
+      "sha256": "1c9deed17eb34bee872e0822db1ad1047585047a6459294a0c58644eed4eadcd"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/figures/wall_geometry.png",
+      "bytes": 181127,
+      "sha256": "0c921df7e2adc5ac8e71536f40a033e24e2de7dbcb84ec16484066a0db3063d0"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/figures/wall_construction.png",
+      "bytes": 454150,
+      "sha256": "fb0ed77bb27289d067515837d8cfee39b972c973ad9bc11f3f6b2fc1110a00a3"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/figures/wall_davis08_gamma.png",
+      "bytes": 204854,
+      "sha256": "65f59cc610b4503ed6d09b947622db700dce7695dc66dfeae533a205bd7ac2bb"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/figures/anchor_comparison.png",
+      "bytes": 217431,
+      "sha256": "65a2f51bacfb994235f98cae4e7670da22e349d52da5caf6242b50d2743d676f"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/figures/tunnel_stages.png",
+      "bytes": 432415,
+      "sha256": "4ac02ad8d39ca7e54fad1c2ee4a5c682355966ab1d4322ef03acd1c6804f6361"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/figures/tunnel10_gamma.png",
+      "bytes": 106432,
+      "sha256": "d7e3f7dce409bc093eaecb7b1b12cfba0df263265e8e72fd2cf2de1acf559fa1"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/figures/tunnel_convergence.png",
+      "bytes": 133931,
+      "sha256": "6f4efb64bc829544433c6ca5b1e31fdc68b34e04d4da5451a6f871e0da413a3f"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/figures/flow_comparison.png",
+      "bytes": 117759,
+      "sha256": "6803faa15b852a08ca0d0738857bfa0f7c067216a010417609733d660d56d321"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/figures/actual_A.svg",
+      "bytes": 281884,
+      "sha256": "c6828f02c812124cea126970ef61a9bbaf714e67ccaeaf0a69555f717ba0523a"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261020/figures/actual_B.svg",
+      "bytes": 278252,
+      "sha256": "cfd936a713e91218cd283422cbcb4e2342bf4a80c3330b6c8bf22b5c8bc14bfc"
+    }
+  ],
+  "visual_review": {
+    "all_pages": 71,
+    "all_contact_sheets_reviewed": true,
+    "key_pages_full_size": [
+      4,
+      14,
+      37,
+      39,
+      42,
+      47,
+      48
+    ],
+    "glyph_correction": "Superscript scientific notation changed to ASCII e notation and re-rendered",
+    "display_stage_checks": "All displayed wall/anchor/tunnel states passed strict Q8 reference and deformed scale1 checks"
+  },
+  "saved_workbook_views": [
+    {
+      "case": "wall_davis08",
+      "zip_ok": true,
+      "one_dll": true,
+      "active_sheet": "図",
+      "active_elements": 580,
+      "result_svg_present": true
+    },
+    {
+      "case": "anchor_inco",
+      "zip_ok": true,
+      "one_dll": true,
+      "active_sheet": "図",
+      "active_elements": 580,
+      "result_svg_present": true
+    },
+    {
+      "case": "tunnel10",
+      "zip_ok": true,
+      "one_dll": true,
+      "active_sheet": "図",
+      "active_elements": 112,
+      "result_svg_present": true
+    }
+  ]
 }

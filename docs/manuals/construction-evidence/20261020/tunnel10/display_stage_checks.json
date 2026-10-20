@@ -1,0 +1,102 @@
+[
+  {
+    "case": "tunnel10",
+    "status": "PASS",
+    "stage": 1,
+    "nodes": 497,
+    "elements": 160,
+    "active_elements": 160,
+    "seconds": 15.1538297,
+    "max_displacement_m": 0.0704046755427031,
+    "min_reference_jacobian": 0.08484577318466237,
+    "min_deformed_jacobian_scale1": 0.08470563192594176,
+    "dense_11x11_jacobian": {
+      "reference": 0.07483729767971592,
+      "deformed": 0.07471403540966659
+    },
+    "deformed_geometry_valid": true,
+    "invalid_deformed_elements": [],
+    "max_shear_increment": 0.000428536141323731,
+    "fixed_disp_max": 0.0
+  },
+  {
+    "case": "tunnel10",
+    "status": "PASS",
+    "stage": 2,
+    "nodes": 497,
+    "elements": 160,
+    "active_elements": 136,
+    "seconds": 15.1538297,
+    "max_displacement_m": 0.07485709114431542,
+    "min_reference_jacobian": 0.08484577318466237,
+    "min_deformed_jacobian_scale1": 0.08474085438912136,
+    "dense_11x11_jacobian": {
+      "reference": 0.07483729767971592,
+      "deformed": 0.0746025280346809
+    },
+    "deformed_geometry_valid": true,
+    "invalid_deformed_elements": [],
+    "max_shear_increment": 1.8387415924575233e-05,
+    "fixed_disp_max": 0.0
+  },
+  {
+    "case": "tunnel10",
+    "status": "PASS",
+    "stage": 5,
+    "nodes": 497,
+    "elements": 160,
+    "active_elements": 136,
+    "seconds": 15.1538297,
+    "max_displacement_m": 0.07563875690416813,
+    "min_reference_jacobian": 0.08484577318466237,
+    "min_deformed_jacobian_scale1": 0.08470968990997119,
+    "dense_11x11_jacobian": {
+      "reference": 0.07483729767971592,
+      "deformed": 0.07474089047606317
+    },
+    "deformed_geometry_valid": true,
+    "invalid_deformed_elements": [],
+    "max_shear_increment": 1.082238857188345e-05,
+    "fixed_disp_max": 0.0
+  },
+  {
+    "case": "tunnel10",
+    "status": "PASS",
+    "stage": 9,
+    "nodes": 497,
+    "elements": 160,
+    "active_elements": 112,
+    "seconds": 15.1538297,
+    "max_displacement_m": 0.07609269993382659,
+    "min_reference_jacobian": 0.08484577318466237,
+    "min_deformed_jacobian_scale1": 0.08470943155606354,
+    "dense_11x11_jacobian": {
+      "reference": 0.07483729767971592,
+      "deformed": 0.07476250873916267
+    },
+    "deformed_geometry_valid": true,
+    "invalid_deformed_elements": [],
+    "max_shear_increment": 4.675506102754137e-06,
+    "fixed_disp_max": 0.0
+  },
+  {
+    "case": "tunnel10",
+    "status": "PASS",
+    "stage": 10,
+    "nodes": 497,
+    "elements": 160,
+    "active_elements": 112,
+    "seconds": 15.1538297,
+    "max_displacement_m": 0.07681333938607011,
+    "min_reference_jacobian": 0.08484577318466237,
+    "min_deformed_jacobian_scale1": 0.08479352237516664,
+    "dense_11x11_jacobian": {
+      "reference": 0.07483729767971592,
+      "deformed": 0.0747853580927833
+    },
+    "deformed_geometry_valid": true,
+    "invalid_deformed_elements": [],
+    "max_shear_increment": 4.583216821223032e-06,
+    "fixed_disp_max": 0.0
+  }
+]
