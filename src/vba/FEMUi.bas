@@ -138,8 +138,8 @@ Public Sub FEMUiSettingsChanged(ByVal Sh As Object, ByVal target As range)
     Next cell
     On Error Resume Next
     FEMInvalidateSettingCache
-    FEMViewerMarkDirty
     If invalidateAnalysis Then
+        FEMViewerMarkDirty
         AnalysisOK = False
         ResultRevision = 0
         P1ResultReady = False

@@ -1,9 +1,14 @@
 ﻿
 Private Sub Workbook_Open()
-  On Error Resume Next
+  Dim eventsSaved As Boolean
+  eventsSaved = Application.EnableEvents
+  On Error GoTo Finish
+  ' Layout/registry writes are not user input edits. Keep the saved dirty marker.
+  Application.EnableEvents = False
   FEMWriteBuildStamp False
   FEMUiShowHome
-  Err.Clear
+Finish:
+  Application.EnableEvents = eventsSaved
 End Sub
 
 Private Sub Workbook_SheetChange(ByVal Sh As Object, ByVal target As range)

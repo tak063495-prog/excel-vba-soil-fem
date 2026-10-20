@@ -11,6 +11,8 @@ Double・収束条件を維持し、SRM全探索のFs区間・全170変位・残
 
 [詳細操作説明書（PDF・47ページ）](docs/manuals/2DSoilFEM_Detailed_Manual_20261020.pdf)：操作手順、実計算の変形・変位・Fs探索・残差など図19点、全83設定、36項目の用語集を収録しています。
 
+画面版 `20261020_UI_02` では、表示設定の変更・保存後の再読込で成功結果を表示できなくなる問題と、手動計算時の表示値の更新を修正しました。[再現条件・検証・旧版からの注意](docs/VIEWER_FIX_20261020.md)。
+
 ## INCONSISTENT 要素行列積・ILU構築の高速化版（2026-10-20）
 
 [一括ダウンロード（XLSM＋DLL 2個、ZIP）](workbook/SoilFEM_INCONSISTENT_ELEMENT_20261020.zip)。

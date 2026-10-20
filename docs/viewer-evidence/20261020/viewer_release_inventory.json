@@ -1,0 +1,839 @@
+{
+  "status": "PASS",
+  "book": "2DSoilFEM_ui_20261020.xlsm",
+  "sha256": "91915d4719ac660f0f8a9da07e4e00d0077dfc061f85c023d9d27f2d1fa31766",
+  "count": 83,
+  "settings": [
+    {
+      "page": "メッシュ設定",
+      "cell": "C9",
+      "key": "MESH_MATERIAL",
+      "value": 1.0,
+      "label": "生成要素の材料番号",
+      "note": "要素作成①②で付ける",
+      "recommendation": "モデル・表示による",
+      "legacy_row": 16
+    },
+    {
+      "page": "メッシュ設定",
+      "cell": "C10",
+      "key": "MESH_BC_BOTTOM",
+      "value": "PINNED",
+      "label": "底面拘束",
+      "note": "Ymin面。NONE=自由 / ROLLER=Y固定 / PINNED=XY固定",
+      "recommendation": "モデル・表示による",
+      "legacy_row": 17
+    },
+    {
+      "page": "メッシュ設定",
+      "cell": "C11",
+      "key": "MESH_BC_LEFT",
+      "value": "ROLLER",
+      "label": "左面拘束",
+      "note": "Xmin面。NONE=自由 / ROLLER=X固定 / PINNED=XY固定",
+      "recommendation": "モデル・表示による",
+      "legacy_row": 18
+    },
+    {
+      "page": "メッシュ設定",
+      "cell": "C12",
+      "key": "MESH_BC_RIGHT",
+      "value": "ROLLER",
+      "label": "右面拘束",
+      "note": "Xmax面。NONE=自由 / ROLLER=X固定 / PINNED=XY固定",
+      "recommendation": "モデル・表示による",
+      "legacy_row": 19
+    },
+    {
+      "page": "メッシュ設定",
+      "cell": "C13",
+      "key": "MESH_BC_TOP",
+      "value": "NONE",
+      "label": "上面拘束",
+      "note": "Ymax面。NONE=自由 / ROLLER=Y固定 / PINNED=XY固定",
+      "recommendation": "モデル・表示による",
+      "legacy_row": 20
+    },
+    {
+      "page": "メッシュ設定",
+      "cell": "C14",
+      "key": "MESH_BC_PIN_CORNER",
+      "value": "AUTO",
+      "label": "剛体モード止め",
+      "note": "AUTO=底面の最小X節点をXY固定 / NONE=しない",
+      "recommendation": "モデル・表示による",
+      "legacy_row": 21
+    },
+    {
+      "page": "メッシュ設定",
+      "cell": "C17",
+      "key": "MESH_POINT1_X",
+      "value": 0.0,
+      "label": "点1 X",
+      "note": "左下X（要素作成①）",
+      "recommendation": "モデル・表示による",
+      "legacy_row": 6
+    },
+    {
+      "page": "メッシュ設定",
+      "cell": "C18",
+      "key": "MESH_POINT1_Y",
+      "value": 0.0,
+      "label": "点1 Y",
+      "note": "左下Y",
+      "recommendation": "モデル・表示による",
+      "legacy_row": 7
+    },
+    {
+      "page": "メッシュ設定",
+      "cell": "C19",
+      "key": "MESH_POINT2_X",
+      "value": 0.0,
+      "label": "点2 X",
+      "note": "左上X",
+      "recommendation": "モデル・表示による",
+      "legacy_row": 8
+    },
+    {
+      "page": "メッシュ設定",
+      "cell": "C20",
+      "key": "MESH_POINT2_Y",
+      "value": 4.0,
+      "label": "点2 Y",
+      "note": "左上Y",
+      "recommendation": "モデル・表示による",
+      "legacy_row": 9
+    },
+    {
+      "page": "メッシュ設定",
+      "cell": "C21",
+      "key": "MESH_POINT3_X",
+      "value": 3.0,
+      "label": "点3 X",
+      "note": "右上X",
+      "recommendation": "モデル・表示による",
+      "legacy_row": 10
+    },
+    {
+      "page": "メッシュ設定",
+      "cell": "C22",
+      "key": "MESH_POINT3_Y",
+      "value": 4.0,
+      "label": "点3 Y",
+      "note": "右上Y",
+      "recommendation": "モデル・表示による",
+      "legacy_row": 11
+    },
+    {
+      "page": "メッシュ設定",
+      "cell": "C23",
+      "key": "MESH_POINT4_X",
+      "value": 3.0,
+      "label": "点4 X",
+      "note": "右下X",
+      "recommendation": "モデル・表示による",
+      "legacy_row": 12
+    },
+    {
+      "page": "メッシュ設定",
+      "cell": "C24",
+      "key": "MESH_POINT4_Y",
+      "value": 0.0,
+      "label": "点4 Y",
+      "note": "右下Y",
+      "recommendation": "モデル・表示による",
+      "legacy_row": 13
+    },
+    {
+      "page": "メッシュ設定",
+      "cell": "C25",
+      "key": "MESH_NX",
+      "value": 25.0,
+      "label": "横方向の分割数 nx",
+      "note": "X方向分割",
+      "recommendation": "モデル・表示による",
+      "legacy_row": 14
+    },
+    {
+      "page": "メッシュ設定",
+      "cell": "C26",
+      "key": "MESH_NY",
+      "value": 25.0,
+      "label": "縦方向の分割数 ny",
+      "note": "Y方向分割",
+      "recommendation": "モデル・表示による",
+      "legacy_row": 15
+    },
+    {
+      "page": "メッシュ設定",
+      "cell": "C29",
+      "key": "MESH_GEN_COMPARE",
+      "value": 2.0,
+      "label": "形状メッシュの生成方式",
+      "note": "0=品質比較で選択。1=デローニ修正を優先。2=地形格子を使用。形状メッシュの作成②に適用。",
+      "recommendation": "モデル・表示による",
+      "legacy_row": 81
+    },
+    {
+      "page": "解析設定",
+      "cell": "C9",
+      "key": "WEIGHT_MODE",
+      "value": "TOTAL",
+      "label": "自重",
+      "note": "TOTALのみ。全応力のγ。浮力・水位は未実装",
+      "recommendation": "TOTAL",
+      "legacy_row": 24
+    },
+    {
+      "page": "解析設定",
+      "cell": "C10",
+      "key": "FLOW_POLICY",
+      "value": "INCONSISTENT",
+      "label": "非関連の扱い",
+      "note": "INCONSISTENT=非関連流れ・非対称整合接線・全Newton / DAVIS=等価関連c*,φ*。JOINTには掛けない。",
+      "recommendation": "INCONSISTENT",
+      "legacy_row": 27
+    },
+    {
+      "page": "解析設定",
+      "cell": "C11",
+      "key": "Q8_HOURGLASS_FACTOR",
+      "value": 0.05,
+      "label": "アワーグラス係数",
+      "note": "0～1",
+      "recommendation": 0.05,
+      "legacy_row": 25
+    },
+    {
+      "page": "解析設定",
+      "cell": "C12",
+      "key": "RCM_POLICY",
+      "value": "AUTO",
+      "label": "節点の並び替え",
+      "note": "AUTO=帯幅が減るときだけ並び替え / ON=必ずRCM / OFF=入力順",
+      "recommendation": "AUTO",
+      "legacy_row": 26
+    },
+    {
+      "page": "解析設定",
+      "cell": "C15",
+      "key": "SRM_FMAX",
+      "value": 3.0,
+      "label": "Fs探索の上限",
+      "note": "探索の上限",
+      "recommendation": "モデル依存",
+      "legacy_row": 30
+    },
+    {
+      "page": "解析設定",
+      "cell": "C16",
+      "key": "SRM_TOL",
+      "value": 0.02,
+      "label": "成功・失敗Fsの許容幅",
+      "note": "Fs区間の停止幅。現値を維持。参考：通常0.025 / 詳細検証0.0125。小さくすると試行が増えます。",
+      "recommendation": "現値を維持",
+      "legacy_row": 31
+    },
+    {
+      "page": "解析設定",
+      "cell": "C17",
+      "key": "SRM_PSI_POLICY",
+      "value": "KEEP",
+      "label": "ψの扱い",
+      "note": "材料のψの扱い。CAP=φ'以下 / REDUCE=Fsで低減 / KEEP=入力のまま。物理条件なので一括変更しません。",
+      "recommendation": "モデル依存",
+      "legacy_row": 32
+    },
+    {
+      "page": "解析設定",
+      "cell": "C18",
+      "key": "SRM_MODE",
+      "value": "REAPPLY",
+      "label": "モード",
+      "note": "REAPPLYのみ。各Fs試行で先行ステージを再実行",
+      "recommendation": "REAPPLY",
+      "legacy_row": 33
+    },
+    {
+      "page": "解析設定",
+      "cell": "C19",
+      "key": "SRM_FIXED_FS",
+      "value": 0.0,
+      "label": "固定Fsで試験する",
+      "note": "0=全探索 / 正=そのFsだけ独立再載荷。F<1も可",
+      "recommendation": 0.0,
+      "legacy_row": 46
+    },
+    {
+      "page": "高速化設定",
+      "cell": "C9",
+      "key": "NATIVE_DLL",
+      "value": "AUTO",
+      "label": "DLLの使用",
+      "note": "AUTO=利用可能なDLLを使用 / BAND=行列DLLのみ / OFF=VBA。未対応CPUでは対応経路へ復帰。",
+      "recommendation": "AUTO",
+      "legacy_row": 91
+    },
+    {
+      "page": "高速化設定",
+      "cell": "C10",
+      "key": "NATIVE_PRECISION",
+      "value": "AUTO",
+      "label": "DLLの演算方式（倍精度）",
+      "note": "全方式Double。AUTO=CPU対応命令を選択 / STRICT=従来VBA互換 / SSE2・AVX2=方式指定。微小な丸め差あり。",
+      "recommendation": "AUTO",
+      "legacy_row": 92
+    },
+    {
+      "page": "高速化設定",
+      "cell": "C11",
+      "key": "NATIVE_STATE_COPY",
+      "value": 1.0,
+      "label": "状態配列のDLL転送",
+      "note": "1=検証済み一括転送 / 0=比較用VBA経路。",
+      "recommendation": 1.0,
+      "legacy_row": 93
+    },
+    {
+      "page": "高速化設定",
+      "cell": "C12",
+      "key": "NATIVE_ASSEMBLY",
+      "value": 1.0,
+      "label": "行列組立のDLL処理",
+      "note": "1=検証済みDLL組立 / 0=比較用VBA経路。収束条件は同じ。",
+      "recommendation": 1.0,
+      "legacy_row": 94
+    },
+    {
+      "page": "高速化設定",
+      "cell": "C13",
+      "key": "NATIVE_GMRES_SIMD",
+      "value": 1.0,
+      "label": "GMRESのCPU拡張命令",
+      "note": "1=CPU対応命令を使用。非対応命令を無理に実行しません。",
+      "recommendation": 1.0,
+      "legacy_row": 95
+    },
+    {
+      "page": "高速化設定",
+      "cell": "C14",
+      "key": "NATIVE_GMRES_TUNED",
+      "value": 1.0,
+      "label": "GMRESの転送・更新最適化",
+      "note": "1=検証済み最適化 / 0=比較用経路。真の残差による判定を維持。",
+      "recommendation": 1.0,
+      "legacy_row": 96
+    },
+    {
+      "page": "高速化設定",
+      "cell": "C15",
+      "key": "NATIVE_GMRES_PREPARED",
+      "value": 1.0,
+      "label": "GMRESの作業領域再利用",
+      "note": "1=準備済み作業領域を再利用 / 0=比較用経路。",
+      "recommendation": 1.0,
+      "legacy_row": 97
+    },
+    {
+      "page": "高速化設定",
+      "cell": "C16",
+      "key": "IO_FAST_PATH",
+      "value": 1.0,
+      "label": "ログの整形・バッファ処理",
+      "note": "1=検証済み一括整形・バッファ処理 / 0=比較用経路。記録内容は同じ。",
+      "recommendation": 1.0,
+      "legacy_row": 98
+    },
+    {
+      "page": "高速化設定",
+      "cell": "C17",
+      "key": "EVENT_LOG_FAST",
+      "value": 1.0,
+      "label": "診断イベントの整形処理",
+      "note": "1=検証済み高速経路 / 0=比較用経路。記録内容は同じ。",
+      "recommendation": 1.0,
+      "legacy_row": 99
+    },
+    {
+      "page": "高速化設定",
+      "cell": "C20",
+      "key": "ACCEL_ADAPTIVE",
+      "value": 1.0,
+      "label": "候補方式の自動選別",
+      "note": "0=固定フラグ / 1=ONのV1/V2a/V2b/V4/V5を候補に費用・進捗で休止/再試用",
+      "recommendation": 1.0,
+      "legacy_row": 47
+    },
+    {
+      "page": "高速化設定",
+      "cell": "C21",
+      "key": "ACCEL_V1_PREDICTOR",
+      "value": 1.0,
+      "label": "V1 変位予測",
+      "note": "0=基準 / 1=同一ステージの確定変位増分から予測",
+      "recommendation": 1.0,
+      "legacy_row": 36
+    },
+    {
+      "page": "高速化設定",
+      "cell": "C22",
+      "key": "ACCEL_V2A_REUSE",
+      "value": 1.0,
+      "label": "V2a 増分間の接線再利用",
+      "note": "DAVISで0=基準 / 1=旧LU再利用。INCONSISTENTは毎反復更新のため休止",
+      "recommendation": 1.0,
+      "legacy_row": 37
+    },
+    {
+      "page": "高速化設定",
+      "cell": "C23",
+      "key": "ACCEL_V2B_COST",
+      "value": 0.0,
+      "label": "V2b 費用による接線更新",
+      "note": "DAVISで費用に応じた限定再利用。INCONSISTENTは毎反復更新のため休止",
+      "recommendation": 0.0,
+      "legacy_row": 38
+    },
+    {
+      "page": "高速化設定",
+      "cell": "C24",
+      "key": "ACCEL_V3_COST_SEARCH",
+      "value": 0.0,
+      "label": "V3 Fs探索の調整",
+      "note": "0=二分 / 1=保護付き探索。最終実幅は基準二分以下",
+      "recommendation": 0.0,
+      "legacy_row": 39
+    },
+    {
+      "page": "高速化設定",
+      "cell": "C25",
+      "key": "ACCEL_V4_ANDERSON",
+      "value": 1.0,
+      "label": "V4 Anderson補正",
+      "note": "0=基準 / 1=凍結接線・未減衰区間のみ。悪化候補は棄却",
+      "recommendation": 1.0,
+      "legacy_row": 40
+    },
+    {
+      "page": "高速化設定",
+      "cell": "C26",
+      "key": "ACCEL_V5_GMRES_LU",
+      "value": 0.0,
+      "label": "V5 旧LUを使うGMRES",
+      "note": "DAVISの旧LU前処理GMRES。INCONSISTENTは非対称LU＋右GMRESを自動選択",
+      "recommendation": 0.0,
+      "legacy_row": 41
+    },
+    {
+      "page": "高速化設定",
+      "cell": "C27",
+      "key": "ACCEL_STEP_RECOVERY",
+      "value": 0.0,
+      "label": "小さくなった増分幅の回復",
+      "note": "0=従来幅 / 1=1.1倍試用後8成功増分の採算を確認。自動選別=1時のみ",
+      "recommendation": 0.0,
+      "legacy_row": 88
+    },
+    {
+      "page": "高速化設定",
+      "cell": "C28",
+      "key": "ACCEL_STEP_FRESH_LU",
+      "value": 0.0,
+      "label": "回復直後のfresh LU試験",
+      "note": "0=既存V2a条件 / 1=回復直後1回だけfresh LU。回復ON時のみ",
+      "recommendation": 0.0,
+      "legacy_row": 89
+    },
+    {
+      "page": "高速化設定",
+      "cell": "C29",
+      "key": "ACCEL_TRACE",
+      "value": 0.0,
+      "label": "高速化詳細ログ",
+      "note": "0=追加詳細OFF / 1=正確な更新理由・全増分・候補/復帰をsolver_events.csvへ",
+      "recommendation": 0.0,
+      "legacy_row": 42
+    },
+    {
+      "page": "高速化設定",
+      "cell": "C30",
+      "key": "ACCEL_PREDICT_BETA",
+      "value": 1.0,
+      "label": "予測子係数beta",
+      "note": "検証用パラメータ 0～1。収束条件は変更しない",
+      "recommendation": 1.0,
+      "legacy_row": 43
+    },
+    {
+      "page": "高速化設定",
+      "cell": "C31",
+      "key": "ACCEL_PREDICT_MAX_RATIO",
+      "value": 1.5,
+      "label": "予測子刻み比上限",
+      "note": "検証用パラメータ 0超～2。上限超は予測しない",
+      "recommendation": 1.5,
+      "legacy_row": 44
+    },
+    {
+      "page": "高速化設定",
+      "cell": "C32",
+      "key": "ACCEL_TANGENT_CHANGE",
+      "value": 0.05,
+      "label": "接線変化の上限",
+      "note": "検証用パラメータ 0超～0.1。要素ごとの相対Frobenius差",
+      "recommendation": 0.05,
+      "legacy_row": 45
+    },
+    {
+      "page": "出力・表示",
+      "cell": "C9",
+      "key": "OUTPUT_STAGE_MODE",
+      "value": "FINAL",
+      "label": "結果の残し方",
+      "note": "FINAL=最後だけ結果シートへ / ALL=各ステージを追記",
+      "recommendation": "FINAL",
+      "legacy_row": 50
+    },
+    {
+      "page": "出力・表示",
+      "cell": "C10",
+      "key": "OUTPUT_INACTIVE_ELEMENTS",
+      "value": "SKIP",
+      "label": "無効要素",
+      "note": "SKIP=Death中は出さない / INCLUDE=行は残しステージ番号だけ書く",
+      "recommendation": "SKIP",
+      "legacy_row": 51
+    },
+    {
+      "page": "出力・表示",
+      "cell": "C11",
+      "key": "DEBUG_MODE",
+      "value": "STAGE",
+      "label": "ログを保存する範囲",
+      "note": "OFF=書かない / STAGE=ステージ境界 / ITER=反復も。*_out/run.log",
+      "recommendation": "STAGE",
+      "legacy_row": 52
+    },
+    {
+      "page": "出力・表示",
+      "cell": "C12",
+      "key": "DEBUG_FLUSH",
+      "value": 5.0,
+      "label": "ログ書き出し間隔",
+      "note": "秒。長時間計算の監視用",
+      "recommendation": 5.0,
+      "legacy_row": 56
+    },
+    {
+      "page": "出力・表示",
+      "cell": "C13",
+      "key": "EXPORT_MODE",
+      "value": "STAGE",
+      "label": "途中状態を保存する範囲",
+      "note": "OFF=保存しない / STAGE=成功ステージ / ON_FAIL=失敗時も。*_out へ",
+      "recommendation": "STAGE",
+      "legacy_row": 57
+    },
+    {
+      "page": "出力・表示",
+      "cell": "C14",
+      "key": "EXPORT_LOAD",
+      "value": "",
+      "label": "途中結果から再開する",
+      "note": "空欄=最初から。AUTO=最後の成功状態。フォルダ名で指定も可。旧結果の再開は入力条件を確認。",
+      "recommendation": "空欄（新規）",
+      "legacy_row": 58
+    },
+    {
+      "page": "出力・表示",
+      "cell": "C17",
+      "key": "VIEW_DISP_SCALE",
+      "value": 1.0,
+      "label": "変位倍率",
+      "note": "変形図",
+      "recommendation": "モデル・表示による",
+      "legacy_row": 64
+    },
+    {
+      "page": "出力・表示",
+      "cell": "C18",
+      "key": "VIEW_COLOR_RESULT",
+      "value": 13.0,
+      "label": "表示する結果の番号",
+      "note": "表示量一覧の番号を指定する。操作パネルの「表示項目一覧」から名称を確認できる。",
+      "recommendation": "モデル・表示による",
+      "legacy_row": 65
+    },
+    {
+      "page": "出力・表示",
+      "cell": "C19",
+      "key": "VIEW_SCALE_MODE",
+      "value": "SYMMETRIC",
+      "label": "色スケール",
+      "note": "AUTO=最大最小 / SYMMETRIC=正負対称 / USER=手入力",
+      "recommendation": "SYMMETRIC",
+      "legacy_row": 66
+    },
+    {
+      "page": "出力・表示",
+      "cell": "C20",
+      "key": "VIEW_RESULT_SOURCE",
+      "value": "SMOOTHED",
+      "label": "色付けする結果の集め方",
+      "note": "SMOOTHED=節点平滑 / ELEMENT=要素平均 / RAW_GAUSS=Gauss点の生値",
+      "recommendation": "SMOOTHED",
+      "legacy_row": 68
+    },
+    {
+      "page": "出力・表示",
+      "cell": "C21",
+      "key": "VIEW_DETAIL_MODE",
+      "value": "DETAIL",
+      "label": "表示モード",
+      "note": "SIMPLE=簡易 / DETAIL=節点番号など詳細",
+      "recommendation": "SIMPLE",
+      "legacy_row": 67
+    },
+    {
+      "page": "出力・表示",
+      "cell": "C22",
+      "key": "VIEW_SCALE",
+      "value": 35.0,
+      "label": "スケール",
+      "note": "座標→図形",
+      "recommendation": "モデル・表示による",
+      "legacy_row": 63
+    },
+    {
+      "page": "出力・表示",
+      "cell": "C23",
+      "key": "VIEW_MIN_X",
+      "value": 1000.0,
+      "label": "原点X",
+      "note": "作図原点X",
+      "recommendation": "モデル・表示による",
+      "legacy_row": 61
+    },
+    {
+      "page": "出力・表示",
+      "cell": "C24",
+      "key": "VIEW_MAX_Y",
+      "value": 1000.0,
+      "label": "原点Y",
+      "note": "作図原点Y",
+      "recommendation": "モデル・表示による",
+      "legacy_row": 62
+    },
+    {
+      "page": "詳細設定",
+      "cell": "C9",
+      "key": "SOLVER",
+      "value": "BAND_LU",
+      "label": "帯域ソルバ",
+      "note": "BAND_LU=標準 / BAND_LDLT_EXPERIMENTAL=影のLDLTをサンプル比較（本番はLUのまま）",
+      "recommendation": "BAND_LU",
+      "legacy_row": 53
+    },
+    {
+      "page": "詳細設定",
+      "cell": "C10",
+      "key": "BAND_LU_KERNEL",
+      "value": "NEW",
+      "label": "Band LUカーネル",
+      "note": "NEW=パックド1D（本番） / OLD=従来2D（回帰）。ログは BandLUKernel=",
+      "recommendation": "NEW",
+      "legacy_row": 54
+    },
+    {
+      "page": "詳細設定",
+      "cell": "C11",
+      "key": "PHYSICAL_FAILURE_MODE",
+      "value": "SHADOW",
+      "label": "物理破壊監視",
+      "note": "未使用。GRAVITYは監視なし、SRMはSHADOWを解析入口で固定",
+      "recommendation": "固定・未使用",
+      "legacy_row": 55
+    },
+    {
+      "page": "詳細設定",
+      "cell": "C14",
+      "key": "MESH_QUALITY_MIN_AREA_RATIO",
+      "value": 1e-06,
+      "label": "最小面積比",
+      "note": "代表寸法^2に対する比",
+      "recommendation": 1e-06,
+      "legacy_row": 71
+    },
+    {
+      "page": "詳細設定",
+      "cell": "C15",
+      "key": "MESH_QUALITY_MIN_JACOBIAN_RATIO",
+      "value": 1e-06,
+      "label": "最小Jacobian比",
+      "note": "代表寸法^2に対する比",
+      "recommendation": 1e-06,
+      "legacy_row": 72
+    },
+    {
+      "page": "詳細設定",
+      "cell": "C16",
+      "key": "MESH_QUALITY_MIN_ANGLE_DEG",
+      "value": 45.0,
+      "label": "最小角度",
+      "note": "deg",
+      "recommendation": "品質目標による",
+      "legacy_row": 73
+    },
+    {
+      "page": "詳細設定",
+      "cell": "C17",
+      "key": "MESH_QUALITY_MAX_ANGLE_DEG",
+      "value": 135.0,
+      "label": "最大角度",
+      "note": "deg",
+      "recommendation": "品質目標による",
+      "legacy_row": 74
+    },
+    {
+      "page": "詳細設定",
+      "cell": "C18",
+      "key": "MESH_QUALITY_MAX_ASPECT_RATIO",
+      "value": 5.0,
+      "label": "最大アスペクト",
+      "note": "長辺/短辺",
+      "recommendation": 5.0,
+      "legacy_row": 75
+    },
+    {
+      "page": "詳細設定",
+      "cell": "C21",
+      "key": "MESH_REPAIR_MAX_ITERATIONS",
+      "value": 5.0,
+      "label": "最大反復",
+      "note": "1～50",
+      "recommendation": 5.0,
+      "legacy_row": 76
+    },
+    {
+      "page": "詳細設定",
+      "cell": "C22",
+      "key": "MESH_REPAIR_DAMPING",
+      "value": 0.5,
+      "label": "移動係数",
+      "note": "0～1",
+      "recommendation": 0.5,
+      "legacy_row": 77
+    },
+    {
+      "page": "詳細設定",
+      "cell": "C23",
+      "key": "MESH_REPAIR_IMPROVEMENT_TOLERANCE",
+      "value": 0.0001,
+      "label": "改善判定",
+      "note": "相対",
+      "recommendation": 0.0001,
+      "legacy_row": 78
+    },
+    {
+      "page": "詳細設定",
+      "cell": "C24",
+      "key": "MESH_REPAIR_ANGLE_ITERATIONS",
+      "value": 2000.0,
+      "label": "角度最適化反復",
+      "note": "1～5000",
+      "recommendation": 2000.0,
+      "legacy_row": 79
+    },
+    {
+      "page": "詳細設定",
+      "cell": "C25",
+      "key": "MESH_REPAIR_TERRAIN_COMPARE",
+      "value": 1.0,
+      "label": "地形追従比較",
+      "note": "1=地形追従と角度最適化を比較 / 0=しない",
+      "recommendation": 1.0,
+      "legacy_row": 80
+    },
+    {
+      "page": "詳細設定",
+      "cell": "C26",
+      "key": "MESH_TERRAIN_COUNT_MIN",
+      "value": 0.55,
+      "label": "格子要素数下限比",
+      "note": "デローニ要素数に対する比",
+      "recommendation": 0.55,
+      "legacy_row": 82
+    },
+    {
+      "page": "詳細設定",
+      "cell": "C27",
+      "key": "MESH_TERRAIN_COUNT_MAX",
+      "value": 1.8,
+      "label": "格子要素数上限比",
+      "note": "デローニ要素数に対する比",
+      "recommendation": 1.8,
+      "legacy_row": 83
+    },
+    {
+      "page": "詳細設定",
+      "cell": "C28",
+      "key": "ADAPT_MAX_ELEMENT_RATIO",
+      "value": 2.0,
+      "label": "要素数倍率上限",
+      "note": "再メッシュの増加上限",
+      "recommendation": 2.0,
+      "legacy_row": 84
+    },
+    {
+      "page": "詳細設定",
+      "cell": "C29",
+      "key": "ADAPT_MARK_FRACTION",
+      "value": 0.15,
+      "label": "細分化割合",
+      "note": "0～1",
+      "recommendation": 0.15,
+      "legacy_row": 85
+    },
+    {
+      "page": "詳細設定",
+      "cell": "C32",
+      "key": "MESH_GEN_LAST_METHOD",
+      "value": "地形追従格子",
+      "label": "MESH_GEN_LAST_METHOD",
+      "note": "再構築時に保持",
+      "recommendation": "自動出力",
+      "legacy_row": 102
+    },
+    {
+      "page": "詳細設定",
+      "cell": "C33",
+      "key": "MESH_GEN_LAST_COMPARE",
+      "value": "選択：地形追従格子 / 要素 302 → 306 / 節点 975 → 1005\r\n最適化前：302要素、合格263 / 警告36 / 不合格3、角度 26.565～146.006°\r\n角度最適化：302要素、合格302 / 警告0 / 不合格0、角度 45.000～134.004°\r\n地形追従：306要素、合格306 / 警告0 / 不合格0、角度 45.000～135.000°\r\n地形追従＋角度最適化：306要素、合格306 / 警告0 / 不合格0、角度 45.921～134.012°\r\n採用優先：両方合格なら地形格子 (MESH_GEN_COMPARE=2)\r\n合格45～135° / 警告30～150°内 / その他は不合格。採用後は再解析が必要です。",
+      "label": "生成比較の結果（自動更新）",
+      "note": null,
+      "recommendation": "自動出力",
+      "legacy_row": 103
+    },
+    {
+      "page": "詳細設定",
+      "cell": "C34",
+      "key": "BAND_LU_BENCH",
+      "value": 0.0,
+      "label": "BAND_LU_BENCH",
+      "note": "再構築時に保持",
+      "recommendation": "モデル・表示による",
+      "legacy_row": 104
+    },
+    {
+      "page": "詳細設定",
+      "cell": "C35",
+      "key": "BAND_LU_BENCH_N",
+      "value": 20.0,
+      "label": "BAND_LU_BENCH_N",
+      "note": "再構築時に保持",
+      "recommendation": "モデル・表示による",
+      "legacy_row": 105
+    }
+  ],
+  "internal_keys": []
+}

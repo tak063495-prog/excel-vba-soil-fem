@@ -5,7 +5,7 @@
 #>
 param([string]$Src,[string]$Dst,[string]$ModDir,[string]$Modules='')
 $ErrorActionPreference='Stop'
-$Required=@('CONTROL','FEMCore','FEMSolver','FEMIo','FEMEngine','FEMNative','FEMNativeMat','FEMNativeKern','FEMUiInputs','FEMUiValidation','FEMUiLayout')
+$Required=@('CONTROL','FEMCore','FEMSolver','FEMIo','FEMEngine','FEMNative','FEMNativeMat','FEMNativeKern','FEMUiInputs','FEMUiValidation','FEMUiLayout','FEMUi','FEMViewer','ThisWorkbook')
 $list=[Collections.Generic.List[string]]::new(); foreach($m in $Required){$list.Add($m)}
 foreach($m in ($Modules -split ',')){ $m=$m.Trim(); if($m -and -not $list.Contains($m)){$list.Add($m)} }
 if(-not (Test-Path -LiteralPath $Src -PathType Leaf)){throw "Src not found: $Src"}
@@ -14,7 +14,8 @@ if((Resolve-Path -LiteralPath $Src).Path -eq [IO.Path]::GetFullPath($Dst)){throw
 function Norm([string]$s){ (($s -replace "`r`n","`n" -replace "`r","`n") -split "`n" | ?{ $_ -notmatch '^Attribute VB_' } | %{ $_.TrimEnd() }) -join "`n" -replace "`n+$","" }
 $srcText=@{}; $srcHash=@{}
 foreach($m in $list){
- $p=Join-Path $ModDir "$m.bas"
+ $extension=if($m -eq 'ThisWorkbook'){'.cls'}else{'.bas'}
+ $p=Join-Path $ModDir ($m+$extension)
  if(-not (Test-Path -LiteralPath $p -PathType Leaf)){throw "Module source missing: $p"}
  $srcText[$m]=Get-Content -LiteralPath $p -Raw -Encoding UTF8
  $srcHash[$m]=(Get-FileHash -LiteralPath $p -Algorithm SHA256).Hash

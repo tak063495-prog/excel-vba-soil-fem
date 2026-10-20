@@ -232,6 +232,7 @@ Private Sub DrawView(ByVal mode As String)
     Dim svg As String, parts() As String, partCount As Long, tempPath As String, labels As Object, showLabels As Boolean
     Dim ws As Worksheet, picture As Object, oldScreen As Boolean, oldEvents As Boolean, oldStatus As Variant
     Dim oldDisplayStatus As Boolean, stateSaved As Boolean, errorText As String, lastRow As Long, canvasW As Double, canvasH As Double
+    Dim viewPhase As String, errorNumber As Long
     If AnalysisRunning Or viewerBusy Then Exit Sub
     viewerBusy = True
     FEMViewerLastError = "": FEMViewerElementCount = 0
@@ -243,11 +244,15 @@ Private Sub DrawView(ByVal mode As String)
     Application.ScreenUpdating = False
     Application.DisplayStatusBar = True
     Application.StatusBar = "メッシュ表示を準備しています"
+    viewPhase = "表示設定の読込"
     decimalMark = Application.International(xlDecimalSeparator)
     nodes = ReadTable("節点データ", 3)
     elements = ReadTable("要素データ", 10)
     materials = ReadTable("材料データ", 13)
     stages = ReadTable("ステージ", 5)
+    ' The viewer reads sheet values directly, including in manual calculation mode.
+    If FEMUiInstalled() Then ThisWorkbook.Worksheets("出力・表示").Calculate
+    ThisWorkbook.Worksheets("設定").Calculate
     settings = ReadTable("設定", 5)
     Set nodeMap = CreateObject("Scripting.Dictionary")
     Set materialMap = CreateObject("Scripting.Dictionary")
@@ -305,6 +310,7 @@ NextPlan:
         End If
     Next r
     dscale = 0#: Stage = 0
+    viewPhase = "保存結果と入力の照合"
     If mode = "RESULT" Then
         If ResultsDirty() Then Err.Raise vbObjectError + 3706, "FEMViewer", "入力変更後のため、再解析してから結果表示してください。"
         If CStr(ThisWorkbook.Worksheets("診断").Cells(2, 2).value2) <> "PASS" Then Err.Raise vbObjectError + 3707, "FEMViewer", "解析成功後に結果表示してください。"
@@ -504,8 +510,10 @@ NextDrawElement:
     ReDim Preserve parts(0 To partCount + 1)
     svg = Join(parts, vbNullString)
     tempPath = ThisWorkbook.path & Application.PathSeparator & "~FEMView_" & Format$(Now, "yyyymmdd_hhnnss") & "_" & CStr(CLng(Timer * 100#)) & ".svg"
+    viewPhase = "一時SVGの保存"
     WriteSvg tempPath, svg
     Set ws = ThisWorkbook.Worksheets("図")
+    viewPhase = "Excelへの図の挿入"
     Set picture = ws.Shapes.AddPicture(tempPath, msoFalse, msoTrue, 10#, 10#, canvasW, canvasH)
     ' 新しい図が作成できた後だけ旧図を消す。表示失敗時には旧図を保持する。
     P1ClearViewerLayers
@@ -513,13 +521,15 @@ NextDrawElement:
     picture.AlternativeText = title & " / " & CStr(count) & "要素"
     picture.Placement = xlFreeFloating
     FEMViewerElementCount = count
+    viewPhase = "図シートの表示"
     ws.Activate
     ThisWorkbook.Windows(1).Zoom = 100
     ThisWorkbook.Windows(1).ScrollRow = 1
     ThisWorkbook.Windows(1).ScrollColumn = 1
     GoTo Finish
 Failed:
-    errorText = Err.Description
+    errorNumber = Err.Number
+    errorText = CStr(errorNumber) & " [" & viewPhase & "] " & Err.Description
     FEMViewerLastError = errorText
 Finish:
     On Error Resume Next

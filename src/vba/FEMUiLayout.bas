@@ -1,5 +1,5 @@
 ﻿Option Explicit
-Public Const FEM_UI_STAMP As String = "20261020_UI_01"
+Public Const FEM_UI_STAMP As String = "20261020_UI_02"
 
 Private mUiSessionReady As Boolean
 Private mUiSessionBook As String
