@@ -16,8 +16,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 21798,
-    "sha256": "ac7e4dc4e047c253d50aab9d33f6b8baf71001f2c198890256a213710dadb36e"
+    "bytes": 21962,
+    "sha256": "6a4c85d9937067a854379a8108e0a837d1212e62e43eb6417a1fa298ea51798a"
   },
   {
     "path": "docs/ACCELERATION_HISTORY.md",
@@ -106,8 +106,8 @@
   },
   {
     "path": "docs/SHAPE_MESH_UI_20261020.md",
-    "bytes": 6775,
-    "sha256": "b7939167dc139e3bedecf9f8093759b722e2440c5e017a49e59ba1bde837b280"
+    "bytes": 6762,
+    "sha256": "51a4bd906c37df8b4f5b781c8e0a5a98bfa639fd6ae17afb6af450965cdae73b"
   },
   {
     "path": "docs/SIMD_NATIVE.md",
@@ -121,8 +121,8 @@
   },
   {
     "path": "docs/STRAIN_INCREMENT_DISPLAY.md",
-    "bytes": 9493,
-    "sha256": "84a7e5fd742de9ab51c1021e25c1bd2988e610d44bc87e0433822744cdbbd74d"
+    "bytes": 9540,
+    "sha256": "65feae5ef4d8f66e0e1ef4328009968d1dd9c55d624f1d29b2247e7c44d86ab0"
   },
   {
     "path": "docs/TECHNICAL_OVERVIEW.md",
@@ -541,13 +541,43 @@
   },
   {
     "path": "docs/manuals/2DSoilFEM_Detailed_Manual_20261020.pdf",
-    "bytes": 1528105,
-    "sha256": "ff076d8a24de89b146eaea5408e984a194e9be448b865e0022b73effae9ac38f"
+    "bytes": 6176530,
+    "sha256": "5883d9fe152e4e6e396a644b34daf40316449bb554c9c4bc61337761a53b146a"
+  },
+  {
+    "path": "docs/manuals/README.md",
+    "bytes": 5799,
+    "sha256": "e3aaea3790ca489500645e2be34693498d43fe863918ba36666ee20c54fab5e2"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/history_probes.json.gz",
+    "bytes": 896044,
+    "sha256": "10b70b425a7f26a03bba2ff18e2f8602c68ecb3938e5de882eaebaef1a2480e7"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/native_11_stages.json.gz",
+    "bytes": 888363,
+    "sha256": "733d8aa2c0b62ab6f9b67395fc83766256dc76b2152e0054bd5cd23e9cc78938"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/numeric_comparison.json",
+    "bytes": 468,
+    "sha256": "76069a12b8229a0c8b5d1775c925bb7ebc8b8959b0f62f19070fbbf5e8defbc2"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/optional_srm_undetermined.json.gz",
+    "bytes": 877727,
+    "sha256": "045e47f7b81a5ab5ef9d84bea799829bc24c05d46374ce8daebe224a11db54bb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/vba_11_stages.json.gz",
+    "bytes": 894728,
+    "sha256": "ef9249f855455571658b579c933b0b11932c4a789d614d8af100d44f50aa37b7"
   },
   {
     "path": "docs/manuals/manual_validation_20261020.json",
-    "bytes": 2769,
-    "sha256": "6e47eeb983a541a90ca29e740df0f6e86241d181a2f2934c5d30fc4fbea54ea5"
+    "bytes": 7142,
+    "sha256": "a0f7daea4bd7d8bac824adf4eb65ce50f13a1282adc873a035f37e67b7aed2b6"
   },
   {
     "path": "docs/native-evidence/assembly_20261020/DAVIS_0.json",
