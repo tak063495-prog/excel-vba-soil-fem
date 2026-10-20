@@ -1,6 +1,6 @@
 # -MeshPath: smoke系のfixture。未指定時はリポジトリ追跡の tests/fixtures/smoke_mesh.json（スクリプト基準）。
 # 相対パス指定はカレントディレクトリ基準。ブック隣へのフォールバックはしない。
-param([string]$Book,[string]$Suite='smoke',[string]$Out,[double]$FixedFs=1.0,[string]$Modes='OFF,AUTO',[string]$Flow='',[string]$MeshPath='',[ValidateSet('STRICT','SSE2','AUTO','AVX2')][string]$Precision='STRICT',[string]$CaseName='',[ValidateSet('off','adaptive')][string[]]$Variants=@('off','adaptive'),[switch]$Profile,[ValidateSet(0,1)][int]$StateCopy=0,[ValidateSet(0,1)][int]$GmresSimd=0,[ValidateSet(0,1)][int]$IoFast=0,[ValidateSet(0,1)][int]$EventFast=0,[ValidateSet(0,1)][int]$AssemblyFast=0,[switch]$NativeProfile,[switch]$MaterialProfile,[switch]$BothProfiles,[ValidateSet(0,1)][int]$GmresTuned=0,[ValidateSet(0,1)][int]$GmresPrepared=0,[switch]$WarmUi)
+param([string]$Book,[string]$Suite='smoke',[string]$Out,[double]$FixedFs=1.0,[string]$Modes='OFF,AUTO',[string]$Flow='',[string]$MeshPath='',[ValidateSet('STRICT','SSE2','AUTO','AVX2')][string]$Precision='STRICT',[string]$CaseName='',[ValidateSet('off','adaptive')][string[]]$Variants=@('off','adaptive'),[switch]$Profile,[ValidateSet(0,1)][int]$StateCopy=0,[ValidateSet(0,1)][int]$GmresSimd=0,[ValidateSet(0,1)][int]$IoFast=0,[ValidateSet(0,1)][int]$EventFast=0,[ValidateSet(0,1)][int]$AssemblyFast=0,[switch]$NativeProfile,[switch]$MaterialProfile,[switch]$BothProfiles,[ValidateSet(0,1)][int]$GmresTuned=0,[ValidateSet(0,1)][int]$GmresPrepared=0,[switch]$WarmUi,[switch]$SaveResultBook)
 $ErrorActionPreference='Stop'
 if($BothProfiles -and (-not $NativeProfile -or $MaterialProfile)){throw 'BothProfiles requires NativeProfile without MaterialProfile'}
 if($MaterialProfile -and -not $NativeProfile){throw 'MaterialProfile requires NativeProfile'}
@@ -238,6 +238,11 @@ try{
    $matHash=if(Test-Path -LiteralPath $matPath){(Get-FileHash -LiteralPath $matPath).Hash}else{$null}
    $profileTarget=if($MaterialProfile){'material'}elseif($NativeProfile){'native'}else{''}
    $res[$res.Count-1] | Add-Member -NotePropertyMembers @{MaterialDllSha256=$matHash;NativeProfileTarget=$profileTarget;UiPrewarmed=[bool]$WarmUi}
+   if($SaveResultBook){
+    $savedCopy=[IO.Path]::ChangeExtension($copy,$name+"_"+$v+"_"+$mode+".results.xlsm")
+    $wb.SaveCopyAs($savedCopy)
+    $res[$res.Count-1] | Add-Member -NotePropertyMembers @{SavedResultBook=$savedCopy;SavedResultBookSha256=(Get-FileHash -LiteralPath $savedCopy).Hash}
+   }
    $res|ConvertTo-Json -Depth 4|Set-Content $Out -Encoding UTF8
    Write-Output "$name $v $mode $t FOS=$fos"
    if(-not $exclusiveExcel){throw 'Another Excel appeared during this test; preserve result but do not accept its timing.'}

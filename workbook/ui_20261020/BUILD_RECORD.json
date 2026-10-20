@@ -1,36 +1,31 @@
 {
-  "compile": "PASS",
-  "source_sha256": "EA0E2CAFDAF3A45C277C02F7D9CE39C8CABAC622C923B553E9BF937FF7FD81F3",
   "dll_layout": "single",
-  "material_available": true,
-  "reopen": "PASS",
   "files": [
     {
       "name": "2DSoilFEM_ui_20261020.xlsm",
-      "bytes": 3131506,
-      "sha256": "768F75AA877B52B122F0691557CD2B777D0DD008E03D51B9DDE88A9997CD7E12"
-    },
-    {
-      "name": "README.txt",
-      "bytes": 3084,
-      "sha256": "CD171CF59512C53CBAC93DA899EE5FE1412EAB7B3CC81A2BA9BCF0B047A98EC2"
+      "bytes": 3195506,
+      "sha256": "1E46355CA510B05509B92BEAEF712118417BCEEA171FF40CE02B0226CD5E9A06"
     },
     {
       "name": "soilfem_native_x64.dll",
       "bytes": 170496,
       "sha256": "AD5C2AE81512BA8E977002415A6A5339B621C00A1BBABE5092559F8A7F9E0797"
+    },
+    {
+      "name": "README.txt",
+      "bytes": 3907,
+      "sha256": "597401979AD8D365AAEBF932E6022608D843D3BF7A1BBD61963B25883FD7D1C9"
     }
   ],
-  "ui_stamp": "20261020_UI_03",
+  "source": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\excel-vba-soil-fem\\workbook\\ui_20261020\\2DSoilFEM_ui_20261020.xlsm",
+  "compile": "PASS",
+  "ui_stamp": "20261020_UI_04",
+  "material_available": true,
   "solver_available": true,
-  "source": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\excel-vba-soil-fem\\workbook\\inco_element_20261020\\2DSoilFEM_inco_element_20261020.xlsm",
-  "validation": {
-    "input_checks": 813,
-    "persistence_checks": 406,
-    "mesh_checks": 91,
-    "viewer_checks": 108,
-    "srm_exact": "docs/shape-mesh-evidence/20261020/paired_srm_exact.json",
-    "fixed_exact": "docs/shape-mesh-evidence/20261020/fixed_exact_comparison.json",
-    "screen": "docs/shape-mesh-evidence/20261020/screen_inspection.json"
-  }
+  "reopen": "PASS",
+  "source_sha256": "768F75AA877B52B122F0691557CD2B777D0DD008E03D51B9DDE88A9997CD7E12",
+  "display_options": "named result selection; independent shear increment/plastic cross checkboxes; A default/B switchable",
+  "documentation": "docs/STRAIN_INCREMENT_DISPLAY.md",
+  "source_revision": "26fd5a2d49b991853b5a17a5097a866b749edded",
+  "release_validation": "docs/strain-increment-evidence/20261020/release_validation.json"
 }

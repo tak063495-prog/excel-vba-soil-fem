@@ -59,7 +59,11 @@ Public Function FEMUiTryWriteSetting(ByVal keyName As String, ByVal value As Var
     oldEvents = Application.EnableEvents
     On Error GoTo Failed
     Application.EnableEvents = False
-    ws.Cells(rowNo, 3).value2 = value
+    If UCase$(keyName) = "VIEW_COLOR_RESULT" And FEMResultChoiceId(value) > 0 Then
+        ws.Cells(rowNo, 3).Value2 = FEMResultChoiceLabel(FEMResultChoiceId(value))
+    Else
+        ws.Cells(rowNo, 3).Value2 = value
+    End If
     FEMUiCalculateSettings
     Application.EnableEvents = oldEvents
     FEMUiTryWriteSetting = True
@@ -86,6 +90,7 @@ Public Sub FEMUiBindSettings()
     Set formulas = CreateObject("Scripting.Dictionary")
     seen.CompareMode = vbTextCompare
     formulas.CompareMode = vbTextCompare
+    FEMResultOptionsEnsureList
     Set legacy = ThisWorkbook.Worksheets("設定")
     pages = FEMUiPages()
     For Each p In pages
@@ -99,6 +104,9 @@ Public Sub FEMUiBindSettings()
                 lr = FEMUiFindLegacyRow(legacy, key)
                 If lr = 0 Then Err.Raise vbObjectError + 3802, "FEMUiBindSettings", "旧設定キーがありません: " & key
                 addr = "=IF('" & Replace(CStr(p), "'", "''") & "'!C" & CStr(r) & "="""","""",'" & Replace(CStr(p), "'", "''") & "'!C" & CStr(r) & ")"
+                If UCase$(key) = "VIEW_COLOR_RESULT" Then
+                    addr = "=IF(ISNUMBER('" & CStr(p) & "'!C" & CStr(r) & "),'" & CStr(p) & "'!C" & CStr(r) & ",IFERROR(MATCH('" & CStr(p) & "'!C" & CStr(r) & ",FEMViewerSelectionLabels,0),0))"
+                End If
                 formulas.Add CStr(lr), addr
             End If
         Next r

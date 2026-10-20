@@ -115,6 +115,7 @@ End Sub
 ' Zero displacements and plastic history for an SRM trial. Must NOT reset CurrentStrengthFactor / FSS.
 Private Sub P3ZeroTrialKinematics()
   Dim i As Long, k As Long
+  FEMIncrementClear
   If lastDof >= 0 Then
     ReDim P3CommittedDisp(lastDof)
     For i = 0 To lastDof
@@ -1844,6 +1845,7 @@ Private Sub P3WriteStageSnapshot()
   P3PrepareOutputResidual
   SaveDisp
   SaveStress
+  FEMIncrementSave
 End Sub
 
 Private Function P3StageMaterialId(ByVal stageIndex As Long) As Long
@@ -2981,6 +2983,7 @@ P3NextGlobalIteration:
         AdaptiveEndIncrement True, localIteration, accelerationRetried
         AccelRememberIncrement incrementBase, targetFactor - stageFactor, localIteration, retryCount
         If AccelTrace Then P6SolverEvent "INCREMENT_ACCEPT", "fs=" & Format$(P3CurrentStrengthFactor, "0.000000000000") & ";lambda_start=" & Format$(stageFactor, "0.000000000000") & ";lambda_target=" & Format$(targetFactor, "0.000000000000") & ";delta_lambda=" & Format$(targetFactor - stageFactor, "0.000000000000") & ";iterations=" & CStr(localIteration) & ";retries=" & CStr(retryCount) & ";predictor=" & CStr(predictorUsed) & ";baseline_retry=" & CStr(AccelBaselineRetry) & ";relres=" & Format$(RelativeResidualFree, "0.000E+00")
+        FEMIncrementCapture targetFactor
         duMax = 0#
         For i = 0 To lastDof
           If NodeCond(i) = 0 Then
@@ -3228,6 +3231,7 @@ Private Function P3RunConsolidationSteps(ByRef targetForce() As Double, ByRef in
       P3CopyCommittedDispToTrial
       Exit Function
     End If
+    FEMIncrementCapture 1#
     For i = 0 To lastDof
       P3FinalInternalForce(i) = internalForce(i)
       P3CommittedDisp(i) = TDisp(i)
@@ -3814,6 +3818,7 @@ Private Sub P3CaptureSrmSuccessSnapshot(ByVal strengthFactor As Double)
     P3SrmSnapLockedApplied(i) = P3LockedApplied(i)
     On Error GoTo 0
   Next i
+  FEMIncrementSnapshot
   P3SrmSnapReady = True
 End Sub
 
@@ -3897,6 +3902,7 @@ Private Function P3RestoreSrmSuccessSnapshot() As Boolean
   P3TrialStateValid = False
   If Not P3RebuildTangentFromSpmat() Then Exit Function
   FEMAppendRunLog "SRM復元", "PASS", "保存したFs=" & Format$(P3SrmSnapFs, "0.000") & " 変位max=" & Format$(P3SrmSnapMaxDisp, "0.000E+00") & " 残差=" & Format$(P3SrmSnapRelRes, "0.000E+00")
+  FEMIncrementRestore
   P3RestoreSrmSuccessSnapshot = True
 End Function
 
@@ -4245,6 +4251,7 @@ Private Function P3ExecuteStage(ByVal stageIndex As Long) As Boolean
   End If
   P3ActivePrefix = stageIndex
   kindText = P3StageKind(stageIndex)
+  If kindText <> "SRM" Then FEMIncrementClear
   FEMLastProc = "stage " & CStr(stageIndex) & " " & kindText
   materialId = P3StageMaterialId(stageIndex)
   logNo = P3StageId(stageIndex)
@@ -4441,6 +4448,7 @@ Private Function P3RunAnalysis() As Boolean
   Dim okFlag As Boolean, resumeIndex As Long
   On Error GoTo P3RunFailed
   FEMLastProc = "P3RunAnalysis"
+  FEMIncrementReset
   AccelResetRun
   P3RunAnalysis = False
   P1Formulation = P1_FORMULATION_PLANE_STRAIN

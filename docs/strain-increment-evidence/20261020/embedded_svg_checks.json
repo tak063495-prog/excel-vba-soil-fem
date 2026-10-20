@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "modes": {
+    "A": {
+      "contour_segments": 23,
+      "principal_half_axes": 80,
+      "max_half_axis_pixels": 12.000680022398734,
+      "embedded_svg_bytes": 28737
+    },
+    "B": {
+      "contour_segments": 0,
+      "principal_half_axes": 80,
+      "max_half_axis_pixels": 12.000680022398734,
+      "embedded_svg_bytes": 26693
+    }
+  }
+}

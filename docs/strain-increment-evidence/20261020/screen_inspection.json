@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "date": "2026-10-20",
+  "method": "Excel actual screen inspection using Computer Use; owned test copies only",
+  "checks": [
+    "content-name dropdown opened and Japanese labels legible",
+    "selector left aligned; descriptions do not overlap",
+    "two independent Forms checkboxes with 11pt adjacent cell labels",
+    "result display button placed below explanatory text",
+    "A stress colors plus increment contours and visible red/blue plastic crosses",
+    "B increment colors plus the same visible plastic crosses",
+    "Fs/increment/load factor and scalar/cross legends visible"
+  ],
+  "font_label_points": 11,
+  "cross_max_half_axis_pixels": 12.000680022398734
+}

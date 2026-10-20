@@ -1094,6 +1094,7 @@ Sub ボタン5_Click()
     ResultRevision = ModelRevision
     If UCase$(Trim$(FEMReadTextSetting("OUTPUT_STAGE_MODE", "FINAL"))) <> "ALL" Then
         SaveStress
+        FEMIncrementSave
         SaveDisp
     End If
     SaveP1Results
