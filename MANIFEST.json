@@ -16,8 +16,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 22095,
-    "sha256": "85ec5d9bf7e4f4a6f29903d6a744706044fc1fa2f35c87766312807cd5c43875"
+    "bytes": 22167,
+    "sha256": "c10c31247dbec71e7ef67118a3c7793556596ab2fe3ff27db9e3750922017d05"
   },
   {
     "path": "docs/ACCELERATION_HISTORY.md",
@@ -541,13 +541,13 @@
   },
   {
     "path": "docs/manuals/2DSoilFEM_Detailed_Manual_20261020.pdf",
-    "bytes": 8422267,
-    "sha256": "9ed4685f3038716658781cde73e05ccea96fc918c83aa7ab5bf0addaa768a3f7"
+    "bytes": 9023266,
+    "sha256": "49ee21002efe4fd3778d0964c7c4df7b02f07f836953f589d7e498acea733fc4"
   },
   {
     "path": "docs/manuals/README.md",
-    "bytes": 9985,
-    "sha256": "28fdefdeb765c4e63f7cee1bce45c99eb6a305791bbf1e4ba07b99cb77bfe49a"
+    "bytes": 10721,
+    "sha256": "7e91eb7f7a6acd6e7dffe3ba3fbd68513ca3eba3d842021c2b1ed2b11cba9e7e"
   },
   {
     "path": "docs/manuals/construction-evidence/20261020/anchor09/adaptive_v2a.csv.gz",
@@ -2970,6 +2970,51 @@
     "sha256": "dce2654c86fe4469ee43554bb4c22c7b0237a55af00d617b5e2bc8339275c2b5"
   },
   {
+    "path": "docs/manuals/construction-evidence/20261021/wall-moment-guide/README.md",
+    "bytes": 3576,
+    "sha256": "4e2b87b67119dc5d575db9377321731f40408298300fab9cc500d842fe3c5d08"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/wall-moment-guide/actual_meshes.png",
+    "bytes": 323429,
+    "sha256": "0a6013b49659935184f8ddd876c91805e4236aa0fcefc229fdb0aa94a30c7983"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/wall-moment-guide/manual_section_source.py",
+    "bytes": 11344,
+    "sha256": "b141e969fe98b3b8d36d27dec8be6b8b7827be80db53fad3acef8c853e7c1863"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/wall-moment-guide/mesh_plan_schematic.png",
+    "bytes": 37639,
+    "sha256": "5ea952f9c4b2e19e43ca4e1790397b2d1fc8c1c5d76195f55712660efa7fae66"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/wall-moment-guide/moment_comparison.png",
+    "bytes": 119713,
+    "sha256": "c244993675763ee0f065d341ea5b5c55794b2d414ace6469050dac4d3116d355"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/wall-moment-guide/rebuild_figures.py",
+    "bytes": 3126,
+    "sha256": "72ae1435c20fcdf8fb13ad5beced0baf90ccb13975957b90a3f6119d16424a93"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/wall-moment-guide/rebuild_sections.py",
+    "bytes": 9046,
+    "sha256": "ebf14768fe2f658549bbf689d1f1d5a2890dee02605a2d4d990901aa3ce82e52"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/wall-moment-guide/sections.csv",
+    "bytes": 8458,
+    "sha256": "098af4ea1e3f2cb52a10913c59ef9c1f0dd29dbd9892ceb378223a914d263cce"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/wall-moment-guide/summary.json",
+    "bytes": 28811,
+    "sha256": "25546991d458e107281486568a412ae425ee0fc7390121b52e66b286f0313778"
+  },
+  {
     "path": "docs/manuals/construction-evidence/history_probes.json.gz",
     "bytes": 896044,
     "sha256": "10b70b425a7f26a03bba2ff18e2f8602c68ecb3938e5de882eaebaef1a2480e7"
@@ -2996,8 +3041,8 @@
   },
   {
     "path": "docs/manuals/manual_validation_20261020.json",
-    "bytes": 247543,
-    "sha256": "51ef01b60831ecf71ec93cd23e552e2d15e9155f990bd2d0d06a7b32570025b7"
+    "bytes": 281702,
+    "sha256": "a048f8c0aca834c74f4ad59487a2bbee0535223d84bad9180a71a155863b92ed"
   },
   {
     "path": "docs/native-evidence/assembly_20261020/DAVIS_0.json",

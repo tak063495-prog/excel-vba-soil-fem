@@ -1,5 +1,5 @@
 {
-  "pages": 102,
+  "pages": 109,
   "chapters": [
     [
       "第1章 / はじめに",
@@ -23,35 +23,35 @@
     ],
     [
       "第6章 / 施工例C：アンカー相当力",
-      55
+      62
     ],
     [
       "第7章 / 施工例D：トンネル",
-      57
+      64
     ],
     [
       "第8章 / 施工例E：水平・斜面の支持力",
-      61
+      68
     ],
     [
       "第9章 / 結果と増分図の読み方",
-      67
+      74
     ],
     [
       "第10章 / 保存・比較・トラブル対応",
-      76
-    ],
-    [
-      "付録A / 設定一覧",
       83
     ],
     [
+      "付録A / 設定一覧",
+      90
+    ],
+    [
       "付録B / 根拠と再現",
-      94
+      101
     ],
     [
       "付録C / 用語集",
-      98
+      105
     ]
   ],
   "page_plan": [
@@ -312,256 +312,291 @@
     },
     {
       "page": 52,
-      "title": "擁壁施工後SRM：結果とせん断帯",
+      "title": "擁壁の曲げ：隅角の最大応力と断面力を分ける",
       "chapter": "第5章 / 施工例B：擁壁とSRM"
     },
     {
       "page": 53,
-      "title": "同一メッシュでDAVISとINCONSISTENTを実測",
+      "title": "曲げを取り出すためのメッシュと断面位置",
       "chapter": "第5章 / 施工例B：擁壁とSRM"
     },
     {
       "page": 54,
-      "title": "流れ則比較：全変位と結果の解釈",
+      "title": "出力設定：工程と積分点の応力を残す",
       "chapter": "第5章 / 施工例B：擁壁とSRM"
     },
     {
       "page": 55,
+      "title": "断面力の求め方：符号・単位・4GPからの復元",
+      "chapter": "第5章 / 施工例B：擁壁とSRM"
+    },
+    {
+      "page": 56,
+      "title": "実計算から整理する：同じ工程・同じ断面",
+      "chapter": "第5章 / 施工例B：擁壁とSRM"
+    },
+    {
+      "page": 57,
+      "title": "曲げモーメント：粗密比較と断面位置の影響",
+      "chapter": "第5章 / 施工例B：擁壁とSRM"
+    },
+    {
+      "page": 58,
+      "title": "釣合い診断と、この例の採用できる範囲",
+      "chapter": "第5章 / 施工例B：擁壁とSRM"
+    },
+    {
+      "page": 59,
+      "title": "擁壁施工後SRM：結果とせん断帯",
+      "chapter": "第5章 / 施工例B：擁壁とSRM"
+    },
+    {
+      "page": 60,
+      "title": "同一メッシュでDAVISとINCONSISTENTを実測",
+      "chapter": "第5章 / 施工例B：擁壁とSRM"
+    },
+    {
+      "page": 61,
+      "title": "流れ則比較：全変位と結果の解釈",
+      "chapter": "第5章 / 施工例B：擁壁とSRM"
+    },
+    {
+      "page": 62,
       "title": "アンカー補強：等価節点力の入力",
       "chapter": "第6章 / 施工例C：アンカー相当力"
     },
     {
-      "page": 56,
+      "page": 63,
       "title": "アンカー相当力を加えた結果",
       "chapter": "第6章 / 施工例C：アンカー相当力"
     },
     {
-      "page": 57,
+      "page": 64,
       "title": "トンネル：地山・空洞・支保占有域",
       "chapter": "第7章 / 施工例D：トンネル"
     },
     {
-      "page": 58,
+      "page": 65,
       "title": "トンネル：上半掘削・支保から下半へ",
       "chapter": "第7章 / 施工例D：トンネル"
     },
     {
-      "page": 59,
+      "page": 66,
       "title": "トンネル：4段階の実計算図と数値",
       "chapter": "第7章 / 施工例D：トンネル"
     },
     {
-      "page": 60,
+      "page": 67,
       "title": "トンネル：施工に伴う変位を読み分ける",
       "chapter": "第7章 / 施工例D：トンネル"
     },
     {
-      "page": 61,
+      "page": 68,
       "title": "支持力解析：水平地盤と斜面上の入力例",
       "chapter": "第8章 / 施工例E：水平・斜面の支持力"
     },
     {
-      "page": 62,
+      "page": 69,
       "title": "支持力解析：自重後の追加沈下を入力する",
       "chapter": "第8章 / 施工例E：水平・斜面の支持力"
     },
     {
-      "page": 63,
+      "page": 70,
       "title": "支持力解析：載荷シートの実入力例",
       "chapter": "第8章 / 施工例E：水平・斜面の支持力"
     },
     {
-      "page": 64,
+      "page": 71,
       "title": "水平・斜面：平均圧力と追加沈下の実計算",
       "chapter": "第8章 / 施工例E：水平・斜面の支持力"
     },
     {
-      "page": 65,
+      "page": 72,
       "title": "支持力解析：応力とせん断増分の実図",
       "chapter": "第8章 / 施工例E：水平・斜面の支持力"
     },
     {
-      "page": 66,
+      "page": 73,
       "title": "支持力解析：実計算から得られた注意点",
       "chapter": "第8章 / 施工例E：水平・斜面の支持力"
     },
     {
-      "page": 67,
+      "page": 74,
       "title": "内容名で結果を選び、増分図を重ねる",
       "chapter": "第9章 / 結果と増分図の読み方"
     },
     {
-      "page": 68,
+      "page": 75,
       "title": "実画面：表示する量と変形倍率を選ぶ",
       "chapter": "第9章 / 結果と増分図の読み方"
     },
     {
-      "page": 69,
+      "page": 76,
       "title": "実画面：増分図を個別にON/OFFする",
       "chapter": "第9章 / 結果と増分図の読み方"
     },
     {
-      "page": 70,
+      "page": 77,
       "title": "増分図：実際の操作順",
       "chapter": "第9章 / 結果と増分図の読み方"
     },
     {
-      "page": 71,
+      "page": 78,
       "title": "増分値の定義・集計・誤読しやすい点",
       "chapter": "第9章 / 結果と増分図の読み方"
     },
     {
-      "page": 72,
+      "page": 79,
       "title": "A：応力に増分等値線と塑性クロスを重ねる",
       "chapter": "第9章 / 結果と増分図の読み方"
     },
     {
-      "page": 73,
+      "page": 80,
       "title": "B：増分カラーでせん断集中域を見る",
       "chapter": "第9章 / 結果と増分図の読み方"
     },
     {
-      "page": 74,
+      "page": 81,
       "title": "結果表・Fs・残差を対応させる",
       "chapter": "第9章 / 結果と増分図の読み方"
     },
     {
-      "page": 75,
+      "page": 82,
       "title": "実画面：結果表と図のFsを照合する",
       "chapter": "第9章 / 結果と増分図の読み方"
     },
     {
-      "page": 76,
+      "page": 83,
       "title": "保存・ログ・チェックポイント再開",
       "chapter": "第10章 / 保存・比較・トラブル対応"
     },
     {
-      "page": 77,
+      "page": 84,
       "title": "実画面：結果を残す設定を解析前に決める",
       "chapter": "第10章 / 保存・比較・トラブル対応"
     },
     {
-      "page": 78,
+      "page": 85,
       "title": "整理する図表から必要な出力を決める",
       "chapter": "第10章 / 保存・比較・トラブル対応"
     },
     {
-      "page": 79,
+      "page": 86,
       "title": "整理例：施工段階の変位と鉛直反力",
       "chapter": "第10章 / 保存・比較・トラブル対応"
     },
     {
-      "page": 80,
+      "page": 87,
       "title": "整理例：SRMの成否・変位・残差を並べる",
       "chapter": "第10章 / 保存・比較・トラブル対応"
     },
     {
-      "page": 81,
+      "page": 88,
       "title": "よくある問題と切り分け",
       "chapter": "第10章 / 保存・比較・トラブル対応"
     },
     {
-      "page": 82,
+      "page": 89,
       "title": "ケース比較と結果を残すチェック表",
       "chapter": "第10章 / 保存・比較・トラブル対応"
     },
     {
-      "page": 83,
+      "page": 90,
       "title": "メッシュ設定：使う値・使わない値",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 84,
+      "page": 91,
       "title": "形状入力と旧設定の互換性",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 85,
+      "page": 92,
       "title": "解析設定：設定一覧 1～9",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 86,
+      "page": 93,
       "title": "高速化設定：設定一覧 1～8",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 87,
+      "page": 94,
       "title": "高速化設定：設定一覧 9～15",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 88,
+      "page": 95,
       "title": "高速化設定：設定一覧 16～22",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 89,
+      "page": 96,
       "title": "出力・表示：保存・再開・変位倍率",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 90,
+      "page": 97,
       "title": "出力・表示：内容名・増分オプション",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 91,
+      "page": 98,
       "title": "詳細設定：設定一覧 1～7",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 92,
+      "page": 99,
       "title": "詳細設定：設定一覧 8～14",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 93,
+      "page": 100,
       "title": "詳細設定：設定一覧 15～21",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 94,
+      "page": 101,
       "title": "出典・作図方法・検証記録",
       "chapter": "付録B / 根拠と再現"
     },
     {
-      "page": 95,
+      "page": 102,
       "title": "版の識別・計算結果を伝える項目",
       "chapter": "付録B / 根拠と再現"
     },
     {
-      "page": 96,
+      "page": 103,
       "title": "既存の回帰図・入力UI検証の出典",
       "chapter": "付録B / 根拠と再現"
     },
     {
-      "page": 97,
+      "page": 104,
       "title": "支持力解析の参考資料と再現入力",
       "chapter": "付録B / 根拠と再現"
     },
     {
-      "page": 98,
+      "page": 105,
       "title": "用語集 1-9",
       "chapter": "付録C / 用語集"
     },
     {
-      "page": 99,
+      "page": 106,
       "title": "用語集 10-18",
       "chapter": "付録C / 用語集"
     },
     {
-      "page": 100,
+      "page": 107,
       "title": "用語集 19-27",
       "chapter": "付録C / 用語集"
     },
     {
-      "page": 101,
+      "page": 108,
       "title": "用語集 28-36",
       "chapter": "付録C / 用語集"
     },
     {
-      "page": 102,
+      "page": 109,
       "title": "用語集 37-43",
       "chapter": "付録C / 用語集"
     }
@@ -647,8 +682,8 @@
     }
   ],
   "glossary_entries": 43,
-  "pdf_sha256": "9ed4685f3038716658781cde73e05ccea96fc918c83aa7ab5bf0addaa768a3f7",
-  "revision": "102 pages; 8 historical INCO24 slope SRM examples, c/phi/psi and flow-rule explanation; original input-mesh cover",
+  "pdf_sha256": "49ee21002efe4fd3778d0964c7c4df7b02f07f836953f589d7e498acea733fc4",
+  "revision": "109 pages; continuum wall section N/V/M, mesh and singularity precautions, stage3 Fs1 archived-data postprocessing and unresolved local equilibrium diagnostic",
   "reference_main": "f144d88008c1575cb8042ea48005202c0208d7bb",
   "book_sha256": "1e46355ca510b05509b92beaef712118417bceea171ff40ce02b0226cd5e9a06",
   "dll_sha256": "ad5c2ae81512ba8e977002415a6a5339b621c00a1bbabe5092559f8a7f9e0797",
@@ -4494,6 +4529,51 @@
       "path": "docs/manuals/construction-evidence/20261021/slope-srm-guide/total_shear.png",
       "bytes": 183614,
       "sha256": "17bb7ac4c7f08bdbccb5beb9ccf15c283d13fe9747d96e139d762c7f61f88ec9"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/wall-moment-guide/actual_meshes.png",
+      "bytes": 323429,
+      "sha256": "0a6013b49659935184f8ddd876c91805e4236aa0fcefc229fdb0aa94a30c7983"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/wall-moment-guide/manual_section_source.py",
+      "bytes": 11344,
+      "sha256": "b141e969fe98b3b8d36d27dec8be6b8b7827be80db53fad3acef8c853e7c1863"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/wall-moment-guide/mesh_plan_schematic.png",
+      "bytes": 37639,
+      "sha256": "5ea952f9c4b2e19e43ca4e1790397b2d1fc8c1c5d76195f55712660efa7fae66"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/wall-moment-guide/moment_comparison.png",
+      "bytes": 119713,
+      "sha256": "c244993675763ee0f065d341ea5b5c55794b2d414ace6469050dac4d3116d355"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/wall-moment-guide/README.md",
+      "bytes": 3576,
+      "sha256": "4e2b87b67119dc5d575db9377321731f40408298300fab9cc500d842fe3c5d08"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/wall-moment-guide/rebuild_figures.py",
+      "bytes": 3126,
+      "sha256": "72ae1435c20fcdf8fb13ad5beced0baf90ccb13975957b90a3f6119d16424a93"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/wall-moment-guide/rebuild_sections.py",
+      "bytes": 9046,
+      "sha256": "ebf14768fe2f658549bbf689d1f1d5a2890dee02605a2d4d990901aa3ce82e52"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/wall-moment-guide/sections.csv",
+      "bytes": 8458,
+      "sha256": "098af4ea1e3f2cb52a10913c59ef9c1f0dd29dbd9892ceb378223a914d263cce"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/wall-moment-guide/summary.json",
+      "bytes": 28811,
+      "sha256": "25546991d458e107281486568a412ae425ee0fc7390121b52e66b286f0313778"
     }
   ],
   "bearing_comparison": {
@@ -5993,27 +6073,23 @@
     }
   ],
   "visual_review": {
-    "pages_rendered": 102,
+    "pages_rendered": 109,
     "contact_sheets_reviewed": 7,
     "new_pages_full_size_reviewed": [
-      1,
-      31,
-      32,
-      33,
-      34,
-      35,
-      36,
-      37,
-      38,
+      52,
       53,
-      94
+      54,
+      55,
+      56,
+      57,
+      58
     ],
     "checks": [
-      "All pages rendered and visually inspected; cover, new chapter pages and changed cover references checked full size",
+      "All pages rendered and contact sheets inspected; seven new pages checked full size",
       "TOC, chapter starts, footer numbering and glossary-at-end checked",
-      "8 material/Fs/residual/elapsed/deformation records reconciled with archived inputs/results and independent audits",
-      "P H7 phi-only change asserted; no claim of c-only experiment or new associated-phi>0 calculation",
-      "Two plotted deformed states checked at dense Q8 points and displacement norm reconciled"
+      "N/V/M tables, plots and local equilibrium residuals reconciled with 38 archived stage3 cuts",
+      "Stress convention/GP source columns audited; four analytic patch checks and 12/24 integration comparison pass",
+      "Unresolved local equilibrium and lack of thickness-direction mesh convergence explicitly stated; no new Excel solve or design accuracy claimed"
     ]
   },
   "output_guide_capture": {
@@ -6260,6 +6336,1079 @@
       {
         "path": "docs/inconsistent-evidence24/srm_cases_INCO24.zip",
         "sha256": "bc569a2ae9db3074d2a124e386a5807072ec955295ed889d8a2833824b40f2bb"
+      }
+    ]
+  },
+  "wall_section_moments": {
+    "scope": "Existing construction-complete stage3 Fs1, DAVIS, unchanged archived workbooks. No new Excel solve.",
+    "stress_convention": "Saved compression-positive tensor C; tensile-positive T=-C. n=+Y for stem, n=+X for base. Mz=integral (r-rc) cross (T n) ds, positive counter-clockwise.",
+    "reconstruction": "Bilinear in natural coordinates through four saved GP stress tensors; exact Q8 edge intersections, inverse mapping and Gauss line quadrature. Mean of fixed-station +/-1e-7m limits; gap retained.",
+    "unit_depth_m": 1.0,
+    "self_checks": {
+      "analytic_affine_patch_tests": 4,
+      "max_absolute_error": 1.7763568394002505e-15,
+      "basis": "Known membrane plus linear bending normal stress and constant shear; 1/3 through-thickness patches; both cut normals"
+    },
+    "closed_subdomain_checks": [
+      {
+        "case": "wall_davis08",
+        "part": "stem",
+        "station_m": 1.8,
+        "body_weight_kN_per_m": 15.359999999999944,
+        "force_closure_kN_per_m": [
+          -4.108008602915403,
+          -2.6779959180102075
+        ],
+        "moment_closure_kNm_per_m": 3.5982681328627972,
+        "force_normalizer_kN_per_m": 71.08372944083547,
+        "moment_normalizer_kNm_per_m": 15.720604913148096
+      },
+      {
+        "case": "wall_davis08",
+        "part": "base",
+        "station_m": 18.0,
+        "body_weight_kN_per_m": 28.8,
+        "force_closure_kN_per_m": [
+          -9.173538942590865,
+          3.7266021118167423
+        ],
+        "moment_closure_kNm_per_m": -21.382368635448827,
+        "force_normalizer_kN_per_m": 388.27896658398225,
+        "moment_normalizer_kNm_per_m": 614.6138779469069
+      },
+      {
+        "case": "wall_davis12",
+        "part": "stem",
+        "station_m": 1.8,
+        "body_weight_kN_per_m": 15.359999999999944,
+        "force_closure_kN_per_m": [
+          -0.7968739579530463,
+          -0.3162177764730032
+        ],
+        "moment_closure_kNm_per_m": 0.6448252744839029,
+        "force_normalizer_kN_per_m": 66.3221037262507,
+        "moment_normalizer_kNm_per_m": 13.491313015066051
+      },
+      {
+        "case": "wall_davis12",
+        "part": "base",
+        "station_m": 18.0,
+        "body_weight_kN_per_m": 28.8,
+        "force_closure_kN_per_m": [
+          -2.1616633614683565,
+          5.170328641393365
+        ],
+        "moment_closure_kNm_per_m": -18.95546135531724,
+        "force_normalizer_kN_per_m": 387.7966521615786,
+        "moment_normalizer_kNm_per_m": 607.2454749154
+      }
+    ],
+    "sources": [
+      {
+        "case": "wall_davis08",
+        "path": "docs/manuals/construction-evidence/20261020/wall_davis08/result.json.gz",
+        "sha256": "bbe1ff8d344b2c8ca6833553c68280d78bb8cf24e2bf7bd8192b5f50d95117c2",
+        "wall_elements": 40
+      },
+      {
+        "case": "wall_davis12",
+        "path": "docs/manuals/construction-evidence/20261020/wall_davis12/result.json.gz",
+        "sha256": "28e1b825843aa00f89bca6ae650c5e60ec2a0e77e53ecd29850ca5a2d67d144d",
+        "wall_elements": 68
+      }
+    ],
+    "records": [
+      {
+        "case": "wall_davis08",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "stem",
+        "station_m": 0.6,
+        "normal_axis": "Y",
+        "width_m": 0.3999999999999986,
+        "centroid_transverse_m": 18.8,
+        "N_kN_per_m": -50.75833061794823,
+        "V_kN_per_m": 13.068902437609157,
+        "Mz_kNm_per_m": -3.813055451514442,
+        "M_minus": -3.813057033924745,
+        "M_plus": -3.8130538691041393,
+        "M_one_sided_gap": 3.1648206055834294e-06,
+        "quadrature_max_abs_difference": 8.188827393951215e-11,
+        "elements_minus": [
+          464,
+          465,
+          466
+        ],
+        "elements_plus": [
+          464,
+          465,
+          466
+        ]
+      },
+      {
+        "case": "wall_davis08",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "stem",
+        "station_m": 0.8,
+        "normal_axis": "Y",
+        "width_m": 0.3999999999999986,
+        "centroid_transverse_m": 18.8,
+        "N_kN_per_m": -65.59396131055007,
+        "V_kN_per_m": 23.271988466888835,
+        "Mz_kNm_per_m": -0.19778882052751787,
+        "M_minus": -0.1977930283471782,
+        "M_plus": -0.19778461270785752,
+        "M_one_sided_gap": 8.415639320691337e-06,
+        "quadrature_max_abs_difference": 1.8744117369351443e-11,
+        "elements_minus": [
+          462,
+          464,
+          465
+        ],
+        "elements_plus": [
+          462,
+          464,
+          465
+        ]
+      },
+      {
+        "case": "wall_davis08",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "stem",
+        "station_m": 1.0,
+        "normal_axis": "Y",
+        "width_m": 0.3999999999999986,
+        "centroid_transverse_m": 18.8,
+        "N_kN_per_m": -55.26891570444353,
+        "V_kN_per_m": 11.486532789164507,
+        "Mz_kNm_per_m": 2.39185933186889,
+        "M_minus": 2.391858260033624,
+        "M_plus": 2.3918604037041558,
+        "M_one_sided_gap": 2.1436705317512406e-06,
+        "quadrature_max_abs_difference": 4.0600411921332125e-11,
+        "elements_minus": [
+          463,
+          490,
+          492
+        ],
+        "elements_plus": [
+          463,
+          490,
+          492
+        ]
+      },
+      {
+        "case": "wall_davis08",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "stem",
+        "station_m": 1.4,
+        "normal_axis": "Y",
+        "width_m": 0.3999999999999986,
+        "centroid_transverse_m": 18.8,
+        "N_kN_per_m": -41.59438041925971,
+        "V_kN_per_m": 11.209385070947363,
+        "Mz_kNm_per_m": 4.792114629853831,
+        "M_minus": 4.792113054496742,
+        "M_plus": 4.79211620521092,
+        "M_one_sided_gap": 3.1507141784459236e-06,
+        "quadrature_max_abs_difference": 3.214495336578693e-11,
+        "elements_minus": [
+          463,
+          491,
+          492
+        ],
+        "elements_plus": [
+          461,
+          491,
+          492
+        ]
+      },
+      {
+        "case": "wall_davis08",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "stem",
+        "station_m": 1.8,
+        "normal_axis": "Y",
+        "width_m": 0.3999999999999986,
+        "centroid_transverse_m": 18.8,
+        "N_kN_per_m": -33.44913834147306,
+        "V_kN_per_m": 2.7452196906597557,
+        "Mz_kNm_per_m": 6.06116857444003,
+        "M_minus": 6.061168484215499,
+        "M_plus": 6.061168664664562,
+        "M_one_sided_gap": 1.8044906280323403e-07,
+        "quadrature_max_abs_difference": 5.858424856342026e-11,
+        "elements_minus": [
+          459,
+          461,
+          493
+        ],
+        "elements_plus": [
+          459,
+          461,
+          493
+        ]
+      },
+      {
+        "case": "wall_davis08",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "stem",
+        "station_m": 2.2,
+        "normal_axis": "Y",
+        "width_m": 0.3999999999999986,
+        "centroid_transverse_m": 18.8,
+        "N_kN_per_m": -23.099185111709048,
+        "V_kN_per_m": -1.4420278792248307,
+        "Mz_kNm_per_m": 5.763409770094112,
+        "M_minus": 5.763410198978937,
+        "M_plus": 5.763409341209287,
+        "M_one_sided_gap": 8.577696499756371e-07,
+        "quadrature_max_abs_difference": 4.774847184307873e-11,
+        "elements_minus": [
+          459,
+          460,
+          493,
+          494
+        ],
+        "elements_plus": [
+          459,
+          460,
+          493,
+          494
+        ]
+      },
+      {
+        "case": "wall_davis08",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "stem",
+        "station_m": 2.6,
+        "normal_axis": "Y",
+        "width_m": 0.3999999999999986,
+        "centroid_transverse_m": 18.8,
+        "N_kN_per_m": -14.729036289133587,
+        "V_kN_per_m": -3.0511750018005994,
+        "Mz_kNm_per_m": 3.870284239136346,
+        "M_minus": 3.8702844988771137,
+        "M_plus": 3.8702839793955786,
+        "M_one_sided_gap": 5.19481535121713e-07,
+        "quadrature_max_abs_difference": 3.820588290182059e-11,
+        "elements_minus": [
+          456,
+          483,
+          485
+        ],
+        "elements_plus": [
+          456,
+          483,
+          485
+        ]
+      },
+      {
+        "case": "wall_davis08",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "stem",
+        "station_m": 3.0,
+        "normal_axis": "Y",
+        "width_m": 0.3999999999999986,
+        "centroid_transverse_m": 18.8,
+        "N_kN_per_m": -7.812642633579943,
+        "V_kN_per_m": -4.256892209200386,
+        "Mz_kNm_per_m": 1.6080715308699016,
+        "M_minus": 1.6080719157670895,
+        "M_plus": 1.608071145972714,
+        "M_one_sided_gap": 7.697943755768932e-07,
+        "quadrature_max_abs_difference": 7.229772336359019e-12,
+        "elements_minus": [
+          457,
+          458,
+          484
+        ],
+        "elements_plus": [
+          457,
+          458,
+          484
+        ]
+      },
+      {
+        "case": "wall_davis08",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "stem",
+        "station_m": 3.2,
+        "normal_axis": "Y",
+        "width_m": 0.3999999999999986,
+        "centroid_transverse_m": 18.8,
+        "N_kN_per_m": -2.9969522354160705,
+        "V_kN_per_m": -2.463892346547521,
+        "Mz_kNm_per_m": 0.7881663345489771,
+        "M_minus": 0.7881667342249637,
+        "M_plus": 0.7881659348729904,
+        "M_one_sided_gap": 7.993519733906496e-07,
+        "quadrature_max_abs_difference": 1.8260948309034575e-12,
+        "elements_minus": [
+          457,
+          458,
+          484
+        ],
+        "elements_plus": [
+          457,
+          458,
+          484
+        ]
+      },
+      {
+        "case": "wall_davis08",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "base",
+        "station_m": 15.2,
+        "normal_axis": "X",
+        "width_m": 0.4,
+        "centroid_transverse_m": 0.2,
+        "N_kN_per_m": 1.3467717584670016,
+        "V_kN_per_m": -4.480150257674477,
+        "Mz_kNm_per_m": 1.2020241860035832,
+        "M_minus": 1.2020236568365725,
+        "M_plus": 1.2020247151705938,
+        "M_one_sided_gap": 1.0583340213088377e-06,
+        "quadrature_max_abs_difference": 3.863576125695545e-14,
+        "elements_minus": [
+          476,
+          477
+        ],
+        "elements_plus": [
+          476,
+          477
+        ]
+      },
+      {
+        "case": "wall_davis08",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "base",
+        "station_m": 15.6,
+        "normal_axis": "X",
+        "width_m": 0.4,
+        "centroid_transverse_m": 0.2,
+        "N_kN_per_m": 4.843149773901672,
+        "V_kN_per_m": -1.8378675976198395,
+        "Mz_kNm_per_m": 3.19471425827522,
+        "M_minus": 3.194713962005773,
+        "M_plus": 3.194714554544667,
+        "M_one_sided_gap": 5.925388939509446e-07,
+        "quadrature_max_abs_difference": 2.2426505097428162e-14,
+        "elements_minus": [
+          478,
+          479
+        ],
+        "elements_plus": [
+          478,
+          479
+        ]
+      },
+      {
+        "case": "wall_davis08",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "base",
+        "station_m": 16.0,
+        "normal_axis": "X",
+        "width_m": 0.4,
+        "centroid_transverse_m": 0.2,
+        "N_kN_per_m": 6.7984565905187,
+        "V_kN_per_m": 1.3350480992844669,
+        "Mz_kNm_per_m": 3.998543611311157,
+        "M_minus": 3.99854368352715,
+        "M_plus": 3.9985435390951642,
+        "M_one_sided_gap": 1.4443198592672957e-07,
+        "quadrature_max_abs_difference": 1.9984014443252818e-14,
+        "elements_minus": [
+          468,
+          469
+        ],
+        "elements_plus": [
+          468,
+          469
+        ]
+      },
+      {
+        "case": "wall_davis08",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "base",
+        "station_m": 16.4,
+        "normal_axis": "X",
+        "width_m": 0.4,
+        "centroid_transverse_m": 0.2,
+        "N_kN_per_m": 7.993985089318568,
+        "V_kN_per_m": 5.3862094936176765,
+        "Mz_kNm_per_m": 3.506751614033649,
+        "M_minus": 3.5067521000455706,
+        "M_plus": 3.5067511280217274,
+        "M_one_sided_gap": 9.720238431931705e-07,
+        "quadrature_max_abs_difference": 4.1744385725905886e-14,
+        "elements_minus": [
+          470,
+          471
+        ],
+        "elements_plus": [
+          470,
+          471
+        ]
+      },
+      {
+        "case": "wall_davis08",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "base",
+        "station_m": 16.8,
+        "normal_axis": "X",
+        "width_m": 0.4,
+        "centroid_transverse_m": 0.2,
+        "N_kN_per_m": 8.69652235544126,
+        "V_kN_per_m": 9.235615397267235,
+        "Mz_kNm_per_m": 1.5846451617517912,
+        "M_minus": 1.58464548248904,
+        "M_plus": 1.5846448410145422,
+        "M_one_sided_gap": 6.414744977423226e-07,
+        "quadrature_max_abs_difference": 1.4210854715202004e-14,
+        "elements_minus": [
+          470,
+          471,
+          474,
+          475
+        ],
+        "elements_plus": [
+          474,
+          475
+        ]
+      },
+      {
+        "case": "wall_davis08",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "base",
+        "station_m": 17.2,
+        "normal_axis": "X",
+        "width_m": 0.4,
+        "centroid_transverse_m": 0.2,
+        "N_kN_per_m": 8.82735162848353,
+        "V_kN_per_m": 12.646448735139538,
+        "Mz_kNm_per_m": -1.7874767391336774,
+        "M_minus": -1.787475895991781,
+        "M_plus": -1.787477582275574,
+        "M_one_sided_gap": 1.6862837930453622e-06,
+        "quadrature_max_abs_difference": 7.993605777301127e-14,
+        "elements_minus": [
+          474,
+          475
+        ],
+        "elements_plus": [
+          474,
+          475
+        ]
+      },
+      {
+        "case": "wall_davis08",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "base",
+        "station_m": 17.6,
+        "normal_axis": "X",
+        "width_m": 0.4,
+        "centroid_transverse_m": 0.2,
+        "N_kN_per_m": 8.906882909190648,
+        "V_kN_per_m": 14.07109755264004,
+        "Mz_kNm_per_m": -6.013773229752865,
+        "M_minus": -6.01377217325257,
+        "M_plus": -6.0137742862531605,
+        "M_one_sided_gap": 2.1130005904979043e-06,
+        "quadrature_max_abs_difference": 8.881784197001252e-15,
+        "elements_minus": [
+          472,
+          473
+        ],
+        "elements_plus": [
+          472,
+          473
+        ]
+      },
+      {
+        "case": "wall_davis08",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "base",
+        "station_m": 18.0,
+        "normal_axis": "X",
+        "width_m": 0.4,
+        "centroid_transverse_m": 0.2,
+        "N_kN_per_m": 8.28878898161562,
+        "V_kN_per_m": 13.48644751196299,
+        "Mz_kNm_per_m": -10.420236439222354,
+        "M_minus": -10.42023534035947,
+        "M_plus": -10.420237538085235,
+        "M_one_sided_gap": 2.1977257649297144e-06,
+        "quadrature_max_abs_difference": 8.171241461241152e-14,
+        "elements_minus": [
+          486,
+          487
+        ],
+        "elements_plus": [
+          486,
+          487
+        ]
+      },
+      {
+        "case": "wall_davis08",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "base",
+        "station_m": 18.2,
+        "normal_axis": "X",
+        "width_m": 0.4,
+        "centroid_transverse_m": 0.2,
+        "N_kN_per_m": 8.095446370488148,
+        "V_kN_per_m": 3.7270535802445095,
+        "Mz_kNm_per_m": -11.815348571308228,
+        "M_minus": -11.81534870906036,
+        "M_plus": -11.815348433556096,
+        "M_one_sided_gap": 2.755042647351047e-07,
+        "quadrature_max_abs_difference": 4.7208903453110906e-11,
+        "elements_minus": [
+          488,
+          489
+        ],
+        "elements_plus": [
+          488,
+          489
+        ]
+      },
+      {
+        "case": "wall_davis08",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "base",
+        "station_m": 18.4,
+        "normal_axis": "X",
+        "width_m": 0.4,
+        "centroid_transverse_m": 0.2,
+        "N_kN_per_m": 6.914771820427719,
+        "V_kN_per_m": -6.694513021886932,
+        "Mz_kNm_per_m": -11.616506853180823,
+        "M_minus": -11.616506914322548,
+        "M_plus": -11.616506792039097,
+        "M_one_sided_gap": 1.2228345092069048e-07,
+        "quadrature_max_abs_difference": 8.639311488423118e-12,
+        "elements_minus": [
+          488,
+          489
+        ],
+        "elements_plus": [
+          488,
+          489
+        ]
+      },
+      {
+        "case": "wall_davis12",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "stem",
+        "station_m": 0.6,
+        "normal_axis": "Y",
+        "width_m": 0.3999999999999986,
+        "centroid_transverse_m": 18.8,
+        "N_kN_per_m": -63.00150880634253,
+        "V_kN_per_m": 19.314141430957736,
+        "Mz_kNm_per_m": -3.6890240679438766,
+        "M_minus": -3.689026211588557,
+        "M_plus": -3.689021924299196,
+        "M_one_sided_gap": 4.2872893608603135e-06,
+        "quadrature_max_abs_difference": 1.1368683772161603e-13,
+        "elements_minus": [
+          847,
+          850
+        ],
+        "elements_plus": [
+          847,
+          850
+        ]
+      },
+      {
+        "case": "wall_davis12",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "stem",
+        "station_m": 0.8,
+        "normal_axis": "Y",
+        "width_m": 0.3999999999999986,
+        "centroid_transverse_m": 18.8,
+        "N_kN_per_m": -58.577203881447815,
+        "V_kN_per_m": 17.066242701585224,
+        "Mz_kNm_per_m": -0.566579657020667,
+        "M_minus": -0.5665812288763082,
+        "M_plus": -0.5665780851650258,
+        "M_one_sided_gap": 3.143711282405093e-06,
+        "quadrature_max_abs_difference": 6.394884621840902e-14,
+        "elements_minus": [
+          848,
+          849
+        ],
+        "elements_plus": [
+          848,
+          849
+        ]
+      },
+      {
+        "case": "wall_davis12",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "stem",
+        "station_m": 1.0,
+        "normal_axis": "Y",
+        "width_m": 0.3999999999999986,
+        "centroid_transverse_m": 18.8,
+        "N_kN_per_m": -52.798838234747436,
+        "V_kN_per_m": 13.999209935823249,
+        "Mz_kNm_per_m": 1.7567709959117233,
+        "M_minus": 1.7567698945205965,
+        "M_plus": 1.7567720973028502,
+        "M_one_sided_gap": 2.2027822537129538e-06,
+        "quadrature_max_abs_difference": 1.3500311979441904e-13,
+        "elements_minus": [
+          872,
+          873
+        ],
+        "elements_plus": [
+          872,
+          873
+        ]
+      },
+      {
+        "case": "wall_davis12",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "stem",
+        "station_m": 1.4,
+        "normal_axis": "Y",
+        "width_m": 0.3999999999999986,
+        "centroid_transverse_m": 18.8,
+        "N_kN_per_m": -42.24058423633076,
+        "V_kN_per_m": 8.142512782847167,
+        "Mz_kNm_per_m": 4.815167729180507,
+        "M_minus": 4.815167224369036,
+        "M_plus": 4.815168233991977,
+        "M_one_sided_gap": 1.0096229408063095e-06,
+        "quadrature_max_abs_difference": 9.08073616301408e-12,
+        "elements_minus": [
+          851,
+          854
+        ],
+        "elements_plus": [
+          851,
+          854
+        ]
+      },
+      {
+        "case": "wall_davis12",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "stem",
+        "station_m": 1.8,
+        "normal_axis": "Y",
+        "width_m": 0.3999999999999986,
+        "centroid_transverse_m": 18.8,
+        "N_kN_per_m": -32.45245975520486,
+        "V_kN_per_m": 3.4281240967149564,
+        "Mz_kNm_per_m": 5.914122408599894,
+        "M_minus": 5.9141223558833556,
+        "M_plus": 5.914122461316432,
+        "M_one_sided_gap": 1.0543307649157896e-07,
+        "quadrature_max_abs_difference": 3.411315674384241e-11,
+        "elements_minus": [
+          855,
+          858
+        ],
+        "elements_plus": [
+          855,
+          858
+        ]
+      },
+      {
+        "case": "wall_davis12",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "stem",
+        "station_m": 2.2,
+        "normal_axis": "Y",
+        "width_m": 0.3999999999999986,
+        "centroid_transverse_m": 18.8,
+        "N_kN_per_m": -22.49791734360913,
+        "V_kN_per_m": -0.6444780753907879,
+        "Mz_kNm_per_m": 5.233468199176477,
+        "M_minus": 5.233468591515716,
+        "M_plus": 5.233467806837239,
+        "M_one_sided_gap": 7.846784768616999e-07,
+        "quadrature_max_abs_difference": 2.3447910280083306e-13,
+        "elements_minus": [
+          868,
+          869
+        ],
+        "elements_plus": [
+          868,
+          869
+        ]
+      },
+      {
+        "case": "wall_davis12",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "stem",
+        "station_m": 2.6,
+        "normal_axis": "Y",
+        "width_m": 0.3999999999999986,
+        "centroid_transverse_m": 18.8,
+        "N_kN_per_m": -13.982087962963387,
+        "V_kN_per_m": -3.0853080764720286,
+        "Mz_kNm_per_m": 3.486997604920123,
+        "M_minus": 3.4869981487105233,
+        "M_plus": 3.4869970611297227,
+        "M_one_sided_gap": 1.0875808005295085e-06,
+        "quadrature_max_abs_difference": 5.020694970880868e-11,
+        "elements_minus": [
+          859,
+          862
+        ],
+        "elements_plus": [
+          859,
+          862
+        ]
+      },
+      {
+        "case": "wall_davis12",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "stem",
+        "station_m": 3.0,
+        "normal_axis": "Y",
+        "width_m": 0.3999999999999986,
+        "centroid_transverse_m": 18.8,
+        "N_kN_per_m": -6.437882138758787,
+        "V_kN_per_m": -3.3501745429921437,
+        "Mz_kNm_per_m": 1.3611465245364218,
+        "M_minus": 1.361146883704382,
+        "M_plus": 1.3611461653684616,
+        "M_one_sided_gap": 7.183359205242823e-07,
+        "quadrature_max_abs_difference": 1.3677947663381929e-13,
+        "elements_minus": [
+          863,
+          866
+        ],
+        "elements_plus": [
+          863,
+          866
+        ]
+      },
+      {
+        "case": "wall_davis12",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "stem",
+        "station_m": 3.2,
+        "normal_axis": "Y",
+        "width_m": 0.3999999999999986,
+        "centroid_transverse_m": 18.8,
+        "N_kN_per_m": -3.442671284712153,
+        "V_kN_per_m": -2.225984532907277,
+        "Mz_kNm_per_m": 0.5912245983010325,
+        "M_minus": 0.5912248648958609,
+        "M_plus": 0.591224331706204,
+        "M_one_sided_gap": 5.331896568705474e-07,
+        "quadrature_max_abs_difference": 1.8264056933503525e-11,
+        "elements_minus": [
+          864,
+          865
+        ],
+        "elements_plus": [
+          864,
+          865
+        ]
+      },
+      {
+        "case": "wall_davis12",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "base",
+        "station_m": 15.2,
+        "normal_axis": "X",
+        "width_m": 0.4,
+        "centroid_transverse_m": 0.2,
+        "N_kN_per_m": 1.16420323507398,
+        "V_kN_per_m": -4.189588754784575,
+        "Mz_kNm_per_m": 1.240632665604691,
+        "M_minus": 1.2406288551102114,
+        "M_plus": 1.2406364760991708,
+        "M_one_sided_gap": 7.620988959455843e-06,
+        "quadrature_max_abs_difference": 1.1102230246251565e-13,
+        "elements_minus": [
+          811,
+          812
+        ],
+        "elements_plus": [
+          811,
+          812,
+          813,
+          814
+        ]
+      },
+      {
+        "case": "wall_davis12",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "base",
+        "station_m": 15.6,
+        "normal_axis": "X",
+        "width_m": 0.4,
+        "centroid_transverse_m": 0.2,
+        "N_kN_per_m": 5.226562922814912,
+        "V_kN_per_m": -2.3183741277696486,
+        "Mz_kNm_per_m": 3.323460638121496,
+        "M_minus": 3.323457602667558,
+        "M_plus": 3.323463673575434,
+        "M_one_sided_gap": 6.070907875965759e-06,
+        "quadrature_max_abs_difference": 1.2434497875801753e-14,
+        "elements_minus": [
+          835,
+          836,
+          837,
+          838
+        ],
+        "elements_plus": [
+          835,
+          836
+        ]
+      },
+      {
+        "case": "wall_davis12",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "base",
+        "station_m": 16.0,
+        "normal_axis": "X",
+        "width_m": 0.4,
+        "centroid_transverse_m": 0.2,
+        "N_kN_per_m": 7.10017196083999,
+        "V_kN_per_m": 1.323138707390527,
+        "Mz_kNm_per_m": 4.137293046776859,
+        "M_minus": 4.137292568368126,
+        "M_plus": 4.137293525185593,
+        "M_one_sided_gap": 9.568174670349094e-07,
+        "quadrature_max_abs_difference": 1.4432899320127035e-14,
+        "elements_minus": [
+          815,
+          816,
+          817,
+          818
+        ],
+        "elements_plus": [
+          815,
+          816
+        ]
+      },
+      {
+        "case": "wall_davis12",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "base",
+        "station_m": 16.4,
+        "normal_axis": "X",
+        "width_m": 0.4,
+        "centroid_transverse_m": 0.2,
+        "N_kN_per_m": 8.135777225636446,
+        "V_kN_per_m": 5.286022046660699,
+        "Mz_kNm_per_m": 3.5266626423985024,
+        "M_minus": 3.526662348577825,
+        "M_plus": 3.52666293621918,
+        "M_one_sided_gap": 5.87641355132007e-07,
+        "quadrature_max_abs_difference": 8.881784197001252e-15,
+        "elements_minus": [
+          827,
+          828
+        ],
+        "elements_plus": [
+          827,
+          828,
+          829,
+          830
+        ]
+      },
+      {
+        "case": "wall_davis12",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "base",
+        "station_m": 16.8,
+        "normal_axis": "X",
+        "width_m": 0.4,
+        "centroid_transverse_m": 0.2,
+        "N_kN_per_m": 8.912301773929851,
+        "V_kN_per_m": 9.271597298365512,
+        "Mz_kNm_per_m": 1.5233608983389106,
+        "M_minus": 1.5233625452915431,
+        "M_plus": 1.5233592513862784,
+        "M_one_sided_gap": 3.2939052647673606e-06,
+        "quadrature_max_abs_difference": 1.9539925233402755e-14,
+        "elements_minus": [
+          821,
+          822
+        ],
+        "elements_plus": [
+          819,
+          820,
+          821,
+          822
+        ]
+      },
+      {
+        "case": "wall_davis12",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "base",
+        "station_m": 17.2,
+        "normal_axis": "X",
+        "width_m": 0.4,
+        "centroid_transverse_m": 0.2,
+        "N_kN_per_m": 9.198548017929522,
+        "V_kN_per_m": 12.751081372550857,
+        "Mz_kNm_per_m": -1.8044740547822942,
+        "M_minus": -1.8044735607748728,
+        "M_plus": -1.8044745487897154,
+        "M_one_sided_gap": 9.880148426066881e-07,
+        "quadrature_max_abs_difference": 4.440892098500626e-14,
+        "elements_minus": [
+          823,
+          824,
+          825,
+          826
+        ],
+        "elements_plus": [
+          825,
+          826
+        ]
+      },
+      {
+        "case": "wall_davis12",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "base",
+        "station_m": 17.6,
+        "normal_axis": "X",
+        "width_m": 0.4,
+        "centroid_transverse_m": 0.2,
+        "N_kN_per_m": 9.345589545217493,
+        "V_kN_per_m": 14.828420631482553,
+        "Mz_kNm_per_m": -6.084671371047314,
+        "M_minus": -6.084671523103079,
+        "M_plus": -6.084671218991549,
+        "M_one_sided_gap": 3.041115306245956e-07,
+        "quadrature_max_abs_difference": 3.907985046680551e-14,
+        "elements_minus": [
+          831,
+          832,
+          833,
+          834
+        ],
+        "elements_plus": [
+          833,
+          834
+        ]
+      },
+      {
+        "case": "wall_davis12",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "base",
+        "station_m": 18.0,
+        "normal_axis": "X",
+        "width_m": 0.4,
+        "centroid_transverse_m": 0.2,
+        "N_kN_per_m": 9.188457347858645,
+        "V_kN_per_m": 13.684832933398283,
+        "Mz_kNm_per_m": -10.56616869283749,
+        "M_minus": -10.566165822665772,
+        "M_plus": -10.566171563009206,
+        "M_one_sided_gap": 5.740343434368356e-06,
+        "quadrature_max_abs_difference": 8.704148513061227e-14,
+        "elements_minus": [
+          839,
+          840
+        ],
+        "elements_plus": [
+          839,
+          840,
+          841,
+          842
+        ]
+      },
+      {
+        "case": "wall_davis12",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "base",
+        "station_m": 18.2,
+        "normal_axis": "X",
+        "width_m": 0.4,
+        "centroid_transverse_m": 0.2,
+        "N_kN_per_m": 9.112774645282602,
+        "V_kN_per_m": 10.821172381534645,
+        "Mz_kNm_per_m": -12.291662822092938,
+        "M_minus": -12.291661976675302,
+        "M_plus": -12.291663667510573,
+        "M_one_sided_gap": 1.690835270906632e-06,
+        "quadrature_max_abs_difference": 5.5067062021407764e-14,
+        "elements_minus": [
+          841,
+          842
+        ],
+        "elements_plus": [
+          841,
+          842,
+          843,
+          844
+        ]
+      },
+      {
+        "case": "wall_davis12",
+        "stage": 3,
+        "Fs": 1.0,
+        "part": "base",
+        "station_m": 18.4,
+        "normal_axis": "X",
+        "width_m": 0.4,
+        "centroid_transverse_m": 0.2,
+        "N_kN_per_m": 9.351422373276357,
+        "V_kN_per_m": 4.960783304780106,
+        "Mz_kNm_per_m": -13.165267420015127,
+        "M_minus": -13.165227022607478,
+        "M_plus": -13.165307817422775,
+        "M_one_sided_gap": 8.079481529676968e-05,
+        "quadrature_max_abs_difference": 3.907985046680551e-14,
+        "elements_minus": [
+          843,
+          844
+        ],
+        "elements_plus": [
+          843,
+          844,
+          845,
+          846
+        ]
       }
     ]
   }
