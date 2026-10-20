@@ -16,8 +16,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 20230,
-    "sha256": "c048d4bff8f35b19ab1191524c0b911f0400a4f079872ae953bc2f3ac08172b5"
+    "bytes": 20506,
+    "sha256": "3f4e3f68fcde53832b8ab01f9a4bbf9c71b5bc3ff0c848705da00e4c1d8be381"
   },
   {
     "path": "docs/ACCELERATION_HISTORY.md",
@@ -135,9 +135,14 @@
     "sha256": "756c57012b02a818b2dce99a68db4513ed9073c00bc7196c44696fef1ebfbb60"
   },
   {
+    "path": "docs/VIEWER_FIX_20261020.md",
+    "bytes": 6111,
+    "sha256": "b292ab09042f448b3d24626afbcd63b548922bf4fbbac647b4903a9e0222fd6b"
+  },
+  {
     "path": "docs/WORKBOOK_UI_20261020.md",
-    "bytes": 10156,
-    "sha256": "56eb27b251a35ae885ae6bee3bff043667463b0a9aa9193ac8ccf5981e910b0e"
+    "bytes": 10447,
+    "sha256": "37d2fbb10f2eae1e40cb6f7ad920f889daedb4f1b6da630143a8c098b3bb6110"
   },
   {
     "path": "docs/benchmark-summary.csv",
@@ -2680,6 +2685,46 @@
     "sha256": "1c3c49305de92b3c126c032bad1799dfcd4202ec002a5304affe953e76740059"
   },
   {
+    "path": "docs/viewer-evidence/20261020/viewer_build.log",
+    "bytes": 3505,
+    "sha256": "fb73a25d7a67f2a9681a8aa2a79444dafad4cf9625cb1e00e5d0aec4c585867b"
+  },
+  {
+    "path": "docs/viewer-evidence/20261020/viewer_dirty_baseline.json",
+    "bytes": 500,
+    "sha256": "8b95584245e99c0adfe4f0b2858c599c8e39d2cf0a0eac4ed2a76c5b4e1f131a"
+  },
+  {
+    "path": "docs/viewer-evidence/20261020/viewer_release_checks.json",
+    "bytes": 4306,
+    "sha256": "3dd50f0acb8bc89418c616619cf0080ac55e586d28b8956a26d2c1e4af43ad0b"
+  },
+  {
+    "path": "docs/viewer-evidence/20261020/viewer_release_comparison.json",
+    "bytes": 696,
+    "sha256": "ee55ff15503a7dfc2d9ca9337369b41320e9ec6e340a908ff1fe1038fe1f598d"
+  },
+  {
+    "path": "docs/viewer-evidence/20261020/viewer_release_inputs.json",
+    "bytes": 97985,
+    "sha256": "3f44078d086fcbf4eb296e00600c9f876b1d168d8d6170047d2343a9876000ce"
+  },
+  {
+    "path": "docs/viewer-evidence/20261020/viewer_release_inventory.json",
+    "bytes": 25073,
+    "sha256": "1a6d062c674e3908a5652db8805c938e1bffb9fbd31369e6b4601649ef4620f6"
+  },
+  {
+    "path": "docs/viewer-evidence/20261020/viewer_release_persistence.json",
+    "bytes": 22276,
+    "sha256": "e1bcb9049ccfa2bf85d64cf48a3e35e75e4a0f231575059d08c632bb4f2f2f3c"
+  },
+  {
+    "path": "docs/viewer-evidence/20261020/viewer_release_srm.json",
+    "bytes": 5501,
+    "sha256": "670f8867caa0f6f7c69803efe2a655d14ae1f1c4e1ada912adbd92e6d94354ac"
+  },
+  {
     "path": "native/build.cmd",
     "bytes": 1192,
     "sha256": "6500ad3dba257cdc6660126bb4cf1cf4ae10634039af0b9c450681eb5863d893"
@@ -2831,8 +2876,8 @@
   },
   {
     "path": "src/vba/FEMUi.bas",
-    "bytes": 6530,
-    "sha256": "571bfed0d0357bbabf379d7786b7d7acaf5e6a27247e6ede4eee29f7e9ce334d"
+    "bytes": 6534,
+    "sha256": "7b747d3aabfefdb0606f3c5feb6cc93cb1aaaa5f6965089941348fede448a2f3"
   },
   {
     "path": "src/vba/FEMUiGeometry.bas",
@@ -2847,7 +2892,7 @@
   {
     "path": "src/vba/FEMUiLayout.bas",
     "bytes": 18886,
-    "sha256": "f534e2ae065a25f37f2fce5019924ce8b7f2cb640c57062e7cebdd393c1c4efc"
+    "sha256": "3c9c92d3c08d88f8fa19e83ee6df6dd8d70da029bc6ab9bcbad7f2f6c2890a0c"
   },
   {
     "path": "src/vba/FEMUiValidation.bas",
@@ -2856,8 +2901,8 @@
   },
   {
     "path": "src/vba/FEMViewer.bas",
-    "bytes": 29682,
-    "sha256": "5e5c8c8ac5eb6530e14c1d9c5649534e50374b852d638803e609669b39280aff"
+    "bytes": 30238,
+    "sha256": "f998abb370c92fe7220ee83a7890a546589a82ba061e0cf9746f23e0fb2879ef"
   },
   {
     "path": "src/vba/Mesh.bas",
@@ -2881,8 +2926,8 @@
   },
   {
     "path": "src/vba/ThisWorkbook.cls",
-    "bytes": 2338,
-    "sha256": "62b9cef74b329eb084fd617c6ef05bd76643f501a8e905d0781689a6555a9a25"
+    "bytes": 2567,
+    "sha256": "5b6ef636b9ee479c0830cdc727e6cf9c12d89a9b5efe362cde2b0fd900f43fc2"
   },
   {
     "path": "src/vba/modules.json",
@@ -2892,7 +2937,7 @@
   {
     "path": "tests/build_workbook_ui.ps1",
     "bytes": 3561,
-    "sha256": "4ba53fe487732d375337221c76dd3bba7cb93cd1681e8f00b0508ccb69f54f1a"
+    "sha256": "8ef869cfe94e5c76d7a2cf26538635b826136cd924e726f6d6ade48d44e755d1"
   },
   {
     "path": "tests/fixtures/smoke_expected.json",
@@ -3296,8 +3341,8 @@
   },
   {
     "path": "tests/native/make_native_workbook.ps1",
-    "bytes": 4364,
-    "sha256": "177530148e04c9f2e4cdc3660927c4492a99e54711012876e1e5f894d1666794"
+    "bytes": 4464,
+    "sha256": "450dd39cb7647168b49370681f884fa8e063053864c860b03f241e8df0d4cfb9"
   },
   {
     "path": "tests/native/measure_event_buffer.ps1",
@@ -3515,6 +3560,11 @@
     "sha256": "38b45931027e583f19bde7593434f195fea6e9203f0bd44e48003ea8bc4d83aa"
   },
   {
+    "path": "tests/test_viewer_display_settings.ps1",
+    "bytes": 9793,
+    "sha256": "154d19a24cdca5617d453ebee625554b7d2b60485a6c68cc0fb519e8f388ec1e"
+  },
+  {
     "path": "tests/test_workbook_inputs.ps1",
     "bytes": 12775,
     "sha256": "8e55de3895bfc7f127f2c5cccbb5b27edea8cb3126a766cc65261d7f45259d33"
@@ -3591,8 +3641,8 @@
   },
   {
     "path": "workbook/SoilFEM_UI_20261020.zip",
-    "bytes": 2991769,
-    "sha256": "0ac11425eebe80fb53c34ed2ba6b74c3457ce06dcbe14c3e6a2c58e5f8c49cf3"
+    "bytes": 2993894,
+    "sha256": "7db56b5f91b9b2672ee7494966ab7f8823f7321da200ca4422c708deda452fb0"
   },
   {
     "path": "workbook/inco_assembly_20261020/2DSoilFEM_inco_assembly_20261020.xlsm",
@@ -3806,18 +3856,18 @@
   },
   {
     "path": "workbook/ui_20261020/2DSoilFEM_ui_20261020.xlsm",
-    "bytes": 3147084,
-    "sha256": "cd71e11dc7cc0e3e6a92150effc30c619a6b9257ccab076b88b6929fb252dfa1"
+    "bytes": 3149007,
+    "sha256": "91915d4719ac660f0f8a9da07e4e00d0077dfc061f85c023d9d27f2d1fa31766"
   },
   {
     "path": "workbook/ui_20261020/BUILD_RECORD.json",
     "bytes": 741,
-    "sha256": "6e7a4bd41b6f4872bd2be84c95ac8556e0a82d29fd423830b22bc8a7fc656d8b"
+    "sha256": "e860528a10236fc307f162e6a23d795e3775c4494574534df4660f9fc7631692"
   },
   {
     "path": "workbook/ui_20261020/README.txt",
-    "bytes": 2232,
-    "sha256": "42157e08197bb61ef88f6e19b30aec0ca7cd21ba5e4dc61b408fbb06534d2dfc"
+    "bytes": 2714,
+    "sha256": "37b33c58d7d2f78fbe4d6be03a3bb0e8ccc05e697a53517b056b5453061c0492"
   },
   {
     "path": "workbook/ui_20261020/soilfem_mat_x64.dll",

@@ -1,0 +1,16 @@
+{
+  "source_sha256": "CD71E11DC7CC0E3E6A92150EFFC30C619A6B9257CCAB076B88B6929FB252DFA1",
+  "expected_dirty_bug": true,
+  "checks": [
+    "initial ALL draws",
+    "initial INITIAL draws",
+    "initial RESULT draws",
+    "reproduced: display edit incorrectly dirties results",
+    "reproduced: result display rejected after display-only edit",
+    "source workbook unchanged"
+  ],
+  "status": "PASS",
+  "book": "workbook\\ui_20261020\\2DSoilFEM_ui_20261020.xlsm",
+  "count": 6,
+  "use_source": false
+}

@@ -52,5 +52,5 @@ try{
 }
 if((Get-FileHash -LiteralPath $SourceWorkbook).Hash -cne $sourceHash){throw 'Source workbook changed.'}
 $files=@(Get-ChildItem -LiteralPath $OutputDirectory -File | ForEach-Object {@{name=$_.Name;bytes=$_.Length;sha256=(Get-FileHash -LiteralPath $_.FullName).Hash}})
-@{source=$SourceWorkbook;source_sha256=$sourceHash;files=$files;compile='PASS';reopen='PASS';ui_stamp='20261020_UI_01'} | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $OutputDirectory 'BUILD_RECORD.json') -Encoding UTF8
+@{source=$SourceWorkbook;source_sha256=$sourceHash;files=$files;compile='PASS';reopen='PASS';ui_stamp='20261020_UI_02'} | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $OutputDirectory 'BUILD_RECORD.json') -Encoding UTF8
 Write-Output "PASS $bookPath"
