@@ -1,0 +1,187 @@
+{
+  "scope": "Historical completed INCO24 runs, not new UI04 runs. All values from public archives.",
+  "cases": [
+    {
+      "fixture": "griffiths_1999_coarse",
+      "label": "G φ20 粗",
+      "c_kPa": 10,
+      "phi_deg": 20,
+      "psi_deg": 0,
+      "E_kPa": 100000,
+      "nu": 0.3,
+      "gamma_kN_m3": 20,
+      "nodes": 661,
+      "elements": 200,
+      "fs_pass": 1.3500000000000003,
+      "fs_fail": 1.3625000000000003,
+      "material_residual": 5.708418027566539e-10,
+      "max_vector_mm": 12.44153911308569,
+      "max_small_strain": 0.008730540263847737,
+      "seconds": 14277.2709585,
+      "build": "20261010_INCO_24"
+    },
+    {
+      "fixture": "griffiths_1999_fine",
+      "label": "G φ20 細",
+      "c_kPa": 10,
+      "phi_deg": 20,
+      "psi_deg": 0,
+      "E_kPa": 100000,
+      "nu": 0.3,
+      "gamma_kN_m3": 20,
+      "nodes": 1441,
+      "elements": 450,
+      "fs_pass": 1.3375000000000004,
+      "fs_fail": 1.3500000000000003,
+      "material_residual": 1.4712175181620588e-06,
+      "max_vector_mm": 10.523546243936213,
+      "max_small_strain": 0.005694240897660707,
+      "seconds": 36422.9819428,
+      "build": "20261010_INCO_24"
+    },
+    {
+      "fixture": "griffiths_1999_phi0_coarse",
+      "label": "G φ0 粗",
+      "c_kPa": 50,
+      "phi_deg": 0,
+      "psi_deg": 0,
+      "E_kPa": 100000,
+      "nu": 0.3,
+      "gamma_kN_m3": 20,
+      "nodes": 641,
+      "elements": 192,
+      "fs_pass": 1.4625000000000004,
+      "fs_fail": 1.4750000000000005,
+      "material_residual": 1.0165163583806459e-10,
+      "max_vector_mm": 1046.640288119161,
+      "max_small_strain": 0.8617838120370976,
+      "seconds": 6164.1439241,
+      "build": "20261010_INCO_24"
+    },
+    {
+      "fixture": "griffiths_1999_phi0_fine",
+      "label": "G φ0 細",
+      "c_kPa": 50,
+      "phi_deg": 0,
+      "psi_deg": 0,
+      "E_kPa": 100000,
+      "nu": 0.3,
+      "gamma_kN_m3": 20,
+      "nodes": 1393,
+      "elements": 432,
+      "fs_pass": 1.4500000000000004,
+      "fs_fail": 1.4625000000000004,
+      "material_residual": 2.1041328744832495e-08,
+      "max_vector_mm": 77.54892640592753,
+      "max_small_strain": 0.06634545471112434,
+      "seconds": 18483.815384999998,
+      "build": "20261010_INCO_24"
+    },
+    {
+      "fixture": "griffiths_1999_foundation",
+      "label": "G 基礎地盤",
+      "c_kPa": 10,
+      "phi_deg": 20,
+      "psi_deg": 0,
+      "E_kPa": 100000,
+      "nu": 0.3,
+      "gamma_kN_m3": 20,
+      "nodes": 789,
+      "elements": 240,
+      "fs_pass": 1.3500000000000003,
+      "fs_fail": 1.3625000000000003,
+      "material_residual": 4.0495010510415995e-09,
+      "max_vector_mm": 27.085162557692733,
+      "max_small_strain": 0.011706086447817095,
+      "seconds": 10466.1691206,
+      "build": "20261010_INCO_24"
+    },
+    {
+      "fixture": "pruska_h7_phi10",
+      "label": "P H7 φ10",
+      "c_kPa": 20,
+      "phi_deg": 10,
+      "psi_deg": 0,
+      "E_kPa": 5000,
+      "nu": 0.3,
+      "gamma_kN_m3": 24,
+      "nodes": 789,
+      "elements": 240,
+      "fs_pass": 1.225,
+      "fs_fail": 1.2375000000000003,
+      "material_residual": 3.3526233524998757e-09,
+      "max_vector_mm": 780.6064112762951,
+      "max_small_strain": 0.24373887267941427,
+      "seconds": 15884.5692549,
+      "build": "20261010_INCO_24"
+    },
+    {
+      "fixture": "pruska_h7_phi20",
+      "label": "P H7 φ20",
+      "c_kPa": 20,
+      "phi_deg": 20,
+      "psi_deg": 0,
+      "E_kPa": 5000,
+      "nu": 0.3,
+      "gamma_kN_m3": 24,
+      "nodes": 789,
+      "elements": 240,
+      "fs_pass": 1.6625000000000005,
+      "fs_fail": 1.6750000000000007,
+      "material_residual": 3.770894586202946e-11,
+      "max_vector_mm": 1024.143638524148,
+      "max_small_strain": 0.5461472306190287,
+      "seconds": 8511.7672726,
+      "build": "20261010_INCO_24"
+    },
+    {
+      "fixture": "pruska_h10.5_phi10",
+      "label": "P H10.5 φ10",
+      "c_kPa": 20,
+      "phi_deg": 10,
+      "psi_deg": 0,
+      "E_kPa": 5000,
+      "nu": 0.3,
+      "gamma_kN_m3": 24,
+      "nodes": 789,
+      "elements": 240,
+      "fs_pass": 0.8125,
+      "fs_fail": 0.8250000000000001,
+      "material_residual": 5.70519024392607e-08,
+      "max_vector_mm": 949.158969469691,
+      "max_small_strain": 0.3572695841601146,
+      "seconds": 15075.5923912,
+      "build": "20261010_INCO_24"
+    }
+  ],
+  "display_geometry": [
+    {
+      "fixture": "griffiths_1999_coarse",
+      "min_deformed_jacobian_11x11": 0.14992651219414585,
+      "max_vector_mm": 12.44153911308569
+    },
+    {
+      "fixture": "griffiths_1999_fine",
+      "min_deformed_jacobian_11x11": 0.06664970438216748,
+      "max_vector_mm": 10.523546243936213
+    }
+  ],
+  "source_files": [
+    {
+      "path": "docs/inconsistent-evidence24/fixtures.json",
+      "sha256": "cb706a29d979c0552126baf3107cd8579d55fc95d9af2a94f892b7c2dc2d88e9"
+    },
+    {
+      "path": "docs/inconsistent-evidence24/practical_comparison.json",
+      "sha256": "66409f119ffeb0e4c7b05c4227c21e74fb9cff5cef1a4e4a3e5fc5ffd96dde17"
+    },
+    {
+      "path": "docs/inconsistent-evidence24/material_force_audit.json",
+      "sha256": "68e34fb5e6b6236e3809af6e6bf947a4b516fdbe4acc9bc28f4a4cf53930d351"
+    },
+    {
+      "path": "docs/inconsistent-evidence24/srm_cases_INCO24.zip",
+      "sha256": "bc569a2ae9db3074d2a124e386a5807072ec955295ed889d8a2833824b40f2bb"
+    }
+  ]
+}
