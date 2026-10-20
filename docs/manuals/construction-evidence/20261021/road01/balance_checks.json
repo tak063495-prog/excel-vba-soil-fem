@@ -1,0 +1,151 @@
+{
+  "case": "road01",
+  "material_areas_m2": {
+    "1": 47.999999999999986,
+    "2": 8.0,
+    "3": 7.999999999999998,
+    "4": 7.999999999999999,
+    "5": 3.999999999999999,
+    "6": 7.999999999999996,
+    "7": 4.000000000000002,
+    "8": 6.0
+  },
+  "stage_balance": [
+    {
+      "stage": 1,
+      "type": "GRAVITY",
+      "expected_weight_kN": 1439.9999999999998,
+      "reaction_y_kN": 1439.9999999999916,
+      "difference_kN": -8.185452315956354e-12,
+      "relative_support_weight_gap": 5.6843418860808026e-15,
+      "free_residual_sum_y_kN": 8.609335466758239e-12,
+      "global_equilibrium_closure_y_kN": 4.2388315080188477e-13,
+      "global_equilibrium_closure_x_kN": 3.2221624610104114e-14,
+      "support_only_roundoff_check": true
+    },
+    {
+      "stage": 2,
+      "type": "BIRTH",
+      "expected_weight_kN": 1511.9999999999998,
+      "reaction_y_kN": 1512.0000000000764,
+      "difference_kN": 7.66249286243692e-11,
+      "relative_support_weight_gap": 5.0677862846805034e-14,
+      "free_residual_sum_y_kN": -7.638134569276644e-11,
+      "global_equilibrium_closure_y_kN": 2.4358293160275934e-13,
+      "global_equilibrium_closure_x_kN": -1.3372613641147219e-14,
+      "support_only_roundoff_check": true
+    },
+    {
+      "stage": 3,
+      "type": "BIRTH",
+      "expected_weight_kN": 1655.9999999999995,
+      "reaction_y_kN": 1656.0000000000014,
+      "difference_kN": 1.8189894035458565e-12,
+      "relative_support_weight_gap": 1.0984235528658557e-15,
+      "free_residual_sum_y_kN": -1.6839862837514374e-12,
+      "global_equilibrium_closure_y_kN": 1.3500311979441904e-13,
+      "global_equilibrium_closure_x_kN": -1.918331710708551e-14,
+      "support_only_roundoff_check": true
+    },
+    {
+      "stage": 4,
+      "type": "BIRTH",
+      "expected_weight_kN": 1727.9999999999995,
+      "reaction_y_kN": 1727.9999999999993,
+      "difference_kN": -2.2737367544323206e-13,
+      "relative_support_weight_gap": 1.315819881037223e-16,
+      "free_residual_sum_y_kN": 3.526068326209497e-13,
+      "global_equilibrium_closure_y_kN": 1.2523315717771766e-13,
+      "global_equilibrium_closure_x_kN": 4.701351881374792e-14,
+      "support_only_roundoff_check": true
+    },
+    {
+      "stage": 5,
+      "type": "DEATH",
+      "expected_weight_kN": 1583.9999999999998,
+      "reaction_y_kN": 1583.9999999999993,
+      "difference_kN": -4.547473508864641e-13,
+      "relative_support_weight_gap": 2.8708797404448495e-16,
+      "free_residual_sum_y_kN": 1.2012613126444194e-13,
+      "global_equilibrium_closure_y_kN": -3.346212196220222e-13,
+      "global_equilibrium_closure_x_kN": 4.913023648783799e-14,
+      "support_only_roundoff_check": true
+    },
+    {
+      "stage": 6,
+      "type": "DEATH",
+      "expected_weight_kN": 1423.9999999999998,
+      "reaction_y_kN": 1423.9999999999995,
+      "difference_kN": -2.2737367544323206e-13,
+      "relative_support_weight_gap": 1.5967252488991017e-16,
+      "free_residual_sum_y_kN": -2.6645352591003757e-14,
+      "global_equilibrium_closure_y_kN": -2.540190280342358e-13,
+      "global_equilibrium_closure_x_kN": 1.692508931235939e-14,
+      "support_only_roundoff_check": true
+    },
+    {
+      "stage": 7,
+      "type": "MATSET",
+      "expected_weight_kN": 1423.9999999999998,
+      "reaction_y_kN": 1423.9999999999995,
+      "difference_kN": -2.2737367544323206e-13,
+      "relative_support_weight_gap": 1.5967252488991017e-16,
+      "free_residual_sum_y_kN": -2.6645352591003757e-14,
+      "global_equilibrium_closure_y_kN": -2.540190280342358e-13,
+      "global_equilibrium_closure_x_kN": 1.692508931235939e-14,
+      "support_only_roundoff_check": true
+    },
+    {
+      "stage": 8,
+      "type": "MATSET",
+      "expected_weight_kN": 1423.9999999999998,
+      "reaction_y_kN": 1423.9999999999995,
+      "difference_kN": -2.2737367544323206e-13,
+      "relative_support_weight_gap": 1.5967252488991017e-16,
+      "free_residual_sum_y_kN": -2.6645352591003757e-14,
+      "global_equilibrium_closure_y_kN": -2.540190280342358e-13,
+      "global_equilibrium_closure_x_kN": 1.692508931235939e-14,
+      "support_only_roundoff_check": true
+    },
+    {
+      "stage": 9,
+      "type": "BIRTH",
+      "expected_weight_kN": 1575.9999999999998,
+      "reaction_y_kN": 1575.9999999999995,
+      "difference_kN": -2.2737367544323206e-13,
+      "relative_support_weight_gap": 1.4427263670255843e-16,
+      "free_residual_sum_y_kN": 9.08162434143378e-14,
+      "global_equilibrium_closure_y_kN": -1.3655743202889425e-13,
+      "global_equilibrium_closure_x_kN": -2.1172932831083633e-14,
+      "support_only_roundoff_check": true
+    },
+    {
+      "stage": 10,
+      "type": "BIRTH",
+      "expected_weight_kN": 1727.9999999999995,
+      "reaction_y_kN": 1728.0000000000002,
+      "difference_kN": 6.821210263296962e-13,
+      "relative_support_weight_gap": 3.947459643111669e-16,
+      "free_residual_sum_y_kN": 1.758593271006248e-13,
+      "global_equilibrium_closure_y_kN": 8.57980353430321e-13,
+      "global_equilibrium_closure_x_kN": 8.098660050635594e-14,
+      "support_only_roundoff_check": true
+    },
+    {
+      "stage": 11,
+      "type": "BIRTH",
+      "expected_weight_kN": 1841.9999999999995,
+      "reaction_y_kN": 1842.0,
+      "difference_kN": 4.547473508864641e-13,
+      "relative_support_weight_gap": 2.468769548786451e-16,
+      "free_residual_sum_y_kN": 2.375877272697835e-14,
+      "global_equilibrium_closure_y_kN": 4.785061236134425e-13,
+      "global_equilibrium_closure_x_kN": 3.350593022997927e-16,
+      "support_only_roundoff_check": true
+    }
+  ],
+  "anchor_balance": null,
+  "plastic_shear_eigen_max_error": 1.0842021724855044e-19,
+  "struct_max_plastic_increment": 0.0,
+  "struct_max_yield_function": null
+}

@@ -1,0 +1,22 @@
+{
+  "case": "bearing_slope_fine_s010000",
+  "status": "PASS",
+  "stage": 2,
+  "nodes": 2629,
+  "elements": 836,
+  "active_elements": 836,
+  "seconds": 5.5935407,
+  "max_displacement_m": 0.07204508777688554,
+  "relative_residual": 1.6719967363586274e-11,
+  "reaction_y_kN": 7667.999999994896,
+  "min_reference_jacobian": 0.00781249999999971,
+  "min_deformed_jacobian_scale1": 0.007769603773376546,
+  "dense_11x11_jacobian": {
+    "reference": 0.007812499999999639,
+    "deformed": 0.007745141859193822
+  },
+  "deformed_geometry_valid": true,
+  "invalid_deformed_elements": [],
+  "max_shear_increment": 0.001111089083274072,
+  "fixed_disp_max": 0.0
+}

@@ -1,0 +1,24 @@
+{
+  "case": "bearing_flat_fine_gravity",
+  "material_areas_m2": {
+    "1": 476.0
+  },
+  "stage_balance": [
+    {
+      "stage": 1,
+      "type": "GRAVITY",
+      "expected_weight_kN": 8568.0,
+      "reaction_y_kN": 8567.999999999201,
+      "difference_kN": -7.98536348156631e-10,
+      "relative_support_weight_gap": 9.319985389316421e-14,
+      "free_residual_sum_y_kN": 7.989508776784504e-10,
+      "global_equilibrium_closure_y_kN": 4.145295218194178e-13,
+      "global_equilibrium_closure_x_kN": 2.5096424240503926e-14,
+      "support_only_roundoff_check": true
+    }
+  ],
+  "anchor_balance": null,
+  "plastic_shear_eigen_max_error": 0.0,
+  "struct_max_plastic_increment": 0.0,
+  "struct_max_yield_function": null
+}

@@ -64,7 +64,7 @@ try{
  }else{if($fixtureData.loads){PutRows '載荷' $fixtureData.loads 10}}
  $ws=$wb.Worksheets.Item('ステージ');$last=$ws.Cells($ws.Rows.Count,1).End(-4162).Row
  if($Srm){PutRows 'ステージ' (,@($last,'SRM',$null,$null,1,'施工後のSRM')) 6 ($last+1);$last++}
- for($r=2;$r -le $last;$r++){$ws.Cells($r,5).Value2=[double]([int](($r-1) -le $StageLimit))}
+ if($StageLimit -ne 999){for($r=2;$r -le $last;$r++){$ws.Cells($r,5).Value2=[double]([int](($r-1) -le $StageLimit))}}
  [void]$app.Run($prefix+'FEMInvalidateInputCache');[void]$app.Run($prefix+'FEMInvalidateSettingCache')
  $compile=$app.VBE.CommandBars.FindControl(1,578);if($compile.Enabled){$compile.Execute()};if($app.VBE.CommandBars.FindControl(1,578).Enabled){throw 'Excel compile failed.'}
  $wb.Save();$timer=[Diagnostics.Stopwatch]::StartNew();[void]$app.Run($prefix+'P0_RunAnalysis');$timer.Stop()

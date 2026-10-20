@@ -54,3 +54,32 @@ python tests/compare_manual_flows.py --inco tests/tmp/manual_inco/result.json --
 ```
 
 変形後形状の反転は比較JSONの警告として保存します。他の独立検査の失敗は処理を停止します。
+
+
+## 道路拡幅と水平・斜面の支持力例（追加改訂）
+
+`road_widening_shape.json` は道路拡幅の11工程です。現行配布原版のコピーで形状メッシュを作成し、初回盛土→盛土の一部と基盤の掘削→MATSET→別材料・別形状の再盛土を再計算しました。
+
+```powershell
+pwsh -NoProfile -File tests/run_manual_case.ps1 -Fixture tests/manual_cases/road_widening_shape.json -OutDirectory tests/tmp/manual_road_new -Flow INCONSISTENT
+python tests/check_manual_case.py tests/tmp/manual_road_new/result.json
+```
+
+`generate_bearing_cases.py` は水平地盤・斜面の粗密共有Q8メッシュを生成します。E=30000kPa、ν=.30、厚さ1m、γ=18kN/m³、c=100kPa、φ=ψ=0°の例です。底面XY固定・側面X固定、幅2mの載荷帯へ自重後の追加沈下を与えます。剛体基礎・片側接触・離間はモデル化しません。
+
+```powershell
+python tests/manual_cases/generate_bearing_cases.py
+python tests/run_bearing_cases.py --out tests/tmp/manual_bearing_new
+```
+
+ドライバーは粗メッシュ1/5/10/20/50mm、細メッシュ10/20/50mmを、水平・斜面の合計16ケースで順次実行します。各ケースを初期状態から再計算し、倍精度・収束条件を維持します。ほかのExcelがある場合は起動せず、所有Excelの終了を待って次へ進みます。中途半端な出力先へ自動で上書きしません。再開時には同じ実行計画と入力ハッシュを要求します。
+
+テンプレートはLOAD工程をE=0にしてあります。自重後の各対象節点のuy0を先に取得し、派生fixtureでDISP目標をuy0−追加沈下へ置換してE=1にします。DISPへ追加沈下だけを入れると、地盤を引き上げる入力になり得ます。通常実行ではfixtureの明示的な無効工程を保持し、`-StageLimit`を明示した場合だけ指定工程までを有効化します。
+
+```powershell
+python tests/check_bearing_case.py tests/tmp/manual_bearing_new/bearing_flat_s010000/result.json
+```
+
+独立検算では、元の支持変位、全Q8の4点/11×11点Jacobian、各載荷節点の追加沈下、反力Y（結果節点J列）、自重・自由節点残差・支持反力、最終相対残差を照合します。H列の外力Yを基礎反力として集計しません。q=−ΣR_y/(B×厚さ)は指定沈下時の平均圧力であり、極限・許容支持力の自動判定や現場載荷試験値ではありません。
+
+公開記録を別の場所へ展開した場合は、`--fixture`と`--baseline`で派生入力JSONと対応する自重結果JSONの位置を指定できます。圧縮ファイルは元のバイト列へ展開してください。baselineのSHA-256も照合します。
