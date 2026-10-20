@@ -1,0 +1,22 @@
+{
+  "case": "bearing_flat_s050000",
+  "status": "PASS",
+  "stage": 2,
+  "nodes": 688,
+  "elements": 209,
+  "active_elements": 209,
+  "seconds": 2.9143701,
+  "max_displacement_m": 0.114431849050303,
+  "relative_residual": 8.762611481854797e-08,
+  "reaction_y_kN": 8568.000004148427,
+  "min_reference_jacobian": 0.031249999999999736,
+  "min_deformed_jacobian_scale1": 0.03083992722657699,
+  "dense_11x11_jacobian": {
+    "reference": 0.03124999999999907,
+    "deformed": 0.0305842020512461
+  },
+  "deformed_geometry_valid": true,
+  "invalid_deformed_elements": [],
+  "max_shear_increment": 0.027382289689732636,
+  "fixed_disp_max": 0.0
+}

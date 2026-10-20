@@ -16,8 +16,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 21798,
-    "sha256": "ac7e4dc4e047c253d50aab9d33f6b8baf71001f2c198890256a213710dadb36e"
+    "bytes": 22037,
+    "sha256": "9e139e03a64dd9131c378e829df02d927e1597cc5858541900397b6fb4f27e36"
   },
   {
     "path": "docs/ACCELERATION_HISTORY.md",
@@ -106,8 +106,8 @@
   },
   {
     "path": "docs/SHAPE_MESH_UI_20261020.md",
-    "bytes": 6775,
-    "sha256": "b7939167dc139e3bedecf9f8093759b722e2440c5e017a49e59ba1bde837b280"
+    "bytes": 6757,
+    "sha256": "0d1085479ef0faabc2dec1b86cf4393e6bcb3047910414759d548a3c2244bbac"
   },
   {
     "path": "docs/SIMD_NATIVE.md",
@@ -121,8 +121,8 @@
   },
   {
     "path": "docs/STRAIN_INCREMENT_DISPLAY.md",
-    "bytes": 9493,
-    "sha256": "84a7e5fd742de9ab51c1021e25c1bd2988e610d44bc87e0433822744cdbbd74d"
+    "bytes": 9728,
+    "sha256": "fb609cdf2e3e3c0bda33bd5dd487d45402ec0e6b60a4959094d79a4645321689"
   },
   {
     "path": "docs/TECHNICAL_OVERVIEW.md",
@@ -541,13 +541,2413 @@
   },
   {
     "path": "docs/manuals/2DSoilFEM_Detailed_Manual_20261020.pdf",
-    "bytes": 1528105,
-    "sha256": "ff076d8a24de89b146eaea5408e984a194e9be448b865e0022b73effae9ac38f"
+    "bytes": 7670898,
+    "sha256": "c9b7ac298dbdffa70b00876c7656439caee321b9c69b6c41853cf32fe3258f4f"
+  },
+  {
+    "path": "docs/manuals/README.md",
+    "bytes": 9059,
+    "sha256": "b969ceb3d186d52854330b8fbcf18562931429b77970bf21d7c6f5276c23f25f"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor09/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor09/adaptive_v2a_gates.csv.gz",
+    "bytes": 154,
+    "sha256": "22fa051d92d49cd44eb105e0740e622f77266948963f0a629cd24cf04c6be521"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor09/increment_summary.csv.gz",
+    "bytes": 2110,
+    "sha256": "02f117f481fcf20b6ba40a45fcb7cb2179b209b608e6710fb310ae09fbe67e07"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor09/manifest.csv.gz",
+    "bytes": 131,
+    "sha256": "c8f07f9240db23ba88a3714c5cd2cb7bde79702085bccdef54456ad3bf3b7a23"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor09/perf_summary.csv.gz",
+    "bytes": 429,
+    "sha256": "96804f20a8672051d7f759e311d804c5d413bd5d9c8cdc3438cfe211c67cf5bc"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor09/perf_summary.txt.gz",
+    "bytes": 1846,
+    "sha256": "1b708b42dda61fe575459a97bc2a4f118da6da4e29a9048a494b20840b86a2f0"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor09/perf_trace.csv.gz",
+    "bytes": 124,
+    "sha256": "b08f0c3fe2925304c61b372f67a03e36ceafb3797d10943c130c1fc009b4cbfb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor09/result.json.gz",
+    "bytes": 1832494,
+    "sha256": "d6041d7ee6b84e083f0bc9dd860e6c2fd263bfd0efcc04e775ca68f1316b00ea"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor09/run.log.gz",
+    "bytes": 3911,
+    "sha256": "04c6d00b1e4639feb2b4a73b1519e83b250f566819344b34fa5609b5ef8bb2c0"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor09/solver_events.csv.gz",
+    "bytes": 669,
+    "sha256": "2f622f1e7b15f67d338b6b1ef3e8c485dcc56e7ab65e2c8254b3114d1ebc2241"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor_inco/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor_inco/adaptive_v2a_gates.csv.gz",
+    "bytes": 68,
+    "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor_inco/balance_checks.json",
+    "bytes": 2842,
+    "sha256": "479a59fdb030479c1b8d606b552c32ada783b46731e422c94685fa116f424de7"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor_inco/display_stage_checks.json",
+    "bytes": 1851,
+    "sha256": "235ab46157f99396254dc3224254514791aa4e7f28d09093d7b507332578adcb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor_inco/increment_summary.csv.gz",
+    "bytes": 28797,
+    "sha256": "c9755c4b40cedf58408768e6b52ca0f2768f540fce6ccfa0029bc86dc00e48cd"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor_inco/independent_checks.json",
+    "bytes": 661,
+    "sha256": "b44e5443b74995640926ec0ca0a89ec28f561cff67e1710ddcfc6955d2d3c193"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor_inco/manifest.csv.gz",
+    "bytes": 141,
+    "sha256": "bd9b072e5cde79d4a9f35c6a6e9ce2754746aa2a112210b04c29edb518e90772"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor_inco/perf_summary.csv.gz",
+    "bytes": 1115,
+    "sha256": "22162ed051571c0bdacca298121ad7ef207cb93cf6f2fb2171e9a11625a747b9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor_inco/perf_summary.txt.gz",
+    "bytes": 1878,
+    "sha256": "ca87e1f237794d84cdcecce3a8b85ceb2e8bacd8228f96369f7377079199b578"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor_inco/perf_trace.csv.gz",
+    "bytes": 483,
+    "sha256": "fbcb40513439137b7d8a6ae74e7e8a07c1c682763d631e60fd0e1cf25fa48b9c"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor_inco/result.json.gz",
+    "bytes": 3126302,
+    "sha256": "fa557a141fdc304063715862a5503462d72d28ea05a81c1ebf8326965601eafc"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor_inco/run.log.gz",
+    "bytes": 16181,
+    "sha256": "daa9460344eae0881b114f8a0e51e35b0e9f276e9c70a1136e925da85012964e"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor_inco/solver_events.csv.gz",
+    "bytes": 25809,
+    "sha256": "367d53cfa83c0e0b4dbb6b47dff3843987f57d61ba17d78962e17e216dfb11f2"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor_inco_workbook.zip",
+    "bytes": 8401690,
+    "sha256": "3704bdc2f7f05edc6d2b00faa44f13207918e8ef06caad2039e489b7708b8b58"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor_vba/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor_vba/adaptive_v2a_gates.csv.gz",
+    "bytes": 154,
+    "sha256": "22fa051d92d49cd44eb105e0740e622f77266948963f0a629cd24cf04c6be521"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor_vba/increment_summary.csv.gz",
+    "bytes": 2180,
+    "sha256": "4cb827581b5e1c5441f7c650acb661e0b7a893aa7188e394955cca58d28e933d"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor_vba/manifest.csv.gz",
+    "bytes": 134,
+    "sha256": "3418b173f1700f01379be9e6574918ec8db445c6b50382fb54b9cd80e4043a1e"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor_vba/perf_summary.csv.gz",
+    "bytes": 433,
+    "sha256": "426a22823ef39656f4904eba30d87b261c13b495c261678f96b6f3d3f8031428"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor_vba/perf_summary.txt.gz",
+    "bytes": 1702,
+    "sha256": "fcfd0021669c9f11ac3507cbece50510a31d44b6d57d4a37d19e673e707d14bf"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor_vba/perf_trace.csv.gz",
+    "bytes": 124,
+    "sha256": "b08f0c3fe2925304c61b372f67a03e36ceafb3797d10943c130c1fc009b4cbfb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor_vba/result.json.gz",
+    "bytes": 1831078,
+    "sha256": "83b923ea7140987193682294b7567696be6b49c52f65584e395d1f2effe65740"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor_vba/run.log.gz",
+    "bytes": 3855,
+    "sha256": "21c4f308a954ede7d8e99d9acf5e1a0e32e9833a28a64e1dd840ab47f8862b0d"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/anchor_vba/solver_events.csv.gz",
+    "bytes": 644,
+    "sha256": "4eeb2db155ca39ba913b793fa7d4bf5c1130cdd2c3e2de769e79803b56a75f5a"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/construction_Fs1_all_displacements.csv.gz",
+    "bytes": 254952,
+    "sha256": "4c98776dc402d042d23db755565155ccd21172ff999cc2b7fd6b6da2da4a9958"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/figures/actual_A.svg",
+    "bytes": 281884,
+    "sha256": "c6828f02c812124cea126970ef61a9bbaf714e67ccaeaf0a69555f717ba0523a"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/figures/actual_B.svg",
+    "bytes": 278252,
+    "sha256": "cfd936a713e91218cd283422cbcb4e2342bf4a80c3330b6c8bf22b5c8bc14bfc"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/figures/anchor_comparison.png",
+    "bytes": 217431,
+    "sha256": "65a2f51bacfb994235f98cae4e7670da22e349d52da5caf6242b50d2743d676f"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/figures/flow_comparison.png",
+    "bytes": 117759,
+    "sha256": "6803faa15b852a08ca0d0738857bfa0f7c067216a010417609733d660d56d321"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/figures/tunnel10_gamma.png",
+    "bytes": 106432,
+    "sha256": "d7e3f7dce409bc093eaecb7b1b12cfba0df263265e8e72fd2cf2de1acf559fa1"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/figures/tunnel_convergence.png",
+    "bytes": 133931,
+    "sha256": "6f4efb64bc829544433c6ca5b1e31fdc68b34e04d4da5451a6f871e0da413a3f"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/figures/tunnel_stages.png",
+    "bytes": 432415,
+    "sha256": "4ac02ad8d39ca7e54fad1c2ee4a5c682355966ab1d4322ef03acd1c6804f6361"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/figures/wall_construction.png",
+    "bytes": 454150,
+    "sha256": "fb0ed77bb27289d067515837d8cfee39b972c973ad9bc11f3f6b2fc1110a00a3"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/figures/wall_davis08_gamma.png",
+    "bytes": 204854,
+    "sha256": "65f59cc610b4503ed6d09b947622db700dce7695dc66dfeae533a205bd7ac2bb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/figures/wall_geometry.png",
+    "bytes": 181127,
+    "sha256": "0c921df7e2adc5ac8e71536f40a033e24e2de7dbcb84ec16484066a0db3063d0"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/final_saved_SRM_all_displacements.csv.gz",
+    "bytes": 254141,
+    "sha256": "1c9deed17eb34bee872e0822db1ad1047585047a6459294a0c58644eed4eadcd"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/flow_comparison.json",
+    "bytes": 39138,
+    "sha256": "bcd8b3d540d0777d7592e61fda78c69c7a0555e703f960c3e2cbece58492717b"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/legacy_case1/increment_summary.csv.gz",
+    "bytes": 12226,
+    "sha256": "f443c417ddc0069cc28ebb07e6f73ed4b13b658460c67b6fd8c712e84a7583e2"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/legacy_case1/perf_summary.csv.gz",
+    "bytes": 1178,
+    "sha256": "aa5b47b4c9d1eecc9c2d15aa1b01238ea65e8fc6b09952d3fb15552d9095f841"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/legacy_case1/solver_events.csv.gz",
+    "bytes": 747979,
+    "sha256": "7b95c0427ac255d5c53b269e0a3876ad8704ced128c46f77fae797a202c3c53e"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/tunnel10/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/tunnel10/adaptive_v2a_gates.csv.gz",
+    "bytes": 68,
+    "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/tunnel10/balance_checks.json",
+    "bytes": 5309,
+    "sha256": "b2f967817d0ce031d27bd362251097622a058794c5b9d1f9c555f7e6e6c6101b"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/tunnel10/construction_displacements.json",
+    "bytes": 229,
+    "sha256": "36c640b376edb4c881e7622124d5430bd847eb281a8d23f620e70a6d0295ec3e"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/tunnel10/display_stage_checks.json",
+    "bytes": 3026,
+    "sha256": "0fc9c2dd4ab2c227813b182196ebdd6bffb0240385986867f39ce67699c14e67"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/tunnel10/increment_summary.csv.gz",
+    "bytes": 8299,
+    "sha256": "b9f03748d2e590b150f529d26168997807db9e73ebddf64e7bb4cf76c9b75373"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/tunnel10/independent_checks.json",
+    "bytes": 648,
+    "sha256": "1ce6a8c24ed856bf981b454aa8058371b7d272952c07801e6a60ca0f3dd3057b"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/tunnel10/manifest.csv.gz",
+    "bytes": 173,
+    "sha256": "2ec70cacc7d89028c7430287311398582d172b2ec1362e829d847699a2e65bcc"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/tunnel10/perf_summary.csv.gz",
+    "bytes": 1099,
+    "sha256": "53a4a4de9a4baffdf648e16539619794f81ba5c79a9b5ad250bdf5086b62bfe2"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/tunnel10/perf_summary.txt.gz",
+    "bytes": 1768,
+    "sha256": "89fbe18b1c3a0fe0e14770f739784cfc7891a0a394b92f8393902c1a167de04f"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/tunnel10/perf_trace.csv.gz",
+    "bytes": 369,
+    "sha256": "a90910e762481654fcfb1c7d6e9f7663f9a387922e4f10f5e8385c91ebcf2583"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/tunnel10/result.json.gz",
+    "bytes": 1282131,
+    "sha256": "37f77a89fc5edfc68d2a3fe009c360fb8c34d0985e25304da508a2bf2bbc7a8d"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/tunnel10/run.log.gz",
+    "bytes": 8046,
+    "sha256": "919944a4e4a0cbb7a170df3c7a2c8683d7e92d78f9be40489fb9803473f1d2c1"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/tunnel10/solver_events.csv.gz",
+    "bytes": 1114,
+    "sha256": "83e3d4c4d7e88ce3fc9e7b2edfd148f94d0d5d346353a224f775f7b960f7df0c"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/tunnel10_workbook.zip",
+    "bytes": 4950118,
+    "sha256": "2b12787157f2923d18bf0c14620edf7764ceb96475cac90fe50e1b14263de6df"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_davis08/adaptive_v2a.csv.gz",
+    "bytes": 7471,
+    "sha256": "5958929424784ccdbffe37fc06426d05d4ba6b7eaa1c8d6e1e2d77cb7c345a39"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_davis08/adaptive_v2a_gates.csv.gz",
+    "bytes": 576,
+    "sha256": "b9d8b94964b3b097ab9c2967a68b5cd739a05e765d791ffe92c96d997cbf2ae6"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_davis08/balance_checks.json",
+    "bytes": 2300,
+    "sha256": "15cac7c52cf790d6882b61db7944ec9ebb244c75b552f80bc6165b642d6c9a85"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_davis08/display_stage_checks.json",
+    "bytes": 2528,
+    "sha256": "8a5ce963109c4a8c598f977f707e93886d1d0ac76f690376225fec280af82750"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_davis08/increment_summary.csv.gz",
+    "bytes": 51467,
+    "sha256": "450bd6f9a1ce76dca7316fa073a88c1ac3cb1c9b430f1f4abd437291abba762d"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_davis08/independent_checks.json",
+    "bytes": 679,
+    "sha256": "127344b4be4d6bd16a1a08a3fa535b70687f89c8b710638335d31cfd57d8b4fd"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_davis08/manifest.csv.gz",
+    "bytes": 125,
+    "sha256": "cf391cad61878c83b7c31571a6029b48a2cedd080bf548aaf1cc01bbd2f67fac"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_davis08/perf_summary.csv.gz",
+    "bytes": 1209,
+    "sha256": "cb55907710d859ee4b1203f1134eca277b3901205ad5a03df16d0adba8c77484"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_davis08/perf_summary.txt.gz",
+    "bytes": 1983,
+    "sha256": "9204d8e6a02d5b51a6187c768900af4142a43b098dee847d614dc22521da0db5"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_davis08/perf_trace.csv.gz",
+    "bytes": 1407,
+    "sha256": "ca0c556a62752d20330037e6f983ced079a887f5047774cd3d894b96af965f27"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_davis08/result.json.gz",
+    "bytes": 2560898,
+    "sha256": "bbe1ff8d344b2c8ca6833553c68280d78bb8cf24e2bf7bd8192b5f50d95117c2"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_davis08/run.log.gz",
+    "bytes": 18110,
+    "sha256": "8c9a90c355dd5b4a8b48b0d0a10b2339ed1bb4b05aee2e7397604df9e0088a75"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_davis08/solver_events.csv.gz",
+    "bytes": 17917,
+    "sha256": "5b5b91e1ce0dea150cd5e6fc3b14aacae8b6fab19dda43977276a2c5c75474d4"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_davis08_workbook.zip",
+    "bytes": 7412918,
+    "sha256": "b2e41f27093244017d537a6f828f2e91166c9902f24ff5c250bb7e16d1ee2871"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_davis12/adaptive_v2a.csv.gz",
+    "bytes": 8796,
+    "sha256": "fd19ccb87ca3ea1f4e69c86c19596989ceb3b501587b7b8286eb49223a2d251d"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_davis12/adaptive_v2a_gates.csv.gz",
+    "bytes": 522,
+    "sha256": "2b0334a953eef148a0e1a5ebc343c81cf822eb5220bbdda3bb75c2affc2059f0"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_davis12/balance_checks.json",
+    "bytes": 2212,
+    "sha256": "82f0625c7d4a39d5af24af362b4f7ed625b03cb8dff0cb2da4dc77606378aae9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_davis12/increment_summary.csv.gz",
+    "bytes": 57742,
+    "sha256": "195ceb25c3335a427d7ec93273975abf57869dd0c4009b9bbf2d4b4ee4d1c82c"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_davis12/independent_checks.json",
+    "bytes": 681,
+    "sha256": "2bdaca7b3bea8c64906cd566b9a649c9660ca910ad0709e4de885adc77776026"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_davis12/manifest.csv.gz",
+    "bytes": 125,
+    "sha256": "dd7dca65582e69eb5218fe9de6fbdbd4592819910f8c545b05a6d8a6bc59f40d"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_davis12/perf_summary.csv.gz",
+    "bytes": 1181,
+    "sha256": "0a7a177764a8629f24cca68515e8c72d32788a1369ba0ed273dc251d5a447b9b"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_davis12/perf_summary.txt.gz",
+    "bytes": 2025,
+    "sha256": "c1caa742066c0b23a4952106cbc91f6d480d782c0e1cb12eff586381ce1b9d25"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_davis12/perf_trace.csv.gz",
+    "bytes": 1488,
+    "sha256": "693ffe9b594a8ea9f05f487bb56aa1b2d5f3d2fdba4ee44782efd089aff1166a"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_davis12/result.json.gz",
+    "bytes": 4631132,
+    "sha256": "28e1b825843aa00f89bca6ae650c5e60ec2a0e77e53ecd29850ca5a2d67d144d"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_davis12/run.log.gz",
+    "bytes": 18119,
+    "sha256": "5d8c1c9302aeb4d836985f73ececfa85a75ad1bb05d4d4f52db25fe812ed1fd0"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_davis12/solver_events.csv.gz",
+    "bytes": 16763,
+    "sha256": "c8b7d01599503dd063cd1a24a36230501d86fe62653421ae0ec7fd3cb7425af8"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_inco11/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_inco11/adaptive_v2a_gates.csv.gz",
+    "bytes": 68,
+    "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_inco11/balance_checks.json",
+    "bytes": 2266,
+    "sha256": "7303a014aac110a5e9ffe3f919b8886adee6f21a551630ddaea2c060a46373c7"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_inco11/increment_summary.csv.gz",
+    "bytes": 24530,
+    "sha256": "d205c8c81ab011afc4f0f6e533581d3dcd36cdb65874a27b3fd33472d088773a"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_inco11/independent_checks.json",
+    "bytes": 739,
+    "sha256": "f92e13f9056edac7db219c28a422494a7e630f38666d4f7441f227d6fbbe2eae"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_inco11/manifest.csv.gz",
+    "bytes": 134,
+    "sha256": "52a692423d23d8dd34f31bc6ee1c345da112cf71538c6f97da14c8dd8e5ddda6"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_inco11/perf_summary.csv.gz",
+    "bytes": 1121,
+    "sha256": "bdbe6d4164bf65a20388420dd6502134b03c809523960b5c8cbf815eb2e58288"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_inco11/perf_summary.txt.gz",
+    "bytes": 1885,
+    "sha256": "0fca07bc43402c97500f9de9d61ae2d618aa99a68cc79cbe78f6f78501afaacf"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_inco11/perf_trace.csv.gz",
+    "bytes": 448,
+    "sha256": "b5edd8b887aae5cd345e8b75c2bd4c5268cadb4160088829c97e52e2ba01617d"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_inco11/result.json.gz",
+    "bytes": 4537878,
+    "sha256": "8c1c5859eb55467b303fbccd399b4157a4b4b648ba1c776edd1ec25f012333d4"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_inco11/run.log.gz",
+    "bytes": 14038,
+    "sha256": "1d35c353b18d7c84a10be564e905215d6abb64dff3054e22c270b07b18a48768"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261020/wall_inco11/solver_events.csv.gz",
+    "bytes": 29252,
+    "sha256": "df55f1abd74cf2848269bdb16fd7ac1517bb4563db48289602e91fd279243c4f"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_gravity/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_gravity/adaptive_v2a_gates.csv.gz",
+    "bytes": 68,
+    "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_gravity/balance_checks.json",
+    "bytes": 742,
+    "sha256": "6d3b5ac774e0a80374709e597c1fef430b7234df27aedd78c8208d8aba6384f1"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_gravity/increment_summary.csv.gz",
+    "bytes": 873,
+    "sha256": "4247ba980cb83b752cf180c61ffb41e5412524bd0d393125ffe1c037eab46d63"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_gravity/independent_checks.json",
+    "bytes": 667,
+    "sha256": "ba1ca198a0fde873eb9c8c45f5e9b060bf81944fdac69a08e650be726545d297"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_gravity/manifest.csv.gz",
+    "bytes": 76,
+    "sha256": "cba1d4919aced4a11a0214927cd2ebb591e0c26781b16c1cee1d6ee92b0b0062"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_gravity/model_input.json.gz",
+    "bytes": 32262,
+    "sha256": "6d7c4e83a87ba9600167b27ddf908ecc7788f8b8ced16e917ff6423742c1d460"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_gravity/perf_summary.csv.gz",
+    "bytes": 427,
+    "sha256": "f22aaf5b0bdbb799358e59458794e0f2bfb9e7c2d0cd658fba18f35996cb2151"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_gravity/perf_summary.txt.gz",
+    "bytes": 1702,
+    "sha256": "3906b3552a2224c18c404e9bf25d93a232adae17a918b2137ee0c081f95e08c1"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_gravity/perf_trace.csv.gz",
+    "bytes": 124,
+    "sha256": "b08f0c3fe2925304c61b372f67a03e36ceafb3797d10943c130c1fc009b4cbfb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_gravity/result.json.gz",
+    "bytes": 614022,
+    "sha256": "5c7d7e176a697ca47c7a50da955e0fe4c2e961b5e9789837c848e625675ab1fc"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_gravity/run.log.gz",
+    "bytes": 2413,
+    "sha256": "37490127362fd7edea1b83bc228cbc52edef7c635dcad2ee250e2fcc191928f3"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_gravity/solver_events.csv.gz",
+    "bytes": 56,
+    "sha256": "dce2654c86fe4469ee43554bb4c22c7b0237a55af00d617b5e2bc8339275c2b5"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_s010000/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_s010000/adaptive_v2a_gates.csv.gz",
+    "bytes": 68,
+    "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_s010000/bearing_checks.json",
+    "bytes": 2655,
+    "sha256": "3964a185efbe99574cfae67eadb8e8202ae53c96e65315121d8f67d9aaca0fb0"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_s010000/increment_summary.csv.gz",
+    "bytes": 1197,
+    "sha256": "37b295158982c402aabdc5bbe3fc9bfcf6da02d25ea5179fc80f4df4de771df2"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_s010000/independent_checks.json",
+    "bytes": 669,
+    "sha256": "56c28558ddafcbd8467a38e73499e5012573f67edf0077113de46600f9fcb1df"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_s010000/manifest.csv.gz",
+    "bytes": 97,
+    "sha256": "43aa0f848ea7e587738442d66863a8389133b5e759f915442f1e29ac13253f28"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_s010000/model_input.json.gz",
+    "bytes": 32676,
+    "sha256": "6a1c692b5cc862336a634cd8c3b0d1e20a2018d0f64abdd1c15958047abca4fd"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_s010000/perf_summary.csv.gz",
+    "bytes": 428,
+    "sha256": "d01800508b71c0cdec0877b11491949565699a0a371ce6d8e4da63d04694dc6e"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_s010000/perf_summary.txt.gz",
+    "bytes": 1715,
+    "sha256": "5ad15aea6c614916418352b4a06288f9bfc03521fc30b8007be34439029e2aba"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_s010000/perf_trace.csv.gz",
+    "bytes": 124,
+    "sha256": "b08f0c3fe2925304c61b372f67a03e36ceafb3797d10943c130c1fc009b4cbfb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_s010000/result.json.gz",
+    "bytes": 1469661,
+    "sha256": "9397a8b96d870be04f7d5c8184e904a61aafb9cfa230668ac035ccd1a63529b4"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_s010000/run.log.gz",
+    "bytes": 2477,
+    "sha256": "50b216ff4c3a1dd31f84a7a6c56d1debd3d83acf05b5de742ef698324304348d"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_s010000/solver_events.csv.gz",
+    "bytes": 56,
+    "sha256": "dce2654c86fe4469ee43554bb4c22c7b0237a55af00d617b5e2bc8339275c2b5"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_s020000/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_s020000/adaptive_v2a_gates.csv.gz",
+    "bytes": 68,
+    "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_s020000/bearing_checks.json",
+    "bytes": 2657,
+    "sha256": "ad6962eb720bdb7a8a106950fe485ef73b23701bc508239404a0c88a18d0c54e"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_s020000/increment_summary.csv.gz",
+    "bytes": 1281,
+    "sha256": "13416ea5ee897e685dc26fd326a50e37ba47d978e540270adb4c0a6bd7d82d40"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_s020000/independent_checks.json",
+    "bytes": 668,
+    "sha256": "8f3001628c67eb96c0f14bd60fe65319a2b98c87f6460f1d25d6effd9bddb7b7"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_s020000/manifest.csv.gz",
+    "bytes": 97,
+    "sha256": "c810b63a5ff465a93ab52042c00c49b02e3b75b53fea1b0291a8e75e479d605f"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_s020000/model_input.json.gz",
+    "bytes": 32676,
+    "sha256": "dab1863378150897885a82781443723213a17fcd40b9b8957e4d48e00316e167"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_s020000/perf_summary.csv.gz",
+    "bytes": 427,
+    "sha256": "d4e1bedd1972e534ff30adee031c80932c69030b0b8ebcb67b36dd7df6965d1d"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_s020000/perf_summary.txt.gz",
+    "bytes": 1715,
+    "sha256": "d6589125e983184e81de1eed2a6f3f88ea442b2592a5718d577a924532bbf406"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_s020000/perf_trace.csv.gz",
+    "bytes": 124,
+    "sha256": "b08f0c3fe2925304c61b372f67a03e36ceafb3797d10943c130c1fc009b4cbfb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_s020000/result.json.gz",
+    "bytes": 1473145,
+    "sha256": "a065ed6024e83c44c1a5ea03c87b3c6eeaade4a953e0d9dd3aaa250834a655db"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_s020000/run.log.gz",
+    "bytes": 2476,
+    "sha256": "8d448f6e675707a96e4933f6016057f1c44bb4ea9881b5631ab892efe951caab"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_fine_s020000/solver_events.csv.gz",
+    "bytes": 56,
+    "sha256": "dce2654c86fe4469ee43554bb4c22c7b0237a55af00d617b5e2bc8339275c2b5"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_gravity/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_gravity/adaptive_v2a_gates.csv.gz",
+    "bytes": 68,
+    "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_gravity/balance_checks.json",
+    "bytes": 762,
+    "sha256": "fbafcd27768c015913e138884bf900a880c1512dbc2ef616ad4076a3bc3d2dfe"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_gravity/increment_summary.csv.gz",
+    "bytes": 875,
+    "sha256": "e05a09ba24fc0865f313b1351715a987c7465e622f587b1a753fa8971743818e"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_gravity/independent_checks.json",
+    "bytes": 661,
+    "sha256": "23e4e8565521847d2ae4f795fc9521a34aa9f4d842cbfc3371ac4f6cb104f023"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_gravity/manifest.csv.gz",
+    "bytes": 77,
+    "sha256": "8e4bf65efc43f7413085b4fae2f0f39ec10af1a9ec4389ccadbd7253445d09d8"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_gravity/model_input.json.gz",
+    "bytes": 9126,
+    "sha256": "ec109110a484a84d106af9a22e0399eceb3bd3bd609d895c85f446a9a0aa5160"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_gravity/perf_summary.csv.gz",
+    "bytes": 427,
+    "sha256": "ce9d93eedde83596089cfaf5c6184324515ebc576829594ef8ae230a86516e06"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_gravity/perf_summary.txt.gz",
+    "bytes": 1700,
+    "sha256": "90165f7dafaa14bdd9c25975af358d167435a69f274f9d83cc898e34c47735c7"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_gravity/perf_trace.csv.gz",
+    "bytes": 124,
+    "sha256": "b08f0c3fe2925304c61b372f67a03e36ceafb3797d10943c130c1fc009b4cbfb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_gravity/result.json.gz",
+    "bytes": 163299,
+    "sha256": "899bd11e510302ccd6c90a1dea07d2e5a4ac73925123211402554aab75d59446"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_gravity/run.log.gz",
+    "bytes": 2406,
+    "sha256": "34c3cd9c871a6ac9885d86b94ab3f0cb645e265eb79f4171dfdbf1f6eebadb20"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_gravity/solver_events.csv.gz",
+    "bytes": 56,
+    "sha256": "dce2654c86fe4469ee43554bb4c22c7b0237a55af00d617b5e2bc8339275c2b5"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s001000/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s001000/adaptive_v2a_gates.csv.gz",
+    "bytes": 68,
+    "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s001000/bearing_checks.json",
+    "bytes": 2337,
+    "sha256": "57ecff6f1cdc94e83acf32a03bfe20aefadea7f2a5c1ce3a4bc852a51ca9009e"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s001000/increment_summary.csv.gz",
+    "bytes": 1194,
+    "sha256": "9073972d17e34d68e49c2876560d510be1e8987663a38251b3430e0fd826a075"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s001000/independent_checks.json",
+    "bytes": 662,
+    "sha256": "6bee4f1f192e45005778fa80ffb02acf3d4d8d1191b82520d584e36ca85b93e9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s001000/manifest.csv.gz",
+    "bytes": 95,
+    "sha256": "fa06040a305450096b2669c3df69e14e8a671f252af059c5a44697542c3b6275"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s001000/model_input.json.gz",
+    "bytes": 9436,
+    "sha256": "0b29a8b7ba4e2c3e7be275fe433b0a15f4326cdd48c65872db8b7a9fc307776d"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s001000/perf_summary.csv.gz",
+    "bytes": 427,
+    "sha256": "c5f08cb71a678f6d737199d38f77bd7585519c9e208d67ac833352e3cd96b07c"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s001000/perf_summary.txt.gz",
+    "bytes": 1711,
+    "sha256": "95d5c822845c57a93db1f9f2ffa2dfdf487bdcc4fee3ce6a570838f570d1ad5c"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s001000/perf_trace.csv.gz",
+    "bytes": 124,
+    "sha256": "b08f0c3fe2925304c61b372f67a03e36ceafb3797d10943c130c1fc009b4cbfb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s001000/result.json.gz",
+    "bytes": 376639,
+    "sha256": "e41a767234cf51504319f49b362452091ee5737317aa6cec976f152ddda8b376"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s001000/run.log.gz",
+    "bytes": 2462,
+    "sha256": "733d0ed342c24c0a8a30ab7295e8ba3103235838010da4175ee4eede048c4009"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s001000/solver_events.csv.gz",
+    "bytes": 56,
+    "sha256": "dce2654c86fe4469ee43554bb4c22c7b0237a55af00d617b5e2bc8339275c2b5"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s005000/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s005000/adaptive_v2a_gates.csv.gz",
+    "bytes": 68,
+    "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s005000/bearing_checks.json",
+    "bytes": 2338,
+    "sha256": "a06a4d86529f029679a961058bc105185b2e69a4f175107b1305b2e8bbd86960"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s005000/increment_summary.csv.gz",
+    "bytes": 1184,
+    "sha256": "e45b0c29c42690b9bd508d06394c8387392592501c26846f9855244beac23dbe"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s005000/independent_checks.json",
+    "bytes": 661,
+    "sha256": "f5737fea535b362720f085f59d3004e62ee741485467c58cf8eef7feea24557c"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s005000/manifest.csv.gz",
+    "bytes": 95,
+    "sha256": "2f17e7421084f43de6cb2c189f11fa300248a87d8fdeeadc6e146dcda682b770"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s005000/model_input.json.gz",
+    "bytes": 9433,
+    "sha256": "c0439673bac91dff5235ac61990e19e5bca6335e3cf53f7fe4bac80b7e52a4bc"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s005000/perf_summary.csv.gz",
+    "bytes": 427,
+    "sha256": "c5f08cb71a678f6d737199d38f77bd7585519c9e208d67ac833352e3cd96b07c"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s005000/perf_summary.txt.gz",
+    "bytes": 1711,
+    "sha256": "81ec405632dad574c167fdb8fa592248db6f58e7746fa3843261d54e17b46339"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s005000/perf_trace.csv.gz",
+    "bytes": 124,
+    "sha256": "b08f0c3fe2925304c61b372f67a03e36ceafb3797d10943c130c1fc009b4cbfb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s005000/result.json.gz",
+    "bytes": 379285,
+    "sha256": "2739691452b50d89f82c528b9fe9b68c2544c35be6796f6e0317b6d85111026b"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s005000/run.log.gz",
+    "bytes": 2464,
+    "sha256": "22bc46be372ae4da91f8407b629ba9f27060c7eb225484a44eec6b121e75bd09"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s005000/solver_events.csv.gz",
+    "bytes": 56,
+    "sha256": "dce2654c86fe4469ee43554bb4c22c7b0237a55af00d617b5e2bc8339275c2b5"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s010000/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s010000/adaptive_v2a_gates.csv.gz",
+    "bytes": 68,
+    "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s010000/bearing_checks.json",
+    "bytes": 2331,
+    "sha256": "d93d8809c8a1f6abd7050097ab27da2343d4c73d29b7716f08e03852c5a1f4dc"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s010000/increment_summary.csv.gz",
+    "bytes": 1204,
+    "sha256": "506feb950077f56bac3181a62ade5657fe1617ad60e43cb3a6018692faf259ec"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s010000/independent_checks.json",
+    "bytes": 662,
+    "sha256": "19fe4f345cf8df5e7803adf1c9e70b029e022602529aab24f4362d92fd9d3caf"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s010000/manifest.csv.gz",
+    "bytes": 94,
+    "sha256": "b06faeb4ec7cb7d00155b6607c1291706ce0869cf12da6243bce2d44e55ab0a9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s010000/model_input.json.gz",
+    "bytes": 9436,
+    "sha256": "5641d1bd8911c8cec6b8b9f27cba9e6c627e501c4ec23c9114be98f2daa0a784"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s010000/perf_summary.csv.gz",
+    "bytes": 427,
+    "sha256": "a15daac7813fadcfa935769b647c532a6552c6338d9f3e45caaddd4f7ceeef9c"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s010000/perf_summary.txt.gz",
+    "bytes": 1708,
+    "sha256": "54a30e432c6352f49cfce560af1bef676d6442eb1f401cde41d702f4615b8155"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s010000/perf_trace.csv.gz",
+    "bytes": 124,
+    "sha256": "b08f0c3fe2925304c61b372f67a03e36ceafb3797d10943c130c1fc009b4cbfb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s010000/result.json.gz",
+    "bytes": 380863,
+    "sha256": "0075cfaf1430385d70fc49938dd90f70def7ddc26d6cac832dcac9b63d32b008"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s010000/run.log.gz",
+    "bytes": 2459,
+    "sha256": "ba633c817c138985e84cf39a94359672701a8dcd6147336de53a5025e9caff64"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s010000/solver_events.csv.gz",
+    "bytes": 56,
+    "sha256": "dce2654c86fe4469ee43554bb4c22c7b0237a55af00d617b5e2bc8339275c2b5"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s020000/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s020000/adaptive_v2a_gates.csv.gz",
+    "bytes": 68,
+    "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s020000/bearing_checks.json",
+    "bytes": 2336,
+    "sha256": "c4f5f8030d70f20abecc19e4859e402e495167396b9176612cd6824b6805ded5"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s020000/increment_summary.csv.gz",
+    "bytes": 1169,
+    "sha256": "c14a9c06254052f50327104ca9611dbc8236e108a3699fe1e6cd3e6229fe87ee"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s020000/independent_checks.json",
+    "bytes": 663,
+    "sha256": "375b994809308ab30e41d4f6f88f01d0c9586945a0c7a5df4213497ade7cc1bb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s020000/manifest.csv.gz",
+    "bytes": 95,
+    "sha256": "df3f86c8711787706a15758c42090a3278a39a94c7a5feffffe19e74942cf1ad"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s020000/model_input.json.gz",
+    "bytes": 9432,
+    "sha256": "940e5a49fc04d95a8f7b72c5b3585cff2238b91119e1ee51a2fd9aa5634f5672"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s020000/perf_summary.csv.gz",
+    "bytes": 427,
+    "sha256": "ce9d93eedde83596089cfaf5c6184324515ebc576829594ef8ae230a86516e06"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s020000/perf_summary.txt.gz",
+    "bytes": 1711,
+    "sha256": "454c99ea7acb57a43e26739700f43753fb884d55f07a0c87da7b10b64ea4f8b5"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s020000/perf_trace.csv.gz",
+    "bytes": 124,
+    "sha256": "b08f0c3fe2925304c61b372f67a03e36ceafb3797d10943c130c1fc009b4cbfb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s020000/result.json.gz",
+    "bytes": 382056,
+    "sha256": "338010af9fb003a1b92b3f72fd8fff398750846e3d9ced0f4ed48fa6440b49fa"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s020000/run.log.gz",
+    "bytes": 2462,
+    "sha256": "83f9a641b43c81597e465f08d16042a89c3239e8355889c51a8208fd325ebee2"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_flat_s020000/solver_events.csv.gz",
+    "bytes": 56,
+    "sha256": "dce2654c86fe4469ee43554bb4c22c7b0237a55af00d617b5e2bc8339275c2b5"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_gravity/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_gravity/adaptive_v2a_gates.csv.gz",
+    "bytes": 68,
+    "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_gravity/balance_checks.json",
+    "bytes": 764,
+    "sha256": "bf562eaef8a2b612474a4234295fcccdbe860c34d6f7108dfe71c72914a55286"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_gravity/increment_summary.csv.gz",
+    "bytes": 874,
+    "sha256": "3cb0007e3d9fdc97fe9da7bb6b9ca7d9d77bbdd5bc2e7604404695b40f06bbdc"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_gravity/independent_checks.json",
+    "bytes": 667,
+    "sha256": "d5a7e3a95acbe6be28c385a85d16a14663c92866cbf67ba733be277410fb2b0f"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_gravity/manifest.csv.gz",
+    "bytes": 77,
+    "sha256": "ded11b9d1fa8fdb727f335d91535422d0932fd5ea553102064d03a68d4c74ef3"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_gravity/model_input.json.gz",
+    "bytes": 35231,
+    "sha256": "dcffa6b2391d6b34c3fded3ca305d85e3da5cc0f15d1f6b35aafca76f9d94569"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_gravity/perf_summary.csv.gz",
+    "bytes": 427,
+    "sha256": "a2255feee75112e8e3062c739dab44674364fd88051951fbc188ddeef9a0c58f"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_gravity/perf_summary.txt.gz",
+    "bytes": 1704,
+    "sha256": "868b38e6ee0cb4ad24131dd6c62b4eb2e3d0de0a2835e5a052fadb86f8c4bc18"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_gravity/perf_trace.csv.gz",
+    "bytes": 124,
+    "sha256": "b08f0c3fe2925304c61b372f67a03e36ceafb3797d10943c130c1fc009b4cbfb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_gravity/result.json.gz",
+    "bytes": 906650,
+    "sha256": "88c27b46fe23389e9eda0a06652c49f7256de27eb6009bd98cbb9f39edcfbbd1"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_gravity/run.log.gz",
+    "bytes": 2411,
+    "sha256": "5bb36658da759967a2528d4bcfd3e908624ac208a3c7a15c612d97316fc6f8e0"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_gravity/solver_events.csv.gz",
+    "bytes": 56,
+    "sha256": "dce2654c86fe4469ee43554bb4c22c7b0237a55af00d617b5e2bc8339275c2b5"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_s010000/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_s010000/adaptive_v2a_gates.csv.gz",
+    "bytes": 68,
+    "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_s010000/bearing_checks.json",
+    "bytes": 2695,
+    "sha256": "c46dc523f6d02f6ce2162da4aaa1aeebfa0b4d79f801cbed12277aa8a1108ed9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_s010000/increment_summary.csv.gz",
+    "bytes": 1237,
+    "sha256": "5153d119e4f3e9cf2d833f9bd0cb7907b4623d3bdd4e2026340cc4f28e18ac3b"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_s010000/independent_checks.json",
+    "bytes": 669,
+    "sha256": "6d320de85b034709b5b7ea1fb163b26c81045ec43232df1753dc7125e8ce4905"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_s010000/manifest.csv.gz",
+    "bytes": 96,
+    "sha256": "bf716cdc9a13cf80e4e314be88b4ec9e8f5c8978efbea3c90f02376d369f0bc5"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_s010000/model_input.json.gz",
+    "bytes": 35946,
+    "sha256": "392f3809a301acda5c690f9cf51e26bd984b954ec6737c420ae88bb300d5504a"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_s010000/perf_summary.csv.gz",
+    "bytes": 427,
+    "sha256": "d99a84f52003e30a0df3fd991816fbd9ebde5b299b6a693943bd6cf06bcda4c6"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_s010000/perf_summary.txt.gz",
+    "bytes": 1719,
+    "sha256": "c67f1b696dd093622fbe5bdf4754e0475d9d30fd97cefc8d6fc79fb1ea21a965"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_s010000/perf_trace.csv.gz",
+    "bytes": 124,
+    "sha256": "b08f0c3fe2925304c61b372f67a03e36ceafb3797d10943c130c1fc009b4cbfb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_s010000/result.json.gz",
+    "bytes": 1776999,
+    "sha256": "cdcc2e60198ff531ba2dd7609aa8293ad4096fe4e9dfc0652ddd12c389c13db3"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_s010000/run.log.gz",
+    "bytes": 2475,
+    "sha256": "027716f027cf9a1c293ec27ee2f386e2bd6ac719ee6ca04b1503d5f3b15789ef"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_s010000/solver_events.csv.gz",
+    "bytes": 56,
+    "sha256": "dce2654c86fe4469ee43554bb4c22c7b0237a55af00d617b5e2bc8339275c2b5"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_s020000/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_s020000/adaptive_v2a_gates.csv.gz",
+    "bytes": 68,
+    "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_s020000/bearing_checks.json",
+    "bytes": 2696,
+    "sha256": "aa29541ba04d992bd18e539838ef4aa21e24184440a05a148e056d18a155ed43"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_s020000/increment_summary.csv.gz",
+    "bytes": 1276,
+    "sha256": "40872f37548eaf527ff016fa71db9f22f468ce82864913ebbd975ac551645bfb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_s020000/independent_checks.json",
+    "bytes": 665,
+    "sha256": "696b63e16b8a6576ad2c1a88f276300782eb195c91b6d89a36e6b794ce107277"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_s020000/manifest.csv.gz",
+    "bytes": 96,
+    "sha256": "7e5d6704bcc8c05cb6ce77f66936cacdd7d01a37fe8fbd20d6d4043e24d7d680"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_s020000/model_input.json.gz",
+    "bytes": 35949,
+    "sha256": "925481de668b0c5301b08782ca20ca38aca54b7338c880b59f7dfda9a4aa57f5"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_s020000/perf_summary.csv.gz",
+    "bytes": 426,
+    "sha256": "28e29efbbb99d64edff900138a572d5d0e08d628554b5d721a25e580f70508b9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_s020000/perf_summary.txt.gz",
+    "bytes": 1719,
+    "sha256": "0e1a00d29efc66909b72ca70de09498098e43d5ccaf861118f8d81ae15846851"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_s020000/perf_trace.csv.gz",
+    "bytes": 124,
+    "sha256": "b08f0c3fe2925304c61b372f67a03e36ceafb3797d10943c130c1fc009b4cbfb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_s020000/result.json.gz",
+    "bytes": 1777966,
+    "sha256": "178ef6339d37bb5dfd8a3fc0c79f24367660e6abaeb985eb0696c9f13f2b43ba"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_s020000/run.log.gz",
+    "bytes": 2481,
+    "sha256": "2f284d2decae9562e83c9be6874cd571ff3d51843e3fde83879aaacd0c9b260e"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_fine_s020000/solver_events.csv.gz",
+    "bytes": 56,
+    "sha256": "dce2654c86fe4469ee43554bb4c22c7b0237a55af00d617b5e2bc8339275c2b5"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_gravity/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_gravity/adaptive_v2a_gates.csv.gz",
+    "bytes": 68,
+    "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_gravity/balance_checks.json",
+    "bytes": 765,
+    "sha256": "7ef3349944dbf597d2e0e973eae82a2d6c1fb0a260597507a3a1642747ee3482"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_gravity/increment_summary.csv.gz",
+    "bytes": 866,
+    "sha256": "a4be3932c1644b3f89af55477ead098bf615004b3a75bb05676d912b1f346515"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_gravity/independent_checks.json",
+    "bytes": 663,
+    "sha256": "28060867fd8e4d71a9230dd31ef12ab0e9067803a11fcb5af8827b7537e460c9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_gravity/manifest.csv.gz",
+    "bytes": 76,
+    "sha256": "44fdd250bfffab3afba82f4b33203c02c38e4eced3169eff3fbafd73a38eb502"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_gravity/model_input.json.gz",
+    "bytes": 9852,
+    "sha256": "e547c37b68d1e5cb25d1b6bccce54fa27bbfbd0dba92ba3c913fbf176eb2dc0a"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_gravity/perf_summary.csv.gz",
+    "bytes": 426,
+    "sha256": "b97da7d35a1b7a2c7ba37b4378a1e825f3d34190b5e2cec22734bfcb24f5bec3"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_gravity/perf_summary.txt.gz",
+    "bytes": 1700,
+    "sha256": "b89767b4a154102a68cbf3cae03ad8e0a6f478a61126beaa8b5d67557ab6d675"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_gravity/perf_trace.csv.gz",
+    "bytes": 124,
+    "sha256": "b08f0c3fe2925304c61b372f67a03e36ceafb3797d10943c130c1fc009b4cbfb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_gravity/result.json.gz",
+    "bytes": 239081,
+    "sha256": "6c8c0e10088e6ce150ef517e07cbe5d54525d34b747e6ba587737f5192f2cecb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_gravity/run.log.gz",
+    "bytes": 2403,
+    "sha256": "7b6b50c4e8d550c504a853ffa060b89532325f3063285f78ef0f9cfd2bb614e8"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_gravity/solver_events.csv.gz",
+    "bytes": 56,
+    "sha256": "dce2654c86fe4469ee43554bb4c22c7b0237a55af00d617b5e2bc8339275c2b5"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s001000/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s001000/adaptive_v2a_gates.csv.gz",
+    "bytes": 68,
+    "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s001000/bearing_checks.json",
+    "bytes": 2354,
+    "sha256": "4a0831eff611bbd917b7c42db209d1dbcf1104150bc8699ca1e6f7a18f548e13"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s001000/increment_summary.csv.gz",
+    "bytes": 1192,
+    "sha256": "5a16fe31b898a57e13c204a3def189fa374d3e16bc32bcf87d09a447fc684765"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s001000/independent_checks.json",
+    "bytes": 661,
+    "sha256": "456ea65bf15c7b55abcda468a4baf752d13cbee9cfdba7176d94c7a1a6efa1b7"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s001000/manifest.csv.gz",
+    "bytes": 97,
+    "sha256": "b31f85af7a4387d18ca0439492a3bb6b76671fea02aff07c3dd0c225034291f8"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s001000/model_input.json.gz",
+    "bytes": 10298,
+    "sha256": "219c2016ef7962147b2ed10f2713a147cd4e17b23a8781fea5331e8c98ee3c6b"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s001000/perf_summary.csv.gz",
+    "bytes": 425,
+    "sha256": "3ebb934eda0b75befae27298efb979cfcfab7736e94e6b01c4ccb572983fe18e"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s001000/perf_summary.txt.gz",
+    "bytes": 1713,
+    "sha256": "c0e643e7d6a06b1c95059d35ae279420572f0f91fcff62e590955ae66e5bc57d"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s001000/perf_trace.csv.gz",
+    "bytes": 124,
+    "sha256": "b08f0c3fe2925304c61b372f67a03e36ceafb3797d10943c130c1fc009b4cbfb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s001000/result.json.gz",
+    "bytes": 457332,
+    "sha256": "931e37030d9c5af51467a70297cb4570c647f1f878d49b888f1e233f803734d4"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s001000/run.log.gz",
+    "bytes": 2465,
+    "sha256": "14450a7d6044bc8dfd3ea00025bbc86b294b8df23e20f1f21658b5b50f2a4052"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s001000/solver_events.csv.gz",
+    "bytes": 56,
+    "sha256": "dce2654c86fe4469ee43554bb4c22c7b0237a55af00d617b5e2bc8339275c2b5"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s005000/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s005000/adaptive_v2a_gates.csv.gz",
+    "bytes": 68,
+    "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s005000/bearing_checks.json",
+    "bytes": 2360,
+    "sha256": "56204baf0a2b406a7542d09b1ac9e5435553e7bbc67bfe6c479ad94bf90b3941"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s005000/increment_summary.csv.gz",
+    "bytes": 1190,
+    "sha256": "50ae434ff4b27cf56d2e5f9b937195b8bf76560e6e9116090cb9046cba1ea61c"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s005000/independent_checks.json",
+    "bytes": 663,
+    "sha256": "4b6c3fe2c69280d111c3902b9efb4d861f1b58d8d5a9141895a87a8bb895c9e0"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s005000/manifest.csv.gz",
+    "bytes": 92,
+    "sha256": "2e91a318341edf20390461a51d021126a07bfa082ba662d337c17e8a4ee38416"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s005000/model_input.json.gz",
+    "bytes": 10298,
+    "sha256": "6dc0bb6fb533bf7299b31b35c3cea94a0563feea8c3cdcc335840b9a54ea8143"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s005000/perf_summary.csv.gz",
+    "bytes": 425,
+    "sha256": "9cb68bb55b3bb059d91e6d2044166ea038c5e4861928ff4749b36ef228cc8839"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s005000/perf_summary.txt.gz",
+    "bytes": 1711,
+    "sha256": "7e32db6459d1ae52b5af5569e041baeca16869fafbc39c16b12a9e7010a8c44e"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s005000/perf_trace.csv.gz",
+    "bytes": 124,
+    "sha256": "b08f0c3fe2925304c61b372f67a03e36ceafb3797d10943c130c1fc009b4cbfb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s005000/result.json.gz",
+    "bytes": 458303,
+    "sha256": "c65a56b59ffb8bc4f185af0e2b8256052b393ca99622cec1effbe22d6c82a3fd"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s005000/run.log.gz",
+    "bytes": 2461,
+    "sha256": "97b8bf11f23fbc1b4c0ba0fe0fb62a71a1a6da68b68defdf10fbd835f4adb121"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s005000/solver_events.csv.gz",
+    "bytes": 56,
+    "sha256": "dce2654c86fe4469ee43554bb4c22c7b0237a55af00d617b5e2bc8339275c2b5"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s010000/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s010000/adaptive_v2a_gates.csv.gz",
+    "bytes": 68,
+    "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s010000/bearing_checks.json",
+    "bytes": 2353,
+    "sha256": "4760ad9ec92c823e5843208e67c0a661607760fc4062abf9943f18f1ba4bcfb6"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s010000/increment_summary.csv.gz",
+    "bytes": 1187,
+    "sha256": "5c65569ffeea2e80916262e8b116871fd278bdee86afa590094a1545dd6948c8"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s010000/independent_checks.json",
+    "bytes": 661,
+    "sha256": "b7331c756884a1de9c28b56e099b160924acd7a287cb44c7d1e35aa429917ae7"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s010000/manifest.csv.gz",
+    "bytes": 97,
+    "sha256": "3ae8db6ecaaf57c183e1a788f6f2018574525c309b3e41b97a75913031de105d"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s010000/model_input.json.gz",
+    "bytes": 10297,
+    "sha256": "095ef43d1279513ce8f6185b046f7c297564f24250199fb79bfc5197a8f08471"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s010000/perf_summary.csv.gz",
+    "bytes": 426,
+    "sha256": "e9be23d7d932a358ee39381e56f3ffb85bf8ec05117f60836940c70b2fcd5278"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s010000/perf_summary.txt.gz",
+    "bytes": 1709,
+    "sha256": "a35c6ea970e2dd6c6455b69ae2639a159d31f9b7ef8d67485071be3476a1fbfe"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s010000/perf_trace.csv.gz",
+    "bytes": 124,
+    "sha256": "b08f0c3fe2925304c61b372f67a03e36ceafb3797d10943c130c1fc009b4cbfb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s010000/result.json.gz",
+    "bytes": 458723,
+    "sha256": "a5d6e93e7383af098a93cebe2dc75e534df98abdc56d7817fec7edb51a383c8d"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s010000/run.log.gz",
+    "bytes": 2459,
+    "sha256": "600294b2ed37b75d798f4311957d1e771800c04224c2d345eead36607baa90ed"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s010000/solver_events.csv.gz",
+    "bytes": 56,
+    "sha256": "dce2654c86fe4469ee43554bb4c22c7b0237a55af00d617b5e2bc8339275c2b5"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s020000/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s020000/adaptive_v2a_gates.csv.gz",
+    "bytes": 68,
+    "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s020000/bearing_checks.json",
+    "bytes": 2350,
+    "sha256": "c10373868ab0bf2a5551d6cf9c912cf476d886d042828cbcf1d4e059fac8d971"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s020000/increment_summary.csv.gz",
+    "bytes": 1184,
+    "sha256": "005f88ae73505448759ec031f379d32a5bb178b3f65846847ad1514a57b4d526"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s020000/independent_checks.json",
+    "bytes": 661,
+    "sha256": "f5434ac5297aa66b9a8b747ac970a9187352bee9051ed4f1255a1039b7452670"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s020000/manifest.csv.gz",
+    "bytes": 96,
+    "sha256": "30d45820b8829cc69445be2e01401b35125c9f051bc88185d5e271aa447278cc"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s020000/model_input.json.gz",
+    "bytes": 10296,
+    "sha256": "51eb3fe271f80a19d33ba5cd185fc128e15f63d2b4ba9a8c528da4cbecf248ff"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s020000/perf_summary.csv.gz",
+    "bytes": 426,
+    "sha256": "e9be23d7d932a358ee39381e56f3ffb85bf8ec05117f60836940c70b2fcd5278"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s020000/perf_summary.txt.gz",
+    "bytes": 1711,
+    "sha256": "f9becdb8beb98c656f9af6978a5a24824191f586ebceb0cbea161dd4d3008472"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s020000/perf_trace.csv.gz",
+    "bytes": 124,
+    "sha256": "b08f0c3fe2925304c61b372f67a03e36ceafb3797d10943c130c1fc009b4cbfb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s020000/result.json.gz",
+    "bytes": 458987,
+    "sha256": "a9383e60dbf050ac956946d2fe6add0cae0788f792cef472f1ca161c70e1272c"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s020000/run.log.gz",
+    "bytes": 2467,
+    "sha256": "b1b7e22d755b050b5b53837fff6a55f2c5f44a859fa9b2f1211bb3e9c928b2d7"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/bearing_slope_s020000/solver_events.csv.gz",
+    "bytes": 56,
+    "sha256": "dce2654c86fe4469ee43554bb4c22c7b0237a55af00d617b5e2bc8339275c2b5"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing03/plan.json.gz",
+    "bytes": 340,
+    "sha256": "1bbf9eee74e555bc295e399fce72e13145509026845db9ac55d4d3c6d9f53f37"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_fine_gravity/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_fine_gravity/adaptive_v2a_gates.csv.gz",
+    "bytes": 68,
+    "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_fine_gravity/balance_checks.json",
+    "bytes": 742,
+    "sha256": "6d3b5ac774e0a80374709e597c1fef430b7234df27aedd78c8208d8aba6384f1"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_fine_gravity/increment_summary.csv.gz",
+    "bytes": 881,
+    "sha256": "396264c4b28e8b30d37848d444f7f5615e0ab1f6ba2e1e31284f593e6acf17ea"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_fine_gravity/independent_checks.json",
+    "bytes": 667,
+    "sha256": "d164c1d14375f1e2fd6d00987961498f684506251452fdaee8e7ff13077b9fff"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_fine_gravity/manifest.csv.gz",
+    "bytes": 75,
+    "sha256": "d26079c1a887f9014e94efccde6d314e748d5a14a8a1959c76f0041a50617b7a"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_fine_gravity/model_input.json.gz",
+    "bytes": 32262,
+    "sha256": "6d7c4e83a87ba9600167b27ddf908ecc7788f8b8ced16e917ff6423742c1d460"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_fine_gravity/perf_summary.csv.gz",
+    "bytes": 428,
+    "sha256": "534e64bdddce537929881f461d192881d879cb3b4c928c23879ae05a61ccaa10"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_fine_gravity/perf_summary.txt.gz",
+    "bytes": 1703,
+    "sha256": "3efb3f8fe7a6bb9a1890ba2c846ee9b757db690bf99410cab3b6188d33acd380"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_fine_gravity/perf_trace.csv.gz",
+    "bytes": 124,
+    "sha256": "b08f0c3fe2925304c61b372f67a03e36ceafb3797d10943c130c1fc009b4cbfb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_fine_gravity/result.json.gz",
+    "bytes": 614929,
+    "sha256": "bd63830fb26617f6cdba5089c5682efa0609dd038f1d01929be53ca924459899"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_fine_gravity/run.log.gz",
+    "bytes": 2411,
+    "sha256": "bbd0755ff42b8390b231b476cce3fd28d4d8ca38044d8819d9ffaba9d451eb4a"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_fine_gravity/solver_events.csv.gz",
+    "bytes": 56,
+    "sha256": "dce2654c86fe4469ee43554bb4c22c7b0237a55af00d617b5e2bc8339275c2b5"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_fine_s050000/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_fine_s050000/adaptive_v2a_gates.csv.gz",
+    "bytes": 68,
+    "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_fine_s050000/bearing_checks.json",
+    "bytes": 2626,
+    "sha256": "7fbaaaa8835dd037751a5856fb10554ad3d36cf5820b334606b875945f8badef"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_fine_s050000/increment_summary.csv.gz",
+    "bytes": 1369,
+    "sha256": "8d02c9f18e280d6c7e37b44c77c0e11a303ab5f07b7e62b31edb7f22501a8a3c"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_fine_s050000/independent_checks.json",
+    "bytes": 668,
+    "sha256": "73ce7bf6e0d1a1390cc2fd6c6e9dd602fb2cacdefd376dd75f2c20f0f6fd6890"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_fine_s050000/manifest.csv.gz",
+    "bytes": 100,
+    "sha256": "b6228e80fe4683a7e9819adf505aeb1c695a033816b60f4df74bc7f0ff03787d"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_fine_s050000/model_input.json.gz",
+    "bytes": 32673,
+    "sha256": "7d1edb1379c7cfa88f4490c59d847d5d0847f9ee68cdfc456fc1e8bcade85d54"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_fine_s050000/perf_summary.csv.gz",
+    "bytes": 426,
+    "sha256": "2750b520b92bdb2d5c1d0fe5146ab9e2d9eff634806225da8084fc8f4d6c0a76"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_fine_s050000/perf_summary.txt.gz",
+    "bytes": 1733,
+    "sha256": "4c74efe698fb282144cdfa78c596d44975e9c7d0dfa87ca221faec42dc658bd2"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_fine_s050000/perf_trace.csv.gz",
+    "bytes": 124,
+    "sha256": "b08f0c3fe2925304c61b372f67a03e36ceafb3797d10943c130c1fc009b4cbfb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_fine_s050000/result.json.gz",
+    "bytes": 1488402,
+    "sha256": "a41e03c28e43db90dd58f30d164ee9861e6f8b20c783f173fd8a7be190661fd8"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_fine_s050000/run.log.gz",
+    "bytes": 2498,
+    "sha256": "4b7103b3a99fff1373fe8102ca166d0022c0613d01d887cfd4f50303cbcd4eac"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_fine_s050000/solver_events.csv.gz",
+    "bytes": 157,
+    "sha256": "5614c74ad8d2f2a8ace9f5a9951916c90e838c5228186181f12f877f44d038d1"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_gravity/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_gravity/adaptive_v2a_gates.csv.gz",
+    "bytes": 68,
+    "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_gravity/balance_checks.json",
+    "bytes": 762,
+    "sha256": "fbafcd27768c015913e138884bf900a880c1512dbc2ef616ad4076a3bc3d2dfe"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_gravity/increment_summary.csv.gz",
+    "bytes": 883,
+    "sha256": "921b53f02e5b965902abf57894f7b0b5691d3a99cb6f49cfaa5becd7a63b044c"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_gravity/independent_checks.json",
+    "bytes": 661,
+    "sha256": "ae717058b9a05ac8d1493f509db27a191a2b1975a848775d2463c24fb64e9a71"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_gravity/manifest.csv.gz",
+    "bytes": 77,
+    "sha256": "154bb5cd3b00714f317b13c38a067c87221b071052806bf91155c3cbadb3e7f5"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_gravity/model_input.json.gz",
+    "bytes": 9126,
+    "sha256": "ec109110a484a84d106af9a22e0399eceb3bd3bd609d895c85f446a9a0aa5160"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_gravity/perf_summary.csv.gz",
+    "bytes": 425,
+    "sha256": "cde5896cfda0edd5fa931fc1a47f8af2c7b7c81f582669b8f591b9c613f79d5b"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_gravity/perf_summary.txt.gz",
+    "bytes": 1698,
+    "sha256": "4f3ffbab833a5b597716c2f310693c957f80283ed4115a6055494dd9e6e112e0"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_gravity/perf_trace.csv.gz",
+    "bytes": 124,
+    "sha256": "b08f0c3fe2925304c61b372f67a03e36ceafb3797d10943c130c1fc009b4cbfb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_gravity/result.json.gz",
+    "bytes": 163338,
+    "sha256": "ce861168e924750c9499c4dd1485d912809493cf5c55b296c9b8c245cf9a85d7"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_gravity/run.log.gz",
+    "bytes": 2401,
+    "sha256": "2c17b488791e7a4ec27a1687a6f8ac631871bf0016f7f31b0b016c819e0e0f5f"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_gravity/solver_events.csv.gz",
+    "bytes": 56,
+    "sha256": "dce2654c86fe4469ee43554bb4c22c7b0237a55af00d617b5e2bc8339275c2b5"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_s050000/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_s050000/adaptive_v2a_gates.csv.gz",
+    "bytes": 68,
+    "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_s050000/bearing_checks.json",
+    "bytes": 2293,
+    "sha256": "bfe8dbe2df9b4418ca55d8bb4ba030d1fa98dbfd179a2eb998d54dd5ce4809d9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_s050000/increment_summary.csv.gz",
+    "bytes": 1289,
+    "sha256": "70d409d9f91f9d164ccd97fd3f76fa398d823efe21cf01242421a4e820e61aae"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_s050000/independent_checks.json",
+    "bytes": 656,
+    "sha256": "94ba508244636d68e5c9a3ab70e9ad0a29d66a948402e7171b16426a44d16993"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_s050000/manifest.csv.gz",
+    "bytes": 96,
+    "sha256": "e8904e99ded5c8aa9b9ff9777a160bc90079dd55513e53403d034f728c83449a"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_s050000/model_input.json.gz",
+    "bytes": 9440,
+    "sha256": "d922bfe4046392ee408b2673db651fc858481a2b9e53672092f3ae36d513044f"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_s050000/perf_summary.csv.gz",
+    "bytes": 426,
+    "sha256": "cecd3ab389ff73305af383530c2265a7a5d73b0f75fce15a94e5e63b2923e46b"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_s050000/perf_summary.txt.gz",
+    "bytes": 1711,
+    "sha256": "e414bf38f44a56c6f6c85aadca517b4066f911457b43a2b1cef6e52d69dd41ab"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_s050000/perf_trace.csv.gz",
+    "bytes": 124,
+    "sha256": "b08f0c3fe2925304c61b372f67a03e36ceafb3797d10943c130c1fc009b4cbfb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_s050000/result.json.gz",
+    "bytes": 384973,
+    "sha256": "d53cc9e714ae116d1b7b9c47a68346a438e6caaf2dfdbc2dce5bb26615dcc267"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_s050000/run.log.gz",
+    "bytes": 2460,
+    "sha256": "14a7e8a02122613ebf3e8023a9c7969d8635b76233983341443bb2b43234fcfd"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_flat_s050000/solver_events.csv.gz",
+    "bytes": 56,
+    "sha256": "dce2654c86fe4469ee43554bb4c22c7b0237a55af00d617b5e2bc8339275c2b5"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_fine_gravity/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_fine_gravity/adaptive_v2a_gates.csv.gz",
+    "bytes": 68,
+    "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_fine_gravity/balance_checks.json",
+    "bytes": 764,
+    "sha256": "bf562eaef8a2b612474a4234295fcccdbe860c34d6f7108dfe71c72914a55286"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_fine_gravity/increment_summary.csv.gz",
+    "bytes": 891,
+    "sha256": "f01134d33eb6e7752c00a3d2b87f17a566dda7f143d5eec30f91810df5b908ef"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_fine_gravity/independent_checks.json",
+    "bytes": 667,
+    "sha256": "acefa7909f72633ee47f143ae29ea62579435e3b28eeab5f2e1ac68bda2f7e35"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_fine_gravity/manifest.csv.gz",
+    "bytes": 77,
+    "sha256": "bd2b661b52c53ef1ca6be6d57b7eeeec1a75fdc96d857146d38a71c19fbc5387"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_fine_gravity/model_input.json.gz",
+    "bytes": 35231,
+    "sha256": "dcffa6b2391d6b34c3fded3ca305d85e3da5cc0f15d1f6b35aafca76f9d94569"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_fine_gravity/perf_summary.csv.gz",
+    "bytes": 426,
+    "sha256": "28e29efbbb99d64edff900138a572d5d0e08d628554b5d721a25e580f70508b9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_fine_gravity/perf_summary.txt.gz",
+    "bytes": 1697,
+    "sha256": "fd7ae154b3574ebac7fae0fa5df1ac905f492566332c5b3ba3eb271d71123ec0"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_fine_gravity/perf_trace.csv.gz",
+    "bytes": 124,
+    "sha256": "b08f0c3fe2925304c61b372f67a03e36ceafb3797d10943c130c1fc009b4cbfb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_fine_gravity/result.json.gz",
+    "bytes": 907883,
+    "sha256": "2687b9fcb2b1848cdb6c3fe39d17d1b71a14b0246c06c935b26fa7baed8a6c17"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_fine_gravity/run.log.gz",
+    "bytes": 2406,
+    "sha256": "8afedc842868607e3b7b1a99c80d1eac0f20236746568eeb205b25ba8ca97149"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_fine_gravity/solver_events.csv.gz",
+    "bytes": 56,
+    "sha256": "dce2654c86fe4469ee43554bb4c22c7b0237a55af00d617b5e2bc8339275c2b5"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_fine_s050000/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_fine_s050000/adaptive_v2a_gates.csv.gz",
+    "bytes": 68,
+    "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_fine_s050000/bearing_checks.json",
+    "bytes": 2680,
+    "sha256": "d3f875fa2cf5d1450a8c737e2fbf90c8d82cea3ec5035bde91f7cecb7e925bc6"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_fine_s050000/increment_summary.csv.gz",
+    "bytes": 1396,
+    "sha256": "6ebaebc42ce1011a59e9d00da2a456c39edbfc4aa7bf23ebbe10c05bde4b925d"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_fine_s050000/independent_checks.json",
+    "bytes": 668,
+    "sha256": "95490a2257bd25554c6e07e53e15317687dae82ed00c5ee69c8f7916f0a16368"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_fine_s050000/manifest.csv.gz",
+    "bytes": 99,
+    "sha256": "e2f147f181ef4740d5e513aca201e6afa2478391babbc51a438030e191d39213"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_fine_s050000/model_input.json.gz",
+    "bytes": 35951,
+    "sha256": "5d4cf6eb3df51176b0bb041f70b8ddbdfc3eb1e023f04a652fb94e5c572c58c1"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_fine_s050000/perf_summary.csv.gz",
+    "bytes": 426,
+    "sha256": "39108249f07efeddfac843f39b0b729b46fb39b156bf5c8d5505c00ebc9f77f0"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_fine_s050000/perf_summary.txt.gz",
+    "bytes": 1729,
+    "sha256": "58ae1404f4e2ea615d290d9e25f946903a129122165820f8d5421b42f3bac24f"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_fine_s050000/perf_trace.csv.gz",
+    "bytes": 124,
+    "sha256": "b08f0c3fe2925304c61b372f67a03e36ceafb3797d10943c130c1fc009b4cbfb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_fine_s050000/result.json.gz",
+    "bytes": 1796586,
+    "sha256": "79694d68a17f317e379043accb17842ba84c9a2de98b683163f184876498de15"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_fine_s050000/run.log.gz",
+    "bytes": 2491,
+    "sha256": "cd9a74b0873fef963e1a39ced09307f0fb464a31ed1e156bfe7bf913d3fdbb00"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_fine_s050000/solver_events.csv.gz",
+    "bytes": 56,
+    "sha256": "dce2654c86fe4469ee43554bb4c22c7b0237a55af00d617b5e2bc8339275c2b5"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_gravity/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_gravity/adaptive_v2a_gates.csv.gz",
+    "bytes": 68,
+    "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_gravity/balance_checks.json",
+    "bytes": 765,
+    "sha256": "7ef3349944dbf597d2e0e973eae82a2d6c1fb0a260597507a3a1642747ee3482"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_gravity/increment_summary.csv.gz",
+    "bytes": 873,
+    "sha256": "9fb71a6e64e5f74dee79563c43637c383c33d568ad4a58a0c30aacf4950084cb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_gravity/independent_checks.json",
+    "bytes": 662,
+    "sha256": "5ebba3dc59df9485a177664ced8afdcb431b7370d63c8c2e572c86346f028e1e"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_gravity/manifest.csv.gz",
+    "bytes": 76,
+    "sha256": "b59a5736d3158e1d87c6fd7be20969b27dcfe9016c05951bad1a88d6164451c3"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_gravity/model_input.json.gz",
+    "bytes": 9852,
+    "sha256": "e547c37b68d1e5cb25d1b6bccce54fa27bbfbd0dba92ba3c913fbf176eb2dc0a"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_gravity/perf_summary.csv.gz",
+    "bytes": 426,
+    "sha256": "67e5cc4af2224fc61a75bffcef901c254dc7dcd831cbb968f9be812e5eb8d4fa"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_gravity/perf_summary.txt.gz",
+    "bytes": 1700,
+    "sha256": "9834ae3f1dc48706321169debd8471df93c15fa859fd53d9b5475ee3123b210e"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_gravity/perf_trace.csv.gz",
+    "bytes": 124,
+    "sha256": "b08f0c3fe2925304c61b372f67a03e36ceafb3797d10943c130c1fc009b4cbfb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_gravity/result.json.gz",
+    "bytes": 239514,
+    "sha256": "fa163fea90556cab93791710f28c9f1323f6d395ee4f9977d3fdd258761b0cd4"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_gravity/run.log.gz",
+    "bytes": 2408,
+    "sha256": "40acabbb06b6bbbecf2e0f7bb2684c1c671750c88f8a9388b55e7fe9b9cd52f6"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_gravity/solver_events.csv.gz",
+    "bytes": 56,
+    "sha256": "dce2654c86fe4469ee43554bb4c22c7b0237a55af00d617b5e2bc8339275c2b5"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_s050000/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_s050000/adaptive_v2a_gates.csv.gz",
+    "bytes": 68,
+    "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_s050000/bearing_checks.json",
+    "bytes": 2334,
+    "sha256": "832de12d58f8407e60cc834a181faef82f653b4a13d1b19af2ec02bcda240511"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_s050000/increment_summary.csv.gz",
+    "bytes": 1318,
+    "sha256": "2e6659e1384b7856a41d741e0d955353fe5ee250fb1c93a31859aff8e7478755"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_s050000/independent_checks.json",
+    "bytes": 660,
+    "sha256": "bda70c2e6a8b7779605bcbce9dd3bbc346092aa91f0cc2d65d544061158e52be"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_s050000/manifest.csv.gz",
+    "bytes": 97,
+    "sha256": "60c2740f0826100dae1e64a620a7e2216e215d0cf9875a8c1ca334edc09374e2"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_s050000/model_input.json.gz",
+    "bytes": 10294,
+    "sha256": "59e8be88afbd5b7a14d3af677bb46b748279e884928c5fbb226ae72209bd3e49"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_s050000/perf_summary.csv.gz",
+    "bytes": 426,
+    "sha256": "e9be23d7d932a358ee39381e56f3ffb85bf8ec05117f60836940c70b2fcd5278"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_s050000/perf_summary.txt.gz",
+    "bytes": 1728,
+    "sha256": "c4109422da4cfee4c02226ae6d732f2da0696c7563a0227bd6e48eff8e6ff56a"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_s050000/perf_trace.csv.gz",
+    "bytes": 124,
+    "sha256": "b08f0c3fe2925304c61b372f67a03e36ceafb3797d10943c130c1fc009b4cbfb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_s050000/result.json.gz",
+    "bytes": 463410,
+    "sha256": "f7ea496953dce3139508735cdad2c206c3bdd8cfa243cf4cd604d498cebf1478"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_s050000/run.log.gz",
+    "bytes": 2484,
+    "sha256": "45b0f54bdc210da9d8c0c191edff99ca756856550635a882b3f9685008450767"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/bearing_slope_s050000/solver_events.csv.gz",
+    "bytes": 56,
+    "sha256": "dce2654c86fe4469ee43554bb4c22c7b0237a55af00d617b5e2bc8339275c2b5"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing04/plan.json.gz",
+    "bytes": 329,
+    "sha256": "4e8cf6f4ffa2379ac377c31da7b2668af593ef4f0329b4d2b763b52cfc04bcac"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing_flat_fine_s050000_workbook.zip",
+    "bytes": 5875381,
+    "sha256": "3f56297404e7a08cc0210fa82a1626ef02f63431bfca3484f2aa8f885fd1457d"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing_slope_fine_s050000_workbook.zip",
+    "bytes": 6282919,
+    "sha256": "51177cc53ddd7748f762000196d1272fdac5796ccb89797e042692a2c20874f1"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/bearing_summary.json",
+    "bytes": 48206,
+    "sha256": "276d268147c1608ea50be33e6230fd6a5ca9e191a064f33368b5e9e0295d5d43"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/figures/bearing_curves.png",
+    "bytes": 123998,
+    "sha256": "bb43ee8bbe365a678b2fa48d5abc6867df0c30fd6ade84448aa5426eecfe800e"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/figures/bearing_fields.png",
+    "bytes": 427677,
+    "sha256": "ddf08947e6df7aee201a92586562cde1540a0232c9f349150f689c215fb68f57"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/figures/bearing_meshes.png",
+    "bytes": 37058,
+    "sha256": "27ee0c5c028bdf90b077ac2d0a4899246485a9fd6373ff9958720952957b52f3"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/figures/bearing_models.png",
+    "bytes": 92333,
+    "sha256": "e27dfe2b8a10b206a6c472072ed0e7cd7586849d1c0c82c75a03e3e69dc55dea"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/figures/road_results.png",
+    "bytes": 120706,
+    "sha256": "178787aac0c2caf33bbbd5aa12c038cad886871db9984de4595774440b706168"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/figures/road_shape_input.png",
+    "bytes": 54833,
+    "sha256": "8857a14926706edfb5a51d4ee36c52369f338153f4b7af3e934ab8aa7d555f00"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/figures/road_stages.png",
+    "bytes": 106077,
+    "sha256": "2d366cef16ce9fa374a8d635c360f6edf73717de2dc890f438b1e8dcd237ed2a"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/README.md",
+    "bytes": 1183,
+    "sha256": "7c6c14114aaab3396b66b28b03354e4268dc7c05ac435daee62fe14609dc1d3c"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/analysis.png",
+    "bytes": 181491,
+    "sha256": "c203ff93f3d5c5cf769f8750285ea4b7954c436e7b380df7de46dd7a1f971f32"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/capture_manifest.json",
+    "bytes": 2563,
+    "sha256": "1cc48b3496615c971dea8a824cfa36555282697b488b44c234d10780030f0853"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/materials.png",
+    "bytes": 165352,
+    "sha256": "5b0d0c4c47b2bafb298cf9d79f57819cc02e5aacbc67677fff150a884c36a89f"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/mesh_actions.png",
+    "bytes": 207042,
+    "sha256": "59c6ca1fbd33b4e2b2b58eac16a58008c355d5133de748d0a875c976c38613cf"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/mesh_preview.png",
+    "bytes": 224785,
+    "sha256": "8a8eabfedd7df59751d8933adc36da4d482bf26d3bc9c0b10a24996eefcff3d6"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/mesh_settings.png",
+    "bytes": 181493,
+    "sha256": "7760ebf5b4245df84e986f4ccf84b0d8a1e806f5c40f56f5ba22d5332cc583ce"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/output_increment.png",
+    "bytes": 170630,
+    "sha256": "710f894da481faf8fd5ae0b9534095e3ad919376ec7dca6adfa4bba4a8a7aebe"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/output_road_summary.png",
+    "bytes": 80146,
+    "sha256": "5fd8cb6efd04c2850ef7a2e46671215c1939f5eec231cf3f11e8d4b77d6c35fb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/output_save.png",
+    "bytes": 178118,
+    "sha256": "7c809b8a65af154da68c7ebfb66db26a110eb1ffdb844930380b185ba8078074"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/output_srm_summary.png",
+    "bytes": 58338,
+    "sha256": "d88135b982fff4e3181889b8d19b75c04abf7b772c9d20f04396dd176db71932"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/output_view.png",
+    "bytes": 177737,
+    "sha256": "2ff77357b53bcc27e63ad0401efbf5d4cda799016a6df2cace2704663b15cd28"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/panel.png",
+    "bytes": 168528,
+    "sha256": "e35a623be3a6809061fa691ef0f0988bd9114fecaaf0a5f9b62102366b63319b"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/rebuild_output_guide.py",
+    "bytes": 3014,
+    "sha256": "d6dbd2266bf9d0a1acebb56c989b50706ee73664626ed434b82920f7dbbdb49b"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/result_figure.png",
+    "bytes": 213360,
+    "sha256": "dc4d8131702abf31ad4eaa878f980ec63e4e1c6637100fa0d7476871e565da7a"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/road_stage_summary.csv",
+    "bytes": 318,
+    "sha256": "a64857d1950ac96a0a58231b1926c76612d859ff7707f21117ba386968f4379a"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/srm_trial_summary.csv",
+    "bytes": 556,
+    "sha256": "66c961be5d9a20a1e3a9e0ee08b6725a022102c84fb83fdebefc1e8d407a385b"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/stage_results.png",
+    "bytes": 244204,
+    "sha256": "7f7e81eb801dd00185c2eb2b44b85d8969bd76da491852c48299c1fb9181502f"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/stages.png",
+    "bytes": 188911,
+    "sha256": "404e64a9dbc7e0f468ec20477f711861e7e88f751de3050beb9bd272dbb2f56e"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/road01/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/road01/adaptive_v2a_gates.csv.gz",
+    "bytes": 68,
+    "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/road01/balance_checks.json",
+    "bytes": 5858,
+    "sha256": "0e479c1cb64c15c1e3c75131a4a0275a8d3fdf1b148d73831ec953dc7ca7d647"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/road01/display_stage_checks.json",
+    "bytes": 3053,
+    "sha256": "0e9348a7fe7cdffda8b8f76ba0c4732bb6b82e8a9ec091ae1d2706f47b33bd84"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/road01/increment_summary.csv.gz",
+    "bytes": 2981,
+    "sha256": "a82bbf118b6f24584193ae4fd830c46783633e270ce13ca14a0e85e2cc838704"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/road01/independent_checks.json",
+    "bytes": 634,
+    "sha256": "146af4e50c247bf1b9522fbc8e38c4301fbe6c11d82880bffbca973f0d8f10c4"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/road01/manifest.csv.gz",
+    "bytes": 165,
+    "sha256": "228acf54933968b1d314c7b3b5dc7378e06503a770d0ded331f72b2dd2b8b9ab"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/road01/model_input.json.gz",
+    "bytes": 992,
+    "sha256": "91aa38833ba77055cbc63de045be0c7d7566493e23a61c0be9bc8a9d6034b74c"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/road01/perf_summary.csv.gz",
+    "bytes": 422,
+    "sha256": "23826a6a4c2d374ac5c970735c040f7729cca45c3f9425b40041ff1a50faf358"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/road01/perf_summary.txt.gz",
+    "bytes": 1749,
+    "sha256": "ab4f72351a84bad4ec894fe769c881a6698d49b60a2fc62c16edcd0738a37f85"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/road01/perf_trace.csv.gz",
+    "bytes": 237,
+    "sha256": "a1bb498cc4fd3a6e29c4643cfa98e1ace094957e2372610355088e1b21f41adc"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/road01/result.json.gz",
+    "bytes": 881366,
+    "sha256": "41459cb58ab54da409b7a55226a8ae44a6f7d25e4a7fff07880becef79748512"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/road01/run.log.gz",
+    "bytes": 3482,
+    "sha256": "25cd44137d5e46abba1d3a94bff483a7ac0c0df2bca2bc2e2bbccb117148b02f"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/road01/solver_events.csv.gz",
+    "bytes": 445,
+    "sha256": "7a2cc4c1c6ae3b714d34919199419d8c7b9fa79c10c283c0adfd02496565114b"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/road01_workbook.zip",
+    "bytes": 4109809,
+    "sha256": "bd48acd61a9e7729d8a92f23691d05e2f72b4bd9837514602f9736fe9c7cc436"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/template_disabled_check/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/template_disabled_check/adaptive_v2a_gates.csv.gz",
+    "bytes": 68,
+    "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/template_disabled_check/balance_checks.json",
+    "bytes": 765,
+    "sha256": "714220b0c741f0b67bd17f242aa8beed6f3f088a8cb67510ffe2c1f34bc4b525"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/template_disabled_check/increment_summary.csv.gz",
+    "bytes": 861,
+    "sha256": "0bbb00653ec77b4f4dee7cac83dfe8e86f330c7ea8cbef99b7f103c0e814b799"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/template_disabled_check/independent_checks.json",
+    "bytes": 663,
+    "sha256": "a64863afc9a005c6aa6313aad82a07b567b340cc8155c7b8778eb4e0acdb74a9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/template_disabled_check/manifest.csv.gz",
+    "bytes": 77,
+    "sha256": "91567f2ec253508e4a5917fa29385a7df8c8f48c0e0de1b88ce27eae0ab02004"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/template_disabled_check/model_input.json.gz",
+    "bytes": 9126,
+    "sha256": "ec109110a484a84d106af9a22e0399eceb3bd3bd609d895c85f446a9a0aa5160"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/template_disabled_check/perf_summary.csv.gz",
+    "bytes": 427,
+    "sha256": "ce9d93eedde83596089cfaf5c6184324515ebc576829594ef8ae230a86516e06"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/template_disabled_check/perf_summary.txt.gz",
+    "bytes": 1701,
+    "sha256": "bfc3682ae72822c36a06224efc55a2f0a24abb8a18483543c9bd22d494ca5479"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/template_disabled_check/perf_trace.csv.gz",
+    "bytes": 124,
+    "sha256": "b08f0c3fe2925304c61b372f67a03e36ceafb3797d10943c130c1fc009b4cbfb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/template_disabled_check/result.json.gz",
+    "bytes": 163050,
+    "sha256": "04086a202e740007b7a5ee16ec1e622f22cbe705c06aebaa7a313ecfda5b662f"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/template_disabled_check/run.log.gz",
+    "bytes": 2401,
+    "sha256": "2b90b083965f23022be411c616cee5cd1f00c8d28ec806cbf25081929c25e262"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/template_disabled_check/solver_events.csv.gz",
+    "bytes": 56,
+    "sha256": "dce2654c86fe4469ee43554bb4c22c7b0237a55af00d617b5e2bc8339275c2b5"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/history_probes.json.gz",
+    "bytes": 896044,
+    "sha256": "10b70b425a7f26a03bba2ff18e2f8602c68ecb3938e5de882eaebaef1a2480e7"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/native_11_stages.json.gz",
+    "bytes": 888363,
+    "sha256": "733d8aa2c0b62ab6f9b67395fc83766256dc76b2152e0054bd5cd23e9cc78938"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/numeric_comparison.json",
+    "bytes": 468,
+    "sha256": "76069a12b8229a0c8b5d1775c925bb7ebc8b8959b0f62f19070fbbf5e8defbc2"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/optional_srm_undetermined.json.gz",
+    "bytes": 877727,
+    "sha256": "045e47f7b81a5ab5ef9d84bea799829bc24c05d46374ce8daebe224a11db54bb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/vba_11_stages.json.gz",
+    "bytes": 894728,
+    "sha256": "ef9249f855455571658b579c933b0b11932c4a789d614d8af100d44f50aa37b7"
   },
   {
     "path": "docs/manuals/manual_validation_20261020.json",
-    "bytes": 2769,
-    "sha256": "6e47eeb983a541a90ca29e740df0f6e86241d181a2f2934c5d30fc4fbea54ea5"
+    "bytes": 238184,
+    "sha256": "11f6367f983c6f42130d3062875c7f884dbef39fae5675bd930c8cd21b15e49c"
   },
   {
     "path": "docs/native-evidence/assembly_20261020/DAVIS_0.json",
@@ -3220,6 +5620,21 @@
     "sha256": "ea766d0437c3350b0fa12d784288a43973e24d05b36a27fb872db768d97c3bcd"
   },
   {
+    "path": "tests/check_bearing_case.py",
+    "bytes": 5481,
+    "sha256": "4d9c2bfd0277783f115388ed4e55472d1b4a8e4d727c76bcadd227dc461fda91"
+  },
+  {
+    "path": "tests/check_manual_case.py",
+    "bytes": 9365,
+    "sha256": "5b3695c8cab77085c1ca8b5e7134dff6e10691cc2e348b5cf41164bbf294d88a"
+  },
+  {
+    "path": "tests/compare_manual_flows.py",
+    "bytes": 5993,
+    "sha256": "dd630c7b3cd753f9a708b6733830745f80fa4f28d1e3a4416d543c7f7c28f8f8"
+  },
+  {
     "path": "tests/fixtures/smoke_expected.json",
     "bytes": 122929,
     "sha256": "3eb34198ff3e0ba61c4b3f38c5871d8d259690cfe04ea0b4722b75e8a9616efe"
@@ -3468,6 +5883,61 @@
     "path": "tests/literature/verify_inputs.py",
     "bytes": 5013,
     "sha256": "0bd3d0819906c611d79d1036bdc588ba1c25e63d22ae1b3bfc527610f92eb853"
+  },
+  {
+    "path": "tests/manual_cases/README.md",
+    "bytes": 8687,
+    "sha256": "57815c5ed2d6477e588cf1706db120714872f790df401b44937c15df9c413984"
+  },
+  {
+    "path": "tests/manual_cases/bearing_flat_fine_mesh.json",
+    "bytes": 438669,
+    "sha256": "deb216cb85971bbbe6aaafe0e8db9335743521b4b4f6c09e8238eaf640ecf0d0"
+  },
+  {
+    "path": "tests/manual_cases/bearing_flat_mesh.json",
+    "bytes": 112739,
+    "sha256": "0b670b4aa6d9dd0fea0feb1b0e67c23e28eea56412bec74bf7464b2c40450baa"
+  },
+  {
+    "path": "tests/manual_cases/bearing_slope_fine_mesh.json",
+    "bytes": 448416,
+    "sha256": "1d74f4e35f137a3b5f952a07e837cb1f52f29390c762cbb4c961239a6f3ac553"
+  },
+  {
+    "path": "tests/manual_cases/bearing_slope_mesh.json",
+    "bytes": 115166,
+    "sha256": "b16cd72f9cca988084ea421a830ed748498e4d5a4ef9694f6aed98416cb0da34"
+  },
+  {
+    "path": "tests/manual_cases/generate_bearing_cases.py",
+    "bytes": 6441,
+    "sha256": "47de8f5d8019d20d9e08cb3decede3320187cc3b9af92db9c04b1362755b0858"
+  },
+  {
+    "path": "tests/manual_cases/road_widening_shape.json",
+    "bytes": 4798,
+    "sha256": "226d1c0cfb80e3f6256922fce713e1bf41672685254586d254f9489cd10385d9"
+  },
+  {
+    "path": "tests/manual_cases/slope_wall_fine_mesh.json",
+    "bytes": 698007,
+    "sha256": "2ef82137f0640667b0a4d898ad59b6ea75fab44cde7da0b899f6356fe2aa5c74"
+  },
+  {
+    "path": "tests/manual_cases/slope_wall_mesh.json",
+    "bytes": 378300,
+    "sha256": "ad7b8727cfd70526a65e8e4d67daaf3e556b09a43ff1a4765d5dbac88b7b00f2"
+  },
+  {
+    "path": "tests/manual_cases/slope_wall_shape.json",
+    "bytes": 2037,
+    "sha256": "0cdbc76415494b1f21c2927e63576f64818dc216a453661be51dd6dca105bbb1"
+  },
+  {
+    "path": "tests/manual_cases/tunnel_mesh.json",
+    "bytes": 87130,
+    "sha256": "b10da259b5a3e73a1e695c778ce41656373bd6dcbae56fb2f196714483e40c1c"
   },
   {
     "path": "tests/native/FEMIncoProfile.bas",
@@ -3828,6 +6298,16 @@
     "path": "tests/run.ps1",
     "bytes": 1300,
     "sha256": "e043a6c9d5db69569376de99bb8128f560e4af992110b918992851956cb12e11"
+  },
+  {
+    "path": "tests/run_bearing_cases.py",
+    "bytes": 5745,
+    "sha256": "1691ed19e16bf61f549dbaccf3154aa420a2e08b1dbfbc9c0a9c932fc4a09509"
+  },
+  {
+    "path": "tests/run_manual_case.ps1",
+    "bytes": 10218,
+    "sha256": "a0eb41d6f53f47118811efc9ffb5d6c2b0ba8b84eba7c58ba7a356f776c159cb"
   },
   {
     "path": "tests/test_best03_defaults.ps1",

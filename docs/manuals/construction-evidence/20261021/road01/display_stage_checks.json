@@ -1,0 +1,94 @@
+[
+  {
+    "case": "road01",
+    "status": "PASS",
+    "stage": 1,
+    "nodes": 328,
+    "elements": 95,
+    "active_elements": 72,
+    "seconds": 3.9328698,
+    "max_displacement_m": 0.008914285714285715,
+    "min_reference_jacobian": 0.11855414423419765,
+    "min_deformed_jacobian_scale1": 0.24928330688809847,
+    "dense_11x11_jacobian": {
+      "reference": 0.08333333333333304,
+      "deformed": 0.24925714285714307
+    },
+    "deformed_geometry_valid": true,
+    "invalid_deformed_elements": [],
+    "max_shear_increment": 0.0004300158671405581,
+    "fixed_disp_max": 0.0,
+    "increment_log_relative_residual": 2.886279556143e-14,
+    "max_abs_displacement_component_m": 0.008914285714285715,
+    "reaction_y_kN": 1439.9999999999916
+  },
+  {
+    "case": "road01",
+    "status": "PASS",
+    "stage": 4,
+    "nodes": 328,
+    "elements": 95,
+    "active_elements": 88,
+    "seconds": 3.9328698,
+    "max_displacement_m": 0.014176289235194288,
+    "min_reference_jacobian": 0.11855414423419765,
+    "min_deformed_jacobian_scale1": 0.24884477731500365,
+    "dense_11x11_jacobian": {
+      "reference": 0.08333333333333304,
+      "deformed": 0.24624088139333958
+    },
+    "deformed_geometry_valid": true,
+    "invalid_deformed_elements": [],
+    "max_shear_increment": 0.000541164231190552,
+    "fixed_disp_max": 0.0,
+    "increment_log_relative_residual": 4.077284418488e-14,
+    "max_abs_displacement_component_m": 0.014176271263541743,
+    "reaction_y_kN": 1727.9999999999993
+  },
+  {
+    "case": "road01",
+    "status": "PASS",
+    "stage": 6,
+    "nodes": 328,
+    "elements": 95,
+    "active_elements": 72,
+    "seconds": 3.9328698,
+    "max_displacement_m": 0.01294718741782017,
+    "min_reference_jacobian": 0.11855414423419765,
+    "min_deformed_jacobian_scale1": 0.24878949902066214,
+    "dense_11x11_jacobian": {
+      "reference": 0.08333333333333304,
+      "deformed": 0.2461772078094886
+    },
+    "deformed_geometry_valid": true,
+    "invalid_deformed_elements": [],
+    "max_shear_increment": 8.240856907568455e-05,
+    "fixed_disp_max": 0.0,
+    "increment_log_relative_residual": 1.093242294638e-06,
+    "max_abs_displacement_component_m": 0.012787325504321479,
+    "reaction_y_kN": 1423.9999999999995
+  },
+  {
+    "case": "road01",
+    "status": "PASS",
+    "stage": 11,
+    "nodes": 328,
+    "elements": 95,
+    "active_elements": 95,
+    "seconds": 3.9328698,
+    "max_displacement_m": 0.021987128893795612,
+    "min_reference_jacobian": 0.11855414423419765,
+    "min_deformed_jacobian_scale1": 0.11820100986099227,
+    "dense_11x11_jacobian": {
+      "reference": 0.08333333333333304,
+      "deformed": 0.08160391887873482
+    },
+    "deformed_geometry_valid": true,
+    "invalid_deformed_elements": [],
+    "max_shear_increment": 0.0006284622763188674,
+    "fixed_disp_max": 0.0,
+    "increment_log_relative_residual": 9.672347489455e-11,
+    "max_abs_displacement_component_m": 0.021987124897654094,
+    "reaction_y_kN": 1842.0
+  }
+]

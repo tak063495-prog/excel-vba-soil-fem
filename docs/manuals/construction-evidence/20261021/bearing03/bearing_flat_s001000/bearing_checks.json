@@ -1,0 +1,79 @@
+{
+  "status": "PASS",
+  "solver_status": "PASS",
+  "q_kPa": 8.853832032099746,
+  "actual_settlement_m": 0.0010000000000000009,
+  "requested_settlement_m": 0.001,
+  "target_error_max_m": 0.0,
+  "increment_error_max_m": 8.673617379884035e-19,
+  "width_m": 2.0,
+  "thickness_m": 1.0,
+  "seconds": 2.1764074,
+  "relative_residual": 3.420299925452553e-12,
+  "reconstructed_relative_residual": 3.4202999254525537e-12,
+  "footing_nodes": [
+    39,
+    44,
+    46,
+    49,
+    51,
+    54,
+    56,
+    59,
+    61
+  ],
+  "footing_reaction_y_kN": {
+    "39": -2.748189756890064,
+    "44": -0.8547428582450605,
+    "46": -2.8241834352812933,
+    "49": -0.8585456782804197,
+    "51": -2.007725964213228,
+    "54": -0.8536635329926077,
+    "56": -2.0057083336220467,
+    "59": -2.7382138556221585,
+    "61": -2.816690649052612
+  },
+  "tension_reaction_node_count": 0,
+  "stage_equilibrium": [
+    {
+      "stage": 1,
+      "support_Rx_kN": 1.3267699341408231e-11,
+      "support_Ry_kN": 8567.999999999727,
+      "free_residual_sum_y_kN": 2.742345794892742e-10,
+      "weight_kN": 8568.000000000002,
+      "equilibrium_closure_y_kN": 0.0
+    },
+    {
+      "stage": 2,
+      "support_Rx_kN": 1.2655795855742724e-10,
+      "support_Ry_kN": 8567.999999997446,
+      "free_residual_sum_y_kN": 2.5567420958161335e-09,
+      "weight_kN": 8568.000000000002,
+      "equilibrium_closure_y_kN": 1.8189894035458565e-12
+    }
+  ],
+  "geometry": {
+    "case": "bearing_flat_s001000",
+    "status": "PASS",
+    "stage": 2,
+    "nodes": 688,
+    "elements": 209,
+    "active_elements": 209,
+    "seconds": 2.1764074,
+    "max_displacement_m": 0.06540582457735412,
+    "relative_residual": 3.420299925452553e-12,
+    "reaction_y_kN": 8567.999999997446,
+    "min_reference_jacobian": 0.031249999999999736,
+    "min_deformed_jacobian_scale1": 0.031237545801468824,
+    "dense_11x11_jacobian": {
+      "reference": 0.03124999999999907,
+      "deformed": 0.031231456215936457
+    },
+    "deformed_geometry_valid": true,
+    "invalid_deformed_elements": [],
+    "max_shear_increment": 7.912264309814844e-05,
+    "fixed_disp_max": 0.0
+  },
+  "no_contact_model": true,
+  "interpretation": "Pressure at prescribed additional settlement; ultimate bearing capacity is not automatically determined"
+}

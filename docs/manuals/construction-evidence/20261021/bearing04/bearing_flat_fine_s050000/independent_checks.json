@@ -1,0 +1,22 @@
+{
+  "case": "bearing_flat_fine_s050000",
+  "status": "PASS",
+  "stage": 2,
+  "nodes": 2629,
+  "elements": 836,
+  "active_elements": 836,
+  "seconds": 11.9327206,
+  "max_displacement_m": 0.11443498957444645,
+  "relative_residual": 4.881496483335759e-10,
+  "reaction_y_kN": 8568.00000000001,
+  "min_reference_jacobian": 0.00781249999999971,
+  "min_deformed_jacobian_scale1": 0.0077022376359790696,
+  "dense_11x11_jacobian": {
+    "reference": 0.007812499999999639,
+    "deformed": 0.007615476309430915
+  },
+  "deformed_geometry_valid": true,
+  "invalid_deformed_elements": [],
+  "max_shear_increment": 0.053972336867757646,
+  "fixed_disp_max": 0.0
+}

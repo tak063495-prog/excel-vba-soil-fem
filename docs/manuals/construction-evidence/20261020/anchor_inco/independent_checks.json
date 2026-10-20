@@ -1,0 +1,22 @@
+{
+  "case": "anchor_inco",
+  "status": "PASS",
+  "stage": 5,
+  "nodes": 1857,
+  "elements": 580,
+  "active_elements": 580,
+  "seconds": 3865.8058969,
+  "max_displacement_m": 0.023523660004540765,
+  "relative_residual": 4.6568024874516776e-08,
+  "reaction_y_kN": 8746.820000000005,
+  "min_reference_jacobian": 0.004012769207712201,
+  "min_deformed_jacobian_scale1": 0.004012754285955705,
+  "dense_11x11_jacobian": {
+    "reference": 0.001428502615121116,
+    "deformed": 0.001428508097544448
+  },
+  "deformed_geometry_valid": true,
+  "invalid_deformed_elements": [],
+  "max_shear_increment": 0.00013517724750175905,
+  "fixed_disp_max": 0.0
+}

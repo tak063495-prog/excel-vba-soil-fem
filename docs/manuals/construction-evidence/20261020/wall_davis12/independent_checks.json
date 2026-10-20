@@ -1,0 +1,22 @@
+{
+  "case": "wall_davis12",
+  "status": "PASS",
+  "stage": 4,
+  "nodes": 3383,
+  "elements": 1074,
+  "active_elements": 1074,
+  "seconds": 299.8932427,
+  "max_displacement_m": 0.012671646594601045,
+  "relative_residual": 3.587809220456177e-06,
+  "reaction_y_kN": 8746.820000000354,
+  "min_reference_jacobian": 0.0055324126404232305,
+  "min_deformed_jacobian_scale1": 0.005530939655299663,
+  "dense_11x11_jacobian": {
+    "reference": 0.004217222876129239,
+    "deformed": 0.004216076054433881
+  },
+  "deformed_geometry_valid": true,
+  "invalid_deformed_elements": [],
+  "max_shear_increment": 8.131584346058848e-06,
+  "fixed_disp_max": 5.5300255055411296e-34
+}

@@ -1,0 +1,136 @@
+{
+  "case": "tunnel10",
+  "material_areas_m2": {
+    "5": 25.126934908291574,
+    "4": 25.126934908291503,
+    "3": 3.910379245102868,
+    "1": 2245.92537169321,
+    "2": 3.9103792451028596
+  },
+  "stage_balance": [
+    {
+      "stage": 1,
+      "type": "GRAVITY",
+      "expected_weight_kN": 50687.99999999997,
+      "reaction_y_kN": 50688.00000000241,
+      "difference_kN": 2.4374458007514477e-09,
+      "relative_support_weight_gap": 4.8087235652451254e-14,
+      "free_residual_sum_y_kN": 9.336149631167245e-10,
+      "global_equilibrium_closure_y_kN": 3.3710607638681722e-09,
+      "global_equilibrium_closure_x_kN": 1.101636173488741e-12,
+      "support_only_roundoff_check": true
+    },
+    {
+      "stage": 2,
+      "type": "DEATH",
+      "expected_weight_kN": 50135.20743201755,
+      "reaction_y_kN": 50135.20743202093,
+      "difference_kN": 3.3760443329811096e-09,
+      "relative_support_weight_gap": 6.733879255529093e-14,
+      "free_residual_sum_y_kN": -9.329870209739966e-12,
+      "global_equilibrium_closure_y_kN": 3.3667144627713697e-09,
+      "global_equilibrium_closure_x_kN": -3.781052887100308e-12,
+      "support_only_roundoff_check": true
+    },
+    {
+      "stage": 3,
+      "type": "DEATH",
+      "expected_weight_kN": 50049.17908862529,
+      "reaction_y_kN": 50049.179088628625,
+      "difference_kN": 3.332388587296009e-09,
+      "relative_support_weight_gap": 6.658228262635706e-14,
+      "free_residual_sum_y_kN": 2.078248684256323e-11,
+      "global_equilibrium_closure_y_kN": 3.3531710741385723e-09,
+      "global_equilibrium_closure_x_kN": -1.2252087026680923e-12,
+      "support_only_roundoff_check": true
+    },
+    {
+      "stage": 4,
+      "type": "MATSET",
+      "expected_weight_kN": 50049.17908862529,
+      "reaction_y_kN": 50049.179088628625,
+      "difference_kN": 3.332388587296009e-09,
+      "relative_support_weight_gap": 6.658228262635706e-14,
+      "free_residual_sum_y_kN": 2.078248684256323e-11,
+      "global_equilibrium_closure_y_kN": 3.3531710741385723e-09,
+      "global_equilibrium_closure_x_kN": -1.2252087026680923e-12,
+      "support_only_roundoff_check": true
+    },
+    {
+      "stage": 5,
+      "type": "BIRTH",
+      "expected_weight_kN": 50143.028190507765,
+      "reaction_y_kN": 50143.028190511446,
+      "difference_kN": 3.6816345527768135e-09,
+      "relative_support_weight_gap": 7.342266084906613e-14,
+      "free_residual_sum_y_kN": -3.058671094180454e-10,
+      "global_equilibrium_closure_y_kN": 3.375767443358768e-09,
+      "global_equilibrium_closure_x_kN": 5.542240877522012e-13,
+      "support_only_roundoff_check": true
+    },
+    {
+      "stage": 6,
+      "type": "DEATH",
+      "expected_weight_kN": 49590.235622525346,
+      "reaction_y_kN": 49590.23562252877,
+      "difference_kN": 3.4269760362803936e-09,
+      "relative_support_weight_gap": 6.910586314544067e-14,
+      "free_residual_sum_y_kN": -6.221734238920362e-11,
+      "global_equilibrium_closure_y_kN": 3.36475869389119e-09,
+      "global_equilibrium_closure_x_kN": 2.7834413376601197e-13,
+      "support_only_roundoff_check": true
+    },
+    {
+      "stage": 7,
+      "type": "DEATH",
+      "expected_weight_kN": 49504.20727913309,
+      "reaction_y_kN": 49504.20727913644,
+      "difference_kN": 3.3542164601385593e-09,
+      "relative_support_weight_gap": 6.775618971586728e-14,
+      "free_residual_sum_y_kN": -4.597877634182623e-12,
+      "global_equilibrium_closure_y_kN": 3.3496185825043767e-09,
+      "global_equilibrium_closure_x_kN": -4.121171042230018e-14,
+      "support_only_roundoff_check": true
+    },
+    {
+      "stage": 8,
+      "type": "MATSET",
+      "expected_weight_kN": 49504.20727913309,
+      "reaction_y_kN": 49504.20727913644,
+      "difference_kN": 3.3542164601385593e-09,
+      "relative_support_weight_gap": 6.775618971586728e-14,
+      "free_residual_sum_y_kN": -4.597877634182623e-12,
+      "global_equilibrium_closure_y_kN": 3.3496185825043767e-09,
+      "global_equilibrium_closure_x_kN": -4.121171042230018e-14,
+      "support_only_roundoff_check": true
+    },
+    {
+      "stage": 9,
+      "type": "BIRTH",
+      "expected_weight_kN": 49598.05638101555,
+      "reaction_y_kN": 49598.05638101891,
+      "difference_kN": 3.3614924177527428e-09,
+      "relative_support_weight_gap": 6.777468036105157e-14,
+      "free_residual_sum_y_kN": 5.580647055580812e-12,
+      "global_equilibrium_closure_y_kN": 3.3670730648083236e-09,
+      "global_equilibrium_closure_x_kN": 2.3430985409832357e-12,
+      "support_only_roundoff_check": true
+    },
+    {
+      "stage": 10,
+      "type": "SRM",
+      "expected_weight_kN": 49598.05638101555,
+      "reaction_y_kN": 49598.05125790799,
+      "difference_kN": -0.005123107563122176,
+      "relative_support_weight_gap": 1.0329250654029916e-07,
+      "free_residual_sum_y_kN": 0.005123110938572539,
+      "global_equilibrium_closure_y_kN": 3.375450363662935e-09,
+      "global_equilibrium_closure_x_kN": -7.623466961870218e-12,
+      "support_only_roundoff_check": false
+    }
+  ],
+  "anchor_balance": null,
+  "plastic_shear_eigen_max_error": 3.3881317890172014e-21,
+  "struct_max_plastic_increment": 0.0,
+  "struct_max_yield_function": -19990797.514250632
+}
