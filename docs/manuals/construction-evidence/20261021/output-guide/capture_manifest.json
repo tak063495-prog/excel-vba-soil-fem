@@ -1,0 +1,60 @@
+{
+  "captured_workbook_sha256": "3ca841a3dd5240627d075797bed2b4ad3f48d7a3558d1339b66390c7b3b0bb9f",
+  "method": "Actual Excel desktop window screenshots with computer-use sky API. PDF uses clipped viewports of the unchanged screenshots. No fabricated UI.",
+  "excel_ui": "20261020_UI_04",
+  "operations": "Navigated actual worksheets; displayed mesh preview on dedicated copy; closed without saving. No analysis, material, convergence or source changes.",
+  "screenshots": [
+    {
+      "file": "analysis.png",
+      "sha256": "c203ff93f3d5c5cf769f8750285ea4b7954c436e7b380df7de46dd7a1f971f32"
+    },
+    {
+      "file": "materials.png",
+      "sha256": "5b0d0c4c47b2bafb298cf9d79f57819cc02e5aacbc67677fff150a884c36a89f"
+    },
+    {
+      "file": "mesh_actions.png",
+      "sha256": "59c6ca1fbd33b4e2b2b58eac16a58008c355d5133de748d0a875c976c38613cf"
+    },
+    {
+      "file": "mesh_preview.png",
+      "sha256": "8a8eabfedd7df59751d8933adc36da4d482bf26d3bc9c0b10a24996eefcff3d6"
+    },
+    {
+      "file": "mesh_settings.png",
+      "sha256": "7760ebf5b4245df84e986f4ccf84b0d8a1e806f5c40f56f5ba22d5332cc583ce"
+    },
+    {
+      "file": "output_increment.png",
+      "sha256": "710f894da481faf8fd5ae0b9534095e3ad919376ec7dca6adfa4bba4a8a7aebe"
+    },
+    {
+      "file": "output_save.png",
+      "sha256": "7c809b8a65af154da68c7ebfb66db26a110eb1ffdb844930380b185ba8078074"
+    },
+    {
+      "file": "output_view.png",
+      "sha256": "2ff77357b53bcc27e63ad0401efbf5d4cda799016a6df2cace2704663b15cd28"
+    },
+    {
+      "file": "panel.png",
+      "sha256": "e35a623be3a6809061fa691ef0f0988bd9114fecaaf0a5f9b62102366b63319b"
+    },
+    {
+      "file": "result_figure.png",
+      "sha256": "dc4d8131702abf31ad4eaa878f980ec63e4e1c6637100fa0d7476871e565da7a"
+    },
+    {
+      "file": "stage_results.png",
+      "sha256": "7f7e81eb801dd00185c2eb2b44b85d8969bd76da491852c48299c1fb9181502f"
+    },
+    {
+      "file": "stages.png",
+      "sha256": "404e64a9dbc7e0f468ec20477f711861e7e88f751de3050beb9bd272dbb2f56e"
+    }
+  ],
+  "plots": "Existing road stages 1/4/6/11 and 12 wall DAVIS SRM trials. Rebuild from published compressed records by running rebuild_output_guide.py from repository root.",
+  "capture_source_local": "tests/tmp/manual_v2/wall_davis08/2DSoilFEM_ui_20261020.xlsm",
+  "source_calculation_record": "docs/manuals/construction-evidence/20261020/wall_davis08/result.json.gz",
+  "original_application_workbook_sha256": "1e46355ca510b05509b92beaef712118417bceea171ff40ce02b0226cd5e9a06"
+}

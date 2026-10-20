@@ -16,8 +16,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 21942,
-    "sha256": "f63bbe205b720e8f8a7e241eda851044bd6ea21462911bd51fafd6846ee27fbd"
+    "bytes": 22037,
+    "sha256": "9e139e03a64dd9131c378e829df02d927e1597cc5858541900397b6fb4f27e36"
   },
   {
     "path": "docs/ACCELERATION_HISTORY.md",
@@ -541,13 +541,13 @@
   },
   {
     "path": "docs/manuals/2DSoilFEM_Detailed_Manual_20261020.pdf",
-    "bytes": 4587214,
-    "sha256": "31ca4517ff9074cf806bfd952ad2705ece19c54dd540a09b12c6f40624faa4b9"
+    "bytes": 7670898,
+    "sha256": "c9b7ac298dbdffa70b00876c7656439caee321b9c69b6c41853cf32fe3258f4f"
   },
   {
     "path": "docs/manuals/README.md",
-    "bytes": 8291,
-    "sha256": "f57ef06b0d4149131db7bdadaaead6362b85fc6a93efe8d41d9df9140006329c"
+    "bytes": 9059,
+    "sha256": "b969ceb3d186d52854330b8fbcf18562931429b77970bf21d7c6f5276c23f25f"
   },
   {
     "path": "docs/manuals/construction-evidence/20261020/anchor09/adaptive_v2a.csv.gz",
@@ -2685,6 +2685,101 @@
     "sha256": "2d366cef16ce9fa374a8d635c360f6edf73717de2dc890f438b1e8dcd237ed2a"
   },
   {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/README.md",
+    "bytes": 1183,
+    "sha256": "7c6c14114aaab3396b66b28b03354e4268dc7c05ac435daee62fe14609dc1d3c"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/analysis.png",
+    "bytes": 181491,
+    "sha256": "c203ff93f3d5c5cf769f8750285ea4b7954c436e7b380df7de46dd7a1f971f32"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/capture_manifest.json",
+    "bytes": 2563,
+    "sha256": "1cc48b3496615c971dea8a824cfa36555282697b488b44c234d10780030f0853"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/materials.png",
+    "bytes": 165352,
+    "sha256": "5b0d0c4c47b2bafb298cf9d79f57819cc02e5aacbc67677fff150a884c36a89f"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/mesh_actions.png",
+    "bytes": 207042,
+    "sha256": "59c6ca1fbd33b4e2b2b58eac16a58008c355d5133de748d0a875c976c38613cf"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/mesh_preview.png",
+    "bytes": 224785,
+    "sha256": "8a8eabfedd7df59751d8933adc36da4d482bf26d3bc9c0b10a24996eefcff3d6"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/mesh_settings.png",
+    "bytes": 181493,
+    "sha256": "7760ebf5b4245df84e986f4ccf84b0d8a1e806f5c40f56f5ba22d5332cc583ce"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/output_increment.png",
+    "bytes": 170630,
+    "sha256": "710f894da481faf8fd5ae0b9534095e3ad919376ec7dca6adfa4bba4a8a7aebe"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/output_road_summary.png",
+    "bytes": 80146,
+    "sha256": "5fd8cb6efd04c2850ef7a2e46671215c1939f5eec231cf3f11e8d4b77d6c35fb"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/output_save.png",
+    "bytes": 178118,
+    "sha256": "7c809b8a65af154da68c7ebfb66db26a110eb1ffdb844930380b185ba8078074"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/output_srm_summary.png",
+    "bytes": 58338,
+    "sha256": "d88135b982fff4e3181889b8d19b75c04abf7b772c9d20f04396dd176db71932"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/output_view.png",
+    "bytes": 177737,
+    "sha256": "2ff77357b53bcc27e63ad0401efbf5d4cda799016a6df2cace2704663b15cd28"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/panel.png",
+    "bytes": 168528,
+    "sha256": "e35a623be3a6809061fa691ef0f0988bd9114fecaaf0a5f9b62102366b63319b"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/rebuild_output_guide.py",
+    "bytes": 3014,
+    "sha256": "d6dbd2266bf9d0a1acebb56c989b50706ee73664626ed434b82920f7dbbdb49b"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/result_figure.png",
+    "bytes": 213360,
+    "sha256": "dc4d8131702abf31ad4eaa878f980ec63e4e1c6637100fa0d7476871e565da7a"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/road_stage_summary.csv",
+    "bytes": 318,
+    "sha256": "a64857d1950ac96a0a58231b1926c76612d859ff7707f21117ba386968f4379a"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/srm_trial_summary.csv",
+    "bytes": 556,
+    "sha256": "66c961be5d9a20a1e3a9e0ee08b6725a022102c84fb83fdebefc1e8d407a385b"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/stage_results.png",
+    "bytes": 244204,
+    "sha256": "7f7e81eb801dd00185c2eb2b44b85d8969bd76da491852c48299c1fb9181502f"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/output-guide/stages.png",
+    "bytes": 188911,
+    "sha256": "404e64a9dbc7e0f468ec20477f711861e7e88f751de3050beb9bd272dbb2f56e"
+  },
+  {
     "path": "docs/manuals/construction-evidence/20261021/road01/adaptive_v2a.csv.gz",
     "bytes": 224,
     "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
@@ -2851,8 +2946,8 @@
   },
   {
     "path": "docs/manuals/manual_validation_20261020.json",
-    "bytes": 229556,
-    "sha256": "d03a07e2a103c2e815ae7427c410e229ff43e1ae9bc506dbe8bb34201311bc0d"
+    "bytes": 238184,
+    "sha256": "11f6367f983c6f42130d3062875c7f884dbef39fae5675bd930c8cd21b15e49c"
   },
   {
     "path": "docs/native-evidence/assembly_20261020/DAVIS_0.json",
