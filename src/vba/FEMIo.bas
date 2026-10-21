@@ -277,7 +277,7 @@ Public Sub FEMEnsureStageSheets()
     wsStage.Cells(3, 2).value2 = "LOAD"
     wsStage.Cells(3, 3).value2 = 1
     wsStage.Cells(3, 5).value2 = 1
-    wsStage.Cells(3, 6).value2 = "載荷シートの材料1。値0なら実質なし"
+    wsStage.Cells(3, 6).value2 = "載荷シートの材料1。DISP=0はゼロ変位拘束"
     wsStage.Cells(4, 1).value2 = 3
     wsStage.Cells(4, 2).value2 = "SRM"
     wsStage.Cells(4, 4).value2 = 1
@@ -3368,7 +3368,7 @@ Private Sub FEMWriteStageLegend(ByVal ws As Worksheet)
   ws.Cells(3, 8).value2 = "GRAVITY"
   ws.Cells(3, 9).value2 = "自重。計画に無い場合は載せない。支持は節点の拘束"
   ws.Cells(4, 8).value2 = "LOAD"
-  ws.Cells(4, 9).value2 = "載荷シートでその材料の行を載せる（値0の行は無効）"
+  ws.Cells(4, 9).value2 = "載荷シートの対象行を適用。DISP=0はゼロ変位拘束、FORCE=0はゼロ節点力"
   ws.Cells(5, 8).value2 = "UNLOAD"
   ws.Cells(5, 9).value2 = "その材料の載荷を外す。要素は残る"
   ws.Cells(6, 8).value2 = "BIRTH"
@@ -3500,7 +3500,7 @@ End Sub
 Private Sub FEMWriteLoadLegend(ByVal ws As Worksheet)
   ws.Cells(1, 12).value2 = "凡例（入力しない）"
   ws.Cells(2, 12).value2 = "選択"
-  ws.Cells(2, 13).value2 = "どの辺・範囲に載せるか。プルダウン"
+  ws.Cells(2, 13).value2 = "対象のキーワードまたは節点番号。TOP/BOTTOM/LEFT/RIGHT/BOXまたは実在する正整数ID"
   ws.Cells(3, 12).value2 = "TOP"
   ws.Cells(3, 13).value2 = "その材料の上辺（Y最大の辺）"
   ws.Cells(4, 12).value2 = "BOTTOM"

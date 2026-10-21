@@ -5,9 +5,9 @@
   "compile": "PASS",
   "reopen": "PASS",
   "dll_layout": "single",
-  "checks_record": "docs/manuals/construction-evidence/20261021/manual-review/ui_checks.json",
+  "checks_record": "docs/manuals/construction-evidence/20261021/manual-rereview/generic_checks.json",
   "review_response": "docs/reviews/2DSoilFEM_manual_response_20261021.md",
-  "scope": "six UI/observer/display modules only; solver/material equations and convergence settings unchanged",
+  "scope": "FEMIo three UI strings only; solver, material, DLL, Double, convergence and SRM unchanged",
   "source_modules": [
     {
       "name": "FEMUiLayout",
@@ -19,7 +19,7 @@
     },
     {
       "name": "FEMIo",
-      "sha256": "525d5726ecc655e73c28e3829a5084e19a5df672aeb40d53e7d715e95d78d5a4"
+      "sha256": "91245435a8f9c17b355e65d4ef8b86150ad78dfbaac2e7e1a7645d3bdb2cbd2a"
     },
     {
       "name": "FEMViewIncrement",
@@ -37,8 +37,8 @@
   "files": [
     {
       "name": "2DSoilFEM_ui_20261020.xlsm",
-      "bytes": 3211772,
-      "sha256": "1fdefa515e11e03ee368cd2734fde1afd703f8cc147fb3ca980638732c08cd1b"
+      "bytes": 3187951,
+      "sha256": "d2126087b29be6d1f2241d28a82510d9f3198e9a9888651c908e24072fa29143"
     },
     {
       "name": "soilfem_native_x64.dll",
@@ -47,9 +47,12 @@
     },
     {
       "name": "README.txt",
-      "bytes": 2215,
-      "sha256": "08879d3843190fe23d1fd4bf1386f42944f2305bc2583971615301b8c2b2dd67"
+      "bytes": 2517,
+      "sha256": "df7a0f27d7b9e09ccd5ca76f9ffec6a67a2cd908d59503a143dd69a4b0259e57"
     }
   ],
-  "source_base_revision": "cbf09683d636e8e33f64e8c2839b72835e7811d0"
+  "source_base_revision": "cbf09683d636e8e33f64e8c2839b72835e7811d0",
+  "source_revision": "d8ac0209248e9ed40c1657fb517196925e60109f",
+  "patch": "20261021 N01-N05 rereview wording correction; UI_05 identity retained",
+  "rereview_record": "docs/manuals/construction-evidence/20261021/manual-rereview/road_checks.json"
 }

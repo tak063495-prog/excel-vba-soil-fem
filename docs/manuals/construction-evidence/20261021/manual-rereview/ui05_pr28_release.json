@@ -1,0 +1,55 @@
+{
+  "ui_stamp": "20261021_UI_05",
+  "calculation_stamp": "20261020_INCO_ELEMENT_01",
+  "baseline_ui04_sha256": "1e46355ca510b05509b92beaef712118417bceea171ff40ce02b0226cd5e9a06",
+  "compile": "PASS",
+  "reopen": "PASS",
+  "dll_layout": "single",
+  "checks_record": "docs/manuals/construction-evidence/20261021/manual-review/ui_checks.json",
+  "review_response": "docs/reviews/2DSoilFEM_manual_response_20261021.md",
+  "scope": "six UI/observer/display modules only; solver/material equations and convergence settings unchanged",
+  "source_modules": [
+    {
+      "name": "FEMUiLayout",
+      "sha256": "cd01a945c17682efcce2847a848d831150838cbadf8474246841a928a445f92e"
+    },
+    {
+      "name": "FEMUiInputs",
+      "sha256": "546a02a11a3895ceef057aa9ffcc2e5fa6870a471421eb43896a865ba299647b"
+    },
+    {
+      "name": "FEMIo",
+      "sha256": "525d5726ecc655e73c28e3829a5084e19a5df672aeb40d53e7d715e95d78d5a4"
+    },
+    {
+      "name": "FEMViewIncrement",
+      "sha256": "4c9a87b1c6837a878b0d35b0ffb81afaf0664123f0317c20b97b1fec55a4962e"
+    },
+    {
+      "name": "FEMIncrementSvg",
+      "sha256": "e2811b96f9aeb79f578ed438b34c848c6e8c3a98194605d1be1d803119454f66"
+    },
+    {
+      "name": "FEMStrainMath",
+      "sha256": "e000500ea75139a191cd0de8493e6d89fd635c327bcbd7bc3daf199de4c55bd7"
+    }
+  ],
+  "files": [
+    {
+      "name": "2DSoilFEM_ui_20261020.xlsm",
+      "bytes": 3211772,
+      "sha256": "1fdefa515e11e03ee368cd2734fde1afd703f8cc147fb3ca980638732c08cd1b"
+    },
+    {
+      "name": "soilfem_native_x64.dll",
+      "bytes": 170496,
+      "sha256": "ad5c2ae81512ba8e977002415a6a5339b621c00a1bbabe5092559f8a7f9e0797"
+    },
+    {
+      "name": "README.txt",
+      "bytes": 2215,
+      "sha256": "08879d3843190fe23d1fd4bf1386f42944f2305bc2583971615301b8c2b2dd67"
+    }
+  ],
+  "source_base_revision": "cbf09683d636e8e33f64e8c2839b72835e7811d0"
+}

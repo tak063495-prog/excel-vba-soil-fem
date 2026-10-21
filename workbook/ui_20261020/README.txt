@@ -17,3 +17,5 @@ Fs区間は数値収束の境界。設計安全率・物理的崩壊や実物の
 
 https://github.com/tak063495-prog/excel-vba-soil-fem/blob/main/docs/manuals/README.md
 https://github.com/tak063495-prog/excel-vba-soil-fem/blob/main/docs/reviews/2DSoilFEM_manual_response_20261021.md
+
+再レビューN01-N05補訂（2026-10-21）：FEMIoの凡例3文言を修正。解析/再解析後もDISP=0はゼロ変位拘束。FORCE=0はゼロ節点力。載荷Bはキーワードまたは実在節点番号。UI_05名とファイル名は維持。検証はmanual-rereviewの記録を参照。
