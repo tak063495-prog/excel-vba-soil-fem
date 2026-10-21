@@ -10,6 +10,10 @@ Public Function FEMResultChoiceLabel(ByVal item As Long) As String
     FEMResultChoiceLabel = "最大せん断ひずみ増分（最終収束増分・4点最大）"
   ElseIf item = 70 Then
     FEMResultChoiceLabel = "最大塑性せん断ひずみ増分（最終収束増分・4点最大）"
+  ElseIf item = 71 Then
+    FEMResultChoiceLabel = "塑性状態（弾性／現在降伏／過去に降伏・要素の4点）"
+  ElseIf item = 72 Then
+    FEMResultChoiceLabel = "累積塑性せん断ひずみ（4点最大）"
   End If
 End Function
 
@@ -18,9 +22,9 @@ Public Function FEMResultChoiceId(ByVal value As Variant) As Long
   If IsError(value) Or IsEmpty(value) Then Exit Function
   If IsNumeric(value) Then
     x = CDbl(value)
-    If x >= 1# And x <= 70# And x = Fix(x) Then FEMResultChoiceId = CLng(x)
+    If x >= 1# And x <= 72# And x = Fix(x) Then FEMResultChoiceId = CLng(x)
   Else
-    For i = 1 To 70
+    For i = 1 To 72
       If CStr(value) = FEMResultChoiceLabel(i) Then FEMResultChoiceId = i: Exit Function
     Next i
   End If
@@ -31,15 +35,15 @@ Public Sub FEMResultOptionsEnsureList()
   On Error Resume Next: Set ws = ThisWorkbook.Worksheets("表示量一覧"): On Error GoTo 0
   If ws Is Nothing Then Set ws = ThisWorkbook.Worksheets.Add(After:=ThisWorkbook.Worksheets(ThisWorkbook.Worksheets.Count)): ws.Name = "表示量一覧"
   ws.Cells(2, 6).Value2 = "内容で選択する表示名"
-  For i = 1 To 70
+  For i = 1 To 72
     ws.Cells(i + 2, 1).Value2 = i: ws.Cells(i + 2, 6).Value2 = FEMResultChoiceLabel(i)
   Next i
   On Error Resume Next
   ThisWorkbook.Names("FEMViewerSelectionLabels").Delete
   ThisWorkbook.Names("FEMViewerSelectionIDs").Delete
   On Error GoTo 0
-  ThisWorkbook.Names.Add Name:="FEMViewerSelectionLabels", RefersTo:="='表示量一覧'!$F$3:$F$72"
-  ThisWorkbook.Names.Add Name:="FEMViewerSelectionIDs", RefersTo:="='表示量一覧'!$A$3:$A$72"
+  ThisWorkbook.Names.Add Name:="FEMViewerSelectionLabels", RefersTo:="='表示量一覧'!$F$3:$F$74"
+  ThisWorkbook.Names.Add Name:="FEMViewerSelectionIDs", RefersTo:="='表示量一覧'!$A$3:$A$74"
   ws.Columns("F").ColumnWidth = 64
   ws.Range("A1").Value2 = "出力・表示の「表示する結果」で内容名を選びます。増分図には新しい版での再解析が必要です。"
 End Sub
@@ -67,7 +71,7 @@ Public Sub FEMResultOptionsInstall()
       With ws.Cells(r, 3).Validation
         .Delete: .Add Type:=xlValidateList, AlertStyle:=xlValidAlertStop, Formula1:="=FEMViewerSelectionLabels"
         .IgnoreBlank = False: .InCellDropdown = True: .ShowError = True
-        .InputTitle = "表示する物理量": .InputMessage = "内容名から選択してください。旧番号1～70も内部読込では対応します。"
+        .InputTitle = "表示する物理量": .InputMessage = "内容名から選択してください。旧番号1～72も内部読込では対応します。"
       End With
     End If
   Next r

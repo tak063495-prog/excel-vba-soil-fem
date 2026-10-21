@@ -1,0 +1,21 @@
+{
+  "flow": "INCONSISTENT",
+  "coarse_settlements_m": [
+    0.001,
+    0.005,
+    0.01,
+    0.02,
+    0.05
+  ],
+  "fine_settlements_m": [
+    0.01,
+    0.02,
+    0.05
+  ],
+  "fixture_sha256": {
+    "bearing_flat_mesh.json": "0b670b4aa6d9dd0fea0feb1b0e67c23e28eea56412bec74bf7464b2c40450baa",
+    "bearing_flat_fine_mesh.json": "deb216cb85971bbbe6aaafe0e8db9335743521b4b4f6c09e8238eaf640ecf0d0",
+    "bearing_slope_mesh.json": "b16cd72f9cca988084ea421a830ed748498e4d5a4ef9694f6aed98416cb0da34",
+    "bearing_slope_fine_mesh.json": "1d74f4e35f137a3b5f952a07e837cb1f52f29390c762cbb4c961239a6f3ac553"
+  }
+}

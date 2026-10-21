@@ -86,6 +86,7 @@ Public Sub FEMIncrementSave()
   Dim ws As Worksheet, rows() As Variant, headers As Variant, e As Long, gp As Long, c As Long, n As Long, r As Long
   Dim x As Double, y As Double, hi As Double, lo As Double, angle As Double, stageNo As Long
   On Error GoTo Failed
+  FEMPlasticStateSave
   On Error Resume Next: Set ws = ThisWorkbook.Worksheets("結果増分"): On Error GoTo Failed
   If ws Is Nothing Then Set ws = ThisWorkbook.Worksheets.Add(After:=ThisWorkbook.Worksheets("結果要素")): ws.Name = "結果増分"
   stageNo = P3ResultStageNumber()
@@ -175,4 +176,110 @@ Public Function FEMIncrementRead(ByVal stageNo As Long) As Object
   Exit Function
 Missing:
   Err.Raise vbObjectError + 3912, , "この結果には表示に必要な最終収束増分がありません。新しい版で最初から再解析してください（結果増分）。"
+End Function
+
+' ===== 20261022: plastic state / cumulative plastic strain for the result display (post-processing only) =====
+' Writes sheet 結果塑性 from the converged state already held in memory. Nothing here feeds the solver.
+' State per Gauss point: 2 = yielded now (P2Yielded, same test as the plastic point count),
+' 1 = plastic strain accumulated earlier but not yielded now, 0 = no plastic strain so far, -1 = no cumulative log.
+Public Sub FEMPlasticStateSave()
+  Dim ws As Worksheet, rows() As Variant, e As Long, gp As Long, c As Long, n As Long, r As Long, stageNo As Long
+  Dim logReady As Boolean, coverage As String, cum(0 To 3) As Double, mult As Double, hasPast As Boolean, st As Long
+  On Error GoTo Failed
+  On Error Resume Next: Set ws = ThisWorkbook.Worksheets("結果塑性"): On Error GoTo Failed
+  If ws Is Nothing Then
+    Set ws = ThisWorkbook.Worksheets.Add(After:=ThisWorkbook.Worksheets(ThisWorkbook.Worksheets.Count)): ws.Name = "結果塑性"
+  End If
+  stageNo = P3ResultStageNumber()
+  If UCase$(P6ReadTextSetting("OUTPUT_STAGE_MODE", "FINAL")) <> "ALL" Then ws.Cells.ClearContents
+  ws.Range("A1:M1").Value2 = Array("ステージ番号", "要素番号", "積分点", "降伏関数f", "現在降伏(1/0)", "累積塑性ひずみX", "累積塑性ひずみY", "累積塑性工学せん断ひずみXY", "累積塑性ひずみZ", "累積塑性乗数", "累積最大塑性工学せん断ひずみ(3D)", "塑性状態(2現在降伏/1過去に降伏/0弾性/-1不明)", "累積の範囲")
+  ws.Range("V1").Value2 = "PLASTIC_STATE_V1"
+  logReady = PlasticLogIsReady()
+  If Not logReady Then
+    coverage = "NONE"
+  ElseIf PlasticLogIsComplete() Then
+    coverage = "FROM_ZERO_STATE"
+  Else
+    coverage = "PARTIAL_FROM_RESUME"
+  End If
+  If NumberOfElement < 1 Then Exit Sub
+  ReDim rows(1 To NumberOfElement * 4, 1 To 13)
+  For e = 0 To NumberOfElement - 1
+    If P3IsElementActive(e) And Not Elem(e).IsJoint Then
+      For gp = 0 To 3
+        n = n + 1
+        For c = 0 To 3: cum(c) = PlasticLogTotal(c, gp, e): Next c
+        mult = PlasticLogMultiplierTotal(gp, e)
+        hasPast = (mult > 0#) Or cum(0) <> 0# Or cum(1) <> 0# Or cum(2) <> 0# Or cum(3) <> 0#
+        If Elem(e).P2Yielded(gp) Then
+          st = 2
+        ElseIf Not logReady Then
+          st = -1
+        ElseIf hasPast Then
+          st = 1
+        Else
+          st = 0
+        End If
+        rows(n, 1) = stageNo: rows(n, 2) = e + 1: rows(n, 3) = gp + 1
+        rows(n, 4) = Elem(e).Stmat(9, gp): rows(n, 5) = IIf(Elem(e).P2Yielded(gp), 1, 0)
+        For c = 0 To 3: rows(n, 6 + c) = cum(c): Next c
+        rows(n, 10) = mult
+        rows(n, 11) = FEMStrainMaxShear(cum(0), cum(1), cum(2), cum(3))
+        rows(n, 12) = st: rows(n, 13) = coverage
+      Next gp
+    End If
+  Next e
+  r = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1: If r < 2 Then r = 2
+  If n > 0 Then ws.Range(ws.Cells(r, 1), ws.Cells(r + n - 1, 13)).Value2 = rows
+  ws.Range("V2").Value2 = "表示している工程の最終状態。現在降伏=降伏点数と同じ判定（P2Yielded）。累積はBIRTH・RESETで0から。"
+  ws.Range("D:K").NumberFormat = "0.00000E+00"
+  Exit Sub
+Failed:
+  FEMIncrementLastError = "塑性状態の出力に失敗: " & CStr(Err.Number) & " " & Err.Description
+End Sub
+
+' Returns e -> Array(state, cumulative max plastic shear 4-point max, yielded-now count, past count, unknown count)
+Public Function FEMPlasticStateRead(ByVal stageNo As Long) As Object
+  Dim ws As Worksheet, data As Variant, result As Object, r As Long, e As Long, v As Variant, st As Long
+  On Error Resume Next: Set ws = ThisWorkbook.Worksheets("結果塑性"): On Error GoTo 0
+  If ws Is Nothing Then GoTo Missing
+  If CStr(ws.Range("V1").Value2) <> "PLASTIC_STATE_V1" Then GoTo Missing
+  r = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row
+  If r < 2 Then GoTo Missing
+  data = ws.Range("A1:M" & CStr(r)).Value2
+  Set result = CreateObject("Scripting.Dictionary")
+  For r = 2 To UBound(data, 1)
+    If IsNumeric(data(r, 1)) And Not IsEmpty(data(r, 1)) Then
+      If CLng(data(r, 1)) = stageNo Then
+        e = CLng(data(r, 2)): st = CLng(data(r, 12))
+        If Not result.Exists(e) Then result(e) = Array(-2&, 0#, 0&, 0&, 0&)
+        v = result(e)
+        If CDbl(data(r, 11)) > v(1) Then v(1) = CDbl(data(r, 11))
+        Select Case st
+          Case 2: v(2) = v(2) + 1
+          Case 1: v(3) = v(3) + 1
+          Case -1: v(4) = v(4) + 1
+        End Select
+        result(e) = v
+      End If
+    End If
+  Next r
+  For Each v In result.Keys
+    e = CLng(v): data = result(e)
+    If data(2) > 0 Then
+      data(0) = 2
+    ElseIf data(4) > 0 Then
+      data(0) = -1
+    ElseIf data(3) > 0 Then
+      data(0) = 1
+    Else
+      data(0) = 0
+    End If
+    result(e) = data
+  Next v
+  If result.Count = 0 Then GoTo Missing
+  Set FEMPlasticStateRead = result
+  Exit Function
+Missing:
+  Err.Raise vbObjectError + 3914, , "この結果には塑性状態の保存がありません。20261022版で最初から再解析してください（結果塑性）。"
 End Function

@@ -124,6 +124,7 @@ End Function
 
 Public Function FEMViewerResultUnit(ByVal selection As Long) As String
     Dim item As Long
+    If selection = 71 Then FEMViewerResultUnit = "状態": Exit Function
     If selection >= 69 Then FEMViewerResultUnit = "無次元": Exit Function
     item = (selection - 1) Mod 17 + 1
     If item = 7 Then
@@ -174,6 +175,7 @@ Private Sub DrawView(ByVal mode As String)
     Dim originX As Double, originY As Double, x As Double, y As Double, firstPoint As Boolean
     Dim increments As Object, overlayCells As Object, entry As Variant, overlayLegend As String, overlaySvg As String
     Dim shearOn As Boolean, crossOn As Boolean, overlayA As Boolean, incrementPaint As Boolean
+    Dim statePaint As Boolean, cumPaint As Boolean, plasticStates As Object, stateCount(0 To 3) As Long, stateNames As Variant
     Dim vectorScale As Double, baseResultId As Long, incrementCaption As String
     Dim resultId As Long, fill As String, stroke As String, points As String, title As String, subtitle As String
     Dim svg As String, parts() As String, partCount As Long, labels As Object, showLabels As Boolean
@@ -321,13 +323,29 @@ NextPlan:
             overlayA = FEMOverlayModeA()
             If crossOn Then vectorScale = FEMPlasticCrossScale()
         End If
-        If shearOn Or crossOn Or resultId >= 69 Then
+        If shearOn Or crossOn Or resultId = 69 Or resultId = 70 Then
             Set increments = FEMIncrementRead(Stage)
             Set overlayCells = CreateObject("Scripting.Dictionary")
         End If
         If shearOn And Not overlayA Then resultId = 69
-        incrementPaint = (resultId >= 69)
-        If incrementPaint Then
+        incrementPaint = (resultId = 69 Or resultId = 70)
+        statePaint = (resultId = 71): cumPaint = (resultId = 72)
+        If statePaint Or cumPaint Then
+            Set plasticStates = FEMPlasticStateRead(Stage)
+            Set values = CreateObject("Scripting.Dictionary")
+            For Each key In active.Keys
+                e = CLng(key)
+                If Not jointElements.Exists(e) Then
+                    If Not plasticStates.Exists(e) Then Err.Raise vbObjectError + 3914, , "有効要素の塑性状態がありません。20261022版で再解析してください。"
+                    entry = plasticStates(e)
+                    If statePaint Then
+                        values(e) = CDbl(entry(0)): stateCount(CLng(entry(0)) + 1) = stateCount(CLng(entry(0)) + 1) + 1
+                    Else
+                        values(e) = CDbl(entry(1))
+                    End If
+                End If
+            Next key
+        ElseIf incrementPaint Then
             Set values = CreateObject("Scripting.Dictionary")
             For Each key In active.Keys
                 e = CLng(key)
@@ -438,7 +456,8 @@ NextElement:
                 Exit For
             Next key
         End If
-        If incrementPaint Then low = 0#
+        If incrementPaint Or cumPaint Then low = 0#
+        If statePaint Then low = -1#: high = 2#
     End If
     Select Case mode
         Case "ALL": title = "図形表示（全メッシュ）": subtitle = "全ステージの要素を表示。色は有効なステージの予定。"
@@ -474,7 +493,8 @@ NextElement:
             fill = "#e2e8ef": stroke = "#718096"
             If mode = "RESULT" Then
                 fill = Color(CDbl(values(e)), low, high): stroke = "#4b5563"
-                If incrementPaint Then fill = FEMIncrementFill(CDbl(values(e)), high)
+                If incrementPaint Or cumPaint Then fill = FEMIncrementFill(CDbl(values(e)), high)
+                If statePaint Then fill = FEMPlasticStateFill(CLng(values(e)))
             Else
                 flag = 0
                 If IsNumeric(elements(r, 10)) Then
@@ -518,9 +538,16 @@ NextDrawElement:
         partCount = partCount + 1
     Next key
     If count = 0 Then parts(partCount) = SvgText(40, 120, "表示対象の要素はありません。", 15): partCount = partCount + 1
-    If mode = "RESULT" Then
+    If mode = "RESULT" And statePaint Then
+        stateNames = Array("不明（累積なし）", "弾性（塑性ひずみなし）", "過去に降伏（現在は弾性）", "現在降伏")
+        For j = 0 To 3
+            parts(partCount) = "<rect x=""" & num(40# + j * 205#) & """ y=""" & num(canvasH - 50#) & """ width=""16"" height=""13"" fill=""" & FEMPlasticStateFill(j - 1) & """ stroke=""#4b5563"" stroke-width=""0.5""/>" & SvgText(40# + j * 205# + 20#, canvasH - 39#, stateNames(j) & " " & CStr(stateCount(j)) & "要素", 10)
+            partCount = partCount + 1
+        Next j
+        parts(partCount) = SvgText(40, canvasH - 17#, "4積分点のうち1点でも現在降伏なら赤。黄は塑性ひずみが残るが今は降伏面の内側。累積はBIRTH・RESETで0から。", 10)
+    ElseIf mode = "RESULT" Then
         For j = 0 To 39
-            parts(partCount) = "<rect x=""" & num(40# + j * 10#) & """ y=""" & num(canvasH - 48#) & """ width=""10.1"" height=""13"" fill=""" & FEMViewerKeyColor(low + (high - low) * j / 39#, low, high, incrementPaint) & """/>"
+            parts(partCount) = "<rect x=""" & num(40# + j * 10#) & """ y=""" & num(canvasH - 48#) & """ width=""10.1"" height=""13"" fill=""" & FEMViewerKeyColor(low + (high - low) * j / 39#, low, high, incrementPaint Or cumPaint) & """/>"
             partCount = partCount + 1
         Next j
         parts(partCount) = SvgText(40, canvasH - 17#, Format$(low, "0.000E+00")) & SvgText(355, canvasH - 17#, Format$(high, "0.000E+00"))
@@ -570,6 +597,15 @@ End Sub
 
 Private Function FEMViewerKeyColor(ByVal value As Double, ByVal low As Double, ByVal high As Double, ByVal incrementPaint As Boolean) As String
     If incrementPaint Then FEMViewerKeyColor = FEMIncrementFill(value, high) Else FEMViewerKeyColor = Color(value, low, high)
+End Function
+
+Private Function FEMPlasticStateFill(ByVal state As Long) As String
+    Select Case state
+        Case 2: FEMPlasticStateFill = "#d62728"
+        Case 1: FEMPlasticStateFill = "#f6c343"
+        Case 0: FEMPlasticStateFill = "#dbe8f5"
+        Case Else: FEMPlasticStateFill = "#9e9e9e"
+    End Select
 End Function
 
 Private Function FEMIncrementFill(ByVal value As Double, ByVal high As Double) As String

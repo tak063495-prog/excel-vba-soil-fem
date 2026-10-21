@@ -1,0 +1,92 @@
+﻿21:41:39 PID 17672
+21:41:44 open C:\Users\link_\manual_shots_20261021\run9\2DSoilFEM_road_gamma20v2_20261021_2141.xlsm from C:\Users\link_\manual_rewrite_20261021\docs\manuals\examples\ex08_road_result_20261021.xlsm
+21:41:49 snap rg2_mat
+21:41:52 run P0_RunAnalysis
+21:41:57 ret P0_RunAnalysis
+21:42:05 elapsed rg2-run 16.0657645
+21:42:08 snap rg2_result
+21:42:08 dump ステージ結果 rg2_stage.tsv
+21:42:54 dump 結果節点 rg2_nodes.tsv
+21:42:55 dump 診断 rg2_diag.tsv
+21:42:56 saved C:\Users\link_\manual_shots_20261021\run9\2DSoilFEM_road_gamma20v2_20261021_2141.xlsm
+21:42:59 open C:\Users\link_\manual_shots_20261021\run9\2DSoilFEM_road_tallerv2_20261021_2142.xlsm from C:\Users\link_\manual_rewrite_20261021\docs\manuals\examples\ex08_road_input_20261021.xlsm
+21:43:03 snap rt2_shape
+21:43:06 run FEMUiGenerateShape
+21:43:12 ret FEMUiGenerateShape
+21:43:24 snap rt2_mesh
+21:43:27 run P0_RunAnalysis
+21:43:34 ret P0_RunAnalysis
+21:43:42 elapsed rt2-run 17.9304342
+21:43:45 snap rt2_result
+21:43:45 dump ステージ結果 rt2_stage.tsv
+21:44:30 dump 結果節点 rt2_nodes.tsv
+21:44:31 dump 診断 rt2_diag.tsv
+21:44:31 nodes 352
+21:44:31 elems 103
+21:44:35 snap rt2_sy_out
+21:44:38 run FEMViewResult
+21:44:38 ret FEMViewResult
+21:44:50 snap rt2_sy_fig
+21:44:51 saved C:\Users\link_\manual_shots_20261021\run9\2DSoilFEM_road_tallerv2_20261021_2142.xlsm
+21:44:54 open C:\Users\link_\manual_shots_20261021\run9\2DSoilFEM_js_p468_20261021_2144.xlsm from C:\Users\link_\manual_rewrite_20261021\docs\manuals\examples\ex11b_joint_strongblock75_20261021_2009.xlsm
+21:44:58 snap js_p468_load
+21:45:01 run P0_RunAnalysis
+21:45:07 ret P0_RunAnalysis
+21:45:15 elapsed js_p468-run 16.8793805
+21:45:19 snap js_p468_result
+21:45:19 dump ステージ結果 js_p468_stage.tsv
+21:45:19 dump 診断 js_p468_diag.tsv
+21:45:57 dump 結果要素 js_p468_elems.tsv
+21:45:59 dump 要素データ js_p468_eldata.tsv
+21:46:03 run FEMPracticalShowJointResults
+21:46:03 ret FEMPracticalShowJointResults
+21:46:14 snap js_p468_jres
+21:46:15 dump 接合結果 js_p468_joint.tsv
+21:46:17 saved C:\Users\link_\manual_shots_20261021\run9\2DSoilFEM_js_p468_20261021_2144.xlsm
+21:46:20 open C:\Users\link_\manual_shots_20261021\run9\2DSoilFEM_js_p472_20261021_2146.xlsm from C:\Users\link_\manual_rewrite_20261021\docs\manuals\examples\ex11b_joint_strongblock75_20261021_2009.xlsm
+21:46:24 snap js_p472_load
+21:46:27 run P0_RunAnalysis
+21:46:33 ret P0_RunAnalysis
+21:46:41 elapsed js_p472-run 17.5141398
+21:46:45 snap js_p472_result
+21:46:45 dump ステージ結果 js_p472_stage.tsv
+21:46:46 dump 診断 js_p472_diag.tsv
+21:47:25 dump 結果要素 js_p472_elems.tsv
+21:47:28 dump 要素データ js_p472_eldata.tsv
+21:47:31 run FEMPracticalShowJointResults
+21:47:31 ret FEMPracticalShowJointResults
+21:47:43 snap js_p472_jres
+21:47:44 dump 接合結果 js_p472_joint.tsv
+21:47:45 saved C:\Users\link_\manual_shots_20261021\run9\2DSoilFEM_js_p472_20261021_2146.xlsm
+21:47:48 open C:\Users\link_\manual_shots_20261021\run9\2DSoilFEM_jw_p15_20261021_2147.xlsm from C:\Users\link_\manual_rewrite_20261021\docs\manuals\examples\ex11_joint_20261021.xlsm
+21:47:52 snap jw_p15_stage
+21:47:55 run P0_RunAnalysis
+21:48:02 ret P0_RunAnalysis
+21:48:10 elapsed jw_p15-run 17.6471182
+21:48:13 snap jw_p15_result
+21:48:14 dump ステージ結果 jw_p15_stage.tsv
+21:48:15 dump 診断 jw_p15_diag.tsv
+21:48:53 dump 結果要素 jw_p15_elems.tsv
+21:48:56 dump 要素データ jw_p15_eldata.tsv
+21:48:59 run FEMPracticalShowJointResults
+21:48:59 ret FEMPracticalShowJointResults
+21:49:10 snap jw_p15_jres
+21:49:11 dump 接合結果 jw_p15_joint.tsv
+21:49:12 saved C:\Users\link_\manual_shots_20261021\run9\2DSoilFEM_jw_p15_20261021_2147.xlsm
+21:49:15 open C:\Users\link_\manual_shots_20261021\run9\2DSoilFEM_jw_p16_20261021_2149.xlsm from C:\Users\link_\manual_rewrite_20261021\docs\manuals\examples\ex11_joint_20261021.xlsm
+21:49:19 snap jw_p16_stage
+21:49:22 run P0_RunAnalysis
+21:49:29 ret P0_RunAnalysis
+21:49:37 elapsed jw_p16-run 17.4892834
+21:49:41 snap jw_p16_result
+21:49:41 dump ステージ結果 jw_p16_stage.tsv
+21:49:42 dump 診断 jw_p16_diag.tsv
+21:50:20 dump 結果要素 jw_p16_elems.tsv
+21:50:22 dump 要素データ jw_p16_eldata.tsv
+21:50:25 run FEMPracticalShowJointResults
+21:50:25 ret FEMPracticalShowJointResults
+21:50:37 snap jw_p16_jres
+21:50:37 dump 接合結果 jw_p16_joint.tsv
+21:50:39 saved C:\Users\link_\manual_shots_20261021\run9\2DSoilFEM_jw_p16_20261021_2149.xlsm
+21:50:39 all done
+21:50:44 killed own 17672

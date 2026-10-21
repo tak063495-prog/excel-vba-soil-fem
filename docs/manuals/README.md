@@ -1,3 +1,9 @@
+# 操作説明書
+
+**最新：[2DSoilFEM_Manual_20261022_0428.pdf](2DSoilFEM_Manual_20261022_0428.pdf)（137ページ、表紙・しおり・ページ番号・目次リンク付き）**（前版 2DSoilFEM_Manual_20261021_2156.pdf も残しています）／原稿 [2DSoilFEM_Manual.md](2DSoilFEM_Manual.md)／作成 `python3 build_manual_pdf_v2.py 2DSoilFEM_Manual.md 出力.pdf`／計算例のブックとログは [examples/README.md](examples/README.md)。
+
+旧版の詳細操作説明書（122ページ）は下に残しています。
+
 # 詳細操作説明書の改訂
 
 [詳細操作説明書 PDF・122ページ](2DSoilFEM_Detailed_Manual_20261020.pdf)
