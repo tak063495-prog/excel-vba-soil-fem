@@ -1,0 +1,30 @@
+{
+ "source": "/workspace/soilfem/docs/manuals/examples/ex09_wall_result_20261021.json.gz",
+ "sha256": "ebcfcb6d4e437a9d312a40bee775fe19552ef6b209f413d4573a40c8e597ef8d",
+ "stage_row": [
+  3,
+  "BIRTH",
+  3,
+  "PASS",
+  1,
+  0.00969031929538346
+ ],
+ "checks": [
+  {
+   "part": "stem",
+   "station_m": 1.8,
+   "M_cut_integrated": 6.061168664664581,
+   "M_cut_from_other_faces_and_weight": 9.659436523005445,
+   "moment_imbalance_residual": 3.5982681328627772,
+   "body_weight_kN_per_m": 15.359999999999944
+  },
+  {
+   "part": "base",
+   "station_m": 18.0,
+   "M_cut_integrated": -10.42023534035947,
+   "M_cut_from_other_faces_and_weight": 10.962131946444515,
+   "moment_imbalance_residual": -21.382368635448827,
+   "body_weight_kN_per_m": 28.8
+  }
+ ]
+}

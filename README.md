@@ -115,6 +115,8 @@ Excel上で2次元地盤FEM、強度低減法（SRM）、ジョイント、施�
 
 ## 説明書
 
+**新版の操作説明書（画面付き・PR #33で作成中）：[2DSoilFEM_Manual_20261021_2156.pdf](docs/manuals/2DSoilFEM_Manual_20261021_2156.pdf)**（121ページ、しおり・ページ番号付き）。原稿と計算例は [docs/manuals/README.md](docs/manuals/README.md)。
+
 初めて使う方は **[詳細操作説明書PDF](docs/manuals/2DSoilFEM_Detailed_Manual_20261020.pdf)** の道路実習（9ページ）から始めてください。[旧INCO_24操作説明書](docs/USER_GUIDE.md)は履歴資料です。ダウンロード・マクロ起動、シートの役割、メッシュ生成、載荷・施工・接合の例、SRM、結果保存まで記載しています。
 
 |文書|内容|

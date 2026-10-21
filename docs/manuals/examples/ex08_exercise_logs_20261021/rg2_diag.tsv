@@ -1,0 +1,157 @@
+﻿2DFEM_ P0診断			解析ログ（再実行で消去） Ver=20261020_INCO_ELEMENT_01	
+ResultStatus	PASS		順	場所
+AnalysisOK	True		1	SOLVER
+AnalysisMessage			2	SOLVER
+AnalysisErrorNumber	0		3	SOLVER
+FailureElement	94		4	ステージ開始
+FailureGaussPoint	-1		5	NEWTON
+FailureIncrement	-1		6	PERF
+FailureIteration	-1		7	ステージ開始
+NumberOfNode	328		8	NEWTON
+NumberOfElement	95		9	ステージ開始
+NumberOfMaterial	8		10	NEWTON
+NumberOfFreeNode	328		11	ステージ開始
+nDof	656		12	NEWTON
+lastDof	655		13	ステージ開始
+BandWidth	87		14	NEWTON
+RelativeResidualFree	1.48702970918641E-10		15	P3RebuildTangentFromSpmat
+ResidualNormFull	105.328471091696		16	P3RebuildTangentFromSpmat
+MaxAbsResidualFree	1.00788923873552E-08		17	P3RebuildTangentFromSpmat
+EnergyError	5.26723010330677E-12		18	ステージ開始
+MatrixSymmetryError	0.274165950940324		19	NEWTON
+TotalAppliedLoadX	0		20	P3RebuildTangentFromSpmat
+TotalAppliedLoadY	-1848.00000000001		21	P3RebuildTangentFromSpmat
+TotalSelfWeight	1864		22	P3RebuildTangentFromSpmat
+MinDetJCorner	0.083333333333333		23	P3RebuildTangentFromSpmat
+MaxDetJCorner	0.25		24	P3RebuildTangentFromSpmat
+MinDetJGauss	0.118554144233333		25	P3RebuildTangentFromSpmat
+MaxDetJGauss	0.250000000000001		26	P3RebuildTangentFromSpmat
+ModelRevision	1		27	P3RebuildTangentFromSpmat
+ResultRevision	1		28	ステージ開始
+TimeInput	1.34375		29	ステージ開始
+TimeElementStiffness	0.078125		30	ステージ開始
+TimeAssembly	0.03125		31	NEWTON
+TimeSolve	0		32	ステージ開始
+TimePlastic	3.0078125		33	NEWTON
+TimeOutput	0.015625		34	ステージ開始
+P1Formulation	PLANE_STRAIN_2D		35	NEWTON
+P1ResultReady	True			
+P1ResultModelRevision	1			
+P1ModelNote	2D平面ひずみ。σz=ν(σx+σy)、3D主応力・3D相当応力を保存。曲げ・横せん断力は現行DOFの対象外。			
+P3SuccessfulIncrementCount	59			
+P3GlobalIterationCount	86			
+P3RetryCount	0			
+P3LastConvergedLoadFactor	0			
+P3CurrentStrengthFactor	1			
+P3UseNonlinearResidual	True			
+P3DefaultIncrementCount	100			
+P3StateNote	mStmat/CommittedStateは確定値、Stmat/TDispは試行値。収束後のみコミットし、失敗時は直前確定状態へ復元。			
+P3MaxTrialDisp	0.0465683348304075			
+P3MaxCorrection	1			
+P3LastRelativeResidual	1.47272714068107E-10			
+P5ModelScale	12			
+P5GeometryTolerance	1.2E-09			
+P5AreaTolerance	1.44E-10			
+P5MinElementArea	0.666666666666667			
+P5MinJacobian	0.083333333333333			
+P5MaxAspectRatio	1.86052101883813			
+P5MinAngleDeg	53.130102354156			
+P5MaxAngleDeg	123.69006752598			
+P5BoundaryEdgeCount	211			
+P5SharedEdgeCount	169			
+P5MaterialInterfaceCount	32			
+P5IsolatedNodeCount	0			
+P5ConnectedComponentCount	1			
+P5BoundarySelfIntersectionCount	0			
+P5LocateCallCount	0			
+P5LocateTotalIterations	0			
+P5LocateMaxIterations	0			
+P5LocateLastIterations	0			
+P5LocateLastElement	0			
+P5LocateLastFailure				
+P6MatrixStoragePolicy	非対称帯域LU（行ピボット）＋CSR真残差照合; total-stress displacement			
+P6BandStorageEntries	57728			
+P6BandStorageBytes	461824			
+P6DenseStorageBytes	3442688			
+P6EstimatedWorkMemoryBytes	525732			
+P6BandSolveCallCount	83			
+P6FactorizationCount	81			
+P6FactorizationReuseCount	5			
+P6RenumberingApplied	True			
+P6NodeOrderingPolicy	保存済みRCM内部自由度順序を再利用。結果出力は原自由度順へ逆変換; RCM_POLICY=AUTO			
+P6MeasuredStageTotalSeconds	4.4765625			
+P6TimeInput	1.34375			
+P6TimeElementStiffness	0.078125			
+P6TimeAssembly	0.03125			
+P6TimeSolve	0			
+P6TimePlastic	3.0078125			
+P6TimeOutput	0.015625			
+P6ModelSignature	328/95/8/656/87			
+P6IntegrationStatus	解析・P1結果・P2材料結果の保存完了			
+P6RCMOriginalBandwidth	607			
+P6RCMCandidateBandwidth	87			
+P6RCMStatus	RCM再利用: DOF帯域幅 607 -> 87			
+P6FactorizationReady	False			
+P6SolverMode	NONSYM_BAND_LU			
+P6OptimizationPolicy	solver=NONSYM_BAND_LU; policy=NONSYMMETRIC; CSR_NNZ=18536; CSR_bytes=473252; csr_numeric=build; csr_path=detailed_nonzero; csr_rebuilds=97; csr_reuse=0; csr_scatter_nnz=24320; csr_diag_zero=0; csr_diag_min=1.000E+00; csr_direct_fallback=False; elastic_k=invalidated_tangent; mesh_revision=1; geometry_revision=1; material_input_revision=1; material_generation=11; tangent_generation=100; csr_numeric_generation=100; p3_active_points=18; p3_plastic_updates=1739; solver_eval=initial_small; solver_eval_count=97; solver_eval_threshold=2000; GMRES_restart=30->30; iter=0; iter_relres=3.838E-15; fallback=; hg=0.05; mixed_up=False; p_count=0; uzawa=0			
+P6ElasticKCacheStatus	invalidated_tangent			
+P6SolverMemoryLimitBytes	536870912			
+P6SolverPolicy	NONSYMMETRIC			
+P6SolverEvaluationStatus	initial_small			
+P6CacheMissReason	not_ready			
+P6QuadratureArea	94			
+P6MeshRevision	1			
+P6GeometryRevision	1			
+P6MaterialGeneration	11	P6StrengthGeneration	0	
+P6MaterialInputRevision	1			
+P6IterativeFallbackStatus				
+FEM_BUILD_STAMP	20261020_INCO_ELEMENT_01			
+Q8_HOURGLASS_FACTOR	0.05			
+P6HourglassModeCount	373			
+MIXED_UP	False			
+P6PressureCount	0			
+P6UzawaIterations	0			
+P6ConsolActive	False			
+P6ConsolTime	0			
+P6ConsolStep	0			
+P6MaxPressure	0			
+P6DrainCount	0			
+P6WeightMode	TOTAL			
+P6WeightNote	全応力γ。Q8 2×2（剛性・内力と同じ積分）。水位・浮力なし			
+P3MaxBoundaryDispError	0			
+P3RelativeBoundaryDispError	0			
+P6ReactionSumX	-8.88178419700125E-15			
+P6ReactionSumY	1864			
+P3SrmEnabled	False			
+P3SrmTrialCount	0			
+P3SrmLower	0			
+P3SrmUpper	0			
+P3SrmNote	SRMなし			
+P3StagePlanText	GRAVITY+BIRTH+BIRTH+BIRTH+DEATH+DEATH+MATSET+MATSET+BIRTH+BIRTH+BIRTH			
+P6HourglassReuseCount	6387			
+P6ScatterN	0			
+P6ProfHgMs	554.6875			
+P6ProfAssembleMs	242.1875			
+P6ProfFactorMs	445.3125			
+P6ProfSolveMs	109.375			
+P6ProfLoadMs	0			
+P6ProfTangentMs	609.375			
+P6ProfEvalCount	197			
+P6ProfEvalMs	78.125			
+FLOW_POLICY	INCONSISTENT			
+FOS_INTERPRETATION	NOT_EVALUATED			
+SRM_TRIAL_CLASS	NONE			
+FAILURE_KIND	NONE			
+FAILED_TRIAL_LAMBDA	0			
+FAILED_TRIAL_RELRES	0			
+FAILED_TRIAL_LINEAR_RELRES	0			
+FAILED_TRIAL_CORRECTION	0			
+FAILED_TRIAL_PLASTIC_POINTS	0			
+FAILED_TRIAL_UMAX	0			
+				
+				
+				
+P1詳細は結果節点・結果要素。Gauss状態はブック横 *_out				
+Elements	95			
+Nodes	328			
+P2塑性点は本シート AN列（適応メッシュ用）				

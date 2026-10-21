@@ -1,0 +1,30 @@
+{
+ "source": "/workspace/soilfem/docs/manuals/construction-evidence/20261020/wall_davis12/result.json.gz",
+ "sha256": "28e1b825843aa00f89bca6ae650c5e60ec2a0e77e53ecd29850ca5a2d67d144d",
+ "stage_row": [
+  3.0,
+  "BIRTH",
+  3.0,
+  "PASS",
+  1.0,
+  0.009690666192404529
+ ],
+ "checks": [
+  {
+   "part": "stem",
+   "station_m": 1.8,
+   "M_cut_integrated": 5.9141224613164365,
+   "M_cut_from_other_faces_and_weight": 6.5589473929880455,
+   "moment_imbalance_residual": 0.6448252744839116,
+   "body_weight_kN_per_m": 15.359999999999944
+  },
+  {
+   "part": "base",
+   "station_m": 18.0,
+   "M_cut_integrated": -10.566165822665772,
+   "M_cut_from_other_faces_and_weight": 8.389294164170181,
+   "moment_imbalance_residual": -18.95546135531709,
+   "body_weight_kN_per_m": 28.8
+  }
+ ]
+}
