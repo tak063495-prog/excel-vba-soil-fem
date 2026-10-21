@@ -1,5 +1,5 @@
 {
-  "pdf_sha256": "0f1cae0ac27d6dcba1b1c2fb128684b9a967dd1d4b62e8503e9e8a90aac60abc",
+  "pdf_sha256": "db57705b694f4d9bf419728404f2486ab2d73f470f9031c27755f307ef0449cc",
   "pages": 122,
   "visual": {
     "pages_rendered": 122,
@@ -13,14 +13,15 @@
       82,
       87,
       101,
-      114
+      114,
+      116
     ],
     "checks": [
       "all page contacts reviewed, changed pages enlarged",
       "TOC/bookmarks/numbering/section references reconciled",
       "new geometry and numerical table reconciled with raw results",
       "quality WARN4 retained; no precision/SRM claim",
-      "glossary last; five existing main URLs HTTP200"
+      "glossary last; seven URLs HTTP200, including two immutable exercise links"
     ]
   },
   "render_hashes": [
@@ -250,7 +251,7 @@
     },
     {
       "page": 57,
-      "sha256": "046ab4db56a325d49027598fade3afd28369a1913e30936ba0f9ea30246d9006"
+      "sha256": "120057b4ba79b3d778bfd369bdb1fd437e2db3de5f529d08d236225a9f181228"
     },
     {
       "page": 58,
@@ -486,7 +487,7 @@
     },
     {
       "page": 116,
-      "sha256": "50335bd3265b5e130bc72330014f975a34d58c456327fda1d6a18c4489499c4c"
+      "sha256": "0f815f1941edff67c7cf36eef434831581c1eef0576b3e5e3431403193f7ccd8"
     },
     {
       "page": 117,

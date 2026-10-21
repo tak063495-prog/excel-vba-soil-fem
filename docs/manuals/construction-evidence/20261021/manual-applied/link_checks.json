@@ -12,6 +12,14 @@
     "status": 200
   },
   {
+    "url": "https://github.com/tak063495-prog/excel-vba-soil-fem/blob/4330d6c9451ff9a05afef7ffc1e6976d4a5eb664/docs/manuals/construction-evidence/20261021/manual-applied/road_taller_workbook.zip",
+    "status": 200
+  },
+  {
+    "url": "https://github.com/tak063495-prog/excel-vba-soil-fem/blob/4330d6c9451ff9a05afef7ffc1e6976d4a5eb664/tests/manual_cases/road_widening_taller_shape.json",
+    "status": 200
+  },
+  {
     "url": "https://github.com/tak063495-prog/excel-vba-soil-fem/blob/main/docs/manuals/construction-evidence/20261021/wall-moment-guide/README.md",
     "status": 200
   },

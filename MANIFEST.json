@@ -541,8 +541,8 @@
   },
   {
     "path": "docs/manuals/2DSoilFEM_Detailed_Manual_20261020.pdf",
-    "bytes": 9257367,
-    "sha256": "0f1cae0ac27d6dcba1b1c2fb128684b9a967dd1d4b62e8503e9e8a90aac60abc"
+    "bytes": 9258293,
+    "sha256": "db57705b694f4d9bf419728404f2486ab2d73f470f9031c27755f307ef0449cc"
   },
   {
     "path": "docs/manuals/README.md",
@@ -2716,8 +2716,8 @@
   },
   {
     "path": "docs/manuals/construction-evidence/20261021/manual-applied/link_checks.json",
-    "bytes": 818,
-    "sha256": "ae303f29c5cf3a555d03a04b4edef9fd64add680f4b99d71e3548c18c4febc53"
+    "bytes": 1241,
+    "sha256": "41f56ad084cc10f718f96cf2d779a0c2b9e91786e4fd90792de5b280fc747742"
   },
   {
     "path": "docs/manuals/construction-evidence/20261021/manual-applied/logs/adaptive_v2a.csv.gz",
@@ -2766,13 +2766,13 @@
   },
   {
     "path": "docs/manuals/construction-evidence/20261021/manual-applied/manual_section_source.py",
-    "bytes": 10737,
-    "sha256": "735bb87daa3c8b08f27588ca101079adbae345eb40c1e9b97d693d336638c004"
+    "bytes": 11447,
+    "sha256": "6077f7259ab141a3329d63648ed07222bb9df031eaebf06d7a77ba0f57d6fe77"
   },
   {
     "path": "docs/manuals/construction-evidence/20261021/manual-applied/pdf_review.json",
-    "bytes": 15117,
-    "sha256": "ebbe690c3303c546ff58f9b17a7daa83be9eb5a26ef0f98f430d7bb9f4514ce5"
+    "bytes": 15156,
+    "sha256": "c9650d1d570f61a876ae20619a87b7a105a07b31ff9baf08c83bd2be3ea2a237"
   },
   {
     "path": "docs/manuals/construction-evidence/20261021/manual-applied/result.json.gz",
@@ -3516,8 +3516,8 @@
   },
   {
     "path": "docs/manuals/manual_validation_20261020.json",
-    "bytes": 314666,
-    "sha256": "34a060765ad81c10a4c02fca72560080cd7b0d6f6f859b1bddd3778b0bed8806"
+    "bytes": 315055,
+    "sha256": "922b013b59f2bc56bc32f4677a968333c459cfeae7471c2a58779f44d9f742de"
   },
   {
     "path": "docs/native-evidence/assembly_20261020/DAVIS_0.json",
@@ -5491,8 +5491,8 @@
   },
   {
     "path": "docs/reviews/2DSoilFEM_manual_applied_response_20261021.md",
-    "bytes": 4685,
-    "sha256": "a2012a867eeb554587d2074d8356922b1b4e36914870725f00885ce3b3240f5c"
+    "bytes": 5429,
+    "sha256": "f2cf16c75101d2402b45c64ca078e6721351f439d24d7ad0f87014f064fc1704"
   },
   {
     "path": "docs/reviews/2DSoilFEM_manual_fresh_review_20261021.md",

@@ -747,7 +747,7 @@
     }
   ],
   "glossary_entries": 43,
-  "pdf_sha256": "0f1cae0ac27d6dcba1b1c2fb128684b9a967dd1d4b62e8503e9e8a90aac60abc",
+  "pdf_sha256": "db57705b694f4d9bf419728404f2486ab2d73f470f9031c27755f307ef0449cc",
   "revision": "122 pages; fresh-review A1-A4 and editorial alignment; new taller road shape exercise",
   "reference_main": "f144d88008c1575cb8042ea48005202c0208d7bb",
   "book_sha256": "1e46355ca510b05509b92beaef712118417bceea171ff40ce02b0226cd5e9a06",
@@ -5037,8 +5037,8 @@
     },
     {
       "path": "docs/manuals/construction-evidence/20261021/manual-applied/link_checks.json",
-      "bytes": 818,
-      "sha256": "ae303f29c5cf3a555d03a04b4edef9fd64add680f4b99d71e3548c18c4febc53"
+      "bytes": 1241,
+      "sha256": "41f56ad084cc10f718f96cf2d779a0c2b9e91786e4fd90792de5b280fc747742"
     },
     {
       "path": "docs/manuals/construction-evidence/20261021/manual-applied/logs/adaptive_v2a.csv.gz",
@@ -5087,13 +5087,13 @@
     },
     {
       "path": "docs/manuals/construction-evidence/20261021/manual-applied/manual_section_source.py",
-      "bytes": 10737,
-      "sha256": "735bb87daa3c8b08f27588ca101079adbae345eb40c1e9b97d693d336638c004"
+      "bytes": 11447,
+      "sha256": "6077f7259ab141a3329d63648ed07222bb9df031eaebf06d7a77ba0f57d6fe77"
     },
     {
       "path": "docs/manuals/construction-evidence/20261021/manual-applied/pdf_review.json",
-      "bytes": 15117,
-      "sha256": "ebbe690c3303c546ff58f9b17a7daa83be9eb5a26ef0f98f430d7bb9f4514ce5"
+      "bytes": 15156,
+      "sha256": "c9650d1d570f61a876ae20619a87b7a105a07b31ff9baf08c83bd2be3ea2a237"
     },
     {
       "path": "docs/manuals/construction-evidence/20261021/manual-applied/README.md",
@@ -6624,14 +6624,15 @@
       82,
       87,
       101,
-      114
+      114,
+      116
     ],
     "checks": [
       "all page contacts reviewed, changed pages enlarged",
       "TOC/bookmarks/numbering/section references reconciled",
       "new geometry and numerical table reconciled with raw results",
       "quality WARN4 retained; no precision/SRM claim",
-      "glossary last; five existing main URLs HTTP200"
+      "glossary last; seven URLs HTTP200, including two immutable exercise links"
     ]
   },
   "output_guide_capture": {
@@ -8133,7 +8134,21 @@
       "limitations": "Angle quality WARN remains: 99 pass / 4 warn / 0 fail; no SRM or mesh-convergence claim. Runtime is a single observation, not a performance comparison."
     },
     "scope": "one taller road solve; no new SRM/boundary-sensitivity/load-controlled/JOINT/RESET study",
-    "baseline_source_revision": "3320d4fc062cd1e6862d5fcfe43d2703ad4f25d6"
+    "baseline_source_revision": "3320d4fc062cd1e6862d5fcfe43d2703ad4f25d6",
+    "minor_rereview": {
+      "changed_text_pages": [
+        57,
+        116
+      ],
+      "changed_render_pages": [
+        57,
+        116
+      ],
+      "other_120_pages_identical": true,
+      "analysis_rerun": false,
+      "links": 7,
+      "scope": "sheet name, direct immutable exercise links, UI04 historical wording"
+    }
   },
   "previous_120_page_visual_review": {
     "pages_rendered": 120,
