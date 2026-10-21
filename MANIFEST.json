@@ -7426,7 +7426,27 @@
   },
   {
     "path": "docs/PILE_MODELING_PLAN.md",
-    "bytes": 152565,
-    "sha256": "ff9209fc17d4c7bf885aba5f804d72d08d442a01c513b42443d514f6f9f46b65"
+    "bytes": 157041,
+    "sha256": "5a8d366f91c01248a38cdba41332b13b457d125698498f5a8dc7cae3cc6a169b"
+  },
+  {
+    "path": "docs/prototypes/PR34_CUSTOM_PRESETS.html",
+    "bytes": 161247,
+    "sha256": "6793158409fd44b4077cd5e4589aa9ed4b9d98d76f362474c8ff76d35c11f993"
+  },
+  {
+    "path": "docs/prototypes/README.md",
+    "bytes": 4227,
+    "sha256": "cc27684b887c32fd96ef1a78fb535486348316a3be00d7e50593c963cce8e2c8"
+  },
+  {
+    "path": "docs/prototypes/pr34-custom-preset-example.json",
+    "bytes": 2127,
+    "sha256": "3a4fd23866142a42a00a05fe92e09b67615a358348e34761b043f927962e3e0d"
+  },
+  {
+    "path": "docs/prototypes/pr34-custom-presets.test.cjs",
+    "bytes": 11039,
+    "sha256": "8ee71e7f56c62e5986c4b4ff0ff293abfa3caa645ba9bb580edcc831beaa2b8e"
   }
 ]

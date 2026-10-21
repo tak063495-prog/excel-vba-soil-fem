@@ -343,6 +343,25 @@ L型擁壁の連続体断面量は定義した切断面の応力積分と釣合�
 
 プリセットの設計試験は、展開後IDの一意性、参照先、順序、状態親、単位、編集・複製・削除、プレビュー差分、既存本線/hash不変性、未対応経路の拒否を確認する。プリセットから物理結果を生成したり、許容差を緩めたりして合格扱いにしない。上記の斜面・壁・トンネル・基礎・アンカーは、個別の物理受入ゲートとA0.8/C11の遷移ゲートを満たした後にだけ実行可能になる。
 
+#### A0.11. カスタムプリセットの保存・読込契約（設計案）
+
+[シート試作と操作手順](prototypes/README.md)で、自作保存、版管理、対応付け読込、JSONの持出しと再登録を確認できる。[読込用JSON例](prototypes/pr34-custom-preset-example.json)と再現確認スクリプトも同梱する。
+
+カスタムプリセットはA0.9の工程・操作・解析区間を再利用するための入力コンテナーであり、計算結果・確定状態・checkpointを持ち運ぶ仕組みではない。`FLOW_ONLY`は工程、操作、区間、枝、内部参照、対象slotの型/単位/次元、パラメータplaceholderを保持する。`MODEL_INPUTS`は利用者が明示的に選んだ対象定義と入力設定を含められるが、mesh割当は明示的に対応したmapping以外を含めない。いずれもsolver結果、commit済みstate、checkpointを埋め込まず、確定stateは外部`source_state_id`への参照と再検証条件だけを保存する。
+
+|契約項目|設計上の規則|
+|---|---|
+|保存メタデータ|安定した`preset_id`、不変の`revision`、名称、説明、`schema_version`、操作辞書版を必須とする。保存済みrevisionは不変とし、同じ名前の変更は新revisionとして保存するか、利用者が明示した別名にする。組込みA0.10プリセットは読取専用で上書き・revision追加を許可しない|
+|対象範囲|`FLOW_ONLY`はstage/operation/segment/branchと内部参照を保存。`MODEL_INPUTS`は明示選択したtarget定義/input設定を追加できるが、mesh割当は対応を宣言した場合だけ保存|
+|IDとmapping|読込時に全namespace（target、stage、segment、operation、branch）へ新IDを発行する。名前・旧IDの一致だけで黙って結び付けない。mapping記録は現在モデルの候補・選択・未解決・空欄を型付きで保持し、既存データを無断上書きしない|
+|適用方式|`FULL_NEW`は新規工程/入力として展開し、`MAPPED_TO_CURRENT_INPUT`は利用者が選んだ現在のtarget定義/入力設定を対応付けた新しいdraft版を作る。保存定義へ書き戻さず、既存のcommit済みstateへ追加/統合しない。操作辞書に定義済みで実行能力が未解禁の操作/遷移は計画として保持・読込できるが、実行を拒否する。未知の操作定義・辞書版・不正スキーマは読込エラーにする|
+
+読込プレビューは、型、unit、dimension、必須性、既存候補、未解決/空欄参照、衝突するID、影響範囲を表示し、全mappingの確定前に適用しない。`mapping_id`、元presetのrevision、生成した新ID、対象stage/segment/operation/branch、外部stateのhashと再検証結果を記録する。保存済みtarget定義を現在モデルの既存定義へ自動統合せず、`MODEL_INPUTS`のtarget定義は新draftとして扱う。外部`source_state_id`が未解決なら利用者の明示的なrebindを要求し、結果やcommit状態を復元せず、commit先への追加/統合も行わない。
+
+設計上の永続形式は、版付きJSONコンテナー（metadata、dictionary、flow、model_inputs、mappings、external_bindings）とする。JSON値は型・単位・次元・範囲・参照を検査し、サイズ、深さ、配列数、文字列長、ID数に上限を設ける。未知schema/操作辞書版、重複ID、壊れたJSON、未許可のmesh割当、実行可能コード、macro、network pathは拒否し、部分適用や黙った補正をしない。保存/読込の失敗は既存モデル・結果・checkpoint・本線state/hashを変更しない。
+
+シート試作と将来APIの受入条件は、Aで保存→Bで読込→Aで再保存したround-tripで内部参照、単位、placeholder、mapping記録が一致すること、同名衝突が新revision/別名規則に従うこと、組込みの読取専用性、未解決mappingの失敗、失敗時の非変更性を確認することである。`FULL_NEW`と`MAPPED_TO_CURRENT_INPUT`の両経路、全namespaceの新ID、空欄/未解決の型付き表示、外部source stateの明示rebind/再検証、未対応経路のplan-only保持と実行拒否を含める。スキーマ/版不一致、未知操作、mapping不備は読込を拒否する。数値結果やsolver実行を保存/読込の合格条件にしない。
+
 ### A1. 確認基準と現行マッピング
 
 基準コミットはmainの [1a6b06c0e8f7b6f5fbc39c18d7645dbad4fd2e68](https://github.com/tak063495-prog/excel-vba-soil-fem/commit/1a6b06c0e8f7b6f5fbc39c18d7645dbad4fd2e68)。現行READMEはUI_05を説明する。[MODEL_INPUTS](MODEL_INPUTS.md)と現行ソースを静的に照合した。旧INCO_24用の[結果説明](RESULTS_AND_TROUBLESHOOTING.md)だけをUI_05の列配置の根拠にはしない。リポジトリ内と作業場所の親階層にAGENTS.mdは見つからなかった。software-engineering/remote-environments技能も本環境の一覧にない。

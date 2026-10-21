@@ -1,0 +1,91 @@
+{
+  "format": "soil-fem-stage-preset",
+  "schemaVersion": 1,
+  "dictionaryVersion": 1,
+  "presetId": "U_DEMO",
+  "revision": 1,
+  "name": "常時斜面の照査工程（自作例）",
+  "description": "工程構成のみ。読込時に地盤slotを明示対応付けし、数値と材料条件を再確認。",
+  "scope": "FLOW_ONLY",
+  "category": "slope",
+  "geometry": "PLANE_STRAIN",
+  "units": "m-kN-s",
+  "slots": [
+    {
+      "id": "G",
+      "name": "G 基盤地盤",
+      "type": "soil",
+      "geometry": "PLANE_STRAIN",
+      "units": "m-kN-s",
+      "active": null
+    }
+  ],
+  "stages": [
+    {
+      "id": "S168",
+      "name": "斜面の初期応力・自重平衡",
+      "parent": "INITIAL",
+      "ops": [
+        {
+          "id": "O167",
+          "kind": "static",
+          "target": "",
+          "p": {
+            "policy": "new",
+            "value": "",
+            "basis": "PER_WIDTH",
+            "duration": "",
+            "solver": "fixed",
+            "mode": "replace",
+            "water": "fixed",
+            "at": "end",
+            "offset": "",
+            "segment": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "S172",
+      "name": "常時の安定性照査",
+      "parent": "S168",
+      "ops": [
+        {
+          "id": "O171",
+          "kind": "static",
+          "target": "",
+          "p": {
+            "policy": "new",
+            "value": "",
+            "basis": "PER_WIDTH",
+            "duration": "",
+            "solver": "fixed",
+            "mode": "replace",
+            "water": "fixed",
+            "at": "end",
+            "offset": "",
+            "segment": ""
+          }
+        },
+        {
+          "id": "O173",
+          "kind": "srm",
+          "target": "G",
+          "p": {
+            "policy": "new",
+            "value": "",
+            "basis": "PER_WIDTH",
+            "duration": "",
+            "solver": "fixed",
+            "mode": "replace",
+            "water": "fixed",
+            "at": "end",
+            "offset": "",
+            "segment": "O171"
+          }
+        }
+      ]
+    }
+  ],
+  "externalBindings": []
+}
