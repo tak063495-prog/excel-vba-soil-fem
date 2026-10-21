@@ -7,6 +7,7 @@ Public Sub FEMUiPrepareInputs()
   Set ws = ThisWorkbook.Worksheets("高速化設定")
   Set legacy = ThisWorkbook.Worksheets("設定")
   keys = Array("NATIVE_DLL", "NATIVE_PRECISION", "NATIVE_STATE_COPY", "NATIVE_ASSEMBLY", "NATIVE_GMRES_SIMD", "NATIVE_GMRES_TUNED", "NATIVE_GMRES_PREPARED", "IO_FAST_PATH", "EVENT_LOG_FAST")
+  FEMUiPreflightRuntimeLayout ws
   For Each item In keys
     found = False
     For Each p In Array("メッシュ設定", "解析設定", "高速化設定", "出力・表示", "詳細設定")
@@ -68,6 +69,36 @@ Public Sub FEMUiPrepareInputs()
   With ThisWorkbook.Worksheets("高速化設定")
     .range("B5").value2 = "通常はDLL・I/OをAUTO/1。下段V方式は比較用。未対応経路は自動復帰。収束条件は変更しません。"
   End With
+End Sub
+
+Public Sub FEMUiPreflightRuntimeLayout(ByVal ws As Worksheet)
+  Dim lastRow As Long, r As Long, k As String, planned As Object, nextRow As Long
+  Dim runtime As Variant, i As Long, sh As Worksheet, f As Range
+  runtime = Array("NATIVE_DLL", "NATIVE_PRECISION", "NATIVE_STATE_COPY", "NATIVE_ASSEMBLY", "NATIVE_GMRES_SIMD", "NATIVE_GMRES_TUNED", "NATIVE_GMRES_PREPARED", "IO_FAST_PATH", "EVENT_LOG_FAST")
+  Set planned = CreateObject("Scripting.Dictionary"): planned.CompareMode = vbTextCompare
+  nextRow = 9
+  For i = LBound(runtime) To UBound(runtime)
+    planned(CStr(runtime(i))) = nextRow: nextRow = nextRow + 1
+  Next i
+  nextRow = nextRow + 2
+  lastRow = ws.Cells(ws.Rows.Count, 6).End(xlUp).Row
+  For r = 8 To lastRow
+    k = Trim$(CStr(ws.Cells(r, 6).Value2))
+    If Len(k) > 0 Then
+      If Not planned.Exists(k) Then
+        planned(k) = nextRow: nextRow = nextRow + 1
+      End If
+      If r <> CLng(planned(k)) Then GoTo RefuseIfFormula
+    End If
+  Next r
+  Exit Sub
+RefuseIfFormula:
+  For Each sh In ThisWorkbook.Worksheets
+    Set f = Nothing
+    On Error Resume Next: Set f = sh.UsedRange.SpecialCells(xlCellTypeFormulas): On Error GoTo 0
+    If Not f Is Nothing Then Err.Raise vbObjectError + 3832, "FEMUiPreflightRuntimeLayout", _
+      "高速化設定を並べ替える前に停止しました。" & sh.Name & " に数式があります。バックアップを作成し、元の設定位置を手動で戻すか、COPY側の定数設定を使用してください。"
+  Next sh
 End Sub
 
 Private Sub FEMUiOrderRuntimePage(ByVal ws As Worksheet, ByVal runtimeKeys As Variant)

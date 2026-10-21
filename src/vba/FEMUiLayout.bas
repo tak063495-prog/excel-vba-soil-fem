@@ -1,5 +1,5 @@
 ﻿Option Explicit
-Public Const FEM_UI_STAMP As String = "20261020_UI_04"
+Public Const FEM_UI_STAMP As String = "20261021_UI_05"
 
 Private mUiSessionReady As Boolean
 Private mUiSessionBook As String
@@ -50,6 +50,7 @@ Public Sub FEMUiAfterLayout()
   activeName = ThisWorkbook.ActiveSheet.name
   On Error GoTo Failed
   Application.EnableEvents = False: Application.ScreenUpdating = False
+  FEMUiPreflightRuntimeLayout ThisWorkbook.Worksheets("高速化設定")
   pageNames = Array("メッシュ設定", "解析設定", "高速化設定", "出力・表示", "詳細設定")
   For Each p In pageNames
     ThisWorkbook.Worksheets(CStr(p)).Unprotect
@@ -171,7 +172,15 @@ Private Sub FEMUiRestoreGuides()
   ws.rows("9:10").RowHeight = 51
   FEMUiList ws, "D2:D2000", "1,0"
   Set ws = ThisWorkbook.Worksheets("載荷")
-  FEMUiList ws, "B2:B2000", "TOP,BOTTOM,LEFT,RIGHT,BOX"
+  ' Selection accepts the five geometric keywords or an existing positive node ID.
+  ' COUNTIF checks the actual IDs, so a gapped/short node table is not accepted by count alone.
+  With ws.range("B2:B2000").Validation
+    .Delete
+    .Add Type:=xlValidateCustom, AlertStyle:=xlValidAlertStop, Operator:=xlBetween, _
+      Formula1:="=OR(B2=""TOP"",B2=""BOTTOM"",B2=""LEFT"",B2=""RIGHT"",B2=""BOX"",IFERROR(AND(ISNUMBER(B2),B2=INT(B2),B2>0,COUNTIF(INDIRECT(""'節点データ'!$A:$A""),B2)=1),FALSE))"
+    .IgnoreBlank = True: .ShowError = True: .ErrorTitle = "入力値"
+    .ErrorMessage = "TOP/BOTTOM/LEFT/RIGHT/BOX、または節点データに存在する正の節点番号を入力してください。"
+  End With
   FEMUiList ws, "C2:C2000", "X,Y"
   FEMUiList ws, "D2:D2000", "DISP,FORCE,FIX"
   Set ws = ThisWorkbook.Worksheets("材料データ")
