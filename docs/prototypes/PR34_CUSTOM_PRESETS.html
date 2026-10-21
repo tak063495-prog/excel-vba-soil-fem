@@ -1,0 +1,2913 @@
+<!doctype html>
+<html lang="en" data-visualize-standalone>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>PR34 Custom Presets Prototype</title>
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
+
+</head>
+<body>
+<iframe id="codex-visualization" sandbox="allow-scripts" referrerpolicy="no-referrer" title="PR34 Custom Presets Prototype" data-srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot; data-visualize-standalone&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
+&lt;title&gt;PR34 Custom Presets Prototype&lt;/title&gt;
+&lt;style&gt;:root {
+  color-scheme: light dark;
+  background-color: var(
+    --background,
+    var(--color-background-primary, light-dark(rgb(255 255 255), rgb(24 24 24)))
+  ) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: var(
+    --color-background-primary,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --card: color-mix(in oklab, var(--foreground) 5%, var(--background));
+  --card-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --popover: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255), rgb(45 45 45))
+  );
+  --popover-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --primary: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --primary-foreground: var(
+    --color-text-inverse,
+    light-dark(rgb(255 255 255), rgb(13 13 13))
+  );
+  --secondary: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%))
+  );
+  --secondary-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: var(
+    --color-text-secondary,
+    light-dark(rgb(26 28 31 / 49.4%), rgb(255 255 255 / 49.8%))
+  );
+  --accent: var(
+    --color-background-info,
+    light-dark(rgb(229 242 255), rgb(13 39 63))
+  );
+  --accent-foreground: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --destructive: var(
+    --color-text-warning,
+    light-dark(rgb(226 85 7), rgb(255 133 73))
+  );
+  --border: var(
+    --color-border-secondary,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+  --input: var(
+    --color-border-primary,
+    light-dark(
+      rgb(26 28 31 / 11.8%),
+      color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+    )
+  );
+  --ring: var(
+    --color-ring-primary,
+    light-dark(rgb(51 156 255), rgb(131 195 255 / 76%))
+  );
+  --font-size-base: var(--font-text-md-size, 16px);
+  --blue: light-dark(rgb(51 156 255), rgb(51 156 255));
+  --orange: light-dark(rgb(226 85 7), rgb(251 106 34));
+  --green: light-dark(rgb(0 162 64), rgb(64 201 119));
+  --red: light-dark(rgb(224 46 42), rgb(255 103 100));
+  --purple: light-dark(rgb(146 79 247), rgb(173 123 249));
+  --yellow: light-dark(rgb(255 195 0), rgb(255 210 64));
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans:
+    -apple-system-body, ui-sans-serif, -apple-system, system-ui, &quot;Segoe UI&quot;,
+    Helvetica, &quot;Apple Color Emoji&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;,
+    &quot;Segoe UI Symbol&quot;;
+  --font-mono:
+    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --icon-size: 16px;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --corner-shape: round;
+  --radius: var(--border-radius-lg, 8px);
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: calc(var(--radius) * 0.75);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 2);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+}
+
+:root[data-theme=&quot;light&quot;] {
+  color-scheme: light;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html &gt; body {
+  /* Preserve MCP aliases for older inline renderers without creating :root cycles. */
+  --color-background-primary: var(
+    --background,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --color-text-primary: var(
+    --foreground,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --color-border-secondary: var(
+    --border,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+
+  margin: 0;
+  padding: var(--visualize-paint-gutter, 0px);
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans) !important;
+  -webkit-font-smoothing: antialiased;
+  font-size: var(--font-size-base);
+  line-height: calc(var(--font-size-base) * 1.625);
+  font-weight: var(--font-weight-normal);
+}
+
+.cursor-interaction {
+  cursor: var(--cursor-interaction, pointer);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: var(--cursor-interaction, pointer);
+  text-decoration: none;
+  text-underline-offset: 2px;
+  font-weight: inherit;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li,
+.table {
+  font-family: var(--font-sans);
+}
+
+h1 {
+  font-size: calc(var(--font-size-base) * 1.5);
+  line-height: 1.3333333333;
+}
+
+h2 {
+  font-size: calc(var(--font-size-base) * 1.25);
+  line-height: 1.4;
+}
+h3 {
+  font-size: calc(var(--font-size-base) * 1.125);
+  line-height: 1.5555555556;
+}
+h4 {
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+}
+h5,
+h6 {
+  font-size: var(--font-size-base);
+  line-height: calc(var(--font-size-base) * 1.625);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+b,
+strong,
+th {
+  font-weight: 600;
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: var(--corner-shape);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+pre,
+pre code {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+  color: var(--foreground);
+  font: inherit;
+  text-align: start;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: calc(var(--font-size-base) * 0.875);
+  line-height: calc(var(--font-size-base) * 1.625);
+  font-family: var(--font-sans);
+}
+
+.table :is(th, td) {
+  padding-block: 10px;
+  padding-inline: 0 24px;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+  border-bottom-color: color-mix(in srgb, var(--foreground) 5%, transparent);
+}
+.table :is(th, td):not(:last-child) {
+  padding-inline-end: calc(var(--font-size-base) * 1.5);
+}
+
+.table-responsive &gt; .table :is(th, td) {
+  overflow-wrap: break-word;
+}
+
+.table :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+.table :is(caption, thead th) {
+  font-weight: 600;
+}
+
+.table thead :is(th, td) {
+  border-bottom-color: var(--border-strong, var(--input));
+  padding-block: calc(var(--font-size-base) / 2);
+  line-height: var(--font-size-base);
+}
+
+.table tbody tr:last-child :is(th, td) {
+  border-bottom: 0;
+}
+.table tbody :is(th, td) {
+  padding-block: calc(var(--font-size-base) * 0.625);
+}
+
+.table.table-sm :is(th, td) {
+  padding-block: 8px;
+}
+
+.table.table-sm :is(th, td):not(:last-child) {
+  padding-inline-end: 16px;
+}
+
+.table :is(.text-end, [align=&quot;right&quot;]) {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.table :is(.text-center, [align=&quot;center&quot;]) {
+  text-align: center;
+}
+
+.table .text-nowrap {
+  white-space: nowrap;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: var(--corner-shape);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+.widget {
+  min-width: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  box-shadow: 0 0 0 0.5px var(--border-strong, var(--border));
+  color: var(--foreground);
+  background: var(--background);
+}
+
+#widget &gt; :not(.card, .widget, .progress) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  border: 1px solid var(--border);
+  corner-shape: var(--corner-shape);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+  font-family: var(--font-sans);
+  padding: 5px 12px;
+  border-color: color-mix(
+    in oklab,
+    light-dark(var(--primary-foreground), var(--foreground)) 5%,
+    transparent
+  );
+  border-radius: var(--radius-2xl);
+  color: light-dark(var(--primary-foreground), var(--foreground));
+  background: light-dark(var(--foreground), var(--popover));
+  box-shadow: 0 8px 18px rgb(15 23 42 / 20%);
+  letter-spacing: -0.15px;
+  font-size: calc(var(--font-size-base) * 14 / 16);
+  font-size: round(nearest, calc(var(--font-size-base) * 14 / 16), 1px);
+  font-weight: 600;
+  line-height: 18px;
+  text-align: center;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+hr {
+  width: 100%;
+  height: 1px;
+  margin-block: 6px;
+  border: 0;
+  background: var(--border);
+}
+
+.nav {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 4px;
+}
+
+.progress {
+  display: flex;
+  height: 8px;
+  margin-block: calc((var(--line-height-normal, 1.5em) - 8px) / 2);
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+}
+
+.progress-bar:only-child {
+  border-radius: var(--radius-full);
+}
+
+.progress-bar {
+  height: 100%;
+  flex-shrink: 0;
+  border: 0;
+  background: var(--viz-series-1);
+}
+
+.viz-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  color: color-mix(in srgb, var(--foreground) 40%, var(--muted-foreground));
+  background: color-mix(in srgb, var(--foreground) 5%, transparent);
+  font-family: var(--font-sans);
+  font-size: calc(var(--font-size-base) * 14 / 16);
+  font-size: round(nearest, calc(var(--font-size-base) * 14 / 16), 1px);
+  font-weight: var(--font-weight-normal);
+  line-height: 1;
+}
+
+small,
+.text-small {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls &gt; .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.nav-link,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+/* Match inline alignment without overriding a containing flex or grid layout. */
+.btn,
+.nav-link,
+.form-control,
+.form-select,
+.form-range,
+.form-check {
+  vertical-align: middle;
+}
+
+.btn,
+.nav-link {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  corner-shape: var(--corner-shape);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: inherit;
+  font-family: var(--font-sans);
+  height: fit-content;
+  min-height: calc(12px + 2 * var(--control-spacing, 12px));
+  padding-inline: var(--control-spacing, 12px);
+  border-color: transparent;
+  border-radius: var(--radius-full);
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 5%, transparent);
+  font-size: calc(var(--font-size-base) * 14 / 16);
+  font-size: round(nearest, calc(var(--font-size-base) * 14 / 16), 1px);
+  font-weight: var(--font-weight-normal);
+  line-height: 18px;
+}
+
+.btn {
+  border-color: var(--border);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: var(--cursor-interaction, pointer);
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover {
+  background: light-dark(
+    color-mix(in srgb, var(--foreground) 5.5%, transparent),
+    color-mix(in srgb, var(--foreground) 8%, transparent)
+  );
+}
+
+.nav-link:not(:disabled):not([aria-disabled=&quot;true&quot;]):hover {
+  background: color-mix(in srgb, var(--foreground) 10%, transparent);
+}
+
+.btn-primary {
+  border-color: var(--border);
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: border-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: border-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--muted-foreground);
+  background: light-dark(
+    color-mix(in srgb, var(--foreground) 5.5%, transparent),
+    color-mix(in srgb, var(--foreground) 8%, transparent)
+  );
+}
+
+.nav-pills .nav-link {
+  min-width: 0;
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.nav-justified .nav-link {
+  flex: 1 1 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.nav-pills .nav-link.active {
+  color: var(--foreground);
+  background: var(--muted);
+}
+
+/* Shared preview chrome; product styles stay inside each variant. */
+.viz-dotted-background {
+  background-image: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--foreground) 14%, transparent) 0.8px,
+    transparent 0.8px
+  );
+  background-position: center;
+  background-size: 16px 16px;
+}
+
+.viz-carousel {
+  position: relative;
+  min-width: 0;
+}
+
+.viz-carousel:has(&gt; .viz-carousel-controls) {
+  min-height: calc(60px + var(--viz-carousel-picker-height, 0px));
+  padding-bottom: 60px;
+}
+
+.viz-carousel &gt; [data-variant][hidden] {
+  display: none !important;
+}
+
+.viz-carousel &gt; [data-variant] {
+  isolation: isolate;
+}
+
+.viz-carousel-controls {
+  --viz-carousel-hover: light-dark(
+    color-mix(in srgb, var(--foreground) 5.4%, transparent),
+    color-mix(in srgb, var(--foreground) 7.8%, transparent)
+  );
+  position: absolute;
+  z-index: 2;
+  bottom: 8px;
+  left: 50%;
+  display: flex;
+  width: max-content;
+  /* Leave room for the host&#x27;s design-controls launcher at the trailing edge. */
+  max-width: calc(100% - 96px);
+  align-items: center;
+  gap: 0;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-sans);
+  /* Match the settings dropdown chrome independently of the content font size. */
+  font-size: 13px;
+  font-weight: var(--font-weight-normal);
+  line-height: 18px;
+  transform: translateX(-50%);
+  user-select: none;
+}
+
+/* Keep authored mockup button styles out of the shared carousel chrome. */
+.viz-carousel-controls button,
+.viz-carousel-picker &gt; summary {
+  display: flex !important;
+  height: auto !important;
+  min-height: 30px;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px;
+  padding: 0 6px !important;
+  -webkit-app-region: no-drag;
+  border: 0 !important;
+  border-radius: 14px !important;
+  color: inherit !important;
+  background: transparent !important;
+  font: inherit !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.viz-carousel-controls &gt; button,
+.viz-carousel-picker &gt; summary {
+  position: relative;
+  isolation: isolate;
+}
+
+.viz-carousel-controls &gt; button {
+  --icon-size: 16px;
+  width: 30px !important;
+  padding: 0 !important;
+}
+
+.viz-carousel-picker &gt; summary {
+  padding-inline: 12px !important;
+}
+
+.viz-carousel-controls .viz-carousel-caret {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  margin: 0;
+  color: inherit;
+  transform: rotate(180deg);
+}
+
+.viz-carousel-controls &gt; button &gt; svg,
+.viz-carousel-controls .viz-carousel-caret,
+.viz-carousel-count {
+  opacity: 0.5;
+}
+
+.viz-carousel-controls &gt; button::before,
+.viz-carousel-picker &gt; summary::before {
+  position: absolute;
+  z-index: -1;
+  inset: 3px;
+  border-radius: 12px;
+  content: &quot;&quot;;
+  pointer-events: none;
+}
+
+.viz-carousel-controls &gt; button:hover::before,
+.viz-carousel-picker &gt; summary:hover::before {
+  background: var(--viz-carousel-hover);
+}
+
+.viz-carousel-controls &gt; button,
+.viz-carousel-controls [data-lucide],
+.viz-carousel-controls .lucide {
+  flex-shrink: 0;
+}
+
+.viz-carousel-picker {
+  min-width: 0;
+}
+
+.viz-carousel-picker &gt; summary {
+  min-width: 0;
+  list-style: none;
+}
+
+.viz-carousel-picker &gt; summary::-webkit-details-marker {
+  display: none;
+}
+
+.viz-carousel-count {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.viz-carousel-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.viz-carousel-options {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 4px);
+  left: 0;
+  display: flex;
+  max-height: 240px;
+  flex-direction: column;
+  gap: 2px;
+  overflow: auto;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--background);
+  box-shadow: 0 4px 12px light-dark(rgb(0 0 0 / 6%), rgb(0 0 0 / 25%));
+}
+
+.viz-carousel-options &gt; button {
+  border-radius: max(0px, calc(var(--radius-lg) - 5px)) !important;
+  width: 100% !important;
+  min-height: 28px;
+  justify-content: flex-start !important;
+  padding: 4px 8px !important;
+  font-size: var(--font-size-small) !important;
+  text-align: start;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.viz-carousel-options &gt; [aria-current=&quot;true&quot;],
+.viz-carousel-options &gt; button:hover {
+  background: var(--viz-carousel-hover) !important;
+}
+
+.btn:disabled,
+.nav-link:disabled,
+.nav-link[aria-disabled=&quot;true&quot;] {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  corner-shape: var(--corner-shape);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  height: calc(12px + 2 * var(--control-spacing, 12px));
+  min-height: calc(12px + 2 * var(--control-spacing, 12px));
+  padding-inline: calc(4px + var(--control-spacing, 12px) / 2);
+  border-color: var(--input);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--popover) 96%, transparent);
+  font-size: calc(var(--font-size-base) * 14 / 16);
+  font-size: round(nearest, calc(var(--font-size-base) * 14 / 16), 1px);
+  font-weight: var(--font-weight-normal);
+  line-height: 1.4285714286;
+}
+.form-control:is(
+  [type=&quot;file&quot;],
+  [type=&quot;date&quot;],
+  [type=&quot;datetime-local&quot;],
+  [type=&quot;month&quot;],
+  [type=&quot;week&quot;],
+  [type=&quot;color&quot;]
+) {
+  height: calc(12px + 2 * var(--control-spacing, 12px));
+  min-height: calc(12px + 2 * var(--control-spacing, 12px));
+  line-height: 18px;
+}
+.form-control:is(
+  [type=&quot;date&quot;],
+  [type=&quot;datetime-local&quot;],
+  [type=&quot;month&quot;],
+  [type=&quot;week&quot;]
+) {
+  padding-inline: var(--control-spacing, 12px);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type=&quot;file&quot;] {
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+  padding: 0;
+}
+
+.form-control[type=&quot;file&quot;]::file-selector-button {
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+  min-height: calc(10px + 2 * var(--control-spacing, 12px));
+  padding-inline: var(--control-spacing, 12px);
+  margin-inline-end: var(--control-spacing, 12px);
+}
+
+.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type=&quot;color&quot;] {
+  width: 40px;
+  height: calc(12px + 2 * var(--control-spacing, 12px));
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: var(--corner-shape);
+}
+
+textarea.form-control {
+  height: auto;
+  resize: vertical;
+  min-height: 96px;
+  padding: 8px 10px;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: none;
+}
+.form-control:disabled {
+  color: var(--muted-foreground);
+  background: color-mix(in srgb, var(--foreground) 5%, transparent);
+  opacity: 1;
+}
+.form-control[aria-invalid=&quot;true&quot;] {
+  border-color: var(--red);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--red) 20%, transparent);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: fit-content;
+  min-height: calc(12px + 2 * var(--control-spacing, 12px));
+  margin: 0;
+  /* The secondary icon role is 14px at compact density and 16px at web density. */
+  --icon-size: calc(10px + var(--control-spacing, 12px) / 2);
+  /* Settings dropdowns retain a 12px inset and a 4px text-to-chevron gap. */
+  padding: 0 calc(16px + var(--icon-size)) 0 12px;
+  outline: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  corner-shape: var(--corner-shape);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(
+      45deg,
+      transparent calc(50% - 0.6px),
+      var(--muted-foreground) calc(50% - 0.6px) calc(50% + 0.6px),
+      transparent calc(50% + 0.6px)
+    ),
+    linear-gradient(
+      135deg,
+      transparent calc(50% - 0.6px),
+      var(--muted-foreground) calc(50% - 0.6px) calc(50% + 0.6px),
+      transparent calc(50% + 0.6px)
+    );
+  background-position:
+    calc(100% - 12px - var(--icon-size) / 2) 50%,
+    calc(100% - 12px - var(--icon-size) * 0.18) 50%;
+  background-repeat: no-repeat;
+  background-size: calc(var(--icon-size) * 0.32) calc(var(--icon-size) * 0.32);
+  cursor: var(--cursor-interaction, default);
+  font-size: calc(var(--font-size-base) * 14 / 16);
+  font-size: round(nearest, calc(var(--font-size-base) * 14 / 16), 1px);
+  font-weight: var(--font-weight-normal);
+  line-height: 18px;
+}
+
+.form-select option {
+  color: var(--popover-foreground);
+  background-color: var(--popover);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: light-dark(
+    color-mix(in srgb, var(--foreground) 5.5%, transparent),
+    color-mix(in srgb, var(--foreground) 8%, transparent)
+  );
+}
+
+.form-select:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+.form-select:disabled {
+  opacity: 0.4;
+}
+
+.form-check {
+  display: flex;
+  min-height: calc(12px + 2 * var(--control-spacing, 12px));
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+  corner-shape: round;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  width: calc(10px + var(--control-spacing, 12px) / 2);
+  height: calc(10px + var(--control-spacing, 12px) / 2);
+  border-color: var(--border-strong, var(--input));
+  border-radius: calc(var(--radius-sm) / 2);
+  background-color: transparent;
+  color: var(--foreground);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:is(:checked, :indeterminate) {
+  border-color: var(--border-strong, var(--input));
+  background-color: color-mix(in srgb, var(--popover) 96%, transparent);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: &quot;&quot;;
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+  background-color: var(--foreground);
+}
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:indeterminate::before {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 65%;
+  height: 6.65%;
+  margin: auto;
+  border-radius: var(--radius-full);
+  background: var(--foreground);
+  mask: none;
+  content: &quot;&quot;;
+}
+
+.form-check-input[type=&quot;radio&quot;] {
+  border-radius: var(--radius-full);
+  width: 16px;
+  height: 16px;
+  border: 0;
+  box-shadow: inset 0 0 0 1px var(--input);
+}
+
+.form-check-input[type=&quot;radio&quot;]:checked {
+  border: 0;
+  background: radial-gradient(
+    circle,
+    var(--primary-foreground) 0 3px,
+    var(--foreground) 3px
+  );
+  box-shadow: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:focus-visible {
+  border-color: var(--ring);
+  outline: none;
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+.form-check:not(.form-switch) .form-check-input[type=&quot;radio&quot;]:disabled,
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;radio&quot;]:disabled
+  + .form-check-label {
+  opacity: 0.5;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-sm);
+  content: &quot;&quot;;
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+  border-color: #fff;
+  background: #fff;
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--blue);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+  outline: none;
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  accent-color: var(--primary);
+  height: calc(12px + 2 * var(--control-spacing, 12px));
+  min-height: calc(12px + 2 * var(--control-spacing, 12px));
+  outline: none;
+  border-radius: var(--radius-full);
+  color: var(--foreground);
+  background: transparent;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  background: var(--form-range-track, var(--border));
+  height: 2px;
+  border-radius: var(--radius-full);
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  margin-top: -9px;
+  border-color: transparent;
+  background: currentColor;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Outline the native track and thumb, preserving the larger input hit area. */
+.form-range:focus-visible::-webkit-slider-runnable-track {
+  outline: 2px auto Highlight;
+  outline-color: -webkit-focus-ring-color;
+}
+
+.form-range::-moz-range-track {
+  background: var(--form-range-track, var(--border));
+  height: 2px;
+  border-radius: var(--radius-full);
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  border-color: transparent;
+  background: currentColor;
+  box-shadow: var(--shadow-sm);
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  outline: 2px solid Highlight;
+  outline-offset: 2px;
+}
+
+.form-range:disabled {
+  opacity: 1;
+  cursor: default;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+  [aria-pressed=&quot;true&quot;],
+  [aria-selected=&quot;true&quot;],
+  .is-selected
+) {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--blue);
+}
+
+.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible,
+.nav-link:focus-visible {
+  outline-offset: 2px;
+  outline: none;
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.viz-carousel-controls :is(button, summary):focus-visible {
+  outline: 2px solid var(--ring) !important;
+  outline-offset: 2px !important;
+}
+
+/* Web recipes are the default, including on renderers without inline style queries. */
+@supports (border-radius: if(style(--corner-shape: round): 1px; else: 2px)) {
+  /* Match the host&#x27;s proportional text-sm scale at every text preference. */
+  .tooltip,
+  .viz-badge,
+  .btn,
+  .nav-link,
+  .form-control,
+  .form-select {
+    font-size: if(
+      style(--corner-shape: round): round(
+          nearest,
+          calc(var(--font-size-base) * 14 / 16),
+          1px
+        );
+        else: round(nearest, calc(var(--font-size-base) * 13 / 14), 1px)
+    );
+  }
+
+  .btn,
+  .nav-link,
+  .form-select {
+    border-radius: if(
+      style(--corner-shape: round): var(--radius-full); else: var(--radius-lg)
+    );
+  }
+
+  .form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+    border-radius: if(
+      style(--corner-shape: round): calc(var(--radius-sm) / 2);
+        else: calc(var(--radius-lg) * 0.4)
+    );
+  }
+
+  .tooltip {
+    font-weight: if(
+      style(--corner-shape: round): 600; else: var(--font-weight-normal)
+    );
+  }
+}
+
+@media (pointer: coarse) {
+  .viz-carousel:has(&gt; .viz-carousel-controls) {
+    min-height: calc(76px + var(--viz-carousel-picker-height, 0px));
+    padding-bottom: 76px;
+  }
+
+  .btn,
+  .nav-link,
+  .viz-carousel-controls button,
+  .viz-carousel-picker &gt; summary,
+  .form-control,
+  .form-select {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Keep small-screen WebKit from zooming when a text field receives focus. */
+  .form-control,
+  .form-select {
+    font-size: max(16px, calc(var(--font-size-base) * 14 / 16));
+    font-size: max(
+      16px,
+      round(nearest, calc(var(--font-size-base) * 14 / 16), 1px)
+    );
+  }
+  .form-control:is(
+    [type=&quot;file&quot;],
+    [type=&quot;date&quot;],
+    [type=&quot;datetime-local&quot;],
+    [type=&quot;month&quot;],
+    [type=&quot;week&quot;],
+    [type=&quot;time&quot;],
+    [type=&quot;color&quot;]
+  ) {
+    height: 44px;
+    min-height: 44px;
+    font-size: max(16px, calc(var(--font-size-base) * 14 / 16));
+    font-size: max(
+      16px,
+      round(nearest, calc(var(--font-size-base) * 14 / 16), 1px)
+    );
+  }
+
+  .form-control[type=&quot;file&quot;]::file-selector-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .form-control-color[type=&quot;color&quot;] {
+    width: 44px;
+    height: 44px;
+  }
+
+  .form-control:is(
+    [type=&quot;date&quot;],
+    [type=&quot;datetime-local&quot;],
+    [type=&quot;month&quot;],
+    [type=&quot;time&quot;],
+    [type=&quot;week&quot;]
+  ) {
+    min-width: 0;
+    max-width: 100%;
+    padding-block: 8px;
+  }
+
+  .form-check {
+    min-height: 44px;
+    padding-inline: 15px;
+  }
+
+  .form-check-input {
+    position: relative;
+  }
+
+  .form-check-input::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    content: &quot;&quot;;
+    transform: translate(-50%, -50%);
+  }
+
+  .form-check-label {
+    display: inline-flex;
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .form-range {
+    height: 44px;
+    touch-action: pan-y;
+  }
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget &gt; svg {
+  width: 100%;
+}
+
+/* Model-authored chart rules can otherwise stretch icons after these styles load. */
+svg.lucide {
+  display: block;
+  width: var(--icon-size) !important;
+  height: var(--icon-size) !important;
+  flex: none;
+  margin: 0 !important;
+  stroke-width: 1.6;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html&gt;body{padding:0}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;script type=&quot;application/json&quot; id=&quot;codex-visualization-widget-state&quot;&gt;__CODEX_VISUALIZATION_WIDGET_STATE__&lt;/script&gt;
+&lt;script&gt;(() =&gt; {
+  const root = document.documentElement;
+  const mediaQuery = globalThis.matchMedia(&quot;(prefers-color-scheme: dark)&quot;);
+  const apply = Reflect.apply;
+  const isArray = Array.isArray;
+  const hasOwn = Object.hasOwn;
+  const parentWindow = globalThis.parent;
+  const stringify = JSON.stringify;
+  const parse = JSON.parse;
+  const encode = TextEncoder.prototype.encode.bind(new TextEncoder());
+  const initialStateElement = document.getElementById(
+    &quot;codex-visualization-widget-state&quot;,
+  );
+  const initialGlobals = parse(initialStateElement?.textContent ?? &quot;{}&quot;);
+  initialStateElement?.remove();
+  /** @type {Record&lt;string, unknown&gt; | null} */
+  let state = initialGlobals.widgetState ?? null;
+  const statePersistence = initialGlobals.statePersistence ?? &quot;none&quot;;
+  let nextStateRequestId = 0;
+  /** @type {Map&lt;number, { resolve: () =&gt; void; reject: (error: Error) =&gt; void; timeout: ReturnType&lt;typeof globalThis.setTimeout&gt;; serializedState: string }&gt;} */
+  const pendingStateWrites = new Map();
+  const persistenceError = () =&gt;
+    Object.assign(
+      new Error(&quot;The host could not persist the widget state update&quot;),
+      {
+        code: -32000,
+        data: { code: &quot;widget_state_persistence_failed&quot;, retryable: false },
+      },
+    );
+  /**
+   * @param {object} prototype
+   * @param {string} property
+   */
+  const getPrototypeGetter = (prototype, property) =&gt; {
+    // oxlint-disable-next-line typescript/unbound-method -- invoked through captured Reflect.apply
+    const getter = Object.getOwnPropertyDescriptor(prototype, property)?.get;
+    if (getter == null) {
+      throw new Error(`Missing ${property} getter`);
+    }
+    return getter;
+  };
+  const getMessageData = getPrototypeGetter(MessageEvent.prototype, &quot;data&quot;);
+  const getMessagePorts = getPrototypeGetter(MessageEvent.prototype, &quot;ports&quot;);
+  const getMessageSource = getPrototypeGetter(MessageEvent.prototype, &quot;source&quot;);
+  // oxlint-disable-next-line typescript/unbound-method -- captured before the untrusted fragment runs
+  const addHostMessageListener = MessagePort.prototype.addEventListener;
+  // oxlint-disable-next-line typescript/unbound-method -- captured before the untrusted fragment runs
+  const postHostMessage = MessagePort.prototype.postMessage;
+  // oxlint-disable-next-line typescript/unbound-method -- captured before the untrusted fragment runs
+  const startHostPort = MessagePort.prototype.start;
+  // oxlint-disable-next-line typescript/unbound-method -- captured before the untrusted fragment runs
+  const stopMessagePropagation = Event.prototype.stopImmediatePropagation;
+  /** @type {MessagePort | null} */
+  let hostPort = null;
+  const postToHost = (type, payload) =&gt; {
+    if (hostPort != null) {
+      apply(postHostMessage, hostPort, [{ type, ...payload }]);
+    }
+  };
+  const openExternal = ({ href }) =&gt; {
+    if (globalThis.navigator.userActivation?.isActive === true) {
+      postToHost(&quot;open-external&quot;, { href });
+    }
+  };
+  const sendFollowUpMessage = ({ context, prompt, title }) =&gt; {
+    if (globalThis.navigator.userActivation?.isActive === true) {
+      postToHost(&quot;follow-up&quot;, { context, prompt, title });
+    }
+    return Promise.resolve();
+  };
+  /**
+   * @param {Record&lt;string, unknown&gt; | ((previous: Record&lt;string, unknown&gt; | null) =&gt; Record&lt;string, unknown&gt;)} next
+   * @returns {Promise&lt;void&gt;}
+   */
+  const setWidgetState = async (next) =&gt; {
+    const nextState = typeof next === &quot;function&quot; ? next(state) : next;
+    if (
+      nextState == null ||
+      typeof nextState !== &quot;object&quot; ||
+      isArray(nextState)
+    ) {
+      throw new TypeError(&quot;Widget state must be a JSON object&quot;);
+    }
+    const inputState = stringify(
+      nextState,
+      (_key, /** @type {unknown} */ value) =&gt; {
+        if (
+          typeof value === &quot;undefined&quot; ||
+          typeof value === &quot;function&quot; ||
+          typeof value === &quot;symbol&quot; ||
+          (typeof value === &quot;number&quot; &amp;&amp; !Number.isFinite(value))
+        ) {
+          throw new TypeError(&quot;Widget state must be a JSON object&quot;);
+        }
+        return value;
+      },
+    );
+    const parsedState = parse(inputState);
+    if (
+      parsedState == null ||
+      typeof parsedState !== &quot;object&quot; ||
+      isArray(parsedState)
+    ) {
+      throw new TypeError(&quot;Widget state must be a JSON object&quot;);
+    }
+    const storedState = {
+      modelContent: null,
+      privateContent: null,
+      ...parsedState,
+    };
+    const serializedState = stringify(storedState);
+    if (encode(serializedState).length &gt; 16 * 1024) {
+      throw new TypeError(
+        &quot;Widget state must be a JSON object of at most 16 KiB&quot;,
+      );
+    }
+    if (
+      hasOwn(storedState, &quot;imageIds&quot;) &amp;&amp;
+      (!isArray(storedState.imageIds) ||
+        storedState.imageIds.some(
+          (/** @type {unknown} */ id) =&gt; typeof id !== &quot;string&quot;,
+        ))
+    ) {
+      throw new TypeError(&quot;Widget state imageIds must be an array of strings&quot;);
+    }
+    if (storedState.imageIds?.length &gt; 0) {
+      throw Object.assign(
+        new TypeError(&quot;Visualization state does not support image attachments&quot;),
+        { code: -32602, data: { code: &quot;images_unsupported&quot; } },
+      );
+    }
+    state = storedState;
+    globalThis.openai.widgetState = state;
+    globalThis.dispatchEvent(
+      new CustomEvent(&quot;openai:set_globals&quot;, {
+        detail: { globals: { widgetState: state } },
+      }),
+    );
+    if (statePersistence === &quot;none&quot;) {
+      throw persistenceError();
+    }
+    const id = ++nextStateRequestId;
+    return new Promise((resolve, reject) =&gt; {
+      const timeout = globalThis.setTimeout(() =&gt; {
+        pendingStateWrites.delete(id);
+        reject(persistenceError());
+      }, 30_000);
+      pendingStateWrites.set(id, { resolve, reject, timeout, serializedState });
+      postToHost(&quot;widget-state-write&quot;, { id, state: serializedState });
+    });
+  };
+  const syncTheme = () =&gt; {
+    const theme = mediaQuery.matches ? &quot;dark&quot; : &quot;light&quot;;
+    root.dataset.theme = theme;
+    globalThis.openai = {
+      ...globalThis.openai,
+      openExternal,
+      sendFollowUpMessage,
+      setWidgetState,
+      theme,
+      visualizationStyleVariables: {},
+      visualizationTheme: theme,
+      widgetState: state,
+      statePersistence,
+      stateModelContext: &quot;none&quot;,
+    };
+    globalThis.dispatchEvent(
+      new CustomEvent(&quot;openai:set_globals&quot;, {
+        detail: { globals: globalThis.openai },
+      }),
+    );
+  };
+  const sendHeight = () =&gt; {
+    postToHost(&quot;height&quot;, {
+      height: Math.ceil(
+        Math.max(
+          document.body.scrollHeight,
+          document.body.getBoundingClientRect().height,
+        ),
+      ),
+    });
+  };
+
+  globalThis.addEventListener(
+    &quot;message&quot;,
+    (event) =&gt; {
+      const data = apply(getMessageData, event, []);
+      const ports = apply(getMessagePorts, event, []);
+      const source = apply(getMessageSource, event, []);
+      if (
+        hostPort != null ||
+        source !== parentWindow ||
+        typeof data !== &quot;object&quot; ||
+        data?.type !== &quot;codex-visualization-initialize&quot; ||
+        !isArray(ports) ||
+        ports.length !== 1
+      ) {
+        return;
+      }
+      apply(stopMessagePropagation, event, []);
+      const nextHostPort = ports[0];
+      try {
+        apply(addHostMessageListener, nextHostPort, [
+          &quot;message&quot;,
+          (event) =&gt; {
+            const data = apply(getMessageData, event, []);
+            if (typeof data === &quot;object&quot; &amp;&amp; data?.type === &quot;measure&quot;) {
+              sendHeight();
+            } else if (
+              typeof data === &quot;object&quot; &amp;&amp;
+              data?.type === &quot;widget-state-result&quot;
+            ) {
+              /** @type {unknown} */
+              const id = data.id;
+              if (typeof id !== &quot;number&quot;) {
+                return;
+              }
+              const pending = pendingStateWrites.get(id);
+              if (pending != null) {
+                pendingStateWrites.delete(id);
+                globalThis.clearTimeout(pending.timeout);
+                if (data.ok === true) {
+                  pending.resolve();
+                } else {
+                  pending.reject(persistenceError());
+                }
+              }
+            }
+          },
+        ]);
+        apply(startHostPort, nextHostPort, []);
+      } catch {
+        return;
+      }
+      hostPort = nextHostPort;
+      for (const [id, { serializedState }] of pendingStateWrites) {
+        postToHost(&quot;widget-state-write&quot;, { id, state: serializedState });
+      }
+      sendHeight();
+    },
+    { capture: true },
+  );
+  document.currentScript?.remove();
+  mediaQuery.addEventListener(&quot;change&quot;, syncTheme);
+  globalThis.addEventListener(&quot;click&quot;, (event) =&gt; {
+    if (event.defaultPrevented) {
+      return;
+    }
+    let element = null;
+    if (event.target instanceof globalThis.Element) {
+      element = event.target;
+    } else if (event.target instanceof globalThis.Node) {
+      element = event.target.parentElement;
+    }
+    const link = element?.closest(&quot;a[href]&quot;);
+    const href = link?.getAttribute(&quot;href&quot;);
+    if (href == null) {
+      return;
+    }
+    if (href.startsWith(&quot;#&quot;)) {
+      let id;
+      try {
+        id = decodeURIComponent(href.slice(1));
+      } catch {
+        return;
+      }
+      const target = id.length === 0 ? root : document.getElementById(id);
+      if (
+        target == null ||
+        globalThis.navigator.userActivation?.isActive !== true
+      ) {
+        return;
+      }
+      event.preventDefault();
+      postToHost(&quot;scroll-to&quot;, {
+        top: target.getBoundingClientRect().top + globalThis.scrollY,
+      });
+      return;
+    }
+    event.preventDefault();
+    openExternal({ href });
+  });
+  new ResizeObserver(sendHeight).observe(document.body);
+  syncTheme();
+})();
+&lt;/script&gt;
+&lt;div id=&quot;custom-preset-fem&quot;&gt;
+&lt;style&gt;
+#custom-preset-fem{color-scheme:light dark;--e-bg:light-dark(#fff,#202a24);--e-text:light-dark(#263a2e,#e4eee7);--e-muted:light-dark(#53685a,#b5c8bc);--e-band:light-dark(#edf3ee,#2d3e32);--e-border:light-dark(#c8d5cc,#506658);--e-key:light-dark(#2c6249,#add4ba);--e-on:light-dark(#fff,#193625);--e-input:light-dark(#fff3ca,#49412a);--e-error:light-dark(#9e402b,#ffb9a6);font:14px/1.55 Meiryo,&quot;Yu Gothic&quot;,sans-serif;color:var(--e-text)}
+#custom-preset-fem *{box-sizing:border-box}
+#custom-preset-fem .e-app{background:var(--e-bg);border:1px solid var(--e-border)}
+#custom-preset-fem header{background:var(--e-band);padding:14px 110px 12px 16px}
+#custom-preset-fem .e-brand{font-size:17px;font-weight:500}
+#custom-preset-fem .e-muted{color:var(--e-muted);font-size:12px}
+#custom-preset-fem button,#custom-preset-fem input,#custom-preset-fem select{font:inherit;color:var(--e-text);border:1px solid var(--e-border);border-radius:3px;max-width:100%}
+#custom-preset-fem button{background:var(--e-bg);padding:6px 9px;text-align:left}
+#custom-preset-fem button[aria-pressed=&quot;true&quot;],#custom-preset-fem .e-primary{background:var(--e-key);color:var(--e-on);border-color:var(--e-key)}
+#custom-preset-fem button:disabled{opacity:.5}
+#custom-preset-fem input,#custom-preset-fem select{background:var(--e-input);padding:7px 8px;width:100%;min-width:0}
+#custom-preset-fem textarea{font:inherit;color:var(--e-text);background:var(--e-input);border:1px solid var(--e-border);border-radius:3px;padding:8px;width:100%;min-width:0;resize:vertical}
+#custom-preset-fem input[type=&quot;checkbox&quot;]{width:auto;accent-color:var(--e-key)}
+#custom-preset-fem .e-nav,#custom-preset-fem .e-examples{display:flex;flex-wrap:wrap;align-items:center;gap:7px;padding:10px 16px;border-bottom:1px solid var(--e-border)}
+#custom-preset-fem .e-examples label{display:flex;align-items:center;flex-wrap:wrap;gap:7px}
+#custom-preset-fem .e-examples select{width:auto}
+#custom-preset-fem .e-work{display:grid;grid-template-columns:minmax(195px,.75fr) minmax(0,2.35fr)}
+#custom-preset-fem aside{padding:12px;border-right:1px solid var(--e-border);background:var(--e-band);min-width:0}
+#custom-preset-fem .e-stage{width:100%;margin:0 0 6px;padding:8px 9px;display:grid;gap:3px}
+#custom-preset-fem .e-stage small{font-size:12px;color:inherit;opacity:.85}
+#custom-preset-fem .e-stage-index{font-weight:500}
+#custom-preset-fem main{padding:12px 16px 18px;min-width:0;min-height:430px}
+#custom-preset-fem h2{font-size:17px;font-weight:500;margin:0 0 10px}
+#custom-preset-fem h3{font-size:14px;font-weight:500;margin:15px 0 7px}
+#custom-preset-fem .e-tools{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin:9px 0}
+#custom-preset-fem .e-tools select{width:auto;max-width:100%}
+#custom-preset-fem .e-table-wrap{overflow-x:auto;max-width:100%}
+#custom-preset-fem table{border-collapse:collapse;width:100%;min-width:450px;text-align:left}
+#custom-preset-fem th,#custom-preset-fem td{padding:8px 7px;vertical-align:top;border-bottom:1px solid var(--e-border);overflow-wrap:anywhere}
+#custom-preset-fem th{font-weight:500;background:var(--e-band)}
+#custom-preset-fem .e-selected td{background:var(--e-band)}
+#custom-preset-fem .e-op-select{min-width:132px}
+#custom-preset-fem .e-role{display:block;font-size:12px;color:var(--e-muted);margin-top:3px}
+#custom-preset-fem .e-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 14px;margin-top:10px}
+#custom-preset-fem .e-form label{display:grid;gap:4px;min-width:0;align-content:start}
+#custom-preset-fem .e-wide{grid-column:1/-1}
+#custom-preset-fem .e-read{background:var(--e-band);padding:7px 9px;min-height:37px}
+#custom-preset-fem .e-note{padding:9px 11px;background:var(--e-band);border-left:3px solid var(--e-key);margin:10px 0}
+#custom-preset-fem .e-alert{color:var(--e-error)}
+#custom-preset-fem .e-confirm{border:1px solid var(--e-border);background:var(--e-band);padding:12px;margin:10px 0}
+#custom-preset-fem .e-status{padding:8px 16px;border-top:1px solid var(--e-border);font-size:12px;color:var(--e-muted);min-height:36px}
+#custom-preset-fem .e-tabs{display:flex;flex-wrap:wrap;gap:8px;padding:8px 16px;background:var(--e-band);border-top:1px solid var(--e-border)}
+#custom-preset-fem .e-tabs button{border:0;background:transparent;border-radius:0;padding:3px 4px}
+#custom-preset-fem .e-tabs button[aria-pressed=&quot;true&quot;]{color:var(--e-key);box-shadow:inset 0 -2px var(--e-key)}
+#custom-preset-fem .e-roomy td,#custom-preset-fem .e-roomy th{padding-top:12px;padding-bottom:12px}
+#custom-preset-fem .e-results{border:1px solid var(--e-border);padding:20px;text-align:center;margin:12px 0}
+#custom-preset-fem [hidden]{display:none!important}
+@media(max-width:700px){#custom-preset-fem .e-work{grid-template-columns:1fr}#custom-preset-fem aside{border-right:0;border-bottom:1px solid var(--e-border)}#custom-preset-fem .e-stage-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}#custom-preset-fem .e-stage{margin:0}#custom-preset-fem main{padding:12px 10px}#custom-preset-fem .e-nav,#custom-preset-fem .e-examples{padding-left:10px;padding-right:10px}}
+@media(max-width:420px){#custom-preset-fem .e-form{grid-template-columns:1fr}#custom-preset-fem .e-stage-list{grid-template-columns:1fr}#custom-preset-fem .e-nav button{flex:1 0 27%}#custom-preset-fem .e-examples label,#custom-preset-fem .e-examples select{width:100%}}
+@media(pointer:coarse){#custom-preset-fem button,#custom-preset-fem select,#custom-preset-fem input{min-height:44px}#custom-preset-fem input,#custom-preset-fem select{font-size:16px}}
+&lt;/style&gt;
+&lt;section class=&quot;e-app&quot; aria-label=&quot;施工工程と操作を組み立てるシート試作&quot;&gt;
+&lt;header&gt;&lt;div class=&quot;e-brand&quot;&gt;2D Soil FEM　施工工程エディター&lt;/div&gt;&lt;div class=&quot;e-muted&quot;&gt;PR #34 設計試作 ｜ 共通モデル＋操作＋解析区間＋照査 ｜ 計算値なし&lt;/div&gt;&lt;/header&gt;
+&lt;nav class=&quot;e-nav&quot; id=&quot;e-nav&quot; aria-label=&quot;常用5画面&quot;&gt;&lt;/nav&gt;
+&lt;div class=&quot;e-examples&quot;&gt;&lt;label&gt;開始プリセット&lt;select id=&quot;e-preset&quot;&gt;&lt;option value=&quot;slope_static&quot;&gt;斜面SRM・常時&lt;/option&gt;&lt;option value=&quot;slope_seismic&quot;&gt;斜面SRM・地震時（震度法）&lt;/option&gt;&lt;option value=&quot;wall&quot;&gt;擁壁施工＋SRM&lt;/option&gt;&lt;option value=&quot;tunnel&quot;&gt;トンネル断面掘削&lt;/option&gt;&lt;option value=&quot;bearing_flat&quot;&gt;支持力・水平地盤&lt;/option&gt;&lt;option value=&quot;bearing_slope&quot;&gt;支持力・斜面&lt;/option&gt;&lt;option value=&quot;anchor&quot;&gt;アンカー・段階掘削&lt;/option&gt;&lt;option value=&quot;empty&quot;&gt;白紙から自由入力&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;&lt;button type=&quot;button&quot; class=&quot;cursor-interaction&quot; data-action=&quot;preset-preview&quot;&gt;構成を確認&lt;/button&gt;&lt;label id=&quot;e-doc-field&quot;&gt;編集中の案&lt;select id=&quot;e-example&quot;&gt;&lt;/select&gt;&lt;/label&gt;&lt;span id=&quot;e-current-doc&quot;&gt;&lt;/span&gt;&lt;span class=&quot;e-muted&quot;&gt;新規案へ展開。既存案を保持し、適用後も自由編集。&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;e-examples&quot; aria-label=&quot;自作プリセット&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;cursor-interaction&quot; data-action=&quot;custom-save-open&quot;&gt;自作プリセットとして保存&lt;/button&gt;&lt;button type=&quot;button&quot; class=&quot;cursor-interaction&quot; data-action=&quot;custom-library&quot;&gt;自作一覧・読込&lt;/button&gt;&lt;button type=&quot;button&quot; class=&quot;cursor-interaction&quot; data-action=&quot;custom-import-open&quot;&gt;JSONから読込&lt;/button&gt;&lt;span class=&quot;e-muted&quot;&gt;試作内の一覧に保存。JSONで持ち出し・再読込できます。&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;e-work&quot;&gt;&lt;aside id=&quot;e-stages&quot; aria-label=&quot;工程一覧と工程編集&quot;&gt;&lt;/aside&gt;&lt;main id=&quot;e-main&quot; aria-live=&quot;polite&quot;&gt;&lt;/main&gt;&lt;/div&gt;
+&lt;div class=&quot;e-status&quot; id=&quot;e-status&quot; role=&quot;status&quot;&gt;&lt;/div&gt;&lt;footer class=&quot;e-tabs&quot; id=&quot;e-tabs&quot; aria-label=&quot;シート移動&quot;&gt;&lt;/footer&gt;
+&lt;/section&gt;
+&lt;script&gt;
+(()=&gt;{
+const root=document.getElementById(&#x27;custom-preset-fem&#x27;),el=id=&gt;root.querySelector(&#x27;#&#x27;+id);
+const names=[&#x27;01 案件&#x27;,&#x27;02 モデル&#x27;,&#x27;03 施工条件&#x27;,&#x27;04 確認・計算&#x27;,&#x27;05 結果&#x27;];
+const clone=v=&gt;JSON.parse(JSON.stringify(v));
+const esc=v=&gt;String(v??&#x27;&#x27;).replace(/[&amp;&lt;&gt;&quot;&#x27;]/g,c=&gt;({&#x27;&amp;&#x27;:&#x27;&amp;amp;&#x27;,&#x27;&lt;&#x27;:&#x27;&amp;lt;&#x27;,&#x27;&gt;&#x27;:&#x27;&amp;gt;&#x27;,&#x27;&quot;&#x27;:&#x27;&amp;quot;&#x27;,&quot;&#x27;&quot;:&#x27;&amp;#39;&#x27;}[c]));
+const button=(label,data=&#x27;&#x27;,disabled=false)=&gt;{const cls=data.match(/class=&quot;([^&quot;]*)&quot;/);return &#x27;&lt;button type=&quot;button&quot; class=&quot;cursor-interaction&#x27;+(cls?&#x27; &#x27;+cls[1]:&#x27;&#x27;)+&#x27;&quot; &#x27;+data.replace(/class=&quot;[^&quot;]*&quot;/,&#x27;&#x27;)+(disabled?&#x27; disabled&#x27;:&#x27;&#x27;)+&#x27;&gt;&#x27;+label+&#x27;&lt;/button&gt;&#x27;;};
+const select=(id,options,value)=&gt;&#x27;&lt;select id=&quot;&#x27;+id+&#x27;&quot;&gt;&#x27;+options.map(([v,t])=&gt;&#x27;&lt;option value=&quot;&#x27;+esc(v)+&#x27;&quot;&#x27;+(String(v)===String(value)?&#x27; selected&#x27;:&#x27;&#x27;)+&#x27;&gt;&#x27;+esc(t)+&#x27;&lt;/option&gt;&#x27;).join(&#x27;&#x27;)+&#x27;&lt;/select&gt;&#x27;;
+const text=(label,id,value,type=&#x27;text&#x27;)=&gt;&#x27;&lt;label&gt;&#x27;+label+&#x27;&lt;input id=&quot;&#x27;+id+&#x27;&quot; type=&quot;&#x27;+type+&#x27;&quot; value=&quot;&#x27;+esc(value)+&#x27;&quot;&#x27;+(type===&#x27;number&#x27;?&#x27; step=&quot;any&quot;&#x27;:&#x27;&#x27;)+&#x27;&gt;&lt;/label&gt;&#x27;;
+const read=(label,value)=&gt;&#x27;&lt;label&gt;&#x27;+label+&#x27;&lt;span class=&quot;e-read&quot;&gt;&#x27;+esc(value)+&#x27;&lt;/span&gt;&lt;/label&gt;&#x27;;
+const table=(heads,rows)=&gt;&#x27;&lt;div class=&quot;e-table-wrap&quot;&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&#x27;+heads.map(h=&gt;&#x27;&lt;th scope=&quot;col&quot;&gt;&#x27;+h+&#x27;&lt;/th&gt;&#x27;).join(&#x27;&#x27;)+&#x27;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&#x27;+rows.map(r=&gt;&#x27;&lt;tr&gt;&#x27;+r.map(c=&gt;&#x27;&lt;td&gt;&#x27;+c+&#x27;&lt;/td&gt;&#x27;).join(&#x27;&#x27;)+&#x27;&lt;/tr&gt;&#x27;).join(&#x27;&#x27;)+&#x27;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&#x27;;
+const defs={
+ activate:{name:&#x27;有効化・設置&#x27;,role:&#x27;操作&#x27;,target:[&#x27;soil&#x27;,&#x27;solid&#x27;,&#x27;beam&#x27;,&#x27;anchor&#x27;,&#x27;interface&#x27;]},
+ remove:{name:&#x27;撤去・掘削&#x27;,role:&#x27;操作&#x27;,target:[&#x27;soil&#x27;,&#x27;solid&#x27;,&#x27;beam&#x27;,&#x27;anchor&#x27;,&#x27;interface&#x27;]},
+ load:{name:&#x27;作用・載荷&#x27;,role:&#x27;操作&#x27;,target:[&#x27;load&#x27;,&#x27;soil&#x27;,&#x27;solid&#x27;]},
+ boundary:{name:&#x27;支持・水理境界変更&#x27;,role:&#x27;操作&#x27;,target:[&#x27;boundary&#x27;]},
+ prestress:{name:&#x27;初期力・緊張&#x27;,role:&#x27;操作&#x27;,target:[&#x27;anchor&#x27;,&#x27;beam&#x27;]},
+ lock:{name:&#x27;定着・基準長固定&#x27;,role:&#x27;操作&#x27;,target:[&#x27;anchor&#x27;]},
+ release:{name:&#x27;内力・応力解放&#x27;,role:&#x27;操作&#x27;,target:[&#x27;soil&#x27;,&#x27;beam&#x27;,&#x27;anchor&#x27;]},
+ material:{name:&#x27;材料・物性変更&#x27;,role:&#x27;操作&#x27;,target:[&#x27;soil&#x27;,&#x27;solid&#x27;,&#x27;beam&#x27;]},
+ static:{name:&#x27;力学の平衡計算&#x27;,role:&#x27;解析区間&#x27;,target:[]},
+ transient:{name:&#x27;過渡連成・圧密&#x27;,role:&#x27;解析区間&#x27;,target:[]},
+ darcy:{name:&#x27;定常浸透&#x27;,role:&#x27;解析区間&#x27;,target:[]},
+ save:{name:&#x27;受理状態を保存&#x27;,role:&#x27;保存&#x27;,target:[]},
+ srm:{name:&#x27;SRM照査を分岐&#x27;,role:&#x27;照査枝&#x27;,target:[&#x27;soil&#x27;]}
+};
+const common=[{id:&#x27;G&#x27;,name:&#x27;G 基盤地盤&#x27;,type:&#x27;soil&#x27;,active:true},{id:&#x27;D&#x27;,name:&#x27;D 排水・支持境界&#x27;,type:&#x27;boundary&#x27;,active:true},{id:&#x27;Q&#x27;,name:&#x27;Q 上載荷重&#x27;,type:&#x27;load&#x27;,active:true}];
+let sequence=100;
+const newId=prefix=&gt;prefix+(++sequence);
+const defaultParams={policy:&#x27;new&#x27;,value:&#x27;&#x27;,basis:&#x27;PER_WIDTH&#x27;,duration:&#x27;1&#x27;,solver:&#x27;fixed&#x27;,mode:&#x27;replace&#x27;,water:&#x27;fixed&#x27;,at:&#x27;end&#x27;,offset:&#x27;&#x27;,segment:&#x27;&#x27;};
+const presetNames={slope_static:&#x27;斜面SRM・常時&#x27;,slope_seismic:&#x27;斜面SRM・地震時（震度法）&#x27;,wall:&#x27;擁壁施工＋SRM&#x27;,tunnel:&#x27;トンネル断面掘削&#x27;,bearing_flat:&#x27;支持力・水平地盤&#x27;,bearing_slope:&#x27;支持力・斜面&#x27;,anchor:&#x27;アンカー・段階掘削&#x27;,empty:&#x27;白紙から自由入力&#x27;};
+const makeOp=(kind,target=&#x27;&#x27;,p={})=&gt;({id:newId(&#x27;O&#x27;),kind,target,p:{...defaultParams,...p}});
+const makeStage=(name,parent,ops=[])=&gt;({id:newId(&#x27;S&#x27;),name,parent,ops,changed:false});
+function templates(){
+const wall={sets:[...clone(common),{id:&#x27;X&#x27;,name:&#x27;X 基礎掘削領域&#x27;,type:&#x27;soil&#x27;,active:true},{id:&#x27;W&#x27;,name:&#x27;W 擁壁縦壁・底盤（連続体）&#x27;,type:&#x27;solid&#x27;,active:false},{id:&#x27;J&#x27;,name:&#x27;J 壁・地盤接触&#x27;,type:&#x27;interface&#x27;,active:false},{id:&#x27;F1&#x27;,name:&#x27;F1 第1層裏込め&#x27;,type:&#x27;soil&#x27;,active:false},{id:&#x27;F2&#x27;,name:&#x27;F2 第2層裏込め&#x27;,type:&#x27;soil&#x27;,active:false}],stages:[]};
+const anchor={sets:[...clone(common),{id:&#x27;W&#x27;,name:&#x27;W 山留め壁（梁）&#x27;,type:&#x27;beam&#x27;,active:false},{id:&#x27;X1&#x27;,name:&#x27;X1 一次掘削領域&#x27;,type:&#x27;soil&#x27;,active:true},{id:&#x27;X2&#x27;,name:&#x27;X2 二次掘削領域&#x27;,type:&#x27;soil&#x27;,active:true},{id:&#x27;A1&#x27;,name:&#x27;A1 上段アンカー&#x27;,type:&#x27;anchor&#x27;,active:false},{id:&#x27;A2&#x27;,name:&#x27;A2 下段アンカー&#x27;,type:&#x27;anchor&#x27;,active:false}],stages:[]};
+const tunnel={sets:[...clone(common),{id:&#x27;U&#x27;,name:&#x27;U トンネル上半&#x27;,type:&#x27;soil&#x27;,active:true},{id:&#x27;L&#x27;,name:&#x27;L トンネル下半&#x27;,type:&#x27;soil&#x27;,active:true},{id:&#x27;C&#x27;,name:&#x27;C 上半支保（梁）&#x27;,type:&#x27;beam&#x27;,active:false},{id:&#x27;B&#x27;,name:&#x27;B ロックボルト&#x27;,type:&#x27;anchor&#x27;,active:false},{id:&#x27;I&#x27;,name:&#x27;I インバート（梁）&#x27;,type:&#x27;beam&#x27;,active:false}],stages:[]};
+function append(doc,name,ops){const parent=doc.stages.at(-1)?.id||&#x27;INITIAL&#x27;;const st=makeStage(name,parent,ops);doc.stages.push(st);return st;}
+for(const doc of [wall,anchor,tunnel])append(doc,&#x27;初期地盤の平衡&#x27;,[makeOp(&#x27;static&#x27;)]);
+append(wall,&#x27;基礎掘削&#x27;,[makeOp(&#x27;remove&#x27;,&#x27;X&#x27;),makeOp(&#x27;static&#x27;)]);
+append(wall,&#x27;L型擁壁の設置&#x27;,[makeOp(&#x27;activate&#x27;,&#x27;W&#x27;),makeOp(&#x27;activate&#x27;,&#x27;J&#x27;),makeOp(&#x27;static&#x27;)]);
+let a=append(wall,&#x27;第1層の裏込め&#x27;,[makeOp(&#x27;activate&#x27;,&#x27;F1&#x27;),makeOp(&#x27;load&#x27;,&#x27;F1&#x27;,{mode:&#x27;selfweight&#x27;}),makeOp(&#x27;transient&#x27;,&#x27;&#x27;,{duration:&#x27;1&#x27;})]);
+a.ops.push(makeOp(&#x27;srm&#x27;,&#x27;G&#x27;,{segment:a.ops[2].id}));
+let b=append(wall,&#x27;排水・圧密待機&#x27;,[makeOp(&#x27;boundary&#x27;,&#x27;D&#x27;,{mode:&#x27;keep&#x27;}),makeOp(&#x27;transient&#x27;,&#x27;&#x27;,{duration:&#x27;30&#x27;})]);
+b.ops.push(makeOp(&#x27;srm&#x27;,&#x27;G&#x27;,{segment:b.ops[1].id,at:&#x27;offset&#x27;,offset:&#x27;15&#x27;}));
+append(wall,&#x27;第2層の裏込め&#x27;,[makeOp(&#x27;activate&#x27;,&#x27;F2&#x27;),makeOp(&#x27;load&#x27;,&#x27;F2&#x27;,{mode:&#x27;selfweight&#x27;}),makeOp(&#x27;transient&#x27;,&#x27;&#x27;,{duration:&#x27;1&#x27;})]);
+append(anchor,&#x27;山留め壁を設置&#x27;,[makeOp(&#x27;activate&#x27;,&#x27;W&#x27;),makeOp(&#x27;static&#x27;)]);
+append(anchor,&#x27;一次掘削&#x27;,[makeOp(&#x27;remove&#x27;,&#x27;X1&#x27;),makeOp(&#x27;static&#x27;)]);
+append(anchor,&#x27;上段アンカー設置・緊張&#x27;,[makeOp(&#x27;activate&#x27;,&#x27;A1&#x27;,{policy:&#x27;stressfree&#x27;}),makeOp(&#x27;prestress&#x27;,&#x27;A1&#x27;,{value:&#x27;&#x27;,basis:&#x27;PER_PILE&#x27;}),makeOp(&#x27;static&#x27;),makeOp(&#x27;lock&#x27;,&#x27;A1&#x27;),makeOp(&#x27;static&#x27;)]);
+let c=append(anchor,&#x27;二次掘削・途中照査&#x27;,[makeOp(&#x27;remove&#x27;,&#x27;X2&#x27;),makeOp(&#x27;static&#x27;)]);c.ops.push(makeOp(&#x27;srm&#x27;,&#x27;G&#x27;,{segment:c.ops[1].id}));
+append(anchor,&#x27;下段アンカーを追加&#x27;,[makeOp(&#x27;activate&#x27;,&#x27;A2&#x27;,{policy:&#x27;stressfree&#x27;}),makeOp(&#x27;prestress&#x27;,&#x27;A2&#x27;,{basis:&#x27;PER_PILE&#x27;}),makeOp(&#x27;static&#x27;),makeOp(&#x27;lock&#x27;,&#x27;A2&#x27;),makeOp(&#x27;static&#x27;)]);
+append(tunnel,&#x27;上半掘削・解放&#x27;,[makeOp(&#x27;remove&#x27;,&#x27;U&#x27;),makeOp(&#x27;release&#x27;,&#x27;U&#x27;,{value:&#x27;&#x27;,mode:&#x27;tunnel&#x27;}),makeOp(&#x27;static&#x27;)]);
+append(tunnel,&#x27;上半支保・ボルト設置&#x27;,[makeOp(&#x27;activate&#x27;,&#x27;C&#x27;,{policy:&#x27;stressfree&#x27;}),makeOp(&#x27;activate&#x27;,&#x27;B&#x27;,{policy:&#x27;stressfree&#x27;}),makeOp(&#x27;static&#x27;)]);
+append(tunnel,&#x27;下半掘削&#x27;,[makeOp(&#x27;remove&#x27;,&#x27;L&#x27;),makeOp(&#x27;static&#x27;)]);
+let d=append(tunnel,&#x27;インバート閉合&#x27;,[makeOp(&#x27;activate&#x27;,&#x27;I&#x27;,{policy:&#x27;stressfree&#x27;}),makeOp(&#x27;static&#x27;)]);d.ops.push(makeOp(&#x27;srm&#x27;,&#x27;G&#x27;,{segment:d.ops[1].id}));
+append(tunnel,&#x27;排水・待機&#x27;,[makeOp(&#x27;boundary&#x27;,&#x27;D&#x27;,{mode:&#x27;replace&#x27;}),makeOp(&#x27;transient&#x27;,&#x27;&#x27;,{duration:&#x27;7&#x27;})]);
+const slope_static={sets:clone(common),stages:[]},slope_seismic={sets:clone(common),stages:[]};
+for(const doc of [slope_static,slope_seismic])append(doc,&#x27;斜面の初期応力・自重平衡&#x27;,[makeOp(&#x27;static&#x27;)]);
+let normal=append(slope_static,&#x27;常時の安定性照査&#x27;,[makeOp(&#x27;static&#x27;)]);normal.ops.push(makeOp(&#x27;srm&#x27;,&#x27;G&#x27;,{segment:normal.ops[0].id}));
+let seismic=append(slope_seismic,&#x27;震度荷重を適用・照査&#x27;,[makeOp(&#x27;load&#x27;,&#x27;G&#x27;,{mode:&#x27;seismic&#x27;,value:&#x27;&#x27;}),makeOp(&#x27;static&#x27;)]);seismic.ops.push(makeOp(&#x27;srm&#x27;,&#x27;G&#x27;,{segment:seismic.ops[1].id}));
+const bearing_flat={sets:[...clone(common),{id:&#x27;F&#x27;,name:&#x27;F 基礎載荷面・接触集合&#x27;,type:&#x27;load&#x27;,active:true}],stages:[]},bearing_slope=clone(bearing_flat);
+for(const doc of [bearing_flat,bearing_slope]){append(doc,&#x27;地盤の初期平衡&#x27;,[makeOp(&#x27;static&#x27;)]);append(doc,&#x27;基礎を段階載荷&#x27;,[makeOp(&#x27;load&#x27;,&#x27;F&#x27;,{mode:&#x27;settlement&#x27;,value:&#x27;&#x27;}),makeOp(&#x27;static&#x27;),makeOp(&#x27;save&#x27;)]);}
+const result={wall,anchor,tunnel,slope_static,slope_seismic,bearing_flat,bearing_slope,empty:{sets:clone(common),stages:[]}};
+for(const [key,doc] of Object.entries(result)){doc.name=presetNames[key];doc.category=key.startsWith(&#x27;slope_&#x27;)?&#x27;slope&#x27;:key.startsWith(&#x27;bearing_&#x27;)?&#x27;bearing&#x27;:key;doc.preset=key;doc.presetVersion=&#x27;1&#x27;;for(const st of doc.stages)for(const op of st.ops){if(op.kind===&#x27;transient&#x27;)op.p.duration=&#x27;&#x27;;if(op.kind===&#x27;srm&#x27;&amp;&amp;op.p.at===&#x27;offset&#x27;)op.p.offset=&#x27;&#x27;;}}
+return result;}
+const catalog=templates();
+let docs={initial:clone(catalog.slope_static)},example=&#x27;initial&#x27;,page=2,selected=docs.initial.stages[1].id,opId=docs.initial.stages[1].ops[1].id;
+let library={};
+let draft=null,stageDraft=null,pending=null,notice=&#x27;プリセットを初期入力に使い、展開後は自由に編集。形状・物性・地震係数・載荷量は利用者入力。&#x27;;
+const layout={roomy:false};
+const documentModel=()=&gt;docs[example];
+const stages=()=&gt;documentModel().stages;
+const stage=()=&gt;stages().find(s=&gt;s.id===selected)||null;
+const currentOp=()=&gt;stage()?.ops.find(o=&gt;o.id===opId)||null;
+const isSegment=o=&gt;[&#x27;static&#x27;,&#x27;transient&#x27;,&#x27;darcy&#x27;].includes(o.kind);
+const targetName=id=&gt;documentModel().sets.find(s=&gt;s.id===id)?.name||&#x27;対象未指定&#x27;;
+const stageName=id=&gt;id===&#x27;INITIAL&#x27;?&#x27;初期モデル&#x27;:stages().find(s=&gt;s.id===id)?.name||&#x27;未指定・参照切れ&#x27;;
+function resetDrafts(){draft=currentOp()?clone(currentOp()):null;stageDraft=stage()?{name:stage().name,parent:stage().parent}:null;pending=null;}
+function mark(id){const affected=new Set([id]);let changed=true;while(changed){changed=false;for(const s of stages())if(affected.has(s.parent)&amp;&amp;!affected.has(s.id)){affected.add(s.id);changed=true;}}for(const s of stages())if(affected.has(s.id))s.changed=true;return affected.size;}
+function expandDocs(data){const result=clone(data);for(const doc of Object.values(result))for(const s of doc.stages)for(const o of s.ops)o.p={...defaultParams,...o.p};return result;}
+function persist(){try{const packed=clone(docs);for(const doc of Object.values(packed))for(const s of doc.stages)for(const o of s.ops)o.p=Object.fromEntries(Object.entries(o.p).filter(([k,v])=&gt;defaultParams[k]!==v));const snap={version:&#x27;custom-v1&#x27;,docs:packed,library,sequence,example,page,selected,opId};const encoded=JSON.stringify(snap);const bytes=Array.from(encoded).reduce((n,c)=&gt;n+(c.codePointAt(0)&lt;128?1:c.codePointAt(0)&lt;2048?2:c.codePointAt(0)&lt;65536?3:4),0);window.openai?.setWidgetState?.({modelContent:{design:&#x27;custom-v1&#x27;,example:documentModel().name,preset:documentModel().preset,page,stage:stage()?.name,customPresetCount:Object.keys(library).length,stageCount:stages().length},privateContent:bytes&lt;14500?snap:null})?.catch(()=&gt;{});}catch{}}
+function restore(s){if(s?.privateContent?.version!==&#x27;custom-v1&#x27;)return;const p=s.privateContent;if(p.docs&amp;&amp;Object.keys(p.docs).length&amp;&amp;Object.values(p.docs).every(d=&gt;Array.isArray(d.stages)&amp;&amp;Array.isArray(d.sets))){docs=expandDocs(p.docs);const restored={};for(const [key,value] of Object.entries(p.library||{})){try{validatePackage(value);if(key===packageKey(value))restored[key]=clone(value);}catch{}}library=restored;sequence=Math.max(sequence,Number(p.sequence)||0);example=docs[p.example]?p.example:Object.keys(docs)[0];page=Number.isInteger(p.page)?Math.max(0,Math.min(4,p.page)):2;selected=p.selected;opId=p.opId;if(!stage())selected=stages()[0]?.id||&#x27;&#x27;;resetDrafts();}}
+function opSummary(o){const p=o.p;return o.kind===&#x27;activate&#x27;?({new:&#x27;新設世代・状態規則を指定&#x27;,stressfree:&#x27;現変形状態で無応力設置&#x27;,resume:&#x27;旧履歴を継承する再有効化&#x27;}[p.policy]||p.policy):o.kind===&#x27;prestress&#x27;?(p.value||&#x27;未指定&#x27;)+&#x27; &#x27;+(p.basis===&#x27;PER_WIDTH&#x27;?&#x27;kN/m&#x27;:&#x27;kN&#x27;)+&#x27;・目標初期力&#x27;:o.kind===&#x27;lock&#x27;?&#x27;定着時の基準長・初期ひずみを保持&#x27;:o.kind===&#x27;remove&#x27;?&#x27;除去作用と残存系の再平衡&#x27;:o.kind===&#x27;release&#x27;?(p.value||&#x27;未指定&#x27;)+&#x27;：等価解放経路&#x27;:o.kind===&#x27;boundary&#x27;?({keep:&#x27;KEEP：前状態を保持&#x27;,replace:&#x27;REPLACE：置換元を明示&#x27;,remove:&#x27;REMOVE：境界を解除&#x27;}[p.mode]||p.mode):o.kind===&#x27;load&#x27;?(p.mode===&#x27;selfweight&#x27;?&#x27;新設領域の自重・重複検査&#x27;:p.mode===&#x27;remove&#x27;?&#x27;作用を解除&#x27;:p.mode===&#x27;seismic&#x27;?&#x27;水平震度 k_h=&#x27;+ (p.value||&#x27;未指定&#x27;) :p.mode===&#x27;settlement&#x27;?&#x27;基礎の載荷変位 &#x27;+(p.value||&#x27;未指定&#x27;)+&#x27; m&#x27;:(p.value||&#x27;未指定&#x27;)+&#x27;・型付き作用&#x27;):o.kind===&#x27;transient&#x27;?p.duration+&#x27; 日／&#x27;+(p.solver===&#x27;fixed&#x27;?&#x27;fixed-stress&#x27;:&#x27;一体解法&#x27;):o.kind===&#x27;srm&#x27;?(p.at===&#x27;offset&#x27;?&#x27;区間開始＋&#x27;+(p.offset||&#x27;未指定&#x27;)+&#x27;日&#x27;:&#x27;直前区間の終了受理状態&#x27;)+&#x27;／&#x27;+(p.water===&#x27;fixed&#x27;?&#x27;起点p固定&#x27;:&#x27;非排水応答・別ゲート&#x27;):o.kind===&#x27;material&#x27;?&#x27;型付き物性・履歴変換プロファイル&#x27;:o.kind===&#x27;save&#x27;?&#x27;直前の受理状態を必須保存&#x27;:o.kind===&#x27;darcy&#x27;?&#x27;定常水頭・流束・収支&#x27;:&#x27;力学の釣合い・受理判定&#x27;;}
+function validate(){const out=[];const list=stages();const positions=new Map(list.map((s,i)=&gt;[s.id,i]));
+for(const s of list){const issue=(msg,oid=&#x27;&#x27;)=&gt;out.push({sid:s.id,oid,msg});if(!s.name.trim())issue(&#x27;工程名が未入力&#x27;);if(s.parent!==&#x27;INITIAL&#x27;&amp;&amp;!positions.has(s.parent))issue(&#x27;引継元が未指定または削除されています&#x27;);else if(s.parent!==&#x27;INITIAL&#x27;&amp;&amp;positions.get(s.parent)&gt;=positions.get(s.id))issue(&#x27;引継元が自工程以降。実行順/依存を確認&#x27;);if(!s.ops.length)issue(&#x27;操作・解析区間がありません&#x27;);let dirty=false;const active=new Map(documentModel().sets.map(t=&gt;[t.id,t.active]));
+const ancestors=[];let p=s.parent,seen=new Set();while(positions.has(p)&amp;&amp;!seen.has(p)){seen.add(p);const a=list[positions.get(p)];ancestors.unshift(a);p=a.parent;}for(const a of ancestors)for(const o of a.ops){if(o.kind===&#x27;activate&#x27;)active.set(o.target,true);if(o.kind===&#x27;remove&#x27;)active.set(o.target,false);}
+for(let i=0;i&lt;s.ops.length;i++){const o=s.ops[i],def=defs[o.kind];if(!def){issue(&#x27;未定義の操作&#x27;,o.id);continue;}const set=documentModel().sets.find(t=&gt;t.id===o.target);if(def.target.length&amp;&amp;(!set||!def.target.includes(set.type)))issue(&#x27;操作に適合する対象集合を指定&#x27;,o.id);
+if(o.kind===&#x27;activate&#x27;){if(active.get(o.target))issue(&#x27;対象は既に有効。新設/再有効化の世代を確認&#x27;,o.id);active.set(o.target,true);dirty=true;}
+else if(o.kind===&#x27;remove&#x27;){if(!active.get(o.target))issue(&#x27;対象は未有効または撤去済み&#x27;,o.id);active.set(o.target,false);dirty=true;}
+else if([&#x27;prestress&#x27;,&#x27;lock&#x27;,&#x27;load&#x27;].includes(o.kind)){if(set&amp;&amp;set.type!==&#x27;load&#x27;&amp;&amp;!active.get(o.target))issue(&#x27;有効化前/撤去後の対象への作用&#x27;,o.id);dirty=true;}
+else if([&#x27;boundary&#x27;,&#x27;release&#x27;,&#x27;material&#x27;].includes(o.kind))dirty=true;
+if(o.kind===&#x27;load&#x27;&amp;&amp;[&#x27;add&#x27;,&#x27;seismic&#x27;,&#x27;settlement&#x27;].includes(o.p.mode)&amp;&amp;!(o.p.value!==&#x27;&#x27;&amp;&amp;Number.isFinite(Number(o.p.value))))issue(&#x27;作用値・係数と量基準を指定&#x27;,o.id);
+if(o.kind===&#x27;prestress&#x27;&amp;&amp;!(Number.isFinite(Number(o.p.value))&amp;&amp;Number(o.p.value)&gt;0))issue(&#x27;目標初期力と量基準を指定&#x27;,o.id);
+if(o.kind===&#x27;release&#x27;&amp;&amp;!(o.p.value!==&#x27;&#x27;&amp;&amp;Number.isFinite(Number(o.p.value))&amp;&amp;Number(o.p.value)&gt;=0&amp;&amp;Number(o.p.value)&lt;=1))issue(&#x27;解放率[0,1]と検証済み経路を指定&#x27;,o.id);
+if(isSegment(o)){if(o.kind===&#x27;transient&#x27;&amp;&amp;!(Number.isFinite(Number(o.p.duration))&amp;&amp;Number(o.p.duration)&gt;0))issue(&#x27;連成区間の期間は正の有限値&#x27;,o.id);dirty=false;}
+if(o.kind===&#x27;srm&#x27;){const j=s.ops.findIndex(x=&gt;x.id===o.p.segment&amp;&amp;isSegment(x));if(j&lt;0)issue(&#x27;SRM起点の解析区間が未指定/削除済み&#x27;,o.id);else if(j&gt;=i)issue(&#x27;SRM起点が後の解析区間。操作順を確認&#x27;,o.id);if(dirty)issue(&#x27;未平衡の変更後です。先に解析区間を追加&#x27;,o.id);if(o.p.at===&#x27;offset&#x27;){const seg=s.ops[j];if(!seg||seg.kind!==&#x27;transient&#x27;)issue(&#x27;区間内時刻は過渡連成区間を指定&#x27;,o.id);else if(!(o.p.offset!==&#x27;&#x27;&amp;&amp;Number.isFinite(Number(o.p.offset))&amp;&amp;Number(o.p.offset)&gt;=0&amp;&amp;Number(o.p.offset)&lt;=Number(seg.p.duration)))issue(&#x27;保存時点は区間の期間内に指定&#x27;,o.id);}if(o.p.water!==&#x27;fixed&#x27;)issue(&#x27;非排水応答SRMは専用ゲートが必要&#x27;,o.id);}
+if(o.kind===&#x27;save&#x27;&amp;&amp;(dirty||!s.ops.slice(0,i).some(isSegment)))issue(&#x27;保存前に受理可能な解析区間が必要&#x27;,o.id);
+}
+if(dirty)issue(&#x27;工程末尾に未平衡の変更。解析区間を追加&#x27;);
+}
+return out;}
+function stageButtons(){const s=stage(),i=stages().findIndex(x=&gt;x.id===selected);return &#x27;&lt;h2&gt;工程一覧&lt;/h2&gt;&lt;div class=&quot;e-tools&quot; aria-label=&quot;工程の編集&quot;&gt;&#x27;+button(&#x27;＋工程&#x27;,&#x27;data-action=&quot;stage-add&quot;&#x27;)+button(&#x27;工程を複製&#x27;,&#x27;data-action=&quot;stage-copy&quot;&#x27;,!s)+button(&#x27;工程を削除&#x27;,&#x27;data-action=&quot;stage-delete&quot;&#x27;,!s)+button(&#x27;工程を上へ&#x27;,&#x27;data-action=&quot;stage-up&quot;&#x27;,i&lt;=0)+button(&#x27;工程を下へ&#x27;,&#x27;data-action=&quot;stage-down&quot;&#x27;,i&lt;0||i===stages().length-1)+&#x27;&lt;/div&gt;&lt;div class=&quot;e-stage-list&quot;&gt;&#x27;+stages().map((x,j)=&gt;button(&#x27;&lt;span class=&quot;e-stage-index&quot;&gt;&#x27;+(j+1)+&#x27;. &#x27;+esc(x.name)+&#x27;&lt;/span&gt;&lt;small&gt;&#x27;+x.id+&#x27; ← &#x27;+esc(stageName(x.parent))+&#x27; ／ &#x27;+x.ops.length+&#x27;項目&#x27;+(x.changed?&#x27;・入力変更あり&#x27;:&#x27;&#x27;)+&#x27;&lt;/small&gt;&#x27;,&#x27;class=&quot;e-stage&quot; data-stage=&quot;&#x27;+x.id+&#x27;&quot; aria-pressed=&quot;&#x27;+(x.id===selected)+&#x27;&quot;&#x27;)).join(&#x27;&#x27;)+&#x27;&lt;/div&gt;&#x27;}
+function opRows(){const s=stage();return &#x27;&lt;div class=&quot;e-table-wrap&quot;&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th scope=&quot;col&quot;&gt;順序・項目&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;対象&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;条件・状態&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&#x27;+s.ops.map((o,i)=&gt;&#x27;&lt;tr&#x27;+(o.id===opId?&#x27; class=&quot;e-selected&quot;&#x27;:&#x27;&#x27;)+&#x27;&gt;&lt;td&gt;&#x27;+button((i+1)+&#x27;. &#x27;+esc(defs[o.kind].name),&#x27;data-op=&quot;&#x27;+o.id+&#x27;&quot; class=&quot;e-op-select&quot; aria-pressed=&quot;&#x27;+(o.id===opId)+&#x27;&quot;&#x27;)+&#x27;&lt;span class=&quot;e-role&quot;&gt;&#x27;+defs[o.kind].role+&#x27; ／ &#x27;+o.id+&#x27;&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&#x27;+esc(defs[o.kind].target.length?targetName(o.target):&#x27;当工程の状態&#x27;)+&#x27;&lt;/td&gt;&lt;td&gt;&#x27;+esc(opSummary(o))+&#x27;&lt;/td&gt;&lt;/tr&gt;&#x27;).join(&#x27;&#x27;)+&#x27;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&#x27;}
+function opEditor(){if(!draft)return &#x27;&lt;div class=&quot;e-note&quot;&gt;「追加する項目」を選んで、操作・解析区間・照査を追加。&lt;/div&gt;&#x27;;const d=draft,p=d.p,def=defs[d.kind];const candidates=documentModel().sets.filter(s=&gt;def.target.includes(s.type)).map(s=&gt;[s.id,s.name]);let fields=&#x27;&lt;label&gt;項目の種類&#x27;+select(&#x27;e-op-kind&#x27;,Object.entries(defs).map(([k,v])=&gt;[k,v.role+&#x27;：&#x27;+v.name]),d.kind)+&#x27;&lt;/label&gt;&#x27;;
+if(def.target.length)fields+=&#x27;&lt;label&gt;対象集合&#x27;+select(&#x27;e-op-target&#x27;,[[&#x27;&#x27;,&#x27;未指定&#x27;],...candidates],d.target)+&#x27;&lt;/label&gt;&#x27;;else fields+=read(&#x27;適用対象&#x27;,&#x27;当工程の解析状態&#x27;);
+if(d.kind===&#x27;activate&#x27;)fields+=&#x27;&lt;label&gt;設置・再有効化の状態規則&#x27;+select(&#x27;e-p-policy&#x27;,[[&#x27;new&#x27;,&#x27;新設世代：型別の初期状態&#x27;],[&#x27;stressfree&#x27;,&#x27;現変形状態で無応力設置&#x27;],[&#x27;resume&#x27;,&#x27;旧履歴を継承（別検証）&#x27;]],p.policy)+&#x27;&lt;/label&gt;&#x27;+read(&#x27;参照状態・設置世代&#x27;,&#x27;適用直前の受理stateと新世代を記録&#x27;);
+if(d.kind===&#x27;remove&#x27;)fields+=read(&#x27;撤去時の扱い&#x27;,&#x27;内力/自重/水の除去と残存系の再平衡&#x27;)+read(&#x27;元の定義&#x27;,&#x27;定義は保持。解析上の活性状態を変更&#x27;);
+if(d.kind===&#x27;prestress&#x27;)fields+=text(&#x27;目標初期力（例の正本入力）&#x27;,&#x27;e-p-value&#x27;,p.value,&#x27;number&#x27;)+&#x27;&lt;label&gt;量基準・単位&#x27;+select(&#x27;e-p-basis&#x27;,[[&#x27;PER_PILE&#x27;,&#x27;1本当たり [kN]&#x27;],[&#x27;PER_WIDTH&#x27;,&#x27;単位幅 [kN/m]&#x27;],[&#x27;THICKNESS_TOTAL&#x27;,&#x27;モデル厚さ全量 [kN]&#x27;]],p.basis)+&#x27;&lt;/label&gt;&#x27;+read(&#x27;適用時点&#x27;,&#x27;設置後、次の平衡区間で一度だけ導入&#x27;);
+if(d.kind===&#x27;lock&#x27;)fields+=read(&#x27;定着後の応答&#x27;,&#x27;基準長/初期ひずみを保持し、以後の変形に応答&#x27;)+read(&#x27;初期力との違い&#x27;,&#x27;定着後も一定力を強制する条件にはしない&#x27;);
+if(d.kind===&#x27;load&#x27;)fields+=&#x27;&lt;label&gt;作用操作&#x27;+select(&#x27;e-p-mode&#x27;,[[&#x27;selfweight&#x27;,&#x27;新設領域の自重を導入&#x27;],[&#x27;add&#x27;,&#x27;指定作用を追加&#x27;],[&#x27;remove&#x27;,&#x27;指定作用を解除&#x27;],[&#x27;seismic&#x27;,&#x27;水平震度の体積力（震度法）&#x27;],[&#x27;settlement&#x27;,&#x27;基礎載荷面へ変位を付与&#x27;]],p.mode)+&#x27;&lt;/label&gt;&#x27;+([&#x27;add&#x27;,&#x27;seismic&#x27;,&#x27;settlement&#x27;].includes(p.mode)?text(p.mode===&#x27;seismic&#x27;?&#x27;水平震度 k_h [無次元・符号付き]&#x27;:p.mode===&#x27;settlement&#x27;?&#x27;載荷変位 [m・鉛直成分の符号付き]&#x27;:&#x27;作用値（単位は対象プロファイル）&#x27;,&#x27;e-p-value&#x27;,p.value,&#x27;number&#x27;):read(&#x27;保持・重複&#x27;,&#x27;既存自重/荷重ロックを保持し二重導入を検査&#x27;));
+if(d.kind===&#x27;boundary&#x27;)fields+=&#x27;&lt;label&gt;境界操作&#x27;+select(&#x27;e-p-mode&#x27;,[[&#x27;keep&#x27;,&#x27;保持 KEEP&#x27;],[&#x27;replace&#x27;,&#x27;置換 REPLACE&#x27;],[&#x27;remove&#x27;,&#x27;解除 REMOVE&#x27;]],p.mode)+&#x27;&lt;/label&gt;&#x27;+read(&#x27;境界プロファイル&#x27;,&#x27;対象辺・方向・水頭/流束/支持と量基準を参照&#x27;);
+if(d.kind===&#x27;release&#x27;)fields+=text(&#x27;等価解放率 [0–1]&#x27;,&#x27;e-p-value&#x27;,p.value,&#x27;number&#x27;)+read(&#x27;解放の基準&#x27;,&#x27;除去前状態・残存等価作用・水荷重を区別&#x27;)+read(&#x27;適用範囲&#x27;,&#x27;2D断面の近似。3D切羽進行は直接解かない&#x27;);
+if(d.kind===&#x27;material&#x27;)fields+=read(&#x27;変更プロファイル&#x27;,&#x27;物性の型・変更前後・履歴変換規則を参照&#x27;)+read(&#x27;禁止する変換&#x27;,&#x27;未定義の塑性履歴の初期化・補造&#x27;);
+if(d.kind===&#x27;transient&#x27;)fields+=text(&#x27;この解析区間の期間 [日]&#x27;,&#x27;e-p-duration&#x27;,p.duration,&#x27;number&#x27;)+&#x27;&lt;label&gt;この区間の連成解法&#x27;+select(&#x27;e-p-solver&#x27;,[[&#x27;fixed&#x27;,&#x27;fixed-stress&#x27;],[&#x27;monolithic&#x27;,&#x27;一体解法（比較用）&#x27;]],p.solver)+&#x27;&lt;/label&gt;&#x27;+read(&#x27;荷重・水理条件&#x27;,&#x27;前イベントまでの解決済み条件を使用&#x27;);
+if(d.kind===&#x27;static&#x27;||d.kind===&#x27;darcy&#x27;)fields+=read(&#x27;時間&#x27;,&#x27;物理時計を進めない平衡/定常区間&#x27;)+read(&#x27;数値設定&#x27;,&#x27;課題別の収束・残差/収支プロファイル&#x27;);
+if(d.kind===&#x27;save&#x27;)fields+=read(&#x27;保存対象&#x27;,&#x27;直前の受理状態と全履歴。未平衡状態は保存不可&#x27;);
+if(d.kind===&#x27;srm&#x27;){const segments=stage().ops.filter(isSegment).map((x,i)=&gt;[x.id,x.id+&#x27; &#x27;+defs[x.kind].name]);fields+=&#x27;&lt;label&gt;起点の解析区間&#x27;+select(&#x27;e-p-segment&#x27;,[[&#x27;&#x27;,&#x27;未指定&#x27;],...segments],p.segment)+&#x27;&lt;/label&gt;&lt;label&gt;起点となる受理状態&#x27;+select(&#x27;e-p-at&#x27;,[[&#x27;end&#x27;,&#x27;指定区間の終了状態&#x27;],[&#x27;offset&#x27;,&#x27;指定区間内の時刻&#x27;]],p.at)+&#x27;&lt;/label&gt;&#x27;+(p.at===&#x27;offset&#x27;?text(&#x27;区間開始からの時刻 [日]&#x27;,&#x27;e-p-offset&#x27;,p.offset,&#x27;number&#x27;):read(&#x27;起点の固定&#x27;,&#x27;実行時に一つのbase_state_idへ固定&#x27;))+&#x27;&lt;label&gt;SRM中の水圧&#x27;+select(&#x27;e-p-water&#x27;,[[&#x27;fixed&#x27;,&#x27;起点pを固定&#x27;],[&#x27;undrained&#x27;,&#x27;非排水応答（別ゲート）&#x27;]],p.water)+&#x27;&lt;/label&gt;&#x27;+read(&#x27;施工本線への引継ぎ&#x27;,&#x27;枝内の低減強度・変位・履歴は返さない&#x27;);}
+return &#x27;&lt;h3&gt;選択項目の入力 ｜ &#x27;+draft.id+&#x27;（未反映の変更は「反映」で確定）&lt;/h3&gt;&lt;div class=&quot;e-form&quot;&gt;&#x27;+fields+&#x27;&lt;/div&gt;&lt;div class=&quot;e-tools&quot;&gt;&#x27;+button(&#x27;項目の入力を反映&#x27;,&#x27;data-action=&quot;op-apply&quot; class=&quot;e-primary&quot;&#x27;)+&#x27;&lt;/div&gt;&#x27;;}
+function editPage(){const s=stage();if(!s)return &#x27;&lt;h2&gt;03 施工条件&lt;/h2&gt;&lt;div class=&quot;e-note&quot;&gt;「＋工程」から施工履歴を組み立てられます。&lt;/div&gt;&#x27;;const i=s.ops.findIndex(o=&gt;o.id===opId);return &#x27;&lt;h2&gt;03 工程と操作を組み立てる&lt;/h2&gt;&lt;div class=&quot;e-form&quot;&gt;&#x27;+text(&#x27;工程名&#x27;,&#x27;e-stage-name&#x27;,stageDraft.name)+&#x27;&lt;label&gt;引継元（表示順を変えてもIDで保持）&#x27;+select(&#x27;e-stage-parent&#x27;,[[&#x27;&#x27;,&#x27;未指定&#x27;],[&#x27;INITIAL&#x27;,&#x27;初期モデル&#x27;],...stages().filter(x=&gt;x.id!==s.id).map(x=&gt;[x.id,x.id+&#x27; &#x27;+x.name])],stageDraft.parent)+&#x27;&lt;/label&gt;&lt;/div&gt;&lt;div class=&quot;e-tools&quot;&gt;&#x27;+button(&#x27;工程の入力を反映&#x27;,&#x27;data-action=&quot;stage-apply&quot;&#x27;)+&#x27;&lt;/div&gt;&lt;h3&gt;この工程の操作・解析区間・照査&lt;/h3&gt;&lt;div class=&quot;e-tools&quot;&gt;&lt;label for=&quot;e-add-kind&quot;&gt;追加する項目&lt;/label&gt;&#x27;+select(&#x27;e-add-kind&#x27;,Object.entries(defs).map(([k,v])=&gt;[k,v.role+&#x27;：&#x27;+v.name]),&#x27;activate&#x27;)+button(&#x27;＋項目&#x27;,&#x27;data-action=&quot;op-add&quot;&#x27;)+button(&#x27;項目を複製&#x27;,&#x27;data-action=&quot;op-copy&quot;&#x27;,i&lt;0)+button(&#x27;項目を削除&#x27;,&#x27;data-action=&quot;op-delete&quot;&#x27;,i&lt;0)+button(&#x27;項目を上へ&#x27;,&#x27;data-action=&quot;op-up&quot;&#x27;,i&lt;=0)+button(&#x27;項目を下へ&#x27;,&#x27;data-action=&quot;op-down&quot;&#x27;,i&lt;0||i===s.ops.length-1)+&#x27;&lt;/div&gt;&#x27;+opRows()+opEditor()+&#x27;&lt;div class=&quot;e-tools&quot;&gt;&#x27;+button(&#x27;入力・順序・引継ぎを確認&#x27;,&#x27;data-page=&quot;3&quot;&#x27;)+button(&#x27;結果の確認画面へ&#x27;,&#x27;data-page=&quot;4&quot;&#x27;)+&#x27;&lt;/div&gt;&#x27;;}
+function confirmation(){if(!pending)return &#x27;&#x27;;if(pending.type===&#x27;preset&#x27;){const doc=catalog[pending.key];return &#x27;&lt;div class=&quot;e-confirm&quot;&gt;&lt;h3&gt;プリセット構成：&#x27;+esc(doc.name)+&#x27;&lt;/h3&gt;&#x27;+table([&#x27;作成する工程&#x27;,&#x27;主な項目&#x27;],doc.stages.map(s=&gt;[esc(s.name),s.ops.map(o=&gt;esc(defs[o.kind].name)).join(&#x27; → &#x27;)]))+(doc.stages.length?&#x27;&#x27;:&#x27;&lt;div class=&quot;e-muted&quot;&gt;工程なし。追加ボタンから自由に作成。&lt;/div&gt;&#x27;)+&#x27;&lt;div class=&quot;e-note&quot;&gt;新しい編集案として展開。既存案・入力・結果は上書きしません。形状・物性・係数・載荷量は利用者入力。&lt;/div&gt;&#x27;+(pending.key===&#x27;slope_seismic&#x27;?&#x27;&lt;div class=&quot;e-muted&quot;&gt;地震時は静的な震度法。地震動時刻歴・液状化解析を含みません。&lt;/div&gt;&#x27;:&#x27;&#x27;)+&#x27;&lt;div class=&quot;e-tools&quot;&gt;&#x27;+button(&#x27;この構成で新規案を作成&#x27;,&#x27;data-action=&quot;preset-apply&quot; class=&quot;e-primary&quot;&#x27;)+button(&#x27;プレビューを閉じる&#x27;,&#x27;data-action=&quot;delete-cancel&quot;&#x27;)+&#x27;&lt;/div&gt;&lt;/div&gt;&#x27;;}const s=stage();return &#x27;&lt;div class=&quot;e-confirm&quot; role=&quot;alert&quot;&gt;&lt;strong&gt;&#x27;+esc(pending.type===&#x27;stage&#x27;?&#x27;工程「&#x27;+s.name+&#x27;」を削除&#x27;:&#x27;選択項目を削除&#x27;)+&#x27;&lt;/strong&gt;&lt;div&gt;&#x27;+esc(pending.impact)+&#x27;&lt;/div&gt;&lt;div class=&quot;e-tools&quot;&gt;&#x27;+button(&#x27;参照を未指定にして削除&#x27;,&#x27;data-action=&quot;delete-confirm&quot;&#x27;)+button(&#x27;削除を取り消す&#x27;,&#x27;data-action=&quot;delete-cancel&quot;&#x27;)+&#x27;&lt;/div&gt;&lt;/div&gt;&#x27;;}
+function checksPage(){const problems=validate();return &#x27;&lt;h2&gt;04 入力・実行順・状態引継ぎ&lt;/h2&gt;&lt;div class=&quot;e-note&quot;&gt;構成検査の例。物理条件の妥当性・各操作の実装ゲートは別途確認。&lt;/div&gt;&#x27;+table([&#x27;対象&#x27;,&#x27;構成検査&#x27;,&#x27;修正へ&#x27;],problems.length?problems.map(x=&gt;[esc(stageName(x.sid))+(x.oid?&#x27;&lt;br&gt;&#x27;+x.oid:&#x27;&#x27;),esc(x.msg),button(&#x27;該当入力へ&#x27;,&#x27;data-fix-stage=&quot;&#x27;+x.sid+&#x27;&quot; data-fix-op=&quot;&#x27;+x.oid+&#x27;&quot;&#x27;)]):[[&#x27;全工程&#x27;,&#x27;参照・順序・例示の入力形式に指摘なし&#x27;,&#x27;数値解析は未実施&#x27;]])+&#x27;&lt;h3&gt;解決する実行順&lt;/h3&gt;&#x27;+table([&#x27;順序・工程&#x27;,&#x27;引継元&#x27;,&#x27;イベントと解析区間&#x27;],stages().map((s,i)=&gt;[(i+1)+&#x27;. &#x27;+esc(s.name),esc(stageName(s.parent)),s.ops.map((o,j)=&gt;(j+1)+&#x27;: &#x27;+esc(defs[o.kind].name)+(o.kind===&#x27;srm&#x27;?&#x27; → 照査枝（本線不変）&#x27;:&#x27;&#x27;)).join(&#x27;&lt;br&gt;&#x27;)]))+&#x27;&lt;div class=&quot;e-tools&quot;&gt;&#x27;+button(&#x27;選択工程へ戻る&#x27;,&#x27;data-page=&quot;2&quot;&#x27;)+button(&#x27;実解析開始（設計試作）&#x27;,&#x27;disabled&#x27;)+&#x27;&lt;/div&gt;&#x27;;}
+function modelPage(){return &#x27;&lt;h2&gt;02 共通モデル・対象集合&lt;/h2&gt;&#x27;+table([&#x27;ID・名称&#x27;,&#x27;表現の型&#x27;,&#x27;初期活性&#x27;],documentModel().sets.map(s=&gt;[esc(s.name),esc({soil:&#x27;地盤領域&#x27;,solid:&#x27;2D連続体&#x27;,beam:&#x27;2D梁&#x27;,anchor:&#x27;軸力部材・界面&#x27;,interface:&#x27;接触/接続&#x27;,boundary:&#x27;境界集合&#x27;,load:&#x27;作用集合&#x27;}[s.type]),s.active?&#x27;有効&#x27;:&#x27;未設置&#x27;]))+&#x27;&lt;h3&gt;新しい対象集合を仮登録&lt;/h3&gt;&lt;div class=&quot;e-form&quot;&gt;&#x27;+text(&#x27;対象集合の名称&#x27;,&#x27;e-new-set-name&#x27;,&#x27;&#x27;)+&#x27;&lt;label&gt;対象の型&#x27;+select(&#x27;e-new-set-type&#x27;,[[&#x27;soil&#x27;,&#x27;地盤領域&#x27;],[&#x27;solid&#x27;,&#x27;2D連続体&#x27;],[&#x27;beam&#x27;,&#x27;2D梁&#x27;],[&#x27;anchor&#x27;,&#x27;軸力部材&#x27;],[&#x27;interface&#x27;,&#x27;接触/接続&#x27;],[&#x27;boundary&#x27;,&#x27;境界集合&#x27;],[&#x27;load&#x27;,&#x27;作用集合&#x27;]],&#x27;soil&#x27;)+&#x27;&lt;/label&gt;&lt;label class=&quot;e-wide&quot;&gt;&lt;span&gt;&lt;input type=&quot;checkbox&quot; id=&quot;e-new-set-active&quot;&gt; 初期モデルから有効&lt;/span&gt;&lt;/label&gt;&lt;/div&gt;&lt;div class=&quot;e-tools&quot;&gt;&#x27;+button(&#x27;対象集合を追加&#x27;,&#x27;data-action=&quot;set-add&quot;&#x27;)+&#x27;&lt;/div&gt;&lt;div class=&quot;e-note&quot;&gt;仮登録した集合を03の対象として選択可能。節点/要素割当・形状・物性は別の詳細入力へ接続する設計。&lt;/div&gt;&#x27;+(documentModel().category===&#x27;tunnel&#x27;?&#x27;&lt;div class=&quot;e-note&quot;&gt;平面ひずみ断面の施工例。応力解放近似と3D切羽応答を区別。&lt;/div&gt;&#x27;:&#x27;&#x27;)+button(&#x27;工程・操作を入力&#x27;,&#x27;data-page=&quot;2&quot;&#x27;);}
+function projectPage(){return &#x27;&lt;h2&gt;01 案件と施工履歴&lt;/h2&gt;&#x27;+table([&#x27;項目&#x27;,&#x27;内容&#x27;],[[&#x27;共通モデル&#x27;,&#x27;平面ひずみ／m・kN・s（時間入力は日）&#x27;],[&#x27;構成&#x27;,&#x27;任意の工程 → 操作イベント → 解析区間 → 状態保存/照査&#x27;],[&#x27;編集&#x27;,&#x27;工程/項目の追加・複製・削除・順序変更&#x27;],[&#x27;結果&#x27;,&#x27;設計試作のため未読込。複製しても計算結果は作らない&#x27;]])+ &#x27;&lt;h3&gt;現在の施工本線&lt;/h3&gt;&#x27;+table([&#x27;工程&#x27;,&#x27;状態の引継元&#x27;],stages().map(s=&gt;[esc(s.name),esc(stageName(s.parent))]))+button(&#x27;工程の編集へ&#x27;,&#x27;data-page=&quot;2&quot;&#x27;);}
+function resultsPage(){const s=stage();if(!s)return &#x27;&lt;h2&gt;05 結果&lt;/h2&gt;&lt;div class=&quot;e-note&quot;&gt;対象工程を追加してください。&lt;/div&gt;&#x27;;const checks=s.ops.filter(o=&gt;o.kind===&#x27;srm&#x27;);return &#x27;&lt;h2&gt;05 選択工程と照査結果&lt;/h2&gt;&lt;div class=&quot;e-note&quot;&gt;&#x27;+esc(s.name)+&#x27; ／ 施工本線の親：&#x27;+esc(stageName(s.parent))+&#x27;&lt;br&gt;&lt;span class=&quot;e-muted&quot;&gt;run・state・入力版：未読込。入力変更は依存する下流と照査を失効。&lt;/span&gt;&lt;/div&gt;&#x27;+table([&#x27;本線で確認する量&#x27;,&#x27;値&#x27;],[[&#x27;地盤の全変位・沈下、応力・水圧&#x27;,&#x27;未読込&#x27;],[documentModel().category===&#x27;bearing&#x27;?&#x27;荷重–沈下曲線、載荷面反力・接触と破壊機構&#x27;:documentModel().category===&#x27;slope&#x27;?&#x27;Fs区間・滑動機構・変位・反力&#x27;:documentModel().category===&#x27;wall&#x27;?&#x27;縦壁/底盤の切断面積分と反力&#x27;:documentModel().category===&#x27;anchor&#x27;?&#x27;アンカー軸力、壁N/V/M、変位・反力&#x27;:&#x27;内空変位、支保N/V/M、地表沈下・水収支&#x27;,&#x27;未読込&#x27;],[&#x27;残差・停止理由・実行時間&#x27;,&#x27;未読込&#x27;]])+&#x27;&lt;h3&gt;この工程から分岐するSRM&lt;/h3&gt;&#x27;+(checks.length?table([&#x27;照査&#x27;,&#x27;起点&#x27;,&#x27;確認する量&#x27;],checks.map(o=&gt;[o.id,esc(opSummary(o)),&#x27;base_state_id・Fs区間・枝内変位・せん断帯・残差（未読込）&#x27;])):&#x27;&lt;div class=&quot;e-muted&quot;&gt;照査なし。03で「SRM照査を分岐」を追加できます。&lt;/div&gt;&#x27;)+&#x27;&lt;div class=&quot;e-results&quot;&gt;結果図・同じ受理状態の数値表&lt;br&gt;&lt;span class=&quot;e-muted&quot;&gt;計算データ未読込。枝内変位は施工の累積変位へ加算しない。&lt;/span&gt;&lt;/div&gt;&#x27;+button(&#x27;入力へ戻る&#x27;,&#x27;data-page=&quot;2&quot;&#x27;);}
+function render(){root.querySelector(&#x27;.e-app&#x27;).classList.toggle(&#x27;e-roomy&#x27;,layout.roomy);const nav=names.map((n,i)=&gt;button(n,&#x27;data-page=&quot;&#x27;+i+&#x27;&quot; aria-pressed=&quot;&#x27;+(page===i)+&#x27;&quot;&#x27;)).join(&#x27;&#x27;);el(&#x27;e-nav&#x27;).innerHTML=nav;el(&#x27;e-tabs&#x27;).innerHTML=nav;el(&#x27;e-example&#x27;).innerHTML=Object.entries(docs).map(([id,d])=&gt;&#x27;&lt;option value=&quot;&#x27;+esc(id)+&#x27;&quot;&gt;&#x27;+esc(d.name)+&#x27;&lt;/option&gt;&#x27;).join(&#x27;&#x27;);el(&#x27;e-example&#x27;).value=example;el(&#x27;e-doc-field&#x27;).hidden=Object.keys(docs).length===1;el(&#x27;e-current-doc&#x27;).hidden=Object.keys(docs).length!==1;el(&#x27;e-current-doc&#x27;).textContent=&#x27;編集中：&#x27;+documentModel().name;el(&#x27;e-stages&#x27;).innerHTML=stageButtons();el(&#x27;e-main&#x27;).innerHTML=pending?.type.startsWith(&#x27;custom-&#x27;)?customPanel():confirmation()+[projectPage,modelPage,editPage,checksPage,resultsPage][page]();el(&#x27;e-status&#x27;).textContent=notice;}
+function commitUI(){resetDrafts();render();persist();}
+function addStage(){const base=stage();const s=makeStage(&#x27;新しい工程&#x27;,base?.id||&#x27;INITIAL&#x27;,[]);const i=stages().findIndex(x=&gt;x.id===selected);stages().splice(i+1,0,s);selected=s.id;opId=&#x27;&#x27;;page=2;mark(s.id);notice=&#x27;工程を追加。対象操作と解析区間を自由に追加してください。&#x27;;commitUI();}
+function copyStage(){const old=stage();if(!old)return;const s=clone(old);s.id=newId(&#x27;S&#x27;);s.name+=&#x27;（複製）&#x27;;const ids=new Map();for(const o of s.ops){const prev=o.id;o.id=newId(&#x27;O&#x27;);ids.set(prev,o.id);}for(const o of s.ops)if(ids.has(o.p.segment))o.p.segment=ids.get(o.p.segment);s.changed=true;stages().splice(stages().findIndex(x=&gt;x.id===old.id)+1,0,s);selected=s.id;opId=s.ops[0]?.id||&#x27;&#x27;;page=2;notice=&#x27;工程を複製。引継元はコピー元と同じ、内部の区間参照は複製先へ変更。結果は複製しません。&#x27;;commitUI();}
+function moveStage(delta){const i=stages().findIndex(s=&gt;s.id===selected),j=i+delta;if(i&lt;0||j&lt;0||j&gt;=stages().length)return;[stages()[i],stages()[j]]=[stages()[j],stages()[i]];mark(selected);notice=&#x27;工程の表示/実行順を変更。引継元はIDで保持。「確認」で順序との整合を検査してください。&#x27;;commitUI();}
+function addOp(kind){const s=stage();if(!s)return;const target=documentModel().sets.find(x=&gt;defs[kind].target.includes(x.type))?.id||&#x27;&#x27;;const o=makeOp(kind,target);const i=s.ops.findIndex(x=&gt;x.id===opId);if(kind===&#x27;srm&#x27;)o.p.segment=s.ops.slice(0,i+1).filter(isSegment).at(-1)?.id||&#x27;&#x27;;s.ops.splice(i+1,0,o);opId=o.id;mark(s.id);notice=&#x27;項目を追加。対象・時点/状態規則を編集して反映できます。&#x27;;commitUI();}
+function copyOp(){const s=stage(),old=currentOp();if(!old)return;const o=clone(old);o.id=newId(&#x27;O&#x27;);s.ops.splice(s.ops.findIndex(x=&gt;x.id===old.id)+1,0,o);opId=o.id;mark(s.id);notice=&#x27;項目を複製。対象と区間参照は保持。二重適用や操作順は確認画面で検査。&#x27;;commitUI();}
+function moveOp(delta){const s=stage(),i=s?.ops.findIndex(o=&gt;o.id===opId),j=i+delta;if(!s||i&lt;0||j&lt;0||j&gt;=s.ops.length)return;[s.ops[i],s.ops[j]]=[s.ops[j],s.ops[i]];mark(s.id);notice=&#x27;項目順を変更。設置・緊張・平衡・照査の前提を確認してください。&#x27;;commitUI();}
+function deleteConfirm(){if(pending?.type===&#x27;stage&#x27;){const id=selected;for(const s of stages())if(s.parent===id){s.parent=&#x27;&#x27;;mark(s.id);}const i=stages().findIndex(s=&gt;s.id===id);stages().splice(i,1);selected=stages()[Math.min(i,stages().length-1)]?.id||&#x27;&#x27;;opId=stage()?.ops[0]?.id||&#x27;&#x27;;notice=&#x27;工程を削除。依存していた工程の引継元は未指定。再指定が必要です。&#x27;;}else if(pending?.type===&#x27;op&#x27;){const s=stage(),id=opId,i=s.ops.findIndex(o=&gt;o.id===id);s.ops.splice(i,1);for(const o of s.ops)if(o.p.segment===id)o.p.segment=&#x27;&#x27;;opId=s.ops[Math.min(i,s.ops.length-1)]?.id||&#x27;&#x27;;mark(s.id);notice=&#x27;項目を削除。参照していた照査の起点は未指定として保持。&#x27;;}page=2;commitUI();}
+function applyPreset(key){const doc=clone(catalog[key]),ids=new Map();for(const s of doc.stages){const old=s.id;s.id=newId(&#x27;S&#x27;);ids.set(old,s.id);for(const o of s.ops){const prev=o.id;o.id=newId(&#x27;O&#x27;);ids.set(prev,o.id);}}for(const s of doc.stages){if(ids.has(s.parent))s.parent=ids.get(s.parent);for(const o of s.ops)if(ids.has(o.p.segment))o.p.segment=ids.get(o.p.segment);}const id=newId(&#x27;P&#x27;);doc.name+=&#x27;（案&#x27;+(Object.keys(docs).length+1)+&#x27;）&#x27;;doc.mappingId=id;docs[id]=doc;example=id;page=2;const index={wall:2,anchor:3,tunnel:1,slope_static:1,slope_seismic:1,bearing_flat:1,bearing_slope:1,empty:0}[key];selected=doc.stages[Math.min(index,doc.stages.length-1)]?.id||&#x27;&#x27;;opId=stage()?.ops[0]?.id||&#x27;&#x27;;notice=&#x27;プリセットを新規案へ展開。全参照を新IDへ接続。既存案を保持し、適用後も自由編集できます。&#x27;;commitUI();}
+const scopes={FLOW_ONLY:&#x27;工程構成のみ（数値は再入力）&#x27;,MODEL_INPUTS:&#x27;対象集合と項目入力値を含む（試作範囲）&#x27;};
+const packageKey=p=&gt;p.presetId+&#x27;@&#x27;+p.revision;
+const canonical=value=&gt;JSON.stringify(value,(_,v)=&gt;v&amp;&amp;typeof v===&#x27;object&#x27;&amp;&amp;!Array.isArray(v)?Object.fromEntries(Object.keys(v).sort().map(k=&gt;[k,v[k]])):v);
+const utf8Size=s=&gt;Array.from(s).reduce((n,c)=&gt;n+(c.codePointAt(0)&lt;128?1:c.codePointAt(0)&lt;2048?2:c.codePointAt(0)&lt;65536?3:4),0);
+function validatePackage(p){
+ const fail=message=&gt;{throw new Error(message);};
+ const strict=(x,keys,label)=&gt;{if(!x||typeof x!==&#x27;object&#x27;||Array.isArray(x))fail(label+&#x27;：オブジェクトが必要&#x27;);for(const k of Object.keys(x))if(!keys.includes(k))fail(label+&#x27;：未対応の項目 &#x27;+k);};
+ const string=(x,max,label,empty=false)=&gt;{if(typeof x!==&#x27;string&#x27;||x.length&gt;max||(!empty&amp;&amp;!x.trim()))fail(label+&#x27;：文字列を確認&#x27;);};
+ const id=(x,label)=&gt;{if(typeof x!==&#x27;string&#x27;||!/^[A-Za-z][A-Za-z0-9_-]{0,63}$/.test(x))fail(label+&#x27;：ID形式を確認&#x27;);};
+ const walk=(v,depth=0)=&gt;{if(depth&gt;12)fail(&#x27;データ階層が深すぎます&#x27;);if(typeof v===&#x27;string&#x27;&amp;&amp;v.length&gt;4000)fail(&#x27;文字列が長すぎます&#x27;);if(v&amp;&amp;typeof v===&#x27;object&#x27;)for(const [k,c] of Object.entries(v)){if([&#x27;__proto__&#x27;,&#x27;prototype&#x27;,&#x27;constructor&#x27;].includes(k))fail(&#x27;未許可のキー&#x27;);walk(c,depth+1);}};
+ const raw=JSON.stringify(p);if(utf8Size(raw)&gt;131072)fail(&#x27;JSONは128KiB以内&#x27;);walk(p);
+ strict(p,[&#x27;format&#x27;,&#x27;schemaVersion&#x27;,&#x27;dictionaryVersion&#x27;,&#x27;presetId&#x27;,&#x27;revision&#x27;,&#x27;name&#x27;,&#x27;description&#x27;,&#x27;scope&#x27;,&#x27;category&#x27;,&#x27;geometry&#x27;,&#x27;units&#x27;,&#x27;slots&#x27;,&#x27;stages&#x27;,&#x27;externalBindings&#x27;],&#x27;プリセット&#x27;);
+ if(p.format!==&#x27;soil-fem-stage-preset&#x27;||p.schemaVersion!==1||p.dictionaryVersion!==1)fail(&#x27;未対応の形式/スキーマ/操作辞書版&#x27;);
+ id(p.presetId,&#x27;preset_id&#x27;);if(!Number.isInteger(p.revision)||p.revision&lt;1)fail(&#x27;revisionは正の整数&#x27;);string(p.name,120,&#x27;名称&#x27;);string(p.description,2000,&#x27;説明&#x27;,true);
+ if(!Object.hasOwn(scopes,p.scope)||![&#x27;slope&#x27;,&#x27;bearing&#x27;,&#x27;wall&#x27;,&#x27;anchor&#x27;,&#x27;tunnel&#x27;,&#x27;empty&#x27;].includes(p.category))fail(&#x27;保存範囲/対象分類が未対応&#x27;);
+ if(p.geometry!==&#x27;PLANE_STRAIN&#x27;||p.units!==&#x27;m-kN-s&#x27;)fail(&#x27;この試作と解析断面/単位系が不一致&#x27;);
+ if(!Array.isArray(p.externalBindings)||p.externalBindings.length)fail(&#x27;外部の確定stateはこの試作では読込不可。起点を別途指定&#x27;);
+ if(!Array.isArray(p.slots)||p.slots.length&gt;200||!Array.isArray(p.stages)||p.stages.length&gt;100)fail(&#x27;対象集合200・工程100以内&#x27;);
+ const targets=new Set(),stageIds=new Set(),opIds=new Set();let total=0;
+ for(const slot of p.slots){strict(slot,[&#x27;id&#x27;,&#x27;name&#x27;,&#x27;type&#x27;,&#x27;geometry&#x27;,&#x27;units&#x27;,&#x27;active&#x27;],&#x27;対象slot&#x27;);id(slot.id,&#x27;target&#x27;);if(targets.has(slot.id))fail(&#x27;対象IDが重複&#x27;);targets.add(slot.id);string(slot.name,240,&#x27;対象名&#x27;);if(![&#x27;soil&#x27;,&#x27;solid&#x27;,&#x27;beam&#x27;,&#x27;anchor&#x27;,&#x27;interface&#x27;,&#x27;boundary&#x27;,&#x27;load&#x27;].includes(slot.type))fail(&#x27;対象の型が未対応&#x27;);if(slot.geometry!==p.geometry||slot.units!==p.units)fail(&#x27;対象の解析断面/単位が不一致&#x27;);if(p.scope===&#x27;MODEL_INPUTS&#x27;?typeof slot.active!==&#x27;boolean&#x27;:slot.active!==null)fail(&#x27;初期活性と保存範囲が不一致&#x27;);}
+ for(const st of p.stages){strict(st,[&#x27;id&#x27;,&#x27;name&#x27;,&#x27;parent&#x27;,&#x27;ops&#x27;],&#x27;工程&#x27;);id(st.id,&#x27;stage&#x27;);if(stageIds.has(st.id))fail(&#x27;工程IDが重複&#x27;);id(st.parent,&#x27;状態親&#x27;);if(st.parent!==&#x27;INITIAL&#x27;&amp;&amp;!stageIds.has(st.parent))fail(&#x27;工程の状態親が未解決/後工程を参照&#x27;);stageIds.add(st.id);string(st.name,240,&#x27;工程名&#x27;);if(!Array.isArray(st.ops))fail(&#x27;工程の項目一覧が必要&#x27;);total+=st.ops.length;if(total&gt;500)fail(&#x27;項目数は500以内&#x27;);const segs=new Set();
+  for(const op of st.ops){strict(op,[&#x27;id&#x27;,&#x27;kind&#x27;,&#x27;target&#x27;,&#x27;p&#x27;],&#x27;工程項目&#x27;);id(op.id,&#x27;operation&#x27;);if(opIds.has(op.id))fail(&#x27;項目IDが重複&#x27;);opIds.add(op.id);if(!Object.hasOwn(defs,op.kind))fail(&#x27;未対応の操作種別&#x27;);if(typeof op.target!==&#x27;string&#x27;)fail(&#x27;対象参照が不正&#x27;);const def=defs[op.kind];if(def.target.length){const slot=p.slots.find(t=&gt;t.id===op.target);if(!slot||!def.target.includes(slot.type))fail(&#x27;操作と対象slotの型が不一致&#x27;);}else if(op.target!==&#x27;&#x27;)fail(&#x27;解析区間/保存の対象は工程状態&#x27;);
+   strict(op.p,Object.keys(defaultParams),&#x27;項目パラメータ&#x27;);for(const [k,v] of Object.entries(op.p)){string(v,4000,&#x27;パラメータ &#x27;+k,true);if([&#x27;value&#x27;,&#x27;duration&#x27;,&#x27;offset&#x27;].includes(k)&amp;&amp;v!==&#x27;&#x27;&amp;&amp;!Number.isFinite(Number(v)))fail(&#x27;数値パラメータに式/コードは指定不可&#x27;);}
+   const params={...defaultParams,...op.p};if(![&#x27;new&#x27;,&#x27;stressfree&#x27;,&#x27;resume&#x27;].includes(params.policy)||![&#x27;PER_WIDTH&#x27;,&#x27;PER_PILE&#x27;,&#x27;THICKNESS_TOTAL&#x27;].includes(params.basis)||![&#x27;fixed&#x27;,&#x27;monolithic&#x27;].includes(params.solver)||![&#x27;replace&#x27;,&#x27;keep&#x27;,&#x27;remove&#x27;,&#x27;selfweight&#x27;,&#x27;add&#x27;,&#x27;seismic&#x27;,&#x27;settlement&#x27;,&#x27;tunnel&#x27;].includes(params.mode)||![&#x27;fixed&#x27;,&#x27;undrained&#x27;].includes(params.water)||![&#x27;end&#x27;,&#x27;offset&#x27;].includes(params.at))fail(&#x27;パラメータの選択値が未対応&#x27;);
+   if(p.scope===&#x27;FLOW_ONLY&#x27;&amp;&amp;[&#x27;value&#x27;,&#x27;duration&#x27;,&#x27;offset&#x27;].some(k=&gt;params[k]!==&#x27;&#x27;))fail(&#x27;工程構成のみの保存に数値が含まれています&#x27;);
+   if(op.kind===&#x27;srm&#x27;&amp;&amp;!segs.has(params.segment))fail(&#x27;照査の区間参照が未解決/後方参照&#x27;);if(isSegment(op))segs.add(op.id);
+  }
+ }
+ return p;
+}
+function buildPackage(meta){const doc=documentModel(),used=new Set(doc.stages.flatMap(s=&gt;s.ops.map(o=&gt;o.target)).filter(Boolean));const slots=(meta.scope===&#x27;MODEL_INPUTS&#x27;?doc.sets:doc.sets.filter(t=&gt;used.has(t.id))).map(t=&gt;({id:t.id,name:t.name,type:t.type,geometry:&#x27;PLANE_STRAIN&#x27;,units:&#x27;m-kN-s&#x27;,active:meta.scope===&#x27;MODEL_INPUTS&#x27;?t.active:null}));
+ return {format:&#x27;soil-fem-stage-preset&#x27;,schemaVersion:1,dictionaryVersion:1,presetId:meta.presetId,revision:meta.revision,name:meta.name.trim(),description:meta.description,scope:meta.scope,category:doc.category,geometry:&#x27;PLANE_STRAIN&#x27;,units:&#x27;m-kN-s&#x27;,slots,stages:doc.stages.map(s=&gt;({id:s.id,name:s.name,parent:s.parent,ops:s.ops.map(o=&gt;{const item=clone(o);if(meta.scope===&#x27;FLOW_ONLY&#x27;)for(const k of [&#x27;value&#x27;,&#x27;duration&#x27;,&#x27;offset&#x27;])item.p[k]=&#x27;&#x27;;return item;})})),externalBindings:[]};
+}
+function saveCustom(){const form=pending;if(form?.type!==&#x27;custom-save&#x27;)return;try{const prior=Object.values(library).filter(p=&gt;p.presetId===form.base),isNew=form.base===&#x27;new&#x27;;let candidate=sequence+1;while(Object.values(library).some(p=&gt;p.presetId===&#x27;U&#x27;+candidate))candidate++;if(Object.values(library).some(p=&gt;p.name===form.name.trim()&amp;&amp;p.presetId!==(isNew?&#x27;U&#x27;+candidate:form.base)))throw new Error(&#x27;同じ名称があります。改訂保存を選ぶか、別名にしてください&#x27;);const packet=buildPackage({presetId:isNew?&#x27;U&#x27;+candidate:form.base,revision:isNew?1:Math.max(...prior.map(p=&gt;p.revision))+1,name:form.name,description:form.description,scope:form.scope});validatePackage(packet);if(isNew)sequence=candidate;const key=packageKey(packet);library[key]=clone(packet);pending={type:&#x27;custom-list&#x27;,error:&#x27;&#x27;};notice=&#x27;自作プリセット &#x27;+packet.name+&#x27; r&#x27;+packet.revision+&#x27; を試作内の一覧へ保存。JSONで持ち出せます。&#x27;;render();persist();}catch(error){pending.error=error.message;render();}}
+function openUserLoad(key){const packet=library[key];try{validatePackage(packet);pending={type:&#x27;custom-load&#x27;,key,mode:packet.scope===&#x27;MODEL_INPUTS&#x27;?&#x27;FULL_NEW&#x27;:&#x27;MAPPED_TO_CURRENT_INPUT&#x27;,map:Object.fromEntries(packet.slots.map(t=&gt;[t.id,&#x27;&#x27;])),error:&#x27;&#x27;};render();}catch(error){notice=error.message;render();}}
+function mappingErrors(packet,mode,mapping){if(mode===&#x27;FULL_NEW&#x27;)return packet.scope===&#x27;MODEL_INPUTS&#x27;?[]:[&#x27;工程構成のみの保存は対象の対応付けが必要&#x27;];if(mode!==&#x27;MAPPED_TO_CURRENT_INPUT&#x27;)return [&#x27;未対応の読込方式&#x27;];const errors=[],seen=new Set();for(const slot of packet.slots){const t=documentModel().sets.find(x=&gt;x.id===mapping[slot.id]);if(!t)errors.push(slot.name+&#x27;：対応先が未指定&#x27;);else if(t.type!==slot.type)errors.push(slot.name+&#x27;：対象型が不一致&#x27;);else if(seen.has(t.id))errors.push(slot.name+&#x27;：対応先が重複&#x27;);else seen.add(t.id);}return errors;}
+function loadCustom(){if(pending?.type!==&#x27;custom-load&#x27;)return;try{const packet=validatePackage(library[pending.key]),errors=mappingErrors(packet,pending.mode,pending.map);if(errors.length)throw new Error(errors.join(&#x27;／&#x27;));const mode=pending.mode,mapping=clone(pending.map),sets=mode===&#x27;FULL_NEW&#x27;?packet.slots:documentModel().sets;const targetMap=new Map(),newSets=sets.map(t=&gt;{const id=newId(&#x27;T&#x27;);targetMap.set(t.id,id);return{id,name:id+&#x27; &#x27;+t.name,type:t.type,active:t.active};});const ids=new Map();const newStages=packet.stages.map(s=&gt;{const id=newId(&#x27;S&#x27;);ids.set(s.id,id);return{id,name:s.name,parent:s.parent,changed:true,ops:s.ops.map(o=&gt;{const oid=newId(&#x27;O&#x27;);ids.set(o.id,oid);return{id:oid,kind:o.kind,target:o.target,p:{...defaultParams,...o.p}};})};});for(const s of newStages){if(s.parent!==&#x27;INITIAL&#x27;)s.parent=ids.get(s.parent);for(const op of s.ops){if(op.target)op.target=targetMap.get(mode===&#x27;FULL_NEW&#x27;?op.target:mapping[op.target]);if(op.p.segment)op.p.segment=ids.get(op.p.segment);}}
+ const key=newId(&#x27;P&#x27;),mappingId=newId(&#x27;M&#x27;);docs[key]={name:packet.name+&#x27; r&#x27;+packet.revision+&#x27;（読込案）&#x27;,category:packet.category,preset:packet.presetId,presetVersion:String(packet.revision),sets:newSets,stages:newStages,mappingId,sourceRevision:packet.revision,mappingMode:mode,mappings:packet.slots.map(t=&gt;({slot:t.id,sourceTarget:mode===&#x27;FULL_NEW&#x27;?null:mapping[t.id],newTarget:targetMap.get(mode===&#x27;FULL_NEW&#x27;?t.id:mapping[t.id])}))};example=key;page=2;selected=newStages[0]?.id||&#x27;&#x27;;opId=stage()?.ops[0]?.id||&#x27;&#x27;;notice=&#x27;自作プリセットを新しい編集案へ読込。対象・工程・項目・照査参照を新IDへ接続。元の案と保存版は保持。&#x27;;commitUI();}catch(error){pending.error=error.message;render();}}
+function registerJSON(raw){if(utf8Size(raw)&gt;131072)throw new Error(&#x27;JSONは128KiB以内&#x27;);const packet=JSON.parse(raw);validatePackage(packet);const key=packageKey(packet),old=library[key];if(old&amp;&amp;canonical(old)!==canonical(packet))throw new Error(&#x27;同じID・revisionに別の内容があります。上書きせず別ID/新revisionを指定&#x27;);if(Object.values(library).some(p=&gt;p.name===packet.name&amp;&amp;p.presetId!==packet.presetId))throw new Error(&#x27;同名の別プリセットがあります。名称を変更して再読込&#x27;);library[key]=clone(packet);return key;}
+function customPanel(){if(!pending)return &#x27;&#x27;;const type=pending.type,error=pending.error?&#x27;&lt;div class=&quot;e-note e-alert&quot; role=&quot;alert&quot;&gt;&#x27;+esc(pending.error)+&#x27;&lt;/div&gt;&#x27;:&#x27;&#x27;;const close=button(&#x27;編集へ戻る&#x27;,&#x27;data-action=&quot;delete-cancel&quot;&#x27;);
+ if(type===&#x27;custom-save&#x27;){const groups=[...new Map(Object.values(library).map(p=&gt;[p.presetId,p.name])).entries()];return &#x27;&lt;h2&gt;自作プリセットとして保存&lt;/h2&gt;&#x27;+error+&#x27;&lt;div class=&quot;e-form&quot;&gt;&#x27;+(groups.length?&#x27;&lt;label&gt;保存方法&#x27;+select(&#x27;c-save-base&#x27;,[[&#x27;new&#x27;,&#x27;別のプリセットとして新規保存&#x27;],...groups.map(([id,name])=&gt;[id,name+&#x27; の新revision&#x27;])],pending.base)+&#x27;&lt;/label&gt;&#x27;:read(&#x27;保存方法&#x27;,&#x27;新規の自作プリセットとして保存&#x27;))+text(&#x27;名称&#x27;,&#x27;c-save-name&#x27;,pending.name)+&#x27;&lt;label&gt;保存範囲&#x27;+select(&#x27;c-save-scope&#x27;,Object.entries(scopes),pending.scope)+&#x27;&lt;/label&gt;&#x27;+read(&#x27;版&#x27;,pending.base===&#x27;new&#x27;?&#x27;新ID・revision 1&#x27;:&#x27;同じIDの新revision。既存版は保持&#x27;)+&#x27;&lt;label class=&quot;e-wide&quot;&gt;説明&lt;textarea id=&quot;c-save-description&quot; rows=&quot;2&quot;&gt;&#x27;+esc(pending.description)+&#x27;&lt;/textarea&gt;&lt;/label&gt;&lt;/div&gt;&#x27;+table([&#x27;範囲&#x27;,&#x27;保存するもの&#x27;,&#x27;再入力/対応付け&#x27;],[[&#x27;工程構成のみ&#x27;,&#x27;工程・操作・区間・照査と内部参照&#x27;,&#x27;対象の型付きslot、数値は再入力&#x27;],[&#x27;対象定義・入力値を含む&#x27;,&#x27;上記＋対象集合の型/初期活性と項目入力値&#x27;,&#x27;新規定義で複製、または現モデルへ対応付け&#x27;]])+&#x27;&lt;div class=&quot;e-note&quot;&gt;反映済みの入力を保存。対象を含む場合は、現モデルの対象集合すべてと項目入力値が対象。形状・節点/要素割当・物性の詳細は未登録。計算結果・確定state・checkpointは含めません。&lt;/div&gt;&lt;div class=&quot;e-tools&quot;&gt;&#x27;+button(&#x27;自作一覧へ保存&#x27;,&#x27;data-action=&quot;custom-save-confirm&quot; class=&quot;e-primary&quot;&#x27;)+close+&#x27;&lt;/div&gt;&#x27;;}
+ if(type===&#x27;custom-list&#x27;){const items=Object.entries(library);return &#x27;&lt;h2&gt;自作プリセット一覧&lt;/h2&gt;&#x27;+error+(items.length?table([&#x27;名称・版&#x27;,&#x27;保存範囲&#x27;,&#x27;操作&#x27;],items.map(([key,p])=&gt;[esc(p.name)+&#x27;&lt;br&gt;&lt;span class=&quot;e-muted&quot;&gt;&#x27;+esc(p.presetId)+&#x27; / r&#x27;+p.revision+&#x27;&lt;/span&gt;&#x27;,esc(scopes[p.scope]),button(&#x27;読込を確認&#x27;,&#x27;data-user-load=&quot;&#x27;+esc(key)+&#x27;&quot;&#x27;)+&#x27; &#x27;+button(&#x27;JSONを書き出す&#x27;,&#x27;data-user-export=&quot;&#x27;+esc(key)+&#x27;&quot;&#x27;)])):&#x27;&lt;div class=&quot;e-note&quot;&gt;自作プリセットは未保存です。編集した案から保存できます。&lt;/div&gt;&#x27;)+&#x27;&lt;div class=&quot;e-tools&quot;&gt;&#x27;+button(&#x27;現在の案を自作保存&#x27;,&#x27;data-action=&quot;custom-save-open&quot;&#x27;)+button(&#x27;JSONから読込&#x27;,&#x27;data-action=&quot;custom-import-open&quot;&#x27;)+close+&#x27;&lt;/div&gt;&lt;div class=&quot;e-muted&quot;&gt;組込みは読取専用。自作はIDとrevisionで管理し、過去の版は上書きしません。&lt;/div&gt;&#x27;;}
+ if(type===&#x27;custom-load&#x27;){const p=library[pending.key],mapped=pending.mode===&#x27;MAPPED_TO_CURRENT_INPUT&#x27;;return &#x27;&lt;h2&gt;自作プリセットの読込を確認&lt;/h2&gt;&#x27;+error+&#x27;&lt;div class=&quot;e-note&quot;&gt;&#x27;+esc(p.name)+&#x27; r&#x27;+p.revision+&#x27; ／ &#x27;+esc(scopes[p.scope])+&#x27;&lt;br&gt;&#x27;+esc(p.description)+&#x27;&lt;/div&gt;&#x27;+(p.scope===&#x27;MODEL_INPUTS&#x27;?&#x27;&lt;div class=&quot;e-form&quot;&gt;&lt;label&gt;読込方式&#x27;+select(&#x27;c-load-mode&#x27;,[[&#x27;FULL_NEW&#x27;,&#x27;保存した対象定義を新規案へ複製&#x27;],[&#x27;MAPPED_TO_CURRENT_INPUT&#x27;,&#x27;現モデルの対象へ対応付けて新規案&#x27;]],pending.mode)+&#x27;&lt;/label&gt;&lt;/div&gt;&#x27;:read(&#x27;読込方式&#x27;,&#x27;現モデルの対象へ対応付けて新規案&#x27;))+table([&#x27;保存slot・必要な型&#x27;,&#x27;単位・断面&#x27;,&#x27;対応先&#x27;],p.slots.map(t=&gt;[esc(t.name)+&#x27;&lt;br&gt;&lt;span class=&quot;e-muted&quot;&gt;&#x27;+esc(t.type)+&#x27;&lt;/span&gt;&#x27;,&#x27;m–kN–s／平面ひずみ&#x27;,mapped?&#x27;&lt;label&gt;&#x27;+esc(t.name)+&#x27; の対応先&#x27;+select(&#x27;c-map-&#x27;+t.id,[[&#x27;&#x27;,&#x27;未指定（明示選択が必要）&#x27;],...documentModel().sets.filter(x=&gt;x.type===t.type).map(x=&gt;[x.id,x.name])],pending.map[t.id])+&#x27;&lt;/label&gt;&#x27;:&#x27;新しい対象IDで複製&#x27;]))+(mapped?&#x27;&lt;details&gt;&lt;summary&gt;新規案へ複製する現モデルの対象集合：&#x27;+documentModel().sets.length+&#x27;件&lt;/summary&gt;&#x27;+table([&#x27;対象集合&#x27;,&#x27;型&#x27;],documentModel().sets.map(t=&gt;[esc(t.name),esc(t.type)]))+&#x27;&lt;/details&gt;&#x27;:&#x27;&#x27;)+&#x27;&lt;h3&gt;作成する工程&lt;/h3&gt;&#x27;+table([&#x27;工程&#x27;,&#x27;解析区間・操作&#x27;],p.stages.map(s=&gt;[esc(s.name),s.ops.map(o=&gt;esc(defs[o.kind].name)).join(&#x27; → &#x27;)]))+&#x27;&lt;div class=&quot;e-note&quot;&gt;現編集中の案と保存版は変更しません。読込後に参照・操作順・物理条件を再検査。未解禁の解析は実行できません。&lt;/div&gt;&lt;div class=&quot;e-tools&quot;&gt;&#x27;+button(&#x27;新しい案へ読込&#x27;,&#x27;data-action=&quot;custom-load-confirm&quot; class=&quot;e-primary&quot;&#x27;)+button(&#x27;自作一覧へ戻る&#x27;,&#x27;data-action=&quot;custom-library&quot;&#x27;)+close+&#x27;&lt;/div&gt;&#x27;;}
+ if(type===&#x27;custom-export&#x27;)return &#x27;&lt;h2&gt;保存用JSONを書き出す&lt;/h2&gt;&lt;div class=&quot;e-note&quot;&gt;以下をコピーしてUTF-8の .json に保存できます。「JSONから読込」で再登録できます。&lt;/div&gt;&lt;label&gt;プリセットJSON&lt;textarea id=&quot;c-export-json&quot; rows=&quot;12&quot; readonly&gt;&#x27;+esc(JSON.stringify(library[pending.key],null,2))+&#x27;&lt;/textarea&gt;&lt;/label&gt;&lt;div class=&quot;e-tools&quot;&gt;&#x27;+button(&#x27;自作一覧へ戻る&#x27;,&#x27;data-action=&quot;custom-library&quot;&#x27;)+close+&#x27;&lt;/div&gt;&#x27;;
+ if(type===&#x27;custom-import&#x27;)return &#x27;&lt;h2&gt;JSONから自作一覧へ読込&lt;/h2&gt;&#x27;+error+&#x27;&lt;label&gt;保存したプリセットJSON&lt;textarea id=&quot;c-import-json&quot; rows=&quot;10&quot; placeholder=&quot;保存用JSONを貼り付け&quot;&gt;&#x27;+esc(pending.raw)+&#x27;&lt;/textarea&gt;&lt;/label&gt;&lt;div class=&quot;e-muted&quot;&gt;形式/版・ID・内部参照・型・単位を検査。128KiB、工程100、項目500、対象200以内。失敗時は一覧・編集案を変更しません。&lt;/div&gt;&lt;div class=&quot;e-tools&quot;&gt;&#x27;+button(&#x27;JSONを検査して一覧へ登録&#x27;,&#x27;data-action=&quot;custom-import-confirm&quot; class=&quot;e-primary&quot;&#x27;)+close+&#x27;&lt;/div&gt;&#x27;;
+ return &#x27;&#x27;;
+}
+root.addEventListener(&#x27;click&#x27;,event=&gt;{const b=event.target.closest(&#x27;button&#x27;);if(!b||b.disabled||!root.contains(b))return;const d=b.dataset;
+if(d.userLoad){openUserLoad(d.userLoad);return;}if(d.userExport){pending={type:&#x27;custom-export&#x27;,key:d.userExport};render();return;}if(d.page!==undefined){page=Number(d.page);commitUI();return;}if(d.stage){selected=d.stage;opId=stage()?.ops[0]?.id||&#x27;&#x27;;commitUI();return;}if(d.op){opId=d.op;resetDrafts();render();persist();return;}if(d.fixStage){selected=d.fixStage;opId=d.fixOp||stage()?.ops[0]?.id||&#x27;&#x27;;page=2;commitUI();return;}
+switch(d.action){case &#x27;custom-save-open&#x27;:pending={type:&#x27;custom-save&#x27;,base:&#x27;new&#x27;,name:documentModel().name+&#x27;（自作）&#x27;,description:&#x27;&#x27;,scope:&#x27;FLOW_ONLY&#x27;,error:&#x27;&#x27;};render();break;case &#x27;custom-library&#x27;:pending={type:&#x27;custom-list&#x27;,error:&#x27;&#x27;};render();break;case &#x27;custom-save-confirm&#x27;:saveCustom();break;case &#x27;custom-load-confirm&#x27;:loadCustom();break;case &#x27;custom-import-open&#x27;:pending={type:&#x27;custom-import&#x27;,raw:&#x27;&#x27;,error:&#x27;&#x27;};render();break;case &#x27;custom-import-confirm&#x27;:try{const key=registerJSON(pending.raw);notice=&#x27;JSONを検査し、自作一覧へ登録。既存案は変更していません。&#x27;;pending={type:&#x27;custom-list&#x27;,error:&#x27;&#x27;};render();persist();}catch(error){pending.error=error.message;render();}break;case &#x27;preset-preview&#x27;:pending={type:&#x27;preset&#x27;,key:el(&#x27;e-preset&#x27;).value};render();break;case &#x27;preset-apply&#x27;:if(pending?.type===&#x27;preset&#x27;)applyPreset(pending.key);break;case &#x27;set-add&#x27;:{const name=el(&#x27;e-new-set-name&#x27;).value.trim();if(!name){notice=&#x27;対象集合の名称を入力してください。&#x27;;el(&#x27;e-status&#x27;).textContent=notice;break;}const id=newId(&#x27;T&#x27;);documentModel().sets.push({id,name:id+&#x27; &#x27;+name,type:el(&#x27;e-new-set-type&#x27;).value,active:el(&#x27;e-new-set-active&#x27;).checked});notice=&#x27;対象集合を仮登録。03で操作の対象に指定できます。&#x27;;commitUI();break;}case &#x27;stage-add&#x27;:addStage();break;case &#x27;stage-copy&#x27;:copyStage();break;case &#x27;stage-up&#x27;:moveStage(-1);break;case &#x27;stage-down&#x27;:moveStage(1);break;case &#x27;stage-delete&#x27;:pending={type:&#x27;stage&#x27;,impact:stages().filter(s=&gt;s.parent===selected).length+&#x27;工程がこの工程を参照。削除後は引継元を未指定にし、入力を保持します。&#x27;};render();break;case &#x27;stage-apply&#x27;:if(stage()){stage().name=stageDraft.name;stage().parent=stageDraft.parent;mark(selected);notice=&#x27;工程名と引継元を反映。依存する下流/照査は再確認。&#x27;;commitUI();}break;case &#x27;op-add&#x27;:addOp(el(&#x27;e-add-kind&#x27;).value);break;case &#x27;op-copy&#x27;:copyOp();break;case &#x27;op-up&#x27;:moveOp(-1);break;case &#x27;op-down&#x27;:moveOp(1);break;case &#x27;op-delete&#x27;:pending={type:&#x27;op&#x27;,impact:stage().ops.filter(o=&gt;o.p.segment===opId).length+&#x27;照査がこの区間を参照。参照は未指定にし、照査入力は残します。&#x27;};render();break;case &#x27;delete-confirm&#x27;:deleteConfirm();break;case &#x27;delete-cancel&#x27;:pending=null;render();break;case &#x27;op-apply&#x27;:if(draft&amp;&amp;currentOp()){const index=stage().ops.findIndex(o=&gt;o.id===opId);stage().ops[index]=clone(draft);mark(selected);notice=&#x27;項目の入力を反映。「確認」で未入力・順序・引継ぎを検査。&#x27;;commitUI();}break;}
+});
+function formInput(target){const id=target.id;if(pending?.type===&#x27;custom-save&#x27;){const k={&#x27;c-save-name&#x27;:&#x27;name&#x27;,&#x27;c-save-description&#x27;:&#x27;description&#x27;,&#x27;c-save-scope&#x27;:&#x27;scope&#x27;,&#x27;c-save-base&#x27;:&#x27;base&#x27;}[id];if(k)pending[k]=target.value;}if(pending?.type===&#x27;custom-load&#x27;){if(id===&#x27;c-load-mode&#x27;)pending.mode=target.value;else if(id.startsWith(&#x27;c-map-&#x27;))pending.map[id.slice(6)]=target.value;}if(pending?.type===&#x27;custom-import&#x27;&amp;&amp;id===&#x27;c-import-json&#x27;)pending.raw=target.value;if(id===&#x27;e-stage-name&#x27;&amp;&amp;stageDraft)stageDraft.name=target.value;else if(id===&#x27;e-stage-parent&#x27;&amp;&amp;stageDraft)stageDraft.parent=target.value;else if(id===&#x27;e-op-target&#x27;&amp;&amp;draft)draft.target=target.value;else if(id.startsWith(&#x27;e-p-&#x27;)&amp;&amp;draft)draft.p[id.slice(4)]=target.value;}
+root.addEventListener(&#x27;input&#x27;,event=&gt;formInput(event.target));
+root.addEventListener(&#x27;change&#x27;,event=&gt;{const t=event.target;if(t.id===&#x27;e-example&#x27;){example=t.value;selected=stages()[0]?.id||&#x27;&#x27;;opId=stage()?.ops[0]?.id||&#x27;&#x27;;page=2;notice=&#x27;編集案を切替。各案の編集内容は保持。新しい構成はプリセットから作成できます。&#x27;;commitUI();return;}if(t.id===&#x27;e-op-kind&#x27;&amp;&amp;draft){draft.kind=t.value;draft.target=&#x27;&#x27;;draft.p=makeOp(t.value).p;render();return;}formInput(t);if([&#x27;e-p-at&#x27;,&#x27;e-p-mode&#x27;,&#x27;c-save-scope&#x27;,&#x27;c-load-mode&#x27;,&#x27;c-save-base&#x27;].includes(t.id))render();});
+window.addEventListener(&#x27;openai:set_globals&#x27;,event=&gt;{const s=event.detail?.globals?.widgetState;if(s?.privateContent?.version===&#x27;custom-v1&#x27;&amp;&amp;s.modelContent?.design===&#x27;custom-v1&#x27;&amp;&amp;(JSON.stringify(expandDocs(s.privateContent.docs))!==JSON.stringify(docs)||JSON.stringify(s.privateContent.library||{})!==JSON.stringify(library))){restore(s);render();}});
+restore(window.openai?.widgetState);resetDrafts();render();
+if(globalThis.Tweak){const tweak=new Tweak({container:root.querySelector(&#x27;.e-app&#x27;),onChange:render});tweak.addToggle(layout,&#x27;roomy&#x27;,{label:&#x27;表の行間を広くする&#x27;});}
+})();
+&lt;/script&gt;
+&lt;/div&gt;
+
+&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+  let lastPointerWasTouch = false;
+  let pinnedByTouch = false;
+
+  const getTrigger = (event) =&gt; {
+    for (const target of event.composedPath()) {
+      if (target?.nodeType === Node.ELEMENT_NODE) {
+        const trigger = target.closest(&quot;[data-tooltip]&quot;);
+        if (trigger) return trigger;
+      }
+    }
+    return null;
+  };
+  const containsTarget = (trigger, target) =&gt;
+    target?.nodeType != null &amp;&amp; trigger.contains(target);
+  const getContent = (trigger) =&gt;
+    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
+  const getPlacement = (trigger) =&gt; {
+    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
+    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
+  };
+  const getTooltip = () =&gt; {
+    if (tooltip == null) {
+      tooltip = document.createElement(&quot;div&quot;);
+      tooltip.id = tooltipId;
+      tooltip.className = &quot;tooltip&quot;;
+      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) =&gt; {
+    const ids = new Set(
+      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute(&quot;aria-describedby&quot;);
+    } else {
+      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
+    }
+  };
+  const clearOpenTimeout = () =&gt; {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) =&gt; {
+    clearOpenTimeout();
+    pinnedByTouch = false;
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) =&gt; {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-width&quot;,
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-height&quot;,
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: &quot;fixed&quot;,
+    })
+      .then(({ x, y }) =&gt; {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = &quot;visible&quot;;
+      })
+      .catch(() =&gt; {
+        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) =&gt; {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = &quot;hidden&quot;;
+    floating.style.transform = &quot;translate(0, 0)&quot;;
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) =&gt; {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() =&gt; {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) =&gt; {
+    if (event.pointerType === &quot;touch&quot;) {
+      return;
+    }
+    const trigger = getTrigger(event);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handlePointer = (event) =&gt; {
+    lastPointerWasTouch =
+      event.type === &quot;pointerdown&quot; &amp;&amp; event.pointerType === &quot;touch&quot;;
+  };
+  const handleTouchClick = (event) =&gt; {
+    const isTouch = event.pointerType === &quot;touch&quot; || lastPointerWasTouch;
+    lastPointerWasTouch = false;
+    if (!isTouch || event.detail === 0) {
+      return;
+    }
+    const trigger = getTrigger(event);
+    if (
+      trigger == null ||
+      !trigger.isConnected ||
+      getContent(trigger).length === 0 ||
+      (pinnedByTouch &amp;&amp; activeTrigger === trigger)
+    ) {
+      if (pinnedByTouch) {
+        closeTooltip();
+      }
+      return;
+    }
+    openTooltip(trigger);
+    pinnedByTouch = activeTrigger === trigger;
+    window.setTimeout(() =&gt; {
+      if (activeTrigger === trigger &amp;&amp; !trigger.isConnected) {
+        closeTooltip(false);
+      }
+    }, 0);
+  };
+  const handleLeave = (event) =&gt; {
+    if (pinnedByTouch) {
+      return;
+    }
+    const trigger = getTrigger(event);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) =&gt; {
+    const trigger = getTrigger(event);
+    if (trigger?.matches(&quot;:focus-visible&quot;)) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) =&gt; {
+    if (event.key === &quot;Escape&quot;) {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) =&gt; {
+    lastPointerWasTouch = false;
+    const trigger = getTrigger(event);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handlers = {
+    pointerover: handlePointerOpen,
+    pointerdown: handlePointer,
+    pointercancel: handlePointer,
+    click: handleTouchClick,
+    pointerout: handleLeave,
+    focusin: handleFocusIn,
+    focusout: handleLeave,
+    keydown: handleKeyDown,
+    contextmenu: handleContextMenu,
+  };
+  const roots = new Map();
+  const handledEvents = new WeakSet();
+  const handleEvent = (event) =&gt; {
+    if (handledEvents.has(event)) return;
+    handledEvents.add(event);
+    handlers[event.type](event);
+  };
+  const discoverRoots = (node) =&gt; {
+    if (node.shadowRoot) listen(node.shadowRoot);
+    for (const element of node.querySelectorAll(&quot;*&quot;)) {
+      if (element.shadowRoot) listen(element.shadowRoot);
+    }
+  };
+  const listen = (root) =&gt; {
+    if (roots.has(root)) return;
+    for (const type of Object.keys(handlers)) root.addEventListener(type, handleEvent);
+    const observer = new window.MutationObserver((records) =&gt; {
+      for (const { addedNodes } of records) {
+        for (const node of addedNodes) {
+          if (node.nodeType === Node.ELEMENT_NODE) discoverRoots(node);
+        }
+      }
+      for (const [root, cleanup] of roots) {
+        if (root.host &amp;&amp; !root.host.isConnected) {
+          cleanup();
+          roots.delete(root);
+        }
+      }
+      if (activeTrigger &amp;&amp; !activeTrigger.isConnected) closeTooltip(false);
+    });
+    observer.observe(root, { childList: true, subtree: true });
+    roots.set(root, () =&gt; {
+      observer.disconnect();
+      for (const type of Object.keys(handlers)) root.removeEventListener(type, handleEvent);
+    });
+    discoverRoots(root);
+  };
+  const destroy = () =&gt; {
+    closeTooltip(false);
+    lastPointerWasTouch = false;
+    for (const cleanup of roots.values()) cleanup();
+    roots.clear();
+    tooltip = null;
+  };
+
+  // Events between children of one shadow root never reach the document.
+  listen(document);
+  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-tabs&quot;&gt;
+(() =&gt; {
+  const selector = &#x27;.nav[role=&quot;tablist&quot;] [role=&quot;tab&quot;]&#x27;;
+  const disabled = &#x27;:disabled,[aria-disabled=&quot;true&quot;]&#x27;;
+  const selectTab = (selected) =&gt; {
+    const panelId = selected.getAttribute(&quot;aria-controls&quot;);
+    for (const tab of selected.closest(&#x27;[role=&quot;tablist&quot;]&#x27;).querySelectorAll(&#x27;[role=&quot;tab&quot;]&#x27;)) {
+      const active = tab === selected;
+      tab.classList.toggle(&quot;active&quot;, active);
+      tab.setAttribute(&quot;aria-selected&quot;, String(active));
+      const id = tab.getAttribute(&quot;aria-controls&quot;);
+      const panel = id &amp;&amp; document.getElementById(id);
+      if (panel != null) {
+        panel.hidden = id !== panelId;
+        if (!panel.hidden &amp;&amp; selected.id) {
+          panel.setAttribute(&quot;aria-labelledby&quot;, selected.id);
+        }
+      }
+    }
+  };
+  const interact = (event) =&gt; {
+    const tab = event.target?.closest?.(selector);
+    if (event.defaultPrevented || tab == null || tab.matches(disabled)) {
+      return;
+    }
+    if (event.type === &quot;click&quot;) {
+      selectTab(tab);
+      return;
+    }
+    const tabs = Array.from(
+      tab.closest(&#x27;[role=&quot;tablist&quot;]&#x27;).querySelectorAll(&#x27;[role=&quot;tab&quot;]&#x27;),
+    ).filter((candidate) =&gt; !candidate.matches(disabled));
+    const current = tabs.indexOf(tab);
+    let next;
+    if (event.key === &quot;ArrowRight&quot; || event.key === &quot;ArrowDown&quot;) {
+      next = (current + 1) % tabs.length;
+    } else if (event.key === &quot;ArrowLeft&quot; || event.key === &quot;ArrowUp&quot;) {
+      next = (current + tabs.length - 1) % tabs.length;
+    } else if (event.key === &quot;Home&quot;) {
+      next = 0;
+    } else if (event.key === &quot;End&quot;) {
+      next = tabs.length - 1;
+    } else {
+      return;
+    }
+    event.preventDefault();
+    tabs[next].focus();
+    selectTab(tabs[next]);
+  };
+
+  for (const list of document.querySelectorAll(&#x27;.nav[role=&quot;tablist&quot;]&#x27;)) {
+    const selected =
+      list.querySelector(&#x27;[role=&quot;tab&quot;][aria-selected=&quot;true&quot;]&#x27;) ??
+      list.querySelector(&#x27;[role=&quot;tab&quot;].active&#x27;) ??
+      list.querySelector(&#x27;[role=&quot;tab&quot;]&#x27;);
+    if (selected != null) {
+      selectTab(selected);
+    }
+  }
+  document.addEventListener(&quot;click&quot;, interact);
+  document.addEventListener(&quot;keydown&quot;, interact);
+  window.addEventListener(&quot;pagehide&quot;, () =&gt; {
+    document.removeEventListener(&quot;click&quot;, interact);
+    document.removeEventListener(&quot;keydown&quot;, interact);
+  }, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-carousel&quot;&gt;
+  (() =&gt; {
+    for (const root of document.querySelectorAll(&quot;.viz-carousel&quot;)) {
+      const panels = Array.from(
+        root.querySelectorAll(&quot;:scope &gt; [data-variant]&quot;),
+      );
+      if (panels.length === 0) {
+        continue;
+      }
+      root.setAttribute(&quot;role&quot;, &quot;group&quot;);
+      panels.forEach((panel, index) =&gt; {
+        panel.hidden = index !== 0;
+        panel.setAttribute(&quot;role&quot;, &quot;group&quot;);
+        if (!panel.hasAttribute(&quot;aria-label&quot;)) {
+          panel.setAttribute(&quot;aria-label&quot;, panel.dataset.variant);
+        }
+      });
+      root.dataset.activeVariant = panels[0].dataset.variant;
+      if (panels.length === 1) {
+        continue;
+      }
+
+      const controls = document.createElement(&quot;div&quot;);
+      controls.className = &quot;viz-carousel-controls&quot;;
+      // Portable copy of the settings dropdown&#x27;s legacy glyph; no 14px icon-package preset matches it.
+      // https://github.com/openai/openai/blob/master/codex/codex-apps/webview/src/icons/chevron.svg
+      controls.innerHTML = `
+      &lt;button type=&quot;button&quot; class=&quot;viz-carousel-previous cursor-interaction&quot;&gt;&lt;i data-lucide=&quot;chevron-left&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/button&gt;
+      &lt;details class=&quot;viz-carousel-picker&quot;&gt;
+        &lt;summary class=&quot;cursor-interaction&quot;&gt;
+          &lt;span class=&quot;viz-carousel-count tabular-nums&quot;&gt;&lt;/span&gt;
+          &lt;span class=&quot;viz-carousel-name&quot;&gt;&lt;/span&gt;
+          &lt;svg class=&quot;viz-carousel-caret&quot; width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 20 21&quot; fill=&quot;none&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;
+            &lt;path d=&quot;M15.2793 7.71101C15.539 7.45131 15.961 7.45131 16.2207 7.71101C16.4804 7.97071 16.4804 8.39272 16.2207 8.65242L10.4707 14.4024C10.211 14.6621 9.78902 14.6621 9.52932 14.4024L3.77932 8.65242L3.69436 8.54792C3.52385 8.28979 3.55205 7.93828 3.77932 7.71101C4.00659 7.48374 4.3581 7.45554 4.61623 7.62605L4.72073 7.71101L10 12.9903L15.2793 7.71101Z&quot; fill=&quot;currentColor&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;0.6&quot; /&gt;
+          &lt;/svg&gt;
+        &lt;/summary&gt;
+        &lt;div class=&quot;viz-carousel-options&quot;&gt;&lt;/div&gt;
+      &lt;/details&gt;
+      &lt;button type=&quot;button&quot; class=&quot;viz-carousel-next cursor-interaction&quot;&gt;&lt;i data-lucide=&quot;chevron-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/button&gt;`;
+      const previous = controls.querySelector(&quot;.viz-carousel-previous&quot;);
+      const next = controls.querySelector(&quot;.viz-carousel-next&quot;);
+      const picker = controls.querySelector(&quot;.viz-carousel-picker&quot;);
+      const summary = picker.querySelector(&quot;summary&quot;);
+      const count = controls.querySelector(&quot;.viz-carousel-count&quot;);
+      const name = controls.querySelector(&quot;.viz-carousel-name&quot;);
+      const options = controls.querySelector(&quot;.viz-carousel-options&quot;);
+      const status = document.createElement(&quot;span&quot;);
+      status.className = &quot;sr-only&quot;;
+      status.setAttribute(&quot;role&quot;, &quot;status&quot;);
+      status.setAttribute(&quot;aria-live&quot;, &quot;polite&quot;);
+      status.setAttribute(&quot;aria-atomic&quot;, &quot;true&quot;);
+      previous.setAttribute(
+        &quot;aria-label&quot;,
+        root.dataset.previousLabel ?? &quot;Previous variant&quot;,
+      );
+      next.setAttribute(&quot;aria-label&quot;, root.dataset.nextLabel ?? &quot;Next variant&quot;);
+
+      let active = 0;
+      let mousePointerId = null;
+      let summaryPointerHandled = false;
+      summary.addEventListener(&quot;pointerdown&quot;, (event) =&gt; {
+        summaryPointerHandled =
+          event.pointerType === &quot;mouse&quot; &amp;&amp; event.button === 0 &amp;&amp; !event.ctrlKey;
+        if (!summaryPointerHandled) {
+          return;
+        }
+        event.preventDefault();
+        summary.focus({ preventScroll: true });
+        picker.open = !picker.open;
+        mousePointerId = picker.open ? event.pointerId : null;
+      });
+      summary.addEventListener(&quot;click&quot;, (event) =&gt; {
+        if (summaryPointerHandled &amp;&amp; event.detail &gt; 0) {
+          event.preventDefault();
+        }
+      });
+      const choices = panels.map((panel, index) =&gt; {
+        const choice = document.createElement(&quot;button&quot;);
+        choice.type = &quot;button&quot;;
+        choice.className = &quot;cursor-interaction&quot;;
+        choice.textContent = panel.dataset.variant;
+        choice.addEventListener(&quot;click&quot;, () =&gt; {
+          select(index);
+          summary.focus();
+        });
+        choice.addEventListener(&quot;pointerup&quot;, (event) =&gt; {
+          if (
+            picker.open &amp;&amp;
+            event.pointerType === &quot;mouse&quot; &amp;&amp;
+            event.button === 0 &amp;&amp;
+            event.pointerId === mousePointerId
+          ) {
+            choice.click();
+          }
+        });
+        options.appendChild(choice);
+        return choice;
+      });
+      const select = (index) =&gt; {
+        const changed = active !== index;
+        active = index;
+        panels.forEach((panel, position) =&gt; {
+          panel.hidden = position !== active;
+          choices[position].setAttribute(
+            &quot;aria-current&quot;,
+            String(position === active),
+          );
+        });
+        root.dataset.activeVariant = panels[active].dataset.variant;
+        count.textContent = `${active + 1} / ${panels.length}`;
+        name.textContent = panels[active].dataset.variant;
+        picker.open = false;
+        mousePointerId = null;
+        if (changed) {
+          status.textContent = `${count.textContent}: ${name.textContent}`;
+        }
+      };
+      previous.addEventListener(&quot;click&quot;, () =&gt;
+        select((active + panels.length - 1) % panels.length),
+      );
+      next.addEventListener(&quot;click&quot;, () =&gt;
+        select((active + 1) % panels.length),
+      );
+      picker.addEventListener(&quot;keydown&quot;, (event) =&gt; {
+        if (event.key === &quot;Escape&quot; &amp;&amp; picker.open) {
+          event.preventDefault();
+          picker.open = false;
+          mousePointerId = null;
+          summary.focus();
+          return;
+        }
+        if (event.altKey || event.ctrlKey || event.metaKey) {
+          return;
+        }
+        const index = choices.indexOf(document.activeElement);
+        let nextIndex;
+        if (event.key === &quot;ArrowDown&quot;) {
+          nextIndex = index &lt; 0 ? active : (index + 1) % choices.length;
+        } else if (event.key === &quot;ArrowUp&quot;) {
+          nextIndex = index &lt; 0 ? active : (index + choices.length - 1) % choices.length;
+        } else if (picker.open &amp;&amp; event.key === &quot;Home&quot;) {
+          nextIndex = 0;
+        } else if (picker.open &amp;&amp; event.key === &quot;End&quot;) {
+          nextIndex = choices.length - 1;
+        } else {
+          return;
+        }
+        event.preventDefault();
+        picker.open = true;
+        choices[nextIndex].focus();
+      });
+      picker.addEventListener(&quot;focusout&quot;, (event) =&gt; {
+        if (!picker.contains(event.relatedTarget)) {
+          picker.open = false;
+          mousePointerId = null;
+        }
+      });
+      const dismiss = (event) =&gt; {
+        if (!summary.contains(event.target)) {
+          mousePointerId = null;
+        }
+        if (!picker.contains(event.target)) {
+          picker.open = false;
+        }
+      };
+      const endPointerSelection = () =&gt; {
+        mousePointerId = null;
+      };
+      const sizePicker = () =&gt; {
+        root.style.setProperty(
+          &quot;--viz-carousel-picker-height&quot;,
+          `${picker.open ? options.offsetHeight : 0}px`,
+        );
+      };
+      picker.addEventListener(&quot;toggle&quot;, sizePicker);
+      window.addEventListener(&quot;resize&quot;, sizePicker);
+      document.addEventListener(&quot;pointerdown&quot;, dismiss);
+      document.addEventListener(&quot;pointerup&quot;, endPointerSelection);
+      document.addEventListener(&quot;pointercancel&quot;, endPointerSelection);
+      window.addEventListener(&quot;blur&quot;, endPointerSelection);
+      window.addEventListener(
+        &quot;pagehide&quot;,
+        () =&gt; {
+          document.removeEventListener(&quot;pointerdown&quot;, dismiss);
+          document.removeEventListener(&quot;pointerup&quot;, endPointerSelection);
+          document.removeEventListener(&quot;pointercancel&quot;, endPointerSelection);
+          window.removeEventListener(&quot;blur&quot;, endPointerSelection);
+          window.removeEventListener(&quot;resize&quot;, sizePicker);
+        },
+        { once: true },
+      );
+      root.append(controls, status);
+      select(0);
+    }
+  })();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  const initialize = () =&gt; {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById(&quot;codex-visualization-lucide&quot;)
+    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+
+<script>(() => {
+  const frame = document.getElementById("codex-visualization");
+  if (!(frame instanceof HTMLIFrameElement)) {
+    return;
+  }
+  const isShare = document.documentElement.classList.contains(
+    "visualization-share-root",
+  );
+  let viewportHeight = globalThis.innerHeight;
+  let sizeFingerprint = null;
+  let sizeWriteTimeout;
+  let lastSize = null;
+  let pendingSize = null;
+  const storageKey = `codex:visualization-widget-state-v2:${JSON.stringify([
+    globalThis.location.pathname,
+    globalThis.location.search,
+  ])}`;
+  const sizeStorageKey = `${storageKey}:share-size-v1`;
+  const parseState = (serializedState) => {
+    if (
+      typeof serializedState !== "string" ||
+      new TextEncoder().encode(serializedState).length > 16 * 1024
+    ) {
+      throw new TypeError(
+        "Widget state must be a JSON object of at most 16 KiB",
+      );
+    }
+    /** @type {unknown} */
+    const state = JSON.parse(serializedState);
+    if (
+      state == null ||
+      typeof state !== "object" ||
+      Array.isArray(state) ||
+      ("imageIds" in state &&
+        (!Array.isArray(state.imageIds) || state.imageIds.length > 0))
+    ) {
+      throw new TypeError("Widget state must be a JSON object");
+    }
+    const storedState = { modelContent: null, privateContent: null, ...state };
+    const canonicalState = JSON.stringify(
+      storedState,
+      (_key, /** @type {unknown} */ value) => {
+        if (typeof value === "number" && !Number.isFinite(value)) {
+          throw new TypeError("Widget state must contain finite numbers");
+        }
+        return value;
+      },
+    );
+    if (new TextEncoder().encode(canonicalState).length > 16 * 1024) {
+      throw new TypeError(
+        "Widget state must be a JSON object of at most 16 KiB",
+      );
+    }
+    return storedState;
+  };
+  let storage = null;
+  let state = null;
+  try {
+    const localStorage = globalThis.localStorage;
+    const probeKey = `${storageKey}:probe`;
+    localStorage.setItem(probeKey, "1");
+    localStorage.removeItem(probeKey);
+    storage = localStorage;
+    const savedState = storage.getItem(storageKey);
+    if (savedState != null) {
+      try {
+        state = parseState(savedState);
+      } catch {
+        // Invalid saved state does not disable future writes.
+      }
+    }
+  } catch {
+    storage = null;
+  }
+  const persistSize = () => {
+    globalThis.clearTimeout(sizeWriteTimeout);
+    if (pendingSize == null) {
+      return;
+    }
+    try {
+      storage?.setItem(sizeStorageKey, pendingSize);
+    } catch {
+      // A denied or full cache must not affect the visualization.
+    }
+    pendingSize = null;
+  };
+  if (isShare) {
+    globalThis.addEventListener("pagehide", persistSize);
+  }
+  const initialGlobals = {
+    widgetState: state,
+    statePersistence: storage == null ? "none" : "local",
+  };
+
+  const channel = new MessageChannel();
+  channel.port1.addEventListener("message", (event) => {
+    const data = event.data;
+    if (typeof data !== "object" || data == null) {
+      return;
+    }
+    if (data.type === "widget-state-write") {
+      if (!Number.isSafeInteger(data.id) || data.id <= 0) {
+        return;
+      }
+      let ok = false;
+      try {
+        if (storage != null) {
+          const state = parseState(data.state);
+          storage.setItem(storageKey, JSON.stringify(state));
+          ok = true;
+        }
+      } catch {
+        // Storage denial, quota limits, and invalid state return a failed receipt.
+      }
+      channel.port1.postMessage({
+        type: "widget-state-result",
+        id: data.id,
+        ok,
+      });
+      return;
+    }
+    if (data.type === "height") {
+      const height = data.height;
+      if (
+        typeof height !== "number" ||
+        !Number.isFinite(height) ||
+        height < 0
+      ) {
+        return;
+      }
+      if (height <= 10_000) {
+        const width = isShare && storage != null ? frame.clientWidth : null;
+        frame.style.height = Math.ceil(height) + "px";
+        if (isShare && storage != null) {
+          const size = JSON.stringify({
+            fingerprint: sizeFingerprint,
+            width,
+            viewportHeight: globalThis.innerHeight,
+            dark: globalThis.matchMedia("(prefers-color-scheme: dark)").matches,
+            scale: globalThis.devicePixelRatio,
+            height: Math.ceil(height),
+          });
+          if (size !== lastSize) {
+            lastSize = size;
+            pendingSize = size;
+            globalThis.clearTimeout(sizeWriteTimeout);
+            sizeWriteTimeout = globalThis.setTimeout(persistSize, 100);
+          }
+        }
+      }
+      if (isShare) {
+        // Keep unusually tall content accessible without accepting an unbounded height.
+        if (height > 10_000 && Number.parseFloat(frame.style.height) === 0) {
+          frame.style.removeProperty("height");
+        }
+        frame.scrolling = height > 10_000 ? "auto" : "no";
+        document.documentElement.classList.add("visualization-share-ready");
+      }
+      return;
+    }
+    if (data.type === "scroll-to") {
+      const top = data.top;
+      if (
+        typeof top === "number" &&
+        Number.isFinite(top) &&
+        top >= 0 &&
+        globalThis.navigator.userActivation?.isActive === true
+      ) {
+        globalThis.scrollTo({
+          top: Math.ceil(
+            globalThis.scrollY + frame.getBoundingClientRect().top + top,
+          ),
+        });
+      }
+      return;
+    }
+    if (data.type === "open-external") {
+      const rawHref = data.href;
+      if (typeof rawHref !== "string") {
+        return;
+      }
+      let href;
+      try {
+        const url = new URL(rawHref, document.baseURI);
+        if (url.protocol !== "https:") {
+          return;
+        }
+        href = url.href;
+      } catch {
+        return;
+      }
+      if (globalThis.navigator.userActivation?.isActive === true) {
+        const anchor = document.createElement("a");
+        anchor.href = href;
+        anchor.rel = "noopener noreferrer";
+        anchor.target = "_blank";
+        document.body.appendChild(anchor);
+        anchor.click();
+        anchor.remove();
+      }
+      return;
+    }
+    if (data.type === "follow-up") {
+      const prompt = data.prompt;
+      if (
+        typeof prompt !== "string" ||
+        globalThis.navigator.userActivation?.isActive !== true
+      ) {
+        return;
+      }
+      const title = data.title;
+      globalThis.prompt(typeof title === "string" ? title : prompt, prompt);
+    }
+  });
+  channel.port1.start();
+  const srcdoc = frame.dataset.srcdoc;
+  if (srcdoc == null) {
+    return;
+  }
+  globalThis.addEventListener("resize", () => {
+    const height = Number.parseFloat(frame.style.height);
+    if (!isShare && (!Number.isFinite(height) || height <= viewportHeight)) {
+      frame.style.removeProperty("height");
+    }
+    viewportHeight = globalThis.innerHeight;
+    channel.port1.postMessage({ type: "measure" });
+  });
+  frame.addEventListener(
+    "load",
+    () => {
+      frame.contentWindow?.postMessage(
+        { type: "codex-visualization-initialize" },
+        "*",
+        [channel.port2],
+      );
+    },
+    { once: true },
+  );
+  // Match the trusted bootstrap element, not the same text in an authored title.
+  const frameHtml = srcdoc.replace(
+    '<script type="application/json" id="codex-visualization-widget-state">__CODEX_VISUALIZATION_WIDGET_STATE__<\/script>',
+    () =>
+      '<script type="application/json" id="codex-visualization-widget-state">' +
+      JSON.stringify(initialGlobals).replaceAll("<", "\\u003c") +
+      "<\/script>",
+  );
+  if (isShare && storage != null) {
+    // Fingerprint the rendered document, including restored widget state, without
+    // storing its content. This is a layout cache, not a security identity.
+    let hash = 5381;
+    for (let index = 0; index < frameHtml.length; index += 1) {
+      hash = (hash * 33 + frameHtml.charCodeAt(index)) % 4_294_967_296;
+    }
+    sizeFingerprint = hash.toString(36);
+    try {
+      const size = JSON.parse(storage.getItem(sizeStorageKey) ?? "null");
+      if (
+        size?.fingerprint === sizeFingerprint &&
+        size.width === frame.clientWidth &&
+        size.viewportHeight === globalThis.innerHeight &&
+        size.dark ===
+          globalThis.matchMedia("(prefers-color-scheme: dark)").matches &&
+        size.scale === globalThis.devicePixelRatio &&
+        typeof size.height === "number" &&
+        Number.isFinite(size.height) &&
+        size.height >= 0 &&
+        size.height <= 10_000
+      ) {
+        frame.style.height = size.height + "px";
+      }
+    } catch {
+      // Ignore missing or invalid cache entries and measure the live frame.
+    }
+  }
+  frame.srcdoc = frameHtml;
+  delete frame.dataset.srcdoc;
+})();
+</script>
+</body>
+</html>
