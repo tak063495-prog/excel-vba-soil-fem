@@ -1,0 +1,150 @@
+[
+  {
+    "case": "bearing_flat_gravity",
+    "status": "PASS",
+    "seconds": 2.2224578999999998
+  },
+  {
+    "case": "bearing_flat_s001000",
+    "status": "PASS",
+    "seconds": 2.3140592,
+    "settlement_m": 0.001,
+    "terrain": "flat",
+    "fine": false
+  },
+  {
+    "case": "bearing_flat_s005000",
+    "status": "PASS",
+    "seconds": 2.3041174,
+    "settlement_m": 0.005,
+    "terrain": "flat",
+    "fine": false
+  },
+  {
+    "case": "bearing_flat_s010000",
+    "status": "PASS",
+    "seconds": 2.3717079,
+    "settlement_m": 0.01,
+    "terrain": "flat",
+    "fine": false
+  },
+  {
+    "case": "bearing_flat_s020000",
+    "status": "PASS",
+    "seconds": 2.4323669999999997,
+    "settlement_m": 0.02,
+    "terrain": "flat",
+    "fine": false
+  },
+  {
+    "case": "bearing_flat_s050000",
+    "status": "PASS",
+    "seconds": 2.7780413,
+    "settlement_m": 0.05,
+    "terrain": "flat",
+    "fine": false
+  },
+  {
+    "case": "bearing_slope_gravity",
+    "status": "PASS",
+    "seconds": 2.0255739
+  },
+  {
+    "case": "bearing_slope_s001000",
+    "status": "PASS",
+    "seconds": 2.2573347,
+    "settlement_m": 0.001,
+    "terrain": "slope",
+    "fine": false
+  },
+  {
+    "case": "bearing_slope_s005000",
+    "status": "PASS",
+    "seconds": 2.3073742999999998,
+    "settlement_m": 0.005,
+    "terrain": "slope",
+    "fine": false
+  },
+  {
+    "case": "bearing_slope_s010000",
+    "status": "PASS",
+    "seconds": 2.4171685,
+    "settlement_m": 0.01,
+    "terrain": "slope",
+    "fine": false
+  },
+  {
+    "case": "bearing_slope_s020000",
+    "status": "PASS",
+    "seconds": 2.3135406,
+    "settlement_m": 0.02,
+    "terrain": "slope",
+    "fine": false
+  },
+  {
+    "case": "bearing_slope_s050000",
+    "status": "PASS",
+    "seconds": 2.759207,
+    "settlement_m": 0.05,
+    "terrain": "slope",
+    "fine": false
+  },
+  {
+    "case": "bearing_flat_fine_gravity",
+    "status": "PASS",
+    "seconds": 3.7312309999999997
+  },
+  {
+    "case": "bearing_flat_fine_s010000",
+    "status": "PASS",
+    "seconds": 5.039168699999999,
+    "settlement_m": 0.01,
+    "terrain": "flat",
+    "fine": true
+  },
+  {
+    "case": "bearing_flat_fine_s020000",
+    "status": "PASS",
+    "seconds": 7.1068114,
+    "settlement_m": 0.02,
+    "terrain": "flat",
+    "fine": true
+  },
+  {
+    "case": "bearing_flat_fine_s050000",
+    "status": "PASS",
+    "seconds": 11.9482166,
+    "settlement_m": 0.05,
+    "terrain": "flat",
+    "fine": true
+  },
+  {
+    "case": "bearing_slope_fine_gravity",
+    "status": "PASS",
+    "seconds": 3.8791040999999997
+  },
+  {
+    "case": "bearing_slope_fine_s010000",
+    "status": "PASS",
+    "seconds": 5.3444163,
+    "settlement_m": 0.01,
+    "terrain": "slope",
+    "fine": true
+  },
+  {
+    "case": "bearing_slope_fine_s020000",
+    "status": "PASS",
+    "seconds": 6.651212699999999,
+    "settlement_m": 0.02,
+    "terrain": "slope",
+    "fine": true
+  },
+  {
+    "case": "bearing_slope_fine_s050000",
+    "status": "PASS",
+    "seconds": 11.941825099999999,
+    "settlement_m": 0.05,
+    "terrain": "slope",
+    "fine": true
+  }
+]

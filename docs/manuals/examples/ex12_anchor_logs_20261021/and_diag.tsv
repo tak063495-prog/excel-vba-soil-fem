@@ -1,0 +1,150 @@
+﻿2DFEM_P0進捗			解析ログ（再実行で消去） Ver=20261020_INCO_ELEMENT_01	
+Stage	start		順	場所
+ResultStatus	NOT_RUN		1	SOLVER
+CurrentIncrement	-1		2	SOLVER
+CurrentIteration	-1		3	SOLVER
+FailureElement	-1			
+FailureGaussPoint	-1			
+FailureIncrement	-1			
+FailureIteration	-1			
+NumberOfNode	0			
+NumberOfElement	0			
+NumberOfMaterial	0			
+NumberOfFreeNode	0			
+nDof	0			
+lastDof	0			
+BandWidth	0			
+RelativeResidualFree	0			
+ResidualNormFull	0			
+MaxAbsResidualFree	0			
+EnergyError	0			
+MatrixSymmetryError	0			
+TotalAppliedLoadX	0			
+TotalAppliedLoadY	0			
+TotalSelfWeight	0			
+MinDetJCorner	1E+308			
+MaxDetJCorner	-1E+308			
+MinDetJGauss	1E+308			
+MaxDetJGauss	-1E+308			
+ModelRevision	1			
+ResultRevision	0			
+TimeInput	0			
+TimeElementStiffness	0			
+TimeAssembly	0			
+TimeSolve	0			
+TimePlastic	0			
+TimeOutput	0			
+P1Formulation	PLANE_STRAIN_2D			
+P1ResultReady	False			
+P1ResultModelRevision	0			
+P1ModelNote	2D平面ひずみ。σz=ν(σx+σy)、3D主応力・3D相当応力を保存。曲げ・横せん断力は現行DOFの対象外。			
+P3SuccessfulIncrementCount	0			
+P3GlobalIterationCount	0			
+P3RetryCount	0			
+P3LastConvergedLoadFactor	0			
+P3CurrentStrengthFactor	1			
+P3UseNonlinearResidual	False			
+P3DefaultIncrementCount	100			
+P3StateNote	mStmat/CommittedStateは確定値、Stmat/TDispは試行値。収束後のみコミットし、失敗時は直前確定状態へ復元。			
+P3MaxTrialDisp	0			
+P3MaxCorrection	0			
+P3LastRelativeResidual	0			
+P5ModelScale	0			
+P5GeometryTolerance	0			
+P5AreaTolerance	0			
+P5MinElementArea	0			
+P5MinJacobian	0			
+P5MaxAspectRatio	0			
+P5MinAngleDeg	0			
+P5MaxAngleDeg	0			
+P5BoundaryEdgeCount	0			
+P5SharedEdgeCount	0			
+P5MaterialInterfaceCount	0			
+P5IsolatedNodeCount	0			
+P5ConnectedComponentCount	0			
+P5BoundarySelfIntersectionCount	0			
+P5LocateCallCount	0			
+P5LocateTotalIterations	0			
+P5LocateMaxIterations	0			
+P5LocateLastIterations	0			
+P5LocateLastElement	0			
+P5LocateLastFailure				
+P6MatrixStoragePolicy	帯域格納＋分解済み帯域因子			
+P6BandStorageEntries	0			
+P6BandStorageBytes	0			
+P6DenseStorageBytes	0			
+P6EstimatedWorkMemoryBytes	0			
+P6BandSolveCallCount	0			
+P6FactorizationCount	0			
+P6FactorizationReuseCount	0			
+P6RenumberingApplied	False			
+P6NodeOrderingPolicy	原節点番号; RCM_POLICY=AUTO			
+P6MeasuredStageTotalSeconds	0			
+P6TimeInput	0			
+P6TimeElementStiffness	0			
+P6TimeAssembly	0			
+P6TimeSolve	0			
+P6TimePlastic	0			
+P6TimeOutput	0			
+P6ModelSignature	0/0/0/0/0			
+P6IntegrationStatus	解析失敗または未実行			
+P6RCMOriginalBandwidth	0			
+P6RCMCandidateBandwidth	0			
+P6RCMStatus				
+P6FactorizationReady	False			
+P6SolverMode				
+P6OptimizationPolicy	solver=BAND_LU; factor_bytes=0; elastic_k=; mesh_revision=0; geometry_revision=0; material_input_revision=0; solver_eval=; solver_eval_count=0; solver_eval_threshold=0; p3_active_points=0; p3_plastic_updates=0; material_generation=0; strength_generation=0; tangent_generation=0; factorization/reuse=0/0; modnewton=0; linesearch=0; joint_asm=0; eval_skip=0; dirty_k=0; yield_xor=0; elastic_fast=0; hg_build/reuse=0/0; scatter=0; t_eval/hg/asm/fac/sol/load/tan_ms=0/0/0/0/0/0/0; band_after_iterative=False; fallback=; hg=0.05; mixed_up=False; p_count=0; consol=False; t=0.000E+00; pmax=0.000E+00			
+P6ElasticKCacheStatus				
+P6SolverMemoryLimitBytes	0			
+P6SolverPolicy				
+P6SolverEvaluationStatus				
+P6CacheMissReason				
+P6QuadratureArea	0			
+P6MeshRevision	0			
+P6GeometryRevision	0			
+P6MaterialGeneration	0	P6StrengthGeneration		
+P6MaterialInputRevision	0			
+P6IterativeFallbackStatus				
+FEM_BUILD_STAMP	20261009_INCO_16			
+Q8_HOURGLASS_FACTOR	0.05			
+P6HourglassModeCount	0			
+MIXED_UP	False			
+P6PressureCount	0			
+P6UzawaIterations	0			
+P6ConsolActive	False			
+P6ConsolTime	0			
+P6ConsolStep	0			
+P6MaxPressure	0			
+P6DrainCount	0			
+P6WeightMode	TOTAL			
+P6WeightNote	全応力γ。Q8 2×2（剛性・内力と同じ積分）。水位・浮力なし			
+P3MaxBoundaryDispError	0			
+P3RelativeBoundaryDispError	0			
+P6ReactionSumX	0			
+P6ReactionSumY	0			
+P3SrmEnabled	False			
+P3SrmTrialCount	0			
+P3SrmLower	0			
+P3SrmUpper	0			
+P3SrmNote				
+P3StagePlanText				
+P6HourglassReuseCount	0			
+P6ScatterN	0			
+P6ProfHgMs	0			
+P6ProfAssembleMs	0			
+P6ProfFactorMs	0			
+P6ProfSolveMs	0			
+P6ProfLoadMs	0			
+P6ProfTangentMs	0			
+P6ProfEvalCount	0			
+P6ProfEvalMs	0			
+FLOW_POLICY	DAVIS			
+FOS_INTERPRETATION	NOT_EVALUATED			
+SRM_TRIAL_CLASS	NONE			
+FAILURE_KIND	NONE			
+FAILED_TRIAL_LAMBDA	0			
+FAILED_TRIAL_RELRES	0			
+FAILED_TRIAL_LINEAR_RELRES	0			
+FAILED_TRIAL_CORRECTION	0			
+FAILED_TRIAL_PLASTIC_POINTS	0			
+FAILED_TRIAL_UMAX	0			
