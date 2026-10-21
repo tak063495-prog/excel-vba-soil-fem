@@ -541,13 +541,13 @@
   },
   {
     "path": "docs/manuals/2DSoilFEM_Detailed_Manual_20261020.pdf",
-    "bytes": 9165250,
-    "sha256": "415a0d455f6e9e850b261df28de30f04c8a6303e9b4849e454abb94f74f2f73c"
+    "bytes": 9165698,
+    "sha256": "096f80acf559609d8b2f6df4d05884dd799d9f8735ee6047866e9f9b8a958c5c"
   },
   {
     "path": "docs/manuals/README.md",
-    "bytes": 11650,
-    "sha256": "3a3f18a3ec247745bda8b5cb21184b30104b45476a0e72b4214069cbed16c7ac"
+    "bytes": 12225,
+    "sha256": "2145ebc20862f7a0996ae1531ba531b4eab22aad97491d5fc61cebb6b95b6292"
   },
   {
     "path": "docs/manuals/construction-evidence/20261020/anchor09/adaptive_v2a.csv.gz",
@@ -2685,9 +2685,144 @@
     "sha256": "2d366cef16ce9fa374a8d635c360f6edf73717de2dc890f438b1e8dcd237ed2a"
   },
   {
+    "path": "docs/manuals/construction-evidence/20261021/manual-rereview/README.md",
+    "bytes": 2293,
+    "sha256": "00aef5d79c95dc25523dfbdc0d396d9acac78115566a2dbc982903086f2a725a"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/manual-rereview/generic_checks.json",
+    "bytes": 4825,
+    "sha256": "4e23b6a2ff71e3b1822621a1c9a228dcbed35dc460d3abfb6a3e75fe8af54581"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/manual-rereview/link_checks.json",
+    "bytes": 636,
+    "sha256": "0f06fc73529dbf11ac3a9cae59fbfca3fc56b426710aa0e49e3994e750fa65c0"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/manual-rereview/pdf_review.json",
+    "bytes": 14731,
+    "sha256": "560a66c90a6ae6d3aaf7bd9cb75f2395531c6227ad10fbd771e0de991938af89"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/manual-rereview/road_baseline_tables.json.gz",
+    "bytes": 798254,
+    "sha256": "f5832e4280c79fae20087ef4440bc1fd89f5367432fe519006f07291f0622634"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/manual-rereview/road_checks.json",
+    "bytes": 6703,
+    "sha256": "0e849f3c66b17eb83ee2a1dd243ff0fd8b31803587df86ac2f1e36d4e692adb6"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/manual-rereview/road_run1_tables.json.gz",
+    "bytes": 798254,
+    "sha256": "f5832e4280c79fae20087ef4440bc1fd89f5367432fe519006f07291f0622634"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/manual-rereview/road_run2_tables.json.gz",
+    "bytes": 798254,
+    "sha256": "f5832e4280c79fae20087ef4440bc1fd89f5367432fe519006f07291f0622634"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/manual-rereview/run1_logs/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/manual-rereview/run1_logs/adaptive_v2a_gates.csv.gz",
+    "bytes": 68,
+    "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/manual-rereview/run1_logs/increment_summary.csv.gz",
+    "bytes": 2902,
+    "sha256": "ccd0fa5341d15093937382d72a1b91c8de4e7ce71505933818b2697fcd643476"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/manual-rereview/run1_logs/manifest.csv.gz",
+    "bytes": 168,
+    "sha256": "64c921580dc068c855b3ec1c5b03abf3406dc61be3a3f7cccdc1504a75e0f72f"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/manual-rereview/run1_logs/perf_summary.csv.gz",
+    "bytes": 422,
+    "sha256": "68b6ad78bca1777fab0a8e2109c7f6d09e0b9c2d517a2e95644b90779caff266"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/manual-rereview/run1_logs/perf_summary.txt.gz",
+    "bytes": 1749,
+    "sha256": "bef1f047027d869576a1374ecd1bf508e12156c9f0f950d0d5f255dd133a6cc0"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/manual-rereview/run1_logs/perf_trace.csv.gz",
+    "bytes": 237,
+    "sha256": "a1bb498cc4fd3a6e29c4643cfa98e1ace094957e2372610355088e1b21f41adc"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/manual-rereview/run1_logs/run.log.gz",
+    "bytes": 3477,
+    "sha256": "2617399efb93e593e6ecd110bee0d9d0f6591fb7b4f7f45a62c7384d25a7d53d"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/manual-rereview/run1_logs/solver_events.csv.gz",
+    "bytes": 445,
+    "sha256": "7a2cc4c1c6ae3b714d34919199419d8c7b9fa79c10c283c0adfd02496565114b"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/manual-rereview/run2_logs/adaptive_v2a.csv.gz",
+    "bytes": 224,
+    "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/manual-rereview/run2_logs/adaptive_v2a_gates.csv.gz",
+    "bytes": 68,
+    "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/manual-rereview/run2_logs/increment_summary.csv.gz",
+    "bytes": 2881,
+    "sha256": "903581ed5f5fc2cb1809f65e1ba6e26940011987d42ad1712a7d75650e604306"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/manual-rereview/run2_logs/manifest.csv.gz",
+    "bytes": 201,
+    "sha256": "2d1e6fc72517065c9a8bf306a47653720c9a4f0ccc9bcd02fff7976cb47baf17"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/manual-rereview/run2_logs/perf_summary.csv.gz",
+    "bytes": 419,
+    "sha256": "072284aa88876b292fa909840e98bf088b2afbd9bde1632a15446709a3d88caf"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/manual-rereview/run2_logs/perf_summary.txt.gz",
+    "bytes": 1750,
+    "sha256": "b424397e45cadb0540df7a810f16fa00ec8eeb8e4bbb9ba4cf780805416afc91"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/manual-rereview/run2_logs/perf_trace.csv.gz",
+    "bytes": 237,
+    "sha256": "a1bb498cc4fd3a6e29c4643cfa98e1ace094957e2372610355088e1b21f41adc"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/manual-rereview/run2_logs/run.log.gz",
+    "bytes": 3472,
+    "sha256": "0829e03c91feb5bc08ec5a82a346f74b579d871611ed7d8fd0ffe359f5fd55fd"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/manual-rereview/run2_logs/solver_events.csv.gz",
+    "bytes": 432,
+    "sha256": "141ce85f411870aed98422d47066e6bec6c5e27a0c70e7cae3278a3479ee05ab"
+  },
+  {
+    "path": "docs/manuals/construction-evidence/20261021/manual-rereview/ui05_pr28_release.json",
+    "bytes": 1921,
+    "sha256": "2b9a6a9b0f584cb12ff44f8412ca4a13a2834f45101f9e642e16edbd56c1245c"
+  },
+  {
     "path": "docs/manuals/construction-evidence/20261021/manual-review/README.md",
-    "bytes": 3654,
-    "sha256": "b9e16250748ac92755919ae1c6d9c78772679b661f797b74f46d7ec64757dfed"
+    "bytes": 4080,
+    "sha256": "2a0eaeb928ed3aa675872aa7202d8d62d3ee9086f0b5739e958cdd0e54518dad"
   },
   {
     "path": "docs/manuals/construction-evidence/20261021/manual-review/actual_A.svg",
@@ -2701,13 +2836,13 @@
   },
   {
     "path": "docs/manuals/construction-evidence/20261021/manual-review/manual_section_source.py",
-    "bytes": 23019,
-    "sha256": "b0b2268df411ab78cd74136b792cae58a1a05dcc614fc0e4dd566ba42db4855b"
+    "bytes": 23988,
+    "sha256": "59e39af9f5c3e8af3bc673b064a6a41cd04b073b239715a026e2f25d5c52876f"
   },
   {
     "path": "docs/manuals/construction-evidence/20261021/manual-review/release.json",
-    "bytes": 1921,
-    "sha256": "2b9a6a9b0f584cb12ff44f8412ca4a13a2834f45101f9e642e16edbd56c1245c"
+    "bytes": 2172,
+    "sha256": "060ef8de1c7f6104a7e882d3733f467971e51ba042eeaf5cc7c830d25bcc5ca9"
   },
   {
     "path": "docs/manuals/construction-evidence/20261021/manual-review/review_summary.json",
@@ -2886,8 +3021,8 @@
   },
   {
     "path": "docs/manuals/construction-evidence/20261021/manual-review/road_ui05_workbook.zip",
-    "bytes": 4108245,
-    "sha256": "c9051dd22e2d7c5f9ebad2d77d7b48532e7dfea872e52277ed6116be76d9473b"
+    "bytes": 4011720,
+    "sha256": "e452e12398e81261d1eda56674a4fde33c06660fce6a48e731e645679573d05a"
   },
   {
     "path": "docs/manuals/construction-evidence/20261021/manual-review/roundtrip.json",
@@ -3261,8 +3396,8 @@
   },
   {
     "path": "docs/manuals/manual_validation_20261020.json",
-    "bytes": 298301,
-    "sha256": "c1dc563ef00a938ba10bef37418cb87e691c7a59becffe3ca08917ace5b684a6"
+    "bytes": 305008,
+    "sha256": "1ddcd8c5c5b4e0e573e68e21b8e4ec4d8afa37c41d79e43a0b8b44a20251887b"
   },
   {
     "path": "docs/native-evidence/assembly_20261020/DAVIS_0.json",
@@ -5235,6 +5370,16 @@
     "sha256": "a9cb0cec504f81b95a7b05e5644459ddba542996c13e7c9399faefeb66c4b895"
   },
   {
+    "path": "docs/reviews/2DSoilFEM_manual_rereview_PR28_20261021.md",
+    "bytes": 15955,
+    "sha256": "375306bd5451e6b69194e382b790358c694d911eca886a24ed99265344bf706a"
+  },
+  {
+    "path": "docs/reviews/2DSoilFEM_manual_rereview_response_20261021.md",
+    "bytes": 4517,
+    "sha256": "1f037a5c052aca8730c4ce7b98310cc13f90a33b51fa94c3f74875403e002135"
+  },
+  {
     "path": "docs/reviews/2DSoilFEM_manual_response_20261021.md",
     "bytes": 7243,
     "sha256": "2296b091c1876cc3c67d4a0040e8275dff6535c1b94ddd9a6f7cd42bebcc7f33"
@@ -5811,8 +5956,8 @@
   },
   {
     "path": "src/vba/FEMIo.bas",
-    "bytes": 176437,
-    "sha256": "525d5726ecc655e73c28e3829a5084e19a5df672aeb40d53e7d715e95d78d5a4"
+    "bytes": 176517,
+    "sha256": "91245435a8f9c17b355e65d4ef8b86150ad78dfbaac2e7e1a7645d3bdb2cbd2a"
   },
   {
     "path": "src/vba/FEMNative.bas",
@@ -5953,6 +6098,11 @@
     "path": "tests/check_manual_case.py",
     "bytes": 9365,
     "sha256": "5b3695c8cab77085c1ca8b5e7134dff6e10691cc2e348b5cf41164bbf294d88a"
+  },
+  {
+    "path": "tests/check_manual_rereview.py",
+    "bytes": 2608,
+    "sha256": "3cf8c0d7a40e04912cb9909b04ecbf751fbbaaf3a00141e11cf306b21e05c0c9"
   },
   {
     "path": "tests/check_manual_review.py",
@@ -6735,6 +6885,11 @@
     "sha256": "ca9f049d8de5d55a178ea3a8ba81a3fcc1c2982808230179176ca8658f300dcc"
   },
   {
+    "path": "tests/verify_manual_rereview.ps1",
+    "bytes": 6721,
+    "sha256": "28b4f1bd9029d9fcac42c1c14d792f9266f8fdf842fdbd2f85917612e4d32d9a"
+  },
+  {
     "path": "tests/verify_manual_review.ps1",
     "bytes": 5367,
     "sha256": "8d48dc2eb94f58401197f0db6f54e44f9e977ea7e09aa6eb561c588eff9a323a"
@@ -6806,8 +6961,8 @@
   },
   {
     "path": "workbook/SoilFEM_UI_20261020.zip",
-    "bytes": 3055044,
-    "sha256": "09bb1cf52e0eab01e139739de9a0c51e3fe0d4947194f2f4df61139c56e2da78"
+    "bytes": 3037084,
+    "sha256": "2bcf58a1dec00058085f5db61ed1fe5a15d8a40208050b4ce34d8dacdff4c8ab"
   },
   {
     "path": "workbook/inco_assembly_20261020/2DSoilFEM_inco_assembly_20261020.xlsm",
@@ -7021,18 +7176,18 @@
   },
   {
     "path": "workbook/ui_20261020/2DSoilFEM_ui_20261020.xlsm",
-    "bytes": 3211772,
-    "sha256": "1fdefa515e11e03ee368cd2734fde1afd703f8cc147fb3ca980638732c08cd1b"
+    "bytes": 3187951,
+    "sha256": "d2126087b29be6d1f2241d28a82510d9f3198e9a9888651c908e24072fa29143"
   },
   {
     "path": "workbook/ui_20261020/BUILD_RECORD.json",
-    "bytes": 1921,
-    "sha256": "2b9a6a9b0f584cb12ff44f8412ca4a13a2834f45101f9e642e16edbd56c1245c"
+    "bytes": 2172,
+    "sha256": "060ef8de1c7f6104a7e882d3733f467971e51ba042eeaf5cc7c830d25bcc5ca9"
   },
   {
     "path": "workbook/ui_20261020/README.txt",
-    "bytes": 2215,
-    "sha256": "08879d3843190fe23d1fd4bf1386f42944f2305bc2583971615301b8c2b2dd67"
+    "bytes": 2517,
+    "sha256": "df7a0f27d7b9e09ccd5ca76f9ffec6a67a2cd908d59503a143dd69a4b0259e57"
   },
   {
     "path": "workbook/ui_20261020/soilfem_native_x64.dll",
