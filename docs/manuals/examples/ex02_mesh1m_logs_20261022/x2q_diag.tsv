@@ -1,0 +1,157 @@
+﻿2DFEM_ P0診断			解析ログ（再実行で消去） Ver=20261020_INCO_ELEMENT_01	
+ResultStatus	PASS		順	場所
+AnalysisOK	True		1	SOLVER
+AnalysisMessage			2	SOLVER
+AnalysisErrorNumber	0		3	SOLVER
+FailureElement	-1		4	ステージ開始
+FailureGaussPoint	-1		5	NEWTON
+FailureIncrement	-1		6	PERF
+FailureIteration	-1		7	ステージ開始
+NumberOfNode	1065		8	SRM試行
+NumberOfElement	330		9	SRM試行
+NumberOfMaterial	1		10	PERF
+NumberOfFreeNode	1065		11	SRM試行
+nDof	2130		12	NEWTON
+lastDof	2129		13	SRM試行
+BandWidth	189		14	PERF
+RelativeResidualFree	1.65812618017534E-09		15	SRM試行
+ResidualNormFull	58.0897055105234		16	NEWTON
+MaxAbsResidualFree	9.72969251833433E-08		17	SRM試行
+EnergyError	1.3754934016452E-12		18	PERF
+MatrixSymmetryError	0.203756548559721		19	SRM試行
+TotalAppliedLoadX	0		20	NEWTON
+TotalAppliedLoadY	-1476		21	SRM試行
+TotalSelfWeight	1476		22	PERF
+MinDetJCorner	0.0333333333333331		23	SRM試行
+MaxDetJCorner	0.0888888888888893		24	NEWTON
+MinDetJGauss	0.0333333333333331		25	SRM試行
+MaxDetJGauss	0.086932177172223		26	PERF
+ModelRevision	1		27	SRM試行
+ResultRevision	1		28	NEWTON
+TimeInput	1.556640625		29	SRM試行
+TimeElementStiffness	0.296875		30	PERF
+TimeAssembly	0.099609375		31	SRM試行
+TimeSolve	0		32	NEWTON
+TimePlastic	1318.837890625		33	SRM試行
+TimeOutput	0.021484375		34	PERF
+P1Formulation	PLANE_STRAIN_2D		35	SRM試行
+P1ResultReady	True		36	NEWTON
+P1ResultModelRevision	1		37	SRM試行
+P1ModelNote	2D平面ひずみ。σz=ν(σx+σy)、3D主応力・3D相当応力を保存。曲げ・横せん断力は現行DOFの対象外。		38	PERF
+P3SuccessfulIncrementCount	17		39	SRM試行
+P3GlobalIterationCount	815		40	NEWTON
+P3RetryCount	3		41	SRM試行
+P3LastConvergedLoadFactor	0		42	PERF
+P3CurrentStrengthFactor	1.5125		43	SRM試行
+P3UseNonlinearResidual	True		44	NEWTON
+P3DefaultIncrementCount	100		45	SRM試行
+P3StateNote	mStmat/CommittedStateは確定値、Stmat/TDispは試行値。収束後のみコミットし、失敗時は直前確定状態へ復元。		46	PERF
+P3MaxTrialDisp	0.0315948870177475		47	SRM復元
+P3MaxCorrection	1			
+P3LastRelativeResidual	1.65022885585372E-09			
+P5ModelScale	14			
+P5GeometryTolerance	1.4E-09			
+P5AreaTolerance	1.96E-10			
+P5MinElementArea	0.133333333333333			
+P5MinJacobian	0.033333333333333			
+P5MaxAspectRatio	5.33593686452737			
+P5MinAngleDeg	38.6598082540901			
+P5MaxAngleDeg	141.34019174591			
+P5BoundaryEdgeCount	697			
+P5SharedEdgeCount	623			
+P5MaterialInterfaceCount	0			
+P5IsolatedNodeCount	0			
+P5ConnectedComponentCount	1			
+P5BoundarySelfIntersectionCount	0			
+P5LocateCallCount	0			
+P5LocateTotalIterations	0			
+P5LocateMaxIterations	0			
+P5LocateLastIterations	0			
+P5LocateLastElement	0			
+P5LocateLastFailure				
+P6MatrixStoragePolicy	非対称帯域LU（行ピボット）＋CSR真残差照合; total-stress displacement			
+P6BandStorageEntries	404700			
+P6BandStorageBytes	3237600			
+P6DenseStorageBytes	36295200			
+P6EstimatedWorkMemoryBytes	1789924			
+P6BandSolveCallCount	6842			
+P6FactorizationCount	4935			
+P6FactorizationReuseCount	3532			
+P6RenumberingApplied	True			
+P6NodeOrderingPolicy	保存済みRCM内部自由度順序を再利用。結果出力は原自由度順へ逆変換; RCM_POLICY=AUTO			
+P6MeasuredStageTotalSeconds	1320.8125			
+P6TimeInput	1.556640625			
+P6TimeElementStiffness	0.296875			
+P6TimeAssembly	0.099609375			
+P6TimeSolve	0			
+P6TimePlastic	1318.837890625			
+P6TimeOutput	0.021484375			
+P6ModelSignature	1065/330/1/2130/189			
+P6IntegrationStatus	解析・P1結果・P2材料結果の保存完了			
+P6RCMOriginalBandwidth	1443			
+P6RCMCandidateBandwidth	189			
+P6RCMStatus	RCM再利用: DOF帯域幅 1443 -> 189			
+P6FactorizationReady	False			
+P6SolverMode	NONSYM_BAND_LU			
+P6OptimizationPolicy	solver=NONSYM_BAND_LU; policy=NONSYMMETRIC; CSR_NNZ=63228; CSR_bytes=1619524; csr_numeric=build; csr_path=detailed_nonzero; csr_rebuilds=5234; csr_reuse=0; csr_scatter_nnz=84480; csr_diag_zero=0; csr_diag_min=1.085E+04; csr_direct_fallback=False; elastic_k=build; mesh_revision=1; geometry_revision=1; material_input_revision=1; material_generation=2; tangent_generation=5236; csr_numeric_generation=5236; p3_active_points=517; p3_plastic_updates=15593068; solver_eval=reevaluate_large; solver_eval_count=5234; solver_eval_threshold=2000; GMRES_restart=30->30; iter=0; iter_relres=6.775E-14; fallback=; hg=0.05; mixed_up=False; p_count=0; uzawa=0			
+P6ElasticKCacheStatus	build			
+P6SolverMemoryLimitBytes	536870912			
+P6SolverPolicy	NONSYMMETRIC			
+P6SolverEvaluationStatus	reevaluate_large			
+P6CacheMissReason	not_ready			
+P6QuadratureArea	81.9999999999988			
+P6MeshRevision	1			
+P6GeometryRevision	1			
+P6MaterialGeneration	2	P6StrengthGeneration	9	
+P6MaterialInputRevision	1			
+P6IterativeFallbackStatus				
+FEM_BUILD_STAMP	20261020_INCO_ELEMENT_01			
+Q8_HOURGLASS_FACTOR	0.05			
+P6HourglassModeCount	330			
+MIXED_UP	False			
+P6PressureCount	0			
+P6UzawaIterations	0			
+P6ConsolActive	False			
+P6ConsolTime	0			
+P6ConsolStep	0			
+P6MaxPressure	0			
+P6DrainCount	0			
+P6WeightMode	TOTAL			
+P6WeightNote	全応力γ。Q8 2×2（剛性・内力と同じ積分）。水位・浮力なし			
+P3MaxBoundaryDispError	0			
+P3RelativeBoundaryDispError	0			
+P6ReactionSumX	7.73603403558809E-12			
+P6ReactionSumY	1476			
+P3SrmEnabled	True			
+P3SrmTrialCount	10			
+P3SrmLower	1.5125			
+P3SrmUpper	1.525			
+P3SrmNote	FOS_PASS=1.513 FOS_FAIL=1.525 FOS_MID=1.519 FOS_WIDTH=0.013 FOS=1.519 ± 0.006 試行=10 判定=NUMERICAL_BRACKET（収束境界の推定。物理破壊・設計安全率の確定値ではありません）			
+P3StagePlanText	GRAVITY+SRM			
+P6HourglassReuseCount	280500			
+P6ScatterN	0			
+P6ProfHgMs	248.046875			
+P6ProfAssembleMs	40640.625			
+P6ProfFactorMs	228478.515625			
+P6ProfSolveMs	963441.40625			
+P6ProfLoadMs	0			
+P6ProfTangentMs	52458.984375			
+P6ProfEvalCount	34186			
+P6ProfEvalMs	43589.84375			
+FLOW_POLICY	INCONSISTENT			
+FOS_INTERPRETATION	NUMERICAL_BRACKET			
+SRM_TRIAL_CLASS	CONVERGED			
+FAILURE_KIND	GLOBAL_STAGNATION			
+FAILED_TRIAL_LAMBDA	0.99375			
+FAILED_TRIAL_RELRES	0.0012201334261754			
+FAILED_TRIAL_LINEAR_RELRES	1.37792322759905E-14			
+FAILED_TRIAL_CORRECTION	7.74027099248124E-05			
+FAILED_TRIAL_PLASTIC_POINTS	505			
+FAILED_TRIAL_UMAX	0.0254363280681529			
+				
+				
+				
+P1詳細は結果節点・結果要素。Gauss状態はブック横 *_out				
+Elements	330			
+Nodes	1065			
+P2塑性点は本シート AN列（適応メッシュ用）				
