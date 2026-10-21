@@ -37,7 +37,7 @@
 
 ## 配布と再現
 
-修正版は[配布ブック](../../workbook/ui_20261020/2DSoilFEM_ui_20261020.xlsm)。名前は維持する。DLLは従来の1個を同じ場所に置く。説明書に添付した過去の計算済みZIPは当時の記録として保持しており、今回の描画修正は含まない。
+修正版は[配布ブック](../../workbook/ui_20261020/2DSoilFEM_ui_20261021.xlsm)。配布名は`2DSoilFEM_ui_20261021.xlsm`とする。DLLは従来の1個を同じ場所に置く。説明書に添付した過去の計算済みZIPは当時の記録として保持しており、今回の描画修正は含まない。
 
 既存の入力・結果を持つブックを更新する場合は、元ファイルを保管し、下のスクリプトで**別名のコピー**に`FEMViewer`と`FEMNativeFigure`だけを取り込める。WindowsデスクトップExcelと、従来の開発用検証と同じVBAプロジェクトアクセスが必要。全Excelを閉じてから、リポジトリ直下のPowerShellで実行する。既存のExcelが起動していれば処理は開始しない。スクリプトは起動済みのExcelを終了させない。
 
@@ -54,10 +54,16 @@ pwsh -NoProfile -File tests/verify_native_figure.ps1 `
 
 ```powershell
 pwsh -NoProfile -File tests/test_native_figure.ps1 `
-  -Book workbook/ui_20261020/2DSoilFEM_ui_20261020.xlsm
+  -Book workbook/ui_20261020/2DSoilFEM_ui_20261021.xlsm
 pwsh -NoProfile -File tests/test_viewer_display_settings.ps1 `
-  -Book workbook/ui_20261020/2DSoilFEM_ui_20261020.xlsm `
+  -Book workbook/ui_20261020/2DSoilFEM_ui_20261021.xlsm `
   -Out tests/results/native_figure/display_regression.json
 ```
 
 図形数は要素・クロスの数に応じて増える。非常に大きいモデルについて今回の表示時間を保証するものではない。
+
+## 配布ファイル名の変更（2026-10-21）
+
+利用者の指定により、配布ブックを`2DSoilFEM_ui_20261021.xlsm`へ変更した。[ZIP一式](../../workbook/SoilFEM_UI_20261021.zip)も新しい名前を格納する。旧ZIPや過去の実計算記録は履歴として保持する。
+
+新しい名前で、Excel全体コンパイル、保存・再読込、メッシュ確認ボタンと結果表示ボタンの`OnAction`が新ブックを参照して実行できることを確認。汎用原版103チェック、計算済み道路例116チェックがPASS。入力・保存結果の表は不変。[原版の記録](../../tests/results/native_figure/renamed_release.json)／[道路例の記録](../../tests/results/native_figure/renamed_road.json)。

@@ -1,9 +1,10 @@
 param(
- [string]$SourceBook='workbook/ui_20261020/2DSoilFEM_ui_20261020.xlsm',
+ [string]$SourceBook='workbook/ui_20261020/2DSoilFEM_ui_20261021.xlsm',
  [Parameter(Mandatory=$true)][string]$DestinationBook,
  [Parameter(Mandatory=$true)][string]$Record,
  [string]$ViewerSource='src/vba/FEMViewer.bas',
  [switch]$SavedResults,
+ [switch]$ButtonActions,
  [switch]$HoldForVisual
 )
 $ErrorActionPreference='Stop';$app=$null;$wb=$null
@@ -24,7 +25,13 @@ function Draw([string]$mode){
 
  $timer=[Diagnostics.Stopwatch]::StartNew();$p="'"+$wb.Name+"'!"
  [void]$app.Run($p+'SetP0SilentMode',$true)
- [void]$app.Run($p+$(if($mode -eq 'MESH'){'FEMUiPreviewMesh'}else{'FEMViewResult'}))
+ if($ButtonActions){
+  $sheet=if($mode -eq 'MESH'){'操作パネル'}else{'出力・表示'}
+  $button=if($mode -eq 'MESH'){'UI_Run'}else{'UI_ResultFigure'}
+  $action=[string]$wb.Worksheets.Item($sheet).Shapes.Item($button).OnAction
+  Check ($action.StartsWith("'"+$wb.Name.Replace("'","''")+"'!")) "$mode button bound to renamed workbook"
+  [void]$app.Run($action)
+ }else{[void]$app.Run($p+$(if($mode -eq 'MESH'){'FEMUiPreviewMesh'}else{'FEMViewResult'}))}
  $timer.Stop();$errorText=[string]$app.Run($p+'FigureErrors');if($errorText -cne '|'){throw $errorText};$s=$wb.Worksheets.Item('図').Shapes.Item('P1Agg_ViewSVG')
  Check ($s.Type -eq 6) "$mode native group, no SVG picture decoder"
  Check ($s.GroupItems.Count -gt 10) "$mode has geometry/text primitives"

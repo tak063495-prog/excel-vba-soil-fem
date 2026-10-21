@@ -44,9 +44,9 @@
   ],
   "files": [
     {
-      "name": "2DSoilFEM_ui_20261020.xlsm",
-      "bytes": 3283921,
-      "sha256": "f470c919f10b3b437286ce585be80b5128d75f23e0b47421dd61ce5d3b6f465d"
+      "name": "2DSoilFEM_ui_20261021.xlsm",
+      "bytes": 3285682,
+      "sha256": "ee761e2dbd9e84a57de1c9d7d1b3cbb1237785e771faddd9edef5e85e087cfe9"
     },
     {
       "name": "soilfem_native_x64.dll",
@@ -55,8 +55,8 @@
     },
     {
       "name": "README.txt",
-      "bytes": 3561,
-      "sha256": "86943f07296c41face71d4777fc8516e89be73c0cedd7569f416ac83228104df"
+      "bytes": 3802,
+      "sha256": "50453a20ed076324e16486bd5af11ebae0ce3e10a940a3094bee67849eb7466c"
     }
   ],
   "source_base_revision": "01d2c4a6d9caba9c251d3683793852c870c095ab",
@@ -64,5 +64,8 @@
   "rereview_record": "docs/manuals/construction-evidence/20261021/manual-rereview/road_checks.json",
   "srm_legend_checks": "docs/manuals/construction-evidence/20261021/srm-legend/road_checks.json",
   "documentation_revision": "122-page applied exercises; distribution README page count only",
-  "figure_review": "docs/reviews/figure_excel2016_fix_20261021.md"
+  "figure_review": "docs/reviews/figure_excel2016_fix_20261021.md",
+  "renamed_checks_record": "tests/results/native_figure/renamed_release.json",
+  "renamed_result_checks_record": "tests/results/native_figure/renamed_road.json",
+  "rename_source_revision": "9229dfb498495224aa4107bf359a9935518288bd"
 }

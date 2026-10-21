@@ -1,6 +1,6 @@
 2D Soil FEM / 操作補訂 20261021_UI_05
 
-2DSoilFEM_ui_20261020.xlsmとsoilfem_native_x64.dll（1個）を同じ新規フォルダーへ展開します。ファイル名は保持しています。
+2DSoilFEM_ui_20261021.xlsmとsoilfem_native_x64.dll（1個）を同じ新規フォルダーへ展開します。最新版のファイル名は末尾20261021です。
 信頼できる取得元を確認し、WindowsデスクトップExcelで開きます。DLLは64bit Excel用。保護設定を全体で無効化しないでください。
 
 初回実習は最新122ページPDFの9ページから。道路の入力・計算済みコピーはmanual-review/road_ui05_workbook.zipです。汎用原版の入力と混ぜません。
@@ -26,3 +26,5 @@ Excel 2016向け表示互換性修正（2026-10-21）：メッシュ・変形応
 詳細・検証記録・既存ブックのコピーへの適用手順：
 https://github.com/tak063495-prog/excel-vba-soil-fem/blob/main/docs/reviews/figure_excel2016_fix_20261021.md
 過去の計算済みサンプルZIPは履歴として保持しており、この描画修正は含みません。
+
+2026-10-21：配布名を2DSoilFEM_ui_20261021.xlsmへ変更。保存・再読込後のボタン参照も新しい名前で確認しました。説明書や過去の計算例にある旧ファイル名は当時の記録です。
