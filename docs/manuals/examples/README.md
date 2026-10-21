@@ -52,4 +52,5 @@
 | `ex13_bearing_flat_s010_20261021.xlsm`, `ex13_bearing_slope_s010_20261021.xlsm` | 解析例13：追加沈下10 mm（水平・斜面、粗メッシュ） | q＝88.5383／88.2314 kPa |
 | `ex13_bearing_logs_20261021/` | 全16ケースの計画・結果一覧・平均圧力集計（bq_2210.json、bq.py）・ログ | 全PASS、旧版記録と一致 |
 
-アンカーのSRM（工程5）はRicoで60分を超えたため、1.725成功・1.75失敗まで確認し、区間は旧版の記録値（1.725〜1.7375）を採用しました。
+| `ex12_anchor_srm_20261021.xlsm` | 解析例12：工程1〜5（SRMまで、INCONSISTENT）を計算済みのブック | Fs区間1.725〜1.7375（NUMERICAL_BRACKET、3819秒、試行12回）。旧版の記録値と一致 |
+| `ex12_anchor_srm_logs_20261021/` | 上の result.json.gz、case_out（run.log・perf_summary・manifest・increment_summary・solver_events・各工程のmeta/node/gauss等）、実行ログ・スクリプト | 相対残差4.657×10⁻⁸、最大変位ノルム0.0235 m |

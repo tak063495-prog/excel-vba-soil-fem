@@ -2,7 +2,7 @@
 
 ## 入出力を整理した最新ブック（2026-10-21）
 
-[操作説明書（PDF・137ページ、最新）](docs/manuals/2DSoilFEM_Manual_20261021_2308.pdf)／[原稿](docs/manuals/2DSoilFEM_Manual.md)
+[操作説明書（PDF・最新）](docs/manuals/2DSoilFEM_Manual_20261022_0428.pdf)／[原稿](docs/manuals/2DSoilFEM_Manual.md)
 
 [一括ダウンロード（XLSM＋DLL 1個、ZIP）](workbook/SoilFEM_UI_20261021.zip)。
 最新版のファイル名は`2DSoilFEM_ui_20261021.xlsm`です。Excel 2016での画像エラーに対応するため、メッシュ・結果図はExcel標準図形で描画します。[修正・検証記録](docs/reviews/figure_excel2016_fix_20261021.md)。
