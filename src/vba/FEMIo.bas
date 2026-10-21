@@ -35,6 +35,7 @@ Private mPhysH As Double
 Private mPhysRatioNow As Double
 Public Sub FEMWriteBuildStamp(Optional ByVal applyLayout As Boolean = True)
   Dim ws As Worksheet
+  If FEMUiInstalled() Then FEMUiPreflightRuntimeLayout ThisWorkbook.Worksheets("高速化設定")
   Set ws = ThisWorkbook.Worksheets("設定")
   ws.range("F1").NumberFormat = "@"
   ws.range("G1").NumberFormat = "@"
@@ -3476,9 +3477,13 @@ Private Sub FEMApplyLoadValidation(ByVal ws As Worksheet)
   On Error Resume Next
   Set targetRange = ws.range("B2:B2000")
   targetRange.Validation.Delete
-  targetRange.Validation.Add Type:=3, AlertStyle:=1, Operator:=1, Formula1:="TOP,BOTTOM,LEFT,RIGHT,BOX"
+  targetRange.Validation.Add Type:=xlValidateCustom, AlertStyle:=xlValidAlertStop, Operator:=xlBetween, _
+    Formula1:="=OR(B2=""TOP"",B2=""BOTTOM"",B2=""LEFT"",B2=""RIGHT"",B2=""BOX"",IFERROR(AND(ISNUMBER(B2),B2=INT(B2),B2>0,COUNTIF(INDIRECT(""'節点データ'!$A:$A""),B2)=1),FALSE))"
   targetRange.Validation.IgnoreBlank = True
-  targetRange.Validation.InCellDropdown = True
+  targetRange.Validation.InCellDropdown = False
+  targetRange.Validation.ShowError = True
+  targetRange.Validation.ErrorTitle = "入力値"
+  targetRange.Validation.ErrorMessage = "TOP/BOTTOM/LEFT/RIGHT/BOX、または節点データに存在する正の節点番号を入力してください。"
   Set targetRange = ws.range("C2:C100")
   targetRange.Validation.Delete
   targetRange.Validation.Add Type:=3, AlertStyle:=1, Operator:=1, Formula1:="X,Y"
@@ -3515,7 +3520,7 @@ Private Sub FEMWriteLoadLegend(ByVal ws As Worksheet)
   ws.Cells(11, 12).value2 = "FIX"
   ws.Cells(11, 13).value2 = "その方向を拘束（変位0）"
   ws.Cells(12, 12).value2 = "値0"
-  ws.Cells(12, 13).value2 = "DISP/FORCEはその行を無効。FIXは0でも拘束"
+  ws.Cells(12, 13).value2 = "DISP=0はゼロ変位を指定。FORCE=0はゼロ節点力。行を無効にする場合はLOAD工程を無効化"
   ws.Cells(13, 12).value2 = "材料番号"
   ws.Cells(13, 13).value2 = "材料データと同じ番号。LOAD/UNLOADの対象"
 End Sub
@@ -3767,9 +3772,9 @@ Private Sub FEMEnsureSpecSheet()
   FEMSpecPut ws, rowNo, "材料", "種別", "SOIL / STRUCT / JOINT", "空はSOIL。JOINTはkn=ヤング率、ks=せん断剛性"
   FEMSpecPut ws, rowNo, "材料", "引張（JOINT）", "0 または 1", "0=剥離可。1=引張も負担"
   FEMSpecPut ws, rowNo, "材料", "JOINTのモデル", "psi=0のみ", "履歴なし応力上限モデル。降伏後の塑性すべり・除荷履歴・ダイレタンシーは未対応"
-  FEMSpecPut ws, rowNo, "載荷", "選択", "TOP / BOTTOM / LEFT / RIGHT / BOX", "BOXだけX1～Y2を使う。解析座標、その材料の節点だけ"
+  FEMSpecPut ws, rowNo, "載荷", "選択", "TOP / BOTTOM / LEFT / RIGHT / BOX / 節点番号", "実在する正の整数ID。BOXだけX1～Y2を使う。解析座標、その材料の節点だけ"
   FEMSpecPut ws, rowNo, "載荷", "方向", "X / Y", "作用方向"
-  FEMSpecPut ws, rowNo, "載荷", "種別", "DISP / FORCE / FIX", "強制変位 / 節点力 / 拘束。DISPとFORCEは値0で無効"
+  FEMSpecPut ws, rowNo, "載荷", "種別", "DISP / FORCE / FIX", "DISP=強制変位（0はゼロ変位拘束）/ FORCE=節点力（0はゼロ力）/ FIX=拘束。行を無効にする場合はLOAD工程を無効化"
   FEMSpecPut ws, rowNo, "接合", "材料A", "番号", "節点を残す側（構造・擁壁）"
   FEMSpecPut ws, rowNo, "接合", "材料B", "番号", "新節点を付ける側（地盤）"
   FEMSpecPut ws, rowNo, "接合", "接合材料", "JOINT番号", "種別JOINTの材料"

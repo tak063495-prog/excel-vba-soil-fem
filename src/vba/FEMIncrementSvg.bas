@@ -123,12 +123,12 @@ Private Function FEMIncrementAxis(ByVal a As Variant, ByVal dx As Double, ByVal 
     Dim head As Double, ux As Double, uy As Double, bX As Double, bY As Double, fragment As String
     If val = 0# Or h <= 0.000001 Then Exit Function
     cx = (a(0) + a(2) + a(4) + a(6)) / 4#: cy = (a(1) + a(3) + a(5) + a(7)) / 4#
-    If val > 0# Then col = "#d62728" Else col = "#1f77b4"
+    If val > 0# Then col = "#1f77b4" Else col = "#d62728"
     head = h * 0.35: If head > 2.4 Then head = 2.4
     For sign = -1 To 1 Step 2
         x1 = cx: y1 = cy: x2 = cx + sign * dx * h: y2 = cy + sign * dy * h
         ux = sign * dx: uy = sign * dy
-        If val < 0# Then x1 = x2: y1 = y2: x2 = cx: y2 = cy: ux = -ux: uy = -uy
+        If val > 0# Then x1 = x2: y1 = y2: x2 = cx: y2 = cy: ux = -ux: uy = -uy
         bX = x2 - ux * head: bY = y2 - uy * head
         fragment = fragment & "<line x1='" & FEMIncrementNum(x1) & "' y1='" & FEMIncrementNum(y1) & "' x2='" & FEMIncrementNum(x2) & "' y2='" & FEMIncrementNum(y2) & "' stroke='" & col & "' stroke-width='0.85' data-element='" & FEMIncrementXml(eid) & "' data-principal='" & principal & "' data-strain='" & FEMIncrementSci(val) & "'/>"
         fragment = fragment & "<path d='M " & FEMIncrementNum(x2) & " " & FEMIncrementNum(y2) & " L " & FEMIncrementNum(bX - uy * head * 0.4) & " " & FEMIncrementNum(bY + ux * head * 0.4) & " L " & FEMIncrementNum(bX + uy * head * 0.4) & " " & FEMIncrementNum(bY - ux * head * 0.4) & " Z' fill='" & col & "'/>"

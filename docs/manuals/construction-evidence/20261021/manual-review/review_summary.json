@@ -1,0 +1,51 @@
+{
+  "regression": [
+    {
+      "baseline": "docs\\manuals\\construction-evidence\\20261021\\road01\\result.json.gz",
+      "candidate": "tests\\tmp\\manual_review\\road_ui05\\result.json",
+      "baseline_sha256": "41459cb58ab54da409b7a55226a8ae44a6f7d25e4a7fff07880becef79748512",
+      "candidate_sha256": "2d1a13773606f27065e9fb085de8efa48ffaf56dbf1d799ea91a52f2d522da7a",
+      "matched_tables": [
+        "materials",
+        "nodes",
+        "elements",
+        "stages",
+        "loads",
+        "all stage nodal displacement/force/reaction",
+        "all stage GP stresses/strains",
+        "stage results"
+      ],
+      "seconds_before": 3.9328698,
+      "seconds_after": 3.9607856
+    },
+    {
+      "baseline": "tests\\tmp\\manual_review\\road_gamma20\\result.json",
+      "candidate": "tests\\tmp\\manual_review\\road_gamma20_ui05\\result.json",
+      "baseline_sha256": "1b48f1fa9af73d06dd4c0412eba1d1b53073963060f8ca48df66f53a269efafe",
+      "candidate_sha256": "e6f45afb0c51aca59835cd317e07c687ad9d8b65e04e5f7c5342d046222db256",
+      "matched_tables": [
+        "materials",
+        "nodes",
+        "elements",
+        "stages",
+        "loads",
+        "all stage nodal displacement/force/reaction",
+        "all stage GP stresses/strains",
+        "stage results"
+      ],
+      "seconds_before": 3.9220543,
+      "seconds_after": 3.9651527
+    }
+  ],
+  "one_changed_input": "road material8 gamma 19->20 only",
+  "expected_additional_weight_kN": 22,
+  "observed_final_reaction_kN": 1863.9999999999998,
+  "initial_reaction_kN": 1439.9999999999916,
+  "final_closure_kN": 2.5557334026871104e-13,
+  "hand_calculation": {
+    "constrained_modulus_kPa": 40384.61538461538,
+    "settlement_m": 0.06440571428571429,
+    "assumptions": "uniform horizontal elastic layer; laterally constrained; not applicable directly to slope"
+  },
+  "validation_scope": "Programmatic Excel Validation.Value/STOP metadata and VBE compilation, not novice physical keyboard-dialog user testing. Observer zero threshold tests are synthetic, not a full plastic hold/SRM regression. No convergence/material conditions loosened."
+}

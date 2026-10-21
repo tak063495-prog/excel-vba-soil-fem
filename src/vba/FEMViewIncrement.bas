@@ -25,6 +25,7 @@ End Sub
 
 Public Sub FEMIncrementCapture(ByVal loadFactor As Double)
   Dim e As Long, gp As Long, c As Long, j As Long, dof As Long, s As Double
+  Dim zeroLocal As Boolean
   On Error GoTo Failed
   incReady = False
   If NumberOfElement < 1 Or lastDof < 0 Then Exit Sub
@@ -33,17 +34,26 @@ Public Sub FEMIncrementCapture(ByVal loadFactor As Double)
   For e = 0 To NumberOfElement - 1
     If P3IsElementActive(e) And Not Elem(e).IsJoint Then
       incActive(e) = True
+      ' Same local-displacement test as P3EvalElements and native material reuse.
+      ' Do not report stale plastic increments when no material update occurred.
+      zeroLocal = True
+      For j = 0 To 15
+        dof = Elem(e).ElNode(j)
+        If dof >= 0 Then
+          If Abs(TDisp(dof) - P3CommittedDisp(dof)) > 1E-30 Then zeroLocal = False
+        End If
+      Next j
       For gp = 0 To 3
         For c = 0 To 2
           s = 0#
           For j = 0 To 15
             dof = Elem(e).ElNode(j)
-            s = s + Elem(e).Bmat(c, j, gp) * (TDisp(dof) - P3CommittedDisp(dof))
+            If dof >= 0 Then s = s + Elem(e).Bmat(c, j, gp) * (TDisp(dof) - P3CommittedDisp(dof))
           Next j
           incData(c, gp, e) = s
         Next c
         For c = 0 To 3
-          incData(c + 3, gp, e) = Elem(e).P2PlasticStrain(c, gp)
+          If Not zeroLocal Then incData(c + 3, gp, e) = Elem(e).P2PlasticStrain(c, gp)
         Next c
       Next gp
     End If
@@ -107,7 +117,7 @@ Public Sub FEMIncrementSave()
   Next e
   r = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1: If r < 2 Then r = 2
   If n > 0 Then ws.Range(ws.Cells(r, 1), ws.Cells(r + n - 1, 20)).Value2 = rows
-  ws.Range("V2").Value2 = "最終収束荷重増分。SRMでは最後の成功Fsに対応。引張正、XYは工学せん断ひずみ。"
+  ws.Range("V2").Value2 = "最終収束荷重増分。SRMでは最後の成功Fsに対応。圧縮正、XYは工学せん断ひずみ。"
   ws.Rows(1).Font.Bold = True: ws.Columns("A:C").ColumnWidth = 14
   ws.Range("F:T").NumberFormat = "0.00000E+00"
   Exit Sub
