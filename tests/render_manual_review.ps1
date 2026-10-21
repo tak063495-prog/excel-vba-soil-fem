@@ -1,4 +1,4 @@
-param([string]$ResultBook='',[string]$Out='tests/tmp/manual_review/wall_render')
+param([string]$ResultBook='',[string]$Out='tests/tmp/manual_review/wall_render',[string]$ViewerSource='')
 $ErrorActionPreference='Stop';if(Get-Process EXCEL -ErrorAction SilentlyContinue){throw 'Another Excel is running.'}
 $repo=Split-Path -Parent $PSScriptRoot
 $Out=[IO.Path]::GetFullPath($Out);New-Item -ItemType Directory -Force -Path $Out|Out-Null
@@ -13,11 +13,23 @@ $xl=$null;$wb=$null
 try{
  $xl=New-Object -ComObject Excel.Application;$xl.EnableEvents=$false;$xl.DisplayAlerts=$false;$xl.AutomationSecurity=1
  $wb=$xl.Workbooks.Open($copy,0,$false);$prefix="'"+$wb.Name+"'!"
- foreach($m in 'FEMIncrementSvg','FEMStrainMath'){$cm=$wb.VBProject.VBComponents.Item($m).CodeModule;$cm.DeleteLines(1,$cm.CountOfLines);$cm.AddFromString([IO.File]::ReadAllText((Join-Path $repo "src/vba/$m.bas")))}
- # Test-only export hook: copy the exact SVG before the viewer deletes its temp file.
+ foreach($m in 'FEMIncrementSvg','FEMStrainMath','FEMNativeFigure'){$component=$null;try{$component=$wb.VBProject.VBComponents.Item($m)}catch{};if(-not $component){$component=$wb.VBProject.VBComponents.Add(1);$component.Name=$m};$cm=$component.CodeModule;if($cm.CountOfLines){$cm.DeleteLines(1,$cm.CountOfLines)};$cm.AddFromString([IO.File]::ReadAllText((Join-Path $repo "src/vba/$m.bas")))}
+ # Test-only export hook at SVG assembly, independent of the drawing backend.
  $process=[Diagnostics.Process]::new();$process.StartInfo.FileName='git';$process.StartInfo.Arguments='show HEAD:src/vba/FEMViewer.bas';$process.StartInfo.WorkingDirectory=$repo;$process.StartInfo.UseShellExecute=$false;$process.StartInfo.RedirectStandardOutput=$true;$process.StartInfo.StandardOutputEncoding=[Text.Encoding]::UTF8
  [void]$process.Start();$viewer=$process.StandardOutput.ReadToEnd();$process.WaitForExit();if($process.ExitCode -ne 0){throw 'Cannot read tracked viewer source.'}
- $viewer=$viewer.Replace('If Len(tempPath) > 0 Then Kill tempPath','If Len(tempPath) > 0 Then FileCopy tempPath, ThisWorkbook.Path & "\latest.svg"'+"`r`n"+'    If Len(tempPath) > 0 Then Kill tempPath')
+ if($ViewerSource){$viewer=[IO.File]::ReadAllText((Resolve-Path -LiteralPath $ViewerSource).Path)}
+ if(-not $viewer.Contains('svg = Join(parts, vbNullString)')){throw 'Missing SVG assembly hook.'}
+ $viewer=$viewer.Replace('svg = Join(parts, vbNullString)','svg = Join(parts, vbNullString): FEMTestWriteSvg svg')
+ $viewer += @'
+
+Private Sub FEMTestWriteSvg(ByVal svg As String)
+ Dim stream As Object
+ Set stream = CreateObject("ADODB.Stream")
+ stream.Type = 2: stream.Charset = "utf-8": stream.Open
+ stream.WriteText svg: stream.SaveToFile ThisWorkbook.Path & "\latest.svg", 2
+ stream.Close
+End Sub
+'@
  $cm=$wb.VBProject.VBComponents.Item('FEMViewer').CodeModule;$cm.DeleteLines(1,$cm.CountOfLines);$cm.AddFromString($viewer)
  $xl.Run($prefix+'SetP0SilentMode',$true)|Out-Null
  foreach($mode in 'A','B'){

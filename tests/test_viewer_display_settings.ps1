@@ -11,7 +11,7 @@ try{
  $app=New-Object -ComObject Excel.Application
  $app.EnableEvents=$false;$app.DisplayAlerts=$false;$app.AutomationSecurity=1
  $wb=$app.Workbooks.Open($copy,0,$false);$prefix="'"+$wb.Name+"'!"
- if($UseSource){foreach($m in 'FEMUi','FEMViewer','ThisWorkbook'){$ext=if($m -eq 'ThisWorkbook'){'.cls'}else{'.bas'};$cm=$wb.VBProject.VBComponents.Item($m).CodeModule;$cm.DeleteLines(1,$cm.CountOfLines);$cm.AddFromString((Get-Content -LiteralPath (Join-Path $repo ("src/vba/"+$m+$ext)) -Raw -Encoding UTF8))}}
+ if($UseSource){foreach($m in 'FEMUi','FEMViewer','FEMNativeFigure','ThisWorkbook'){$ext=if($m -eq 'ThisWorkbook'){'.cls'}else{'.bas'};$component=$null;try{$component=$wb.VBProject.VBComponents.Item($m)}catch{};if(-not $component){$component=$wb.VBProject.VBComponents.Add(1);$component.Name=$m};$cm=$component.CodeModule;if($cm.CountOfLines){$cm.DeleteLines(1,$cm.CountOfLines)};$cm.AddFromString((Get-Content -LiteralPath (Join-Path $repo ("src/vba/"+$m+$ext)) -Raw -Encoding UTF8))}}
  $h=$wb.VBProject.VBComponents.Add(1);$h.Name='ViewerDisplayTests'
  $h.CodeModule.AddFromString(@'
 Option Explicit

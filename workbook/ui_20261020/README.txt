@@ -21,3 +21,8 @@ https://github.com/tak063495-prog/excel-vba-soil-fem/blob/main/docs/reviews/2DSo
 再レビューN01-N05補訂（2026-10-21）：FEMIoの凡例3文言を修正。解析/再解析後もDISP=0はゼロ変位拘束。FORCE=0はゼロ節点力。載荷Bはキーワードまたは実在節点番号。UI_05名とファイル名は維持。検証はmanual-rereviewの記録を参照。
 
 SRM凡例追加訂正：「最後の有効行のSRM」がFs探索です。GRAVITY→SRM→LOAD（有効）のSRMは途中ゲート。計算処理とPDFは変更していません。実Excelコンパイル・凡例再生成・保存再読込を確認（解析再実行なし）。
+
+Excel 2016向け表示互換性修正（2026-10-21）：メッシュ・変形応力図をSVG画像ではなくExcel標準図形で描画します。「この画像は表示できません」への対応です。等値線・塑性クロス・色スケールも保持。VBAコンパイル・保存再読込・実ボタンの表示を現行Excelで確認しました。利用者のExcel 2016実機確認は未実施です。解析処理とDLLは同じです。
+詳細・検証記録・既存ブックのコピーへの適用手順：
+https://github.com/tak063495-prog/excel-vba-soil-fem/blob/main/docs/reviews/figure_excel2016_fix_20261021.md
+過去の計算済みサンプルZIPは履歴として保持しており、この描画修正は含みません。

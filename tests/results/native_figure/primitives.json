@@ -1,0 +1,8 @@
+{
+  "excel_build": "20430",
+  "compile": "PASS",
+  "status": "PASS",
+  "excel_version": "16.0",
+  "result": "PASS|primitive geometry, colors, dashes, text, failure cleanup, seven increment fixtures",
+  "source_sha256": "F470C919F10B3B437286CE585BE80B5128D75F23E0B47421DD61CE5D3B6F465D"
+}

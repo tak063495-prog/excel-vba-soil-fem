@@ -5525,6 +5525,11 @@
     "sha256": "4cd78483f0f8a423e61459805418813b8e4fbee70e976ce353d12f1527cb967c"
   },
   {
+    "path": "docs/reviews/figure_excel2016_fix_20261021.md",
+    "bytes": 5828,
+    "sha256": "2fc3d2b87dfe79a2fc142e3d57a21b5977ac529ed714f08e54f6f304b096bc16"
+  },
+  {
     "path": "docs/shape-mesh-evidence/20261020/combined_dll_numeric.json",
     "bytes": 1391,
     "sha256": "5bdddd3e4f030d3313bcef25cb1428d2422fb110c0bed530727f3d74c34a3216"
@@ -6100,6 +6105,11 @@
     "sha256": "5a866de98876ccdac69a5bec28d00f2ee5d0d0d4b4bb579e4d328ab7fec85b4d"
   },
   {
+    "path": "src/vba/FEMNativeFigure.bas",
+    "bytes": 13855,
+    "sha256": "9a6a77a420b0819d8699301db1683bc7216333de0b5e1f6c9019862b32946510"
+  },
+  {
     "path": "src/vba/FEMNativeKern.bas",
     "bytes": 16022,
     "sha256": "b8b93afd8d51299e7f71ac7fab15bfa3ca5ec230f3a0f776af5d1c45094ae71e"
@@ -6186,8 +6196,8 @@
   },
   {
     "path": "src/vba/FEMViewer.bas",
-    "bytes": 32685,
-    "sha256": "b71df4ecab2b46c90d98f959899da82ca0244e752e35db6a677c842bb9cfd70c"
+    "bytes": 32084,
+    "sha256": "ec7f5fef664db54ad599e282c6c63b13e6d5328543c87f9749a75facf73f8201"
   },
   {
     "path": "src/vba/Mesh.bas",
@@ -6580,6 +6590,11 @@
     "sha256": "1e5cdee10bfd053d36b2fe7a6f4d2833b75b84b15980247d31f7c10805f458c3"
   },
   {
+    "path": "tests/native/NativeFigureHarness.bas",
+    "bytes": 3265,
+    "sha256": "be4484fa4bc694c16a99f526042c15557580447a364d4f889d9cafe945e638db"
+  },
+  {
     "path": "tests/native/benchmark_ilu.py",
     "bytes": 3808,
     "sha256": "d16c558fc24f60a2bd04d8d27bcef4b61c1dd2843ddb1752fedaee707d789710"
@@ -6751,8 +6766,8 @@
   },
   {
     "path": "tests/native/make_native_workbook.ps1",
-    "bytes": 4699,
-    "sha256": "7723b7c463ecd977db89d9cf972653ad2acdc115d36fe8584d1900ee36e574ba"
+    "bytes": 4717,
+    "sha256": "2b7cf8346311797c175d6663668f8da2ec21f9efacd0ee74e3006daec56f44ba"
   },
   {
     "path": "tests/native/measure_event_buffer.ps1",
@@ -6931,8 +6946,48 @@
   },
   {
     "path": "tests/render_manual_review.ps1",
-    "bytes": 3226,
-    "sha256": "4c0ae82797f7ce9b6c25ba1b077ff54a7a020bc6256aaca8f5ab5347a6907b73"
+    "bytes": 3830,
+    "sha256": "3592ff72f6c6dd846e1031124d6e77197fe04ca28156a3fb99de74bafafccc68"
+  },
+  {
+    "path": "tests/results/native_figure/display_regression.json",
+    "bytes": 4519,
+    "sha256": "9971d548d44f0ffce2dd92c3491e38d60e54899d3d0a27667d68bc245c3566ee"
+  },
+  {
+    "path": "tests/results/native_figure/mesh_screen.jpg",
+    "bytes": 218817,
+    "sha256": "24065f531788f6c5a211781631ef23b7db1560910ac147117a158d91309e1d2e"
+  },
+  {
+    "path": "tests/results/native_figure/primitives.json",
+    "bytes": 296,
+    "sha256": "ec53d92aef9a854e540b61e6f2379dfbd1462e47a757846f38546d8679dd50a7"
+  },
+  {
+    "path": "tests/results/native_figure/release.json",
+    "bytes": 4369,
+    "sha256": "abdc320f829dcaa6b42cccba38cfcc68d8eae30f6c7b6ebaba766f8ef6433762"
+  },
+  {
+    "path": "tests/results/native_figure/result_A_screen.jpg",
+    "bytes": 183877,
+    "sha256": "4636293d4e92a6ec1804668490bfb4e64c18ea32295f6b773726eba9e111ef44"
+  },
+  {
+    "path": "tests/results/native_figure/result_B_screen.jpg",
+    "bytes": 181385,
+    "sha256": "a4d0fc2eb0e095eaaa049280a157852c89643ee48794ce38850145c1823ec7e9"
+  },
+  {
+    "path": "tests/results/native_figure/road.json",
+    "bytes": 5113,
+    "sha256": "d3479be4af957136cb10f4d28656467b76e52a1ceca2085669637c702bcd8028"
+  },
+  {
+    "path": "tests/results/native_figure/road_mesh_screen.jpg",
+    "bytes": 189959,
+    "sha256": "01b0d9ceda89d87bcfd59bc4d40967c3d95d2e1f3fd8b90cc32deedf38e71668"
   },
   {
     "path": "tests/run.ps1",
@@ -6985,6 +7040,11 @@
     "sha256": "30b9b96738b462861ffe3d9545aa0c730aa1eab9810cab7ce97f21c714861ce3"
   },
   {
+    "path": "tests/test_native_figure.ps1",
+    "bytes": 1499,
+    "sha256": "240fd6201989c28ae25bffcdd04d76ac1dd2d955f5286e435c75edd6b44c97ef"
+  },
+  {
     "path": "tests/test_practical_final.ps1",
     "bytes": 6735,
     "sha256": "3bb70bdaffdd0e3632e88f4dbb6fccbeff93de29d55305821aebf10179c17eba"
@@ -7016,8 +7076,8 @@
   },
   {
     "path": "tests/test_viewer_display_settings.ps1",
-    "bytes": 10375,
-    "sha256": "6817fc54ec0615b8d63ff0235e75fe7c18a8c6896050e72e63acea76d4e3d9b4"
+    "bytes": 10551,
+    "sha256": "1c8871bd596818265b4fa96a53198fa9ece3521e9cbae571b75b607a0a7fb6ef"
   },
   {
     "path": "tests/test_workbook_inputs.ps1",
@@ -7038,6 +7098,11 @@
     "path": "tests/verify_manual_review.ps1",
     "bytes": 5367,
     "sha256": "8d48dc2eb94f58401197f0db6f54e44f9e977ea7e09aa6eb561c588eff9a323a"
+  },
+  {
+    "path": "tests/verify_native_figure.ps1",
+    "bytes": 5821,
+    "sha256": "d9478a2966986b8c8b4332395361ba553c7a96706d9c8c2b440f810efaece3d9"
   },
   {
     "path": "workbook/2DSoilFEM_20261008_practical.xlsm",
@@ -7321,18 +7386,18 @@
   },
   {
     "path": "workbook/ui_20261020/2DSoilFEM_ui_20261020.xlsm",
-    "bytes": 3188352,
-    "sha256": "8d7a0cf22376b6939cdd302f3e43f7ececc7a970509e37d069214e230b87c736"
+    "bytes": 3283921,
+    "sha256": "f470c919f10b3b437286ce585be80b5128d75f23e0b47421dd61ce5d3b6f465d"
   },
   {
     "path": "workbook/ui_20261020/BUILD_RECORD.json",
-    "bytes": 2342,
-    "sha256": "e43471d68d045c05e8f1241e251b4490840703b9e2d3830c94f859dc9fa4fcec"
+    "bytes": 2600,
+    "sha256": "d15a22c9d7854f66dd5eb70f4e0b849a2ca7bffbe72f8a5d1cf3b324b25bf6a6"
   },
   {
     "path": "workbook/ui_20261020/README.txt",
-    "bytes": 2800,
-    "sha256": "2da1226e3a2015b846ff8f14024ed80fdac870608d1623c8997fda4afea78d00"
+    "bytes": 3561,
+    "sha256": "86943f07296c41face71d4777fc8516e89be73c0cedd7569f416ac83228104df"
   },
   {
     "path": "workbook/ui_20261020/soilfem_native_x64.dll",
