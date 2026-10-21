@@ -56,6 +56,23 @@ Public Sub PlasticLogResumeUnknown()
   PlasticLogResetState
   mComplete = False
 End Sub
+' Read-only accessors for the result display (20261022). They never change the log.
+Public Function PlasticLogIsReady() As Boolean
+  PlasticLogIsReady = mReady
+End Function
+Public Function PlasticLogIsComplete() As Boolean
+  PlasticLogIsComplete = mComplete
+End Function
+Public Function PlasticLogTotal(ByVal comp As Long, ByVal gp As Long, ByVal elementId As Long) As Double
+  If Not mReady Then Exit Function
+  If elementId < 0 Or elementId > UBound(mTotal, 3) Then Exit Function
+  PlasticLogTotal = mTotal(comp, gp, elementId)
+End Function
+Public Function PlasticLogMultiplierTotal(ByVal gp As Long, ByVal elementId As Long) As Double
+  If Not mReady Then Exit Function
+  If elementId < 0 Or elementId > UBound(mMultiplier, 2) Then Exit Function
+  PlasticLogMultiplierTotal = mMultiplier(gp, elementId)
+End Function
 Private Function PLNum(ByVal v As Double) As String
   PLNum = Replace(Format$(v, "0.000000000000E+00"), Application.International(xlDecimalSeparator), ".")
 End Function

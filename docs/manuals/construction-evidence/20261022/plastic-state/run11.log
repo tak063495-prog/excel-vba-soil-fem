@@ -1,0 +1,27 @@
+﻿06:51:15 PID 4200
+06:51:15 step old
+06:51:21 open C:\Users\link_\manual_rewrite_20261021\run11\ex02_old_20261022.xlsm
+06:51:24 run P0_RunAnalysis
+07:13:43 ret P0_RunAnalysis
+07:13:51 elapsed old 1350.0109373
+07:13:51 dump ステージ結果 old_stage.tsv
+07:14:48 dump 結果要素 old_elems.tsv
+07:15:18 dump 結果節点 old_nodes.tsv
+07:15:20 step new
+07:15:23 open C:\Users\link_\manual_rewrite_20261021\run11\ex02_new_20261022.xlsm
+07:15:26 run P0_RunAnalysis
+07:37:43 ret P0_RunAnalysis
+07:37:51 elapsed new 1348.6328662
+07:37:51 dump ステージ結果 new_stage.tsv
+07:38:52 dump 結果要素 new_elems.tsv
+07:39:24 dump 結果節点 new_nodes.tsv
+07:40:07 dump 結果塑性 new_plastic.tsv
+07:40:14 snap st_out
+07:40:17 run FEMViewResult
+07:40:18 ret FEMViewResult
+07:40:30 snap st_fig
+07:40:35 snap cum_out
+07:40:38 run FEMViewResult
+07:40:39 ret FEMViewResult
+07:40:50 snap cum_fig
+07:40:57 all done
