@@ -4647,13 +4647,13 @@
     },
     {
       "path": "docs/manuals/construction-evidence/20261021/manual-review/README.md",
-      "bytes": 4080,
-      "sha256": "2a0eaeb928ed3aa675872aa7202d8d62d3ee9086f0b5739e958cdd0e54518dad"
+      "bytes": 4496,
+      "sha256": "96fa6dfbc809e01a10d5de08581a9fe6b64b7a347c4e0b7f629e02b7e3c13c1a"
     },
     {
       "path": "docs/manuals/construction-evidence/20261021/manual-review/release.json",
-      "bytes": 2172,
-      "sha256": "060ef8de1c7f6104a7e882d3733f467971e51ba042eeaf5cc7c830d25bcc5ca9"
+      "bytes": 2246,
+      "sha256": "1e8d2b8da85349af9826c29f2c7fa092ea760a9fe17be5193868386ab0902794"
     },
     {
       "path": "docs/manuals/construction-evidence/20261021/manual-review/review_summary.json",
@@ -4832,8 +4832,8 @@
     },
     {
       "path": "docs/manuals/construction-evidence/20261021/manual-review/road_ui05_workbook.zip",
-      "bytes": 4011720,
-      "sha256": "e452e12398e81261d1eda56674a4fde33c06660fce6a48e731e645679573d05a"
+      "bytes": 4002798,
+      "sha256": "8ce9af62c764ed2103e5a6053a598acf8221d97ab125dd36dd2ebab6a9c29a27"
     },
     {
       "path": "docs/manuals/construction-evidence/20261021/manual-review/roundtrip.json",
@@ -4984,6 +4984,21 @@
       "path": "docs/manuals/construction-evidence/20261021/manual-rereview/pdf_review.json",
       "bytes": 14731,
       "sha256": "560a66c90a6ae6d3aaf7bd9cb75f2395531c6227ad10fbd771e0de991938af89"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/srm-legend/generic_checks.json",
+      "bytes": 5308,
+      "sha256": "5e313118c6d2b13c6dbb53a318349ca21c85b8516f3d6661f4dad118cad3c234"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/srm-legend/pr29_release.json",
+      "bytes": 2172,
+      "sha256": "060ef8de1c7f6104a7e882d3733f467971e51ba042eeaf5cc7c830d25bcc5ca9"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/srm-legend/road_checks.json",
+      "bytes": 5367,
+      "sha256": "69b6f333874f7bbd0cfba4bae4b775d89e6d212119c89fd5b2b26049dfe02c03"
     }
   ],
   "bearing_comparison": {
@@ -7958,5 +7973,12 @@
     "comparison": "all nine input/result tables exactly equal to archived baseline; only FEMIo wording changed",
     "visual": "120 page contacts checked; pages10/13/18/87 enlarged; TOC/glossary/page numbering unchanged",
     "limitations": "programmatic validation, no physical keyboard test; no new JOINT/RESET or SRM sweep; old UI04 case ZIPs retained for history"
+  },
+  "srm_legend_followup": {
+    "response": "docs/reviews/2DSoilFEM_srm_legend_followup_20261021.md",
+    "generic_checks": 101,
+    "road_checks": 102,
+    "analysis_rerun": false,
+    "pdf_unchanged": true
   }
 }

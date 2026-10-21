@@ -19,6 +19,10 @@ function Inspect($phase){
  Check ([string]$stage.Range('I4').Value2 -match 'DISP=0はゼロ変位拘束' -and [string]$stage.Range('I4').Value2 -match 'FORCE=0はゼロ節点力') "$phase stage legend correct"
  Check ([string]$load.Range('M12').Value2 -match 'DISP=0はゼロ変位' -and [string]$load.Range('M12').Value2 -notmatch 'DISP/FORCE.*無効') "$phase load zero legend correct"
  Check ([string]$load.Range('M2').Value2 -match 'キーワードまたは節点番号' -and [string]$load.Range('M2').Value2 -notmatch 'プルダウン') "$phase target legend correct"
+ Check ([string]$stage.Range('I8').Value2 -match '最後の有効行のSRM=Fs探索') "$phase SRM legend uses last effective row"
+ $spec=$wb.Worksheets.Item('仕様');$found=$false
+ for($row=3;$row -le $spec.UsedRange.Rows.Count;$row++){if([string]$spec.Cells($row,1).Value2 -eq 'ステージ' -and [string]$spec.Cells($row,2).Value2 -eq 'SRM'){$found=([string]$spec.Cells($row,4).Value2 -match '最後の有効行のSRM=Fs探索');break}}
+ Check $found "$phase SRM specification uses last effective row"
  $target=$load.Range('B2');$saved=$target.Formula
  try{
   $v=$target.Validation;Check ($v.Type -eq 7 -and $v.ShowError -and $v.AlertStyle -eq 1) "$phase custom STOP validation"
@@ -64,6 +68,7 @@ try{
  # Empty-stage defaults are tested only in memory, then discarded.
  $wb.Worksheets.Item('ステージ').Range('A2:F2000').ClearContents();[void]$app.Run($prefix+'FEMEnsureStageSheets')
  Check ([string]$wb.Worksheets.Item('ステージ').Range('F3').Value2 -match 'DISP=0はゼロ変位拘束') 'empty stage default has correct zero DISP meaning'
+ Check ([string]$wb.Worksheets.Item('ステージ').Range('F4').Value2 -match '最後の有効行のSRMならFs探索') 'empty stage SRM default uses last effective row'
  $wb.Close($false);$wb=$null
  Check ((Get-FileHash -LiteralPath $source).Hash -ceq $sourceHash) 'source workbook unchanged'
  [pscustomobject]@{status='PASS';checks=$checks;analysis_seconds=$times;analyses=if($RunRoad){2}else{0};matched_tables=@($baseline.Keys);numeric_comparison='all available input/result tables exactly unchanged';destination_sha256=(Get-FileHash -LiteralPath $destination).Hash.ToLower();scope='programmatic validation; no physical keyboard user test; only FEMIo wording changed; embedded source comparison ignores VBE identifier casing'}|ConvertTo-Json -Depth 8|Set-Content -LiteralPath $Out -Encoding UTF8
