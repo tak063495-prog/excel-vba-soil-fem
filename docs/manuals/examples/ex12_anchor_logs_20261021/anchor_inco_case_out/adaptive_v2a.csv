@@ -1,0 +1,1 @@
+ver,trial_id,path,stage,kind,fs,srm_stage,increment,lambda_start,lambda_target,previous_iterations,assessed,q,correction_ms,fresh_q,factor_price_ms,cost_known,cost_status,estimated_net_ms,corrections,factorizations,factor_ms,elapsed_ms,accepted,outcome,rebuild_reasons,cooldown,previous_step,step_ratio,probe,bad_streak_before,bad_streak_after,cost_model,failure_reason

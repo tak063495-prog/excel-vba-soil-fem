@@ -1,0 +1,4 @@
+ver,fs,inc,lambda,dlambda20,dlambda80,umax,du20,du80,compliance20,compliance_ref,compliance_ratio,plastic_gp_ratio,new_plastic_gp20,factor_ratio20,reuse_ratio20,damped_ls_ratio20
+20261020_INCO_ELEMENT_01,1.600,20,8.752E-01,NA,NA,2.149E-02,NA,NA,NA,NA,NA,3.902E-01,NA,NA,NA,NA
+20261020_INCO_ELEMENT_01,1.550,20,9.640E-01,NA,NA,3.309E-02,NA,NA,NA,NA,NA,2.705E-01,NA,NA,NA,NA
+20261020_INCO_ELEMENT_01,1.525,20,9.937E-01,NA,NA,3.501E-02,NA,NA,NA,NA,NA,4.008E-01,NA,NA,NA,NA
