@@ -5,9 +5,9 @@
   "compile": "PASS",
   "reopen": "PASS",
   "dll_layout": "single",
-  "checks_record": "docs/manuals/construction-evidence/20261021/srm-legend/generic_checks.json",
+  "checks_record": "tests/results/native_figure/release.json",
   "review_response": "docs/reviews/2DSoilFEM_manual_response_20261021.md",
-  "scope": "FEMIo three SRM explanation strings only; calculation and PDF unchanged",
+  "scope": "FEMViewer SVG image insertion replaced by Excel native shapes; solver and input/result tables unchanged",
   "source_modules": [
     {
       "name": "FEMUiLayout",
@@ -32,13 +32,21 @@
     {
       "name": "FEMStrainMath",
       "sha256": "e000500ea75139a191cd0de8493e6d89fd635c327bcbd7bc3daf199de4c55bd7"
+    },
+    {
+      "name": "FEMViewer",
+      "sha256": "ec7f5fef664db54ad599e282c6c63b13e6d5328543c87f9749a75facf73f8201"
+    },
+    {
+      "name": "FEMNativeFigure",
+      "sha256": "9a6a77a420b0819d8699301db1683bc7216333de0b5e1f6c9019862b32946510"
     }
   ],
   "files": [
     {
-      "name": "2DSoilFEM_ui_20261020.xlsm",
-      "bytes": 3188352,
-      "sha256": "8d7a0cf22376b6939cdd302f3e43f7ececc7a970509e37d069214e230b87c736"
+      "name": "2DSoilFEM_ui_20261021.xlsm",
+      "bytes": 3285682,
+      "sha256": "ee761e2dbd9e84a57de1c9d7d1b3cbb1237785e771faddd9edef5e85e087cfe9"
     },
     {
       "name": "soilfem_native_x64.dll",
@@ -47,14 +55,17 @@
     },
     {
       "name": "README.txt",
-      "bytes": 2800,
-      "sha256": "2da1226e3a2015b846ff8f14024ed80fdac870608d1623c8997fda4afea78d00"
+      "bytes": 3802,
+      "sha256": "50453a20ed076324e16486bd5af11ebae0ce3e10a940a3094bee67849eb7466c"
     }
   ],
-  "source_base_revision": "cbf09683d636e8e33f64e8c2839b72835e7811d0",
-  "source_revision": "9a4838a226f3c657ddb5460e4e2c3d037dc0e3a8",
-  "patch": "20261021 SRM legend: last effective row; three wording-only changes",
+  "source_base_revision": "01d2c4a6d9caba9c251d3683793852c870c095ab",
+  "patch": "20261021 native figure renderer for Excel 2016 SVG compatibility",
   "rereview_record": "docs/manuals/construction-evidence/20261021/manual-rereview/road_checks.json",
   "srm_legend_checks": "docs/manuals/construction-evidence/20261021/srm-legend/road_checks.json",
-  "documentation_revision": "122-page applied exercises; distribution README page count only"
+  "documentation_revision": "122-page applied exercises; distribution README page count only",
+  "figure_review": "docs/reviews/figure_excel2016_fix_20261021.md",
+  "renamed_checks_record": "tests/results/native_figure/renamed_release.json",
+  "renamed_result_checks_record": "tests/results/native_figure/renamed_road.json",
+  "rename_source_revision": "9229dfb498495224aa4107bf359a9935518288bd"
 }

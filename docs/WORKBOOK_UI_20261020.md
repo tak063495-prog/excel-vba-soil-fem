@@ -84,8 +84,8 @@ Excelをすべて閉じた環境で、リポジトリのルートから実行し
 
 ```powershell
 pwsh -NoProfile -File tests/build_workbook_ui.ps1 -OutputDirectory C:\work\soilfem_ui
-pwsh -NoProfile -File tests/test_workbook_inputs.ps1 -Book C:\work\soilfem_ui\2DSoilFEM_ui_20261020.xlsm
-pwsh -NoProfile -File tests/test_workbook_ui_persistence.ps1 -Book C:\work\soilfem_ui\2DSoilFEM_ui_20261020.xlsm -Baseline workbook/inco_element_20261020/2DSoilFEM_inco_element_20261020.xlsm
+pwsh -NoProfile -File tests/test_workbook_inputs.ps1 -Book C:\work\soilfem_ui\2DSoilFEM_ui_20261021.xlsm
+pwsh -NoProfile -File tests/test_workbook_ui_persistence.ps1 -Book C:\work\soilfem_ui\2DSoilFEM_ui_20261021.xlsm -Baseline workbook/inco_element_20261020/2DSoilFEM_inco_element_20261020.xlsm
 ```
 
 画面の説明・書式は初回表示と明示更新時に整え、通常の解析では設定の連携とシート順だけを確認します。ユーザーの入力値をキャッシュして固定する処理ではありません。

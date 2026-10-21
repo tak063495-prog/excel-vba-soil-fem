@@ -1,4 +1,4 @@
-﻿Option Explicit
+Option Explicit
 
 Public FEMViewerLastError As String
 Public FEMViewerElementCount As Long
@@ -158,17 +158,6 @@ Public Sub FEMViewerSetupSelector()
     FEMResultOptionsInstall
 End Sub
 
-Private Sub WriteSvg(ByVal path As String, ByVal svg As String)
-    Dim stream As Object
-    Set stream = CreateObject("ADODB.Stream")
-    stream.Type = 2
-    stream.Charset = "utf-8"
-    stream.Open
-    stream.WriteText svg
-    stream.SaveToFile path, 2
-    stream.Close
-End Sub
-
 Private Sub DrawView(ByVal mode As String)
     Dim nodes As Variant, elements As Variant, materials As Variant, stages As Variant, settings As Variant
     Dim nodeResults As Variant, elementResults As Variant, nodeMap As Object, materialMap As Object
@@ -187,7 +176,7 @@ Private Sub DrawView(ByVal mode As String)
     Dim shearOn As Boolean, crossOn As Boolean, overlayA As Boolean, incrementPaint As Boolean
     Dim vectorScale As Double, baseResultId As Long, incrementCaption As String
     Dim resultId As Long, fill As String, stroke As String, points As String, title As String, subtitle As String
-    Dim svg As String, parts() As String, partCount As Long, tempPath As String, labels As Object, showLabels As Boolean
+    Dim svg As String, parts() As String, partCount As Long, labels As Object, showLabels As Boolean
     Dim ws As Worksheet, picture As Object, oldScreen As Boolean, oldEvents As Boolean, oldStatus As Variant
     Dim oldDisplayStatus As Boolean, stateSaved As Boolean, errorText As String, lastRow As Long, canvasW As Double, canvasH As Double
     Dim viewPhase As String, errorNumber As Long
@@ -541,12 +530,9 @@ NextDrawElement:
     parts(partCount + 1) = "</g></svg>"
     ReDim Preserve parts(0 To partCount + 1)
     svg = Join(parts, vbNullString)
-    tempPath = ThisWorkbook.path & Application.PathSeparator & "~FEMView_" & Format$(Now, "yyyymmdd_hhnnss") & "_" & CStr(CLng(Timer * 100#)) & ".svg"
-    viewPhase = "一時SVGの保存"
-    WriteSvg tempPath, svg
     Set ws = ThisWorkbook.Worksheets("図")
-    viewPhase = "Excelへの図の挿入"
-    Set picture = ws.Shapes.AddPicture(tempPath, msoFalse, msoTrue, 10#, 10#, canvasW, canvasH)
+    viewPhase = "Excel標準図形への描画"
+    Set picture = FEMNativeFigureCreate(ws, svg, canvasW, canvasH)
     ' 新しい図が作成できた後だけ旧図を消す。表示失敗時には旧図を保持する。
     P1ClearViewerLayers
     picture.name = "P1Agg_ViewSVG"
@@ -571,7 +557,6 @@ Failed:
     FEMViewerLastError = errorText
 Finish:
     On Error Resume Next
-    If Len(tempPath) > 0 Then Kill tempPath
     If stateSaved Then
         Application.StatusBar = oldStatus
         Application.DisplayStatusBar = oldDisplayStatus

@@ -1,6 +1,6 @@
 # 計算後の「変形・応力図を表示」の修正
 
-対象は `2DSoilFEM_ui_20261020.xlsm`、画面版 `20261020_UI_02` です。ファイル名は変更していません。計算版 `20261020_INCO_ELEMENT_01`、材料則・Double・収束条件・SRM条件、DLL 2個は維持しています。
+対象は `2DSoilFEM_ui_20261021.xlsm`、画面版 `20261020_UI_02` です。ファイル名は変更していません。計算版 `20261020_INCO_ELEMENT_01`、材料則・Double・収束条件・SRM条件、DLL 2個は維持しています。
 
 ## 再現した問題と修正
 
@@ -44,7 +44,7 @@ INCONSISTENTの85節点・20要素SRM探索を同条件で比較し、Fs区間 `
 Excelをすべて閉じ、リポジトリのルートで実行します。テストは自分で作成したExcelと作業コピーだけを扱います。
 
 ```powershell
-pwsh -NoProfile -File tests/test_viewer_display_settings.ps1 -Book workbook/ui_20261020/2DSoilFEM_ui_20261020.xlsm -Out tests/results/viewer_checks.json
+pwsh -NoProfile -File tests/test_viewer_display_settings.ps1 -Book workbook/ui_20261020/2DSoilFEM_ui_20261021.xlsm -Out tests/results/viewer_checks.json
 ```
 
 修正前の配布版を使う場合は `-ExpectDirtyBug` で誤ったdirty化を再現できます。開発時の `-UseSource` はコピーのFEMUi・FEMViewer・ThisWorkbookだけを差し替えて検証します。

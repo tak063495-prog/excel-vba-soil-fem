@@ -1,6 +1,6 @@
 # 形状メッシュへの統一と操作順の整理（UI_03）
 
-配布名は `2DSoilFEM_ui_20261020.xlsm` のままです。ZIPを新しいフォルダへ展開し、同梱の **soilfem_native_x64.dll 1個**をブックと同じ場所に置きます。旧版のDLLと混ぜず、新しいExcelプロセスで開いてください。
+配布名は `2DSoilFEM_ui_20261021.xlsm` のままです。ZIPを新しいフォルダへ展開し、同梱の **soilfem_native_x64.dll 1個**をブックと同じ場所に置きます。旧版のDLLと混ぜず、新しいExcelプロセスで開いてください。
 
 ## 入力と確認の順序
 
@@ -36,7 +36,7 @@ MSVCの計算カーネルと、従来と同じGCC14/x87精度フラグで作成�
 ```powershell
 cmd /c native\build_combined.cmd
 pwsh -NoProfile -File tests/build_workbook_ui.ps1 -OutputDirectory tests/tmp/new_ui_build
-pwsh -NoProfile -File tests/test_shape_mesh_workflow.ps1 -Book tests/tmp/new_ui_build/2DSoilFEM_ui_20261020.xlsm
+pwsh -NoProfile -File tests/test_shape_mesh_workflow.ps1 -Book tests/tmp/new_ui_build/2DSoilFEM_ui_20261021.xlsm
 pwsh -NoProfile -File tests/native/build_combined_probes.ps1 -OutputDirectory tests/tmp/new_probe_build -Count 100000
 ```
 

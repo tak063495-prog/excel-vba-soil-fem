@@ -1,4 +1,4 @@
-param([string]$Book='workbook/ui_20261020/2DSoilFEM_ui_20261020.xlsm',[string]$Out='tests/results/shape_mesh_workflow.json',[switch]$CompileOnly)
+param([string]$Book='workbook/ui_20261020/2DSoilFEM_ui_20261021.xlsm',[string]$Out='tests/results/shape_mesh_workflow.json',[switch]$CompileOnly)
 $ErrorActionPreference='Stop'; $repo=Split-Path -Parent $PSScriptRoot; Push-Location $repo
 $app=$null;$wb=$null
 try {

@@ -13,7 +13,7 @@ $sourceHash=(Get-FileHash -LiteralPath $SourceWorkbook).Hash
 New-Item -ItemType Directory -Path $OutputDirectory | Out-Null
 $NativeDll=(Resolve-Path -LiteralPath $NativeDll).Path
 Copy-Item -LiteralPath $NativeDll -Destination (Join-Path $OutputDirectory 'soilfem_native_x64.dll')
-$bookPath=Join-Path $OutputDirectory '2DSoilFEM_ui_20261020.xlsm'
+$bookPath=Join-Path $OutputDirectory '2DSoilFEM_ui_20261021.xlsm'
 & pwsh -NoProfile -File (Join-Path $PSScriptRoot 'native/make_native_workbook.ps1') -Src $SourceWorkbook -Dst $bookPath -ModDir (Join-Path $repo 'src/vba') -Modules FEMUiLayout
 if($LASTEXITCODE -ne 0){throw 'VBA source verification/compilation failed.'}
 for($wait=0;$wait -lt 20;$wait++){

@@ -2,7 +2,7 @@
 # Only a fresh, dedicated copy is edited. Existing Excel processes cause an abort.
 # The public workbook, its VBA, the DLL and solver convergence settings are retained.
 # -Anchor is a distributed, balanced prestress load example, not an anchor element.
-param([Parameter(Mandatory=$true)][string]$Fixture,[Parameter(Mandatory=$true)][string]$OutDirectory,[int]$StageLimit=999,[switch]$Srm,[switch]$Anchor,[ValidateSet('','DAVIS','INCONSISTENT')][string]$Flow='',[string]$SourceWorkbook='workbook/ui_20261020/2DSoilFEM_ui_20261020.xlsm')
+param([Parameter(Mandatory=$true)][string]$Fixture,[Parameter(Mandatory=$true)][string]$OutDirectory,[int]$StageLimit=999,[switch]$Srm,[switch]$Anchor,[ValidateSet('','DAVIS','INCONSISTENT')][string]$Flow='',[string]$SourceWorkbook='workbook/ui_20261020/2DSoilFEM_ui_20261021.xlsm')
 $ErrorActionPreference='Stop';$app=$null;$wb=$null
 $repo=(Get-Location).Path
 $source=(Resolve-Path -LiteralPath $SourceWorkbook).Path;$hash=(Get-FileHash -LiteralPath $source).Hash

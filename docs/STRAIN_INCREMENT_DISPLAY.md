@@ -5,7 +5,7 @@ UI_05では保存増分が**圧縮正**であることに合わせ、正の主�
 [UI_05の38項目Excel検証・道路11工程回帰・A/B再描画](manuals/construction-evidence/20261021/manual-review/README.md)。以降のUI_04の件数・実測は当時の記録であり、符号凡例・ゼロ増分の正しさを検証済みと読み替えないでください。
 
 
-配布名は `2DSoilFEM_ui_20261020.xlsm` のままです。`soilfem_native_x64.dll` 1個を同じフォルダに置きます。DLL・Double・材料則・Newton/GMRES収束条件・SRM探索条件を変更していません。
+配布名は `2DSoilFEM_ui_20261021.xlsm` のままです。`soilfem_native_x64.dll` 1個を同じフォルダに置きます。DLL・Double・材料則・Newton/GMRES収束条件・SRM探索条件を変更していません。
 
 ## 操作
 
@@ -68,9 +68,9 @@ UI_05では保存増分が**圧縮正**であることに合わせ、正の主�
 再現例（Excelをすべて閉じ、リポジトリのルートから実行）：
 
 ```powershell
-pwsh -NoProfile -File tests/build_workbook_ui.ps1 -SourceWorkbook workbook/ui_20261020/2DSoilFEM_ui_20261020.xlsm -OutputDirectory tests/tmp/new_increment_build
-pwsh -NoProfile -File tests/test_increment_display.ps1 -Book tests/tmp/new_increment_build/2DSoilFEM_ui_20261020.xlsm
-pwsh -NoProfile -File tests/native/run_native_compare.ps1 -Book tests/tmp/new_increment_build/2DSoilFEM_ui_20261020.xlsm -Suite smokesrm -CaseName Case1 -Variants off -Modes AUTO -Precision AUTO -Flow INCONSISTENT -StateCopy 1 -GmresSimd 1 -IoFast 1 -EventFast 1 -AssemblyFast 1 -GmresTuned 1 -GmresPrepared 1 -WarmUi -SaveResultBook -Out tests/results/increment_srm.json
+pwsh -NoProfile -File tests/build_workbook_ui.ps1 -SourceWorkbook workbook/ui_20261020/2DSoilFEM_ui_20261021.xlsm -OutputDirectory tests/tmp/new_increment_build
+pwsh -NoProfile -File tests/test_increment_display.ps1 -Book tests/tmp/new_increment_build/2DSoilFEM_ui_20261021.xlsm
+pwsh -NoProfile -File tests/native/run_native_compare.ps1 -Book tests/tmp/new_increment_build/2DSoilFEM_ui_20261021.xlsm -Suite smokesrm -CaseName Case1 -Variants off -Modes AUTO -Precision AUTO -Flow INCONSISTENT -StateCopy 1 -GmresSimd 1 -IoFast 1 -EventFast 1 -AssemblyFast 1 -GmresTuned 1 -GmresPrepared 1 -WarmUi -SaveResultBook -Out tests/results/increment_srm.json
 ```
 
 `SavedResultBook` に記録されたコピーを `tests/test_increment_results.ps1 -Book ... -OutDirectory ...` に渡して実表示・再読込を検証します。表示専用2モジュールの改善を既存の計算結果に適用する場合は `-UseDisplaySource` を指定できます。適用したソースのSHA-256も記録します。計算エンジンや結果データは変更しません。出力された `increment_rows.json` は `tests/native/check_increment_results.py --rows ... --run ... --out ...` で独立に検算できます。計測後の保存は実行時間に含めません。[詳細PDF説明書](manuals/2DSoilFEM_Detailed_Manual_20261020.pdf)の「結果と増分図の読み方」に、内容名選択・独立したチェック・A/B切替を記載しています。実計算A/Bは、倍率1で要素反転のない擁壁施工後SRMの図へ差し替えました。旧図はこの節の回帰検証記録として保持しています。
