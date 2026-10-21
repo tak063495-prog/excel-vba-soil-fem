@@ -1,6 +1,6 @@
 # 斜面SRM：既存INCO_24の8検証例
 
-説明書の第3章（37–44ページ）へ、既存のGriffiths–Lane/Pruška再構成斜面の実計算を統合しました。これは2026年10月10日に完了したINCO_24の記録で、現行UI_04の新規解析を主張するものではありません。
+説明書の第3章（38–45ページ）へ、既存のGriffiths–Lane/Pruška再構成斜面の実計算を統合しました。これは2026年10月10日に完了したINCO_24の記録で、現行UI_04の新規解析を主張するものではありません。
 
 - [固定入力](../../../../inconsistent-evidence24/fixtures.json)
 - [Fs区間と数値診断](../../../../inconsistent-evidence24/practical_comparison.json)

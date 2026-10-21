@@ -1,0 +1,59 @@
+{
+  "ui_stamp": "20261021_UI_05",
+  "calculation_stamp": "20261020_INCO_ELEMENT_01",
+  "baseline_ui04_sha256": "1e46355ca510b05509b92beaef712118417bceea171ff40ce02b0226cd5e9a06",
+  "compile": "PASS",
+  "reopen": "PASS",
+  "dll_layout": "single",
+  "checks_record": "docs/manuals/construction-evidence/20261021/srm-legend/generic_checks.json",
+  "review_response": "docs/reviews/2DSoilFEM_manual_response_20261021.md",
+  "scope": "FEMIo three SRM explanation strings only; calculation and PDF unchanged",
+  "source_modules": [
+    {
+      "name": "FEMUiLayout",
+      "sha256": "cd01a945c17682efcce2847a848d831150838cbadf8474246841a928a445f92e"
+    },
+    {
+      "name": "FEMUiInputs",
+      "sha256": "546a02a11a3895ceef057aa9ffcc2e5fa6870a471421eb43896a865ba299647b"
+    },
+    {
+      "name": "FEMIo",
+      "sha256": "c466de4025d91ea9427d2577cd87ee5d52db8489a3042e56c5c69db55e7af9d8"
+    },
+    {
+      "name": "FEMViewIncrement",
+      "sha256": "4c9a87b1c6837a878b0d35b0ffb81afaf0664123f0317c20b97b1fec55a4962e"
+    },
+    {
+      "name": "FEMIncrementSvg",
+      "sha256": "e2811b96f9aeb79f578ed438b34c848c6e8c3a98194605d1be1d803119454f66"
+    },
+    {
+      "name": "FEMStrainMath",
+      "sha256": "e000500ea75139a191cd0de8493e6d89fd635c327bcbd7bc3daf199de4c55bd7"
+    }
+  ],
+  "files": [
+    {
+      "name": "2DSoilFEM_ui_20261020.xlsm",
+      "bytes": 3188352,
+      "sha256": "8d7a0cf22376b6939cdd302f3e43f7ececc7a970509e37d069214e230b87c736"
+    },
+    {
+      "name": "soilfem_native_x64.dll",
+      "bytes": 170496,
+      "sha256": "ad5c2ae81512ba8e977002415a6a5339b621c00a1bbabe5092559f8a7f9e0797"
+    },
+    {
+      "name": "README.txt",
+      "bytes": 2800,
+      "sha256": "e6e8b9151725ae5308fbd7ac3bbd046547298328bd1d217d53d331bc046d5ce4"
+    }
+  ],
+  "source_base_revision": "cbf09683d636e8e33f64e8c2839b72835e7811d0",
+  "source_revision": "9a4838a226f3c657ddb5460e4e2c3d037dc0e3a8",
+  "patch": "20261021 SRM legend: last effective row; three wording-only changes",
+  "rereview_record": "docs/manuals/construction-evidence/20261021/manual-rereview/road_checks.json",
+  "srm_legend_checks": "docs/manuals/construction-evidence/20261021/srm-legend/road_checks.json"
+}
