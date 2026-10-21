@@ -1,0 +1,38 @@
+{
+  "status": "PASS",
+  "baseline": {
+    "nodes": 328,
+    "elements": 95,
+    "reaction_y_kN": 1842.0,
+    "max_displacement_m": 0.021987128893795612,
+    "seconds": 3.9607856
+  },
+  "taller": {
+    "nodes": 352,
+    "elements": 103,
+    "reaction_y_kN": 1899.0,
+    "max_displacement_m": 0.023695236299421288,
+    "seconds": 4.3582559
+  },
+  "expected_added_area_m2": 3,
+  "expected_added_weight_kN": 57,
+  "observed_added_reaction_kN": 57.0,
+  "last_relative_residual": 3.006834296129487e-07,
+  "min_reference_jacobian_11x11": 0.05642003216895733,
+  "min_deformed_jacobian_11x11": 0.0563686144445711,
+  "fixed_displacement_max": 0.0,
+  "max_global_closure_kN": 6.03073146976385e-13,
+  "settings_differences": {
+    "MESH_GEN_LAST_METHOD": [
+      "既存接続",
+      "角度最適化（外周・接続維持）"
+    ],
+    "MESH_GEN_LAST_COMPARE": [
+      "選択：既存接続 / 要素 95 → 95 / 節点 328 → 328\r\n最適化前：95要素、合格95 / 警告0 / 不合格0、角度 53.130～123.690°\r\n角度最適化：95要素、合格95 / 警告0 / 不合格0、角度 53.130～123.690°\r\n地形追従：対象外（複数材料の領域境界を保持するため）\r\n採用優先：両方合格なら地形格子 (MESH_GEN_COMPARE=2)\r\n合格45～135° / 警告30～150°内 / その他は不合格。採用後は再解析が必要です。",
+      "選択：角度最適化（外周・接続維持） / 要素 103 → 103 / 節点 352 → 352\r\n最適化前：103要素、合格94 / 警告7 / 不合格2、角度 26.565～149.036°\r\n角度最適化：103要素、合格99 / 警告4 / 不合格0、角度 35.634～134.010°\r\n地形追従：対象外（複数材料の領域境界を保持するため）\r\n採用優先：両方合格なら地形格子 (MESH_GEN_COMPARE=2)\r\n合格45～135° / 警告30～150°内 / その他は不合格。採用後は再解析が必要です。"
+    ]
+  },
+  "settings_unchanged_except_mesh_metadata": true,
+  "quality_note": "選択：角度最適化（外周・接続維持） / 要素 103 → 103 / 節点 352 → 352\r\n最適化前：103要素、合格94 / 警告7 / 不合格2、角度 26.565～149.036°\r\n角度最適化：103要素、合格99 / 警告4 / 不合格0、角度 35.634～134.010°\r\n地形追従：対象外（複数材料の領域境界を保持するため）\r\n採用優先：両方合格なら地形格子 (MESH_GEN_COMPARE=2)\r\n合格45～135° / 警告30～150°内 / その他は不合格。採用後は再解析が必要です。",
+  "limitations": "Angle quality WARN remains: 99 pass / 4 warn / 0 fail; no SRM or mesh-convergence claim. Runtime is a single observation, not a performance comparison."
+}

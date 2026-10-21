@@ -1,5 +1,5 @@
 {
-  "pages": 120,
+  "pages": 122,
   "chapters": [
     [
       "第1章 / はじめに",
@@ -11,47 +11,47 @@
     ],
     [
       "第3章 / 解析条件と収束",
-      29
+      30
     ],
     [
       "第4章 / 施工例A：掘削と再盛土",
-      47
+      48
     ],
     [
       "第5章 / 施工例B：擁壁とSRM",
-      56
+      58
     ],
     [
       "第6章 / 施工例C：アンカー相当力",
-      69
+      71
     ],
     [
       "第7章 / 施工例D：トンネル",
-      72
+      74
     ],
     [
       "第8章 / 施工例E：水平・斜面の支持力",
-      77
+      79
     ],
     [
       "第9章 / 結果と増分図の読み方",
-      84
+      86
     ],
     [
       "第10章 / 保存・比較・トラブル対応",
-      93
+      95
     ],
     [
       "付録A / 設定一覧",
-      101
+      103
     ],
     [
       "付録B / 根拠と再現",
-      112
+      114
     ],
     [
       "付録C / 用語集",
-      116
+      118
     ]
   ],
   "page_plan": [
@@ -137,521 +137,531 @@
     },
     {
       "page": 17,
-      "title": "形状メッシュ：点・領域を入力して作成する",
+      "title": "保存メッシュの拘束を変更する",
       "chapter": "第2章 / モデル入力"
     },
     {
       "page": 18,
-      "title": "2材料の割当：境界番号と行順は別",
+      "title": "形状メッシュ：点・領域を入力して作成する",
       "chapter": "第2章 / モデル入力"
     },
     {
       "page": 19,
-      "title": "メッシュを修正する：形状と細かさ",
+      "title": "2材料の割当：境界番号と行順は別",
       "chapter": "第2章 / モデル入力"
     },
     {
       "page": 20,
-      "title": "品質修正候補を比較して採用する",
+      "title": "メッシュを修正する：形状と細かさ",
       "chapter": "第2章 / モデル入力"
     },
     {
       "page": 21,
-      "title": "実画面：メッシュの設定から確認へ",
+      "title": "品質修正候補を比較して採用する",
       "chapter": "第2章 / モデル入力"
     },
     {
       "page": 22,
-      "title": "実画面：メッシュを見てから解析する",
+      "title": "実画面：メッシュの設定から確認へ",
       "chapter": "第2章 / モデル入力"
     },
     {
       "page": 23,
-      "title": "品質WARNの判断：図を見た後に何をするか",
+      "title": "実画面：メッシュを見てから解析する",
       "chapter": "第2章 / モデル入力"
     },
     {
       "page": 24,
-      "title": "載荷 A:Jと合力の落とし穴",
+      "title": "品質WARNの判断：図を見た後に何をするか",
       "chapter": "第2章 / モデル入力"
     },
     {
       "page": 25,
-      "title": "施工ステージ A:F の入力",
+      "title": "載荷 A:Jと合力の落とし穴",
       "chapter": "第2章 / モデル入力"
     },
     {
       "page": 26,
-      "title": "実画面：ステージの順序と有効列",
+      "title": "施工ステージ A:F の入力",
       "chapter": "第2章 / モデル入力"
     },
     {
       "page": 27,
-      "title": "接合JOINTと材料の切替",
+      "title": "実画面：ステージの順序と有効列",
       "chapter": "第2章 / モデル入力"
     },
     {
       "page": 28,
-      "title": "RESETと差分表示：消す量を取り違えない",
+      "title": "接合JOINTと材料の切替",
       "chapter": "第2章 / モデル入力"
     },
     {
       "page": 29,
+      "title": "RESETと差分表示：消す量を取り違えない",
+      "chapter": "第2章 / モデル入力"
+    },
+    {
+      "page": 30,
       "title": "解析設定と推奨値の範囲",
       "chapter": "第3章 / 解析条件と収束"
     },
     {
-      "page": 30,
+      "page": 31,
       "title": "実画面：流れ則とSRM条件を確認する",
       "chapter": "第3章 / 解析条件と収束"
     },
     {
-      "page": 31,
+      "page": 32,
       "title": "高速化設定とDLLなしの計算",
       "chapter": "第3章 / 解析条件と収束"
     },
     {
-      "page": 32,
+      "page": 33,
       "title": "実行前の検査・エラー修正",
       "chapter": "第3章 / 解析条件と収束"
     },
     {
-      "page": 33,
+      "page": 34,
       "title": "増分・反復・収束を図で理解する",
       "chapter": "第3章 / 解析条件と収束"
     },
     {
-      "page": 34,
+      "page": 35,
       "title": "SRMの仕組みとFsの意味",
       "chapter": "第3章 / 解析条件と収束"
     },
     {
-      "page": 35,
+      "page": 36,
       "title": "DAVISとINCONSISTENT：流れ則の違い",
       "chapter": "第3章 / 解析条件と収束"
     },
     {
-      "page": 36,
+      "page": 37,
       "title": "流れ則の選択・対象材料・比較条件",
       "chapter": "第3章 / 解析条件と収束"
     },
     {
-      "page": 37,
+      "page": 38,
       "title": "斜面SRMの検証例：使う記録と入力条件",
       "chapter": "第3章 / 解析条件と収束"
     },
     {
-      "page": 38,
+      "page": 39,
       "title": "斜面の形状：同じ材料でも高さ・基盤が違う",
       "chapter": "第3章 / 解析条件と収束"
     },
     {
-      "page": 39,
+      "page": 40,
       "title": "c・φ・ψを分けて読む：強度と塑性流れ",
       "chapter": "第3章 / 解析条件と収束"
     },
     {
-      "page": 40,
+      "page": 41,
       "title": "関連・非関連流れ則：φとψの関係",
       "chapter": "第3章 / 解析条件と収束"
     },
     {
-      "page": 41,
+      "page": 42,
       "title": "8ケースの実測：Fs区間と独立残差",
       "chapter": "第3章 / 解析条件と収束"
     },
     {
-      "page": 42,
+      "page": 43,
       "title": "斜面の実図：最後の収束状態を比べる",
       "chapter": "第3章 / 解析条件と収束"
     },
     {
-      "page": 43,
+      "page": 44,
       "title": "Fsが近くても変位の適用範囲は別に調べる",
       "chapter": "第3章 / 解析条件と収束"
     },
     {
-      "page": 44,
+      "page": 45,
       "title": "文献との比較とログの開き方",
       "chapter": "第3章 / 解析条件と収束"
     },
     {
-      "page": 45,
+      "page": 46,
       "title": "既存Case1：Fs図の計算条件",
       "chapter": "第3章 / 解析条件と収束"
     },
     {
-      "page": 46,
+      "page": 47,
       "title": "既存Case1：Fs区間の数値例",
       "chapter": "第3章 / 解析条件と収束"
     },
     {
-      "page": 47,
+      "page": 48,
       "title": "道路拡幅：掘削して別材料で再盛土",
       "chapter": "第4章 / 施工例A：掘削と再盛土"
     },
     {
-      "page": 48,
+      "page": 49,
       "title": "入力①：18点と8つの外側境界",
       "chapter": "第4章 / 施工例A：掘削と再盛土"
     },
     {
-      "page": 49,
+      "page": 50,
       "title": "入力②：材料と初期状態",
       "chapter": "第4章 / 施工例A：掘削と再盛土"
     },
     {
-      "page": 50,
+      "page": 51,
       "title": "入力③：11工程をそのまま並べる",
       "chapter": "第4章 / 施工例A：掘削と再盛土"
     },
     {
-      "page": 51,
+      "page": 52,
       "title": "入力④：メッシュ・計算・工程図の比較",
       "chapter": "第4章 / 施工例A：掘削と再盛土"
     },
     {
-      "page": 52,
+      "page": 53,
       "title": "道路拡幅：現行ブックで11工程を実解析",
       "chapter": "第4章 / 施工例A：掘削と再盛土"
     },
     {
-      "page": 53,
+      "page": 54,
       "title": "道路拡幅：掘削から再盛土までの実計算図",
       "chapter": "第4章 / 施工例A：掘削と再盛土"
     },
     {
-      "page": 54,
+      "page": 55,
       "title": "道路拡幅：再盛土完了の応力と増分を読む",
       "chapter": "第4章 / 施工例A：掘削と再盛土"
     },
     {
-      "page": 55,
+      "page": 56,
       "title": "一条件だけ変える実習：材料8の単位体積重量",
       "chapter": "第4章 / 施工例A：掘削と再盛土"
     },
     {
-      "page": 56,
+      "page": 57,
+      "title": "形状変更の実習：再盛土の高さを1m増やす",
+      "chapter": "第4章 / 施工例A：掘削と再盛土"
+    },
+    {
+      "page": 58,
       "title": "斜面上のL型擁壁：モデルと材料",
       "chapter": "第5章 / 施工例B：擁壁とSRM"
     },
     {
-      "page": 57,
+      "page": 59,
       "title": "擁壁施工からSRMまでの入力",
       "chapter": "第5章 / 施工例B：擁壁とSRM"
     },
     {
-      "page": 58,
+      "page": 60,
       "title": "擁壁の施工3工程を図で比較する",
       "chapter": "第5章 / 施工例B：擁壁とSRM"
     },
     {
-      "page": 59,
+      "page": 61,
       "title": "擁壁の曲げ：隅角の最大応力と断面力を分ける",
       "chapter": "第5章 / 施工例B：擁壁とSRM"
     },
     {
-      "page": 60,
+      "page": 62,
       "title": "曲げを取り出すためのメッシュと断面位置",
       "chapter": "第5章 / 施工例B：擁壁とSRM"
     },
     {
-      "page": 61,
+      "page": 63,
       "title": "出力設定：工程と積分点の応力を残す",
       "chapter": "第5章 / 施工例B：擁壁とSRM"
     },
     {
-      "page": 62,
+      "page": 64,
       "title": "断面力の求め方：符号・単位・4GPからの復元",
       "chapter": "第5章 / 施工例B：擁壁とSRM"
     },
     {
-      "page": 63,
+      "page": 65,
       "title": "実計算から整理する：同じ工程・同じ断面",
       "chapter": "第5章 / 施工例B：擁壁とSRM"
     },
     {
-      "page": 64,
+      "page": 66,
       "title": "曲げモーメント：粗密比較と断面位置の影響",
       "chapter": "第5章 / 施工例B：擁壁とSRM"
     },
     {
-      "page": 65,
+      "page": 67,
       "title": "釣合い診断と、この例の採用できる範囲",
       "chapter": "第5章 / 施工例B：擁壁とSRM"
     },
     {
-      "page": 66,
+      "page": 68,
       "title": "擁壁施工後SRM：結果とせん断帯",
       "chapter": "第5章 / 施工例B：擁壁とSRM"
     },
     {
-      "page": 67,
+      "page": 69,
       "title": "同一メッシュでDAVISとINCONSISTENTを実測",
       "chapter": "第5章 / 施工例B：擁壁とSRM"
     },
     {
-      "page": 68,
+      "page": 70,
       "title": "流れ則比較：全変位と結果の解釈",
       "chapter": "第5章 / 施工例B：擁壁とSRM"
     },
     {
-      "page": 69,
+      "page": 71,
       "title": "アンカー補強：等価節点力の入力",
       "chapter": "第6章 / 施工例C：アンカー相当力"
     },
     {
-      "page": 70,
+      "page": 72,
       "title": "アンカー例の施工表：SRMまで5工程を入力",
       "chapter": "第6章 / 施工例C：アンカー相当力"
     },
     {
-      "page": 71,
+      "page": 73,
       "title": "アンカー相当力を加えた結果",
       "chapter": "第6章 / 施工例C：アンカー相当力"
     },
     {
-      "page": 72,
+      "page": 74,
       "title": "トンネル：地山・空洞・支保占有域",
       "chapter": "第7章 / 施工例D：トンネル"
     },
     {
-      "page": 73,
+      "page": 75,
       "title": "トンネルの寸法：内空と掘削外周を分ける",
       "chapter": "第7章 / 施工例D：トンネル"
     },
     {
-      "page": 74,
+      "page": 76,
       "title": "トンネル：上半掘削・支保から下半へ",
       "chapter": "第7章 / 施工例D：トンネル"
     },
     {
-      "page": 75,
+      "page": 77,
       "title": "トンネル：4段階の実計算図と数値",
       "chapter": "第7章 / 施工例D：トンネル"
     },
     {
-      "page": 76,
+      "page": 78,
       "title": "トンネル：施工に伴う変位を読み分ける",
       "chapter": "第7章 / 施工例D：トンネル"
     },
     {
-      "page": 77,
+      "page": 79,
       "title": "支持力解析：水平地盤と斜面上の入力例",
       "chapter": "第8章 / 施工例E：水平・斜面の支持力"
     },
     {
-      "page": 78,
+      "page": 80,
       "title": "支持力解析：自重後の追加沈下を入力する",
       "chapter": "第8章 / 施工例E：水平・斜面の支持力"
     },
     {
-      "page": 79,
+      "page": 81,
       "title": "支持力解析：載荷シートの実入力例",
       "chapter": "第8章 / 施工例E：水平・斜面の支持力"
     },
     {
-      "page": 80,
+      "page": 82,
       "title": "自重基準の手計算と、一様面圧の節点力",
       "chapter": "第8章 / 施工例E：水平・斜面の支持力"
     },
     {
-      "page": 81,
+      "page": 83,
       "title": "水平・斜面：平均圧力と追加沈下の実計算",
       "chapter": "第8章 / 施工例E：水平・斜面の支持力"
     },
     {
-      "page": 82,
+      "page": 84,
       "title": "支持力解析：応力とせん断増分の実図",
       "chapter": "第8章 / 施工例E：水平・斜面の支持力"
     },
     {
-      "page": 83,
+      "page": 85,
       "title": "支持力解析：実計算から得られた注意点",
       "chapter": "第8章 / 施工例E：水平・斜面の支持力"
     },
     {
-      "page": 84,
+      "page": 86,
       "title": "内容名で結果を選び、増分図を重ねる",
       "chapter": "第9章 / 結果と増分図の読み方"
     },
     {
-      "page": 85,
+      "page": 87,
       "title": "実画面：表示する量と変形倍率を選ぶ",
       "chapter": "第9章 / 結果と増分図の読み方"
     },
     {
-      "page": 86,
+      "page": 88,
       "title": "実画面：増分図を個別にON/OFFする",
       "chapter": "第9章 / 結果と増分図の読み方"
     },
     {
-      "page": 87,
+      "page": 89,
       "title": "増分図：実際の操作順",
       "chapter": "第9章 / 結果と増分図の読み方"
     },
     {
-      "page": 88,
+      "page": 90,
       "title": "増分値の定義・集計・誤読しやすい点",
       "chapter": "第9章 / 結果と増分図の読み方"
     },
     {
-      "page": 89,
+      "page": 91,
       "title": "A：応力に増分等値線と塑性クロスを重ねる",
       "chapter": "第9章 / 結果と増分図の読み方"
     },
     {
-      "page": 90,
+      "page": 92,
       "title": "B：増分カラーでせん断集中域を見る",
       "chapter": "第9章 / 結果と増分図の読み方"
     },
     {
-      "page": 91,
+      "page": 93,
       "title": "結果表・Fs・残差を対応させる",
       "chapter": "第9章 / 結果と増分図の読み方"
     },
     {
-      "page": 92,
+      "page": 94,
       "title": "実画面：結果表と図のFsを照合する",
       "chapter": "第9章 / 結果と増分図の読み方"
     },
     {
-      "page": 93,
+      "page": 95,
       "title": "保存・ログ・チェックポイント再開",
       "chapter": "第10章 / 保存・比較・トラブル対応"
     },
     {
-      "page": 94,
+      "page": 96,
       "title": "保存後の再表示と、途中計算の再開は別の操作",
       "chapter": "第10章 / 保存・比較・トラブル対応"
     },
     {
-      "page": 95,
+      "page": 97,
       "title": "実画面：結果を残す設定を解析前に決める",
       "chapter": "第10章 / 保存・比較・トラブル対応"
     },
     {
-      "page": 96,
+      "page": 98,
       "title": "整理する図表から必要な出力を決める",
       "chapter": "第10章 / 保存・比較・トラブル対応"
     },
     {
-      "page": 97,
+      "page": 99,
       "title": "整理例：施工段階の変位と鉛直反力",
       "chapter": "第10章 / 保存・比較・トラブル対応"
     },
     {
-      "page": 98,
+      "page": 100,
       "title": "整理例：SRMの成否・変位・残差を並べる",
       "chapter": "第10章 / 保存・比較・トラブル対応"
     },
     {
-      "page": 99,
+      "page": 101,
       "title": "よくある問題と切り分け",
       "chapter": "第10章 / 保存・比較・トラブル対応"
     },
     {
-      "page": 100,
+      "page": 102,
       "title": "ケース比較と結果を残すチェック表",
       "chapter": "第10章 / 保存・比較・トラブル対応"
     },
     {
-      "page": 101,
+      "page": 103,
       "title": "メッシュ設定：使う値・使わない値",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 102,
+      "page": 104,
       "title": "形状入力と旧設定の互換性",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 103,
+      "page": 105,
       "title": "解析設定：設定一覧 1～9",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 104,
+      "page": 106,
       "title": "高速化設定：設定一覧 1～8",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 105,
+      "page": 107,
       "title": "高速化設定：設定一覧 9～15",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 106,
+      "page": 108,
       "title": "高速化設定：設定一覧 16～22",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 107,
+      "page": 109,
       "title": "出力・表示：保存・再開・変位倍率",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 108,
+      "page": 110,
       "title": "出力・表示：内容名・増分オプション",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 109,
+      "page": 111,
       "title": "詳細設定：設定一覧 1～7",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 110,
+      "page": 112,
       "title": "詳細設定：設定一覧 8～14",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 111,
+      "page": 113,
       "title": "詳細設定：設定一覧 15～21",
       "chapter": "付録A / 設定一覧"
     },
     {
-      "page": 112,
+      "page": 114,
       "title": "出典・作図方法・検証記録",
       "chapter": "付録B / 根拠と再現"
     },
     {
-      "page": 113,
+      "page": 115,
       "title": "版の識別・計算結果を伝える項目",
       "chapter": "付録B / 根拠と再現"
     },
     {
-      "page": 114,
+      "page": 116,
       "title": "既存の回帰図・入力UI検証の出典",
       "chapter": "付録B / 根拠と再現"
     },
     {
-      "page": 115,
+      "page": 117,
       "title": "支持力解析の参考資料と再現入力",
       "chapter": "付録B / 根拠と再現"
     },
     {
-      "page": 116,
+      "page": 118,
       "title": "用語集 1-9",
       "chapter": "付録C / 用語集"
     },
     {
-      "page": 117,
+      "page": 119,
       "title": "用語集 10-18",
       "chapter": "付録C / 用語集"
     },
     {
-      "page": 118,
+      "page": 120,
       "title": "用語集 19-27",
       "chapter": "付録C / 用語集"
     },
     {
-      "page": 119,
+      "page": 121,
       "title": "用語集 28-36",
       "chapter": "付録C / 用語集"
     },
     {
-      "page": 120,
+      "page": 122,
       "title": "用語集 37-43",
       "chapter": "付録C / 用語集"
     }
@@ -737,8 +747,8 @@
     }
   ],
   "glossary_entries": 43,
-  "pdf_sha256": "096f80acf559609d8b2f6df4d05884dd799d9f8735ee6047866e9f9b8a958c5c",
-  "revision": "120 pages; R01-R16 plus N01-N05 rereview corrections; wording and provenance clarification",
+  "pdf_sha256": "db57705b694f4d9bf419728404f2486ab2d73f470f9031c27755f307ef0449cc",
+  "revision": "122 pages; fresh-review A1-A4 and editorial alignment; new taller road shape exercise",
   "reference_main": "f144d88008c1575cb8042ea48005202c0208d7bb",
   "book_sha256": "1e46355ca510b05509b92beaef712118417bceea171ff40ce02b0226cd5e9a06",
   "dll_sha256": "ad5c2ae81512ba8e977002415a6a5339b621c00a1bbabe5092559f8a7f9e0797",
@@ -4563,7 +4573,7 @@
     {
       "path": "docs/manuals/construction-evidence/20261021/slope-srm-guide/README.md",
       "bytes": 2239,
-      "sha256": "3670d1767b45870ce3cf2a96b72983fe4c5de09b2f070b5618acea0078d82ab6"
+      "sha256": "a2a2d4332df657dc5507a92decb018a7a016eeefaf51a3a236be130998e043d1"
     },
     {
       "path": "docs/manuals/construction-evidence/20261021/slope-srm-guide/rebuild_slope_srm.py",
@@ -4607,8 +4617,8 @@
     },
     {
       "path": "docs/manuals/construction-evidence/20261021/wall-moment-guide/README.md",
-      "bytes": 3576,
-      "sha256": "e740f2bd3807f56212af8a950a7c3292ed6e71ccfca9e64ae427f729cf530a20"
+      "bytes": 4066,
+      "sha256": "b10f3b558da6b8d119d576a68369c0ce45228894e541f2cab4edffcc545a2e36"
     },
     {
       "path": "docs/manuals/construction-evidence/20261021/wall-moment-guide/rebuild_figures.py",
@@ -4652,8 +4662,8 @@
     },
     {
       "path": "docs/manuals/construction-evidence/20261021/manual-review/release.json",
-      "bytes": 2246,
-      "sha256": "1e8d2b8da85349af9826c29f2c7fa092ea760a9fe17be5193868386ab0902794"
+      "bytes": 2342,
+      "sha256": "e43471d68d045c05e8f1241e251b4490840703b9e2d3830c94f859dc9fa4fcec"
     },
     {
       "path": "docs/manuals/construction-evidence/20261021/manual-review/review_summary.json",
@@ -4999,6 +5009,111 @@
       "path": "docs/manuals/construction-evidence/20261021/srm-legend/road_checks.json",
       "bytes": 5367,
       "sha256": "69b6f333874f7bbd0cfba4bae4b775d89e6d212119c89fd5b2b26049dfe02c03"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/manual-applied/balance_checks.json.gz",
+      "bytes": 1104,
+      "sha256": "bfd32db484272542b3b7071e107b416ca83bee348981679cc1e30467d23ad59f"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/manual-applied/baseline_release.json",
+      "bytes": 2246,
+      "sha256": "1e8d2b8da85349af9826c29f2c7fa092ea760a9fe17be5193868386ab0902794"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/manual-applied/exercise_summary.json",
+      "bytes": 2744,
+      "sha256": "187c53e795e672448c96bc01a6f6173c5eebe0ca73851258a9b1d62f7df8d885"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/manual-applied/geometry_before_after.png",
+      "bytes": 56078,
+      "sha256": "f7aacf86d2e35167a77511020a17ce75c778059acc79bc4c0b558422b19fa134"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/manual-applied/independent_checks.json.gz",
+      "bytes": 365,
+      "sha256": "65e24f2730602a872f8e937d640e85510599cae33d23b203a297fdba61d8185d"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/manual-applied/link_checks.json",
+      "bytes": 1241,
+      "sha256": "41f56ad084cc10f718f96cf2d779a0c2b9e91786e4fd90792de5b280fc747742"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/manual-applied/logs/adaptive_v2a.csv.gz",
+      "bytes": 224,
+      "sha256": "31f399dba42c0da3b348be8c9ef61045eaaa7c0487c76b154a447a4a4b428b65"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/manual-applied/logs/adaptive_v2a_gates.csv.gz",
+      "bytes": 68,
+      "sha256": "9d2a3e2507e304b5f75a60e607511c239b2b36d81accf7a28447cbe47513dbf9"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/manual-applied/logs/increment_summary.csv.gz",
+      "bytes": 2955,
+      "sha256": "cc1e1fd476b7fbfbfbff382999c624a36c0cc32b602fcb751a090cd797e34097"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/manual-applied/logs/manifest.csv.gz",
+      "bytes": 168,
+      "sha256": "501e88faee1439aa89e26f25cedcc907b1509f3c06ed0aca414b3fa8d076ae51"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/manual-applied/logs/perf_summary.csv.gz",
+      "bytes": 425,
+      "sha256": "c35d9851d78a08b3ee452a80a3e25327e7e09268d4706678119d9c1e1c2d7645"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/manual-applied/logs/perf_summary.txt.gz",
+      "bytes": 1746,
+      "sha256": "820acd8c203c1e6ee4954469cb6d27d35aaeff94f8ea0a3bab2ccfb37fe9cc8f"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/manual-applied/logs/perf_trace.csv.gz",
+      "bytes": 236,
+      "sha256": "820857aeefd76914862bca4edcdad99c342512c683255712273ec650e4c6600f"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/manual-applied/logs/run.log.gz",
+      "bytes": 3480,
+      "sha256": "09d9c5210bd4f3d7a3d895b72d307eab165c4493adc3f68e25274e1c27b855be"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/manual-applied/logs/solver_events.csv.gz",
+      "bytes": 434,
+      "sha256": "d9807c3a157454eafc74f06c3cd7d87ed96a8a37d4df75e41ad4cfa4b1695116"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/manual-applied/manual_section_source.py",
+      "bytes": 11447,
+      "sha256": "6077f7259ab141a3329d63648ed07222bb9df031eaebf06d7a77ba0f57d6fe77"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/manual-applied/pdf_review.json",
+      "bytes": 15156,
+      "sha256": "c9650d1d570f61a876ae20619a87b7a105a07b31ff9baf08c83bd2be3ea2a237"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/manual-applied/README.md",
+      "bytes": 3290,
+      "sha256": "606175647b95bb66fccc759cd57bdc25b00374421ed515876e689004fa8051be"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/manual-applied/result.json.gz",
+      "bytes": 978920,
+      "sha256": "4fa324ed951ae07c77c537f272a33bf5e0821be137f7e7f7700f46ad90118413"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/manual-applied/road_taller_workbook.zip",
+      "bytes": 4258689,
+      "sha256": "2fe1314715b2d62211faa781c1dc48f93d7df6400dbd83c05f59b819cbedb4df"
+    },
+    {
+      "path": "docs/manuals/construction-evidence/20261021/manual-applied/road_widening_taller_shape.json",
+      "bytes": 4858,
+      "sha256": "38b1594e6599a3fd164b9da1404b44c6101a0d9a54bfa828091858abe8c8cf1f"
     }
   ],
   "bearing_comparison": {
@@ -6498,33 +6613,26 @@
     }
   ],
   "visual_review": {
-    "pages_rendered": 120,
+    "pages_rendered": 122,
     "contact_sheets_reviewed": 8,
     "new_or_changed_pages_full_size_reviewed": [
+      1,
       9,
-      10,
-      11,
-      13,
-      18,
-      23,
-      24,
-      28,
-      55,
-      66,
-      68,
-      70,
-      73,
-      80,
-      89,
-      90,
-      94,
-      113
+      17,
+      57,
+      63,
+      82,
+      87,
+      101,
+      114,
+      116
     ],
     "checks": [
-      "all pages rendered and contacts reviewed; changed pages enlarged",
-      "TOC/numbering/bookmarks/glossary/page references and four active links checked",
-      "road exercise, hand calculation, material/stage input and tunnel dimensions reconciled",
-      "A/B redraw from same archived result values with corrected compression convention; no new wall SRM solve"
+      "all page contacts reviewed, changed pages enlarged",
+      "TOC/bookmarks/numbering/section references reconciled",
+      "new geometry and numerical table reconciled with raw results",
+      "quality WARN4 retained; no precision/SRM claim",
+      "glossary last; seven URLs HTTP200, including two immutable exercise links"
     ]
   },
   "output_guide_capture": {
@@ -7980,5 +8088,96 @@
     "road_checks": 102,
     "analysis_rerun": false,
     "pdf_unchanged": true
+  },
+  "applied_review": {
+    "response": "docs/reviews/2DSoilFEM_manual_applied_response_20261021.md",
+    "new_pages": [
+      17,
+      57
+    ],
+    "shape_exercise": {
+      "status": "PASS",
+      "baseline": {
+        "nodes": 328,
+        "elements": 95,
+        "reaction_y_kN": 1842.0,
+        "max_displacement_m": 0.021987128893795612,
+        "seconds": 3.9607856
+      },
+      "taller": {
+        "nodes": 352,
+        "elements": 103,
+        "reaction_y_kN": 1899.0,
+        "max_displacement_m": 0.023695236299421288,
+        "seconds": 4.3582559
+      },
+      "expected_added_area_m2": 3,
+      "expected_added_weight_kN": 57,
+      "observed_added_reaction_kN": 57.0,
+      "last_relative_residual": 3.006834296129487e-07,
+      "min_reference_jacobian_11x11": 0.05642003216895733,
+      "min_deformed_jacobian_11x11": 0.0563686144445711,
+      "fixed_displacement_max": 0.0,
+      "max_global_closure_kN": 6.03073146976385e-13,
+      "settings_differences": {
+        "MESH_GEN_LAST_METHOD": [
+          "既存接続",
+          "角度最適化（外周・接続維持）"
+        ],
+        "MESH_GEN_LAST_COMPARE": [
+          "選択：既存接続 / 要素 95 → 95 / 節点 328 → 328\r\n最適化前：95要素、合格95 / 警告0 / 不合格0、角度 53.130～123.690°\r\n角度最適化：95要素、合格95 / 警告0 / 不合格0、角度 53.130～123.690°\r\n地形追従：対象外（複数材料の領域境界を保持するため）\r\n採用優先：両方合格なら地形格子 (MESH_GEN_COMPARE=2)\r\n合格45～135° / 警告30～150°内 / その他は不合格。採用後は再解析が必要です。",
+          "選択：角度最適化（外周・接続維持） / 要素 103 → 103 / 節点 352 → 352\r\n最適化前：103要素、合格94 / 警告7 / 不合格2、角度 26.565～149.036°\r\n角度最適化：103要素、合格99 / 警告4 / 不合格0、角度 35.634～134.010°\r\n地形追従：対象外（複数材料の領域境界を保持するため）\r\n採用優先：両方合格なら地形格子 (MESH_GEN_COMPARE=2)\r\n合格45～135° / 警告30～150°内 / その他は不合格。採用後は再解析が必要です。"
+        ]
+      },
+      "settings_unchanged_except_mesh_metadata": true,
+      "quality_note": "選択：角度最適化（外周・接続維持） / 要素 103 → 103 / 節点 352 → 352\r\n最適化前：103要素、合格94 / 警告7 / 不合格2、角度 26.565～149.036°\r\n角度最適化：103要素、合格99 / 警告4 / 不合格0、角度 35.634～134.010°\r\n地形追従：対象外（複数材料の領域境界を保持するため）\r\n採用優先：両方合格なら地形格子 (MESH_GEN_COMPARE=2)\r\n合格45～135° / 警告30～150°内 / その他は不合格。採用後は再解析が必要です。",
+      "limitations": "Angle quality WARN remains: 99 pass / 4 warn / 0 fail; no SRM or mesh-convergence claim. Runtime is a single observation, not a performance comparison."
+    },
+    "scope": "one taller road solve; no new SRM/boundary-sensitivity/load-controlled/JOINT/RESET study",
+    "baseline_source_revision": "3320d4fc062cd1e6862d5fcfe43d2703ad4f25d6",
+    "minor_rereview": {
+      "changed_text_pages": [
+        57,
+        116
+      ],
+      "changed_render_pages": [
+        57,
+        116
+      ],
+      "other_120_pages_identical": true,
+      "analysis_rerun": false,
+      "links": 7,
+      "scope": "sheet name, direct immutable exercise links, UI04 historical wording"
+    }
+  },
+  "previous_120_page_visual_review": {
+    "pages_rendered": 120,
+    "contact_sheets_reviewed": 8,
+    "new_or_changed_pages_full_size_reviewed": [
+      9,
+      10,
+      11,
+      13,
+      18,
+      23,
+      24,
+      28,
+      55,
+      66,
+      68,
+      70,
+      73,
+      80,
+      89,
+      90,
+      94,
+      113
+    ],
+    "checks": [
+      "all pages rendered and contacts reviewed; changed pages enlarged",
+      "TOC/numbering/bookmarks/glossary/page references and four active links checked",
+      "road exercise, hand calculation, material/stage input and tunnel dimensions reconciled",
+      "A/B redraw from same archived result values with corrected compression convention; no new wall SRM solve"
+    ]
   }
 }

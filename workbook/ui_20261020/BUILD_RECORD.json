@@ -48,12 +48,13 @@
     {
       "name": "README.txt",
       "bytes": 2800,
-      "sha256": "e6e8b9151725ae5308fbd7ac3bbd046547298328bd1d217d53d331bc046d5ce4"
+      "sha256": "2da1226e3a2015b846ff8f14024ed80fdac870608d1623c8997fda4afea78d00"
     }
   ],
   "source_base_revision": "cbf09683d636e8e33f64e8c2839b72835e7811d0",
   "source_revision": "9a4838a226f3c657ddb5460e4e2c3d037dc0e3a8",
   "patch": "20261021 SRM legend: last effective row; three wording-only changes",
   "rereview_record": "docs/manuals/construction-evidence/20261021/manual-rereview/road_checks.json",
-  "srm_legend_checks": "docs/manuals/construction-evidence/20261021/srm-legend/road_checks.json"
+  "srm_legend_checks": "docs/manuals/construction-evidence/20261021/srm-legend/road_checks.json",
+  "documentation_revision": "122-page applied exercises; distribution README page count only"
 }
