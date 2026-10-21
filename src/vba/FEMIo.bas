@@ -282,7 +282,7 @@ Public Sub FEMEnsureStageSheets()
     wsStage.Cells(4, 2).value2 = "SRM"
     wsStage.Cells(4, 4).value2 = 1
     wsStage.Cells(4, 5).value2 = 0
-    wsStage.Cells(4, 6).value2 = "途中ゲート。必要Fs=パラメータ。最後の行ならFs探索"
+    wsStage.Cells(4, 6).value2 = "途中ゲート。必要Fs=パラメータ。最後の有効行のSRMならFs探索"
     wsStage.Cells(5, 1).value2 = 4
     wsStage.Cells(5, 2).value2 = "UNLOAD"
     wsStage.Cells(5, 3).value2 = 1
@@ -3376,7 +3376,7 @@ Private Sub FEMWriteStageLegend(ByVal ws As Worksheet)
   ws.Cells(7, 8).value2 = "DEATH"
   ws.Cells(7, 9).value2 = "材料を消す。初期状態ONの要素を無効化"
   ws.Cells(8, 8).value2 = "SRM"
-  ws.Cells(8, 9).value2 = "途中=パラメータの必要Fs未満なら中断／最後のSRM=Fs探索"
+  ws.Cells(8, 9).value2 = "途中=パラメータの必要Fs未満なら中断／最後の有効行のSRM=Fs探索"
   ws.Cells(9, 8).value2 = "RESET_U"
   ws.Cells(9, 9).value2 = "変位・応力・塑性をゼロ。形状はそのまま。後続SRMの原点"
   ws.Cells(10, 8).value2 = "RESET_STRESS"
@@ -3746,7 +3746,7 @@ Private Sub FEMEnsureSpecSheet()
   FEMSpecPut ws, rowNo, "ステージ", "UNLOAD", "材料番号", "その材料の載荷を外す。要素は残る"
   FEMSpecPut ws, rowNo, "ステージ", "BIRTH", "材料番号", "初期状態OFFの材料を出す"
   FEMSpecPut ws, rowNo, "ステージ", "DEATH", "材料番号", "初期状態ONの材料を消す"
-  FEMSpecPut ws, rowNo, "ステージ", "SRM", "パラメータ=必要Fs", "途中=ゲート。最後のSRM=Fs探索（設定の上限Fs・許容差）"
+  FEMSpecPut ws, rowNo, "ステージ", "SRM", "パラメータ=必要Fs", "途中=ゲート。最後の有効行のSRM=Fs探索（設定の上限Fs・許容差）"
   FEMSpecPut ws, rowNo, "ステージ", "RESET_U", "", "変位・応力・塑性をゼロ。形状そのまま。後続SRMの原点"
   FEMSpecPut ws, rowNo, "ステージ", "RESET_STRESS", "", "形状を変形後座標にしてからゼロ。checkpointはx,yも保存"
   FEMSpecPut ws, rowNo, "ステージ", "MATSET", "コピー元 or c=;phi=", "材料を差し替え。後続SRMの原点"

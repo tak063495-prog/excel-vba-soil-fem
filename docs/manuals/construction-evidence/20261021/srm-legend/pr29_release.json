@@ -1,0 +1,58 @@
+{
+  "ui_stamp": "20261021_UI_05",
+  "calculation_stamp": "20261020_INCO_ELEMENT_01",
+  "baseline_ui04_sha256": "1e46355ca510b05509b92beaef712118417bceea171ff40ce02b0226cd5e9a06",
+  "compile": "PASS",
+  "reopen": "PASS",
+  "dll_layout": "single",
+  "checks_record": "docs/manuals/construction-evidence/20261021/manual-rereview/generic_checks.json",
+  "review_response": "docs/reviews/2DSoilFEM_manual_response_20261021.md",
+  "scope": "FEMIo three UI strings only; solver, material, DLL, Double, convergence and SRM unchanged",
+  "source_modules": [
+    {
+      "name": "FEMUiLayout",
+      "sha256": "cd01a945c17682efcce2847a848d831150838cbadf8474246841a928a445f92e"
+    },
+    {
+      "name": "FEMUiInputs",
+      "sha256": "546a02a11a3895ceef057aa9ffcc2e5fa6870a471421eb43896a865ba299647b"
+    },
+    {
+      "name": "FEMIo",
+      "sha256": "91245435a8f9c17b355e65d4ef8b86150ad78dfbaac2e7e1a7645d3bdb2cbd2a"
+    },
+    {
+      "name": "FEMViewIncrement",
+      "sha256": "4c9a87b1c6837a878b0d35b0ffb81afaf0664123f0317c20b97b1fec55a4962e"
+    },
+    {
+      "name": "FEMIncrementSvg",
+      "sha256": "e2811b96f9aeb79f578ed438b34c848c6e8c3a98194605d1be1d803119454f66"
+    },
+    {
+      "name": "FEMStrainMath",
+      "sha256": "e000500ea75139a191cd0de8493e6d89fd635c327bcbd7bc3daf199de4c55bd7"
+    }
+  ],
+  "files": [
+    {
+      "name": "2DSoilFEM_ui_20261020.xlsm",
+      "bytes": 3187951,
+      "sha256": "d2126087b29be6d1f2241d28a82510d9f3198e9a9888651c908e24072fa29143"
+    },
+    {
+      "name": "soilfem_native_x64.dll",
+      "bytes": 170496,
+      "sha256": "ad5c2ae81512ba8e977002415a6a5339b621c00a1bbabe5092559f8a7f9e0797"
+    },
+    {
+      "name": "README.txt",
+      "bytes": 2517,
+      "sha256": "df7a0f27d7b9e09ccd5ca76f9ffec6a67a2cd908d59503a143dd69a4b0259e57"
+    }
+  ],
+  "source_base_revision": "cbf09683d636e8e33f64e8c2839b72835e7811d0",
+  "source_revision": "d8ac0209248e9ed40c1657fb517196925e60109f",
+  "patch": "20261021 N01-N05 rereview wording correction; UI_05 identity retained",
+  "rereview_record": "docs/manuals/construction-evidence/20261021/manual-rereview/road_checks.json"
+}
