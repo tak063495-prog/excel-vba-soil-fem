@@ -1011,8 +1011,8 @@
   },
   {
     "path": "docs/manuals/2DSoilFEM_Manual_20261023_WATER_02.pdf",
-    "bytes": 19827690,
-    "sha256": "c5158dbfb842da5ce9590038db6a910ae8f5c8ead558febfceef2ce5c9ea698d"
+    "bytes": 19838007,
+    "sha256": "12a3441a25dc74c4036a42d354039b6b238314be2903b7cdcb9ae4b6c6aa3642"
   },
   {
     "path": "docs/manuals/README.md",
@@ -9433,6 +9433,16 @@
     "path": "docs/water-display-evidence/20261023/boundary_correction/page_mapping.json",
     "bytes": 3755,
     "sha256": "789ccc2b43c15bd0deb2528529188582d14c6b056b12ac5d464b1ecd45b6e6d4"
+  },
+  {
+    "path": "docs/water-display-evidence/20261023/boundary_correction/pdf_checks.json",
+    "bytes": 3841,
+    "sha256": "2aae28c72fa3e090ca5a27b8aba64817b60fc60b02f635e60c3f603ad89f84b9"
+  },
+  {
+    "path": "docs/water-display-evidence/20261023/boundary_correction/visual_review.zip",
+    "bytes": 10599491,
+    "sha256": "92bdc35bd06b086826baa16ed02b454dc2eb5cac6046c4e69c29dfe6f6161185"
   },
   {
     "path": "docs/water-display-evidence/20261023/consistency.json",
