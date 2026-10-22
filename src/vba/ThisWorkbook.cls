@@ -2,12 +2,17 @@
 Private Sub Workbook_Open()
   Dim eventsSaved As Boolean
   eventsSaved = Application.EnableEvents
-  On Error GoTo Finish
+  On Error GoTo Failed
   ' Layout/registry writes are not user input edits. Keep the saved dirty marker.
   Application.EnableEvents = False
   FEMWriteBuildStamp False
   FEMWaterInstallUi
-  FEMUiShowHome
+  FEM24Install
+  FEM24Home
+  GoTo Finish
+Failed:
+  FEM24Error = "画面の初期化に失敗しました。" & Err.description
+  If Not SuppressUserMessages Then MsgBox FEM24Error, vbExclamation
 Finish:
   Application.EnableEvents = eventsSaved
 End Sub
@@ -20,8 +25,12 @@ Private Sub Workbook_SheetChange(ByVal sh As Object, ByVal target As range)
   Dim invalidateSettings As Boolean
   Dim rngC As range
   Dim rngE As range
-  On Error Resume Next
   If AnalysisRunning Then Exit Sub
+  If FEM24IsPage(sh.name) Then
+    FEM24Changed sh, target
+    Exit Sub
+  End If
+  On Error Resume Next
   sheetName = sh.name
   If FEMUiIsSettingsSheet(sheetName) Then
     FEMUiSettingsChanged sh, target
@@ -29,6 +38,7 @@ Private Sub Workbook_SheetChange(ByVal sh As Object, ByVal target As range)
   End If
   If sheetName = "節点データ" Or sheetName = "材料データ" Or sheetName = "要素データ" _
      Or sheetName = "水条件" Or sheetName = "形状入力" Or sheetName = "ステージ" Or sheetName = "載荷" Or sheetName = "図形定義" Or sheetName = "接合" Then
+    FEM24ClearPlot
     FEMViewerMarkDirty
     FEMUiInvalidateMeshPreview
     AnalysisOK = False
@@ -67,10 +77,15 @@ Private Sub Workbook_SheetChange(ByVal sh As Object, ByVal target As range)
   End If
   If invalidateSettings Then FEMInvalidateSettingCache
   If invalidateAnalysis Then
+    FEM24ClearPlot
     FEMViewerMarkDirty
     FEMUiInvalidateMeshPreview
     AnalysisOK = False
     ResultRevision = 0
     P1ResultReady = False
   End If
+End Sub
+
+Private Sub Workbook_SheetActivate(ByVal sh As Object)
+  If FEM24Installed() Then FEM24Refresh sh
 End Sub

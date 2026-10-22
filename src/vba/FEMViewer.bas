@@ -1,5 +1,7 @@
 Option Explicit
 
+Public FEMViewerLastSvg As String
+Public FEMViewerCanvasW As Double, FEMViewerCanvasH As Double
 Public FEMViewerLastError As String
 Public FEMViewerElementCount As Long
 Private viewerBusy As Boolean
@@ -184,6 +186,7 @@ Private Sub DrawView(ByVal mode As String)
     Dim viewPhase As String, errorNumber As Long
     If AnalysisRunning Or viewerBusy Then Exit Sub
     viewerBusy = True
+    FEMViewerLastSvg = ""
     FEMViewerLastError = "": FEMViewerElementCount = 0
     On Error GoTo Failed
     oldScreen = Application.ScreenUpdating: oldEvents = Application.EnableEvents
@@ -571,8 +574,10 @@ NextDrawElement:
         ws.Shapes("UI_MeshRepair").Visible = msoFalse
         On Error GoTo Failed
     End If
+    FEMViewerLastSvg = svg: FEMViewerCanvasW = canvasW: FEMViewerCanvasH = canvasH
     FEMViewerElementCount = count
     viewPhase = "図シートの表示"
+    ws.Visible = xlSheetVisible
     ws.Activate
     ThisWorkbook.Windows(1).Zoom = 100
     ThisWorkbook.Windows(1).ScrollRow = 1

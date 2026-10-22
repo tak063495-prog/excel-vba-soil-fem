@@ -1,0 +1,257 @@
+{
+  "status": "PASS",
+  "book_sha256": "16161736280992174173430F9A163FCA72CC4F3D408683CDCE1990461910B560",
+  "ui_check_count": 102,
+  "frontend_vs_canonical": {
+    "disp": 0.0,
+    "stress": 0.0,
+    "metrics": 0.0
+  },
+  "disabled_water_plan_vs_no_plan": {
+    "disp": 0.0,
+    "stress": 0.0,
+    "metrics": 0.0
+  },
+  "water_regression": {
+    "root": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\stage_ui24\\regression15",
+    "baseline": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\groundwater\\acceptance20",
+    "records": [
+      {
+        "label": "cutoff",
+        "candidate": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\stage_ui24\\regression15\\cutoff\\result.json",
+        "reference": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\groundwater\\acceptance20\\cutoff\\result.json",
+        "maxdiff": {
+          "disp": 0.0,
+          "stress": 0.0,
+          "metrics": 0.0
+        },
+        "candidate_seconds": 6.6361491,
+        "reference_seconds": 5.8907809,
+        "pass": true
+      },
+      {
+        "label": "box_inside",
+        "candidate": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\stage_ui24\\regression15\\box_inside\\result.json",
+        "reference": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\groundwater\\acceptance20\\box_inside\\result.json",
+        "maxdiff": {
+          "disp": 0.0,
+          "stress": 0.0,
+          "metrics": 0.0
+        },
+        "candidate_seconds": 6.2019267,
+        "reference_seconds": 4.4928178,
+        "pass": true
+      },
+      {
+        "label": "stages",
+        "candidate": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\stage_ui24\\regression15\\stages\\result.json",
+        "reference": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\groundwater\\acceptance20\\stages\\result.json",
+        "maxdiff": {
+          "disp": 0.0,
+          "stress": 0.0,
+          "metrics": 0.0
+        },
+        "candidate_seconds": 7.0018817,
+        "reference_seconds": 6.6223544,
+        "pass": true
+      },
+      {
+        "label": "wet_srm_INCONSISTENT",
+        "candidate": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\stage_ui24\\regression15\\wet_srm_INCONSISTENT\\result.json",
+        "reference": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\groundwater\\acceptance20\\wet_srm\\result.json",
+        "maxdiff": {
+          "disp": 0.0,
+          "stress": 0.0,
+          "metrics": 0.0
+        },
+        "candidate_seconds": 144.467191,
+        "reference_seconds": 137.5978232,
+        "pass": true
+      },
+      {
+        "label": "wet_srm_DAVIS_final5_reference",
+        "candidate": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\stage_ui24\\regression15\\wet_srm_DAVIS\\result.json",
+        "reference": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\water_display\\final7\\wet_srm_DAVIS\\result.json",
+        "maxdiff": {
+          "disp": 0.0,
+          "stress": 0.0,
+          "metrics": 0.0
+        },
+        "candidate_seconds": 22.3958476,
+        "reference_seconds": 21.3899807,
+        "pass": true
+      }
+    ],
+    "rejections": [
+      {
+        "name": "fixed_stress",
+        "path": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\stage_ui24\\regression15\\reject_fixed_stress\\input_check.json",
+        "pass": true,
+        "actual_error": "ERROR|現在実行できる連携方式はONE_WAYです。FIXED_STRESSは時間圧密の将来拡張です。工程=2|FEMWater"
+      },
+      {
+        "name": "time_reserved",
+        "path": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\stage_ui24\\regression15\\reject_time_reserved\\input_check.json",
+        "pass": true,
+        "actual_error": "ERROR|時間・排水・連成反復の入力はFIXED_STRESS用の予約項目です。現版では空欄にしてください。工程=2|FEMWater"
+      },
+      {
+        "name": "missing_stage",
+        "path": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\stage_ui24\\regression15\\reject_missing_stage\\input_check.json",
+        "pass": true,
+        "actual_error": "ERROR|工程別水理設定は有効な工程番号へ一意に対応させてください。工程=999|FEMWater"
+      },
+      {
+        "name": "conflicting_profile",
+        "path": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\stage_ui24\\regression15\\reject_conflicting_profile\\input_check.json",
+        "pass": true,
+        "actual_error": "ERROR|ステージC列と工程別水理設定の水位線IDが矛盾しています。|FEMWater"
+      },
+      {
+        "name": "orphan",
+        "path": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\stage_ui24\\regression15\\reject_orphan\\input_check.json",
+        "pass": true,
+        "actual_error": "ERROR|工程別水理設定の工程番号を入力してください。|FEMWater"
+      },
+      {
+        "name": "duplicate",
+        "path": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\stage_ui24\\regression15\\reject_duplicate\\input_check.json",
+        "pass": true,
+        "actual_error": "ERROR|工程別水理設定の工程番号が重複しています。|FEMWater"
+      },
+      {
+        "name": "unknown_profile",
+        "path": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\stage_ui24\\regression15\\reject_unknown_profile\\input_check.json",
+        "pass": true,
+        "actual_error": "ERROR|工程別の水位線IDは、水位線表へ2点以上登録してください。|FEMWater"
+      }
+    ],
+    "ui": {
+      "evidence_files": 0,
+      "note": "UI action JSON is checked only when --ui is supplied; no Excel is started by this checker."
+    },
+    "one_way_vs_stages": {
+      "disp": 0.0,
+      "stress": 0.0,
+      "metrics": 0.0
+    },
+    "box_inside_balance": {
+      "Fx_kN": 1.7763568394002505e-15,
+      "Fy_kN": 85.0,
+      "M_kNm": 127.49999999999999,
+      "Ry_kN": 107.00000000000038
+    },
+    "resume": {
+      "cutoff": {
+        "disp": 4.967345978990068e-13,
+        "stress": 4.76837158203125e-06,
+        "metrics": 2.295806709179656e-09
+      },
+      "box_inside": {
+        "disp": 4.906503246634953e-13,
+        "stress": 5.0067901611328125e-06,
+        "metrics": 1.369202839425751e-09
+      },
+      "stages": {
+        "disp": 4.582918246287537e-13,
+        "stress": 3.026798367500305e-09,
+        "metrics": 1.7852386235972517e-13
+      },
+      "one_way": {
+        "disp": 4.582918246287537e-13,
+        "stress": 3.026798367500305e-09,
+        "metrics": 1.7852386235972517e-13
+      },
+      "joint": {
+        "disp": 4.235164736271502e-22,
+        "stress": 4.76837158203125e-06,
+        "metrics": 5.400124791776761e-13
+      }
+    },
+    "status": "PASS"
+  },
+  "unchanged_sources": {
+    "FEMCore": "8e929d573cd74ef082a12dcadc43c28fecd6db321122f634f201a8c46aaecb32",
+    "FEMEngine": "b68c8a45fab39ec4b33b0a691ede8f11d5db46c198bf183a629643c80d567175",
+    "FEMSolver": "bd8daa3cf81aa90f6e3497e0aef6a2382a5379287b00be75f30b9036c16e3148",
+    "FEMNative": "8e5d7b1eb0154210a03fb8a74c34f02e30ac91a73a21f7d1d9c656b6bcca4620",
+    "FEMNativeKern": "93184c1086b67748700b0c522ce7fd367983403c9193c07b5d9908fc1c7bb340",
+    "FEMNativeMat": "e6500276c465d6877b7548f81f4a9810c8804edecec9a09865a2d1036664b3b9",
+    "FEMSeepage": "af9c1c61e53fc5f6f692f72809a9c12e94cd82bea01586290fabff19bf51fd00",
+    "FEMSeepageFlux": "e1d2bebf1bdda0562959befbbebbbd6e78e688749cae7ffc92190364c3a69f25",
+    "FEMWaterGeometry": "3297b5a54128ac87c093603523030ae095fa4af90bad3b42fcd0cf08bc87857a",
+    "FEMWaterView": "2f993fae23da7e54daa5e29cff6c626ef3d7651a55d037059617dec82ce258be",
+    "FEMJointWater": "221bea581a7f2fed46aa24169fdc210339f5f4bd097893f3b1b9f08ef095db56",
+    "FEMStrainMath": "e000500ea75139a191cd0de8493e6d89fd635c327bcbd7bc3daf199de4c55bd7",
+    "FEMViewIncrement": "e57c288a9db3b410b20044b3dfbb551e5bb52f76f7b9d6f93ea7d8a99a3d448c",
+    "FEMIncrementSvg": "028987deafd8b8e2b51a7287f5fd09de2db214b93e90c47a64abd9b933062356",
+    "Mesh": "c621083aed6fc85cf376625fdeadfd52e80319b201dc79915c08531dc786649a",
+    "MeshAdapt": "dc03d02bd7eb449fcc267bd0975bf32ec18602aca79b91b0a24704760b144a13",
+    "FEMTerrainBlocks": "2385d13f223907a3f4354646c6e285e2f295f4494341846909f27496baa09468"
+  },
+  "base": "ecc05e794847601267437f627d7a6249b3290bd0",
+  "basic": [
+    {
+      "case": "GWTestDarcy",
+      "result": "PASS h0=3.000000 h2=2.000000 qx=5.000000E-06 rr=1.579E-15 bal=5.972E-15"
+    },
+    {
+      "case": "GWTestDarcyCases",
+      "result": "PASS allDirichlet/disconnected/negative"
+    },
+    {
+      "case": "GWTestWetGeometry",
+      "result": "PASS closedFy=60.000000 partialFx=-3.750000"
+    },
+    {
+      "case": "GWTestDarcyPatches",
+      "result": "PASS skew/K=1E-15/layered/thickness/face conservation"
+    },
+    {
+      "case": "dry",
+      "status": "PASS",
+      "displacement_count": 42,
+      "maxdiff": 0.0,
+      "candidate_seconds": 6.008538,
+      "reference_seconds": 5.5047157
+    },
+    {
+      "case": "hydro",
+      "status": "PASS",
+      "displacement_count": 42,
+      "maxdiff": 0.0,
+      "candidate_seconds": 2.630208,
+      "reference_seconds": 2.1603793
+    },
+    {
+      "case": "submerged",
+      "status": "PASS",
+      "displacement_count": 42,
+      "maxdiff": 0.0,
+      "candidate_seconds": 2.5354317,
+      "reference_seconds": 2.0460411
+    },
+    {
+      "case": "steady",
+      "status": "PASS",
+      "displacement_count": 42,
+      "maxdiff": 0.0,
+      "candidate_seconds": 2.4663416,
+      "reference_seconds": 2.0693461
+    },
+    {
+      "case": "total",
+      "status": "PASS",
+      "displacement_count": 42,
+      "maxdiff": 0.0,
+      "candidate_seconds": 2.4920767,
+      "reference_seconds": 2.0309767
+    },
+    {
+      "case": "invalid_inputs",
+      "result": "PASS rejected=6"
+    }
+  ],
+  "water_change_scope": "GWValidateStagePlans only; inactive stage plans retained and skipped",
+  "unchanged_dll_sha256": "ad5c2ae81512ba8e977002415a6a5339b621c00a1bbabe5092559f8a7f9e0797"
+}

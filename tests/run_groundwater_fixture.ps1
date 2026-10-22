@@ -1,4 +1,4 @@
-﻿param([Parameter(Mandatory=$true)][string]$Book,[Parameter(Mandatory=$true)][string]$Fixture,[Parameter(Mandatory=$true)][string]$Out,[switch]$Resume,[string]$Flow="INCONSISTENT",[string]$Native="AUTO")
+﻿param([Parameter(Mandatory=$true)][string]$Book,[Parameter(Mandatory=$true)][string]$Fixture,[Parameter(Mandatory=$true)][string]$Out,[switch]$Resume,[string]$Flow="INCONSISTENT",[string]$Native="AUTO",[switch]$FrontUi)
 $ErrorActionPreference='Stop'
 if(Get-Process EXCEL -ErrorAction SilentlyContinue){throw 'Another Excel is running; do not dispatch.'}
 if(Test-Path -LiteralPath $Out){throw 'Preserve previous evidence.'}
@@ -96,6 +96,23 @@ End Function
  SetSetting 'EXPORT_MODE' $(if($Resume){'STAGE'}else{'OFF'});SetSetting 'EXPORT_LOAD' '';SetSetting 'FLOW_POLICY' $Flow;SetSetting 'NATIVE_DLL' $Native;SetSetting 'OUTPUT_STAGE_MODE' 'ALL'
  if($data.settings){foreach($property in $data.settings.PSObject.Properties){SetSetting $property.Name $property.Value}}
  if($Resume){SetSetting 'EXPORT_MODE' 'STAGE'}
+ if($FrontUi){
+  # Perturb canonical values, then restore through real front-sheet events.
+  $null=Call 'FEM24Install'
+  $mat=$wb.Worksheets.Item('材料データ');$young=$mat.Range('B2').Value2
+  $mat.Range('B2').Value2=[double]$young+1.0
+  $null=Call 'FEM24Materials';$xl.EnableEvents=$true
+  $wb.Worksheets.Item('材料・接合').Range('B8').Value2=$young
+  if($mat.Range('B2').Value2 -ne $young){throw 'Front material write-through failed.'}
+  $xl.EnableEvents=$false
+  $level=$water.Range('C12').Value2;$water.Range('C12').Value2=[double]$level+0.125
+  $null=Call 'FEM24Water';$xl.EnableEvents=$true
+  $wb.Worksheets.Item('境界・水条件').Range('C4').Value2='水位線'
+  $wb.Worksheets.Item('境界・水条件').Range('C8').Value2=$level
+  if($water.Range('C12').Value2 -ne $level){throw 'Front water write-through failed.'}
+  $xl.EnableEvents=$false
+  @{status='PASS';material_young=$young;water_level=$level;flow=$Flow;events='real Workbook_SheetChange'}|ConvertTo-Json|Set-Content (Join-Path $Out 'front_inputs.json') -Encoding UTF8
+ }
  $preview=Call 'WFPreview'
  if($data.expectedPreviewError){
   $expected=[string]$data.expectedPreviewError
@@ -173,6 +190,8 @@ End Function
  $_.ScriptStackTrace | Write-Output
  throw
 }finally{
+ $xl.EnableEvents=$false
+ if($wb){try{$wb.Close($false)}catch{}}
  foreach($reference in @($testModule,$mod,$water,$ws,$wb)){if($null -ne $reference -and [Runtime.InteropServices.Marshal]::IsComObject($reference)){[void][Runtime.InteropServices.Marshal]::FinalReleaseComObject($reference)}}
  $xl.Quit();[void][Runtime.InteropServices.Marshal]::FinalReleaseComObject($xl)
  [GC]::Collect();[GC]::WaitForPendingFinalizers()

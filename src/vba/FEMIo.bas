@@ -109,7 +109,7 @@ Private Sub FEMRebuildSettingsLayout(ByVal ws As Worksheet)
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "MESH_BC_PIN_CORNER", "メッシュ", "剛体モード止め", "NONE", "AUTO=底面の最小X節点をXY固定 / NONE=しない", True
   writeRow = writeRow + 1
   FEMPutSection ws, writeRow, "2. 解析（共通）"
-  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "WEIGHT_MODE", "解析", "自重", "TOTAL", "TOTALのみ。全応力のγ。浮力・水位は未実装", True
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "WEIGHT_MODE", "解析", "自重", "TOTAL", "TOTALのみ。入力γによる自重。水圧・外水圧は水条件で別途計算（自重を自動で水中重量へ変更しない）", True
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "Q8_HOURGLASS_FACTOR", "解析", "アワーグラス係数", 0.05, "0～1", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "RCM_POLICY", "解析", "RCM", "AUTO", "AUTO=帯幅が減るときだけ並び替え / ON=必ずRCM / OFF=入力順", True
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "FLOW_POLICY", "解析", "非関連の扱い", "INCONSISTENT", "INCONSISTENT=非関連流れ・非対称整合接線・全Newton / DAVIS=等価関連c*,φ*（JOINTには掛けない）", True

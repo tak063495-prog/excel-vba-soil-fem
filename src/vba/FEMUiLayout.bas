@@ -1,5 +1,5 @@
 ﻿Option Explicit
-Public Const FEM_UI_STAMP As String = "20261021_UI_05"
+Public Const FEM_UI_STAMP As String = "20261024_STAGE_01"
 
 Private mUiSessionReady As Boolean
 Private mUiSessionBook As String
@@ -32,6 +32,7 @@ Public Sub FEMUiUpdateLayout()
     If ThisWorkbook.Worksheets(activeName).Visible = xlSheetVisible Then ThisWorkbook.Worksheets(activeName).Activate
   End If
   Application.EnableEvents = eventsSaved: Application.ScreenUpdating = screenSaved
+  If FEM24Installed() Then FEM24ApplyTabs
   FEMInvalidateSettingCache
   Exit Sub
 Failed:
@@ -86,6 +87,7 @@ Public Sub FEMUiAfterLayout()
   FEMUiFinishInputs
   FEMResultOptionsInstall
   mUiSessionReady = True: mUiSessionBook = ThisWorkbook.name
+  If FEM24Installed() Then FEM24ApplyTabs
   FEMInvalidateSettingCache
   Exit Sub
 Failed:
@@ -348,6 +350,7 @@ Private Sub FEMUiSetInputViews()
 End Sub
 
 Public Sub FEMUiShowHome()
+  If FEM24Installed() Then FEM24Home: Exit Sub
   If Not FEMUiInstalled() Then Exit Sub
   FEMUiOpen "操作パネル"
 End Sub
