@@ -1,30 +1,76 @@
 {
-  "distribution": "20261023",
-  "verification_date": "2026-10-22",
   "build": "20261022_WATER_02",
-  "reference_commit": "3a1be89872e2e97b3e6f0bd1b3b7a58e11109389",
-  "reference_workbook": "workbook/ui_20261022/2DSoilFEM_ui_20261022.xlsm",
-  "book_sha256": "1702746bb1c0351c59970f50a18a4a73f36f8b63ad7b1451b01e43d535afc2e7",
+  "mesh_build": "20261022_TERRAIN_DIRECT_01",
+  "verification_date": "2026-10-22",
+  "base_main": "6930bf04c29932fa37bfc125ee04004dd645cfd4",
+  "book_sha256": "fdb6215362b57d6d7437364e9d2c6d228733cc7ffbcd1828875aef0a557d5e42",
   "dll_sha256": "ad5c2ae81512ba8e977002415a6a5339b621c00a1bbabe5092559f8a7f9e0797",
-  "byte_identical_to_reference": true,
+  "dll_unchanged": true,
   "compile": "PASS",
-  "source_modules_verified": 31,
-  "normal_open": true,
-  "actions_rebound": 35,
-  "preview_shapes": 3,
+  "source_verification": "before-save and reopen",
+  "modules": [
+    "CONTROL",
+    "FEM",
+    "FEMCore",
+    "FEMSolver",
+    "FEMIo",
+    "FEMEngine",
+    "FEMNative",
+    "FEMNativeMat",
+    "FEMNativeKern",
+    "FEMUiInputs",
+    "FEMUiValidation",
+    "FEMUiLayout",
+    "FEMUi",
+    "FEMViewer",
+    "FEMNativeFigure",
+    "ThisWorkbook",
+    "FEMUiMeshWorkflow",
+    "FEMUiGeometry",
+    "FEMPractical",
+    "MeshAdapt",
+    "FEMResultOptions",
+    "FEMStrainMath",
+    "FEMViewIncrement",
+    "FEMIncrementSvg",
+    "FEMWater",
+    "FEMSeepage",
+    "FEMWaterUi",
+    "FEMWaterGeometry",
+    "FEMWaterView",
+    "FEMSeepageFlux",
+    "FEMJointWater"
+  ],
+  "canonical_inputs_unchanged": [
+    "節点データ",
+    "要素データ",
+    "載荷",
+    "材料データ",
+    "形状入力",
+    "ステージ"
+  ],
+  "defaults": [
+    "NONE",
+    9.80665,
+    "外水",
+    "AUTO"
+  ],
   "excel_version": "16.0",
   "excel_build": 20430.0,
-  "wet_independent_check": "PASS",
-  "initial_full_array_differences": {
-    "disp": 0.0,
-    "stress": 0.0,
-    "metrics": 0.0
+  "terrain_geometry": "Python independent Q8 area/25-point Jacobian/all coordinates/connectivity PASS",
+  "rejections": 8,
+  "elastic_dofs": 1074,
+  "elastic_comparison": {
+    "status": "PASS",
+    "max_difference": {
+      "disp": 0.0,
+      "stress": 0.0,
+      "metrics": 0.0
+    },
+    "reference_seconds": 5.1474565,
+    "candidate_seconds": 5.1540116
   },
-  "resume_full_array_differences": {
-    "disp": 0.0,
-    "stress": 0.0,
-    "metrics": 0.0
-  },
-  "full_regression_evidence": "docs/joint-water-evidence/20261022 (unchanged same binary)",
-  "solver_changes": false
+  "water_joint": "initial full vectors/metrics exact; independent and resume PASS",
+  "solver_law_tolerance_changes": false,
+  "evidence": "docs/mesh-evidence/20261022"
 }

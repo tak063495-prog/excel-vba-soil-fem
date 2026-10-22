@@ -99,6 +99,12 @@ End Function
  }
  if($preview -ne 'PASS'){throw "Preview: $preview"}
  $timer=[Diagnostics.Stopwatch]::StartNew();$status=Call 'WFRun';$timer.Stop()
+ # Failed input/setup may leave no elements allocated. Do not mask its message
+ # with a second error while collecting an unallocated stress/DOF array.
+ if($status -notlike 'PASS|*'){
+  @{case=$data.name;status=$status;seconds=$timer.Elapsed.TotalSeconds}|ConvertTo-Json|Set-Content (Join-Path $Out 'failure.json') -Encoding UTF8
+  throw "Analysis: $status"
+ }
  $record=@{case=$data.name;status=$status;seconds=$timer.Elapsed.TotalSeconds;metrics=@(Call 'WFMetrics');disp=@(Call 'WFDisplacements');stress=@(Call 'WFStress');book_sha256=(Get-FileHash $Book).Hash;fixture_sha256=(Get-FileHash $Fixture).Hash;excel_version=$xl.Version;excel_build=$xl.Build;build=(Call 'WFBuild');native=(Call 'WFNative');requested_native=$Native;flow=$Flow}
  $record|ConvertTo-Json -Depth 8|Set-Content (Join-Path $Out 'result.json') -Encoding UTF8
  Write-Output ($record|ConvertTo-Json -Depth 2 -Compress)

@@ -5,6 +5,8 @@ Private srcLoX() As Double, srcHiX() As Double, srcLoY() As Double, srcHiY() As 
 Private srcX() As Double, srcY() As Double, srcMat() As Long, srcSeen() As Long
 Private terrainPrepared As Boolean, terrainPX() As Double, terrainPY() As Double, terrainNP As Long
 Private terrainLeft As Double, terrainRight As Double, terrainBottom As Double
+Private terrainNX As Long, terrainNY As Long
+Private terrainSegmentColumns As Object, terrainSegmentLoX() As Double, terrainSegmentHiX() As Double
 Private markHeap() As Double, markDue() As Double, markHeapN As Long, markLog() As Long, markLogN As Long
 
 Private Type CandidateState
@@ -204,7 +206,7 @@ Private Sub LoadMesh()
     Set sourceGrid = Nothing
     terrainPrepared = False
     If nn < 8 Or ne < 1 Then Err.Raise vbObjectError + 3801, , "Q8メッシュがありません。"
-    cap = nn + ne * 25
+    If candidateKind = "SMOOTH" Then cap = nn Else cap = nn + ne * 25
     If cap > 300000 Or ne > 50000 Then Err.Raise vbObjectError + 3801, , "再メッシュの作業上限を超えます。"
     ReDim xx(1 To cap): ReDim yy(1 To cap): ReDim nodeRows(1 To cap, 1 To 14)
     ReDim conn(1 To ne * 4, 1 To 8): ReDim materialId(1 To ne * 4)
@@ -979,9 +981,10 @@ End Function
 Private Function ElementClass(ByVal e As Long) As Long
     ElementClass = metricClass(e)
 End Function
-Private Sub GetQuality(ByRef q As QualityRecord, Optional ByVal withHeat As Boolean = True)
+Private Sub GetQuality(ByRef q As QualityRecord, Optional ByVal withHeat As Boolean = True, Optional ByVal structured As Boolean = False)
     Dim e As Long, k As Long, cls As Long, ratio As Double, j As Long, a As Long, b As Long, c As Long
     Dim ux As Double, uy As Double, vx As Double, vy As Double, sj As Double
+    Dim row As Long, col As Long
     q.passN = 0: q.warnN = 0: q.failN = 0: q.scaledJ = 1#: q.grading = 1#: q.heatArea = 0#
     q.countN = nn: q.countE = ne: q.minA = MinAngle(): q.maxA = MaxAngle(): q.aspect = MaxAspect()
     For e = 1 To ne
@@ -993,12 +996,29 @@ Private Sub GetQuality(ByRef q As QualityRecord, Optional ByVal withHeat As Bool
         End Select
         If metricSJ(e) < q.scaledJ Then q.scaledJ = metricSJ(e)
     Next e
+    If structured Then
+        ' Structured adjacency gives the same maximum area ratio without rebuilding an edge map.
+        For row = 0 To terrainNY - 1
+            For col = 0 To terrainNX - 1
+                e = row * terrainNX + col + 1
+                If col < terrainNX - 1 Then
+                    ratio = areas(e) / areas(e + 1): If ratio < 1# Then ratio = 1# / ratio
+                    If ratio > q.grading Then q.grading = ratio
+                End If
+                If row < terrainNY - 1 Then
+                    ratio = areas(e) / areas(e + terrainNX): If ratio < 1# Then ratio = 1# / ratio
+                    If ratio > q.grading Then q.grading = ratio
+                End If
+            Next col
+        Next row
+    Else
     For k = 1 To edgeN
         If ee2(k) > 0 Then
             ratio = areas(ee1(k)) / areas(ee2(k)): If ratio < 1# Then ratio = 1# / ratio
             If ratio > q.grading Then q.grading = ratio
         End If
     Next k
+    End If
     If withHeat And candidateKind = "PLASTIC" Then q.heatArea = PlasticResolution(False)
 End Sub
 Private Function BetterQuality(ByRef a As QualityRecord, ByRef b As QualityRecord) As Boolean
@@ -1121,10 +1141,21 @@ NextCorner:
     Next n
 End Sub
 
+Private Sub CompareSourceAngles(ByRef source As CandidateState, ByRef best As CandidateState, ByRef bestQ As QualityRecord)
+    Dim q As QualityRecord
+    ' Restore only for the delayed path; original source is unrefined for PLASTIC.
+    If candidateKind = "SMOOTH" Then Call RestoreState(source)
+    Application.StatusBar = "メッシュ候補：外周・接続を維持して角度を最適化"
+    Call OptimizeAngles
+    Call GetQuality(q)
+    comparisonText = comparisonText & vbCrLf & QualityLine("角度最適化", q)
+    If BetterQuality(q, bestQ) Then bestQ = q: Call CaptureState(best): selectedMethod = "角度最適化（外周・接続維持）"
+End Sub
+
 Private Function GenerateAndCompare() As Boolean
     Dim source As CandidateState, best As CandidateState, terrainBase As CandidateState
     Dim bestQ As QualityRecord, q As QualityRecord, baseQ As QualityRecord, record As String, method As String, found As Boolean
-    Dim off As Long, target As Long, ratio As Double, bestIsTerrain As Boolean
+    Dim off As Long, target As Long, ratio As Double, bestIsTerrain As Boolean, preferRaw As Boolean, sourceOptimized As Boolean
     bestIsTerrain = False
     Call CaptureState(source)
     If candidateKind = "PLASTIC" Then
@@ -1136,11 +1167,13 @@ Private Function GenerateAndCompare() As Boolean
     If candidateKind = "PLASTIC" Then plasticHeatLimit = bestQ.heatArea * 1.05 Else plasticHeatLimit = 0#
     Call CaptureState(best): selectedMethod = "既存接続"
     comparisonText = QualityLine("最適化前", bestQ)
-    Application.StatusBar = "メッシュ候補：外周・接続を維持して角度を最適化"
-    Call OptimizeAngles
-    Call GetQuality(q)
-    comparisonText = comparisonText & vbCrLf & QualityLine("角度最適化", q)
-    If BetterQuality(q, bestQ) Then bestQ = q: Call CaptureState(best): selectedMethod = "角度最適化（外周・接続維持）"
+    ' With policy 2, a passing raw terrain grid always wins over both optimized grids.
+    ' Delay the expensive optimizer until we know that such a grid is unavailable.
+    preferRaw = (candidateKind = "SMOOTH" And FEMReadSetting("MESH_GEN_COMPARE", 1#) >= 1.5 And FEMReadSetting("MESH_REPAIR_TERRAIN_COMPARE", 1#) >= 0.5)
+    If Not preferRaw Then
+        Call CompareSourceAngles(source, best, bestQ)
+        sourceOptimized = True
+    End If
     If FEMReadSetting("MESH_REPAIR_TERRAIN_COMPARE", 1#) < 0.5 Then
         comparisonText = comparisonText & vbCrLf & "地形追従：比較設定OFF"
         GoTo Done
@@ -1148,14 +1181,13 @@ Private Function GenerateAndCompare() As Boolean
     Call RestoreState(source)
     Application.StatusBar = "メッシュ候補：地形追従格子の適用条件を確認"
     If Not TerrainEligible() Then
-        comparisonText = comparisonText & vbCrLf & "地形追従：対象外（" & terrainReason & "）"
-        GoTo Done
+        GoTo TerrainSkipped
     End If
     On Error GoTo TerrainFailed
     For off = -16 To 16
-        If BuildTerrain(off, False) Then
-            Call CheckCandidate
-            Call GetQuality(q, False)
+        If BuildTerrain(off, False, candidateKind = "SMOOTH") Then
+            If candidateKind <> "SMOOTH" Then Call CheckCandidate
+            Call GetQuality(q, False, candidateKind = "SMOOTH")
             If Not found Then
                 found = True: baseQ = q: Call CaptureState(terrainBase)
             ElseIf BetterQuality(q, baseQ) Then
@@ -1165,9 +1197,9 @@ Private Function GenerateAndCompare() As Boolean
     Next off
     If Not found Then
         For off = -16 To 16
-            If BuildTerrain(off, True) Then
-                Call CheckCandidate
-                Call GetQuality(q, False)
+            If BuildTerrain(off, True, candidateKind = "SMOOTH") Then
+                If candidateKind <> "SMOOTH" Then Call CheckCandidate
+                Call GetQuality(q, False, candidateKind = "SMOOTH")
                 If Not found Then
                     found = True: baseQ = q: Call CaptureState(terrainBase)
                 ElseIf BetterQuality(q, baseQ) Then
@@ -1187,6 +1219,15 @@ Private Function GenerateAndCompare() As Boolean
     Call CheckCandidate
     Call GetQuality(q)
     comparisonText = comparisonText & vbCrLf & QualityLine("地形追従", q)
+    If preferRaw And QualityPasses(q) Then
+        bestQ = q: Call CaptureState(best): selectedMethod = "地形追従格子": bestIsTerrain = True
+        comparisonText = comparisonText & vbCrLf & "地形格子優先：合格格子を採用し、採用結果に影響しない角度最適化を省略"
+        GoTo Done
+    End If
+    If preferRaw And Not sourceOptimized Then
+        Call CompareSourceAngles(source, best, bestQ): sourceOptimized = True
+        Call RestoreState(terrainBase): Call CheckCandidate: Call GetQuality(q)
+    End If
     If candidateKind = "PLASTIC" And q.heatArea > plasticHeatLimit Then
         comparisonText = comparisonText & "（塑性域の分解能不足で除外）"
     ElseIf PreferTerrainOver(q, bestQ, bestIsTerrain) Then
@@ -1206,6 +1247,7 @@ TerrainFailed:
     Resume TerrainSkipped
 TerrainSkipped:
     comparisonText = comparisonText & vbCrLf & "地形追従：候補除外（" & terrainReason & "）"
+    If preferRaw And Not sourceOptimized Then Call CompareSourceAngles(source, best, bestQ)
 Done:
     On Error GoTo 0
     If FEMReadSetting("MESH_GEN_COMPARE", 1#) >= 1.5 Then
@@ -1260,48 +1302,149 @@ Private Function TerrainEligible() As Boolean
             sFixX(segN) = CLng(d(nodeRows(em(k), 4))): sFixY(segN) = CLng(d(nodeRows(em(k), 5)))
         End If
     Next k
+    Call PrepareTerrainSegmentColumns
     For i = 1 To nn
-        fx = 0: fy = 0
-        For k = 1 To segN
-            If OnSegment(xx(i), yy(i), sx1(k), sy1(k), sx2(k), sy2(k)) Then
-                If sFixX(k) <> 0 Then fx = sFixX(k)
-                If sFixY(k) <> 0 Then fy = sFixY(k)
-            End If
-        Next k
+        Call TerrainPointConditions(xx(i), yy(i), fx, fy)
         If fx <> CLng(d(nodeRows(i, 4))) Or fy <> CLng(d(nodeRows(i, 5))) Then terrainReason = "内部拘束・局所的な境界条件を保持するため": Exit Function
     Next i
     TerrainEligible = True
 End Function
-Private Sub SetTerrainConditions(ByVal n As Long)
-    Dim k As Long
-    nodeRows(n, 4) = 0#: nodeRows(n, 5) = 0#
+Private Sub PrepareTerrainSegmentColumns()
+    Dim k As Long, length As Double, padding As Double, tol As Double
+    Set terrainSegmentColumns = CreateObject("Scripting.Dictionary")
+    ReDim terrainSegmentLoX(1 To segN): ReDim terrainSegmentHiX(1 To segN)
+    tol = meshScale * 0.000000001
     For k = 1 To segN
-        If OnSegment(xx(n), yy(n), sx1(k), sy1(k), sx2(k), sy2(k)) Then
-            If sFixX(k) <> 0 Then nodeRows(n, 4) = sFixX(k)
-            If sFixY(k) <> 0 Then nodeRows(n, 5) = sFixY(k)
+        length = Sqr((sx2(k) - sx1(k)) ^ 2 + (sy2(k) - sy1(k)) ^ 2)
+        If length <= 0# Then Err.Raise vbObjectError + 3860, , "地形境界に長さ0の辺があります。"
+        ' Conservative bound for the existing cross-product and endpoint tolerances.
+        padding = tol + tol * meshScale / length
+        If sx1(k) < sx2(k) Then
+            terrainSegmentLoX(k) = sx1(k) - padding: terrainSegmentHiX(k) = sx2(k) + padding
+        Else
+            terrainSegmentLoX(k) = sx2(k) - padding: terrainSegmentHiX(k) = sx1(k) + padding
         End If
     Next k
 End Sub
-Private Sub ValidateTerrainConditions()
-    Dim i As Long, k As Long, fx As Long, fy As Long
-    For i = 1 To nn
-        fx = 0: fy = 0
+Private Sub TerrainPointConditions(ByVal xp As Double, ByVal yp As Double, ByRef fx As Long, ByRef fy As Long)
+    Dim candidates As Collection, item As Variant, k As Long
+    If terrainSegmentColumns.Exists(xp) Then
+        Set candidates = terrainSegmentColumns(xp)
+    Else
+        Set candidates = New Collection
         For k = 1 To segN
-            If OnSegment(xx(i), yy(i), sx1(k), sy1(k), sx2(k), sy2(k)) Then
-                If sFixX(k) <> 0 Then fx = sFixX(k)
-                If sFixY(k) <> 0 Then fy = sFixY(k)
-            End If
+            If xp >= terrainSegmentLoX(k) And xp <= terrainSegmentHiX(k) Then candidates.Add k
         Next k
+        ' Numeric Double keys retain exact coordinates; no formatted/rounded string keys.
+        terrainSegmentColumns.Add xp, candidates
+    End If
+    fx = 0: fy = 0
+    For Each item In candidates
+        k = CLng(item)
+        If OnSegment(xp, yp, sx1(k), sy1(k), sx2(k), sy2(k)) Then
+            If sFixX(k) <> 0 Then fx = sFixX(k)
+            If sFixY(k) <> 0 Then fy = sFixY(k)
+        End If
+    Next item
+End Sub
+Private Sub SetTerrainConditions(ByVal n As Long)
+    Dim fx As Long, fy As Long
+    Call TerrainPointConditions(xx(n), yy(n), fx, fy)
+    nodeRows(n, 4) = CDbl(fx): nodeRows(n, 5) = CDbl(fy)
+End Sub
+Private Sub ValidateTerrainConditions()
+    Dim i As Long, fx As Long, fy As Long
+    For i = 1 To nn
+        Call TerrainPointConditions(xx(i), yy(i), fx, fy)
         If fx <> CLng(d(nodeRows(i, 4))) Or fy <> CLng(d(nodeRows(i, 5))) Then Err.Raise vbObjectError + 3860, , "地形追従候補の境界条件が一致しません。"
     Next i
 End Sub
-Private Function BuildTerrain(ByVal offset As Long, Optional ByVal ignoreCountWindow As Boolean = False) As Boolean
+Public Sub MeshPrepareTerrainDirect(ByRef outX() As Double, ByRef outY() As Double, ByRef outElements() As Variant)
+    Dim ws As Worksheet, raw As Variant, header As Variant, n As Long, i As Long, j As Long, k As Long
+    Dim ext(1 To 1) As Long, inner(1 To 1) As Long, boundary() As Long, gx() As Double, gy() As Double
+    Dim spacing As Double, area As Double, rows As Variant, token As String, target As String, q As QualityRecord
+    Dim lowX As Double, highX As Double, lowY As Double, highY As Double, mat As Long
+    ' Validate everything in arrays. No node/element/result worksheet is replaced on rejection.
+    If busy Or AnalysisRunning Then Err.Raise vbObjectError + 3860, , "解析またはメッシュ処理中です。"
+    candidateReady = False: MeshAdaptLastError = "": selectedMethod = ""
+    Set ws = ThisWorkbook.Worksheets("図形定義")
+    header = ws.Range("A1:N24").Value2
+    If CLng(Val(header(3, 4))) <> 1 Or CLng(Val(header(24, 4))) <> 0 Then Err.Raise vbObjectError + 3860, , "地形格子は外周1つ・穴なしの単一領域だけです。複数領域・穴には適用できません。"
+    n = CLng(Val(header(3, 5)))
+    If n < 4 Or n > 1999 Then Err.Raise vbObjectError + 3860, , "地形格子の外周は4～1999点が必要です。"
+    spacing = CDbl(header(3, 6))
+    If spacing <= 0# Then Err.Raise vbObjectError + 3860, , "格子間隔は正数が必要です。"
+    If MeshJointPairsDefined() Then Err.Raise vbObjectError + 3860, , "地形格子の直接生成は単一材料です。接合境界を含むモデルには適用できません。"
+    rows = Table("載荷", 9)
+    For i = 1 To UBound(rows, 1)
+        If Left$(Trim$(CStr(rows(i, 1))), 1) <> "(" Then
+            token = UCase$(Trim$(CStr(rows(i, 4)))): target = UCase$(Trim$(CStr(rows(i, 2))))
+            If token = "FORCE" Then Err.Raise vbObjectError + 3860, , "節点番号によるFORCE載荷は地形格子生成前に解除し、生成後に設定してください。"
+            If token = "FIX" Or token = "DISP" Then
+                If target <> "TOP" And target <> "BOTTOM" And target <> "LEFT" And target <> "RIGHT" Then Err.Raise vbObjectError + 3860, , "位置・節点番号指定の拘束・変位には地形格子を適用できません。"
+            End If
+        End If
+    Next i
+    Set ws = Nothing
+    On Error Resume Next: Set ws = ThisWorkbook.Worksheets("水条件"): On Error GoTo 0
+    If Not ws Is Nothing Then
+        If Application.CountA(ws.Range("A216:F" & CStr(Application.Max(216, ws.Cells(ws.Rows.Count, 1).End(xlUp).Row)))) > 0 Then Err.Raise vbObjectError + 3860, , "要素・辺番号を指定した水理境界があります。地形格子生成前に解除し、生成後に設定してください。"
+    End If
+    Set ws = ThisWorkbook.Worksheets("図形定義")
+    raw = ws.Range(ws.Cells(2, 2), ws.Cells(n + 1, 3)).Value2
+    ReDim gx(1 To n): ReDim gy(1 To n): ReDim boundary(1 To 1, 1 To n + 1)
+    ReDim oldNodes(1 To n, 1 To 14): ReDim oldElements(1 To 1, 1 To 10)
+    For i = 1 To n
+        gx(i) = CDbl(raw(i, 1)): gy(i) = CDbl(raw(i, 2))
+        boundary(1, i) = CLng(ws.Cells(3, i + 6).Value2)
+        oldNodes(i, 1) = i: oldNodes(i, 2) = gx(i): oldNodes(i, 3) = gy(i)
+        If i = 1 Then lowX = gx(i): highX = gx(i): lowY = gy(i): highY = gy(i)
+        If gx(i) < lowX Then lowX = gx(i)
+        If gx(i) > highX Then highX = gx(i)
+        If gy(i) < lowY Then lowY = gy(i)
+        If gy(i) > highY Then highY = gy(i)
+    Next i
+    ext(1) = n
+    P5ValidateBoundaryGeometry 1, 0, ext, inner, boundary, gx, gy, n
+    meshScale = highX - lowX: If highY - lowY > meshScale Then meshScale = highY - lowY
+    segN = n: ReDim sx1(1 To n): ReDim sy1(1 To n): ReDim sx2(1 To n): ReDim sy2(1 To n)
+    ReDim sFixX(1 To n): ReDim sFixY(1 To n)
+    For i = 1 To n
+        j = boundary(1, i): k = boundary(1, i Mod n + 1)
+        sx1(i) = gx(j): sy1(i) = gy(j): sx2(i) = gx(k): sy2(i) = gy(k)
+        area = area + gx(j) * gy(k) - gx(k) * gy(j)
+    Next i
+    area = Abs(area) / 2#: mat = MeshReadMaterialNumber()
+    oldElements(1, 10) = mat: originalNN = n: originalNE = 1
+    Set oldAreaByMaterial = CreateObject("Scripting.Dictionary"): oldAreaByMaterial.Add CStr(mat), area
+    terrainPrepared = False: candidateKind = "SMOOTH": candidateRebuilt = False
+    geomVersion = 0: heatVersion = -1: sweepCount = 0: plasticHeatLimit = 0#
+    Call PrepareTerrainSegmentColumns
+    If (highX - lowX) / spacing > 30000# Or (highY - lowY) / spacing > 30000# Then Err.Raise vbObjectError + 3860, , "格子間隔が小さすぎます。節点・要素上限60000以内となるよう大きくしてください。"
+    ' Match the Q8 edge scale created by the historical triangle-to-quad subdivision.
+    If Not BuildTerrain(0, True, False, spacing / 2#) Then Err.Raise vbObjectError + 3860, , "地形格子を適用できません：" & terrainReason
+    Call CheckCandidate
+    Call GetQuality(q)
+    P5ValidateMeshQuality nn, ne, conn, xx, yy
+    If Not QualityPasses(q) Or Not P5QualityMeetsSettings() Then Err.Raise vbObjectError + 3860, , "地形格子を適用できません：品質目標を満たしません。" & P5QualitySummary()
+    ReDim outX(1 To nn): ReDim outY(1 To nn): ReDim outElements(1 To ne, 1 To 10)
+    For i = 1 To nn: outX(i) = xx(i): outY(i) = yy(i): Next i
+    For i = 1 To ne
+        outElements(i, 1) = i: outElements(i, 10) = mat
+        For j = 1 To 8: outElements(i, j + 1) = conn(i, j): Next j
+    Next i
+    selectedMethod = "地形追従格子（直接生成）"
+    MeshAdaptLastSummary = "デローニ・角度最適化・候補探索を省略。格子間隔 " & CStr(spacing) & " / 節点 " & CStr(nn) & " / 要素 " & CStr(ne) & vbCrLf & P5QualitySummary()
+End Sub
+
+Private Function BuildTerrain(ByVal offset As Long, Optional ByVal ignoreCountWindow As Boolean = False, Optional ByVal rankingOnly As Boolean = False, Optional ByVal directSpacing As Double = 0#) As Boolean
     Dim xmin As Double, xmax As Double, bottom As Double, tol As Double, k As Long, i As Long, j As Long, t As Long, n As Long
     Dim tx1() As Double, ty1() As Double, tx2() As Double, ty2() As Double, tfX() As Long, tfY() As Long, order() As Long, nt As Long
     Dim px() As Double, py() As Double, masksX() As Long, masksY() As Long, np As Long, a As Double, b As Double, c As Double, endY As Double, z As Double
     Dim nx As Long, ny As Long, count() As Long, total As Long, target As Long, ideal As Double, best As Double, at As Long, h As Double
     Dim gridX() As Double, gridH() As Double, col As Long, row As Long, e As Long, v1 As Long, v2 As Long, v3 As Long, v4 As Long, mid As Long, key As String, mids As Object
     Dim bcBottomX As Long, bcBottomY As Long, bcLeftX As Long, bcLeftY As Long, bcRightX As Long, bcRightY As Long
+    Dim nodeCapacity As Long, elementCapacity As Long, horizontal() As Long, vertical() As Long
     If terrainPrepared Then
         xmin = terrainLeft: xmax = terrainRight: bottom = terrainBottom
         px = terrainPX: py = terrainPY: np = terrainNP
@@ -1369,16 +1512,29 @@ NextTop:
 TerrainGeometryReady:
     ideal = 0#
     For i = 1 To np: ideal = ideal + (px(i) - px(i - 1)) * ((py(i) + py(i - 1)) / 2# - bottom): Next i
-    ny = CLng(Sqr(originalNE * ideal / (xmax - xmin) ^ 2)) + offset
-    If ny < 1 Then Exit Function
-    nx = CLng(CDbl(originalNE) / CDbl(ny))
-    If nx < np Then nx = np
-    If Not ignoreCountWindow Then
+    If directSpacing > 0# Then
+        ny = 1: nx = 0
+        For i = 0 To np
+            target = CLng(-Int(-(py(i) - bottom) / directSpacing))
+            If target > ny Then ny = target
+        Next i
+        For i = 1 To np: nx = nx + CLng(-Int(-(px(i) - px(i - 1)) / directSpacing)): Next i
+    Else
+        ny = CLng(Sqr(originalNE * ideal / (xmax - xmin) ^ 2)) + offset
+        If ny < 1 Then Exit Function
+        nx = CLng(CDbl(originalNE) / CDbl(ny))
+        If nx < np Then nx = np
+    End If
+    If CDbl(nx) * CDbl(ny) > 60000# Or 3# * nx * ny + 2# * nx + 2# * ny + 1# > 60000# Then Err.Raise vbObjectError + 3860, , "地形格子の節点・要素数が60000を超えます。格子間隔を大きくしてください。"
+    If Not ignoreCountWindow And directSpacing <= 0# Then
         If CDbl(nx * ny) < CDbl(originalNE) * FEMReadSetting("MESH_TERRAIN_COUNT_MIN", 0.55) Then Exit Function
         If CDbl(nx * ny) > CDbl(originalNE) * FEMReadSetting("MESH_TERRAIN_COUNT_MAX", 1.8) Then Exit Function
     End If
-    ReDim count(1 To np): total = np
-    For i = 1 To np: count(i) = 1: Next i
+    ReDim count(1 To np): total = 0
+    For i = 1 To np
+        If directSpacing > 0# Then count(i) = CLng(-Int(-(px(i) - px(i - 1)) / directSpacing)) Else count(i) = 1
+        total = total + count(i)
+    Next i
     Do While total < nx
         best = -1#: at = 1
         For i = 1 To np
@@ -1395,32 +1551,47 @@ TerrainGeometryReady:
         Next j
     Next i
     gridX(nx) = xmax: gridH(nx) = py(np) - bottom
-    ne = nx * ny: nn = 0
-    ReDim xx(1 To ne * 30 + 100): ReDim yy(1 To UBound(xx)): ReDim nodeRows(1 To UBound(xx), 1 To 14)
-    ReDim conn(1 To ne * 4, 1 To 8): ReDim materialId(1 To ne * 4): ReDim candidateScore(1 To ne * 4)
+    ne = nx * ny: nn = 0: terrainNX = nx: terrainNY = ny
+    nodeCapacity = ne * 30 + 100: elementCapacity = ne * 4
+    If candidateKind = "SMOOTH" Then
+        nodeCapacity = 3 * nx * ny + 2 * nx + 2 * ny + 1: elementCapacity = ne
+    End If
+    ReDim xx(1 To nodeCapacity): ReDim yy(1 To nodeCapacity): ReDim nodeRows(1 To nodeCapacity, 1 To 14)
+    ReDim conn(1 To elementCapacity, 1 To 8): ReDim materialId(1 To elementCapacity): ReDim candidateScore(1 To elementCapacity)
     For row = 0 To ny
         For col = 0 To nx
             n = AddPoint(gridX(col), bottom + gridH(col) * row / ny): Call SetTerrainConditions(n)
         Next col
     Next row
-    Set mids = CreateObject("Scripting.Dictionary"): e = 0
+    ReDim horizontal(0 To ny, 0 To nx - 1): ReDim vertical(0 To ny - 1, 0 To nx): e = 0
     For row = 0 To ny - 1
         For col = 0 To nx - 1
             e = e + 1: v1 = row * (nx + 1) + col + 1: v2 = v1 + 1: v4 = v1 + nx + 1: v3 = v4 + 1
             conn(e, 1) = v1: conn(e, 2) = v2: conn(e, 3) = v3: conn(e, 4) = v4: materialId(e) = CLng(oldElements(1, 10))
             For j = 1 To 4
-                v1 = conn(e, j): v2 = conn(e, j Mod 4 + 1): key = EdgeKey(v1, v2)
-                If mids.Exists(key) Then
-                    mid = CLng(mids(key))
-                Else
-                    mid = AddPoint((xx(v1) + xx(v2)) / 2#, (yy(v1) + yy(v2)) / 2#): mids.Add key, mid: Call SetTerrainConditions(mid)
+                v1 = conn(e, j): v2 = conn(e, j Mod 4 + 1)
+                Select Case j
+                    Case 1: mid = horizontal(row, col)
+                    Case 2: mid = vertical(row, col + 1)
+                    Case 3: mid = horizontal(row + 1, col)
+                    Case 4: mid = vertical(row, col)
+                End Select
+                If mid = 0 Then
+                    ' First-seen ordering and arithmetic are identical to the edge dictionary.
+                    mid = AddPoint((xx(v1) + xx(v2)) / 2#, (yy(v1) + yy(v2)) / 2#): Call SetTerrainConditions(mid)
+                    Select Case j
+                        Case 1: horizontal(row, col) = mid
+                        Case 2: vertical(row, col + 1) = mid
+                        Case 3: horizontal(row + 1, col) = mid
+                        Case 4: vertical(row, col) = mid
+                    End Select
                 End If
                 conn(e, j + 4) = mid
             Next j
         Next col
     Next row
     candidateRebuilt = True
-    Call BuildEdges
+    If Not rankingOnly Then Call BuildEdges
     Call CacheMetrics
     BuildTerrain = True
 End Function

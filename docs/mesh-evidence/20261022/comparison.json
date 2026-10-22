@@ -1,0 +1,90 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "case": "slope2",
+      "repeats": 3,
+      "reference_median_seconds": 5.8036352,
+      "candidate_median_seconds": 0.9643977,
+      "reduction_percent": 83.38286837877061,
+      "reference_nodes": 413,
+      "reference_elements": 120,
+      "all_mesh_cells_exact": false,
+      "direct_python_mesh_equivalent": true,
+      "geometry": {
+        "nodes": 537,
+        "elements": 160,
+        "area_m2": 116.0,
+        "min_jacobian": 0.12500000000000003,
+        "min_angle_deg": 56.30993247402021,
+        "max_angle_deg": 123.6900675259798
+      },
+      "reference_profile": "工程,回数,秒\r\nCONTROL.MeshApplySheetBoundaryConditions,1,0.000000\r\nMeshAngle.AngleFG,464,0.164063\r\nMeshAngle.MeshAngleOptimize,2,0.250000\r\nCONTROL.CreateMeshFromGeometryDefinition,1,3.117188\r\n",
+      "candidate_profile": "工程,回数,秒\r\nCONTROL.CreateMeshFromGeometryDefinition,1,0.039063\r\n"
+    },
+    {
+      "case": "slope1",
+      "repeats": 3,
+      "reference_median_seconds": 12.4363327,
+      "candidate_median_seconds": 2.5779616,
+      "reduction_percent": 79.27072504260038,
+      "reference_nodes": 1528,
+      "reference_elements": 473,
+      "all_mesh_cells_exact": false,
+      "direct_python_mesh_equivalent": true,
+      "geometry": {
+        "nodes": 2033,
+        "elements": 640,
+        "area_m2": 116.0,
+        "min_jacobian": 0.031250000000000014,
+        "min_angle_deg": 56.30993247402018,
+        "max_angle_deg": 123.69006752597983
+      },
+      "reference_profile": "工程,回数,秒\r\nCONTROL.MeshApplySheetBoundaryConditions,1,0.007813\r\nMeshAngle.AngleFG,2829,3.937500\r\nMeshAngle.MeshAngleOptimize,2,6.515625\r\nCONTROL.CreateMeshFromGeometryDefinition,1,10.570313\r\n",
+      "candidate_profile": "工程,回数,秒\r\nCONTROL.CreateMeshFromGeometryDefinition,1,0.132813\r\n"
+    },
+    {
+      "case": "flat1",
+      "repeats": 3,
+      "reference_median_seconds": 8.2556137,
+      "candidate_median_seconds": 2.7354051,
+      "reduction_percent": 66.86612044359586,
+      "reference_nodes": 2033,
+      "reference_elements": 640,
+      "all_mesh_cells_exact": false,
+      "direct_python_mesh_equivalent": true,
+      "geometry": {
+        "nodes": 2033,
+        "elements": 640,
+        "area_m2": 160.0,
+        "min_jacobian": 0.0625,
+        "min_angle_deg": 90.0,
+        "max_angle_deg": 90.0
+      },
+      "reference_profile": "工程,回数,秒\r\nCONTROL.MeshApplySheetBoundaryConditions,1,0.023438\r\nMeshAngle.AngleFG,2,0.007813\r\nMeshAngle.MeshAngleOptimize,2,0.015625\r\nCONTROL.CreateMeshFromGeometryDefinition,1,5.757813\r\n",
+      "candidate_profile": "工程,回数,秒\r\nCONTROL.CreateMeshFromGeometryDefinition,1,0.117188\r\n"
+    },
+    {
+      "case": "slope2_quality",
+      "repeats": 3,
+      "reference_median_seconds": 5.7453101,
+      "candidate_median_seconds": 5.5145277,
+      "reduction_percent": 4.0168832662313525,
+      "reference_nodes": 413,
+      "reference_elements": 120,
+      "all_mesh_cells_exact": true,
+      "direct_python_mesh_equivalent": false,
+      "geometry": {
+        "nodes": 413,
+        "elements": 120,
+        "area_m2": 115.99999999999994,
+        "min_jacobian": 0.16666666666666585,
+        "min_angle_deg": 56.30993247402021,
+        "max_angle_deg": 123.6900675259798
+      },
+      "reference_profile": "工程,回数,秒\r\nCONTROL.MeshApplySheetBoundaryConditions,1,0.000000\r\nMeshAngle.AngleFG,464,0.179688\r\nMeshAngle.MeshAngleOptimize,2,0.242188\r\nCONTROL.CreateMeshFromGeometryDefinition,1,3.195313\r\n",
+      "candidate_profile": "工程,回数,秒\r\nCONTROL.MeshApplySheetBoundaryConditions,1,0.000000\r\nMeshAngle.AngleFG,464,0.195313\r\nMeshAngle.MeshAngleOptimize,2,0.250000\r\nCONTROL.CreateMeshFromGeometryDefinition,1,2.929688\r\n"
+    }
+  ],
+  "note": "Wall time includes shape translation, mesh generation, quality and preview; sequential runs, not a speed guarantee. Direct mode uses a newly generated mesh with spacing/2 Q8 edges, so its mesh may differ. AngleFG times are nested within optimizer time, not additive."
+}

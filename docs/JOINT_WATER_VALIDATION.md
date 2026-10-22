@@ -82,4 +82,4 @@ python tests/compare_joint_water_regression.py --joint <JOINT出力先> --legacy
 
 ## 配布名20261023
 
-ユーザー指定によりXLSMを20261023へ改名しました。計算識別WATER_02と本体・DLLのバイトは同一です。[実Excelのコンパイル・再読込・表示と水圧JOINT再計算](reviews/groundwater_release23_issue35.md)を確認済みです。このページの14例・旧回帰の数値と記録は保持しています。
+初回23版ではユーザー指定によりXLSMを20261023へ改名し、WATER_02の本体・DLLはバイト一致でした。後続の[地形格子直接生成版](MESH_TERRAIN_PERF.md)は同名のブックを更新しています。計算部の法則・条件とDLLは維持し、水圧JOINTの再計算・保存再開も確認しています。[実Excelのコンパイル・再読込・表示と水圧JOINT再計算](reviews/groundwater_release23_issue35.md)を確認済みです。このページの14例・旧回帰の数値と記録は保持しています。

@@ -26,7 +26,7 @@ Public Sub FEMUiShapeOnlyPage()
   ws.range("B5").value2 = "材料・外周拘束を確認 → 形状入力 → 作成 → メッシュ・拘束・品質を確認します。"
   ws.range("B28").value2 = "形状メッシュ：座標・境界・格子間隔は「形状入力」で指定"
   ws.range("E9").value2 = "形状メッシュの生成要素に付ける材料番号"
-  ws.range("E29").value2 = "0=品質比較で選択。1=デローニ修正を優先。2=地形格子を使用。"
+  ws.range("E29").value2 = "0=品質比較。1=デローニ優先。2=地形格子を直接生成（適用不可は停止）。"
   ws.range("B31:E31").UnMerge: ws.range("B31:E31").Merge
   ws.range("B31").value2 = "作成すると節点・要素を更新します。既存モデルを使う場合は作成せず、確認表示へ進んでください。"
   ws.range("B31").WrapText = True: ws.rows(31).RowHeight = 34

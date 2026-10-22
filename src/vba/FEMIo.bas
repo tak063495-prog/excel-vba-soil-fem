@@ -166,7 +166,7 @@ Private Sub FEMRebuildSettingsLayout(ByVal ws As Worksheet)
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "MESH_REPAIR_IMPROVEMENT_TOLERANCE", "修正", "改善判定", 0.0001, "相対", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "MESH_REPAIR_ANGLE_ITERATIONS", "修正", "角度最適化反復", 2000#, "1～5000", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "MESH_REPAIR_TERRAIN_COMPARE", "修正", "地形追従比較", 1#, "1=地形追従と角度最適化を比較 / 0=しない", False
-  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "MESH_GEN_COMPARE", "修正", "生成時比較", 1#, "0=両方合格なら品質の良い方 / 1=デローニ修正優先 / 2=地形格子（生格子。角度最適化しない）", False
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "MESH_GEN_COMPARE", "修正", "生成方式", 1#, "0=品質比較 / 1=デローニ優先 / 2=地形格子を直接生成（適用不可は停止）", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "MESH_TERRAIN_COUNT_MIN", "修正", "格子要素数下限比", 0.55, "デローニ要素数に対する比", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "MESH_TERRAIN_COUNT_MAX", "修正", "格子要素数上限比", 1.8, "デローニ要素数に対する比", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ADAPT_MAX_ELEMENT_RATIO", "適応", "要素数倍率上限", 2#, "再メッシュの増加上限", False

@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "max_difference": {
+    "disp": 0.0,
+    "stress": 0.0,
+    "metrics": 0.0
+  },
+  "reference_seconds": 5.1474565,
+  "candidate_seconds": 5.1540116
+}

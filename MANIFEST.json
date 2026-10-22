@@ -16,8 +16,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 24303,
-    "sha256": "06cad3b6cd8df6e2922e6324af8c5a10e1aa41a07d340fecc31e4c51b0c7d28a"
+    "bytes": 24718,
+    "sha256": "a49e5aeecbd31b9f630f3e309bdc949338aa7b599e14f8ae379eef57a9e9cda0"
   },
   {
     "path": "docs/ACCELERATION_HISTORY.md",
@@ -86,13 +86,18 @@
   },
   {
     "path": "docs/JOINT_WATER_VALIDATION.md",
-    "bytes": 11807,
-    "sha256": "a67b3c1185bc58f7abfc3d898600754c29339fc762ed4c75c0bfb27bd28d2bf3"
+    "bytes": 12024,
+    "sha256": "56abd08af46ee98b1ff0fe3267934cfc54cad47e018c984a8194cb59255c77cd"
   },
   {
     "path": "docs/LITERATURE_VALIDATION.md",
     "bytes": 20844,
     "sha256": "bc3158e0fb13616d058ee94be060a69bb5ad646be4254e370fbe40cb251813dd"
+  },
+  {
+    "path": "docs/MESH_TERRAIN_PERF.md",
+    "bytes": 7224,
+    "sha256": "d6a803e82fa575d23b6aceb14709e45dfcc9bfef75fc304a1ac4dbd49a527c64"
   },
   {
     "path": "docs/MODEL_INPUTS.md",
@@ -6060,6 +6065,81 @@
     "sha256": "1de6868f4865b9c232fac8c9977d66dad06cbd7bde9db6de51bd93cf2417d701"
   },
   {
+    "path": "docs/mesh-evidence/20261022/comparison.json",
+    "bytes": 4104,
+    "sha256": "de63644e48ebf395949e0f44899fbc520c50c194380c1fc5eae353733a916cf2"
+  },
+  {
+    "path": "docs/mesh-evidence/20261022/elastic_comparison.json",
+    "bytes": 173,
+    "sha256": "badad1c5be59d2da03f9949d8488ba1d772f6b9e28df8cbdfa5d1903ddcd91bf"
+  },
+  {
+    "path": "docs/mesh-evidence/20261022/elastic_input.json",
+    "bytes": 84541,
+    "sha256": "2003cfdbc68e521bd52b2f92a8b08e5bb06c3d78734404c7b73f4920516188ea"
+  },
+  {
+    "path": "docs/mesh-evidence/20261022/guards.json",
+    "bytes": 3865,
+    "sha256": "8687b56dfea6d6d95db069d995db863a0bddf819d32ccb920db7d0815e192e8f"
+  },
+  {
+    "path": "docs/mesh-evidence/20261022/package.json",
+    "bytes": 1227,
+    "sha256": "97465621afbab53dd9992006e8c15d2272dc83defb37979bb7fab3c5babcd8b7"
+  },
+  {
+    "path": "docs/mesh-evidence/20261022/python_experiment.json",
+    "bytes": 2261,
+    "sha256": "437a57cefcbeeb9603891daf2d245c876d2e7b99ff7fe6135e8d331e1bb7d7ad"
+  },
+  {
+    "path": "docs/mesh-evidence/20261022/records.zip",
+    "bytes": 22878150,
+    "sha256": "48b7c78e89498a3df8cffbdb1d1287e9914eedf9c881a0b88d1060d4820c2e5b"
+  },
+  {
+    "path": "docs/mesh-evidence/20261022/release.json",
+    "bytes": 402,
+    "sha256": "bd00d94b73f84dde2c3df0678f732011f643a5f998da9cc3a60593a4070c317c"
+  },
+  {
+    "path": "docs/mesh-evidence/20261022/terrain_error.jpg",
+    "bytes": 162303,
+    "sha256": "d0843d851e3b9493cf2af37335dfd4007fd6ac90e78d7b1a4e2ece2ea9ee132c"
+  },
+  {
+    "path": "docs/mesh-evidence/20261022/terrain_mesh.jpg",
+    "bytes": 155597,
+    "sha256": "6530ec263955ca10b2ec3a038bf2c89ecf179ef754c7c69f562513d7a55a85d0"
+  },
+  {
+    "path": "docs/mesh-evidence/20261022/terrain_settings.jpg",
+    "bytes": 149201,
+    "sha256": "8f32bfc366c5ea4d3ca4f89ec69c0b37f4684d256670b3ae9486a812e972c566"
+  },
+  {
+    "path": "docs/mesh-evidence/20261022/timing.png",
+    "bytes": 51492,
+    "sha256": "1c5442af7976734de183ef4d6937efe214e50b841498f324fcb27cc2f2cf34f7"
+  },
+  {
+    "path": "docs/mesh-evidence/20261022/ui_checks.json",
+    "bytes": 1376,
+    "sha256": "5dbf0f0a663ee1b799acafe2f3b153791788470feb2422e72b89501307a60541"
+  },
+  {
+    "path": "docs/mesh-evidence/20261022/wet_joint_check.json",
+    "bytes": 768,
+    "sha256": "413283f538879c2b0245843c01cdc5be93e972f7fb1887f07e5be8b057cf717e"
+  },
+  {
+    "path": "docs/mesh-evidence/20261022/wet_joint_comparison.json",
+    "bytes": 173,
+    "sha256": "416bf2856357a038a0c3c10e85dfc1c592175f68cd8836e1e6eed921cf1c4f95"
+  },
+  {
     "path": "docs/native-evidence/assembly_20261020/DAVIS_0.json",
     "bytes": 51733,
     "sha256": "f6dde4d41d2c4c0d2fe9a03db43fc12858c06d4ef40bc224af6bc0820edb24ac"
@@ -8071,8 +8151,8 @@
   },
   {
     "path": "docs/reviews/groundwater_release23_issue35.md",
-    "bytes": 5121,
-    "sha256": "0428fecb83a777ece20f8dc4acf02a035a025c343d2989195d9b336803708541"
+    "bytes": 5578,
+    "sha256": "6e1ed535b11e57d99345602872bca98682c1fbf640c41fd5b0646766f03a8cdc"
   },
   {
     "path": "docs/shape-mesh-evidence/20261020/combined_dll_numeric.json",
@@ -8601,8 +8681,8 @@
   },
   {
     "path": "src/vba/CONTROL.bas",
-    "bytes": 101320,
-    "sha256": "5c55e98e256ac1980c92407999b72b203a7e2ff8da7a0ae32ff725c0d6d2aed4"
+    "bytes": 102444,
+    "sha256": "4576cc3dc57c94ea8b450611d117e3f59a0fbb986fd449f71e1cd31204c70ec9"
   },
   {
     "path": "src/vba/FEM.bas",
@@ -8641,8 +8721,8 @@
   },
   {
     "path": "src/vba/FEMIo.bas",
-    "bytes": 178520,
-    "sha256": "ea88bb775d852fb0ff15974e649f73bfe03d15fbb8433677b1dfcf527ae8b4c3"
+    "bytes": 178487,
+    "sha256": "c1bc7161153f31b50e15571724a2d95d03f4ed8c34707e649efde62cbeaaf92d"
   },
   {
     "path": "src/vba/FEMJointWater.bas",
@@ -8741,8 +8821,8 @@
   },
   {
     "path": "src/vba/FEMUiMeshWorkflow.bas",
-    "bytes": 7338,
-    "sha256": "a73203dccd153fbd644cf9c6af464895a7fffb3d969911c1528ba2dbaf2a9218"
+    "bytes": 7353,
+    "sha256": "ccefbe9e2bac11b829db51088d5a197f0e4dbe273b4747fe4d1c8b219c9e922b"
   },
   {
     "path": "src/vba/FEMUiValidation.bas",
@@ -8786,8 +8866,8 @@
   },
   {
     "path": "src/vba/MeshAdapt.bas",
-    "bytes": 88157,
-    "sha256": "040c883decff3281affd7cf07652efb832234eedd19b5e9bf9e4a4465a2f2b7a"
+    "bytes": 99649,
+    "sha256": "9a42f7e8b562841af15cb5ff3417aa64840d7589053a6e98bea53641cdf32225"
   },
   {
     "path": "src/vba/MeshAngle.bas",
@@ -8860,6 +8940,11 @@
     "sha256": "c6e240b5ef256cd12dcfe5b892f713a37827aaf20809f8521b60c48647d63c6e"
   },
   {
+    "path": "tests/check_mesh_benchmark.py",
+    "bytes": 4425,
+    "sha256": "3767a6a623e94ded9d204279e5a57faa7aeecff97940656baf5b99a7ec2e94b9"
+  },
+  {
     "path": "tests/check_release23_manual.py",
     "bytes": 4605,
     "sha256": "858efa4b94350cc4772c5d162f2f4f8b787e6ad440adc1e406ade5ca70818274"
@@ -8878,6 +8963,11 @@
     "path": "tests/compare_manual_flows.py",
     "bytes": 5993,
     "sha256": "dd630c7b3cd753f9a708b6733830745f80fa4f28d1e3a4416d543c7f7c28f8f8"
+  },
+  {
+    "path": "tests/experiment_mesh_terrain.py",
+    "bytes": 7338,
+    "sha256": "ddf356aeba7c2821b123e4a69f0e04d38da90e679ac6cc8c60072782bbcce9d4"
   },
   {
     "path": "tests/fixtures/groundwater_all_birth.json",
@@ -9710,6 +9800,11 @@
     "sha256": "006f35d08744d020a08e989904d4513187da33289a5a0874142a634be0b3edb4"
   },
   {
+    "path": "tests/package_terrain_release.py",
+    "bytes": 5912,
+    "sha256": "2f908e602066150c2c79db8a8083942794fee78d3e41a2d9a18e3acc6d61990f"
+  },
+  {
     "path": "tests/plot_joint_orientation.py",
     "bytes": 2124,
     "sha256": "09cf2d674a4bb91bf42fbefdc208593cc857199bccc1125d1e3e7e6c380bd02d"
@@ -9796,8 +9891,8 @@
   },
   {
     "path": "tests/run_groundwater_fixture.ps1",
-    "bytes": 10496,
-    "sha256": "6b269b287c7407613861c97c4407e8a66635aed78992f0233c1fca108a79e59a"
+    "bytes": 10863,
+    "sha256": "db60d7f278285995c9dec9365ed4294b801517c0da4556d7ee7310c83b5576d2"
   },
   {
     "path": "tests/run_groundwater_regression.ps1",
@@ -9813,6 +9908,11 @@
     "path": "tests/run_manual_case.ps1",
     "bytes": 10275,
     "sha256": "fa778ec7eedab2e292880b503557c1f32b0aa7cc0718dc8506bd8702606a7035"
+  },
+  {
+    "path": "tests/run_mesh_benchmark.ps1",
+    "bytes": 7928,
+    "sha256": "9fba4dd05473567b8eddc5b489831c2ecd71ea486974e113487363a8bab29a21"
   },
   {
     "path": "tests/test_best03_defaults.ps1",
@@ -9925,6 +10025,11 @@
     "sha256": "cb9a4eb7d445f90ab2987708575805b220ebaa4f67526c88303464f2895cb85b"
   },
   {
+    "path": "tests/verify_terrain_ui.ps1",
+    "bytes": 3285,
+    "sha256": "95bd8f100fb3f4aa7bbda38a38870713f491246c794afa4fb642170b2b1aa19e"
+  },
+  {
     "path": "tests/verify_workbook_rename.ps1",
     "bytes": 3298,
     "sha256": "5063e324c4ef7914a4e809b4813fc6698598a43317819f5e4a92aad4be0348f0"
@@ -10011,8 +10116,8 @@
   },
   {
     "path": "workbook/SoilFEM_UI_20261023.zip",
-    "bytes": 3367396,
-    "sha256": "4bdc186ccba55c0ff892444e3139a18c6f691fc4510a3d079a2ba5c11657f77c"
+    "bytes": 3393367,
+    "sha256": "f10f0e6f4d8c7b18aa20d62f2c9c2836fe4cf7d0a9a8ec39417dabcb40e89b2e"
   },
   {
     "path": "workbook/inco_assembly_20261020/2DSoilFEM_inco_assembly_20261020.xlsm",
@@ -10266,18 +10371,18 @@
   },
   {
     "path": "workbook/ui_20261023/2DSoilFEM_ui_20261023.xlsm",
-    "bytes": 3519130,
-    "sha256": "1702746bb1c0351c59970f50a18a4a73f36f8b63ad7b1451b01e43d535afc2e7"
+    "bytes": 3542405,
+    "sha256": "fdb6215362b57d6d7437364e9d2c6d228733cc7ffbcd1828875aef0a557d5e42"
   },
   {
     "path": "workbook/ui_20261023/BUILD_RECORD.json",
-    "bytes": 978,
-    "sha256": "31ae339e20fcc928bc4d8ea0136592bfee3623b7dab2dd4c243b193c8a481114"
+    "bytes": 1874,
+    "sha256": "db3e70a54a27fbceab92b8893adb2357062dc8c5f5e7285f68df4a9f6ec673a3"
   },
   {
     "path": "workbook/ui_20261023/README.txt",
-    "bytes": 3605,
-    "sha256": "457f968c7519e200c9dc2f9eae78c3abfdd2ad4e7b5efea646a119678d0b6ce7"
+    "bytes": 3868,
+    "sha256": "b93c28db6034c5c9f047e5120dc13578a1e2086bc34a371c3660f13558220a10"
   },
   {
     "path": "workbook/ui_20261023/soilfem_native_x64.dll",

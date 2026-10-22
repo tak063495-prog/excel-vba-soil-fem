@@ -1,0 +1,79 @@
+{
+  "status": "PASS",
+  "rejected_cases": [
+    {
+      "result": "ERROR|メッシュ作成 [地形格子の適用確認・直接生成]：地形格子を適用できません：品質目標を満たしません。最小面積=3.000E-01、最小Jacobian=5.000E-02、最小角度=5.7°、最大アスペクト比=8.04",
+      "mesh_unchanged": true,
+      "seconds": 0.0517698,
+      "status": "EXPECTED_REJECT",
+      "repeat": 0,
+      "case": "steep_fallback",
+      "profile": "工程,回数,秒\r\nCONTROL.CreateMeshFromGeometryDefinition,1,0.023438\r\n"
+    },
+    {
+      "result": "ERROR|メッシュ作成 [地形格子の適用確認・直接生成]：地形格子は外周1つ・穴なしの単一領域だけです。複数領域・穴には適用できません。",
+      "mesh_unchanged": true,
+      "seconds": 0.0171165,
+      "status": "EXPECTED_REJECT",
+      "repeat": 0,
+      "case": "hole_fallback",
+      "profile": "工程,回数,秒\r\nCONTROL.CreateMeshFromGeometryDefinition,1,0.000000\r\n"
+    },
+    {
+      "result": "ERROR|メッシュ作成 [地形格子の適用確認・直接生成]：地形格子を適用できません：水平底辺・鉛直側辺・高さ関数の地表ではありません",
+      "mesh_unchanged": true,
+      "seconds": 0.0244841,
+      "status": "EXPECTED_REJECT",
+      "repeat": 0,
+      "case": "sloping_bottom_rejected",
+      "profile": "工程,回数,秒\r\nCONTROL.CreateMeshFromGeometryDefinition,1,0.007813\r\n"
+    },
+    {
+      "result": "ERROR|メッシュ作成 [地形格子の適用確認・直接生成]：地形格子を適用できません：穴・複数領域・張り出しを含むため",
+      "mesh_unchanged": true,
+      "seconds": 0.0223744,
+      "status": "EXPECTED_REJECT",
+      "repeat": 0,
+      "case": "overhang_rejected",
+      "profile": "工程,回数,秒\r\nCONTROL.CreateMeshFromGeometryDefinition,1,0.015625\r\n"
+    },
+    {
+      "result": "ERROR|メッシュ作成 [地形格子の適用確認・直接生成]：節点番号によるFORCE載荷は地形格子生成前に解除し、生成後に設定してください。",
+      "mesh_unchanged": true,
+      "seconds": 0.0233364,
+      "status": "EXPECTED_REJECT",
+      "repeat": 0,
+      "case": "force_rejected",
+      "profile": "工程,回数,秒\r\nCONTROL.CreateMeshFromGeometryDefinition,1,0.015625\r\n"
+    },
+    {
+      "result": "ERROR|メッシュ作成 [地形格子の適用確認・直接生成]：地形格子の直接生成は単一材料です。接合境界を含むモデルには適用できません。",
+      "mesh_unchanged": true,
+      "seconds": 0.0632836,
+      "status": "EXPECTED_REJECT",
+      "repeat": 0,
+      "case": "joint_rejected",
+      "profile": "工程,回数,秒\r\nCONTROL.CreateMeshFromGeometryDefinition,1,0.007813\r\n"
+    },
+    {
+      "result": "ERROR|メッシュ作成 [地形格子の適用確認・直接生成]：要素・辺番号を指定した水理境界があります。地形格子生成前に解除し、生成後に設定してください。",
+      "mesh_unchanged": true,
+      "seconds": 0.0214481,
+      "status": "EXPECTED_REJECT",
+      "repeat": 0,
+      "case": "water_boundary_rejected",
+      "profile": "工程,回数,秒\r\nCONTROL.CreateMeshFromGeometryDefinition,1,0.000000\r\n"
+    },
+    {
+      "result": "ERROR|メッシュ作成 [地形格子の適用確認・直接生成]：格子間隔が小さすぎます。節点・要素上限60000以内となるよう大きくしてください。",
+      "mesh_unchanged": true,
+      "seconds": 0.0246974,
+      "status": "EXPECTED_REJECT",
+      "repeat": 0,
+      "case": "too_fine_rejected",
+      "profile": "工程,回数,秒\r\nCONTROL.CreateMeshFromGeometryDefinition,1,0.031250\r\n"
+    }
+  ],
+  "clockwise_mesh_exact": true,
+  "delaunay_policy1_mesh_exact": true
+}
