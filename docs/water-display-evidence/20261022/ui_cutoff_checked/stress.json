@@ -1,0 +1,32 @@
+{
+  "source_book_sha256": "E013A1DD566831EEC91EA2033E19CE6FF078BAAA38364B7AABE83A2DD28B1040",
+  "status": "PASS",
+  "sheet": "図",
+  "action": "stress",
+  "shapes": [
+    {
+      "name": "UI_MeshStart",
+      "left": 12.0,
+      "text": "このメッシュで解析を開始",
+      "width": 245.0,
+      "height": 32.0,
+      "top": 562.0
+    },
+    {
+      "name": "UI_MeshRepair",
+      "left": 275.0,
+      "text": "品質修正候補を確認",
+      "width": 245.0,
+      "height": 32.0,
+      "top": 562.0
+    },
+    {
+      "name": "P1Agg_ViewSVG",
+      "left": 10.0,
+      "text": null,
+      "width": 860.00006,
+      "height": 540.0,
+      "top": 10.0
+    }
+  ]
+}

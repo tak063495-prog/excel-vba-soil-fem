@@ -1,0 +1,48 @@
+{
+  "source_book_sha256": "27207C7CA2BD7B3AFB80AF27EFD23FA9B53E4D6E5F1061E35B65495D813AEB26",
+  "sheet": "水条件",
+  "action": "input",
+  "shapes": [
+    {
+      "left": 854.25,
+      "width": 125.0,
+      "top": 37.5,
+      "height": 22.0,
+      "text": "入力へ",
+      "name": "GW_UI_INPUT"
+    },
+    {
+      "left": 854.25,
+      "width": 125.0,
+      "top": 85.5,
+      "height": 22.0,
+      "text": "水圧プレビュー",
+      "name": "GW_UI_PREVIEW"
+    },
+    {
+      "left": 854.25,
+      "width": 125.0,
+      "top": 133.5,
+      "height": 22.0,
+      "text": "水圧結果",
+      "name": "GW_UI_RESULTS"
+    },
+    {
+      "left": 407.25,
+      "width": 125.0,
+      "top": 133.5,
+      "height": 22.0,
+      "text": "接合の水圧入力",
+      "name": "GW_UI_JOINT_INPUT"
+    },
+    {
+      "left": 630.75,
+      "width": 125.0,
+      "top": 133.5,
+      "height": 22.0,
+      "text": "接合の水圧結果",
+      "name": "GW_UI_JOINT_RESULTS"
+    }
+  ],
+  "status": "PASS"
+}

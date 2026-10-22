@@ -16,8 +16,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 25168,
-    "sha256": "e1bc8eb58c93a6a0d5e522f2414857b476626ed1feb643e8d20ec775d9f4c71b"
+    "bytes": 25835,
+    "sha256": "5d0289a8728b574866ec1d815716834f530f1a73a7983a22bb641f1cafee5557"
   },
   {
     "path": "docs/ACCELERATION_HISTORY.md",
@@ -26,8 +26,8 @@
   },
   {
     "path": "docs/GROUNDWATER.md",
-    "bytes": 15863,
-    "sha256": "4b0b08bb1b2e8ec6b07a6a556daaf1f0c2346f96a805ff87826dd2b594fdfdee"
+    "bytes": 18023,
+    "sha256": "eec4464f81284bf7925f774af5fc94d97c9f176e9c35e7fdc08df75607d7fab2"
   },
   {
     "path": "docs/GROUNDWATER_VALIDATION.md",
@@ -178,6 +178,16 @@
     "path": "docs/VIEWER_FIX_20261020.md",
     "bytes": 6111,
     "sha256": "2806d55065fa68aa3b87e14d3eae4a789f8812bcfd16b1688a434544812bbc4d"
+  },
+  {
+    "path": "docs/WATER_DISPLAY_VALIDATION.md",
+    "bytes": 5503,
+    "sha256": "0a35bcbf2bfafa7201ca1d5d13b55a9fa942453b85bfc8eee486562cbb4bedaf"
+  },
+  {
+    "path": "docs/WATER_STAGE_INPUT_PLAN.md",
+    "bytes": 5799,
+    "sha256": "c1d6033e94483517e0f10f12ea43584348fac2a61f9dcfa0fa307a4f379b91ab"
   },
   {
     "path": "docs/WORKBOOK_UI_20261020.md",
@@ -941,8 +951,8 @@
   },
   {
     "path": "docs/manuals/2DSoilFEM_Manual.md",
-    "bytes": 296737,
-    "sha256": "4102445c01598230caef223e496d0de059e40b5df2a207b156d4a371b73e579c"
+    "bytes": 312435,
+    "sha256": "a950e88da5ec6076dc7f4d242e1c2b49fe8612891ffa0e88b455ad767151aa0d"
   },
   {
     "path": "docs/manuals/2DSoilFEM_Manual_20261021_2017.pdf",
@@ -1006,8 +1016,8 @@
   },
   {
     "path": "docs/manuals/README.md",
-    "bytes": 15028,
-    "sha256": "33049134021a895d107b67ef5c3eb1a4db36ddd5af027762f03a8024f7b22f06"
+    "bytes": 15789,
+    "sha256": "9531a503786fb82400f8403724b7ad1fbe81e322e88e2c626b486d787abaab2a"
   },
   {
     "path": "docs/manuals/build_manual_pdf.py",
@@ -1016,8 +1026,8 @@
   },
   {
     "path": "docs/manuals/build_manual_pdf_v2.py",
-    "bytes": 5609,
-    "sha256": "5996e0deed0b4796cbc6ef1f4dfca98d254dcf528bb64f4b2d5830adfe5a327d"
+    "bytes": 5860,
+    "sha256": "47a61a626daa92a4c50401aff1a5905a1c50b2e13c74e0530bb1694e0b283254"
   },
   {
     "path": "docs/manuals/construction-evidence/20261020/anchor09/adaptive_v2a.csv.gz",
@@ -4066,8 +4076,8 @@
   },
   {
     "path": "docs/manuals/examples/README.md",
-    "bytes": 7699,
-    "sha256": "bd3226ec811d9265d5f2fe8b03d843d82c2752c743048afd8dcba9e24301a3e4"
+    "bytes": 8210,
+    "sha256": "d5211ca560b9628d409f50bd0b248fb41031f7f9072c1ad33e9e903c4fa7256f"
   },
   {
     "path": "docs/manuals/examples/ex01_material_20261021.xlsm",
@@ -5053,6 +5063,11 @@
     "path": "docs/manuals/examples/lit_griffiths_result_20261021.xlsm",
     "bytes": 3716490,
     "sha256": "ad81576fb84c5f90ec52129dd41cb3145719830ea1e07a02161d176af7e60df8"
+  },
+  {
+    "path": "docs/manuals/examples/water_display_examples.zip",
+    "bytes": 22091626,
+    "sha256": "eb2c774047384b0dd27012941eab65e40d8673183db8726da7ae3fc272996e3b"
   },
   {
     "path": "docs/manuals/images/cover/cover_slope_mesh.png",
@@ -6063,6 +6078,71 @@
     "path": "docs/manuals/images/v8/x2_05q_fig.png",
     "bytes": 92310,
     "sha256": "0dabed91a80930f3007d120338c517bc1fe62bc187a24c45b3c56b6eab01c53b"
+  },
+  {
+    "path": "docs/manuals/images/water_display/boundary.png",
+    "bytes": 246321,
+    "sha256": "742bcb3863eeaef78972606217df364d78e692b53c09e286a959b3a71ea40f85"
+  },
+  {
+    "path": "docs/manuals/images/water_display/hydro_preview.png",
+    "bytes": 162645,
+    "sha256": "522fb015431b87668f28663d4bf1ccb60d435e3e39f7a0344b39e2d2f7b85029"
+  },
+  {
+    "path": "docs/manuals/images/water_display/input.png",
+    "bytes": 267084,
+    "sha256": "d7e89ae9763db120611b082a3b32677a06eb525f0bf48f30ed9df8b2c18c2c66"
+  },
+  {
+    "path": "docs/manuals/images/water_display/model_cutoff.png",
+    "bytes": 230867,
+    "sha256": "9435f934209bd8d26741f529e025214f0286b33547ba6cc88e54552d66ab7ba4"
+  },
+  {
+    "path": "docs/manuals/images/water_display/stage_plan.png",
+    "bytes": 167289,
+    "sha256": "c782b170192f7e43358511828aa2bf76d5d7628fb2a1110f7fdf9000cdabecdb"
+  },
+  {
+    "path": "docs/manuals/images/water_display/stage_result.png",
+    "bytes": 181040,
+    "sha256": "1b9bbede562863fe5394ea89286258dc5a2cabed7477b7f24e0fa3fc622103bb"
+  },
+  {
+    "path": "docs/manuals/images/water_display/stages.png",
+    "bytes": 176904,
+    "sha256": "1d1f6a7a31657e13ab5edbfc07f47f87d5b93084eca262d4c460f976fd0c0739"
+  },
+  {
+    "path": "docs/manuals/images/water_display/steady_preview.png",
+    "bytes": 233584,
+    "sha256": "98a1d38616015b17978ad28cc4227634aef257a709176f3c540496ab6f659860"
+  },
+  {
+    "path": "docs/manuals/images/water_display/steady_result.png",
+    "bytes": 234988,
+    "sha256": "4c8e8ffed2fda816936815c0604209905d72593bc13bb08a4af8acb1de49e044"
+  },
+  {
+    "path": "docs/manuals/images/water_display/stress_cutoff.png",
+    "bytes": 206784,
+    "sha256": "c0305724185d62ae42bb44de9838d70d41a9e1be20f05114f9b2683874dc76f4"
+  },
+  {
+    "path": "docs/manuals/images/water_display/wet_fixed13.png",
+    "bytes": 109173,
+    "sha256": "a9757f5b1fa149d5b529e5db1d6cced29f529ae147984703fc2013cac7214b14"
+  },
+  {
+    "path": "docs/manuals/images/water_display/wet_srm_davis.png",
+    "bytes": 89624,
+    "sha256": "59fca250756307fa35cf7700f960e014bdf3c6fd141645dc460dc573cc806321"
+  },
+  {
+    "path": "docs/manuals/images/water_display/wet_srm_inco.png",
+    "bytes": 93057,
+    "sha256": "6711b4e1e974821551ae7c52906f3e0107ec421b625a227fa237cee1fe4204bc"
   },
   {
     "path": "docs/manuals/manual_validation_20261020.json",
@@ -8705,6 +8785,551 @@
     "sha256": "670f8867caa0f6f7c69803efe2a655d14ae1f1c4e1ada912adbd92e6d94354ac"
   },
   {
+    "path": "docs/water-display-evidence/20261022/README.md",
+    "bytes": 1298,
+    "sha256": "a59851e5f4890b679091fbddd61ea1cd1c5621c92a1a398b4806f23a88616671"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/artifacts.json",
+    "bytes": 266,
+    "sha256": "8adce1bf5466e933ca2bba50cd6760b165ef86f60b80b0d1582fd1757f441cef"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/box_inside/result.json",
+    "bytes": 17093,
+    "sha256": "f0e08c83e3454c17c850f733046a66d25fa009faceaafed3f17d115b35c0e091"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/box_inside/resume.json",
+    "bytes": 15439,
+    "sha256": "d91bf77d3438c9bf4e272b2aeccbad3d2e8668f72eb5b5006d3eda0b541270b7"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/box_inside/resume_接合結果.json",
+    "bytes": 53373,
+    "sha256": "7854fe82a09f861c875eb70fee4a98f07a1f17b2302e214713cb0accf505b0e8"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/box_inside/ステージ結果.json",
+    "bytes": 373,
+    "sha256": "2ce8ed655f5a9d0d1904025adcf9168bdb8c22e2c97f0d789619a07f35e1f638"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/box_inside/接合結果.json",
+    "bytes": 53373,
+    "sha256": "7854fe82a09f861c875eb70fee4a98f07a1f17b2302e214713cb0accf505b0e8"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/box_inside/水圧確認.json",
+    "bytes": 27171,
+    "sha256": "71eea269af5ec1332f071e7dfbd7546bfeedb3cf36cfb179cb295fa1dada271d"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/box_inside/水圧結果.json",
+    "bytes": 27235,
+    "sha256": "4f36a887bffed0a0406f35a2cd6daea5786f113378cdb9cdcedcc230e5044684"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/box_inside/結果節点.json.gz",
+    "bytes": 9193,
+    "sha256": "fa1170b913a61ba39e14a2ce5a05ce13db4b76d91a38d8d2381b90e4d1bdf9cc"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/build.log",
+    "bytes": 8143,
+    "sha256": "f8acc2685aaaea4923c7a71d57895c70af5dd2bb84518291493685ce685ba418"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/calculation_logs.zip",
+    "bytes": 239786,
+    "sha256": "35fe681c06ce46600a0fa4f96afb2582dc7faccd184f1b70d5079c5aea851527"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/cutoff/result.json",
+    "bytes": 48315,
+    "sha256": "a040ad42492d8b17f915229a751b755cd5a24941679690f97c84995a4d88e03c"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/cutoff/resume.json",
+    "bytes": 45160,
+    "sha256": "2463bfd86990757db47f845078777e820f7504e3da5bfdb891b096373d74207f"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/cutoff/resume_接合結果.json",
+    "bytes": 53373,
+    "sha256": "7854fe82a09f861c875eb70fee4a98f07a1f17b2302e214713cb0accf505b0e8"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/cutoff/ステージ結果.json",
+    "bytes": 368,
+    "sha256": "631446fee767c97b2aa82faf300e4be941bbf4c2ee0cf15a053e9f1742c08033"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/cutoff/接合結果.json",
+    "bytes": 53373,
+    "sha256": "7854fe82a09f861c875eb70fee4a98f07a1f17b2302e214713cb0accf505b0e8"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/cutoff/水圧確認.json",
+    "bytes": 76335,
+    "sha256": "0030e22f79cca3a3d595820a915495a1c31166c0d9adc4caa570f7095d7c7cc3"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/cutoff/水圧結果.json",
+    "bytes": 84179,
+    "sha256": "71c63add4f459ecd8ed6d40346008bb3715244bf5576a70ec59fbb9ac89ca4a2"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/cutoff/結果節点.json.gz",
+    "bytes": 13073,
+    "sha256": "4d955c7e9b1d2dafd6e1e62936591634fe9bf7580af4990754927172301c690e"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/fixed13/result.json",
+    "bytes": 39592,
+    "sha256": "9c453326cdf57682d702d97cc8590d1130035fed75d3224269ca31c601e6f216"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/fixed13/resume.json",
+    "bytes": 36603,
+    "sha256": "99a4ca9116c651aacd5d723eb6a35476d868997950d71ee5c3114c9f3f860626"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/fixed13/resume_接合結果.json",
+    "bytes": 53373,
+    "sha256": "7854fe82a09f861c875eb70fee4a98f07a1f17b2302e214713cb0accf505b0e8"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/fixed13/ステージ結果.json",
+    "bytes": 621,
+    "sha256": "67555d865615f31c14ea80d38af73ea82713791becd2ed2ff876bb7872a85e9a"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/fixed13/接合結果.json",
+    "bytes": 53373,
+    "sha256": "7854fe82a09f861c875eb70fee4a98f07a1f17b2302e214713cb0accf505b0e8"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/fixed13/水圧確認.json",
+    "bytes": 42980,
+    "sha256": "92a97ba6a5870f7a6abef05d060c118a57fff2cebc45f5150d846218e2d1d2bd"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/fixed13/水圧結果.json",
+    "bytes": 85957,
+    "sha256": "1794fac549e03f91a1a95de6c6dddd70184ca4f34f4b6c7172429b0b6d4a4107"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/fixed13/結果節点.json.gz",
+    "bytes": 16979,
+    "sha256": "8b6852cf6475380f3c65904a3f9ff4b765189556bad21cb1e1a473e90172c478"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/independent.json",
+    "bytes": 1091,
+    "sha256": "42653e764a2ad1201e43896a7b4ed99f6de7d8cd3b569e8f210129574a16447f"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/joint/result.json",
+    "bytes": 5996,
+    "sha256": "9a412867e7da48a908a1b84a94cd1452f9b48111a2697b679b28ef87eb629616"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/joint/resume.json",
+    "bytes": 5373,
+    "sha256": "b4d257d4ac10cb94ed7a174797fbf90edd6748782edfb66bd95ff70663a5b61d"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/joint/resume_接合結果.json",
+    "bytes": 53755,
+    "sha256": "9282b90750a27dd33e932adcd8170620ed5f9ac677b22281d751c0d6a11fee22"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/joint/tangent.json",
+    "bytes": 187,
+    "sha256": "4019012a35ef4bb105d801e6180b912bdea517ebbaf7baccce5338ad0ef6d238"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/joint/ステージ結果.json",
+    "bytes": 358,
+    "sha256": "0b0dde9773b8bd2f357e5b287581120dc5bdb742d66d076ef4d7b45387f372bb"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/joint/接合結果.json",
+    "bytes": 53748,
+    "sha256": "832c5920ea8ff497930fc88c732a3394a265bbd05022020a2322ef2f82eb1ce4"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/joint/水圧確認.json",
+    "bytes": 18105,
+    "sha256": "7cd7c08ca2c099fb3a6fe02570233f4e3f4c9ee370687e41e3b24e0083692f95"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/joint/水圧結果.json",
+    "bytes": 16245,
+    "sha256": "4163d42a127abfcd2f58eed40fd603d9b3aa5db966216aea73091e01441d3250"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/joint/結果節点.json.gz",
+    "bytes": 7659,
+    "sha256": "4bbc5093347252cae3b2da80d0a99ce21b10f608c7648485681251fb33f90659"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/joint_check.json",
+    "bytes": 768,
+    "sha256": "8c93d8a9687411a5fefc1ebc59afe668bea30e98973a3f7e828c7120505eb765"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/manual_page_mapping.json",
+    "bytes": 3182,
+    "sha256": "35a78a759b7ea9c51f934525b2bd42cc77be1eb4ae07fdc22e3006d33621d829"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/manual_prose_preservation.json",
+    "bytes": 2010,
+    "sha256": "924119eecc55d40df0f697b7257495b35b69abfdc47e1576b5ee25c307e70945"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/one_way/result.json",
+    "bytes": 8781,
+    "sha256": "9a73365f6b09b34cf85cb894d3823a9502c3054c1684a8a823c2ab7ccc3e72fd"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/one_way/resume.json",
+    "bytes": 7230,
+    "sha256": "a29e662413636fdf21f86d0f0fc8cf2bef1cfe3d183a6d55e8581a14a7710187"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/one_way/resume_接合結果.json",
+    "bytes": 53373,
+    "sha256": "7854fe82a09f861c875eb70fee4a98f07a1f17b2302e214713cb0accf505b0e8"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/one_way/ステージ結果.json",
+    "bytes": 1177,
+    "sha256": "a91f3ec742f14b1ec326a49711b3f581bc5582f0b9eb8016b734811e02cfeee8"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/one_way/接合結果.json",
+    "bytes": 53373,
+    "sha256": "7854fe82a09f861c875eb70fee4a98f07a1f17b2302e214713cb0accf505b0e8"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/one_way/水圧確認.json",
+    "bytes": 30914,
+    "sha256": "6611756397b9a771bcdd997b66bf42840cd832d8256467bc8e18f5814f6ce2be"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/one_way/水圧結果.json",
+    "bytes": 87216,
+    "sha256": "e0aad0da6d95b0ef3c45d11c3e74cebfd36638762196b4e46f86b42fff72be63"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/one_way/結果節点.json.gz",
+    "bytes": 10030,
+    "sha256": "ab7135e3a40ff1eed75f68b94bb3379ce47bfadddb900949746550470236babb"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/package.json",
+    "bytes": 1265,
+    "sha256": "779749de08390ffd75462728cfea2831b21541d5397d5b5c7bcb838607947e56"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/queue.log",
+    "bytes": 800,
+    "sha256": "cabd0803c47b110037098780f771eaaca0d2bd6f631e83f3cc8492d850d8cf07"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/reject_conflicting_profile/input_check.json",
+    "bytes": 351,
+    "sha256": "f094cfb7b07b6644345832cedf0609ba02a70217e50522f73207ee0947b73882"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/reject_duplicate/input_check.json",
+    "bytes": 333,
+    "sha256": "498d107381a9bb632acdc7d58d4cfba34ad338e4e9c7fa1627188497207e1f22"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/reject_fixed_stress/input_check.json",
+    "bytes": 396,
+    "sha256": "571249229e024c75c8d0e80af9c05c24f0b18e15052de44106784fa4a7079cb3"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/reject_missing_stage/input_check.json",
+    "bytes": 382,
+    "sha256": "f96cd8adf6947349658c50648e7dae32574bceefa273f9e01ff3ff3f42744774"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/reject_orphan/input_check.json",
+    "bytes": 342,
+    "sha256": "740229ec84ec5a86644e898b3de130a313857b2a0e80ebdd189a5b4d2d8b1c36"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/reject_time_reserved/input_check.json",
+    "bytes": 407,
+    "sha256": "558595b36fa4b506b0a5fede1fdb12c6c43a6edd5584ee032a1a5293f9b76ee5"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/reject_unknown_profile/input_check.json",
+    "bytes": 355,
+    "sha256": "f9c243f5ccd75ec835aafa125e94cd6c23943ef70434bb996853e582846c3b5f"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/sources.json",
+    "bytes": 3107,
+    "sha256": "7f7189760e2b6b17e6224156dc5edfc157272e0e0ca970e0ce7dfbe80931b359"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/stages/result.json",
+    "bytes": 8780,
+    "sha256": "fcff62b16dc6cbabf1ef24e0fa069162672cbe9a642b2a19eeccc00a4f2795c2"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/stages/resume.json",
+    "bytes": 7229,
+    "sha256": "638f5369d2e14597b210d7a17312252256c1bccdf6f75a8194971a210abadd7c"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/stages/resume_接合結果.json",
+    "bytes": 53373,
+    "sha256": "7854fe82a09f861c875eb70fee4a98f07a1f17b2302e214713cb0accf505b0e8"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/stages/ステージ結果.json",
+    "bytes": 1177,
+    "sha256": "a91f3ec742f14b1ec326a49711b3f581bc5582f0b9eb8016b734811e02cfeee8"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/stages/接合結果.json",
+    "bytes": 53373,
+    "sha256": "7854fe82a09f861c875eb70fee4a98f07a1f17b2302e214713cb0accf505b0e8"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/stages/水圧確認.json",
+    "bytes": 30914,
+    "sha256": "6611756397b9a771bcdd997b66bf42840cd832d8256467bc8e18f5814f6ce2be"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/stages/水圧結果.json",
+    "bytes": 87216,
+    "sha256": "38b2e47dfcd454f47c31a8c9de1caaa8262418fdebb00f7d701b5425d333ff7b"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/stages/結果節点.json.gz",
+    "bytes": 10030,
+    "sha256": "ab7135e3a40ff1eed75f68b94bb3379ce47bfadddb900949746550470236babb"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/ui_cutoff/boundary.json",
+    "bytes": 1054,
+    "sha256": "3c08d10961b453856acfaaff6d3cbd8f56f652fb457b18e31db83e673f9aa304"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/ui_cutoff/command.txt",
+    "bytes": 6,
+    "sha256": "eaa9eb2410ffb871a6971ae3c3d0a41236bc4fe35547b320fcf031cd8d24706e"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/ui_cutoff/input.json",
+    "bytes": 1051,
+    "sha256": "bb65ea1cf2d170e30efc2038512f3188204f6b1ea44666500e54f8d4f87c0616"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/ui_cutoff/mesh.json",
+    "bytes": 703,
+    "sha256": "dadf41344346d845c3d5d81496ad635d541778fe2edd810ff967e3510052289f"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/ui_cutoff/preview.json",
+    "bytes": 35874,
+    "sha256": "23718d19a653b8e08d5b4818b4d731fc115b3710985bff748aea843434312d64"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/ui_cutoff/reopen.json",
+    "bytes": 35877,
+    "sha256": "8ba134b596455ab0d4087ba635d935b3e204b2ce0c746690b9061661a7173a67"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/ui_cutoff/result.json",
+    "bytes": 35877,
+    "sha256": "977408a5c443465336ac5620e0508eb1ba123b5bd1048ff2af28cac8257aebb4"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/ui_cutoff/status.txt",
+    "bytes": 8,
+    "sha256": "06458b7943e998d6895a0ffe710b5b9e571f84b5c358ff2f195bf3fd3519d1e4"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/ui_cutoff/stress.json",
+    "bytes": 705,
+    "sha256": "e72280220d9b1e531a2f5f400f037fe67ddd83e5f76327873138a7895310616e"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/ui_cutoff_checked/command.txt",
+    "bytes": 6,
+    "sha256": "eaa9eb2410ffb871a6971ae3c3d0a41236bc4fe35547b320fcf031cd8d24706e"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/ui_cutoff_checked/input.json",
+    "bytes": 1051,
+    "sha256": "4ecf1bff2e44e3510f846a64b7e89d9975ecfcd2fa2f59a6714ff889918433f1"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/ui_cutoff_checked/status.txt",
+    "bytes": 8,
+    "sha256": "0117b9f51f4b8958b7f549b44a658522a13f6f468bf6f9b9b6ed77dae8afa96a"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/ui_cutoff_checked/stress.json",
+    "bytes": 709,
+    "sha256": "5b9fa4af6ad4db35c806cd09711839c5284d1367f3d7ea714e64c1fa29d77414"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/ui_hydro/command.txt",
+    "bytes": 6,
+    "sha256": "eaa9eb2410ffb871a6971ae3c3d0a41236bc4fe35547b320fcf031cd8d24706e"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/ui_hydro/input.json",
+    "bytes": 1051,
+    "sha256": "aba1ca0f855f50921b8b3b77c33d3cc42affc779396cc09733518a99fd2c2a86"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/ui_hydro/preview.json",
+    "bytes": 17393,
+    "sha256": "635115adb9647b59cad986955daa19d7a0e5fe3ba8b076b1fde2d3e3097e0bd6"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/ui_hydro/reopen.json",
+    "bytes": 17398,
+    "sha256": "95369a1572295d234e7c23e1ca31a5314a95caebfb1a66e3c60854a13f8d0123"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/ui_hydro/result.json",
+    "bytes": 17398,
+    "sha256": "b3089f315aa5ab4bdbe9dd6fd490e484ce6e316c45209dd93ff1d0306450463b"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/ui_hydro/stale.json",
+    "bytes": 17397,
+    "sha256": "87537b9abbacaf32ca94ea2ac40e54366e59d9b644a2268b459661674f25ea02"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/ui_hydro/stale_error.txt",
+    "bytes": 74,
+    "sha256": "3e44ffed897a9c343f1f2899d24fb1b715b4e39f72515bbf7c9eb83398e56bcf"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/ui_hydro/status.txt",
+    "bytes": 7,
+    "sha256": "87d22bcd5216c3f293e3969b6b6a36ba1dde01e2860fb13004a287e47e04c6bb"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/ui_stages/command.txt",
+    "bytes": 6,
+    "sha256": "eaa9eb2410ffb871a6971ae3c3d0a41236bc4fe35547b320fcf031cd8d24706e"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/ui_stages/input.json",
+    "bytes": 1051,
+    "sha256": "69bce46313b776a9b0ddf0c95f39513b86c3f6f6d15cc369fc5569f8fa4e4346"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/ui_stages/plans.json",
+    "bytes": 1051,
+    "sha256": "427550c76bc942c64d43623b51e160d6c02e5d6c817ec78644cc3b03a2a161e6"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/ui_stages/preview.json",
+    "bytes": 8007,
+    "sha256": "6f5d553610405fb48867fe29ea21a39c755508374b5de9a2562ffb8a16ac9b1f"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/ui_stages/reopen.json",
+    "bytes": 8007,
+    "sha256": "f146cc55d2224dc3a1aa3a59f92ccfe0bca7da90e80276145f2c9edb3216cef4"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/ui_stages/result.json",
+    "bytes": 8007,
+    "sha256": "c15bebda038a3edd322519cf73a242f80290e26ea1eb1cb98acfc09b2c47a306"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/ui_stages/stages.json",
+    "bytes": 343,
+    "sha256": "4f68d021a4497e75cca52c973f2f5b5880af0b28dc23da989cc8e1a634f19bcc"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/ui_stages/status.txt",
+    "bytes": 8,
+    "sha256": "06458b7943e998d6895a0ffe710b5b9e571f84b5c358ff2f195bf3fd3519d1e4"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/water_display_check.json",
+    "bytes": 8347,
+    "sha256": "2e8b07a5d03aaf9ff3a458007272fc681e570edff35214788b63ad9f24137edc"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/wet_srm_DAVIS/result.json",
+    "bytes": 40207,
+    "sha256": "447fd04705bb1fad7297adde607013a45693e1ec4c132f6e9c9cdde64d9e8080"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/wet_srm_DAVIS/ステージ結果.json",
+    "bytes": 753,
+    "sha256": "8362727253078631708a325494898d5bcb3e90fd8130ff785f05b180753752f6"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/wet_srm_DAVIS/接合結果.json",
+    "bytes": 53373,
+    "sha256": "7854fe82a09f861c875eb70fee4a98f07a1f17b2302e214713cb0accf505b0e8"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/wet_srm_DAVIS/水圧確認.json",
+    "bytes": 42980,
+    "sha256": "92a97ba6a5870f7a6abef05d060c118a57fff2cebc45f5150d846218e2d1d2bd"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/wet_srm_DAVIS/水圧結果.json",
+    "bytes": 86016,
+    "sha256": "8d6eb20c4fe76dd811f90b00e33f611c29a66d2ec5eb37cb3136edf2dfa2d0a2"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/wet_srm_DAVIS/結果節点.json.gz",
+    "bytes": 18689,
+    "sha256": "d941505c2e5fa5a024a721712c515feeb6e37f25e4954fa201f2ee92d268115f"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/wet_srm_INCONSISTENT/result.json",
+    "bytes": 39450,
+    "sha256": "03a3c0843c7ec590c7fb8f726a8cf40b77184dd992548796e7521ea43565c066"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/wet_srm_INCONSISTENT/ステージ結果.json",
+    "bytes": 755,
+    "sha256": "c720041d989094836d8971093856c01b0d59a88d59648fca6fecf2af4857a3a2"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/wet_srm_INCONSISTENT/接合結果.json",
+    "bytes": 53373,
+    "sha256": "7854fe82a09f861c875eb70fee4a98f07a1f17b2302e214713cb0accf505b0e8"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/wet_srm_INCONSISTENT/水圧確認.json",
+    "bytes": 42980,
+    "sha256": "92a97ba6a5870f7a6abef05d060c118a57fff2cebc45f5150d846218e2d1d2bd"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/wet_srm_INCONSISTENT/水圧結果.json",
+    "bytes": 86033,
+    "sha256": "4d974ffc05dc9ff50cd26a771023f649629f296ec90c369294148f0eba133027"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/wet_srm_INCONSISTENT/結果節点.json.gz",
+    "bytes": 16735,
+    "sha256": "e37314edc1bd52394729252b06896452fcaabb615dab5110ba2df739c574166c"
+  },
+  {
     "path": "native/build.cmd",
     "bytes": 1192,
     "sha256": "6500ad3dba257cdc6660126bb4cf1cf4ae10634039af0b9c450681eb5863d893"
@@ -8806,8 +9431,8 @@
   },
   {
     "path": "src/vba/FEMEngine.bas",
-    "bytes": 290902,
-    "sha256": "adff7a483847d52f3e9f6455be6743e0a74979b919d23661cb2deae79eaa2917"
+    "bytes": 290962,
+    "sha256": "b68c8a45fab39ec4b33b0a691ede8f11d5db46c198bf183a629643c80d567175"
   },
   {
     "path": "src/vba/FEMIncrementLog.bas",
@@ -8946,8 +9571,8 @@
   },
   {
     "path": "src/vba/FEMWater.bas",
-    "bytes": 40637,
-    "sha256": "38ebfcb2ca3adc89998f805c1110d072c35e364d78f5dcca39208883212e6daa"
+    "bytes": 45449,
+    "sha256": "b1c88bb44805590ffd21d077a29a6bbd581808dbbf025a7f00c4879fbaaaf97f"
   },
   {
     "path": "src/vba/FEMWaterGeometry.bas",
@@ -8956,13 +9581,13 @@
   },
   {
     "path": "src/vba/FEMWaterUi.bas",
-    "bytes": 8260,
-    "sha256": "647188d05811378325f2c88a265f7e14813b8e3ca16b1a2537814d4c1dca7dcf"
+    "bytes": 10673,
+    "sha256": "6898c1dcb9a23bbc49f2f73d96f2c27eedcea02a1bbf8acd833a9946d5ff2bf1"
   },
   {
     "path": "src/vba/FEMWaterView.bas",
-    "bytes": 11007,
-    "sha256": "88e150086db3b6930ff4f0130febcad735fb777a44cd1b42ca28aff31c4ca2ae"
+    "bytes": 18529,
+    "sha256": "2f993fae23da7e54daa5e29cff6c626ef3d7651a55d037059617dec82ce258be"
   },
   {
     "path": "src/vba/Mesh.bas",
@@ -9075,6 +9700,11 @@
     "sha256": "858efa4b94350cc4772c5d162f2f4f8b787e6ad440adc1e406ade5ca70818274"
   },
   {
+    "path": "tests/check_water_display.py",
+    "bytes": 8922,
+    "sha256": "4b9d7498826f678b0440086bf4a10b3b31701158d45731dccc704fad85243efd"
+  },
+  {
     "path": "tests/compare_groundwater_regression.py",
     "bytes": 3053,
     "sha256": "58f02cbbd8ccc4dc896aa893ffcf5ca5eb146cef1bd2857f9483b1896c3b17d2"
@@ -9098,6 +9728,11 @@
     "path": "tests/experiment_mesh_terrain.py",
     "bytes": 7338,
     "sha256": "ddf356aeba7c2821b123e4a69f0e04d38da90e679ac6cc8c60072782bbcce9d4"
+  },
+  {
+    "path": "tests/export_embedded_sources.ps1",
+    "bytes": 936,
+    "sha256": "e97cdb929ff63416ef54c593cc76388d8554a72d3fb57063eaa8a5e30052e80f"
   },
   {
     "path": "tests/fixtures/complex_terrain.json",
@@ -9273,6 +9908,51 @@
     "path": "tests/fixtures/unit/split_engine_test.txt",
     "bytes": 944,
     "sha256": "5e963a85eb6fdbccf6f4323fa9299ee239a07ce665e5ddcf159e3863120d9f24"
+  },
+  {
+    "path": "tests/fixtures/water_slope_fixed13.json",
+    "bytes": 13779,
+    "sha256": "790b989323cf3d51f2a91b904dd92c8341b22e5b856dffb86bc2e6d1f4e31dc1"
+  },
+  {
+    "path": "tests/fixtures/water_stage_guards/conflicting_profile.json",
+    "bytes": 4339,
+    "sha256": "9bb8f5521bfd3baed3ea6d47031749ced27a3b668069f047816b5a4b7516ec76"
+  },
+  {
+    "path": "tests/fixtures/water_stage_guards/duplicate.json",
+    "bytes": 4488,
+    "sha256": "df31a1790dd46eefdc6819a9a76dddaabff52d9f5d3c365ed264b0378c1aa75b"
+  },
+  {
+    "path": "tests/fixtures/water_stage_guards/fixed_stress.json",
+    "bytes": 4351,
+    "sha256": "d61595b330ad90bda27edb3bcfb57ec689ad3fc76c2843711de25b89a3346717"
+  },
+  {
+    "path": "tests/fixtures/water_stage_guards/missing_stage.json",
+    "bytes": 4349,
+    "sha256": "73e9a3fa012127570286e3e6c481e430aa6da3b780bb37154883c90333991431"
+  },
+  {
+    "path": "tests/fixtures/water_stage_guards/orphan.json",
+    "bytes": 4334,
+    "sha256": "d09b64d12640235e13655f6451c702fb2d7329638c91987cf6d6eb9aa43d54b5"
+  },
+  {
+    "path": "tests/fixtures/water_stage_guards/time_reserved.json",
+    "bytes": 4338,
+    "sha256": "42d17d5ef69970c5ea5a5a3f97abeb5e37a759705198b89c4b328319f00956ba"
+  },
+  {
+    "path": "tests/fixtures/water_stage_guards/unknown_profile.json",
+    "bytes": 4344,
+    "sha256": "01c506726dd9f06e18cadd20a8c6b6332296bc3dd2afbfe3b0364d9bfe7db405"
+  },
+  {
+    "path": "tests/fixtures/water_stage_one_way.json",
+    "bytes": 4302,
+    "sha256": "0d35b3229a0a00c8860a5472a4417ac809ee205abff6621b23c1adaf7dd71374"
   },
   {
     "path": "tests/inconsistent/README.md",
@@ -9945,6 +10625,11 @@
     "sha256": "2f908e602066150c2c79db8a8083942794fee78d3e41a2d9a18e3acc6d61990f"
   },
   {
+    "path": "tests/package_water_display.py",
+    "bytes": 5033,
+    "sha256": "10ec0220335af2ef1ebf4d4117b17d939b9589ed2d1c7b0dff520589f250e4af"
+  },
+  {
     "path": "tests/plot_joint_orientation.py",
     "bytes": 2124,
     "sha256": "09cf2d674a4bb91bf42fbefdc208593cc857199bccc1125d1e3e7e6c380bd02d"
@@ -9953,6 +10638,11 @@
     "path": "tests/plot_joint_water.py",
     "bytes": 3590,
     "sha256": "61e523f0da1f538744a05a7d7fa640918b8e23ab3f1f1a9de6eb3e6499180185"
+  },
+  {
+    "path": "tests/plot_water_srm.py",
+    "bytes": 4540,
+    "sha256": "2e78d884b11996eb4f8f4e651edc14ef5ceafd41602c107d52a13ff07e292937"
   },
   {
     "path": "tests/refresh_manual_case_ui.ps1",
@@ -10015,6 +10705,11 @@
     "sha256": "01b0d9ceda89d87bcfd59bc4d40967c3d95d2e1f3fd8b90cc32deedf38e71668"
   },
   {
+    "path": "tests/review_water_manual.py",
+    "bytes": 2257,
+    "sha256": "c6a44cac367df5ffcca017fa2ca4292358a3d6caaf66e7db9310d51398502f48"
+  },
+  {
     "path": "tests/run.ps1",
     "bytes": 1300,
     "sha256": "e043a6c9d5db69569376de99bb8128f560e4af992110b918992851956cb12e11"
@@ -10041,8 +10736,8 @@
   },
   {
     "path": "tests/run_groundwater_fixture.ps1",
-    "bytes": 11156,
-    "sha256": "c39a805bec2acfd57efbecc8a2ecb2b3d4a80c528c6c5fcabdfbf5fa86b464f9"
+    "bytes": 11229,
+    "sha256": "8745cdf36cd892a226dc819d2c38e02774ffa484c7d536a1a7f838d7ad9e7f7a"
   },
   {
     "path": "tests/run_groundwater_regression.ps1",
@@ -10063,6 +10758,16 @@
     "path": "tests/run_mesh_benchmark.ps1",
     "bytes": 8026,
     "sha256": "0e07537e9404b19e378f50e6a08e4abc4d60075cecafbd94416673015b743b3e"
+  },
+  {
+    "path": "tests/run_water_display_regression.ps1",
+    "bytes": 2000,
+    "sha256": "6679c4a65b429574e3cfd2f08e672a204dfe0d6fe1874fdcc80668d18cd13cce"
+  },
+  {
+    "path": "tests/run_water_display_ui.ps1",
+    "bytes": 4432,
+    "sha256": "68acd2f90a8fbdf979ff40e9162361b995cffa8843bdf0d908dd7670303f5a60"
   },
   {
     "path": "tests/test_best03_defaults.ps1",
@@ -10266,8 +10971,8 @@
   },
   {
     "path": "workbook/SoilFEM_UI_20261023.zip",
-    "bytes": 3471080,
-    "sha256": "191be7e4b17587d61e36a534ffb5569fb7fe896fd12c2b9fdf1265c29547f404"
+    "bytes": 3494486,
+    "sha256": "0b1403f6cf3d993be80cf81855e60dff900115fcc5e92d7799e8bba5e684ed53"
   },
   {
     "path": "workbook/inco_assembly_20261020/2DSoilFEM_inco_assembly_20261020.xlsm",
@@ -10521,13 +11226,13 @@
   },
   {
     "path": "workbook/ui_20261023/2DSoilFEM_ui_20261023.xlsm",
-    "bytes": 3607252,
-    "sha256": "c6410acfa198d793877db73cc2bfefd2323914b1786345867a8d417bf2e3b7ea"
+    "bytes": 3640035,
+    "sha256": "a13396a4a88c4f77200c280af17882fce997e3909ed6832b2b99acd82f32e96a"
   },
   {
     "path": "workbook/ui_20261023/BUILD_RECORD.json",
-    "bytes": 16025,
-    "sha256": "d1f31f4edb7cfa57b4da9f3824bf2fa3700dfbea50b9d339f3c1a8f89d6c164d"
+    "bytes": 30233,
+    "sha256": "ef19c034578ccb3be2f518a0cbdce1f3dd64e63cb1d866da0b861c7bb5f968d2"
   },
   {
     "path": "workbook/ui_20261023/README.txt",

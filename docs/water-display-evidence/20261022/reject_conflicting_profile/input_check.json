@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "fixture_sha256": "9BB8F5521BFD3BAED3EA6D47031749CED27A3B668069F047816B5A4B7516EC76",
+  "actual_error": "ERROR|ステージC列と工程別水理設定の水位線IDが矛盾しています。|FEMWater",
+  "book_sha256": "A13396A4A88C4F77200C280AF17882FCE997E3909ED6832B2B99ACD82F32E96A",
+  "expected_error": "矛盾"
+}

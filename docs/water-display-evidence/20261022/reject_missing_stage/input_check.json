@@ -1,0 +1,7 @@
+{
+  "expected_error": "有効な工程番号",
+  "fixture_sha256": "73E9A3FA012127570286E3E6C481E430AA6DA3B780BB37154883C90333991431",
+  "status": "PASS",
+  "actual_error": "ERROR|工程別水理設定は有効な工程番号へ一意に対応させてください。工程=999|FEMWater",
+  "book_sha256": "A13396A4A88C4F77200C280AF17882FCE997E3909ED6832B2B99ACD82F32E96A"
+}

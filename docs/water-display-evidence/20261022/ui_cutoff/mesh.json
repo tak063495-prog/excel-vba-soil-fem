@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "source_book_sha256": "E013A1DD566831EEC91EA2033E19CE6FF078BAAA38364B7AABE83A2DD28B1040",
+  "shapes": [
+    {
+      "name": "UI_MeshStart",
+      "width": 245.0,
+      "top": 562.0,
+      "height": 32.0,
+      "text": "このメッシュで解析を開始",
+      "left": 12.0
+    },
+    {
+      "name": "UI_MeshRepair",
+      "width": 245.0,
+      "top": 562.0,
+      "height": 32.0,
+      "text": "品質修正候補を確認",
+      "left": 275.0
+    },
+    {
+      "name": "P1Agg_ViewSVG",
+      "width": 860.0,
+      "top": 10.0,
+      "height": 540.0,
+      "text": null,
+      "left": 10.0
+    }
+  ],
+  "action": "mesh",
+  "sheet": "図"
+}

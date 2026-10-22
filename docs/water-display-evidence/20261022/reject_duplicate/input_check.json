@@ -1,0 +1,7 @@
+{
+  "fixture_sha256": "DF31A1790DD46EEFDC6819A9A76DDDAABFF52D9F5D3C365ED264B0378C1AA75B",
+  "expected_error": "重複",
+  "actual_error": "ERROR|工程別水理設定の工程番号が重複しています。|FEMWater",
+  "status": "PASS",
+  "book_sha256": "A13396A4A88C4F77200C280AF17882FCE997E3909ED6832B2B99ACD82F32E96A"
+}

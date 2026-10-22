@@ -55,7 +55,7 @@ Public Function GWInputSignature() As String
     On Error GoTo 0
     If Not ws Is Nothing Then
       Select Case CStr(item)
-        Case "水条件": lastRow = 415: cols = 10
+        Case "水条件": lastRow = 415: cols = 20
         Case "節点データ": lastRow = ws.cells(ws.rows.count, 1).End(xlUp).row: cols = 9
         Case "要素データ": lastRow = ws.cells(ws.rows.count, 1).End(xlUp).row: cols = 10
         Case "材料データ": lastRow = ws.cells(ws.rows.count, 1).End(xlUp).row: cols = 13
@@ -67,7 +67,7 @@ Public Function GWInputSignature() As String
       For i = 1 To UBound(values, 1)
         For j = 1 To UBound(values, 2)
           If CStr(item) = "水条件" Then
-            If Not ((j = 2 And i >= 3 And i <= 6) Or (i >= 12 And i <= 211 And (j <= 3 Or (j >= 6 And j <= 9))) Or (i >= 216 And i <= 415 And j <= 5)) Then GoTo NextSigCell
+            If Not ((j = 2 And i >= 3 And i <= 6) Or (i >= 12 And i <= 211 And (j <= 3 Or (j >= 6 And j <= 9))) Or (i >= 216 And i <= 415 And j <= 5) Or (i >= 12 And i <= 211 And j >= 12 And j <= 19 And GWPlanRowFilled(values, i))) Then GoTo NextSigCell
           Else
             If i = 1 Then GoTo NextSigCell
           End If
@@ -88,10 +88,67 @@ NextSigCell:
   GWInputSignature = Format$(h, "0")
 End Function
 
+Private Function GWPlanRowFilled(ByRef values As Variant, ByVal row As Long) As Boolean
+  Dim j As Long
+  For j = 12 To 19
+    If IsError(values(row, j)) Then GWPlanRowFilled = True: Exit Function
+    If Len(Trim$(CStr(values(row, j)))) > 0 Then GWPlanRowFilled = True: Exit Function
+  Next j
+End Function
+
+Public Sub GWValidateStagePlans()
+  Dim w As Worksheet, stages As Worksheet, seen As Object, r As Long, s As Long, count As Long, id As Long, sid As Long, matches As Long, targetRow As Long, col As Long, mode As String, profile As String
+  On Error Resume Next: Set w = ThisWorkbook.Worksheets("水条件"): On Error GoTo 0
+  If w Is Nothing Then Exit Sub
+  Set stages = ThisWorkbook.Worksheets("ステージ")
+  Set seen = CreateObject("Scripting.Dictionary")
+  For r = 12 To 211
+    If Application.CountA(w.range(w.cells(r, 12), w.cells(r, 19))) = 0 Then GoTo NextPlan
+    If Not GWEnabled() Then GWFail "工程別水理設定を使う場合は、水条件のNONEをHYDROSTATICまたはSTEADYへ変更してください。"
+    id = GWId(w.cells(r, 12).value2, "工程別水理設定の工程番号")
+    If seen.Exists(CStr(id)) Then GWFail "工程別水理設定の工程番号が重複しています。"
+    seen.Add CStr(id), True: matches = 0: count = 0
+    For s = 2 To stages.cells(stages.rows.count, 1).End(xlUp).row
+      If Len(Trim$(CStr(stages.cells(s, 2).value2))) > 0 Then
+        count = count + 1: sid = CLng(Val(CStr(stages.cells(s, 1).value2))): If sid <= 0 Then sid = count
+        If sid = id And Val(CStr(stages.cells(s, 5).value2)) <> 0# Then matches = matches + 1: targetRow = s
+      End If
+    Next s
+    If matches <> 1 Then GWFail "工程別水理設定は有効な工程番号へ一意に対応させてください。工程=" & CStr(id)
+    mode = UCase$(Trim$(CStr(w.cells(r, 13).value2)))
+    If mode <> "ONE_WAY" Then GWFail "現在実行できる連携方式はONE_WAYです。FIXED_STRESSは時間圧密の将来拡張です。工程=" & CStr(id)
+    For col = 15 To 19
+      If Len(Trim$(CStr(w.cells(r, col).value2))) > 0 Then GWFail "時間・排水・連成反復の入力はFIXED_STRESS用の予約項目です。現版では空欄にしてください。工程=" & CStr(id)
+    Next col
+    If Len(Trim$(CStr(w.cells(r, 14).value2))) > 0 Then
+      If UCase$(Trim$(CStr(stages.cells(targetRow, 2).value2))) <> "WATER" Then GWFail "工程別水位線IDはWATER工程に指定してください。"
+      If Len(Trim$(CStr(stages.cells(targetRow, 3).value2))) > 0 And Trim$(CStr(stages.cells(targetRow, 3).value2)) <> Trim$(CStr(w.cells(r, 14).value2)) Then GWFail "ステージC列と工程別水理設定の水位線IDが矛盾しています。"
+      profile = Trim$(CStr(w.cells(r, 14).value2)): count = 0
+      For s = 12 To 211
+        If Trim$(CStr(w.cells(s, 1).value2)) = profile Then count = count + 1
+      Next s
+      If count < 2 Then GWFail "工程別の水位線IDは、水位線表へ2点以上登録してください。"
+    End If
+NextPlan:
+  Next r
+End Sub
+
+Public Function GWResolveStageProfile(ByVal stageId As Long, ByVal profile As String) As String
+  Dim w As Worksheet, r As Long
+  GWResolveStageProfile = profile: Set w = ThisWorkbook.Worksheets("水条件")
+  For r = 12 To 211
+    If Val(CStr(w.cells(r, 12).value2)) = stageId Then
+      If Len(Trim$(CStr(w.cells(r, 14).value2))) > 0 Then GWResolveStageProfile = Trim$(CStr(w.cells(r, 14).value2))
+      Exit Function
+    End If
+  Next r
+End Function
+
 Public Sub GWValidateScope()
   Dim ws As Worksheet, r As Long, kind As String
   GJReady = False: mReady = False
   GWActive = GWEnabled()
+  GWValidateStagePlans
   If Not GWActive Then Exit Sub
   If P6ReadSetting("CONSOL_ENABLE", 0#) <> 0# Then GWFail "水条件は指定水圧/定常浸透です。過渡圧密と同時には使えません。"
   Set ws = ThisWorkbook.Worksheets("水条件")
@@ -558,6 +615,7 @@ Public Sub GWPreviewCompute()
   Dim ws As Worksheet, key As Variant, owner As Variant, row As Long, e As Long, s As Long, g As Long
   Dim px As Double, py As Double, normalX As Double, normalY As Double
   If Not GWEnabled() Then GWFail "水条件はNONEです。水圧を確認する場合はHYDROSTATICまたはSTEADYを選んでください。"
+  GWValidateStagePlans
   FEMInvalidateInputCache
   GJReady = False: mReady = False
   Call SetNodeData
@@ -810,6 +868,34 @@ End Function
 
 Public Function GWMaterialProfile(ByVal mat As Long) As String
   GWMaterialProfile = mMatProfile(mat)
+End Function
+
+' Read-only drawing access. A water-level profile is an input, never a solved free surface.
+Public Function GWViewMode() As String
+  GWViewMode = mMode
+End Function
+
+Public Function GWViewDefaultProfile() As String
+  GWViewDefaultProfile = mProfile
+End Function
+
+Public Function GWViewHead(ByVal e As Long, ByVal localNode As Long, ByRef head As Double, ByRef prescribed As Boolean) As Boolean
+  Dim n As Long
+  If Not mReady Or Not mFlowSolved Then Exit Function
+  If e < 0 Or e >= NumberOfElement Or localNode < 0 Or localNode > 7 Then Exit Function
+  If Not P3IsElementActive(e) Or Elem(e).IsJoint Then Exit Function
+  If mK(e) <= 0# Then Exit Function
+  n = Elem(e).node(localNode): head = mHeads(n)
+  prescribed = mHeadFixed(GWFlowNode(e, localNode))
+  GWViewHead = True
+End Function
+
+Public Function GWViewFlux(ByVal e As Long, ByVal gp As Long, ByRef qx As Double, ByRef qy As Double) As Boolean
+  If Not mReady Or Not mFlowSolved Then Exit Function
+  If e < 0 Or e >= NumberOfElement Or gp < 0 Or gp > 3 Then Exit Function
+  If Not P3IsElementActive(e) Or Elem(e).IsJoint Then Exit Function
+  If mK(e) <= 0# Then Exit Function
+  qx = mFx(gp, e): qy = mFy(gp, e): GWViewFlux = True
 End Function
 
 Public Function GWJointPressure(ByVal e As Long, ByVal gp As Long) As Double

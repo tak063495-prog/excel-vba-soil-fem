@@ -92,6 +92,7 @@ End Function
  Rows $water 12 1 $data.water.profiles 4
  Rows $water 12 6 $data.water.materials 5
  Rows $water 216 1 $data.water.boundaries 6
+ if($data.water.stagePlans){Rows $water 12 12 $data.water.stagePlans 9}
  SetSetting 'EXPORT_MODE' $(if($Resume){'STAGE'}else{'OFF'});SetSetting 'EXPORT_LOAD' '';SetSetting 'FLOW_POLICY' $Flow;SetSetting 'NATIVE_DLL' $Native;SetSetting 'OUTPUT_STAGE_MODE' 'ALL'
  if($data.settings){foreach($property in $data.settings.PSObject.Properties){SetSetting $property.Name $property.Value}}
  if($Resume){SetSetting 'EXPORT_MODE' 'STAGE'}

@@ -3,7 +3,7 @@
   "mesh_build": "20261022_TERRAIN_BLOCKS_02",
   "verification_date": "2026-10-22",
   "base_main": "6930bf04c29932fa37bfc125ee04004dd645cfd4",
-  "book_sha256": "c6410acfa198d793877db73cc2bfefd2323914b1786345867a8d417bf2e3b7ea",
+  "book_sha256": "a13396a4a88c4f77200c280af17882fce997e3909ed6832b2b99acd82f32e96a",
   "dll_sha256": "ad5c2ae81512ba8e977002415a6a5339b621c00a1bbabe5092559f8a7f9e0797",
   "dll_unchanged": true,
   "compile": "PASS",
@@ -530,5 +530,319 @@
     ],
     "measurement": "GetProcessMemoryInfo PagefileUsage (private committed memory) and WorkingSetSize sampled inside PINPUT before allocation and while tables are live; whole Excel process, not isolated allocator or lifetime peak.",
     "limitations": "One sequential run per book/case. Regular polygons do not add subdivision nodes; the separate shared-edge case exercises reverse numbering and different subdivision spacings. Timing includes instrumentation and is not a full-meshing speed benchmark."
+  },
+  "prior_mesh_release_book_sha256": "c6410acfa198d793877db73cc2bfefd2323914b1786345867a8d417bf2e3b7ea",
+  "water_view_build": "20261022_WATER_VIEW_03",
+  "water_view_evidence": "docs/water-display-evidence/20261022",
+  "water_view_package": {
+    "compile": "PASS",
+    "excel_version": "16.0",
+    "excel_build": 20430.0,
+    "defaults": [
+      "NONE",
+      9.80665,
+      "外水",
+      "AUTO"
+    ],
+    "source_verification": "before-save and reopen",
+    "status": "PASS",
+    "canonical_inputs_unchanged": [
+      "節点データ",
+      "載荷",
+      "要素データ",
+      "材料データ",
+      "ステージ",
+      "形状入力"
+    ],
+    "candidate_sha256": "5CB2FF2B56D07809AEFCC28A1C640BAA9D80C47ECF215921EAFBA979F0F42181",
+    "modules": [
+      "CONTROL",
+      "FEM",
+      "FEMCore",
+      "FEMSolver",
+      "FEMIo",
+      "FEMEngine",
+      "FEMNative",
+      "FEMNativeMat",
+      "FEMNativeKern",
+      "FEMUiInputs",
+      "FEMUiValidation",
+      "FEMUiLayout",
+      "FEMUi",
+      "FEMViewer",
+      "FEMNativeFigure",
+      "ThisWorkbook",
+      "FEMUiMeshWorkflow",
+      "FEMUiGeometry",
+      "FEMPractical",
+      "MeshAdapt",
+      "Mesh",
+      "FEMTerrainBlocks",
+      "FEMResultOptions",
+      "FEMStrainMath",
+      "FEMViewIncrement",
+      "FEMIncrementSvg",
+      "FEMWater",
+      "FEMSeepage",
+      "FEMWaterUi",
+      "FEMWaterGeometry",
+      "FEMWaterView",
+      "FEMSeepageFlux",
+      "FEMJointWater"
+    ],
+    "package_sha256": "A13396A4A88C4F77200C280AF17882FCE997E3909ED6832B2B99ACD82F32E96A"
+  },
+  "water_view_sources": {
+    "status": "PASS",
+    "modules": {
+      "MeshAdapt": "dc03d02bd7eb449fcc267bd0975bf32ec18602aca79b91b0a24704760b144a13",
+      "FEMViewIncrement": "e57c288a9db3b410b20044b3dfbb551e5bb52f76f7b9d6f93ea7d8a99a3d448c",
+      "Mesh": "c621083aed6fc85cf376625fdeadfd52e80319b201dc79915c08531dc786649a",
+      "FEMWaterUi": "6898c1dcb9a23bbc49f2f73d96f2c27eedcea02a1bbf8acd833a9946d5ff2bf1",
+      "ThisWorkbook": "3b5fdb1f4093fa023e353fe9e4fd942cf339afba7f484baf6f6fc5b11130c8c3",
+      "FEMIncrementSvg": "028987deafd8b8e2b51a7287f5fd09de2db214b93e90c47a64abd9b933062356",
+      "FEMSeepage": "af9c1c61e53fc5f6f692f72809a9c12e94cd82bea01586290fabff19bf51fd00",
+      "FEMResultOptions": "42f674605c8000b62c3450e4b5a06986856f8618c9afa1fac517764f49c0986f",
+      "FEMCore": "8e929d573cd74ef082a12dcadc43c28fecd6db321122f634f201a8c46aaecb32",
+      "FEMUiGeometry": "ea085d2d4bc982b6871410b7904bdc0cf02670a491ffa4e183a088cf18dac689",
+      "FEMSeepageFlux": "e1d2bebf1bdda0562959befbbebbbd6e78e688749cae7ffc92190364c3a69f25",
+      "CONTROL": "4576cc3dc57c94ea8b450611d117e3f59a0fbb986fd449f71e1cd31204c70ec9",
+      "FEMNative": "8e5d7b1eb0154210a03fb8a74c34f02e30ac91a73a21f7d1d9c656b6bcca4620",
+      "FEMUiValidation": "53b14ade53e891bc56ddd28f24fe6f487922cb63f040da7e2b496308492fb036",
+      "FEMNativeFigure": "22c292ee119fc075172f6dc545b0ffc01b5bb1d20e55c615dcad147e82d6f04d",
+      "FEM": "a55755312c2946e6d8b609aa11d05dacbaac748f96ab7c8d86fbc1ecb2a4f537",
+      "FEMUiLayout": "326ac5d863c1d75e38fe1e4d687e9cb674e68078de84a8a20116fab640abfa9f",
+      "FEMPractical": "0f39d154d02a7e487cc3094e7e48a0cadffdf6378b74126906da701d2de79ca2",
+      "FEMTerrainBlocks": "2385d13f223907a3f4354646c6e285e2f295f4494341846909f27496baa09468",
+      "FEMNativeKern": "93184c1086b67748700b0c522ce7fd367983403c9193c07b5d9908fc1c7bb340",
+      "FEMUiMeshWorkflow": "ebe602bc14dc6ef24baa86fb0d72a4d71b443454feba0655bdb51a6982a84ff2",
+      "FEMNativeMat": "e6500276c465d6877b7548f81f4a9810c8804edecec9a09865a2d1036664b3b9",
+      "FEMUiInputs": "989f9278c9854d7f7cbc86288841c752081c45f9937ef67455eff20714b0db3c",
+      "FEMSolver": "bd8daa3cf81aa90f6e3497e0aef6a2382a5379287b00be75f30b9036c16e3148",
+      "FEMIo": "c1bc7161153f31b50e15571724a2d95d03f4ed8c34707e649efde62cbeaaf92d",
+      "FEMStrainMath": "e000500ea75139a191cd0de8493e6d89fd635c327bcbd7bc3daf199de4c55bd7",
+      "FEMWater": "b1c88bb44805590ffd21d077a29a6bbd581808dbbf025a7f00c4879fbaaaf97f",
+      "FEMUi": "8085b9ee4a6730d7c45eec94ae4e9033486ab5a79cf28de2b9b48c3cb14d3a18",
+      "FEMEngine": "b68c8a45fab39ec4b33b0a691ede8f11d5db46c198bf183a629643c80d567175",
+      "FEMJointWater": "221bea581a7f2fed46aa24169fdc210339f5f4bd097893f3b1b9f08ef095db56",
+      "FEMViewer": "dabbb142a9eddd07430fcbdaaab376f9a6527c51def2a4d337bceb949dee1387",
+      "FEMWaterView": "2f993fae23da7e54daa5e29cff6c626ef3d7651a55d037059617dec82ce258be",
+      "FEMWaterGeometry": "3297b5a54128ac87c093603523030ae095fa4af90bad3b42fcd0cf08bc87857a"
+    },
+    "normalization": "VBE identifier/keyword case outside string literals and apostrophe comments; line endings/trailing whitespace/Attribute VB_. String literals and comment text preserved."
+  },
+  "water_view_regression": {
+    "root": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\water_display\\final7",
+    "baseline": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\groundwater\\acceptance20",
+    "records": [
+      {
+        "label": "cutoff",
+        "candidate": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\water_display\\final7\\cutoff\\result.json",
+        "reference": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\groundwater\\acceptance20\\cutoff\\result.json",
+        "maxdiff": {
+          "disp": 0.0,
+          "stress": 0.0,
+          "metrics": 0.0
+        },
+        "candidate_seconds": 5.3738362,
+        "reference_seconds": 5.8907809,
+        "pass": true
+      },
+      {
+        "label": "box_inside",
+        "candidate": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\water_display\\final7\\box_inside\\result.json",
+        "reference": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\groundwater\\acceptance20\\box_inside\\result.json",
+        "maxdiff": {
+          "disp": 0.0,
+          "stress": 0.0,
+          "metrics": 0.0
+        },
+        "candidate_seconds": 5.1449746,
+        "reference_seconds": 4.4928178,
+        "pass": true
+      },
+      {
+        "label": "stages",
+        "candidate": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\water_display\\final7\\stages\\result.json",
+        "reference": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\groundwater\\acceptance20\\stages\\result.json",
+        "maxdiff": {
+          "disp": 0.0,
+          "stress": 0.0,
+          "metrics": 0.0
+        },
+        "candidate_seconds": 6.0334244,
+        "reference_seconds": 6.6223544,
+        "pass": true
+      },
+      {
+        "label": "wet_srm_INCONSISTENT",
+        "candidate": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\water_display\\final7\\wet_srm_INCONSISTENT\\result.json",
+        "reference": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\groundwater\\acceptance20\\wet_srm\\result.json",
+        "maxdiff": {
+          "disp": 0.0,
+          "stress": 0.0,
+          "metrics": 0.0
+        },
+        "candidate_seconds": 146.7853063,
+        "reference_seconds": 137.5978232,
+        "pass": true
+      },
+      {
+        "label": "wet_srm_DAVIS_final5_reference",
+        "candidate": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\water_display\\final7\\wet_srm_DAVIS\\result.json",
+        "reference": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\water_display\\final\\wet_srm_DAVIS\\result.json",
+        "maxdiff": {
+          "disp": 0.0,
+          "stress": 0.0,
+          "metrics": 0.0
+        },
+        "candidate_seconds": 21.3899807,
+        "reference_seconds": 20.4191773,
+        "pass": true
+      }
+    ],
+    "rejections": [
+      {
+        "name": "fixed_stress",
+        "path": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\water_display\\final7\\reject_fixed_stress\\input_check.json",
+        "pass": true,
+        "actual_error": "ERROR|現在実行できる連携方式はONE_WAYです。FIXED_STRESSは時間圧密の将来拡張です。工程=2|FEMWater"
+      },
+      {
+        "name": "time_reserved",
+        "path": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\water_display\\final7\\reject_time_reserved\\input_check.json",
+        "pass": true,
+        "actual_error": "ERROR|時間・排水・連成反復の入力はFIXED_STRESS用の予約項目です。現版では空欄にしてください。工程=2|FEMWater"
+      },
+      {
+        "name": "missing_stage",
+        "path": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\water_display\\final7\\reject_missing_stage\\input_check.json",
+        "pass": true,
+        "actual_error": "ERROR|工程別水理設定は有効な工程番号へ一意に対応させてください。工程=999|FEMWater"
+      },
+      {
+        "name": "conflicting_profile",
+        "path": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\water_display\\final7\\reject_conflicting_profile\\input_check.json",
+        "pass": true,
+        "actual_error": "ERROR|ステージC列と工程別水理設定の水位線IDが矛盾しています。|FEMWater"
+      },
+      {
+        "name": "orphan",
+        "path": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\water_display\\final7\\reject_orphan\\input_check.json",
+        "pass": true,
+        "actual_error": "ERROR|工程別水理設定の工程番号を入力してください。|FEMWater"
+      },
+      {
+        "name": "duplicate",
+        "path": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\water_display\\final7\\reject_duplicate\\input_check.json",
+        "pass": true,
+        "actual_error": "ERROR|工程別水理設定の工程番号が重複しています。|FEMWater"
+      },
+      {
+        "name": "unknown_profile",
+        "path": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\water_display\\final7\\reject_unknown_profile\\input_check.json",
+        "pass": true,
+        "actual_error": "ERROR|工程別の水位線IDは、水位線表へ2点以上登録してください。|FEMWater"
+      }
+    ],
+    "ui": {
+      "evidence_files": 9,
+      "checks": [
+        {
+          "path": "tests\\tmp\\water_display\\final7\\ui_cutoff\\preview.json",
+          "shape_count": 213,
+          "steady": true,
+          "fixed_head": true
+        },
+        {
+          "path": "tests\\tmp\\water_display\\final7\\ui_hydro\\preview.json",
+          "shape_count": 105,
+          "steady": false,
+          "fixed_head": false
+        },
+        {
+          "path": "tests\\tmp\\water_display\\final7\\ui_stages\\preview.json",
+          "shape_count": 45,
+          "steady": false,
+          "fixed_head": true
+        },
+        {
+          "path": "tests\\tmp\\water_display\\final7\\ui_cutoff\\reopen.json",
+          "shape_count": 213,
+          "steady": true,
+          "fixed_head": true
+        },
+        {
+          "path": "tests\\tmp\\water_display\\final7\\ui_hydro\\reopen.json",
+          "shape_count": 105,
+          "steady": false,
+          "fixed_head": false
+        },
+        {
+          "path": "tests\\tmp\\water_display\\final7\\ui_stages\\reopen.json",
+          "shape_count": 45,
+          "steady": false,
+          "fixed_head": true
+        },
+        {
+          "path": "tests\\tmp\\water_display\\final7\\ui_cutoff\\result.json",
+          "shape_count": 213,
+          "steady": true,
+          "fixed_head": true
+        },
+        {
+          "path": "tests\\tmp\\water_display\\final7\\ui_hydro\\result.json",
+          "shape_count": 105,
+          "steady": false,
+          "fixed_head": false
+        },
+        {
+          "path": "tests\\tmp\\water_display\\final7\\ui_stages\\result.json",
+          "shape_count": 45,
+          "steady": false,
+          "fixed_head": true
+        }
+      ],
+      "note": "UI action JSON is checked only when --ui is supplied; no Excel is started by this checker."
+    },
+    "one_way_vs_stages": {
+      "disp": 0.0,
+      "stress": 0.0,
+      "metrics": 0.0
+    },
+    "box_inside_balance": {
+      "Fx_kN": 1.7763568394002505e-15,
+      "Fy_kN": 85.0,
+      "M_kNm": 127.49999999999999,
+      "Ry_kN": 107.00000000000038
+    },
+    "resume": {
+      "cutoff": {
+        "disp": 4.967345978990068e-13,
+        "stress": 4.76837158203125e-06,
+        "metrics": 2.295806709179656e-09
+      },
+      "box_inside": {
+        "disp": 4.906503246634953e-13,
+        "stress": 5.0067901611328125e-06,
+        "metrics": 1.369202839425751e-09
+      },
+      "stages": {
+        "disp": 4.582918246287537e-13,
+        "stress": 3.026798367500305e-09,
+        "metrics": 1.7852386235972517e-13
+      },
+      "one_way": {
+        "disp": 4.582918246287537e-13,
+        "stress": 3.026798367500305e-09,
+        "metrics": 1.7852386235972517e-13
+      },
+      "joint": {
+        "disp": 4.235164736271502e-22,
+        "stress": 4.76837158203125e-06,
+        "metrics": 5.400124791776761e-13
+      }
+    },
+    "status": "PASS"
   }
 }

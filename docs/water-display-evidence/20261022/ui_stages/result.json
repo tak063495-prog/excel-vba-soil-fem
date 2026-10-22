@@ -1,0 +1,368 @@
+{
+  "source_book_sha256": "27207C7CA2BD7B3AFB80AF27EFD23FA9B53E4D6E5F1061E35B65495D813AEB26",
+  "sheet": "水圧結果",
+  "action": "result",
+  "shapes": [
+    {
+      "left": 0.0,
+      "width": 680.0,
+      "top": 129.0,
+      "height": 494.25,
+      "text": "",
+      "name": "GW_VIEW_CANVAS"
+    },
+    {
+      "left": 20.0,
+      "width": 650.0,
+      "top": 131.0,
+      "height": 22.0,
+      "text": "受理水圧 工程=5 STEADY",
+      "name": "GW_VIEW_TITLE"
+    },
+    {
+      "left": 20.0,
+      "width": 82.3126,
+      "top": 410.93747,
+      "height": 82.3126,
+      "text": "",
+      "name": "GW_VIEW_MESH_0"
+    },
+    {
+      "left": 102.31252,
+      "width": 82.3126,
+      "top": 410.93747,
+      "height": 82.3126,
+      "text": "",
+      "name": "GW_VIEW_MESH_1"
+    },
+    {
+      "left": 20.0,
+      "width": 82.3126,
+      "top": 328.62503,
+      "height": 82.31252,
+      "text": "",
+      "name": "GW_VIEW_MESH_2"
+    },
+    {
+      "left": 102.31252,
+      "width": 82.3126,
+      "top": 328.62503,
+      "height": 82.31252,
+      "text": "",
+      "name": "GW_VIEW_MESH_3"
+    },
+    {
+      "left": 23.0,
+      "width": 100.0,
+      "top": 236.31252,
+      "height": 16.0,
+      "text": "入力線：W",
+      "name": "GW_VIEW_PROFILE_LABEL_1"
+    },
+    {
+      "left": 20.0,
+      "width": 164.62505,
+      "top": 246.31252,
+      "height": 0.0,
+      "text": null,
+      "name": "GW_VIEW_PROFILE_13"
+    },
+    {
+      "left": 23.0,
+      "width": 100.0,
+      "top": 154.0,
+      "height": 16.0,
+      "text": "入力線：V",
+      "name": "GW_VIEW_PROFILE_LABEL_2"
+    },
+    {
+      "left": 20.0,
+      "width": 164.62505,
+      "top": 164.0,
+      "height": 0.0,
+      "text": null,
+      "name": "GW_VIEW_PROFILE_15"
+    },
+    {
+      "left": 33.894646,
+      "width": 7.0,
+      "top": 472.35535,
+      "height": 7.0,
+      "text": "",
+      "name": "GW_VIEW_GP_0_0"
+    },
+    {
+      "left": 81.41779,
+      "width": 7.0,
+      "top": 472.35535,
+      "height": 7.0,
+      "text": "",
+      "name": "GW_VIEW_GP_0_1"
+    },
+    {
+      "left": 81.41779,
+      "width": 7.0,
+      "top": 424.8322,
+      "height": 7.0,
+      "text": "",
+      "name": "GW_VIEW_GP_0_2"
+    },
+    {
+      "left": 33.894646,
+      "width": 7.0,
+      "top": 424.8322,
+      "height": 7.0,
+      "text": "",
+      "name": "GW_VIEW_GP_0_3"
+    },
+    {
+      "left": 116.20717,
+      "width": 7.0,
+      "top": 472.35535,
+      "height": 7.0,
+      "text": "",
+      "name": "GW_VIEW_GP_1_0"
+    },
+    {
+      "left": 163.73032,
+      "width": 7.0,
+      "top": 472.35535,
+      "height": 7.0,
+      "text": "",
+      "name": "GW_VIEW_GP_1_1"
+    },
+    {
+      "left": 163.73032,
+      "width": 7.0,
+      "top": 424.8322,
+      "height": 7.0,
+      "text": "",
+      "name": "GW_VIEW_GP_1_2"
+    },
+    {
+      "left": 116.20717,
+      "width": 7.0,
+      "top": 424.8322,
+      "height": 7.0,
+      "text": "",
+      "name": "GW_VIEW_GP_1_3"
+    },
+    {
+      "left": 33.894646,
+      "width": 7.0,
+      "top": 390.04285,
+      "height": 7.0,
+      "text": "",
+      "name": "GW_VIEW_GP_2_0"
+    },
+    {
+      "left": 81.41779,
+      "width": 7.0,
+      "top": 390.04285,
+      "height": 7.0,
+      "text": "",
+      "name": "GW_VIEW_GP_2_1"
+    },
+    {
+      "left": 81.41779,
+      "width": 7.0,
+      "top": 342.51968,
+      "height": 7.0,
+      "text": "",
+      "name": "GW_VIEW_GP_2_2"
+    },
+    {
+      "left": 33.894646,
+      "width": 7.0,
+      "top": 342.51968,
+      "height": 7.0,
+      "text": "",
+      "name": "GW_VIEW_GP_2_3"
+    },
+    {
+      "left": 116.20717,
+      "width": 7.0,
+      "top": 390.04285,
+      "height": 7.0,
+      "text": "",
+      "name": "GW_VIEW_GP_3_0"
+    },
+    {
+      "left": 163.73032,
+      "width": 7.0,
+      "top": 390.04285,
+      "height": 7.0,
+      "text": "",
+      "name": "GW_VIEW_GP_3_1"
+    },
+    {
+      "left": 163.73032,
+      "width": 7.0,
+      "top": 342.51968,
+      "height": 7.0,
+      "text": "",
+      "name": "GW_VIEW_GP_3_2"
+    },
+    {
+      "left": 116.20717,
+      "width": 7.0,
+      "top": 342.51968,
+      "height": 7.0,
+      "text": "",
+      "name": "GW_VIEW_GP_3_3"
+    },
+    {
+      "left": 17.0,
+      "width": 6.0,
+      "top": 490.25,
+      "height": 6.0,
+      "text": "",
+      "name": "GW_VIEW_HEAD_FIXED_20"
+    },
+    {
+      "left": 25.0,
+      "width": 110.0,
+      "top": 493.25,
+      "height": 17.0,
+      "text": "固定h=4. m",
+      "name": "GW_VIEW_HEAD_LABEL_1"
+    },
+    {
+      "left": 17.0,
+      "width": 6.0,
+      "top": 407.93747,
+      "height": 6.0,
+      "text": "",
+      "name": "GW_VIEW_HEAD_FIXED_16"
+    },
+    {
+      "left": 17.0,
+      "width": 6.0,
+      "top": 449.09378,
+      "height": 6.0,
+      "text": "",
+      "name": "GW_VIEW_HEAD_FIXED_18"
+    },
+    {
+      "left": 181.62505,
+      "width": 6.0,
+      "top": 490.25,
+      "height": 6.0,
+      "text": "",
+      "name": "GW_VIEW_HEAD_FIXED_12"
+    },
+    {
+      "left": 181.62505,
+      "width": 6.0,
+      "top": 407.93747,
+      "height": 6.0,
+      "text": "",
+      "name": "GW_VIEW_HEAD_FIXED_9"
+    },
+    {
+      "left": 181.62505,
+      "width": 6.0,
+      "top": 449.09378,
+      "height": 6.0,
+      "text": "",
+      "name": "GW_VIEW_HEAD_FIXED_10"
+    },
+    {
+      "left": 99.31252,
+      "width": 6.0,
+      "top": 325.62503,
+      "height": 6.0,
+      "text": "",
+      "name": "GW_VIEW_HEAD_FIXED_4"
+    },
+    {
+      "left": 17.0,
+      "width": 6.0,
+      "top": 325.62503,
+      "height": 6.0,
+      "text": "",
+      "name": "GW_VIEW_HEAD_FIXED_7"
+    },
+    {
+      "left": 58.15622,
+      "width": 6.0,
+      "top": 325.62503,
+      "height": 6.0,
+      "text": "",
+      "name": "GW_VIEW_HEAD_FIXED_6"
+    },
+    {
+      "left": 181.62505,
+      "width": 6.0,
+      "top": 325.62503,
+      "height": 6.0,
+      "text": "",
+      "name": "GW_VIEW_HEAD_FIXED_2"
+    },
+    {
+      "left": 140.46873,
+      "width": 6.0,
+      "top": 325.62503,
+      "height": 6.0,
+      "text": "",
+      "name": "GW_VIEW_HEAD_FIXED_0"
+    },
+    {
+      "left": 20.0,
+      "width": 630.0,
+      "top": 513.25,
+      "height": 18.0,
+      "text": "計算h=4.～4. m / max|q|=2.93E-19 m/s（一定水頭：流向矢印を省略）",
+      "name": "GW_VIEW_HEAD_RANGE"
+    },
+    {
+      "left": 143.46873,
+      "width": 0.0,
+      "top": 328.62503,
+      "height": 80.0,
+      "text": null,
+      "name": "GW_VIEW_FORCE_0"
+    },
+    {
+      "left": 184.62505,
+      "width": 0.0,
+      "top": 328.62503,
+      "height": 20.0,
+      "text": null,
+      "name": "GW_VIEW_FORCE_2"
+    },
+    {
+      "left": 102.31252,
+      "width": 0.0,
+      "top": 328.62503,
+      "height": 40.0,
+      "text": null,
+      "name": "GW_VIEW_FORCE_4"
+    },
+    {
+      "left": 61.15622,
+      "width": 0.0,
+      "top": 328.62503,
+      "height": 80.0,
+      "text": null,
+      "name": "GW_VIEW_FORCE_6"
+    },
+    {
+      "left": 20.0,
+      "width": 0.0,
+      "top": 328.62503,
+      "height": 20.0,
+      "text": null,
+      "name": "GW_VIEW_FORCE_7"
+    },
+    {
+      "left": 20.0,
+      "width": 630.0,
+      "top": 533.25,
+      "height": 70.0,
+      "text": "橙破線＝登録した入力水位線（境界用。計算結果の水面ではない）\n青点＝GP水圧 max=37.154 kPa / 橙矢印＝水圧の等価節点荷重 max=13.076 kN\n紫実線＝計算全水頭h [m] の等値線（表示用補間） / 紫菱形＝固定水頭境界\n緑矢印＝計算Darcy流束q [m/s]（外力矢印とは別）。飽和領域は入力メッシュで固定。",
+      "name": "GW_VIEW_LEGEND"
+    }
+  ],
+  "status": "PASS"
+}
