@@ -97,24 +97,28 @@ Private Function GWPlanRowFilled(ByRef values As Variant, ByVal row As Long) As 
 End Function
 
 Public Sub GWValidateStagePlans()
-  Dim w As Worksheet, stages As Worksheet, seen As Object, r As Long, s As Long, count As Long, id As Long, sid As Long, matches As Long, targetRow As Long, col As Long, mode As String, profile As String
+  Dim w As Worksheet, stages As Worksheet, seen As Object, r As Long, s As Long, count As Long, id As Long, sid As Long, matches As Long, allMatches As Long, targetRow As Long, col As Long, mode As String, profile As String
   On Error Resume Next: Set w = ThisWorkbook.Worksheets("水条件"): On Error GoTo 0
   If w Is Nothing Then Exit Sub
   Set stages = ThisWorkbook.Worksheets("ステージ")
   Set seen = CreateObject("Scripting.Dictionary")
   For r = 12 To 211
     If Application.CountA(w.range(w.cells(r, 12), w.cells(r, 19))) = 0 Then GoTo NextPlan
-    If Not GWEnabled() Then GWFail "工程別水理設定を使う場合は、水条件のNONEをHYDROSTATICまたはSTEADYへ変更してください。"
     id = GWId(w.cells(r, 12).value2, "工程別水理設定の工程番号")
     If seen.Exists(CStr(id)) Then GWFail "工程別水理設定の工程番号が重複しています。"
-    seen.Add CStr(id), True: matches = 0: count = 0
+    seen.Add CStr(id), True: matches = 0: allMatches = 0: count = 0
     For s = 2 To stages.cells(stages.rows.count, 1).End(xlUp).row
       If Len(Trim$(CStr(stages.cells(s, 2).value2))) > 0 Then
         count = count + 1: sid = CLng(Val(CStr(stages.cells(s, 1).value2))): If sid <= 0 Then sid = count
-        If sid = id And Val(CStr(stages.cells(s, 5).value2)) <> 0# Then matches = matches + 1: targetRow = s
+        If sid = id Then
+          allMatches = allMatches + 1
+          If Val(CStr(stages.cells(s, 5).value2)) <> 0# Then matches = matches + 1: targetRow = s
+        End If
       End If
     Next s
-    If matches <> 1 Then GWFail "工程別水理設定は有効な工程番号へ一意に対応させてください。工程=" & CStr(id)
+    If allMatches <> 1 Then GWFail "工程別水理設定は有効な工程番号へ一意に対応させてください。工程=" & CStr(id)
+    If matches = 0 Then GoTo NextPlan
+    If Not GWEnabled() Then GWFail "工程別水理設定を使う場合は、水条件のNONEをHYDROSTATICまたはSTEADYへ変更してください。"
     mode = UCase$(Trim$(CStr(w.cells(r, 13).value2)))
     If mode <> "ONE_WAY" Then GWFail "現在実行できる連携方式はONE_WAYです。FIXED_STRESSは時間圧密の将来拡張です。工程=" & CStr(id)
     For col = 15 To 19

@@ -58,20 +58,38 @@ End Sub
 
 Public Sub FEMWaterShowInputs()
   FEMWaterInstallUi
+  FEMWaterSheet("水条件", False).Visible = xlSheetVisible
   FEMWaterSheet("水条件", False).Activate
 End Sub
 
 Public Sub FEMWaterPreview()
+  Dim eventsSaved As Boolean, errorNumber As Long, errorText As String
+  Dim diagnostic As Worksheet, diagnosticSaved As Variant
+  eventsSaved = Application.EnableEvents
   On Error GoTo Failed
+  Application.EnableEvents = False
+  On Error Resume Next
+  Set diagnostic = ThisWorkbook.Worksheets("診断")
+  Err.Clear
+  On Error GoTo Failed
+  If Not diagnostic Is Nothing Then diagnosticSaved = diagnostic.range("A1:B" & CStr(FEM_DIAGNOSTIC_LAST_ROW)).value2
   FEMWaterInstallUi
   FEMWaterSheet("水条件", False).range("B7").ClearContents
   GWPreviewCompute
   FEMWaterSheet("水条件", False).range("B7").value2 = GWInputSignature()
+  FEMWaterSheet("水圧確認", False).Visible = xlSheetVisible
   FEMWaterSheet("水圧確認", False).Activate
+  If Not diagnostic Is Nothing Then diagnostic.range("A1:B" & CStr(FEM_DIAGNOSTIC_LAST_ROW)).value2 = diagnosticSaved
+  Application.EnableEvents = eventsSaved
   Exit Sub
 Failed:
-  If SuppressUserMessages Then Err.Raise Err.number, "FEMWaterPreview", Err.description
-  MsgBox "水圧プレビューに失敗しました：" & Err.description, vbExclamation, "水条件"
+  errorNumber = Err.number: errorText = Err.description
+  On Error Resume Next
+  If Not diagnostic Is Nothing And IsArray(diagnosticSaved) Then diagnostic.range("A1:B" & CStr(FEM_DIAGNOSTIC_LAST_ROW)).value2 = diagnosticSaved
+  Application.EnableEvents = eventsSaved
+  On Error GoTo 0
+  If SuppressUserMessages Then Err.Raise errorNumber, "FEMWaterPreview", errorText
+  MsgBox "水圧プレビューに失敗しました：" & errorText, vbExclamation, "水条件"
 End Sub
 
 Public Sub FEMWaterResults()
@@ -81,7 +99,7 @@ Public Sub FEMWaterResults()
   Set ws = FEMWaterSheet("水圧結果", False)
   If CStr(ws.range("R5").value2) <> GWInputSignature() Then Err.Raise vbObjectError + 7912, , "入力が変更されています。再解析してください。"
   If ThisWorkbook.names("_FEMViewerResultsDirty").RefersTo = "=TRUE" Then Err.Raise vbObjectError + 7912, , "計算結果が古くなっています。再解析してください。"
-  ws.Activate
+  ws.Visible = xlSheetVisible: ws.Activate
   Exit Sub
 MissingResult:
   If SuppressUserMessages Then Err.Raise Err.number, "FEMWaterResults", Err.description
@@ -147,7 +165,7 @@ Public Sub FEMWaterShowJointResults()
   If ThisWorkbook.names("_FEMViewerResultsDirty").RefersTo = "=TRUE" Then Err.Raise vbObjectError + 7912, , "計算結果が古くなっています。再解析してください。"
   Set ws = ThisWorkbook.Worksheets("接合結果")
   If Not IsNumeric(ws.range("A2").value2) Or Len(CStr(ws.range("A2").value2)) = 0 Then Err.Raise vbObjectError + 7912, , "接合結果がありません。"
-  ws.Activate
+  ws.Visible = xlSheetVisible: ws.Activate
   ActiveWindow.FreezePanes = False: ActiveWindow.SplitColumn = 4: ActiveWindow.SplitRow = 1: ActiveWindow.FreezePanes = True
   ws.columns("A:D").ColumnWidth = 9
   Application.Goto ws.range("P1"), True
