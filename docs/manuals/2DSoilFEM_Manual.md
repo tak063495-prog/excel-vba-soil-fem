@@ -325,9 +325,9 @@ DLLは`soilfem_native_x64.dll`の1個だけです。古い`soilfem_mat_x64.dll`�
 |6|ステージ A:F → 水条件 L:T|工程の順番・有効フラグを設定し、必要なWATER工程だけ水位線IDを対応させる|
 |7|解析後 H7「水圧結果」|受理した水圧・全/有効応力・水頭・流束の数値表を確認|
 
-![水条件の基本入力](images/water_display/input.png)
+![水条件の基本入力](images/water_display/input_mode.png)
 
-図4-5-A　「水条件」の共通入力。上部の説明で方式を選び、工程別設定・施工順のリンクから移動します。静水圧と定常浸透の違いを第8章で説明します。
+図4-5-A　「水条件」の共通入力。B3で方式、B4でγw、B5で既定の水位線ID、B6で外水圧を指定します。水条件を使わない最初の例題はNONEのままです。
 
 ![水工程計画（基本操作）](images/water_display/stage_plan.png)
 

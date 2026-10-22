@@ -951,8 +951,8 @@
   },
   {
     "path": "docs/manuals/2DSoilFEM_Manual.md",
-    "bytes": 312435,
-    "sha256": "a950e88da5ec6076dc7f4d242e1c2b49fe8612891ffa0e88b455ad767151aa0d"
+    "bytes": 312429,
+    "sha256": "3656d90e4d7f4e4772e254d5a97f85b1655caf4b0d480f031aa8f4fe2be1d2ee"
   },
   {
     "path": "docs/manuals/2DSoilFEM_Manual_20261021_2017.pdf",
@@ -1011,8 +1011,8 @@
   },
   {
     "path": "docs/manuals/2DSoilFEM_Manual_20261023_WATER_02.pdf",
-    "bytes": 17138980,
-    "sha256": "166eea445010e45c15e7c6344e797da5236efbc245c9b4bb45e623f012722ae1"
+    "bytes": 18948455,
+    "sha256": "c9a6900d37444d0898c5293f6ef54f55fdca9bccf223917d557dd91d25fadfcb"
   },
   {
     "path": "docs/manuals/README.md",
@@ -6095,6 +6095,11 @@
     "sha256": "d7e89ae9763db120611b082a3b32677a06eb525f0bf48f30ed9df8b2c18c2c66"
   },
   {
+    "path": "docs/manuals/images/water_display/input_mode.png",
+    "bytes": 58610,
+    "sha256": "392babf0d0332c0f3829bba87b8759e40b6c139a4f7e6847eed86aed0326bc2f"
+  },
+  {
     "path": "docs/manuals/images/water_display/model_cutoff.png",
     "bytes": 230867,
     "sha256": "9435f934209bd8d26741f529e025214f0286b33547ba6cc88e54552d66ab7ba4"
@@ -8980,6 +8985,11 @@
     "sha256": "8c93d8a9687411a5fefc1ebc59afe668bea30e98973a3f7e828c7120505eb765"
   },
   {
+    "path": "docs/water-display-evidence/20261022/manual_checks.json",
+    "bytes": 20683,
+    "sha256": "3efc6957b5af5fb409f91f63c2ed570f328ed35446c299349505f3284721e23c"
+  },
+  {
     "path": "docs/water-display-evidence/20261022/manual_page_mapping.json",
     "bytes": 3182,
     "sha256": "35a78a759b7ea9c51f934525b2bd42cc77be1eb4ae07fdc22e3006d33621d829"
@@ -8988,6 +8998,11 @@
     "path": "docs/water-display-evidence/20261022/manual_prose_preservation.json",
     "bytes": 2010,
     "sha256": "924119eecc55d40df0f697b7257495b35b69abfdc47e1576b5ee25c307e70945"
+  },
+  {
+    "path": "docs/water-display-evidence/20261022/manual_visual_review.zip",
+    "bytes": 10334578,
+    "sha256": "9e8887935858eb8dc94b0c0742e6d4fbaa657b287e134c893c234e0386e152af"
   },
   {
     "path": "docs/water-display-evidence/20261022/one_way/result.json",
@@ -10706,8 +10721,8 @@
   },
   {
     "path": "tests/review_water_manual.py",
-    "bytes": 2257,
-    "sha256": "c6a44cac367df5ffcca017fa2ca4292358a3d6caaf66e7db9310d51398502f48"
+    "bytes": 2815,
+    "sha256": "16c486f29f554f06a4b37f1f138fcdd3b0396e761ae7e256a028f8e6d19eea7c"
   },
   {
     "path": "tests/run.ps1",
