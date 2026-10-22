@@ -82,7 +82,7 @@ Public Function FEMNativeGmres(ByVal params As LongPtr, ByVal tol As Double) As 
   If FEMNativeGmres >= 0 Then FEMNativeGmresCalls = FEMNativeGmresCalls + 1
   Exit Function
 FailedGmres:
-  If Err.Number = 18 Then Err.Raise 18
+  If Err.number = 18 Then Err.Raise 18
   Err.Clear
 End Function
 #End If
@@ -143,7 +143,7 @@ Public Function FEMNativeRestoreState() As Boolean
   If rc = 0 Then FEMNativeStateCopies = FEMNativeStateCopies + 1: FEMNativeRestoreState = True
   Exit Function
 FailedState:
-  If Err.Number = 18 Then Err.Raise 18
+  If Err.number = 18 Then Err.Raise 18
   Err.Clear
 #End If
 End Function
@@ -196,7 +196,7 @@ Public Function FEMNativeCSRScatterList() As Boolean
   FEMNativeCSRScatterList = True
   Exit Function
 FailedAssembly:
-  If Err.Number = 18 Then Err.Raise 18
+  If Err.number = 18 Then Err.Raise 18
   Err.Clear
 #End If
 End Function
@@ -273,7 +273,7 @@ Public Function FEMNativeAvailable() As Boolean
     loadedPath = String$(32768, vbNullChar)
     size = GetModuleFileNameW(mHandle, StrPtr(loadedPath), Len(loadedPath))
     If size = 0 Or size >= Len(loadedPath) Then mReason = "DLL_PATH_UNVERIFIED": Exit Function
-    If StrComp(Left$(loadedPath, size), path, vbTextCompare) <> 0 Then mReason = "DLL_ALREADY_LOADED_OTHER_PATH": Exit Function
+    If StrComp(left$(loadedPath, size), path, vbTextCompare) <> 0 Then mReason = "DLL_ALREADY_LOADED_OTHER_PATH": Exit Function
   Else
     ' LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR | LOAD_LIBRARY_SEARCH_DEFAULT_DIRS
     mHandle = LoadLibraryExW(StrPtr(path), 0, &H1100)
@@ -313,8 +313,8 @@ Public Function FEMNativeAvailable() As Boolean
 #End If
   Exit Function
 LoadFailed:
-  If Err.Number = 18 Then mChecked = False: Err.Raise 18 ' ユーザー中断は利用可否を確定せず呼出側へ送る
-  mReason = "DLL_ERROR_" & CStr(Err.Number)
+  If Err.number = 18 Then mChecked = False: Err.Raise 18 ' ユーザー中断は利用可否を確定せず呼出側へ送る
+  mReason = "DLL_ERROR_" & CStr(Err.number)
   mAvailable = False
   FEMNativeAvailable = False
   Err.Clear
@@ -346,8 +346,8 @@ Public Function FEMNativeBandFactor(ByRef band() As Double, ByRef packed() As Do
   End If
   Exit Function
 Failed:
-  If Err.Number = 18 Then Err.Raise 18 ' ユーザー中断はDLL無効化・VBA代替へ進めず呼出側へ送る
-  FEMNativeDisable "BAND_FACTOR_ERR_" & CStr(Err.Number)
+  If Err.number = 18 Then Err.Raise 18 ' ユーザー中断はDLL無効化・VBA代替へ進めず呼出側へ送る
+  FEMNativeDisable "BAND_FACTOR_ERR_" & CStr(Err.number)
   Err.Clear
 #End If
 End Function
@@ -370,8 +370,8 @@ Public Function FEMNativeBandSolve(ByRef packed() As Double, ByRef rhs() As Doub
   End If
   Exit Function
 Failed:
-  If Err.Number = 18 Then Err.Raise 18 ' ユーザー中断はDLL無効化・VBA代替へ進めず呼出側へ送る
-  FEMNativeDisable "BAND_SOLVE_ERR_" & CStr(Err.Number)
+  If Err.number = 18 Then Err.Raise 18 ' ユーザー中断はDLL無効化・VBA代替へ進めず呼出側へ送る
+  FEMNativeDisable "BAND_SOLVE_ERR_" & CStr(Err.number)
   Err.Clear
 #End If
 End Function
@@ -399,8 +399,8 @@ Public Function FEMNativeNsFactor(ByRef a() As Double, ByRef rhs() As Double, By
   End If
   Exit Function
 Failed:
-  If Err.Number = 18 Then Err.Raise 18 ' ユーザー中断はDLL無効化・VBA代替へ進めず呼出側へ送る
-  FEMNativeDisable "NS_FACTOR_ERR_" & CStr(Err.Number)
+  If Err.number = 18 Then Err.Raise 18 ' ユーザー中断はDLL無効化・VBA代替へ進めず呼出側へ送る
+  FEMNativeDisable "NS_FACTOR_ERR_" & CStr(Err.number)
   Err.Clear
 #End If
 End Function
@@ -418,8 +418,8 @@ Public Function FEMNativeNsForward(ByRef pivotRows() As Long, ByRef lower() As D
   If rc = 0 Then FEMNativeNsForward = 0 Else FEMNativeDisable "NS_FORWARD_RC_" & CStr(rc)
   Exit Function
 Failed:
-  If Err.Number = 18 Then Err.Raise 18 ' ユーザー中断はDLL無効化・VBA代替へ進めず呼出側へ送る
-  FEMNativeDisable "NS_FORWARD_ERR_" & CStr(Err.Number)
+  If Err.number = 18 Then Err.Raise 18 ' ユーザー中断はDLL無効化・VBA代替へ進めず呼出側へ送る
+  FEMNativeDisable "NS_FORWARD_ERR_" & CStr(Err.number)
   Err.Clear
 #End If
 End Function
@@ -439,8 +439,8 @@ Public Function FEMNativeNsBack(ByRef a() As Double, ByRef rhs() As Double, ByRe
   If rc >= 0 And rc <= 2 Then FEMNativeNsBack = rc Else FEMNativeDisable "NS_BACK_RC_" & CStr(rc)
   Exit Function
 Failed:
-  If Err.Number = 18 Then Err.Raise 18 ' ユーザー中断はDLL無効化・VBA代替へ進めず呼出側へ送る
-  FEMNativeDisable "NS_BACK_ERR_" & CStr(Err.Number)
+  If Err.number = 18 Then Err.Raise 18 ' ユーザー中断はDLL無効化・VBA代替へ進めず呼出側へ送る
+  FEMNativeDisable "NS_BACK_ERR_" & CStr(Err.number)
   Err.Clear
 #End If
 End Function

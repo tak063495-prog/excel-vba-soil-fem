@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "case": "joint_water_slip",
+  "seconds": 5.0259861,
+  "effective_contact_kN": 27.99999999999999,
+  "water_support_kN": 20.0,
+  "total_contact_kN": 47.999999999999986,
+  "reaction_y_kN": 88.00000000000001,
+  "residual": 7.050988804720377e-14,
+  "Fs": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "max_head_error_m": 0.0,
+  "max_flux_error_m_s": 0.0,
+  "resume": {
+    "max_du_m": 4.499862532288471e-22,
+    "max_physical_stress_error_kPa": 5.648814749292796e-13,
+    "residual": 6.758723795922452e-14,
+    "seconds": 1.8102066
+  },
+  "tangent": [],
+  "fluid_exact": {}
+}

@@ -1,0 +1,76 @@
+{
+  "status": "PASS",
+  "note": "Final output recovery changes do not alter any accepted initial numerical result relative to source18.",
+  "cases": {
+    "dry": {
+      "disp": 0.0,
+      "stress": 0.0,
+      "metrics": 0.0
+    },
+    "wet": {
+      "disp": 0.0,
+      "stress": 0.0,
+      "metrics": 0.0
+    },
+    "prescribed": {
+      "disp": 0.0,
+      "stress": 0.0,
+      "metrics": 0.0
+    },
+    "continuous": {
+      "disp": 0.0,
+      "stress": 0.0,
+      "metrics": 0.0
+    },
+    "prescribed_steady": {
+      "disp": 0.0,
+      "stress": 0.0,
+      "metrics": 0.0
+    },
+    "soil_steady": {
+      "disp": 0.0,
+      "stress": 0.0,
+      "metrics": 0.0
+    },
+    "partial": {
+      "disp": 0.0,
+      "stress": 0.0,
+      "metrics": 0.0
+    },
+    "slip": {
+      "disp": 0.0,
+      "stress": 0.0,
+      "metrics": 0.0
+    },
+    "opening": {
+      "disp": 0.0,
+      "stress": 0.0,
+      "metrics": 0.0
+    },
+    "stages": {
+      "disp": 0.0,
+      "stress": 0.0,
+      "metrics": 0.0
+    },
+    "srm": {
+      "disp": 0.0,
+      "stress": 0.0,
+      "metrics": 0.0
+    },
+    "struct_pair": {
+      "disp": 0.0,
+      "stress": 0.0,
+      "metrics": 0.0
+    },
+    "wet_davis": {
+      "disp": 0.0,
+      "stress": 0.0,
+      "metrics": 0.0
+    },
+    "slip_davis": {
+      "disp": 0.0,
+      "stress": 0.0,
+      "metrics": 0.0
+    }
+  }
+}

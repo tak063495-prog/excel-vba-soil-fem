@@ -41,9 +41,9 @@ Public Sub FEMWriteBuildStamp(Optional ByVal applyLayout As Boolean = True)
   ws.range("G1").NumberFormat = "@"
   ws.range("F1").value2 = "Ver"
   ws.range("G1").value2 = FEM_BUILD_STAMP
-  ws.Cells(1, 1).value2 = "2DFEM 設定"
-  ws.Cells(2, 1).value2 = "値はC列。選択肢はF列と「仕様」シート。手順はステージ。LOADは載荷。再開は EXPORT_LOAD。ログはブック横 *_out。"
-  ws.Cells(2, 2).value2 = ""
+  ws.cells(1, 1).value2 = "2DFEM 設定"
+  ws.cells(2, 1).value2 = "値はC列。選択肢はF列と「仕様」シート。手順はステージ。LOADは載荷。再開は EXPORT_LOAD。ログはブック横 *_out。"
+  ws.cells(2, 2).value2 = ""
   FEMUiCalculateSettings
   FEMRebuildSettingsLayout ws
   FEMEnsureStageSheets
@@ -56,18 +56,18 @@ Private Sub FEMRebuildSettingsLayout(ByVal ws As Worksheet)
   Dim cacheN As Long, lastRow As Long, rowNo As Long, keyName As String
   Dim writeRow As Long, i As Long, extraFlag As Boolean, foundFlag As Boolean
   Dim clearLast As Long, cacheCap As Long
-  lastRow = ws.Cells(ws.rows.count, 5).End(xlUp).row
+  lastRow = ws.cells(ws.rows.count, 5).End(xlUp).row
   If lastRow < 5 Then lastRow = 5
   cacheCap = lastRow
   If cacheCap < 32 Then cacheCap = 32
   ReDim cacheKey(1 To cacheCap)
   ReDim cacheVal(1 To cacheCap)
   On Error Resume Next
-  ws.range(ws.Cells(4, 1), ws.Cells(lastRow, 5)).UnMerge
+  ws.range(ws.cells(4, 1), ws.cells(lastRow, 5)).UnMerge
   If lastRow < 200 Then ws.range("A4:E200").UnMerge
   On Error GoTo 0
   For rowNo = 1 To lastRow
-    keyName = UCase$(Trim$(CStr(ws.Cells(rowNo, 5).value2)))
+    keyName = UCase$(Trim$(CStr(ws.cells(rowNo, 5).value2)))
     If Len(keyName) > 0 And keyName <> "SRM_ENABLE" And keyName <> "設定キー" Then
       cacheN = cacheN + 1
       If cacheN > cacheCap Then
@@ -76,19 +76,19 @@ Private Sub FEMRebuildSettingsLayout(ByVal ws As Worksheet)
         ReDim Preserve cacheVal(1 To cacheCap)
       End If
       cacheKey(cacheN) = keyName
-      cacheVal(cacheN) = ws.Cells(rowNo, 3).value2
+      cacheVal(cacheN) = ws.cells(rowNo, 3).value2
     End If
   Next rowNo
   clearLast = lastRow
   If clearLast < 200 Then clearLast = 200
-  ws.range(ws.Cells(4, 1), ws.Cells(clearLast, 5)).ClearContents
+  ws.range(ws.cells(4, 1), ws.cells(clearLast, 5)).ClearContents
   ' Clear row-bound rules before rebuilding the key-bound settings layout.
-  ws.range(ws.Cells(4, 3), ws.Cells(clearLast, 3)).Validation.Delete
-  ws.Cells(4, 1).value2 = "カテゴリ"
-  ws.Cells(4, 2).value2 = "項目"
-  ws.Cells(4, 3).value2 = "値"
-  ws.Cells(4, 4).value2 = "単位・説明"
-  ws.Cells(4, 5).value2 = "設定キー"
+  ws.range(ws.cells(4, 3), ws.cells(clearLast, 3)).Validation.Delete
+  ws.cells(4, 1).value2 = "カテゴリ"
+  ws.cells(4, 2).value2 = "項目"
+  ws.cells(4, 3).value2 = "値"
+  ws.cells(4, 4).value2 = "単位・説明"
+  ws.cells(4, 5).value2 = "設定キー"
   writeRow = 5
   FEMPutSection ws, writeRow, "1. メッシュ（拘束は要素作成②後も適用。点座標は要素作成①）"
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "MESH_POINT1_X", "簡易", "点1 X", 0#, "左下X（要素作成①）", False
@@ -193,7 +193,7 @@ Private Sub FEMRebuildSettingsLayout(ByVal ws As Worksheet)
     If cacheKey(i) = "SOLVER_POLICY" Or cacheKey(i) = "CONSOL_ENABLE" Or cacheKey(i) = "RCM_SEARCH_LIMIT" Then foundFlag = True
     If Not foundFlag Then
       For rowNo = 5 To writeRow - 1
-        If UCase$(Trim$(CStr(ws.Cells(rowNo, 5).value2))) = cacheKey(i) Then
+        If UCase$(Trim$(CStr(ws.cells(rowNo, 5).value2))) = cacheKey(i) Then
           foundFlag = True
           Exit For
         End If
@@ -205,11 +205,11 @@ Private Sub FEMRebuildSettingsLayout(ByVal ws As Worksheet)
         FEMPutSection ws, writeRow, "7. 追加設定（保持）"
         extraFlag = True
       End If
-      ws.Cells(writeRow, 1).value2 = "追加"
-      ws.Cells(writeRow, 2).value2 = cacheKey(i)
-      ws.Cells(writeRow, 3).value2 = cacheVal(i)
-      ws.Cells(writeRow, 4).value2 = "再構築時に保持"
-      ws.Cells(writeRow, 5).value2 = cacheKey(i)
+      ws.cells(writeRow, 1).value2 = "追加"
+      ws.cells(writeRow, 2).value2 = cacheKey(i)
+      ws.cells(writeRow, 3).value2 = cacheVal(i)
+      ws.cells(writeRow, 4).value2 = "再構築時に保持"
+      ws.cells(writeRow, 5).value2 = cacheKey(i)
       writeRow = writeRow + 1
     End If
   Next i
@@ -218,7 +218,7 @@ Private Sub FEMRebuildSettingsLayout(ByVal ws As Worksheet)
 End Sub
 
 Private Sub FEMPutSection(ByVal ws As Worksheet, ByRef writeRow As Long, ByVal titleText As String)
-  ws.Cells(writeRow, 1).value2 = titleText
+  ws.cells(writeRow, 1).value2 = titleText
   writeRow = writeRow + 1
 End Sub
 
@@ -239,12 +239,12 @@ Private Sub FEMPutCached(ByVal ws As Worksheet, ByRef writeRow As Long, ByRef ca
       If Not IsNumeric(foundValue) Then foundValue = defaultValue
     End If
   End If
-  ws.Cells(writeRow, 1).value2 = categoryText
-  ws.Cells(writeRow, 2).value2 = itemText
-  If isText Then ws.Cells(writeRow, 3).NumberFormat = "@"
-  ws.Cells(writeRow, 3).value2 = foundValue
-  ws.Cells(writeRow, 4).value2 = noteText
-  ws.Cells(writeRow, 5).value2 = keyName
+  ws.cells(writeRow, 1).value2 = categoryText
+  ws.cells(writeRow, 2).value2 = itemText
+  If isText Then ws.cells(writeRow, 3).NumberFormat = "@"
+  ws.cells(writeRow, 3).value2 = foundValue
+  ws.cells(writeRow, 4).value2 = noteText
+  ws.cells(writeRow, 5).value2 = keyName
   writeRow = writeRow + 1
 End Sub
 
@@ -262,42 +262,42 @@ Public Sub FEMEnsureStageSheets()
     Set wsStage = ThisWorkbook.Worksheets.Add(After:=ThisWorkbook.Worksheets("設定"))
     wsStage.name = "ステージ"
   End If
-  wsStage.Cells(1, 1).value2 = "番号"
-  wsStage.Cells(1, 2).value2 = "種別"
-  wsStage.Cells(1, 3).value2 = "材料番号"
-  wsStage.Cells(1, 4).value2 = "パラメータ"
-  wsStage.Cells(1, 5).value2 = "有効"
-  wsStage.Cells(1, 6).value2 = "説明"
-  If Len(Trim$(CStr(wsStage.Cells(2, 2).value2))) = 0 Then
-    wsStage.Cells(2, 1).value2 = 1
-    wsStage.Cells(2, 2).value2 = "GRAVITY"
-    wsStage.Cells(2, 5).value2 = 1
-    wsStage.Cells(2, 6).value2 = "自重。支持は節点データ（拘束かつ変位0）"
-    wsStage.Cells(3, 1).value2 = 2
-    wsStage.Cells(3, 2).value2 = "LOAD"
-    wsStage.Cells(3, 3).value2 = 1
-    wsStage.Cells(3, 5).value2 = 1
-    wsStage.Cells(3, 6).value2 = "載荷シートの材料1。DISP=0はゼロ変位拘束"
-    wsStage.Cells(4, 1).value2 = 3
-    wsStage.Cells(4, 2).value2 = "SRM"
-    wsStage.Cells(4, 4).value2 = 1
-    wsStage.Cells(4, 5).value2 = 0
-    wsStage.Cells(4, 6).value2 = "途中ゲート。必要Fs=パラメータ。最後の有効行のSRMならFs探索"
-    wsStage.Cells(5, 1).value2 = 4
-    wsStage.Cells(5, 2).value2 = "UNLOAD"
-    wsStage.Cells(5, 3).value2 = 1
-    wsStage.Cells(5, 5).value2 = 0
-    wsStage.Cells(5, 6).value2 = "材料1の載荷を外す"
-    wsStage.Cells(6, 1).value2 = 5
-    wsStage.Cells(6, 2).value2 = "DEATH"
-    wsStage.Cells(6, 3).value2 = 1
-    wsStage.Cells(6, 5).value2 = 0
-    wsStage.Cells(6, 6).value2 = "材料1を撤去（無効化）"
-    wsStage.Cells(7, 1).value2 = 6
-    wsStage.Cells(7, 2).value2 = "BIRTH"
-    wsStage.Cells(7, 3).value2 = 2
-    wsStage.Cells(7, 5).value2 = 0
-    wsStage.Cells(7, 6).value2 = "材料2を追加（初期状態OFFから有効化）"
+  wsStage.cells(1, 1).value2 = "番号"
+  wsStage.cells(1, 2).value2 = "種別"
+  wsStage.cells(1, 3).value2 = "材料番号"
+  wsStage.cells(1, 4).value2 = "パラメータ"
+  wsStage.cells(1, 5).value2 = "有効"
+  wsStage.cells(1, 6).value2 = "説明"
+  If Len(Trim$(CStr(wsStage.cells(2, 2).value2))) = 0 Then
+    wsStage.cells(2, 1).value2 = 1
+    wsStage.cells(2, 2).value2 = "GRAVITY"
+    wsStage.cells(2, 5).value2 = 1
+    wsStage.cells(2, 6).value2 = "自重。支持は節点データ（拘束かつ変位0）"
+    wsStage.cells(3, 1).value2 = 2
+    wsStage.cells(3, 2).value2 = "LOAD"
+    wsStage.cells(3, 3).value2 = 1
+    wsStage.cells(3, 5).value2 = 1
+    wsStage.cells(3, 6).value2 = "載荷シートの材料1。DISP=0はゼロ変位拘束"
+    wsStage.cells(4, 1).value2 = 3
+    wsStage.cells(4, 2).value2 = "SRM"
+    wsStage.cells(4, 4).value2 = 1
+    wsStage.cells(4, 5).value2 = 0
+    wsStage.cells(4, 6).value2 = "途中ゲート。必要Fs=パラメータ。最後の有効行のSRMならFs探索"
+    wsStage.cells(5, 1).value2 = 4
+    wsStage.cells(5, 2).value2 = "UNLOAD"
+    wsStage.cells(5, 3).value2 = 1
+    wsStage.cells(5, 5).value2 = 0
+    wsStage.cells(5, 6).value2 = "材料1の載荷を外す"
+    wsStage.cells(6, 1).value2 = 5
+    wsStage.cells(6, 2).value2 = "DEATH"
+    wsStage.cells(6, 3).value2 = 1
+    wsStage.cells(6, 5).value2 = 0
+    wsStage.cells(6, 6).value2 = "材料1を撤去（無効化）"
+    wsStage.cells(7, 1).value2 = 6
+    wsStage.cells(7, 2).value2 = "BIRTH"
+    wsStage.cells(7, 3).value2 = 2
+    wsStage.cells(7, 5).value2 = 0
+    wsStage.cells(7, 6).value2 = "材料2を追加（初期状態OFFから有効化）"
   End If
   FEMWriteStageLegend wsStage
   FEMApplyStageValidation wsStage
@@ -313,22 +313,23 @@ Public Sub FEMEnsureStageSheets()
   End If
   FEMEnsureMaterialSheetLayout
   FEMEnsureJointSheet
+  FEMPracticalEnsureJointLayout
   FEMEnsureSpecSheet
   FEMDeleteCommonSheet
   If wsOut Is Nothing Then
     Set wsOut = ThisWorkbook.Worksheets.Add(After:=ThisWorkbook.Worksheets("要素データ"))
     wsOut.name = "ステージ結果"
   End If
-  wsOut.Cells(1, 1).value2 = "番号"
-  wsOut.Cells(1, 2).value2 = "種別"
-  wsOut.Cells(1, 3).value2 = "材料番号"
-  wsOut.Cells(1, 4).value2 = "成否"
-  wsOut.Cells(1, 5).value2 = "Fsまたはλ"
-  wsOut.Cells(1, 6).value2 = "最大変位"
-  wsOut.Cells(1, 7).value2 = "反力X"
-  wsOut.Cells(1, 8).value2 = "反力Y"
-  wsOut.Cells(1, 9).value2 = "試行"
-  wsOut.Cells(1, 10).value2 = "メッセージ"
+  wsOut.cells(1, 1).value2 = "番号"
+  wsOut.cells(1, 2).value2 = "種別"
+  wsOut.cells(1, 3).value2 = "材料番号"
+  wsOut.cells(1, 4).value2 = "成否"
+  wsOut.cells(1, 5).value2 = "Fsまたはλ"
+  wsOut.cells(1, 6).value2 = "最大変位"
+  wsOut.cells(1, 7).value2 = "反力X"
+  wsOut.cells(1, 8).value2 = "反力Y"
+  wsOut.cells(1, 9).value2 = "試行"
+  wsOut.cells(1, 10).value2 = "メッセージ"
   On Error Resume Next
   wsStage.Move After:=ThisWorkbook.Worksheets("設定")
   wsLoad.Move After:=ThisWorkbook.Worksheets("ステージ")
@@ -381,14 +382,14 @@ Private Sub FEMIoTrimDiagnosticSheet()
   Set ws = ThisWorkbook.Worksheets(FEM_INTEGRATED_RESULT_SHEET)
   On Error GoTo 0
   If ws Is Nothing Then Exit Sub
-  lastRow = ws.Cells(ws.rows.count, 1).End(xlUp).row
-  If lastRow < ws.Cells(ws.rows.count, 4).End(xlUp).row Then lastRow = ws.Cells(ws.rows.count, 4).End(xlUp).row
+  lastRow = ws.cells(ws.rows.count, 1).End(xlUp).row
+  If lastRow < ws.cells(ws.rows.count, 4).End(xlUp).row Then lastRow = ws.cells(ws.rows.count, 4).End(xlUp).row
   If lastRow > FEM_DIAGNOSTIC_LAST_ROW Then
-    ws.range(ws.Cells(FEM_DIAGNOSTIC_LAST_ROW + 1, 1), ws.Cells(lastRow, 36)).ClearContents
+    ws.range(ws.cells(FEM_DIAGNOSTIC_LAST_ROW + 1, 1), ws.cells(lastRow, 36)).ClearContents
   End If
-  lastRow = ws.Cells(ws.rows.count, 4).End(xlUp).row
+  lastRow = ws.cells(ws.rows.count, 4).End(xlUp).row
   If lastRow > 80 Then
-    ws.range(ws.Cells(81, 4), ws.Cells(lastRow, 14)).ClearContents
+    ws.range(ws.cells(81, 4), ws.cells(lastRow, 14)).ClearContents
   End If
 End Sub
 
@@ -424,20 +425,20 @@ Private Sub FEMIoSetNodeHeaders()
   Set ws = ThisWorkbook.Worksheets("節点データ")
   On Error GoTo 0
   If ws Is Nothing Then Exit Sub
-  ws.Cells(1, 1).value2 = "節点番号"
-  ws.Cells(1, 2).value2 = "X座標"
-  ws.Cells(1, 3).value2 = "Y座標"
-  ws.Cells(1, 4).value2 = "X拘束条件"
-  ws.Cells(1, 5).value2 = "Y拘束条件"
-  ws.Cells(1, 6).value2 = "X変位(互換)"
-  ws.Cells(1, 7).value2 = "Y変位(互換)"
-  ws.Cells(1, 8).value2 = "X力(互換)"
-  ws.Cells(1, 9).value2 = "Y力(互換)"
-  ws.Cells(1, 11).value2 = "凡例（入力しない）"
-  ws.Cells(2, 11).value2 = "X/Y拘束条件"
-  ws.Cells(2, 12).value2 = "0=自由 / 1=固定。載荷のFIXでも拘束できる"
-  ws.Cells(3, 11).value2 = "変位・力列"
-  ws.Cells(3, 12).value2 = "互換用。通常の載荷は載荷シートへ"
+  ws.cells(1, 1).value2 = "節点番号"
+  ws.cells(1, 2).value2 = "X座標"
+  ws.cells(1, 3).value2 = "Y座標"
+  ws.cells(1, 4).value2 = "X拘束条件"
+  ws.cells(1, 5).value2 = "Y拘束条件"
+  ws.cells(1, 6).value2 = "X変位(互換)"
+  ws.cells(1, 7).value2 = "Y変位(互換)"
+  ws.cells(1, 8).value2 = "X力(互換)"
+  ws.cells(1, 9).value2 = "Y力(互換)"
+  ws.cells(1, 11).value2 = "凡例（入力しない）"
+  ws.cells(2, 11).value2 = "X/Y拘束条件"
+  ws.cells(2, 12).value2 = "0=自由 / 1=固定。載荷のFIXでも拘束できる"
+  ws.cells(3, 11).value2 = "変位・力列"
+  ws.cells(3, 12).value2 = "互換用。通常の載荷は載荷シートへ"
 End Sub
 
 Private Sub FEMIoOrderSheets()
@@ -449,7 +450,7 @@ Private Sub FEMIoOrderSheets()
     Set ws = ThisWorkbook.Worksheets(CStr(names(i)))
     If Not ws Is Nothing Then
       If i = LBound(names) Then
-        ws.Move Before:=ThisWorkbook.Worksheets(1)
+        ws.Move before:=ThisWorkbook.Worksheets(1)
       Else
         ws.Move After:=ThisWorkbook.Worksheets(CStr(names(i - 1)))
       End If
@@ -489,7 +490,7 @@ Public Sub FEMIoBegin()
   On Error Resume Next
   femIoFileNum = FreeFile
   Open femIoPath For Output As #femIoFileNum
-  If Err.Number <> 0 Then
+  If Err.number <> 0 Then
     femIoFileNum = 0
     Err.Clear
     Exit Sub
@@ -881,7 +882,7 @@ Public Sub FEMIoFlushEvents()
   mEvUsed = 0: mEvCount = 0
   Exit Sub
 FlushFailed:
-  e = Err.Number: description = Err.Description: source = Err.source
+  e = Err.number: description = Err.description: source = Err.source
   On Error Resume Next
   If fileNum <> 0 Then Close #fileNum
   Err.Clear
@@ -934,7 +935,7 @@ Private Sub FEMIoAppendCsv(ByVal fileName As String, ByRef headerFlag As Boolean
   headerFlag = True
   Exit Sub
 WriteFailed:
-  e = Err.Number: description = Err.Description: source = Err.source
+  e = Err.number: description = Err.description: source = Err.source
   On Error Resume Next
   If fileNum <> 0 Then Close #fileNum
   Err.Clear
@@ -974,7 +975,7 @@ Private Function FEMIoEnsureDir(ByVal folderPath As String) As Boolean
   FEMIoEnsureDir = (Dir$(folderPath, vbDirectory) <> vbNullString)
   Exit Function
 Failed:
-  e = Err.Number: description = Err.Description: source = Err.source
+  e = Err.number: description = Err.description: source = Err.source
   Err.Clear
   On Error GoTo 0
   If e = 18 Then Err.Raise e, source, description
@@ -1744,7 +1745,7 @@ Private Sub P6PlasticStats(ByRef nElem As Long, ByRef largest As Long, ByRef max
   For k = 0 To NumberOfElement - 1
     If isP(k) Then
       For i = 0 To 7
-        dof = Elem(k).ElNode(i)
+        dof = Elem(k).elnode(i)
         If dof >= 0 Then
           nd = dof \ 2
           If nd >= 0 And nd <= nodeMax Then
@@ -2315,6 +2316,7 @@ Private Function FEMIoContentHash() As String
   End If
   h = FEMIoMixText(h, FEMIoStagePlanHash())
   h = FEMIoMixText(h, FEMIoLoadingHash())
+  If GWEnabled() Then h = FEMIoMixText(h, "WATER_V2:" & GWInputSignature())
   FEMIoContentHash = Format$(h, "0")
 End Function
 
@@ -2344,11 +2346,11 @@ Private Function FEMIoLoadingHash() As String
     FEMIoLoadingHash = Format$(h, "0")
     Exit Function
   End If
-  lastRow = ws.Cells(ws.rows.count, 1).End(xlUp).row
+  lastRow = ws.cells(ws.rows.count, 1).End(xlUp).row
   h = FEMIoMix(h, CDbl(lastRow))
   For rowNo = 2 To lastRow
     For colNo = 1 To 9
-      h = FEMIoMixText(h, Trim$(CStr(ws.Cells(rowNo, colNo).value2)))
+      h = FEMIoMixText(h, Trim$(CStr(ws.cells(rowNo, colNo).value2)))
     Next colNo
   Next rowNo
   FEMIoLoadingHash = Format$(h, "0")
@@ -2457,6 +2459,7 @@ Public Sub FEMIoExportStage(ByVal stageNo As Long, ByVal kindText As String, ByV
   If fullState Then
     If Not FEMIoWriteNode(tmpFolder) Then GoTo ExportFail
     If Not FEMIoWriteGauss(tmpFolder) Then GoTo ExportFail
+    If Not GWWriteCheckpoint(tmpFolder) Then GoTo ExportFail
     If Not PlasticLogWrite(tmpFolder) Then FEMIoLog "累積塑性診断", "WARN", "plastic_cumulative.csvを保存できませんでした。"
     If Not FEMIoWriteDofLock(tmpFolder) Then GoTo ExportFail
     If Not FEMIoWriteOrigin(tmpFolder) Then GoTo ExportFail
@@ -2508,7 +2511,7 @@ Private Function FEMIoWriteNode(ByVal stageFolder As String) As Boolean
   For origFree = 0 To NumberOfFreeNode - 1
     internalNode = FEMIoInternalFreeNode(origFree)
     dof0 = 2 * internalNode
-    Print #fileNumber, CStr(origFree + 1) & "," & Format$(XXX(dof0), "0.0000000000") & "," & Format$(XXX(dof0 + 1), "0.0000000000") & "," & Format$(TDisp(dof0), "0.000000000000") & "," & Format$(TDisp(dof0 + 1), "0.000000000000") & "," & CStr(NodeCond(dof0)) & "," & CStr(NodeCond(dof0 + 1))
+    Print #fileNumber, CStr(origFree + 1) & "," & FEMIoKinematicText(XXX(dof0), True) & "," & FEMIoKinematicText(XXX(dof0 + 1), True) & "," & FEMIoKinematicText(TDisp(dof0), False) & "," & FEMIoKinematicText(TDisp(dof0 + 1), False) & "," & CStr(NodeCond(dof0)) & "," & CStr(NodeCond(dof0 + 1))
   Next origFree
   Close #fileNumber
   FEMIoWriteNode = True
@@ -2846,7 +2849,7 @@ Public Function FEMIoTryResume() As Long
     On Error Resume Next
     fileNumber = FreeFile
     Open folderPath & Application.PathSeparator & "manifest.csv" For Input As #fileNumber
-    If Err.Number = 0 Then
+    If Err.number = 0 Then
       Do While Not EOF(fileNumber)
         Line Input #fileNumber, lineText
         parts = Split(lineText, ",")
@@ -3285,9 +3288,16 @@ Public Function FEMIoFinishResume() As Boolean
   End If
   If femIoResumeFss > 0# Then FSS = femIoResumeFss
   If Not FEMIoRebuildResumeGeometry() Then Exit Function
+  GWReadCheckpoint femIoResumeFolder
   P3AssembleSelfWeightOnly
   FEMIoRefreshDerivedStressState
   P3CommitMaterialState
+  If GWActive Then
+    GWRebuildAcceptedInternalForce
+    P3CommitMaterialState
+    If P3HasJointElements Then FEMPracticalSaveJointResults femIoResumeStage
+    If UCase$(Trim$(FEMReadTextSetting("OUTPUT_STAGE_MODE", "FINAL"))) = "ALL" Then GWWriteResults femIoResumeStage
+  End If
   PlasticLogResumeUnknown
   P3RecountActivePlasticPoints
   P3TrialStateValid = False
@@ -3316,15 +3326,18 @@ Private Sub FEMIoRefreshDerivedStressState()
       p1 = centerValue + radiusValue
       p2 = centerValue - radiusValue
       P1SortPrincipal3 p1, p2, sz, sMax, sMid, sMin
-      Elem(k).P2PrincipalStress(0, im) = sMax
-      Elem(k).P2PrincipalStress(1, im) = sMid
-      Elem(k).P2PrincipalStress(2, im) = sMin
+      Elem(k).P2PrincipalStress(0, im) = sMax - GWNewPressure(k, im)
+      Elem(k).P2PrincipalStress(1, im) = sMid - GWNewPressure(k, im)
+      Elem(k).P2PrincipalStress(2, im) = sMin - GWNewPressure(k, im)
       Elem(k).Stmat(3, im) = sMax
       Elem(k).Stmat(4, im) = sMin
       Elem(k).Stmat(5, im) = 0.5 * (sMax - sMin)
       angleRad = 0.5 * P1Atan2(2# * txy, sx - sy)
       Elem(k).Stmat(6, im) = angleRad * 180# / piValue
       Elem(k).Stmat(7, im) = P1VonMises3D(sx, sy, sz, txy)
+      If GWActive Then
+        sMax = sMax - GWNewPressure(k, im): sMin = sMin - GWNewPressure(k, im)
+      End If
       If sMin > 0# Then
         Elem(k).Stmat(8, im) = sMax
       ElseIf sMax > 0# Then
@@ -3362,39 +3375,39 @@ Private Sub FEMIoInferResumeLock()
 End Sub
 
 Private Sub FEMWriteStageLegend(ByVal ws As Worksheet)
-  ws.Cells(1, 8).value2 = "凡例（入力しない）"
-  ws.Cells(2, 8).value2 = "種別"
-  ws.Cells(2, 9).value2 = "意味"
-  ws.Cells(3, 8).value2 = "GRAVITY"
-  ws.Cells(3, 9).value2 = "自重。計画に無い場合は載せない。支持は節点の拘束"
-  ws.Cells(4, 8).value2 = "LOAD"
-  ws.Cells(4, 9).value2 = "載荷シートの対象行を適用。DISP=0はゼロ変位拘束、FORCE=0はゼロ節点力"
-  ws.Cells(5, 8).value2 = "UNLOAD"
-  ws.Cells(5, 9).value2 = "その材料の載荷を外す。要素は残る"
-  ws.Cells(6, 8).value2 = "BIRTH"
-  ws.Cells(6, 9).value2 = "材料を出す。材料の初期状態をOFFにしておく"
-  ws.Cells(7, 8).value2 = "DEATH"
-  ws.Cells(7, 9).value2 = "材料を消す。初期状態ONの要素を無効化"
-  ws.Cells(8, 8).value2 = "SRM"
-  ws.Cells(8, 9).value2 = "途中=パラメータの必要Fs未満なら中断／最後の有効行のSRM=Fs探索"
-  ws.Cells(9, 8).value2 = "RESET_U"
-  ws.Cells(9, 9).value2 = "変位・応力・塑性をゼロ。形状はそのまま。後続SRMの原点"
-  ws.Cells(10, 8).value2 = "RESET_STRESS"
-  ws.Cells(10, 9).value2 = "座標をX+=uしてから変位・応力をゼロ。後続SRMの原点"
-  ws.Cells(11, 8).value2 = "MATSET"
-  ws.Cells(11, 9).value2 = "材料番号へコピー、またはパラメータ c=;phi=。後続SRMの原点"
-  ws.Cells(13, 8).value2 = "材料番号"
-  ws.Cells(13, 9).value2 = "LOAD/UNLOAD/BIRTH/DEATH/MATSETの対象。空ならその種別では使わない"
-  ws.Cells(14, 8).value2 = "パラメータ"
-  ws.Cells(14, 9).value2 = "SRM=必要Fs。MATSET=コピー元材料番号または c=10;phi=30"
-  ws.Cells(15, 8).value2 = "有効"
-  ws.Cells(15, 9).value2 = "1=実行 / 0または空=飛ばす"
-  ws.Cells(17, 8).value2 = "例1"
-  ws.Cells(17, 9).value2 = "GRAVITY→SRM"
-  ws.Cells(18, 8).value2 = "例2"
-  ws.Cells(18, 9).value2 = "GRAVITY→SRM→RESET_U→MATSET→GRAVITY→SRM"
-  ws.Cells(19, 8).value2 = "詳細"
-  ws.Cells(19, 9).value2 = "「仕様」シート"
+  ws.cells(1, 8).value2 = "凡例（入力しない）"
+  ws.cells(2, 8).value2 = "種別"
+  ws.cells(2, 9).value2 = "意味"
+  ws.cells(3, 8).value2 = "GRAVITY"
+  ws.cells(3, 9).value2 = "自重。計画に無い場合は載せない。支持は節点の拘束"
+  ws.cells(4, 8).value2 = "LOAD"
+  ws.cells(4, 9).value2 = "載荷シートの対象行を適用。DISP=0はゼロ変位拘束、FORCE=0はゼロ節点力"
+  ws.cells(5, 8).value2 = "UNLOAD"
+  ws.cells(5, 9).value2 = "その材料の載荷を外す。要素は残る"
+  ws.cells(6, 8).value2 = "BIRTH"
+  ws.cells(6, 9).value2 = "材料を出す。材料の初期状態をOFFにしておく"
+  ws.cells(7, 8).value2 = "DEATH"
+  ws.cells(7, 9).value2 = "材料を消す。初期状態ONの要素を無効化"
+  ws.cells(8, 8).value2 = "SRM"
+  ws.cells(8, 9).value2 = "途中=パラメータの必要Fs未満なら中断／最後の有効行のSRM=Fs探索"
+  ws.cells(9, 8).value2 = "RESET_U"
+  ws.cells(9, 9).value2 = "変位・応力・塑性をゼロ。形状はそのまま。後続SRMの原点"
+  ws.cells(10, 8).value2 = "RESET_STRESS"
+  ws.cells(10, 9).value2 = "座標をX+=uしてから変位・応力をゼロ。後続SRMの原点"
+  ws.cells(11, 8).value2 = "MATSET"
+  ws.cells(11, 9).value2 = "材料番号へコピー、またはパラメータ c=;phi=。後続SRMの原点"
+  ws.cells(13, 8).value2 = "材料番号"
+  ws.cells(13, 9).value2 = "LOAD/UNLOAD/BIRTH/DEATH/MATSETの対象。空ならその種別では使わない"
+  ws.cells(14, 8).value2 = "パラメータ"
+  ws.cells(14, 9).value2 = "SRM=必要Fs。MATSET=コピー元材料番号または c=10;phi=30"
+  ws.cells(15, 8).value2 = "有効"
+  ws.cells(15, 9).value2 = "1=実行 / 0または空=飛ばす"
+  ws.cells(17, 8).value2 = "例1"
+  ws.cells(17, 9).value2 = "GRAVITY→SRM"
+  ws.cells(18, 8).value2 = "例2"
+  ws.cells(18, 9).value2 = "GRAVITY→SRM→RESET_U→MATSET→GRAVITY→SRM"
+  ws.cells(19, 8).value2 = "詳細"
+  ws.cells(19, 9).value2 = "「仕様」シート"
 End Sub
 
 Private Sub FEMEnsureJointSheet()
@@ -3406,67 +3419,77 @@ Private Sub FEMEnsureJointSheet()
     Set ws = ThisWorkbook.Worksheets.Add(After:=ThisWorkbook.Worksheets("載荷"))
     ws.name = "接合"
   End If
-  ws.Cells(1, 1).value2 = "材料A"
-  ws.Cells(1, 2).value2 = "材料B"
-  ws.Cells(1, 3).value2 = "接合材料"
-  ws.Cells(1, 4).value2 = "有効"
-  ws.Cells(1, 5).value2 = "説明"
-  ws.Cells(1, 7).value2 = "凡例（入力しない）"
-  ws.Cells(2, 7).value2 = "材料A"
-  ws.Cells(2, 8).value2 = "節点を残す側（擁壁・構造）"
-  ws.Cells(3, 7).value2 = "材料B"
-  ws.Cells(3, 8).value2 = "節点を増やす側（地盤）"
-  ws.Cells(4, 7).value2 = "接合材料"
-  ws.Cells(4, 8).value2 = "種別JOINTの材料番号"
-  ws.Cells(5, 7).value2 = "生成"
-  ws.Cells(5, 8).value2 = "要素作成②の後。共有辺を6節点接合にする"
-  ws.Cells(6, 7).value2 = "有効"
-  ws.Cells(6, 8).value2 = "1=その行を使う / 0または空=使わない"
-  ws.Cells(7, 7).value2 = "順序"
-  ws.Cells(7, 8).value2 = "材料Aの節点を残し、材料B側に新節点を付ける"
+  If CStr(ws.cells(1, 6).value2) <> "水圧方式" And CStr(ws.cells(1, 7).value2) <> "水位線ID" Then ws.range("G1:H20").ClearContents
+  ws.cells(1, 6).value2 = "水圧方式"
+  ws.cells(1, 7).value2 = "水位線ID"
+  ws.columns("F:G").ColumnWidth = 20
+  FEMApplyListValidation ws.range("F2:F2000"), "SOIL,CONTINUOUS,PRESCRIBED"
+  ws.cells(12, 11).value2 = "水圧方式"
+  ws.cells(12, 12).value2 = "SOIL=地盤側水圧 / CONTINUOUS=両地盤の水頭連続 / PRESCRIBED=指定水位線"
+  ws.cells(13, 11).value2 = "水位線ID"
+  ws.cells(13, 12).value2 = "指定時のみ必須。*=WATER工程の現在水位。NONEでは従来どおり。"
+  ws.columns("K").ColumnWidth = 20: ws.columns("L").ColumnWidth = 100
+  ws.cells(1, 1).value2 = "材料A"
+  ws.cells(1, 2).value2 = "材料B"
+  ws.cells(1, 3).value2 = "接合材料"
+  ws.cells(1, 4).value2 = "有効"
+  ws.cells(1, 5).value2 = "説明"
+  ws.cells(1, 11).value2 = "凡例（入力しない）"
+  ws.cells(2, 11).value2 = "材料A"
+  ws.cells(2, 12).value2 = "節点を残す側（擁壁・構造）"
+  ws.cells(3, 11).value2 = "材料B"
+  ws.cells(3, 12).value2 = "節点を増やす側（地盤）"
+  ws.cells(4, 11).value2 = "接合材料"
+  ws.cells(4, 12).value2 = "種別JOINTの材料番号"
+  ws.cells(5, 11).value2 = "生成"
+  ws.cells(5, 12).value2 = "要素作成②の後。共有辺を6節点接合にする"
+  ws.cells(6, 11).value2 = "有効"
+  ws.cells(6, 12).value2 = "1=その行を使う / 0または空=使わない"
+  ws.cells(7, 11).value2 = "順序"
+  ws.cells(7, 12).value2 = "材料Aの節点を残し、材料B側に新節点を付ける"
 End Sub
 
 Private Sub FEMEnsureLoadSheetLayout(ByVal ws As Worksheet)
   Dim lastRow As Long, rowNo As Long, headerF As String, selectorText As String
   Dim boxParts() As String, noteText As String
-  headerF = UCase$(Trim$(CStr(ws.Cells(1, 6).value2)))
-  lastRow = ws.Cells(ws.rows.count, 1).End(xlUp).row
+  headerF = UCase$(Trim$(CStr(ws.cells(1, 6).value2)))
+  lastRow = ws.cells(ws.rows.count, 1).End(xlUp).row
   If lastRow < 2 Then lastRow = 2
   If headerF = "説明" Then
     For rowNo = 2 To lastRow
-      noteText = Trim$(CStr(ws.Cells(rowNo, 6).value2))
-      If Len(Trim$(CStr(ws.Cells(rowNo, 10).value2))) = 0 Then ws.Cells(rowNo, 10).value2 = noteText
-      ws.Cells(rowNo, 6).ClearContents
+      noteText = Trim$(CStr(ws.cells(rowNo, 6).value2))
+      If Len(Trim$(CStr(ws.cells(rowNo, 10).value2))) = 0 Then ws.cells(rowNo, 10).value2 = noteText
+      ws.cells(rowNo, 6).ClearContents
     Next rowNo
   End If
   For rowNo = 2 To lastRow
-    selectorText = UCase$(Trim$(CStr(ws.Cells(rowNo, 2).value2)))
+    selectorText = UCase$(Trim$(CStr(ws.cells(rowNo, 2).value2)))
     If left$(selectorText, 4) = "BOX:" Then
       boxParts = Split(mid$(selectorText, 5), ",")
-      ws.Cells(rowNo, 2).value2 = "BOX"
-      If UBound(boxParts) >= 0 Then If Len(Trim$(CStr(ws.Cells(rowNo, 6).value2))) = 0 Then ws.Cells(rowNo, 6).value2 = Val(boxParts(0))
-      If UBound(boxParts) >= 1 Then If Len(Trim$(CStr(ws.Cells(rowNo, 7).value2))) = 0 Then ws.Cells(rowNo, 7).value2 = Val(boxParts(1))
-      If UBound(boxParts) >= 2 Then If Len(Trim$(CStr(ws.Cells(rowNo, 8).value2))) = 0 Then ws.Cells(rowNo, 8).value2 = Val(boxParts(2))
-      If UBound(boxParts) >= 3 Then If Len(Trim$(CStr(ws.Cells(rowNo, 9).value2))) = 0 Then ws.Cells(rowNo, 9).value2 = Val(boxParts(3))
+      ws.cells(rowNo, 2).value2 = "BOX"
+      If UBound(boxParts) >= 0 Then If Len(Trim$(CStr(ws.cells(rowNo, 6).value2))) = 0 Then ws.cells(rowNo, 6).value2 = val(boxParts(0))
+      If UBound(boxParts) >= 1 Then If Len(Trim$(CStr(ws.cells(rowNo, 7).value2))) = 0 Then ws.cells(rowNo, 7).value2 = val(boxParts(1))
+      If UBound(boxParts) >= 2 Then If Len(Trim$(CStr(ws.cells(rowNo, 8).value2))) = 0 Then ws.cells(rowNo, 8).value2 = val(boxParts(2))
+      If UBound(boxParts) >= 3 Then If Len(Trim$(CStr(ws.cells(rowNo, 9).value2))) = 0 Then ws.cells(rowNo, 9).value2 = val(boxParts(3))
     End If
   Next rowNo
   ' BOX coordinate columns H:I are input; preserve them during layout refresh.
-  ws.Cells(1, 1).value2 = "材料番号"
-  ws.Cells(1, 2).value2 = "選択"
-  ws.Cells(1, 3).value2 = "方向"
-  ws.Cells(1, 4).value2 = "種別"
-  ws.Cells(1, 5).value2 = "値"
-  ws.Cells(1, 6).value2 = "X1"
-  ws.Cells(1, 7).value2 = "Y1"
-  ws.Cells(1, 8).value2 = "X2"
-  ws.Cells(1, 9).value2 = "Y2"
-  ws.Cells(1, 10).value2 = "説明"
-  If Len(Trim$(CStr(ws.Cells(2, 1).value2))) = 0 Or UCase$(Trim$(CStr(ws.Cells(2, 1).value2))) = "基礎" Then
-    ws.Cells(2, 1).value2 = 1
-    ws.Cells(2, 2).value2 = "TOP"
-    ws.Cells(2, 3).value2 = "Y"
-    ws.Cells(2, 4).value2 = "DISP"
-    If Len(Trim$(CStr(ws.Cells(2, 5).value2))) = 0 Then ws.Cells(2, 5).value2 = 0#
+  ws.cells(1, 1).value2 = "材料番号"
+  ws.cells(1, 2).value2 = "選択"
+  ws.cells(1, 3).value2 = "方向"
+  ws.cells(1, 4).value2 = "種別"
+  ws.cells(1, 5).value2 = "値"
+  ws.cells(1, 6).value2 = "X1"
+  ws.cells(1, 7).value2 = "Y1"
+  ws.cells(1, 8).value2 = "X2"
+  ws.cells(1, 9).value2 = "Y2"
+  ws.cells(1, 10).value2 = "説明"
+  If Len(Trim$(CStr(ws.cells(2, 1).value2))) = 0 Or UCase$(Trim$(CStr(ws.cells(2, 1).value2))) = "基礎" Then
+    ws.cells(2, 1).value2 = 1
+    ws.cells(2, 2).value2 = "TOP"
+    ws.cells(2, 3).value2 = "Y"
+    ws.cells(2, 4).value2 = "DISP"
+    If Len(Trim$(CStr(ws.cells(2, 5).value2))) = 0 Then ws.cells(2, 5).value2 = 0#
   End If
   FEMApplyLoadValidation ws
   FEMWriteLoadLegend ws
@@ -3483,7 +3506,7 @@ Private Sub FEMApplyLoadValidation(ByVal ws As Worksheet)
   targetRange.Validation.InCellDropdown = False
   targetRange.Validation.ShowError = True
   targetRange.Validation.ErrorTitle = "入力値"
-  targetRange.Validation.ErrorMessage = "TOP/BOTTOM/LEFT/RIGHT/BOX、または節点データに存在する正の節点番号を入力してください。"
+  targetRange.Validation.errorMessage = "TOP/BOTTOM/LEFT/RIGHT/BOX、または節点データに存在する正の節点番号を入力してください。"
   Set targetRange = ws.range("C2:C100")
   targetRange.Validation.Delete
   targetRange.Validation.Add Type:=3, AlertStyle:=1, Operator:=1, Formula1:="X,Y"
@@ -3498,31 +3521,31 @@ Private Sub FEMApplyLoadValidation(ByVal ws As Worksheet)
 End Sub
 
 Private Sub FEMWriteLoadLegend(ByVal ws As Worksheet)
-  ws.Cells(1, 12).value2 = "凡例（入力しない）"
-  ws.Cells(2, 12).value2 = "選択"
-  ws.Cells(2, 13).value2 = "対象のキーワードまたは節点番号。TOP/BOTTOM/LEFT/RIGHT/BOXまたは実在する正整数ID"
-  ws.Cells(3, 12).value2 = "TOP"
-  ws.Cells(3, 13).value2 = "その材料の上辺（Y最大の辺）"
-  ws.Cells(4, 12).value2 = "BOTTOM"
-  ws.Cells(4, 13).value2 = "その材料の下辺"
-  ws.Cells(5, 12).value2 = "LEFT"
-  ws.Cells(5, 13).value2 = "その材料の左辺"
-  ws.Cells(6, 12).value2 = "RIGHT"
-  ws.Cells(6, 13).value2 = "その材料の右辺"
-  ws.Cells(7, 12).value2 = "BOX"
-  ws.Cells(7, 13).value2 = "X1,Y1,X2,Y2の矩形。解析座標。その材料の節点だけ"
-  ws.Cells(8, 12).value2 = "方向"
-  ws.Cells(8, 13).value2 = "X または Y"
-  ws.Cells(9, 12).value2 = "DISP"
-  ws.Cells(9, 13).value2 = "強制変位。値の単位は長さ"
-  ws.Cells(10, 12).value2 = "FORCE"
-  ws.Cells(10, 13).value2 = "節点力。値の単位は力"
-  ws.Cells(11, 12).value2 = "FIX"
-  ws.Cells(11, 13).value2 = "その方向を拘束（変位0）"
-  ws.Cells(12, 12).value2 = "値0"
-  ws.Cells(12, 13).value2 = "DISP=0はゼロ変位を指定。FORCE=0はゼロ節点力。行を無効にする場合はLOAD工程を無効化"
-  ws.Cells(13, 12).value2 = "材料番号"
-  ws.Cells(13, 13).value2 = "材料データと同じ番号。LOAD/UNLOADの対象"
+  ws.cells(1, 12).value2 = "凡例（入力しない）"
+  ws.cells(2, 12).value2 = "選択"
+  ws.cells(2, 13).value2 = "対象のキーワードまたは節点番号。TOP/BOTTOM/LEFT/RIGHT/BOXまたは実在する正整数ID"
+  ws.cells(3, 12).value2 = "TOP"
+  ws.cells(3, 13).value2 = "その材料の上辺（Y最大の辺）"
+  ws.cells(4, 12).value2 = "BOTTOM"
+  ws.cells(4, 13).value2 = "その材料の下辺"
+  ws.cells(5, 12).value2 = "LEFT"
+  ws.cells(5, 13).value2 = "その材料の左辺"
+  ws.cells(6, 12).value2 = "RIGHT"
+  ws.cells(6, 13).value2 = "その材料の右辺"
+  ws.cells(7, 12).value2 = "BOX"
+  ws.cells(7, 13).value2 = "X1,Y1,X2,Y2の矩形。解析座標。その材料の節点だけ"
+  ws.cells(8, 12).value2 = "方向"
+  ws.cells(8, 13).value2 = "X または Y"
+  ws.cells(9, 12).value2 = "DISP"
+  ws.cells(9, 13).value2 = "強制変位。値の単位は長さ"
+  ws.cells(10, 12).value2 = "FORCE"
+  ws.cells(10, 13).value2 = "節点力。値の単位は力"
+  ws.cells(11, 12).value2 = "FIX"
+  ws.cells(11, 13).value2 = "その方向を拘束（変位0）"
+  ws.cells(12, 12).value2 = "値0"
+  ws.cells(12, 13).value2 = "DISP=0はゼロ変位を指定。FORCE=0はゼロ節点力。行を無効にする場合はLOAD工程を無効化"
+  ws.cells(13, 12).value2 = "材料番号"
+  ws.cells(13, 13).value2 = "材料データと同じ番号。LOAD/UNLOADの対象"
 End Sub
 
 Private Sub FEMEnsureMaterialSheetLayout()
@@ -3531,43 +3554,43 @@ Private Sub FEMEnsureMaterialSheetLayout()
   Set ws = ThisWorkbook.Worksheets("材料データ")
   On Error GoTo 0
   If ws Is Nothing Then Exit Sub
-  ws.Cells(1, 1).value2 = "材料番号"
-  ws.Cells(1, 2).value2 = "ヤング率"
-  ws.Cells(1, 3).value2 = "ポアソン比"
-  ws.Cells(1, 4).value2 = "板厚"
-  ws.Cells(1, 5).value2 = "単位体積重量"
-  ws.Cells(1, 6).value2 = "内部摩擦角"
-  ws.Cells(1, 7).value2 = "粘着力"
-  ws.Cells(1, 8).value2 = "ダイレタンシー角"
-  ws.Cells(1, 9).value2 = "強度低減"
-  ws.Cells(1, 10).value2 = "初期状態"
-  ws.Cells(1, 11).value2 = "種別"
-  ws.Cells(1, 12).value2 = "せん断剛性"
-  ws.Cells(1, 13).value2 = "引張"
-  ws.Cells(1, 15).value2 = "凡例（入力しない）"
-  ws.Cells(2, 15).value2 = "強度低減"
-  ws.Cells(2, 16).value2 = "1=SRMでc・φを下げる / 0=構造物・基盤は下げない"
-  ws.Cells(3, 15).value2 = "初期状態"
-  ws.Cells(3, 16).value2 = "ON=解析開始から有効 / OFF=BIRTH待ち"
-  ws.Cells(4, 15).value2 = "種別"
-  ws.Cells(4, 16).value2 = "SOIL=地盤 / STRUCT=構造 / JOINT=接合。空=SOIL"
-  ws.Cells(5, 15).value2 = "JOINT"
-  ws.Cells(5, 16).value2 = "Kn=B列、Ks=L列、psi=0のみ。履歴なし応力上限モデル。残留塑性すべりは未対応"
-  ws.Cells(6, 15).value2 = "DAVIS"
-  ws.Cells(6, 16).value2 = "FLOW_POLICY=DAVISでもJOINTのc,φは変換しない"
-  ws.Cells(7, 15).value2 = "単位"
-  ws.Cells(7, 16).value2 = "角度は度。粘着力は応力と同じ単位"
-  lastRow = ws.Cells(ws.rows.count, 1).End(xlUp).row
+  ws.cells(1, 1).value2 = "材料番号"
+  ws.cells(1, 2).value2 = "ヤング率"
+  ws.cells(1, 3).value2 = "ポアソン比"
+  ws.cells(1, 4).value2 = "板厚"
+  ws.cells(1, 5).value2 = "単位体積重量"
+  ws.cells(1, 6).value2 = "内部摩擦角"
+  ws.cells(1, 7).value2 = "粘着力"
+  ws.cells(1, 8).value2 = "ダイレタンシー角"
+  ws.cells(1, 9).value2 = "強度低減"
+  ws.cells(1, 10).value2 = "初期状態"
+  ws.cells(1, 11).value2 = "種別"
+  ws.cells(1, 12).value2 = "せん断剛性"
+  ws.cells(1, 13).value2 = "引張"
+  ws.cells(1, 15).value2 = "凡例（入力しない）"
+  ws.cells(2, 15).value2 = "強度低減"
+  ws.cells(2, 16).value2 = "1=SRMでc・φを下げる / 0=構造物・基盤は下げない"
+  ws.cells(3, 15).value2 = "初期状態"
+  ws.cells(3, 16).value2 = "ON=解析開始から有効 / OFF=BIRTH待ち"
+  ws.cells(4, 15).value2 = "種別"
+  ws.cells(4, 16).value2 = "SOIL=地盤 / STRUCT=構造 / JOINT=接合。空=SOIL"
+  ws.cells(5, 15).value2 = "JOINT"
+  ws.cells(5, 16).value2 = "Kn=B列、Ks=L列、psi=0のみ。履歴なし応力上限モデル。残留塑性すべりは未対応"
+  ws.cells(6, 15).value2 = "DAVIS"
+  ws.cells(6, 16).value2 = "FLOW_POLICY=DAVISでもJOINTのc,φは変換しない"
+  ws.cells(7, 15).value2 = "単位"
+  ws.cells(7, 16).value2 = "角度は度。粘着力は応力と同じ単位"
+  lastRow = ws.cells(ws.rows.count, 1).End(xlUp).row
   If lastRow < 2 Then lastRow = 2
   For rowNo = 2 To lastRow
-    If Len(Trim$(CStr(ws.Cells(rowNo, 1).value2))) = 0 Then GoTo NextMaterialRow
-    If Len(Trim$(CStr(ws.Cells(rowNo, 9).value2))) = 0 Then ws.Cells(rowNo, 9).value2 = 1
-    If Len(Trim$(CStr(ws.Cells(rowNo, 10).value2))) = 0 Then ws.Cells(rowNo, 10).value2 = "ON"
+    If Len(Trim$(CStr(ws.cells(rowNo, 1).value2))) = 0 Then GoTo NextMaterialRow
+    If Len(Trim$(CStr(ws.cells(rowNo, 9).value2))) = 0 Then ws.cells(rowNo, 9).value2 = 1
+    If Len(Trim$(CStr(ws.cells(rowNo, 10).value2))) = 0 Then ws.cells(rowNo, 10).value2 = "ON"
     ' Old legend used L/M (ks/tension). Clear leftover labels on data rows.
-    If Not IsNumeric(ws.Cells(rowNo, 12).value2) Then
-      If InStr(1, CStr(ws.Cells(rowNo, 12).value2), "強度") > 0 Or InStr(1, CStr(ws.Cells(rowNo, 12).value2), "凡例") > 0 Then
-        ws.Cells(rowNo, 12).ClearContents
-        If Not IsNumeric(ws.Cells(rowNo, 13).value2) Then ws.Cells(rowNo, 13).ClearContents
+    If Not IsNumeric(ws.cells(rowNo, 12).value2) Then
+      If InStr(1, CStr(ws.cells(rowNo, 12).value2), "強度") > 0 Or InStr(1, CStr(ws.cells(rowNo, 12).value2), "凡例") > 0 Then
+        ws.cells(rowNo, 12).ClearContents
+        If Not IsNumeric(ws.cells(rowNo, 13).value2) Then ws.cells(rowNo, 13).ClearContents
       End If
     End If
 NextMaterialRow:
@@ -3635,53 +3658,53 @@ End Function
 
 Private Sub FEMWriteSettingsChoiceGuide(ByVal ws As Worksheet)
   Dim lastRow As Long, rowNo As Long, keyName As String, listText As String
-  lastRow = ws.Cells(ws.rows.count, 5).End(xlUp).row
+  lastRow = ws.cells(ws.rows.count, 5).End(xlUp).row
   On Error Resume Next
-  ws.range(ws.Cells(4, 6), ws.Cells(200, 6)).ClearContents
+  ws.range(ws.cells(4, 6), ws.cells(200, 6)).ClearContents
   Err.Clear
   On Error GoTo 0
-  ws.Cells(4, 6).NumberFormat = "@"
-  ws.Cells(4, 6).value2 = "選択肢"
+  ws.cells(4, 6).NumberFormat = "@"
+  ws.cells(4, 6).value2 = "選択肢"
   For rowNo = 5 To lastRow
-    keyName = UCase$(Trim$(CStr(ws.Cells(rowNo, 5).value2)))
+    keyName = UCase$(Trim$(CStr(ws.cells(rowNo, 5).value2)))
     listText = FEMSettingChoiceList(keyName)
     If Len(listText) > 0 Then
-      ws.Cells(rowNo, 6).value2 = Replace$(listText, ",", " / ")
+      ws.cells(rowNo, 6).value2 = Replace$(listText, ",", " / ")
     ElseIf keyName = "EXPORT_LOAD" Then
-      ws.Cells(rowNo, 6).value2 = "空 / AUTO / フォルダ名"
+      ws.cells(rowNo, 6).value2 = "空 / AUTO / フォルダ名"
     ElseIf keyName = "MESH_REPAIR_TERRAIN_COMPARE" Then
-      ws.Cells(rowNo, 6).NumberFormat = "@"
-      ws.Cells(rowNo, 6).value2 = "1=する  0=しない"
+      ws.cells(rowNo, 6).NumberFormat = "@"
+      ws.cells(rowNo, 6).value2 = "1=する  0=しない"
     ElseIf keyName = "ACCEL_PREDICT_BETA" Then
-      ws.Cells(rowNo, 6).value2 = "0以上1以下"
+      ws.cells(rowNo, 6).value2 = "0以上1以下"
     ElseIf keyName = "ACCEL_PREDICT_MAX_RATIO" Then
-      ws.Cells(rowNo, 6).value2 = "0より大きく2以下"
+      ws.cells(rowNo, 6).value2 = "0より大きく2以下"
     ElseIf keyName = "ACCEL_TANGENT_CHANGE" Then
-      ws.Cells(rowNo, 6).value2 = "0より大きく0.1以下"
+      ws.cells(rowNo, 6).value2 = "0より大きく0.1以下"
     ElseIf keyName = "SRM_FIXED_FS" Then
-      ws.Cells(rowNo, 6).value2 = "0=通常探索 / 正数=固定Fs"
+      ws.cells(rowNo, 6).value2 = "0=通常探索 / 正数=固定Fs"
     End If
   Next rowNo
 End Sub
 
 Private Sub FEMApplySettingValidation(ByVal ws As Worksheet)
   Dim lastRow As Long, rowNo As Long, keyName As String, listText As String
-  lastRow = ws.Cells(ws.rows.count, 5).End(xlUp).row
+  lastRow = ws.cells(ws.rows.count, 5).End(xlUp).row
   For rowNo = 5 To lastRow
-    keyName = UCase$(Trim$(CStr(ws.Cells(rowNo, 5).value2)))
+    keyName = UCase$(Trim$(CStr(ws.cells(rowNo, 5).value2)))
     listText = FEMSettingChoiceList(keyName)
-    FEMApplyListValidation ws.Cells(rowNo, 3), listText
+    FEMApplyListValidation ws.cells(rowNo, 3), listText
     Select Case keyName
       Case "ACCEL_PREDICT_BETA"
-        FEMApplyNumericValidation ws.Cells(rowNo, 3), "=AND(ISNUMBER(C" & rowNo & "),C" & rowNo & ">=0,C" & rowNo & "<=1)"
+        FEMApplyNumericValidation ws.cells(rowNo, 3), "=AND(ISNUMBER(C" & rowNo & "),C" & rowNo & ">=0,C" & rowNo & "<=1)"
       Case "ACCEL_PREDICT_MAX_RATIO"
-        FEMApplyNumericValidation ws.Cells(rowNo, 3), "=AND(ISNUMBER(C" & rowNo & "),C" & rowNo & ">0,C" & rowNo & "<=2)"
+        FEMApplyNumericValidation ws.cells(rowNo, 3), "=AND(ISNUMBER(C" & rowNo & "),C" & rowNo & ">0,C" & rowNo & "<=2)"
       Case "ACCEL_TANGENT_CHANGE"
-        FEMApplyNumericValidation ws.Cells(rowNo, 3), "=AND(ISNUMBER(C" & rowNo & "),C" & rowNo & ">0,C" & rowNo & "<=0.1)"
+        FEMApplyNumericValidation ws.cells(rowNo, 3), "=AND(ISNUMBER(C" & rowNo & "),C" & rowNo & ">0,C" & rowNo & "<=0.1)"
       Case "SRM_FIXED_FS"
-        FEMApplyNumericValidation ws.Cells(rowNo, 3), "=AND(ISNUMBER(C" & rowNo & "),C" & rowNo & ">=0)"
+        FEMApplyNumericValidation ws.cells(rowNo, 3), "=AND(ISNUMBER(C" & rowNo & "),C" & rowNo & ">=0)"
       Case "VIEW_COLOR_RESULT"
-        FEMApplyListValidation ws.Cells(rowNo, 3), "=FEMViewerSelectionIDs"
+        FEMApplyListValidation ws.cells(rowNo, 3), "=FEMViewerSelectionIDs"
     End Select
   Next rowNo
 End Sub
@@ -3698,7 +3721,7 @@ Private Sub FEMApplyNumericValidation(ByVal targetRange As range, ByVal ruleText
 End Sub
 
 Private Sub FEMApplyStageValidation(ByVal ws As Worksheet)
-  FEMApplyListValidation ws.range("B2:B2000"), "GRAVITY,LOAD,UNLOAD,BIRTH,DEATH,SRM,RESET_U,RESET_STRESS,MATSET"
+  FEMApplyListValidation ws.range("B2:B2000"), "GRAVITY,LOAD,UNLOAD,BIRTH,DEATH,SRM,RESET_U,RESET_STRESS,MATSET,WATER"
   FEMApplyListValidation ws.range("E2:E2000"), "1,0"
 End Sub
 
@@ -3710,10 +3733,10 @@ Private Sub FEMApplyMaterialValidation(ByVal ws As Worksheet)
 End Sub
 
 Private Sub FEMSpecPut(ByVal ws As Worksheet, ByRef rowNo As Long, ByVal classText As String, ByVal itemText As String, ByVal valueText As String, ByVal meaningText As String)
-  ws.Cells(rowNo, 1).value2 = classText
-  ws.Cells(rowNo, 2).value2 = itemText
-  ws.Cells(rowNo, 3).value2 = valueText
-  ws.Cells(rowNo, 4).value2 = meaningText
+  ws.cells(rowNo, 1).value2 = classText
+  ws.cells(rowNo, 2).value2 = itemText
+  ws.cells(rowNo, 3).value2 = valueText
+  ws.cells(rowNo, 4).value2 = meaningText
   rowNo = rowNo + 1
 End Sub
 
@@ -3726,12 +3749,12 @@ Private Sub FEMEnsureSpecSheet()
     Set ws = ThisWorkbook.Worksheets.Add(After:=ThisWorkbook.Worksheets("設定"))
     ws.name = "仕様"
   End If
-  ws.Cells.ClearContents
-  ws.Cells(1, 1).value2 = "仕様（入力しない。開くたびに再生成）"
-  ws.Cells(2, 1).value2 = "分類"
-  ws.Cells(2, 2).value2 = "項目"
-  ws.Cells(2, 3).value2 = "値・入力"
-  ws.Cells(2, 4).value2 = "意味"
+  ws.cells.ClearContents
+  ws.cells(1, 1).value2 = "仕様（入力しない。開くたびに再生成）"
+  ws.cells(2, 1).value2 = "分類"
+  ws.cells(2, 2).value2 = "項目"
+  ws.cells(2, 3).value2 = "値・入力"
+  ws.cells(2, 4).value2 = "意味"
   ws.columns(3).NumberFormat = "@"
   rowNo = 3
   FEMSpecPut ws, rowNo, "このブック", "設定", "C列", "数値と選択肢。F列が候補。G1がプログラムVer"
@@ -3794,42 +3817,42 @@ End Sub
 Private Sub P6EnsureSettingRow(ByVal ws As Worksheet, ByVal keyName As String, ByVal categoryText As String, ByVal itemText As String, ByVal defaultValue As Double, ByVal noteText As String)
   Dim lastRow As Long, rowNo As Long, foundRow As Long
   foundRow = 0
-  lastRow = ws.Cells(ws.rows.count, 5).End(xlUp).row
+  lastRow = ws.cells(ws.rows.count, 5).End(xlUp).row
   For rowNo = 1 To lastRow
-    If UCase$(Trim$(CStr(ws.Cells(rowNo, 5).value2))) = UCase$(keyName) Then
+    If UCase$(Trim$(CStr(ws.cells(rowNo, 5).value2))) = UCase$(keyName) Then
       foundRow = rowNo
       Exit For
     End If
   Next rowNo
   If foundRow = 0 Then
     foundRow = lastRow + 1
-    ws.Cells(foundRow, 5).value2 = keyName
-    ws.Cells(foundRow, 3).value2 = defaultValue
+    ws.cells(foundRow, 5).value2 = keyName
+    ws.cells(foundRow, 3).value2 = defaultValue
   End If
-  ws.Cells(foundRow, 1).value2 = categoryText
-  ws.Cells(foundRow, 2).value2 = itemText
-  ws.Cells(foundRow, 4).value2 = noteText
+  ws.cells(foundRow, 1).value2 = categoryText
+  ws.cells(foundRow, 2).value2 = itemText
+  ws.cells(foundRow, 4).value2 = noteText
 End Sub
 
 Private Sub P6EnsureTextSettingRow(ByVal ws As Worksheet, ByVal keyName As String, ByVal categoryText As String, ByVal itemText As String, ByVal defaultText As String, ByVal noteText As String)
   Dim lastRow As Long, rowNo As Long, foundRow As Long
   foundRow = 0
-  lastRow = ws.Cells(ws.rows.count, 5).End(xlUp).row
+  lastRow = ws.cells(ws.rows.count, 5).End(xlUp).row
   For rowNo = 1 To lastRow
-    If UCase$(Trim$(CStr(ws.Cells(rowNo, 5).value2))) = UCase$(keyName) Then
+    If UCase$(Trim$(CStr(ws.cells(rowNo, 5).value2))) = UCase$(keyName) Then
       foundRow = rowNo
       Exit For
     End If
   Next rowNo
   If foundRow = 0 Then
     foundRow = lastRow + 1
-    ws.Cells(foundRow, 5).value2 = keyName
-    ws.Cells(foundRow, 3).NumberFormat = "@"
-    ws.Cells(foundRow, 3).value2 = defaultText
+    ws.cells(foundRow, 5).value2 = keyName
+    ws.cells(foundRow, 3).NumberFormat = "@"
+    ws.cells(foundRow, 3).value2 = defaultText
   End If
-  ws.Cells(foundRow, 1).value2 = categoryText
-  ws.Cells(foundRow, 2).value2 = itemText
-  ws.Cells(foundRow, 4).value2 = noteText
+  ws.cells(foundRow, 1).value2 = categoryText
+  ws.cells(foundRow, 2).value2 = itemText
+  ws.cells(foundRow, 4).value2 = noteText
 End Sub
 
 Public Sub FEMResetRunLog()
@@ -3842,21 +3865,21 @@ Public Sub FEMResetRunLog()
     P3RunLogRow = 0
     Exit Sub
   End If
-  lastRow = ws.Cells(ws.rows.count, 4).End(xlUp).row
+  lastRow = ws.cells(ws.rows.count, 4).End(xlUp).row
   If lastRow < 2 Then lastRow = 2
-  ws.range(ws.Cells(1, 4), ws.Cells(lastRow, 14)).ClearContents
-  ws.Cells(1, 4).value2 = "解析ログ（再実行で消去） Ver=" & FEM_BUILD_STAMP
-  ws.Cells(2, 4).value2 = "順"
-  ws.Cells(2, 5).value2 = "場所"
-  ws.Cells(2, 6).value2 = "ステージ"
-  ws.Cells(2, 7).value2 = "種別"
-  ws.Cells(2, 8).value2 = "状態"
-  ws.Cells(2, 9).value2 = "Fs"
-  ws.Cells(2, 10).value2 = "増分"
-  ws.Cells(2, 11).value2 = "反復"
-  ws.Cells(2, 12).value2 = "相対残差"
-  ws.Cells(2, 13).value2 = "補正比"
-  ws.Cells(2, 14).value2 = "メッセージ"
+  ws.range(ws.cells(1, 4), ws.cells(lastRow, 14)).ClearContents
+  ws.cells(1, 4).value2 = "解析ログ（再実行で消去） Ver=" & FEM_BUILD_STAMP
+  ws.cells(2, 4).value2 = "順"
+  ws.cells(2, 5).value2 = "場所"
+  ws.cells(2, 6).value2 = "ステージ"
+  ws.cells(2, 7).value2 = "種別"
+  ws.cells(2, 8).value2 = "状態"
+  ws.cells(2, 9).value2 = "Fs"
+  ws.cells(2, 10).value2 = "増分"
+  ws.cells(2, 11).value2 = "反復"
+  ws.cells(2, 12).value2 = "相対残差"
+  ws.cells(2, 13).value2 = "補正比"
+  ws.cells(2, 14).value2 = "メッセージ"
   P3RunLogRow = 2
   P3RunLogStageNo = 0
   P3RunLogKind = vbNullString
@@ -3877,17 +3900,17 @@ Public Sub FEMAppendRunLog(ByVal placeText As String, ByVal statusText As String
     stageNo = P3StageId(P3ActivePrefix)
     kindText = P3StageKind(P3ActivePrefix)
   End If
-  ws.Cells(P3RunLogRow, 4).value2 = P3RunLogRow - 2
-  ws.Cells(P3RunLogRow, 5).value2 = placeText
-  If stageNo > 0 Then ws.Cells(P3RunLogRow, 6).value2 = stageNo
-  ws.Cells(P3RunLogRow, 7).value2 = kindText
-  ws.Cells(P3RunLogRow, 8).value2 = statusText
-  ws.Cells(P3RunLogRow, 9).value2 = P3CurrentStrengthFactor
-  ws.Cells(P3RunLogRow, 10).value2 = CurrentIncrement
-  ws.Cells(P3RunLogRow, 11).value2 = CurrentIteration
-  ws.Cells(P3RunLogRow, 12).value2 = RelativeResidualFree
-  ws.Cells(P3RunLogRow, 13).value2 = P3MaxCorrection
-  ws.Cells(P3RunLogRow, 14).value2 = messageText
+  ws.cells(P3RunLogRow, 4).value2 = P3RunLogRow - 2
+  ws.cells(P3RunLogRow, 5).value2 = placeText
+  If stageNo > 0 Then ws.cells(P3RunLogRow, 6).value2 = stageNo
+  ws.cells(P3RunLogRow, 7).value2 = kindText
+  ws.cells(P3RunLogRow, 8).value2 = statusText
+  ws.cells(P3RunLogRow, 9).value2 = P3CurrentStrengthFactor
+  ws.cells(P3RunLogRow, 10).value2 = CurrentIncrement
+  ws.cells(P3RunLogRow, 11).value2 = CurrentIteration
+  ws.cells(P3RunLogRow, 12).value2 = RelativeResidualFree
+  ws.cells(P3RunLogRow, 13).value2 = P3MaxCorrection
+  ws.cells(P3RunLogRow, 14).value2 = messageText
   If P3RunLogRow > 80 Then
     ' 診断シートは要約。本文は *_out/run.log
     P3RunLogRow = 80
@@ -3943,3 +3966,14 @@ WriteFailed:
   Close #fileNum
   Err.Clear
 End Sub
+
+' Stiff contact springs amplify rounded gap errors; retain Double-scale kinematics.
+Private Function FEMIoKinematicText(ByVal value As Double, ByVal coordinate As Boolean) As String
+  If GWActive And P3HasJointElements Then
+    FEMIoKinematicText = Replace$(Format$(value, "0.0000000000000000E+00"), Application.International(xlDecimalSeparator), ".")
+  ElseIf coordinate Then
+    FEMIoKinematicText = Format$(value, "0.0000000000")
+  Else
+    FEMIoKinematicText = Format$(value, "0.000000000000")
+  End If
+End Function

@@ -57,11 +57,11 @@ Private Sub SaveApplicationState()
     savedCalculationValid = False
     On Error Resume Next
     savedCalculation = Application.Calculation
-    savedCalculationValid = (Err.Number = 0 And Not IsError(savedCalculation) And IsNumeric(savedCalculation))
+    savedCalculationValid = (Err.number = 0 And Not IsError(savedCalculation) And IsNumeric(savedCalculation))
     Err.Clear
     On Error Resume Next
     savedEnableCancelKey = Application.EnableCancelKey
-    savedCancelKeyValid = (Err.Number = 0)
+    savedCancelKeyValid = (Err.number = 0)
     Err.Clear
     Application.EnableCancelKey = xlErrorHandler
     On Error GoTo 0
@@ -108,16 +108,16 @@ Private Sub FEMEnsureSettingCache()
     On Error GoTo 0
     If ws Is Nothing Then Exit Sub
     FEMUiCalculateSettings
-    lastRow = ws.Cells(ws.rows.count, 5).End(xlUp).row
+    lastRow = ws.cells(ws.rows.count, 5).End(xlUp).row
     If lastRow < 1 Then Exit Sub
     ReDim FEMSettingCacheKeys(0 To lastRow - 1)
     ReDim FEMSettingCacheValues(0 To lastRow - 1)
     For rowNo = 1 To lastRow
-        keyValue = ws.Cells(rowNo, 5).value2
+        keyValue = ws.cells(rowNo, 5).value2
         If Not IsError(keyValue) Then
             If Len(Trim$(CStr(keyValue))) > 0 Then
                 FEMSettingCacheKeys(FEMSettingCacheCount) = UCase$(Trim$(CStr(keyValue)))
-                FEMSettingCacheValues(FEMSettingCacheCount) = ws.Cells(rowNo, 3).value2
+                FEMSettingCacheValues(FEMSettingCacheCount) = ws.cells(rowNo, 3).value2
                 FEMSettingCacheCount = FEMSettingCacheCount + 1
             End If
         End If
@@ -173,9 +173,9 @@ Private Function FEMFindSettingRow(ByVal keyName As String) As Long
     Set ws = ThisWorkbook.Worksheets("設定")
     On Error GoTo 0
     If ws Is Nothing Then Exit Function
-    lastRow = ws.Cells(ws.rows.count, 5).End(xlUp).row
+    lastRow = ws.cells(ws.rows.count, 5).End(xlUp).row
     For rowNo = 1 To lastRow
-        If UCase$(Trim$(CStr(ws.Cells(rowNo, 5).value2))) = UCase$(Trim$(keyName)) Then
+        If UCase$(Trim$(CStr(ws.cells(rowNo, 5).value2))) = UCase$(Trim$(keyName)) Then
             FEMFindSettingRow = rowNo
             Exit Function
         End If
@@ -198,14 +198,14 @@ Public Sub FEMWriteNumericSetting(ByVal keyName As String, ByVal value As Double
     If ws Is Nothing Then Exit Sub
     rowNo = FEMFindSettingRow(keyName)
     If rowNo = 0 Then
-        lastRow = ws.Cells(ws.rows.count, 5).End(xlUp).row
+        lastRow = ws.cells(ws.rows.count, 5).End(xlUp).row
         rowNo = lastRow + 1
-        ws.Cells(rowNo, 1).value2 = "追加"
-        ws.Cells(rowNo, 2).value2 = keyName
-        ws.Cells(rowNo, 4).value2 = "自動記録"
-        ws.Cells(rowNo, 5).value2 = keyName
+        ws.cells(rowNo, 1).value2 = "追加"
+        ws.cells(rowNo, 2).value2 = keyName
+        ws.cells(rowNo, 4).value2 = "自動記録"
+        ws.cells(rowNo, 5).value2 = keyName
     End If
-    ws.Cells(rowNo, 3).value2 = value
+    ws.cells(rowNo, 3).value2 = value
     FEMInvalidateSettingCache
 End Sub
 
@@ -225,14 +225,14 @@ Public Sub FEMWriteTextSetting(ByVal keyName As String, ByVal value As String)
     If ws Is Nothing Then Exit Sub
     rowNo = FEMFindSettingRow(keyName)
     If rowNo = 0 Then
-        lastRow = ws.Cells(ws.rows.count, 5).End(xlUp).row
+        lastRow = ws.cells(ws.rows.count, 5).End(xlUp).row
         rowNo = lastRow + 1
-        ws.Cells(rowNo, 1).value2 = "メッシュ品質"
-        ws.Cells(rowNo, 2).value2 = keyName
-        ws.Cells(rowNo, 4).value2 = "自動記録"
-        ws.Cells(rowNo, 5).value2 = keyName
+        ws.cells(rowNo, 1).value2 = "メッシュ品質"
+        ws.cells(rowNo, 2).value2 = keyName
+        ws.cells(rowNo, 4).value2 = "自動記録"
+        ws.cells(rowNo, 5).value2 = keyName
     End If
-    ws.Cells(rowNo, 3).value2 = value
+    ws.cells(rowNo, 3).value2 = value
     FEMInvalidateSettingCache
 End Sub
 
@@ -345,8 +345,8 @@ Private Sub CreateMeshFromGeometryDefinition()
     If stateWasSaved Then RestoreApplicationState
     MeshPerfLeave "CONTROL.CreateMeshFromGeometryDefinition": Exit Sub
 ErrorHandler:
-    errorNumber = Err.Number
-    errorDescription = Err.Description
+    errorNumber = Err.number
+    errorDescription = Err.description
     On Error Resume Next
     P5ReleaseGeometryDefinitionWorkspace
     On Error GoTo 0
@@ -487,10 +487,10 @@ Private Sub MeshCommitGeneratedMesh(ByVal nodeCount As Long, ByVal elementCount 
 
     Set wsNode = ThisWorkbook.Worksheets("節点データ")
     Set wsElement = ThisWorkbook.Worksheets("要素データ")
-    oldNodeCount = wsNode.Cells(wsNode.rows.count, 1).End(xlUp).row - 1
-    oldElementCount = wsElement.Cells(wsElement.rows.count, 1).End(xlUp).row - 1
-    If oldNodeCount > 0 Then wsNode.range(wsNode.Cells(2, 1), wsNode.Cells(oldNodeCount + 1, 14)).ClearContents
-    If oldElementCount > 0 Then wsElement.range(wsElement.Cells(2, 1), wsElement.Cells(oldElementCount + 1, 10)).ClearContents
+    oldNodeCount = wsNode.cells(wsNode.rows.count, 1).End(xlUp).row - 1
+    oldElementCount = wsElement.cells(wsElement.rows.count, 1).End(xlUp).row - 1
+    If oldNodeCount > 0 Then wsNode.range(wsNode.cells(2, 1), wsNode.cells(oldNodeCount + 1, 14)).ClearContents
+    If oldElementCount > 0 Then wsElement.range(wsElement.cells(2, 1), wsElement.cells(oldElementCount + 1, 10)).ClearContents
 
     ReDim nodeOutput(1 To nodeCount, 1 To 9)
     For i = 1 To nodeCount
@@ -504,8 +504,8 @@ Private Sub MeshCommitGeneratedMesh(ByVal nodeCount As Long, ByVal elementCount 
         nodeOutput(i, 8) = 0
         nodeOutput(i, 9) = 0
     Next i
-    wsNode.range(wsNode.Cells(2, 1), wsNode.Cells(nodeCount + 1, 9)).value2 = nodeOutput
-    wsElement.range(wsElement.Cells(2, 1), wsElement.Cells(elementCount + 1, 10)).value2 = elementRows
+    wsNode.range(wsNode.cells(2, 1), wsNode.cells(nodeCount + 1, 9)).value2 = nodeOutput
+    wsElement.range(wsElement.cells(2, 1), wsElement.cells(elementCount + 1, 10)).value2 = elementRows
     FEMInvalidateInputCache
 End Sub
 
@@ -587,10 +587,10 @@ Public Sub MeshApplySheetBoundaryConditions()
     Dim rawValues As Variant
 
     Set wsNode = ThisWorkbook.Worksheets("節点データ")
-    lastRow = wsNode.Cells(wsNode.rows.count, 1).End(xlUp).row
+    lastRow = wsNode.cells(wsNode.rows.count, 1).End(xlUp).row
     nodeCount = lastRow - 1
     If nodeCount < 1 Then MeshPerfLeave "CONTROL.MeshApplySheetBoundaryConditions": Exit Sub
-    rawValues = wsNode.range(wsNode.Cells(2, 1), wsNode.Cells(nodeCount + 1, 3)).value2
+    rawValues = wsNode.range(wsNode.cells(2, 1), wsNode.cells(nodeCount + 1, 3)).value2
     ReDim nodeX(1 To nodeCount)
     ReDim nodeY(1 To nodeCount)
     ReDim condX(1 To nodeCount)
@@ -605,7 +605,7 @@ Public Sub MeshApplySheetBoundaryConditions()
         nodeOutput(i, 1) = condX(i)
         nodeOutput(i, 2) = condY(i)
     Next i
-    wsNode.range(wsNode.Cells(2, 4), wsNode.Cells(nodeCount + 1, 5)).value2 = nodeOutput
+    wsNode.range(wsNode.cells(2, 4), wsNode.cells(nodeCount + 1, 5)).value2 = nodeOutput
     FEMInvalidateInputCache
     MeshPerfLeave "CONTROL.MeshApplySheetBoundaryConditions"
 End Sub
@@ -622,13 +622,13 @@ Private Function MeshQuadSignedArea(ByVal x1 As Double, ByVal y1 As Double, ByVa
     MeshQuadSignedArea = (x1 * y2 - x2 * y1) + (x2 * y3 - x3 * y2) + (x3 * y4 - x4 * y3) + (x4 * y1 - x1 * y4)
 End Function
 
-Private Function MeshSegmentsProperIntersect(ByVal ax As Double, ByVal ay As Double, ByVal bx As Double, ByVal by As Double, _
+Private Function MeshSegmentsProperIntersect(ByVal ax As Double, ByVal ay As Double, ByVal bX As Double, ByVal bY As Double, _
                                              ByVal cx As Double, ByVal cy As Double, ByVal dx As Double, ByVal dy As Double) As Boolean
     Dim o1 As Double, o2 As Double, o3 As Double, o4 As Double
-    o1 = (bx - ax) * (cy - ay) - (by - ay) * (cx - ax)
-    o2 = (bx - ax) * (dy - ay) - (by - ay) * (dx - ax)
+    o1 = (bX - ax) * (cy - ay) - (bY - ay) * (cx - ax)
+    o2 = (bX - ax) * (dy - ay) - (bY - ay) * (dx - ax)
     o3 = (dx - cx) * (ay - cy) - (dy - cy) * (ax - cx)
-    o4 = (dx - cx) * (by - cy) - (dy - cy) * (bx - cx)
+    o4 = (dx - cx) * (bY - cy) - (dy - cy) * (bX - cx)
     MeshSegmentsProperIntersect = (o1 * o2 < 0#) And (o3 * o4 < 0#)
 End Function
 
@@ -738,7 +738,7 @@ Private Function MeshGetEdgeMidpoint(ByVal nodeA As Long, ByVal nodeB As Long, _
     keyName = CStr(lowNode) & "-" & CStr(highNode)
     On Error Resume Next
     existingIndex = CLng(edgeLookup.item(keyName))
-    If Err.Number = 0 Then
+    If Err.number = 0 Then
         On Error GoTo 0
         MeshGetEdgeMidpoint = existingIndex
         Exit Function
@@ -914,8 +914,8 @@ Sub ボタン3_Click()
     RestoreApplicationState
     Exit Sub
 ErrorHandler:
-    errorNumber = Err.Number
-    errorDescription = Err.Description
+    errorNumber = Err.number
+    errorDescription = Err.description
     RestoreApplicationState
     MsgBox "描画用データの読み込み失敗 [" & CStr(errorNumber) & "] " & errorDescription, vbCritical
 End Sub
@@ -946,7 +946,7 @@ Sub ボタン4_Click()
     On Error Resume Next
     Set wsIntegratedResult = ThisWorkbook.Worksheets("診断")
     On Error GoTo ErrorHandler
-    If Not wsIntegratedResult Is Nothing Then wsIntegratedResult.Cells.ClearContents
+    If Not wsIntegratedResult Is Nothing Then wsIntegratedResult.cells.ClearContents
 
     '解析済み状態も無効化し、クリア後の表示ボタンが古い結果を参照しないようにする。
     AnalysisOK = False
@@ -961,8 +961,8 @@ Sub ボタン4_Click()
     Application.ScreenUpdating = True
     Exit Sub
 ErrorHandler:
-    errorNumber = Err.Number
-    errorDescription = Err.Description
+    errorNumber = Err.number
+    errorDescription = Err.description
     Application.ScreenUpdating = True
     MsgBox "クリアに失敗しました [" & CStr(errorNumber) & "] " & errorDescription, vbCritical
 End Sub
@@ -990,16 +990,16 @@ Private Sub ClearElementInputData()
     Set ws = ThisWorkbook.Worksheets("節点データ")
     On Error GoTo 0
     If Not ws Is Nothing Then
-        lastRow = ws.Cells(ws.rows.count, 1).End(xlUp).row
-        If lastRow >= 2 Then ws.range(ws.Cells(2, 1), ws.Cells(lastRow, 14)).ClearContents
+        lastRow = ws.cells(ws.rows.count, 1).End(xlUp).row
+        If lastRow >= 2 Then ws.range(ws.cells(2, 1), ws.cells(lastRow, 14)).ClearContents
     End If
     Set ws = Nothing
     On Error Resume Next
     Set ws = ThisWorkbook.Worksheets("要素データ")
     On Error GoTo 0
     If Not ws Is Nothing Then
-        lastRow = ws.Cells(ws.rows.count, 1).End(xlUp).row
-        If lastRow >= 2 Then ws.range(ws.Cells(2, 1), ws.Cells(lastRow, 10)).ClearContents
+        lastRow = ws.cells(ws.rows.count, 1).End(xlUp).row
+        If lastRow >= 2 Then ws.range(ws.cells(2, 1), ws.cells(lastRow, 10)).ClearContents
     End If
     FEMInvalidateInputCache
 End Sub
@@ -1027,6 +1027,8 @@ Sub ボタン5_Click()
     FEMLastProc = "P0_RunAnalysis"
     FEMInvalidateSettingCache
     FEMValidateAnalysisScope
+    GWValidateScope
+    GWClearResults
     FEMWriteBuildStamp
     FEMInvalidateInputCache
     FEMInvalidateSettingCache
@@ -1097,6 +1099,16 @@ Sub ボタン5_Click()
         FEMIncrementSave
         SaveDisp
     End If
+    If UCase$(Trim$(FEMReadTextSetting("OUTPUT_STAGE_MODE", "FINAL"))) <> "ALL" Then GWWriteResults P3RunLogStageNo
+    ' A fully resumed run skips stage output after Cleardata. Recover only the
+    ' accepted final state; skipped stages and increments remain unavailable.
+    If UCase$(Trim$(FEMReadTextSetting("OUTPUT_STAGE_MODE", "FINAL"))) = "ALL" Then
+        If Len(CStr(ThisWorkbook.Worksheets("結果節点").cells(2, 1).value2)) = 0 Then
+            FEMPracticalClearJointResults
+            SaveStress
+            SaveDisp
+        End If
+    End If
     SaveP1Results
     SaveP2MaterialResults
     TimeOutput = TimerElapsed(stageStart)
@@ -1132,8 +1144,8 @@ AnalysisFailure:
     End If
     GoTo ErrorHandler
 ErrorHandler:
-    primaryError = Err.Number
-    primaryDescription = Err.Description
+    primaryError = Err.number
+    primaryDescription = Err.description
     If primaryError = 0 Then primaryError = AnalysisErrorNumber
     If primaryError = 0 Then primaryError = vbObjectError + 3399
     If Len(primaryDescription) = 0 Then primaryDescription = AnalysisMessage
@@ -1153,8 +1165,8 @@ SkipFailureAssign:
     On Error Resume Next
     FEMIoClose
     SaveAnalysisReport
-    reportError = Err.Number
-    reportDescription = Err.Description
+    reportError = Err.number
+    reportDescription = Err.description
     Err.Clear
     On Error GoTo 0
     RestoreApplicationState
@@ -1186,10 +1198,10 @@ Dim i As Long, CoutN As Long
  With ThisWorkbook.Worksheets("結果節点")
      For i = 0 To NumberOfFreeNode
         i1 = i * 2: i2 = i1 + 1
-        XXX(i1) = .Cells(i + 2, 2)
-        XXX(i2) = .Cells(i + 2, 3)
-        Disp(i1) = .Cells(i + 2, 4)
-        Disp(i2) = .Cells(i + 2, 5)
+        XXX(i1) = .cells(i + 2, 2)
+        XXX(i2) = .cells(i + 2, 3)
+        Disp(i1) = .cells(i + 2, 4)
+        Disp(i2) = .cells(i + 2, 5)
      Next i
  End With
  
@@ -1233,7 +1245,7 @@ Dim i As Long, CC As Long
  With ThisWorkbook.Worksheets("結果要素")
  sMax = 0: sMin = 0
  For i = 0 To NumberOfElement - 1
-   stressforcolor(i) = .Cells(i + 2, idd + 1): CC = stressforcolor(i)
+   stressforcolor(i) = .cells(i + 2, idd + 1): CC = stressforcolor(i)
    If CC > 0 And CC > sMax Then sMax = CC
    If CC < 0 And CC < sMin Then sMin = CC
  Next i
@@ -1279,8 +1291,8 @@ Private Function P1LoadViewerMeshFromSheets() As Boolean
     On Error GoTo P1ViewerMeshLoadError
     Set wsNode = ThisWorkbook.Worksheets("節点データ")
     Set wsElement = ThisWorkbook.Worksheets("要素データ")
-    lastNodeRow = wsNode.Cells(wsNode.rows.count, 1).End(xlUp).row
-    lastElementRow = wsElement.Cells(wsElement.rows.count, 1).End(xlUp).row
+    lastNodeRow = wsNode.cells(wsNode.rows.count, 1).End(xlUp).row
+    lastElementRow = wsElement.cells(wsElement.rows.count, 1).End(xlUp).row
     nodeCount = lastNodeRow - 1
     elementCount = lastElementRow - 1
     If nodeCount < 1 Then Err.Raise vbObjectError + 3490, "CONTROL.P1LoadViewerMeshFromSheets", "図形表示用の節点データがありません。"
@@ -1288,8 +1300,8 @@ Private Function P1LoadViewerMeshFromSheets() As Boolean
 
     ' 図形表示は材料番号を必要としないため、解析用ValidateInputDataを経由しない。
     ' 要素作成②の材料番号が材料データに未登録でも、Q8形状そのものは表示できる。
-    nodeValues = wsNode.range(wsNode.Cells(2, 1), wsNode.Cells(nodeCount + 1, 3)).value2
-    elementValues = wsElement.range(wsElement.Cells(2, 1), wsElement.Cells(elementCount + 1, 9)).value2
+    nodeValues = wsNode.range(wsNode.cells(2, 1), wsNode.cells(nodeCount + 1, 3)).value2
+    elementValues = wsElement.range(wsElement.cells(2, 1), wsElement.cells(elementCount + 1, 9)).value2
     NumberOfNode = nodeCount
     NumberOfElement = elementCount
     NumberOfFreeNode = nodeCount
@@ -1336,8 +1348,8 @@ Private Function P1LoadViewerMeshFromSheets() As Boolean
     P1LoadViewerMeshFromSheets = True
     Exit Function
 P1ViewerMeshLoadError:
-    errorNumber = Err.Number
-    errorDescription = Err.Description
+    errorNumber = Err.number
+    errorDescription = Err.description
     Err.Raise errorNumber, "CONTROL.P1LoadViewerMeshFromSheets", errorDescription
 End Function
 
@@ -1431,7 +1443,7 @@ Private Function P1EnsureViewerReady(ByVal operationName As String) As Boolean
     End If
     On Error Resume Next
     upperBound = UBound(TDisp)
-    errorNumber = Err.Number
+    errorNumber = Err.number
     Err.Clear
     On Error GoTo 0
     If errorNumber <> 0 Then
@@ -2135,7 +2147,7 @@ Public Sub P1DrawOriginalViewer()
     P1DrawOriginalLayer ws, view, False
     Exit Sub
 P1OriginalViewerError:
-    P1ViewerLastError = CStr(Err.Number) & " " & Err.Description
+    P1ViewerLastError = CStr(Err.number) & " " & Err.description
     If Not SuppressUserMessages Then MsgBox "図形表示に失敗しました。" & vbCrLf & P1ViewerLastError, vbExclamation
 End Sub
 
@@ -2193,13 +2205,6 @@ Public Sub P1DrawContourViewer()
     P1AddLegend ws, view, P1ResultLabel(view.resultId), view.resultId, minValue, maxValue, minNode, maxNode, P1ResultSourceLabel(view)
     Exit Sub
 P1ContourViewerError:
-    P1ViewerLastError = CStr(Err.Number) & " " & Err.Description
+    P1ViewerLastError = CStr(Err.number) & " " & Err.description
     If Not SuppressUserMessages Then MsgBox "コンター表示に失敗しました。" & vbCrLf & P1ViewerLastError, vbExclamation
 End Sub
-
-
-
-
-
-
-

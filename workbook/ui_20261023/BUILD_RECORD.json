@@ -1,0 +1,30 @@
+{
+  "distribution": "20261023",
+  "verification_date": "2026-10-22",
+  "build": "20261022_WATER_02",
+  "reference_commit": "3a1be89872e2e97b3e6f0bd1b3b7a58e11109389",
+  "reference_workbook": "workbook/ui_20261022/2DSoilFEM_ui_20261022.xlsm",
+  "book_sha256": "1702746bb1c0351c59970f50a18a4a73f36f8b63ad7b1451b01e43d535afc2e7",
+  "dll_sha256": "ad5c2ae81512ba8e977002415a6a5339b621c00a1bbabe5092559f8a7f9e0797",
+  "byte_identical_to_reference": true,
+  "compile": "PASS",
+  "source_modules_verified": 31,
+  "normal_open": true,
+  "actions_rebound": 35,
+  "preview_shapes": 3,
+  "excel_version": "16.0",
+  "excel_build": 20430.0,
+  "wet_independent_check": "PASS",
+  "initial_full_array_differences": {
+    "disp": 0.0,
+    "stress": 0.0,
+    "metrics": 0.0
+  },
+  "resume_full_array_differences": {
+    "disp": 0.0,
+    "stress": 0.0,
+    "metrics": 0.0
+  },
+  "full_regression_evidence": "docs/joint-water-evidence/20261022 (unchanged same binary)",
+  "solver_changes": false
+}

@@ -49,22 +49,22 @@ End Sub
 Private Function ReadTable(ByVal sheetName As String, ByVal columns As Long) As Variant
     Dim ws As Worksheet, lastRow As Long
     Set ws = ThisWorkbook.Worksheets(sheetName)
-    lastRow = ws.Cells(ws.rows.count, 1).End(xlUp).row
+    lastRow = ws.cells(ws.rows.count, 1).End(xlUp).row
     If lastRow < 2 Then lastRow = 2
-    ReadTable = ws.range(ws.Cells(1, 1), ws.Cells(lastRow, columns)).value2
+    ReadTable = ws.range(ws.cells(1, 1), ws.cells(lastRow, columns)).value2
 End Function
 
-Private Function Number(ByVal value As Variant, ByVal field As String) As Double
+Private Function number(ByVal value As Variant, ByVal field As String) As Double
     If IsError(value) Then Err.Raise vbObjectError + 3700, "FEMViewer", field & "がエラーです。"
     If IsEmpty(value) Then Err.Raise vbObjectError + 3700, "FEMViewer", field & "が空欄です。"
     If Not IsNumeric(value) Then Err.Raise vbObjectError + 3700, "FEMViewer", field & "が数値ではありません。"
-    Number = CDbl(value)
-    If Abs(Number) > 1E+100 Then Err.Raise vbObjectError + 3700, "FEMViewer", field & "が表示範囲外です。"
+    number = CDbl(value)
+    If Abs(number) > 1E+100 Then Err.Raise vbObjectError + 3700, "FEMViewer", field & "が表示範囲外です。"
 End Function
 
 Private Function id(ByVal value As Variant) As Long
     Dim n As Double
-    n = Number(value, "番号")
+    n = number(value, "番号")
     If n < 1# Or n > 2147483647# Or n <> Fix(n) Then Err.Raise vbObjectError + 3701, "FEMViewer", "番号が正の整数ではありません。"
     id = CLng(n)
 End Function
@@ -148,7 +148,7 @@ Private Function SavedElementValues(ByRef rows As Variant, ByVal selection As Lo
                 If active.Exists(e) And Not jointElements.Exists(e) Then
                     If values.Exists(e) Then Err.Raise vbObjectError + 3704, "FEMViewer", "同じステージ・要素の結果が重複しています。要素=" & e
                     If IsEmpty(rows(r, column)) Then Err.Raise vbObjectError + 3704, "FEMViewer", "選択列の結果がありません。要素=" & e
-                    values.Add e, Number(rows(r, column), "結果要素の選択列")
+                    values.Add e, number(rows(r, column), "結果要素の選択列")
                 End If
             End If
         End If
@@ -220,7 +220,7 @@ Private Sub DrawView(ByVal mode As String)
         If Not IsEmpty(nodes(r, 1)) Then
             n = id(nodes(r, 1))
             If nodeMap.Exists(n) Then Err.Raise vbObjectError + 3705, "FEMViewer", "節点番号が重複しています。"
-            nodeMap.Add n, Array(Number(nodes(r, 2), "節点X"), Number(nodes(r, 3), "節点Y"))
+            nodeMap.Add n, Array(number(nodes(r, 2), "節点X"), number(nodes(r, 3), "節点Y"))
         End If
     Next r
     If config.Exists("VIEW_DETAIL_MODE") Then showLabels = (UCase$(Trim$(CStr(config("VIEW_DETAIL_MODE")))) = "DETAIL")
@@ -232,7 +232,7 @@ Private Sub DrawView(ByVal mode As String)
             If kind = "JOINT" Or kind = "接合" Or kind = "IF" Or kind = "INTERFACE" Then jointMaterials(mat) = True
         End If
     Next r
-    For Each key In materialMap.Keys
+    For Each key In materialMap.keys
         finalMaterials(key) = materialMap(key)
     Next key
     For r = 2 To UBound(stages, 1)
@@ -263,7 +263,7 @@ NextPlan:
     viewPhase = "保存結果と入力の照合"
     If mode = "RESULT" Then
         If ResultsDirty() Then Err.Raise vbObjectError + 3706, "FEMViewer", "入力変更後のため、再解析してから結果表示してください。"
-        If CStr(ThisWorkbook.Worksheets("診断").Cells(2, 2).value2) <> "PASS" Then Err.Raise vbObjectError + 3707, "FEMViewer", "解析成功後に結果表示してください。"
+        If CStr(ThisWorkbook.Worksheets("診断").cells(2, 2).value2) <> "PASS" Then Err.Raise vbObjectError + 3707, "FEMViewer", "解析成功後に結果表示してください。"
         nodeResults = ReadTable("結果節点", 10)
         elementResults = ReadTable("結果要素", 72)
         Stage = LatestStage(nodeResults)
@@ -303,13 +303,13 @@ NextPlan:
                     n = id(nodeResults(r, 2))
                     If Not nodeMap.Exists(n) Then Err.Raise vbObjectError + 3709, "FEMViewer", "結果の節点が現在のメッシュにありません。"
                     node = nodeMap(n)
-                    resultX = Number(nodeResults(r, 3), "結果X"): resultY = Number(nodeResults(r, 4), "結果Y")
+                    resultX = number(nodeResults(r, 3), "結果X"): resultY = number(nodeResults(r, 4), "結果Y")
                     If geometryMoved Then
                         nodeMap(n) = Array(resultX, resultY)
                     Else
                         If Abs(node(0) - resultX) > 0.00000001 * (1# + Abs(node(0))) Or Abs(node(1) - resultY) > 0.00000001 * (1# + Abs(node(1))) Then Err.Raise vbObjectError + 3710, "FEMViewer", "結果と入力の座標が一致しません。再解析してください。"
                     End If
-                    displacements(n) = Array(Number(nodeResults(r, 5), "X変位"), Number(nodeResults(r, 6), "Y変位"))
+                    displacements(n) = Array(number(nodeResults(r, 5), "X変位"), number(nodeResults(r, 6), "Y変位"))
                 End If
             End If
         Next r
@@ -333,7 +333,7 @@ NextPlan:
         If statePaint Or cumPaint Then
             Set plasticStates = FEMPlasticStateRead(Stage)
             Set values = CreateObject("Scripting.Dictionary")
-            For Each key In active.Keys
+            For Each key In active.keys
                 e = CLng(key)
                 If Not jointElements.Exists(e) Then
                     If Not plasticStates.Exists(e) Then Err.Raise vbObjectError + 3914, , "有効要素の塑性状態がありません。20261022版で再解析してください。"
@@ -347,7 +347,7 @@ NextPlan:
             Next key
         ElseIf incrementPaint Then
             Set values = CreateObject("Scripting.Dictionary")
-            For Each key In active.Keys
+            For Each key In active.keys
                 e = CLng(key)
                 If Not jointElements.Exists(e) Then
                     If Not increments.Exists(e) Then Err.Raise vbObjectError + 3912, , "有効要素の増分結果がありません。再解析してください。"
@@ -358,7 +358,7 @@ NextPlan:
             Set values = SavedElementValues(elementResults, resultId, Stage, active, jointElements)
         End If
         dscale = 1#
-        If config.Exists("VIEW_DISP_SCALE") Then dscale = Number(config("VIEW_DISP_SCALE"), "変位倍率")
+        If config.Exists("VIEW_DISP_SCALE") Then dscale = number(config("VIEW_DISP_SCALE"), "変位倍率")
         If dscale < 0# Then Err.Raise vbObjectError + 3711, "FEMViewer", "変位倍率は0以上で指定してください。"
     End If
     ReDim selected(2 To UBound(elements, 1))
@@ -429,9 +429,9 @@ NextElement:
     End If
     If config.Exists("VIEW_SCALE_MODE") Then
         If UCase$(CStr(config("VIEW_SCALE_MODE"))) = "USER" Then
-            If config.Exists("VIEW_SCALE") Then drawScale = Number(config("VIEW_SCALE"), "表示スケール")
-            If config.Exists("VIEW_MIN_X") Then originX = Number(config("VIEW_MIN_X"), "作図原点X")
-            If config.Exists("VIEW_MAX_Y") Then originY = Number(config("VIEW_MAX_Y"), "作図原点Y")
+            If config.Exists("VIEW_SCALE") Then drawScale = number(config("VIEW_SCALE"), "表示スケール")
+            If config.Exists("VIEW_MIN_X") Then originX = number(config("VIEW_MIN_X"), "作図原点X")
+            If config.Exists("VIEW_MAX_Y") Then originY = number(config("VIEW_MAX_Y"), "作図原点Y")
             If drawScale <= 0# Then Err.Raise vbObjectError + 3718, "FEMViewer", "表示スケールは正数で指定してください。"
             If originX + maxX * drawScale + 40# > canvasW Then canvasW = originX + maxX * drawScale + 40#
             If originY - minY * drawScale + 80# > canvasH Then canvasH = originY - minY * drawScale + 80#
@@ -450,7 +450,7 @@ NextElement:
             overlaySvg = FEMIncrementOverlaySvg(overlayCells, shearOn, crossOn, overlayA, vectorScale, overlayLegend)
         End If
         If Not increments Is Nothing Then
-            For Each key In increments.Keys
+            For Each key In increments.keys
                 entry = increments(key)
                 incrementCaption = "最終収束増分 / Fs=" & Format$(entry(5), "0.0000") & " / 増分=" & CStr(entry(6)) & " / 荷重係数=" & Format$(entry(7), "0.0000")
                 Exit For
@@ -519,8 +519,8 @@ NextDrawElement:
                 n = id(nodes(r, 1))
                 If visibleNodes.Exists(n) Then
                     supportX = False: supportY = False
-                    If Not IsEmpty(nodes(r, 4)) Then supportX = (Number(nodes(r, 4), "X拘束") <> 0#)
-                    If Not IsEmpty(nodes(r, 5)) Then supportY = (Number(nodes(r, 5), "Y拘束") <> 0#)
+                    If Not IsEmpty(nodes(r, 4)) Then supportX = (number(nodes(r, 4), "X拘束") <> 0#)
+                    If Not IsEmpty(nodes(r, 5)) Then supportY = (number(nodes(r, 5), "Y拘束") <> 0#)
                     If supportX Or supportY Then
                         node = nodeMap(n): x = originX + drawScale * node(0): y = originY - drawScale * node(1)
                         supportLabel = "": If supportX Then supportLabel = "X"
@@ -532,7 +532,7 @@ NextDrawElement:
             End If
         Next r
     End If
-    For Each key In labels.Keys
+    For Each key In labels.keys
         node = labels(key)
         parts(partCount) = SvgText(originX + drawScale * node(0) + 2#, originY - drawScale * node(1) - 2#, CStr(key), 9)
         partCount = partCount + 1
@@ -579,8 +579,8 @@ NextDrawElement:
     ThisWorkbook.Windows(1).ScrollColumn = 1
     GoTo Finish
 Failed:
-    errorNumber = Err.Number
-    errorText = CStr(errorNumber) & " [" & viewPhase & "] " & Err.Description
+    errorNumber = Err.number
+    errorText = CStr(errorNumber) & " [" & viewPhase & "] " & Err.description
     FEMViewerLastError = errorText
 Finish:
     On Error Resume Next
@@ -614,5 +614,5 @@ Private Function FEMIncrementFill(ByVal value As Double, ByVal high As Double) A
     If t < 0# Then t = 0#
     If t > 1# Then t = 1#
     g = CLng(255# - 220# * t): b = CLng(229# - 209# * t)
-    FEMIncrementFill = "#FF" & Right$("0" & Hex$(g), 2) & Right$("0" & Hex$(b), 2)
+    FEMIncrementFill = "#FF" & right$("0" & Hex$(g), 2) & right$("0" & Hex$(b), 2)
 End Function

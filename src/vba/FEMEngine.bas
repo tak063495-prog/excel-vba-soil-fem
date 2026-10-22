@@ -448,7 +448,7 @@ Public Sub P3JointEval(ByVal elementId As Long, ByVal addForce As Boolean)
   Dim knValue As Double, ksValue As Double, jac As Double, dVolume As Double
   Dim dXdxi As Double, dYdxi As Double, tx As Double, ty As Double, nxVal As Double, nyVal As Double
   Dim gapValue As Double, slipValue As Double, fnValue As Double, fsValue As Double
-  Dim tauMax As Double, dnn As Double, dss As Double, scaleValue As Double
+  Dim tauMax As Double, dnn As Double, dss As Double, dsn As Double, scaleValue As Double
   Dim umx As Double, umy As Double, usx As Double, usy As Double
   Dim xiValue As Double, n0 As Double, n1 As Double, n2 As Double
   Dim dn0 As Double, dn1 As Double, dn2 As Double
@@ -462,11 +462,11 @@ Public Sub P3JointEval(ByVal elementId As Long, ByVal addForce As Boolean)
   Elem(elementId).IsJoint = True
   For i = 0 To 5
     If Elem(elementId).node(i) < 0 Then Exit Sub
-    Elem(elementId).ElNode(2 * i) = 2 * Elem(elementId).node(i)
-    Elem(elementId).ElNode(2 * i + 1) = 2 * Elem(elementId).node(i) + 1
+    Elem(elementId).elnode(2 * i) = 2 * Elem(elementId).node(i)
+    Elem(elementId).elnode(2 * i + 1) = 2 * Elem(elementId).node(i) + 1
   Next i
   For i = 12 To 15
-    Elem(elementId).ElNode(i) = -1
+    Elem(elementId).elnode(i) = -1
   Next i
   For i = 0 To 15
     For j = 0 To 15
@@ -509,10 +509,10 @@ Public Sub P3JointEval(ByVal elementId As Long, ByVal addForce As Boolean)
     nyVal = -tx
     gapValue = 0#: slipValue = 0#
     For a = 0 To 2
-      umx = TDisp(Elem(elementId).ElNode(2 * a))
-      umy = TDisp(Elem(elementId).ElNode(2 * a + 1))
-      usx = TDisp(Elem(elementId).ElNode(6 + 2 * a))
-      usy = TDisp(Elem(elementId).ElNode(7 + 2 * a))
+      umx = TDisp(Elem(elementId).elnode(2 * a))
+      umy = TDisp(Elem(elementId).elnode(2 * a + 1))
+      usx = TDisp(Elem(elementId).elnode(6 + 2 * a))
+      usy = TDisp(Elem(elementId).elnode(7 + 2 * a))
       gapValue = gapValue + shapeN(a) * ((usx - umx) * nxVal + (usy - umy) * nyVal)
       slipValue = slipValue + shapeN(a) * ((usx - umx) * tx + (usy - umy) * ty)
     Next a
@@ -530,7 +530,7 @@ Public Sub P3JointEval(ByVal elementId As Long, ByVal addForce As Boolean)
       bs(6 + 2 * a + 1) = shapeN(a) * ty
     Next a
     dnn = knValue
-    dss = ksValue
+    dss = ksValue: dsn = 0#
     fnValue = knValue * gapValue
     fsValue = ksValue * slipValue
     ' gap>0 はマスター外向き法線に対する開口（引張）。AllowTension=False なら剥離。
@@ -545,6 +545,8 @@ Public Sub P3JointEval(ByVal elementId As Long, ByVal addForce As Boolean)
       If Abs(fsValue) > tauMax Then
         If fsValue >= 0# Then fsValue = tauMax Else fsValue = -tauMax
         dss = 0#
+        ' Derivative of the SAME Coulomb cap; normal traction is independent of slip (psi=0).
+        If fnValue < 0# And (P3FlowPolicyIsInconsistent() Or GWActive) Then dsn = -Sgn(fsValue) * knValue * tanPhi
         Elem(elementId).JointContact(gp) = 2
       Else
         Elem(elementId).JointContact(gp) = 0
@@ -554,17 +556,18 @@ Public Sub P3JointEval(ByVal elementId As Long, ByVal addForce As Boolean)
     If dVolume < 0# Then dVolume = -dVolume
     Elem(elementId).dj(gp) = dVolume
     Elem(elementId).Stmat(0, gp) = -fnValue
+    If GWActive Then Elem(elementId).Stmat(16, gp) = -fnValue + GWJointPressure(elementId, gp)
     Elem(elementId).Stmat(1, gp) = fsValue
     Elem(elementId).Stmat(2, gp) = gapValue
     Elem(elementId).Stmat(10, gp) = slipValue
     For i = 0 To 11
       For j = 0 To 11
-        Elem(elementId).kmat(i, j) = Elem(elementId).kmat(i, j) + dVolume * (dnn * bn(i) * bn(j) + dss * bs(i) * bs(j))
+        Elem(elementId).kmat(i, j) = Elem(elementId).kmat(i, j) + dVolume * (dnn * bn(i) * bn(j) + dss * bs(i) * bs(j) + dsn * bs(i) * bn(j))
       Next j
     Next i
     If addForce Then
       For i = 0 To 11
-        dofId = Elem(elementId).ElNode(i)
+        dofId = Elem(elementId).elnode(i)
         If dofId >= 0 And dofId <= lastDof Then
           iNForce(dofId) = iNForce(dofId) + dVolume * (fnValue * bn(i) + fsValue * bs(i))
         End If
@@ -896,10 +899,10 @@ Public Function P3IsElementActive(ByVal elementId As Long) As Boolean
     P3IsElementActive = True
     Exit Function
   End If
-  P3IsElementActive = P3ElementActive(elementId)
+  P3IsElementActive = P3ElementActive(elementId) And GJParticipates(elementId)
 End Function
 
-Private Sub P3InitElementActive()
+Public Sub P3InitElementActive()
   Dim i As Long, materialIndex As Long
   If NumberOfElement <= 0 Then
     P3ElementActiveReady = False
@@ -940,6 +943,7 @@ End Sub
 Private Sub P3ResetElementHistory(ByVal elementId As Long)
   Dim i As Long, j As Long, im As Long
   If elementId < 0 Or elementId > NumberOfElement - 1 Then Exit Sub
+  GWResetElement elementId
   For im = 0 To 3
     For i = 0 To 16
       Elem(elementId).Stmat(i, im) = 0#
@@ -1026,13 +1030,13 @@ Private Sub P3ResetElementElasticTangent(ByVal elementId As Long)
       Next j
     Next i
   Next im
-  SetSmat Elem(elementId).Dmat, Elem(elementId).Bmat, Elem(elementId).Smat
-  SetSmat Elem(elementId).Dmat, Elem(elementId).Bmat, Elem(elementId).Spmat
+  SetSmat Elem(elementId).Dmat, Elem(elementId).bMat, Elem(elementId).Smat
+  SetSmat Elem(elementId).Dmat, Elem(elementId).bMat, Elem(elementId).Spmat
   For im = 0 To 3
     Elem(elementId).SpmatValid(im) = True
   Next im
   P6EnsureGaussCache
-  SetElmStiffness Material(materialIndex).thickness, Material(materialIndex).weight, Elem(elementId).Bmat, Elem(elementId).Smat, Elem(elementId).kmat, Elem(elementId).ElmWeight, Elem(elementId).dj, P6GaussN
+  SetElmStiffness Material(materialIndex).thickness, Material(materialIndex).weight, Elem(elementId).bMat, Elem(elementId).Smat, Elem(elementId).kmat, Elem(elementId).ElmWeight, Elem(elementId).dj, P6GaussN
   P6AddQ8HourglassStabilization Elem(elementId), Material(materialIndex).thickness, True
   Elem(elementId).TangentDirty = False
 End Sub
@@ -1046,11 +1050,11 @@ Private Sub P3ApplyBirthDeathUpTo(ByVal lastIndex As Long)
     If Not P3StageOn(i) Then GoTo NextBirthDeath
     If P3StageKind(i) = "BIRTH" Then
       materialId = 0
-      If IsNumeric(P3StageGroup(i)) Then materialId = CLng(Val(P3StageGroup(i)))
+      If IsNumeric(P3StageGroup(i)) Then materialId = CLng(val(P3StageGroup(i)))
       If materialId > 0 Then P3SetMaterialElementsActive materialId, True
     ElseIf P3StageKind(i) = "DEATH" Then
       materialId = 0
-      If IsNumeric(P3StageGroup(i)) Then materialId = CLng(Val(P3StageGroup(i)))
+      If IsNumeric(P3StageGroup(i)) Then materialId = CLng(val(P3StageGroup(i)))
       If materialId > 0 Then P3SetMaterialElementsActive materialId, False
     End If
 NextBirthDeath:
@@ -1106,6 +1110,7 @@ Public Sub P3AssembleSelfWeightOnly()
     Next a
 NextSelfWeightElement:
   Next i
+  GWAddSurfaceForce P3SelfWeightForce
 End Sub
 
 Private Sub P3CaptureSupportBoundary()
@@ -1219,7 +1224,7 @@ Private Function P3JointContactChangedSinceFactor() As Boolean
       Exit Function
     End If
     For gp = 0 To 2
-      If Elem(k).JointContact(gp) <> P6FactorJointContact(gp, i) Then
+      If P3JointTangentState(k, gp) <> P6FactorJointContact(gp, i) Then
         P3JointContactChangedSinceFactor = True
         Exit Function
       End If
@@ -1736,9 +1741,9 @@ Private Function P3RebuildTangentFromSpmat() As Boolean
         If P3IncoElasticCorrection Then
           ' Only the correction operator changes. Trial stress/flow/yield and
           ' the actual internal force continue to use the same material law.
-          SetElmStiffness Material(materialIndex).thickness, Material(materialIndex).weight, Elem(k).Bmat, Elem(k).Smat, Elem(k).kmat, Elem(k).ElmWeight, Elem(k).dj, P6GaussN
+          SetElmStiffness Material(materialIndex).thickness, Material(materialIndex).weight, Elem(k).bMat, Elem(k).Smat, Elem(k).kmat, Elem(k).ElmWeight, Elem(k).dj, P6GaussN
         Else
-        SetElmStiffness Material(materialIndex).thickness, Material(materialIndex).weight, Elem(k).Bmat, Elem(k).Spmat, Elem(k).kmat, Elem(k).ElmWeight, Elem(k).dj, P6GaussN
+        SetElmStiffness Material(materialIndex).thickness, Material(materialIndex).weight, Elem(k).bMat, Elem(k).Spmat, Elem(k).kmat, Elem(k).ElmWeight, Elem(k).dj, P6GaussN
         End If
         End If
         ' Full Newton uses the material force's derivative. Retain numerical
@@ -1768,9 +1773,9 @@ NextTangentElement:
   P3TangentJustRebuilt = True
   GoTo TangentDone
 TangentFail:
-  errNum = Err.Number
+  errNum = Err.number
   errSrc = Err.source
-  errDesc = Err.Description
+  errDesc = Err.description
   Resume TangentDone
 TangentDone:
   On Error GoTo 0
@@ -1843,6 +1848,7 @@ Private Sub P3WriteStageSnapshot()
   outputMode = UCase$(Trim$(P6ReadTextSetting("OUTPUT_STAGE_MODE", "FINAL")))
   If outputMode <> "ALL" Then Exit Sub
   P3PrepareOutputResidual
+  GWWriteResults P3RunLogStageNo
   SaveDisp
   SaveStress
   FEMIncrementSave
@@ -1851,7 +1857,7 @@ End Sub
 Private Function P3StageMaterialId(ByVal stageIndex As Long) As Long
   P3StageMaterialId = 0
   If stageIndex < 1 Or stageIndex > P3StageN Then Exit Function
-  If IsNumeric(P3StageGroup(stageIndex)) Then P3StageMaterialId = CLng(Val(P3StageGroup(stageIndex)))
+  If IsNumeric(P3StageGroup(stageIndex)) Then P3StageMaterialId = CLng(val(P3StageGroup(stageIndex)))
 End Function
 
 Private Sub P3EnsureStateWorkspace()
@@ -1988,6 +1994,7 @@ Private Sub P3InitializeTrialState()
     ReDim P3LockedApplied(lastDof)
   End If
   P3InitElementActive
+  GWResetState
   If lastDof >= 0 Then
     If Not P3SupportCondReady Then
       P3CaptureSupportBoundary
@@ -2154,6 +2161,7 @@ End Function
 Public Sub P3CommitMaterialState()
   Dim i As Long, j As Long, k As Long, im As Long
   Dim wasActive As Boolean, isActive As Boolean, historyYielded As Boolean
+  GWCommit
   For k = 0 To NumberOfElement - 1
     For im = 0 To 3
       For i = 0 To 16
@@ -2206,7 +2214,7 @@ Private Function P3EvaluateTrialState(ByRef incrementBase() As Double, ByRef int
   ' Native material/force kernel (FEMNativeMat): evaluates runs of elements in
   ' order and stops at the first element it does not handle, which the
   ' unchanged VBA code below evaluates. Force sums keep the element order.
-  nativeOn = FEMMatAvailable()
+  nativeOn = FEMMatAvailable() And Not GWActive
   If nativeOn Then
     If CurrentIncrement >= 0 Then nativeFlags = 1
     If P3TrialStateInitialized Then nativeFlags = nativeFlags Or 2
@@ -2234,17 +2242,17 @@ Private Function P3EvaluateTrialState(ByRef incrementBase() As Double, ByRef int
     With Elem(k)
       P3CurrentElementZeroIncrement = True
       For j = 0 To 15
-        If .ElNode(j) < 0 Then GoTo NextEvalDof
-        .u(j) = TDisp(.ElNode(j)) - incrementBase(.ElNode(j))
+        If .elnode(j) < 0 Then GoTo NextEvalDof
+        .u(j) = TDisp(.elnode(j)) - incrementBase(.elnode(j))
         If Abs(.u(j)) > 1E-30 Then P3CurrentElementZeroIncrement = False
 NextEvalDof:
       Next j
-      If Not Nrf(.Smat, .Spmat, .u, .Stmat, .mStmat, Material(materialIndex).fai, Material(materialIndex).cohesion, Material(materialIndex).psai, Material(materialIndex).young, Material(materialIndex).Poisson, .Dmat, .Dpmat, .Bmat, materialIndex) Then
+      If Not Nrf(.Smat, .Spmat, .u, .Stmat, .mStmat, Material(materialIndex).fai, Material(materialIndex).cohesion, Material(materialIndex).psai, Material(materialIndex).young, Material(materialIndex).Poisson, .Dmat, .Dpmat, .bMat, materialIndex) Then
         P6ProfEvalCount = P6ProfEvalCount + 1
         P6ProfEvalMs = P6ProfEvalMs + P6ElapsedMs(t0)
         Exit Function
       End If
-      CalcForce .ElNo, .Bmat, .dj, .Stmat
+      CalcForce .ElNo, .bMat, .dj, .Stmat
     End With
 NextEvalElement:
   Next k
@@ -2392,10 +2400,10 @@ Private Function P3VectorHasChange(ByRef oldVec() As Double, ByRef newVec() As D
   If lastDof < 0 Then Exit Function
   On Error Resume Next
   oldOk = (UBound(oldVec) >= lastDof)
-  If Err.Number <> 0 Then oldOk = False
+  If Err.number <> 0 Then oldOk = False
   Err.Clear
   newOk = (UBound(newVec) >= lastDof)
-  If Err.Number <> 0 Then newOk = False
+  If Err.number <> 0 Then newOk = False
   On Error GoTo 0
   If Not newOk Then Exit Function
   If Not oldOk Then
@@ -2697,6 +2705,7 @@ Private Function P3RunLoadStages() As Boolean
   Dim elWinRes As Double, elWinIter As Long, elRate As Double, elNeed As Double
   P3IncoElasticCorrection = False
   P3ApplyNewtonPolicy P3RunLogKind
+  GWBeginLoad
   If P3SrmEnabled And P3FlowPolicyIsInconsistent() Then P6SolverEvent "SRM_MATERIAL_FORCE", "hourglass_force=False;newton_hourglass_tangent=False;elastic_hourglass_tangent=iteration_regularization"
   P3ResetFailureDiagnostics
   P3EvalSkipCount = 0
@@ -2716,6 +2725,7 @@ Private Function P3RunLoadStages() As Boolean
   hasAppliedLoad = (appliedSquare > 1E-30)
   hasPrescribedDisp = P3HasNonzeroPrescribedDisp()
   P3ForceRef = Sqr(selfWeightSquare) + Sqr(appliedSquare)
+  If GWActive And P3ForceRef <= 0.000000000001 Then P3ForceRef = GWCharacteristicForce()
   If P3ForceRef <= 0.000000000001 Then
     ' During force unloading, zero target load is not the characteristic scale.
     ' Retain the last committed external load; do not demand roundoff / 1E-12.
@@ -2744,6 +2754,7 @@ Private Function P3RunLoadStages() As Boolean
   P3LineSearchCuts = 0
   P3JointAssembleCount = 0
   wantGravity = P3PlanWantsKind("GRAVITY")
+  If GWNeedsRamp() Then wantGravity = True
   wantApply = P3PlanWantsKind("APPLY")
   gravityRan = False
   applyRan = False
@@ -2753,7 +2764,7 @@ Private Function P3RunLoadStages() As Boolean
     elasticPreference = False
     If stageId = 1 Then
       If Not wantGravity Then GoTo P3NextStage
-      If Not hasSelfWeight And Not P3VectorHasChange(P3LockedSelfWeight, P3SelfWeightForce) Then GoTo P3NextStage
+      If Not hasSelfWeight And Not P3VectorHasChange(P3LockedSelfWeight, P3SelfWeightForce) And Not GWNeedsRamp() Then GoTo P3NextStage
       stepSize = P3_GRAVITY_STEP_SIZE
     Else
       If Not wantApply Then GoTo P3NextStage
@@ -2799,6 +2810,18 @@ P3RetrySameIncrement:
         incrementBase(i) = P3CommittedDisp(i)
       Next i
       P3ApplyIncrementPredictor targetFactor - stageFactor, prescribedFactor, predictorUsed
+      ' Compare contact Newton/line-search residuals on the SAME Dirichlet boundary.
+      ' The optional predictor is disabled for JOINT; without lifting, the old
+      ' equilibrium residual is compared with a different prescribed displacement.
+      If P3HasJointElements Then
+        For i = 0 To lastDof
+          If NodeCond(i) <> 0 Then
+            TDisp(i) = P3TargetBoundaryDisp(i, prescribedFactor)
+            UDisp(i) = TDisp(i)
+          End If
+        Next i
+        P3TrialStateValid = False
+      End If
       IncrementLogPredictorUsed predictorUsed
       If P6MixedUP Then P6UpdateContinuityG
       If stageId = 1 Then
@@ -2808,6 +2831,7 @@ P3RetrySameIncrement:
         selfWeightFactor = 0#
         appliedFactor = targetFactor
       End If
+      If stageId = 1 Then GWTrialFactor targetFactor
       P3BuildTargetForce selfWeightFactor, appliedFactor, targetForce
       P3ClearTransientFailure
       mAccelAttemptFailure = "": mLineSearchFailure = "": mLineSearchTries = 0: mLineSearchMaterialRejects = 0: mLineSearchBestQ = -1#
@@ -2853,7 +2877,7 @@ P3RetrySameIncrement:
         For i = 0 To lastDof
           Disp(i) = 0#
           If NodeCond(i) <> 0 Then Disp(i) = P3TargetBoundaryDisp(i, prescribedFactor) - TDisp(i)
-          Force(i) = targetForce(i) - internalForce(i)
+          force(i) = targetForce(i) - internalForce(i)
         Next i
         correctionBuilt = False
         If P3ShouldRebuildTangent(localIteration, ResidualNormFree) Then
@@ -3216,7 +3240,7 @@ Private Function P3RunConsolidationSteps(ByRef targetForce() As Double, ByRef in
       For i = 0 To lastDof
         Disp(i) = 0#
         If NodeCond(i) <> 0 Then Disp(i) = P3BoundaryDisp(i) - TDisp(i)
-        Force(i) = targetForce(i) - internalForce(i)
+        force(i) = targetForce(i) - internalForce(i)
       Next i
       SetBoundaryCondition
       If Not BandSolver() Then Exit Do
@@ -3291,7 +3315,7 @@ Private Sub P3LoadStagePlan()
   Set ws = ThisWorkbook.Worksheets("ステージ")
   On Error GoTo 0
   If ws Is Nothing Then Exit Sub
-  lastRow = ws.Cells(ws.rows.count, 1).End(xlUp).row
+  lastRow = ws.cells(ws.rows.count, 1).End(xlUp).row
   If lastRow < 2 Then Exit Sub
   ReDim P3StageKind(1 To lastRow)
   ReDim P3StageId(1 To lastRow)
@@ -3299,23 +3323,23 @@ Private Sub P3LoadStagePlan()
   ReDim P3StageParam(1 To lastRow)
   ReDim P3StageOn(1 To lastRow)
   For rowNo = 2 To lastRow
-    kindText = P3NormalizeStageKind(CStr(ws.Cells(rowNo, 2).value2))
+    kindText = P3NormalizeStageKind(CStr(ws.cells(rowNo, 2).value2))
     If Len(kindText) = 0 Then GoTo NextStageRow
     enabledValue = 0#
-    If IsNumeric(ws.Cells(rowNo, 5).value2) Then enabledValue = CDbl(ws.Cells(rowNo, 5).value2)
+    If IsNumeric(ws.cells(rowNo, 5).value2) Then enabledValue = CDbl(ws.cells(rowNo, 5).value2)
     P3StageN = P3StageN + 1
     P3StageKind(P3StageN) = kindText
-    If IsNumeric(ws.Cells(rowNo, 1).value2) Then
-      P3StageId(P3StageN) = CLng(Val(CStr(ws.Cells(rowNo, 1).value2)))
+    If IsNumeric(ws.cells(rowNo, 1).value2) Then
+      P3StageId(P3StageN) = CLng(val(CStr(ws.cells(rowNo, 1).value2)))
     Else
       P3StageId(P3StageN) = P3StageN
     End If
     If P3StageId(P3StageN) <= 0 Then P3StageId(P3StageN) = P3StageN
-    P3StageGroup(P3StageN) = Trim$(CStr(ws.Cells(rowNo, 3).value2))
-    P3StageParam(P3StageN) = Trim$(CStr(ws.Cells(rowNo, 4).value2))
+    P3StageGroup(P3StageN) = Trim$(CStr(ws.cells(rowNo, 3).value2))
+    P3StageParam(P3StageN) = Trim$(CStr(ws.cells(rowNo, 4).value2))
     P3StageOn(P3StageN) = (enabledValue <> 0#)
     If P3StageOn(P3StageN) Then
-      If kindText <> "GRAVITY" And kindText <> "APPLY" And kindText <> "LOAD" And kindText <> "UNLOAD" And kindText <> "SRM" And kindText <> "BIRTH" And kindText <> "DEATH" And kindText <> "RESET_U" And kindText <> "RESET_STRESS" And kindText <> "MATSET" Then
+      If kindText <> "GRAVITY" And kindText <> "APPLY" And kindText <> "LOAD" And kindText <> "UNLOAD" And kindText <> "SRM" And kindText <> "BIRTH" And kindText <> "DEATH" And kindText <> "RESET_U" And kindText <> "RESET_STRESS" And kindText <> "MATSET" And kindText <> "WATER" Then
         SetAnalysisFailure RESULT_INPUT_ERROR, "未対応のステージ種別です。行=" & CStr(rowNo) & " 種別=" & kindText, vbObjectError + 3233, -1, -1, CurrentIncrement, CurrentIteration
         Exit Sub
       End If
@@ -3339,7 +3363,7 @@ Private Sub P3FlagsFromPrefix(ByVal lastIndex As Long)
   P3ActivePrefix = lastIndex
   For i = 1 To lastIndex
     If P3StageOn(i) Then
-      If P3StageKind(i) = "GRAVITY" Then P3PlanHasGravity = True
+      If P3StageKind(i) = "GRAVITY" Or P3StageKind(i) = "WATER" Then P3PlanHasGravity = True
       If P3StageKind(i) = "APPLY" Or P3StageKind(i) = "LOAD" Then P3PlanHasApply = True
     End If
   Next i
@@ -3360,7 +3384,7 @@ Private Function P3StageGroupHitsMaterial(ByVal groupText As String, ByVal mater
     P3StageGroupHitsMaterial = True
     Exit Function
   End If
-  P3StageGroupHitsMaterial = (CLng(Val(token)) = materialId)
+  P3StageGroupHitsMaterial = (CLng(val(token)) = materialId)
 End Function
 
 Private Function P3MaterialNetLoaded(ByVal materialId As Long) As Boolean
@@ -3436,9 +3460,9 @@ Private Sub P3ResetStageResultSheet()
   Set ws = ThisWorkbook.Worksheets("ステージ結果")
   On Error GoTo 0
   If ws Is Nothing Then Exit Sub
-  lastRow = ws.Cells(ws.rows.count, 1).End(xlUp).row
+  lastRow = ws.cells(ws.rows.count, 1).End(xlUp).row
   If lastRow < 2 Then lastRow = 2
-  ws.range(ws.Cells(2, 1), ws.Cells(lastRow, 10)).ClearContents
+  ws.range(ws.cells(2, 1), ws.cells(lastRow, 10)).ClearContents
   P3StageResultRow = 1
 End Sub
 
@@ -3451,20 +3475,20 @@ Private Sub P3LogStageResult(ByVal stageNo As Long, ByVal kindText As String, By
   On Error GoTo 0
   If Not ws Is Nothing Then
     P3StageResultRow = P3StageResultRow + 1
-    ws.Cells(P3StageResultRow, 1).value2 = stageNo
-    ws.Cells(P3StageResultRow, 2).value2 = kindText
-    ws.Cells(P3StageResultRow, 3).value2 = groupText
+    ws.cells(P3StageResultRow, 1).value2 = stageNo
+    ws.cells(P3StageResultRow, 2).value2 = kindText
+    ws.cells(P3StageResultRow, 3).value2 = groupText
     If okFlag Then
-      ws.Cells(P3StageResultRow, 4).value2 = "PASS"
+      ws.cells(P3StageResultRow, 4).value2 = "PASS"
     Else
-      ws.Cells(P3StageResultRow, 4).value2 = "FAIL"
+      ws.cells(P3StageResultRow, 4).value2 = "FAIL"
     End If
-    ws.Cells(P3StageResultRow, 5).value2 = factorValue
-    ws.Cells(P3StageResultRow, 6).value2 = P3MaxTrialDisp
-    ws.Cells(P3StageResultRow, 7).value2 = P6ReactionSumX
-    ws.Cells(P3StageResultRow, 8).value2 = P6ReactionSumY
-    ws.Cells(P3StageResultRow, 9).value2 = P3SrmTrialCount
-    ws.Cells(P3StageResultRow, 10).value2 = messageText
+    ws.cells(P3StageResultRow, 5).value2 = factorValue
+    ws.cells(P3StageResultRow, 6).value2 = P3MaxTrialDisp
+    ws.cells(P3StageResultRow, 7).value2 = P6ReactionSumX
+    ws.cells(P3StageResultRow, 8).value2 = P6ReactionSumY
+    ws.cells(P3StageResultRow, 9).value2 = P3SrmTrialCount
+    ws.cells(P3StageResultRow, 10).value2 = messageText
   End If
   If stageNo > 0 And okFlag Then P3LastCompletedStage = stageNo
   If exportCheckpoint Then FEMIoExportStage stageNo, kindText, okFlag
@@ -3478,10 +3502,10 @@ Private Function P3LoadingSheetHasAction() As Boolean
   Set ws = ThisWorkbook.Worksheets("載荷")
   On Error GoTo 0
   If ws Is Nothing Then Exit Function
-  If UCase$(Trim$(CStr(ws.Cells(1, 1).value2))) <> "材料番号" And UCase$(Trim$(CStr(ws.Cells(1, 1).value2))) <> "グループ" Then Exit Function
-  lastRow = ws.Cells(ws.rows.count, 1).End(xlUp).row
+  If UCase$(Trim$(CStr(ws.cells(1, 1).value2))) <> "材料番号" And UCase$(Trim$(CStr(ws.cells(1, 1).value2))) <> "グループ" Then Exit Function
+  lastRow = ws.cells(ws.rows.count, 1).End(xlUp).row
   For rowNo = 2 To lastRow
-    kindText = UCase$(Trim$(CStr(ws.Cells(rowNo, 4).value2)))
+    kindText = UCase$(Trim$(CStr(ws.cells(rowNo, 4).value2)))
     If kindText = "FIX" Or kindText = "DISP" Then
       P3LoadingSheetHasAction = True
       Exit Function
@@ -3502,7 +3526,7 @@ Private Function P3NodeMatchesSelector(ByVal originalNode As Long, ByVal selecto
   nodeX = x(originalNode): nodeY = y(originalNode)
   tol = 0.000000001 * (Abs(xmax - xmin) + Abs(yMax - yMin) + 1#)
   If IsNumeric(token) Then
-    If CLng(Val(token)) = originalNode + 1 Then P3NodeMatchesSelector = True
+    If CLng(val(token)) = originalNode + 1 Then P3NodeMatchesSelector = True
     Exit Function
   End If
   If token = "TOP" Then
@@ -3516,8 +3540,8 @@ Private Function P3NodeMatchesSelector(ByVal originalNode As Long, ByVal selecto
   ElseIf left$(token, 4) = "BOX:" Then
     boxParts = Split(mid$(token, 5), ",")
     If UBound(boxParts) >= 3 Then
-      bx1 = CDbl(Val(boxParts(0))): by1 = CDbl(Val(boxParts(1)))
-      bx2 = CDbl(Val(boxParts(2))): by2 = CDbl(Val(boxParts(3)))
+      bx1 = CDbl(val(boxParts(0))): by1 = CDbl(val(boxParts(1)))
+      bx2 = CDbl(val(boxParts(2))): by2 = CDbl(val(boxParts(3)))
       If nodeX >= bx1 - tol And nodeX <= bx2 + tol And nodeY >= by1 - tol And nodeY <= by2 + tol Then P3NodeMatchesSelector = True
     End If
   End If
@@ -3587,7 +3611,7 @@ Private Sub P3BuildLoadIndex()
     For orig = 0 To NumberOfNode - 1
       On Error Resume Next
       freeNode = FEMFreeNodeMap(orig)
-      If Err.Number = 0 Then
+      If Err.number = 0 Then
         If freeNode >= 0 And freeNode <= UBound(invFree) Then invFree(freeNode) = orig
       End If
       Err.Clear
@@ -3661,21 +3685,21 @@ Private Sub P3OverlayLoadingSheet()
   If ws Is Nothing Then GoTo LoadDone
   If Not P3LoadingSheetHasAction() Then GoTo LoadDone
   If Not P3LoadIndexReady Or P3LoadIndexActiveGen <> P3ActiveSetGen Then P3BuildLoadIndex
-  lastRow = ws.Cells(ws.rows.count, 1).End(xlUp).row
+  lastRow = ws.cells(ws.rows.count, 1).End(xlUp).row
   For rowNo = 2 To lastRow
-    groupText = Trim$(CStr(ws.Cells(rowNo, 1).value2))
+    groupText = Trim$(CStr(ws.cells(rowNo, 1).value2))
     If left$(groupText, 1) = "(" Then GoTo NextLoadRow
-    selectorText = CStr(ws.Cells(rowNo, 2).value2)
-    dirText = UCase$(Trim$(CStr(ws.Cells(rowNo, 3).value2)))
-    kindText = UCase$(Trim$(CStr(ws.Cells(rowNo, 4).value2)))
+    selectorText = CStr(ws.cells(rowNo, 2).value2)
+    dirText = UCase$(Trim$(CStr(ws.cells(rowNo, 3).value2)))
+    kindText = UCase$(Trim$(CStr(ws.cells(rowNo, 4).value2)))
     loadValue = 0#
-    If IsNumeric(ws.Cells(rowNo, 5).value2) Then loadValue = CDbl(ws.Cells(rowNo, 5).value2)
+    If IsNumeric(ws.cells(rowNo, 5).value2) Then loadValue = CDbl(ws.cells(rowNo, 5).value2)
     If kindText <> "DISP" And kindText <> "FORCE" And kindText <> "FIX" Then GoTo NextLoadRow
     If dirText <> "X" And dirText <> "Y" Then
       Err.Raise vbObjectError + 3232, "FEM.P3OverlayLoadingSheet", "載荷の方向はXまたはYです。行=" & CStr(rowNo) & " 値=" & dirText
     End If
     materialId = 0
-    If IsNumeric(groupText) Then materialId = CLng(Val(groupText))
+    If IsNumeric(groupText) Then materialId = CLng(val(groupText))
     If Not P3MaterialNetLoaded(materialId) Then GoTo NextLoadRow
     hasBound = False
     For orig = 0 To NumberOfNode - 1
@@ -3697,7 +3721,7 @@ Private Sub P3OverlayLoadingSheet()
       If freeNode < 0 Then GoTo NextOrig
     If Not P3NodeOnMaterial(orig, materialId) Then GoTo NextOrig
     If UCase$(Trim$(selectorText)) = "BOX" Then
-      If Not P3NodeInBox(orig, CDbl(Val(CStr(ws.Cells(rowNo, 6).value2))), CDbl(Val(CStr(ws.Cells(rowNo, 7).value2))), CDbl(Val(CStr(ws.Cells(rowNo, 8).value2))), CDbl(Val(CStr(ws.Cells(rowNo, 9).value2)))) Then GoTo NextOrig
+      If Not P3NodeInBox(orig, CDbl(val(CStr(ws.cells(rowNo, 6).value2))), CDbl(val(CStr(ws.cells(rowNo, 7).value2))), CDbl(val(CStr(ws.cells(rowNo, 8).value2))), CDbl(val(CStr(ws.cells(rowNo, 9).value2)))) Then GoTo NextOrig
     Else
       If Not P3NodeMatchesSelector(orig, selectorText, xmin, xmax, yMin, yMax) Then GoTo NextOrig
     End If
@@ -3720,9 +3744,9 @@ NextLoadRow:
   Next rowNo
   GoTo LoadDone
 LoadFail:
-  errNum = Err.Number
+  errNum = Err.number
   errSrc = Err.source
-  errDesc = Err.Description
+  errDesc = Err.description
   Resume LoadDone
 LoadDone:
   On Error GoTo 0
@@ -3898,6 +3922,7 @@ Private Function P3RestoreSrmSuccessSnapshot() As Boolean
     Next gp
   Next k
   P3RestoreCommittedMaterialState False
+  GWUseFinalPressure
   P3MarkAllTangentDirty
   P3TrialStateValid = False
   If Not P3RebuildTangentFromSpmat() Then Exit Function
@@ -3913,13 +3938,13 @@ Public Sub P3PrepareOutputResidual()
   P3UseNonlinearResidual = True
   On Error Resume Next
   appliedOk = (UBound(P3AppliedForce) >= lastDof)
-  If Err.Number <> 0 Then appliedOk = False
+  If Err.number <> 0 Then appliedOk = False
   Err.Clear
   If UBound(P3SelfWeightForce) < lastDof Then
     On Error GoTo 0
     Exit Sub
   End If
-  If Err.Number <> 0 Then
+  If Err.number <> 0 Then
     On Error GoTo 0
     Exit Sub
   End If
@@ -4006,7 +4031,7 @@ End Function
 
 Private Function P3RunStrengthReduction() As Boolean
   Dim fsValue As Double, fMax As Double, fTol As Double
-  Dim fLow As Double, fHigh As Double, stepValue As Double
+  Dim flow As Double, fHigh As Double, stepValue As Double
   Dim bisectCount As Long, baselineWidth As Double
   P3RunStrengthReduction = False
   P3SrmTrialCount = 0
@@ -4051,19 +4076,19 @@ Private Function P3RunStrengthReduction() As Boolean
       P3CaptureSrmSuccessSnapshot 1#
       FEMAppendRunLog "SRM試行", "PASS", "Fs=1.000 PASS_REUSED_FROM_GRAVITY 残差=" & Format$(RelativeResidualFree, "0.000E+00")
       P6PerfEmitReuse "PASS_REUSED"
-      fLow = 1#
+      flow = 1#
       P3SrmLower = 1#
       stepValue = 0.1
       Do
-        fsValue = fLow + stepValue
+        fsValue = flow + stepValue
         If fsValue > fMax Then fsValue = fMax
         If P3TryStrengthFactor(fsValue) Then
-          fLow = fsValue
-          If Abs(fLow - fMax) <= 0.000000001 Then
-            P3SrmLower = fLow
+          flow = fsValue
+          If Abs(flow - fMax) <= 0.000000001 Then
+            P3SrmLower = flow
             P3SrmUpper = fMax
-            FSS = fLow
-            P3PublishFos fLow, fMax, False
+            FSS = flow
+            P3PublishFos flow, fMax, False
             P3RunStrengthReduction = True
             Exit Function
           End If
@@ -4082,32 +4107,32 @@ Private Function P3RunStrengthReduction() As Boolean
       fsValue = 0.9
       Do While fsValue >= 0.2 - 0.000000001
         If P3TryStrengthFactor(fsValue) Then
-          fLow = fsValue
+          flow = fsValue
           Exit Do
         End If
         If P3SrmAbortIfFatal() Then Exit Function
         fHigh = fsValue
         fsValue = fsValue - 0.1
       Loop
-      If fLow <= 0# Then
+      If flow <= 0# Then
         SetAnalysisFailure RESULT_NONCONVERGED, "SRM: Fs=0.2でも自重／載荷が収束しません。メッシュ・拘束・強度を確認してください。", vbObjectError + 3220, FailureElement, FailureGaussPoint, CurrentIncrement, CurrentIteration
         P3SrmNote = "SRM失敗: 下限でも非収束"
         Exit Function
       End If
     End If
   ElseIf P3TryStrengthFactor(fsValue) Then
-    fLow = fsValue
+    flow = fsValue
     stepValue = 0.1
     Do
-      fsValue = fLow + stepValue
+      fsValue = flow + stepValue
       If fsValue > fMax Then fsValue = fMax
       If P3TryStrengthFactor(fsValue) Then
-        fLow = fsValue
-        If Abs(fLow - fMax) <= 0.000000001 Then
-          P3SrmLower = fLow
+        flow = fsValue
+        If Abs(flow - fMax) <= 0.000000001 Then
+          P3SrmLower = flow
           P3SrmUpper = fMax
-          FSS = fLow
-          P3PublishFos fLow, fMax, False
+          FSS = flow
+          P3PublishFos flow, fMax, False
           P3SrmNote = P3SrmNote & " FMAXまで収束"
           P3RunStrengthReduction = True
           Exit Function
@@ -4124,14 +4149,14 @@ Private Function P3RunStrengthReduction() As Boolean
     fsValue = 0.9
     Do While fsValue >= 0.2 - 0.000000001
       If P3TryStrengthFactor(fsValue) Then
-        fLow = fsValue
+        flow = fsValue
         Exit Do
       End If
       If P3SrmAbortIfFatal() Then Exit Function
       fHigh = fsValue
       fsValue = fsValue - 0.1
     Loop
-    If fLow <= 0# Then
+    If flow <= 0# Then
       SetAnalysisFailure RESULT_NONCONVERGED, "SRM: Fs=0.2でも自重／載荷が収束しません。メッシュ・拘束・強度を確認してください。", vbObjectError + 3220, FailureElement, FailureGaussPoint, CurrentIncrement, CurrentIteration
       P3SrmNote = "SRM失敗: 下限でも非収束"
       Exit Function
@@ -4139,42 +4164,42 @@ Private Function P3RunStrengthReduction() As Boolean
   End If
   P3SrmUpper = fHigh
   If V3CostSearchEnabled Then
-    baselineWidth = fHigh - fLow
+    baselineWidth = fHigh - flow
     Do While Not P3SrmWidthReached(0#, baselineWidth, fTol): baselineWidth = baselineWidth * 0.5: Loop
     fTol = baselineWidth
   End If
   AccelSrmWidthTarget = fTol
   bisectCount = 0
-  Do While Not P3SrmWidthReached(fLow, fHigh, fTol) And bisectCount < 40
-    fsValue = NextFsByBracket(fLow, fHigh, fTol)
-    If P3SrmWidthReached(fLow, fHigh, fTol) Then Exit Do
+  Do While Not P3SrmWidthReached(flow, fHigh, fTol) And bisectCount < 40
+    fsValue = NextFsByBracket(flow, fHigh, fTol)
+    If P3SrmWidthReached(flow, fHigh, fTol) Then Exit Do
     If P3TryStrengthFactor(fsValue) Then
-      fLow = fsValue
+      flow = fsValue
     Else
       If P3SrmAbortIfFatal() Then Exit Function
       fHigh = fsValue
     End If
     bisectCount = bisectCount + 1
   Loop
-  If P3SrmSnapReady And Abs(P3SrmSnapFs - fLow) <= 0.000000001 Then
+  If P3SrmSnapReady And Abs(P3SrmSnapFs - flow) <= 0.000000001 Then
     If Not P3RestoreSrmSuccessSnapshot() Then
-      SetAnalysisFailure RESULT_NONCONVERGED, "SRM: 収束Fs=" & Format$(fLow, "0.000") & " の保存状態を復元できませんでした。", vbObjectError + 3221, FailureElement, FailureGaussPoint, CurrentIncrement, CurrentIteration
+      SetAnalysisFailure RESULT_NONCONVERGED, "SRM: 収束Fs=" & Format$(flow, "0.000") & " の保存状態を復元できませんでした。", vbObjectError + 3221, FailureElement, FailureGaussPoint, CurrentIncrement, CurrentIteration
       P3FailureKind = "STATE_RESTORE": P3SrmTrialClassification = "NUMERICAL_FAILURE"
       Call P3SrmAbortIfFatal
       Exit Function
     End If
-  ElseIf Not P3TryStrengthFactor(fLow) Then
+  ElseIf Not P3TryStrengthFactor(flow) Then
     If ResultStatus = RESULT_PASS Or Len(ResultStatus) = 0 Then
-      SetAnalysisFailure RESULT_NONCONVERGED, "SRM: 最後に収束したFs=" & Format$(fLow, "0.000") & " の再解析に失敗しました。", vbObjectError + 3221, FailureElement, FailureGaussPoint, CurrentIncrement, CurrentIteration
+      SetAnalysisFailure RESULT_NONCONVERGED, "SRM: 最後に収束したFs=" & Format$(flow, "0.000") & " の再解析に失敗しました。", vbObjectError + 3221, FailureElement, FailureGaussPoint, CurrentIncrement, CurrentIteration
     End If
     P3FailureKind = "FINAL_VERIFICATION": P3SrmTrialClassification = "NUMERICAL_FAILURE"
     Call P3SrmAbortIfFatal
     Exit Function
   End If
-  FSS = fLow
-  P3SrmLower = fLow
+  FSS = flow
+  P3SrmLower = flow
   P3SrmUpper = fHigh
-  P3PublishFos fLow, fHigh, True
+  P3PublishFos flow, fHigh, True
   P3ClearTransientFailure
   P3RunStrengthReduction = True
 End Function
@@ -4263,7 +4288,14 @@ Private Function P3ExecuteStage(ByVal stageIndex As Long) As Boolean
   End If
   If Not P3ReplayQuiet Then FEMProgressStage logNo, kindText
   If Not P3ReplayQuiet Then FEMAppendRunLog "ステージ開始", "RUN", kindText
-  If kindText = "GRAVITY" Then
+  If kindText = "WATER" Then
+    GWStage P3StageGroup(stageIndex)
+    P3AssembleSelfWeightOnly
+    P3PlanHasGravity = True: P3PlanHasApply = False
+    If Not P3RunLoadStages() Then Exit Function
+    P3LogStageResult logNo, kindText, P3StageGroup(stageIndex), True, 1#, "水圧場固定・再平衡"
+    P3WriteStageSnapshot
+  ElseIf kindText = "GRAVITY" Then
     P3PlanHasGravity = True
     P3PlanHasApply = False
     If Not P3ReplayQuiet Then P6PerfMark
@@ -4311,6 +4343,7 @@ Private Function P3ExecuteStage(ByVal stageIndex As Long) As Boolean
       Exit Function
     End If
     P3SetMaterialElementsActive materialId, True
+    If GWEnabled() Then GWRebuild
     P3HoldOrphanDofs
     P3AssembleSelfWeightOnly
     P3RefreshActiveStiffness
@@ -4325,6 +4358,7 @@ Private Function P3ExecuteStage(ByVal stageIndex As Long) As Boolean
       Exit Function
     End If
     P3SetMaterialElementsActive materialId, False
+    If GWEnabled() Then GWRebuild
     P3HoldOrphanDofs
     P3AssembleSelfWeightOnly
     P3RefreshActiveStiffness
@@ -4514,11 +4548,11 @@ P3NextPlanStage:
   P3RunAnalysis = True
   Exit Function
 P3RunFailed:
-  FEMLastProc = FEMLastProc & " err=" & CStr(Err.Number)
-  If Err.Number = 9 Then
-    SetAnalysisFailure RESULT_RUNTIME_ERROR, "インデックスが有効範囲にありません。場所=" & FEMLastProc & " 要素=" & CStr(FailureElement) & " Ver=" & FEM_BUILD_STAMP, Err.Number, FailureElement, FailureGaussPoint, CurrentIncrement, CurrentIteration
+  FEMLastProc = FEMLastProc & " err=" & CStr(Err.number)
+  If Err.number = 9 Then
+    SetAnalysisFailure RESULT_RUNTIME_ERROR, "インデックスが有効範囲にありません。場所=" & FEMLastProc & " 要素=" & CStr(FailureElement) & " Ver=" & FEM_BUILD_STAMP, Err.number, FailureElement, FailureGaussPoint, CurrentIncrement, CurrentIteration
   Else
-    SetAnalysisFailure RESULT_RUNTIME_ERROR, Err.Description & " 場所=" & FEMLastProc & " Ver=" & FEM_BUILD_STAMP, Err.Number, FailureElement, FailureGaussPoint, CurrentIncrement, CurrentIteration
+    SetAnalysisFailure RESULT_RUNTIME_ERROR, Err.description & " 場所=" & FEMLastProc & " Ver=" & FEM_BUILD_STAMP, Err.number, FailureElement, FailureGaussPoint, CurrentIncrement, CurrentIteration
   End If
   P3RunAnalysis = False
 End Function
@@ -5860,20 +5894,20 @@ Private Function P2RunSelfTestCase(ByRef ws As Worksheet, ByVal rowNumber As Lon
     End If
   End If
 WriteSelfTestResult:
-  ws.Cells(rowNumber, startColumn).value2 = caseName
-  ws.Cells(rowNumber, startColumn + 1).value2 = outputState.converged
-  ws.Cells(rowNumber, startColumn + 2).value2 = outputState.yielded
-  ws.Cells(rowNumber, startColumn + 3).value2 = outputState.Elastic
-  ws.Cells(rowNumber, startColumn + 4).value2 = outputState.TrialYieldFunction
-  ws.Cells(rowNumber, startColumn + 5).value2 = outputState.YieldFunction
-  ws.Cells(rowNumber, startColumn + 6).value2 = outputState.PlasticMultiplier
-  ws.Cells(rowNumber, startColumn + 7).value2 = outputState.failureCode
-  ws.Cells(rowNumber, startColumn + 9).value2 = outputState.Stress(3)
-  ws.Cells(rowNumber, startColumn + 10).value2 = outputState.PlasticStrain(3)
+  ws.cells(rowNumber, startColumn).value2 = caseName
+  ws.cells(rowNumber, startColumn + 1).value2 = outputState.converged
+  ws.cells(rowNumber, startColumn + 2).value2 = outputState.yielded
+  ws.cells(rowNumber, startColumn + 3).value2 = outputState.Elastic
+  ws.cells(rowNumber, startColumn + 4).value2 = outputState.TrialYieldFunction
+  ws.cells(rowNumber, startColumn + 5).value2 = outputState.YieldFunction
+  ws.cells(rowNumber, startColumn + 6).value2 = outputState.PlasticMultiplier
+  ws.cells(rowNumber, startColumn + 7).value2 = outputState.failureCode
+  ws.cells(rowNumber, startColumn + 9).value2 = outputState.Stress(3)
+  ws.cells(rowNumber, startColumn + 10).value2 = outputState.PlasticStrain(3)
   If passed Then
-    ws.Cells(rowNumber, startColumn + 8).value2 = "PASS"
+    ws.cells(rowNumber, startColumn + 8).value2 = "PASS"
   Else
-    ws.Cells(rowNumber, startColumn + 8).value2 = "FAIL"
+    ws.cells(rowNumber, startColumn + 8).value2 = "FAIL"
   End If
   P2RunSelfTestCase = passed
 End Function
@@ -5886,19 +5920,19 @@ Public Function P2RunMaterialPointSelfTest() As Boolean
   On Error GoTo Failed
   Set ws = GetIntegratedResultSheet()
   testStartColumn = FEM_INTEGRATED_P2_TEST_START_COLUMN
-  ws.range(ws.Cells(FEM_INTEGRATED_P2_TEST_START_ROW, testStartColumn), ws.Cells(FEM_INTEGRATED_P2_TEST_END_ROW, testStartColumn + 11)).ClearContents
-  ws.Cells(FEM_INTEGRATED_P2_TEST_START_ROW, testStartColumn).value2 = "P2 Material Point Self Test"
-  ws.Cells(FEM_INTEGRATED_P2_TEST_START_ROW + 1, testStartColumn).value2 = "Case"
-  ws.Cells(FEM_INTEGRATED_P2_TEST_START_ROW + 1, testStartColumn + 1).value2 = "Converged"
-  ws.Cells(FEM_INTEGRATED_P2_TEST_START_ROW + 1, testStartColumn + 2).value2 = "Yielded"
-  ws.Cells(FEM_INTEGRATED_P2_TEST_START_ROW + 1, testStartColumn + 3).value2 = "Elastic"
-  ws.Cells(FEM_INTEGRATED_P2_TEST_START_ROW + 1, testStartColumn + 4).value2 = "TrialF"
-  ws.Cells(FEM_INTEGRATED_P2_TEST_START_ROW + 1, testStartColumn + 5).value2 = "FinalF"
-  ws.Cells(FEM_INTEGRATED_P2_TEST_START_ROW + 1, testStartColumn + 6).value2 = "PlasticMultiplier"
-  ws.Cells(FEM_INTEGRATED_P2_TEST_START_ROW + 1, testStartColumn + 7).value2 = "FailureCode"
-  ws.Cells(FEM_INTEGRATED_P2_TEST_START_ROW + 1, testStartColumn + 8).value2 = "Status"
-  ws.Cells(FEM_INTEGRATED_P2_TEST_START_ROW + 1, testStartColumn + 9).value2 = "SigmaZ"
-  ws.Cells(FEM_INTEGRATED_P2_TEST_START_ROW + 1, testStartColumn + 10).value2 = "PlasticStrainZ"
+  ws.range(ws.cells(FEM_INTEGRATED_P2_TEST_START_ROW, testStartColumn), ws.cells(FEM_INTEGRATED_P2_TEST_END_ROW, testStartColumn + 11)).ClearContents
+  ws.cells(FEM_INTEGRATED_P2_TEST_START_ROW, testStartColumn).value2 = "P2 Material Point Self Test"
+  ws.cells(FEM_INTEGRATED_P2_TEST_START_ROW + 1, testStartColumn).value2 = "Case"
+  ws.cells(FEM_INTEGRATED_P2_TEST_START_ROW + 1, testStartColumn + 1).value2 = "Converged"
+  ws.cells(FEM_INTEGRATED_P2_TEST_START_ROW + 1, testStartColumn + 2).value2 = "Yielded"
+  ws.cells(FEM_INTEGRATED_P2_TEST_START_ROW + 1, testStartColumn + 3).value2 = "Elastic"
+  ws.cells(FEM_INTEGRATED_P2_TEST_START_ROW + 1, testStartColumn + 4).value2 = "TrialF"
+  ws.cells(FEM_INTEGRATED_P2_TEST_START_ROW + 1, testStartColumn + 5).value2 = "FinalF"
+  ws.cells(FEM_INTEGRATED_P2_TEST_START_ROW + 1, testStartColumn + 6).value2 = "PlasticMultiplier"
+  ws.cells(FEM_INTEGRATED_P2_TEST_START_ROW + 1, testStartColumn + 7).value2 = "FailureCode"
+  ws.cells(FEM_INTEGRATED_P2_TEST_START_ROW + 1, testStartColumn + 8).value2 = "Status"
+  ws.cells(FEM_INTEGRATED_P2_TEST_START_ROW + 1, testStartColumn + 9).value2 = "SigmaZ"
+  ws.cells(FEM_INTEGRATED_P2_TEST_START_ROW + 1, testStartColumn + 10).value2 = "PlasticStrainZ"
   rowNumber = FEM_INTEGRATED_P2_TEST_START_ROW + 2
   allPassed = True
 
@@ -5960,26 +5994,26 @@ Public Function P2RunMaterialPointSelfTest() As Boolean
   P2SetSelfTestInput inputState, -0.05, 0#, 0#, 30#, 0#, 0#
   passed = P2RunSelfTestCase(ws, rowNumber, testStartColumn, "tensile_zero_cohesion_rejected", inputState, True, P2_FAILURE_NOT_CONVERGED, outputState): If Not passed Then allPassed = False
   rowNumber = rowNumber + 1
-  ws.Cells(rowNumber, testStartColumn).value2 = "rotation_principal_difference"
-  ws.Cells(rowNumber, testStartColumn + 1).value2 = principalDifference
+  ws.cells(rowNumber, testStartColumn).value2 = "rotation_principal_difference"
+  ws.cells(rowNumber, testStartColumn + 1).value2 = principalDifference
   rowNumber = rowNumber + 1
   tangentDifference = Abs(plasticOutput.tangent(0, 1) - plasticOutput.tangent(1, 0))
-  ws.Cells(rowNumber, testStartColumn).value2 = "nonassociated_tangent_asymmetry"
-  ws.Cells(rowNumber, testStartColumn + 1).value2 = tangentDifference
-  ws.Cells(rowNumber + 1, testStartColumn).value2 = "Overall"
+  ws.cells(rowNumber, testStartColumn).value2 = "nonassociated_tangent_asymmetry"
+  ws.cells(rowNumber, testStartColumn + 1).value2 = tangentDifference
+  ws.cells(rowNumber + 1, testStartColumn).value2 = "Overall"
   If allPassed Then
-    ws.Cells(rowNumber + 1, testStartColumn + 1).value2 = "PASS"
+    ws.cells(rowNumber + 1, testStartColumn + 1).value2 = "PASS"
   Else
-    ws.Cells(rowNumber + 1, testStartColumn + 1).value2 = "FAIL"
+    ws.cells(rowNumber + 1, testStartColumn + 1).value2 = "FAIL"
   End If
   ws.range(ws.columns(testStartColumn), ws.columns(testStartColumn + 10)).EntireColumn.AutoFit
   P2RunMaterialPointSelfTest = allPassed
   Exit Function
 Failed:
   If Not ws Is Nothing Then
-    ws.Cells(FEM_INTEGRATED_P2_TEST_START_ROW, testStartColumn + 9).value2 = "ERROR"
-    ws.Cells(FEM_INTEGRATED_P2_TEST_START_ROW, testStartColumn + 10).value2 = Err.Number
-    ws.Cells(FEM_INTEGRATED_P2_TEST_START_ROW, testStartColumn + 11).value2 = Err.Description
+    ws.cells(FEM_INTEGRATED_P2_TEST_START_ROW, testStartColumn + 9).value2 = "ERROR"
+    ws.cells(FEM_INTEGRATED_P2_TEST_START_ROW, testStartColumn + 10).value2 = Err.number
+    ws.cells(FEM_INTEGRATED_P2_TEST_START_ROW, testStartColumn + 11).value2 = Err.description
   End If
   P2RunMaterialPointSelfTest = False
 End Function
@@ -6036,7 +6070,7 @@ Public Function P2RunEdgeReturnCaseReport() As String
   End If
   Exit Function
 Failed:
-  P2RunEdgeReturnCaseReport = "error=" & CStr(Err.Number) & "|" & Err.Description
+  P2RunEdgeReturnCaseReport = "error=" & CStr(Err.number) & "|" & Err.description
 End Function
 
 
@@ -6198,8 +6232,8 @@ Private Function P3TryNewtonWatchdog(ByRef incrementBase() As Double, ByRef targ
       End If
       If innerStep = 6 Or ResidualNormFree > 100# * originalNorm Then GoTo NextWatchdogAlpha
       For i = 0 To lastDof
-        Disp(i) = 0#: Force(i) = 0#
-        If NodeCond(i) = 0 Then Force(i) = targetForce(i) - internalForce(i)
+        Disp(i) = 0#: force(i) = 0#
+        If NodeCond(i) = 0 Then force(i) = targetForce(i) - internalForce(i)
       Next i
       If localIteration >= P3GlobalIterationLimit() Then
         budgetExhausted = True: GoTo RestoreWatchdog
@@ -6232,7 +6266,7 @@ RestoreWatchdog:
   If budgetExhausted Then P3SetGlobalBudgetFailure
   Exit Function
 FatalTrial:
-  errorNumber = Err.Number: errorMessage = Err.Description
+  errorNumber = Err.number: errorMessage = Err.description
   If errorNumber <> 0 Then
     If errorNumber = 7 Then
       SetAnalysisFailure RESULT_CAPACITY_ERROR, errorMessage, errorNumber, FailureElement, FailureGaussPoint, CurrentIncrement, CurrentIteration
@@ -6265,8 +6299,8 @@ Private Function P3TryResidualRecovery(ByRef incrementBase() As Double, ByRef ta
     P3UpdateResidualMetrics targetForce, internalForce
     residualBefore = ResidualNormFree
     For i = 0 To lastDof
-      Force(i) = 0#: Disp(i) = 0#
-      If NodeCond(i) = 0 Then Force(i) = targetForce(i) - internalForce(i)
+      force(i) = 0#: Disp(i) = 0#
+      If NodeCond(i) = 0 Then force(i) = targetForce(i) - internalForce(i)
     Next i
     localIteration = localIteration + 1
     P3GlobalIterationCount = P3GlobalIterationCount + 1: P6PerfNewtonCount = P6PerfNewtonCount + 1
@@ -6337,5 +6371,15 @@ Public Function P3AccelFailureReason() As String
     Else
       P3AccelFailureReason = "ATTEMPT_NOT_CONVERGED"
     End If
+  End If
+End Function
+
+' Factor reuse must also notice a reversed friction direction / compression branch.
+' Public contact output remains 0=stick,1=open,2=slip; these extra bits are internal only.
+Public Function P3JointTangentState(ByVal e As Long, ByVal gp As Long) As Long
+  P3JointTangentState = Elem(e).JointContact(gp)
+  If P3JointTangentState = 2 And (P3FlowPolicyIsInconsistent() Or GWActive) Then
+    If Elem(e).Stmat(0, gp) > 0# Then P3JointTangentState = P3JointTangentState + 4
+    If Elem(e).Stmat(1, gp) < 0# Then P3JointTangentState = P3JointTangentState + 8
   End If
 End Function

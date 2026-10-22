@@ -1,0 +1,108 @@
+{
+  "status": "PASS",
+  "book_source": "packaged source22",
+  "input_preserved": true,
+  "actions": [
+    {
+      "sheet": "図",
+      "shapes": 3,
+      "action": "stress",
+      "freeze_columns": 0,
+      "freeze_rows": 0,
+      "status": "PASS"
+    },
+    {
+      "sheet": "接合",
+      "shapes": 1,
+      "action": "joint_input",
+      "freeze_columns": 1.0,
+      "freeze_rows": 1.0,
+      "status": "PASS"
+    },
+    {
+      "sheet": "接合結果",
+      "shapes": 0,
+      "action": "joint_result",
+      "freeze_columns": 4.0,
+      "freeze_rows": 1.0,
+      "status": "PASS"
+    },
+    {
+      "sheet": "接合結果",
+      "shapes": 0,
+      "action": "reopen",
+      "freeze_columns": 4.0,
+      "freeze_rows": 1.0,
+      "status": "PASS"
+    },
+    {
+      "sheet": "水圧結果",
+      "shapes": 21,
+      "action": "result",
+      "freeze_columns": 0,
+      "freeze_rows": 0,
+      "status": "PASS"
+    },
+    {
+      "sheet": "水圧確認",
+      "shapes": 21,
+      "action": "preview",
+      "freeze_columns": 0,
+      "freeze_rows": 0,
+      "status": "PASS"
+    },
+    {
+      "sheet": "水条件",
+      "shapes": 5,
+      "action": "water_input",
+      "freeze_columns": 0,
+      "freeze_rows": 0,
+      "status": "PASS"
+    },
+    {
+      "sheet": "接合結果",
+      "shapes": 0,
+      "action": "joint_result",
+      "freeze_columns": 4.0,
+      "freeze_rows": 1.0,
+      "status": "PASS"
+    },
+    {
+      "sheet": "図",
+      "shapes": 3,
+      "action": "mesh",
+      "freeze_columns": 0,
+      "freeze_rows": 0,
+      "status": "PASS"
+    },
+    {
+      "sheet": "図",
+      "shapes": 3,
+      "action": "stale",
+      "freeze_columns": 0,
+      "freeze_rows": 0,
+      "status": "ERROR|入力が変更されています。再解析してください。"
+    },
+    {
+      "sheet": "図",
+      "shapes": 3,
+      "action": "quit",
+      "freeze_columns": 0,
+      "freeze_rows": 0,
+      "status": "PASS"
+    }
+  ],
+  "manual_button_click": "水条件: 接合の水圧結果; native result screen observed",
+  "screenshots": {
+    "button_result.jpg": "c53fedd084c2261053c214fc6090431bf655fcfa5197b242a634810332aa2d35",
+    "joint_input.jpg": "2b8c1300e9e09efe459dc77f5dded8fb40577a21104e064885df3edf1041d783",
+    "joint_result.jpg": "8eff5a6f7044e13105ee7efa17382b55858475bf63c5f50ab7ae1a94b62133f6",
+    "mesh.jpg": "9e5ef0620342f7490136bb426a9637806e9b36f4445f35e0fe699ad91294dc54",
+    "preview.jpg": "3092e79863ad1ec56b560fa2aaa8f1c9e5cf89414bb026a048389135727fe9b6",
+    "reopen.jpg": "8d9cd6e9bd4d3a824d3e5e2087209df177ea82ca8d1be974e8eef7732eb3674d",
+    "stress.jpg": "9f0c512fb2edb1c2525af71b3cb52a40666cfbc55db5ac083455566e64595ca5",
+    "water_input.jpg": "993f4f3ef656d8f713963c8ac12ceb349aa7898c0458b249d0a6796ea0e01971",
+    "water_result.jpg": "570b5e37dedf3beddec61ad0fe079bc507e27a963fc54b9fcd610494c24b33bc"
+  },
+  "normal_result_plot_note": "stress.jpg uses the existing selected accumulated XY shear-strain display; this is a drawing regression, not a structural design example."
+}

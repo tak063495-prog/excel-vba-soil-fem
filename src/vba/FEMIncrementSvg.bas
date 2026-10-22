@@ -7,7 +7,7 @@ Public Function FEMIncrementOverlaySvg(ByVal cells As Object, ByVal shearOn As B
     Dim s As String, key As Variant, a As Variant, maxG As Double, maxP As Double, refHalf As Double, em As Double
     Dim nodes As Object, n As Variant, v As Variant, i As Long, x As Double, y As Double, edgeCount As Long
     Set nodes = CreateObject("Scripting.Dictionary")
-    For Each key In cells.Keys
+    For Each key In cells.keys
         a = cells(key)
         If IsArray(a) Then
             If IsNumeric(a(8)) Then If Abs(CDbl(a(8))) > maxG Then maxG = Abs(CDbl(a(8)))
@@ -34,7 +34,7 @@ Public Function FEMIncrementOverlaySvg(ByVal cells As Object, ByVal shearOn As B
     If shearOn And contourMode And maxG > 0# Then
         s = s & "<g id='shear-increment-contours'>"
         For i = 1 To 3
-            For Each key In cells.Keys
+            For Each key In cells.keys
                 a = cells(key)
                 If IsArray(a) Then s = s & FEMIncrementCellContours(a, nodes, maxG * i / 4#, i)
             Next key
@@ -45,7 +45,7 @@ Public Function FEMIncrementOverlaySvg(ByVal cells As Object, ByVal shearOn As B
     End If
     If crossOn And maxP > 0# Then
         s = s & "<g id='plastic-principal-crosses'>"
-        For Each key In cells.Keys
+        For Each key In cells.keys
             a = cells(key)
             If IsArray(a) Then s = s & FEMIncrementCross(a, maxP, refHalf, vectorScale, CStr(key))
         Next key

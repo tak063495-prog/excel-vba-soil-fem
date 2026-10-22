@@ -35,7 +35,7 @@ Public Sub FEMUiUpdateLayout()
   FEMInvalidateSettingCache
   Exit Sub
 Failed:
-  errorNo = Err.Number: errorText = Err.Description: mUiSessionReady = False
+  errorNo = Err.number: errorText = Err.description: mUiSessionReady = False
   Application.EnableEvents = eventsSaved: Application.ScreenUpdating = screenSaved
   Err.Raise errorNo, "FEMUiUpdateLayout", errorText
 End Sub
@@ -62,10 +62,10 @@ Public Sub FEMUiAfterLayout()
     ws.Unprotect
     ws.columns(6).Hidden = True
     ws.range("A1:G200").locked = True
-    maxRow = ws.Cells(ws.rows.count, 6).End(xlUp).row
+    maxRow = ws.cells(ws.rows.count, 6).End(xlUp).row
     For r = 1 To maxRow
-      If Len(CStr(ws.Cells(r, 6).value2)) > 0 Then
-        If left$(CStr(ws.Cells(r, 6).value2), 14) <> "MESH_GEN_LAST_" Then ws.Cells(r, 3).MergeArea.locked = False
+      If Len(CStr(ws.cells(r, 6).value2)) > 0 Then
+        If left$(CStr(ws.cells(r, 6).value2), 14) <> "MESH_GEN_LAST_" Then ws.cells(r, 3).MergeArea.locked = False
       End If
     Next r
   Next p
@@ -89,7 +89,7 @@ Public Sub FEMUiAfterLayout()
   FEMInvalidateSettingCache
   Exit Sub
 Failed:
-  errorNo = Err.Number: errorSource = Err.source: errorText = Err.Description
+  errorNo = Err.number: errorSource = Err.source: errorText = Err.description
   mUiSessionReady = False
   Application.EnableEvents = eventsSaved: Application.ScreenUpdating = screenSaved
   Err.Raise errorNo, "FEMUiAfterLayout:" & uiPhase, uiPhase & ": " & errorText
@@ -118,58 +118,69 @@ Private Sub FEMUiRestoreGuides()
     ws.range("F2").value2 = "自重。外周の拘束は「メッシュ設定」、個別の支持・変位は「節点データ」で設定。"
   End If
   ws.range("H1:I24").ClearContents
-  ws.Cells(1, 8).value2 = "施工ステージの入力"
-  ws.Cells(1, 9).value2 = "上から順に実行。有効1=実行、0=スキップ。"
-  ws.Cells(2, 8).value2 = "GRAVITY　自重"
-  ws.Cells(2, 9).value2 = "自重を計算。支持・変位は節点データで設定。"
-  ws.Cells(3, 8).value2 = "LOAD　載荷"
-  ws.Cells(3, 9).value2 = "C列に対象材料番号。「載荷」シートの該当行を使用。"
-  ws.Cells(4, 8).value2 = "UNLOAD　除荷"
-  ws.Cells(4, 9).value2 = "対象材料の荷重・変位を外す。要素は残る。"
-  ws.Cells(5, 8).value2 = "BIRTH　追加"
-  ws.Cells(5, 9).value2 = "C列の材料の要素を有効化。材料の初期状態をOFFにしておく。"
-  ws.Cells(6, 8).value2 = "DEATH　撤去"
-  ws.Cells(6, 9).value2 = "C列の材料の要素を無効化。材料単位で指定する。"
-  ws.Cells(7, 8).value2 = "SRM　強度低減"
-  ws.Cells(7, 9).value2 = "最後の有効行ならFs探索。途中の行はD列の必要Fsを確認する。"
-  ws.Cells(8, 8).value2 = "RESET_U"
-  ws.Cells(8, 9).value2 = "変位・応力・塑性履歴をゼロ。基準座標はそのまま。"
-  ws.Cells(9, 8).value2 = "RESET_STRESS"
-  ws.Cells(9, 9).value2 = "変形後座標を基準にし、変位・応力・塑性履歴をゼロ。"
-  ws.Cells(10, 8).value2 = "MATSET"
-  ws.Cells(10, 9).value2 = "材料状態を変更。D列の書式は仕様シートで確認。"
-  ws.Cells(11, 8).value2 = "BIRTHの準備"
-  ws.Cells(11, 9).value2 = "追加材料を登録 → 要素へ材料番号を付与 → 初期状態OFF → BIRTH行。"
-  ws.Cells(12, 8).value2 = "DEATHの準備"
-  ws.Cells(12, 9).value2 = "撤去する範囲を別の材料番号へ分ける → DEATH行へその材料番号。"
-  ws.Cells(13, 8).value2 = "注意"
-  ws.Cells(13, 9).value2 = "A列の番号を替えても並び順は替わらない。行を並べ替えて順番を変更。"
+  ws.cells(1, 8).value2 = "施工ステージの入力"
+  ws.cells(1, 9).value2 = "上から順に実行。有効1=実行、0=スキップ。"
+  ws.cells(2, 8).value2 = "GRAVITY　自重"
+  ws.cells(2, 9).value2 = "自重を計算。支持・変位は節点データで設定。"
+  ws.cells(3, 8).value2 = "LOAD　載荷"
+  ws.cells(3, 9).value2 = "C列に対象材料番号。「載荷」シートの該当行を使用。"
+  ws.cells(4, 8).value2 = "UNLOAD　除荷"
+  ws.cells(4, 9).value2 = "対象材料の荷重・変位を外す。要素は残る。"
+  ws.cells(5, 8).value2 = "BIRTH　追加"
+  ws.cells(5, 9).value2 = "C列の材料の要素を有効化。材料の初期状態をOFFにしておく。"
+  ws.cells(6, 8).value2 = "DEATH　撤去"
+  ws.cells(6, 9).value2 = "C列の材料の要素を無効化。材料単位で指定する。"
+  ws.cells(7, 8).value2 = "SRM　強度低減"
+  ws.cells(7, 9).value2 = "最後の有効行ならFs探索。途中の行はD列の必要Fsを確認する。"
+  ws.cells(8, 8).value2 = "RESET_U"
+  ws.cells(8, 9).value2 = "変位・応力・塑性履歴をゼロ。基準座標はそのまま。"
+  ws.cells(9, 8).value2 = "RESET_STRESS"
+  ws.cells(9, 9).value2 = "変形後座標を基準にし、変位・応力・塑性履歴をゼロ。"
+  ws.cells(10, 8).value2 = "MATSET"
+  ws.cells(10, 9).value2 = "材料状態を変更。D列の書式は仕様シートで確認。"
+  ws.cells(11, 8).value2 = "BIRTHの準備"
+  ws.cells(11, 9).value2 = "追加材料を登録 → 要素へ材料番号を付与 → 初期状態OFF → BIRTH行。"
+  ws.cells(12, 8).value2 = "DEATHの準備"
+  ws.cells(12, 9).value2 = "撤去する範囲を別の材料番号へ分ける → DEATH行へその材料番号。"
+  ws.cells(13, 8).value2 = "注意"
+  ws.cells(13, 9).value2 = "A列の番号を替えても並び順は替わらない。行を並べ替えて順番を変更。"
   FEMUiList ws, "B2:B2000", "GRAVITY,LOAD,UNLOAD,BIRTH,DEATH,SRM,RESET_U,RESET_STRESS,MATSET"
   FEMUiList ws, "E2:E2000", "1,0"
   Set ws = ThisWorkbook.Worksheets("接合")
-  ws.range("G1:H20").ClearContents
-  ws.Cells(1, 7).value2 = "ジョイントの設定"
-  ws.Cells(1, 8).value2 = "異なる材料の共有辺に接合要素を作ります。"
-  ws.Cells(2, 7).value2 = "1　材料を登録"
-  ws.Cells(2, 8).value2 = "「材料データ」にJOINT材料を追加。種別=JOINT、B列=Kn、L列=Ks。"
-  ws.Cells(3, 7).value2 = "2　接合する組合せ"
-  ws.Cells(3, 8).value2 = "A列=節点を残す側、B列=節点を増やす側、C列=JOINT材料の番号。"
-  ws.Cells(4, 7).value2 = "3　生成"
-  ws.Cells(4, 8).value2 = "有効=1にして、メッシュ設定の「形状メッシュを作成②」を実行。"
-  ws.Cells(5, 7).value2 = "生成のタイミング"
-  ws.Cells(5, 8).value2 = "要素作成②の後と解析開始時に、既存の接合処理を使用。"
-  ws.Cells(6, 7).value2 = "入力の意味"
-  ws.Cells(6, 8).value2 = "材料A/Bは材料番号。接合材料にも番号を入力。説明は任意。"
-  ws.Cells(7, 7).value2 = "剛性と引張"
-  ws.Cells(7, 8).value2 = "Kn/Ksは正。M列の引張=0で開口可、1で引張を保持。"
-  ws.Cells(8, 7).value2 = "高速化の扱い"
-  ws.Cells(8, 8).value2 = "ジョイントを含むモデルでは対応していない高速化方式を見送る。"
-  ws.Cells(9, 7).value2 = "モデルの範囲"
-  ws.Cells(9, 8).value2 = "履歴なしの応力上限モデル。JOINTのpsiは0。塑性すべり・ダイレタンシーは未対応。"
-  ws.Cells(10, 7).value2 = "除荷・反転載荷"
-  ws.Cells(10, 8).value2 = "降伏後の残留すべり・除荷剛性・散逸を扱う弾塑性接合モデルではありません。"
-  ws.range("G9:H10").WrapText = True
+  ws.range("K1:L10").ClearContents
+  ws.cells(1, 11).value2 = "ジョイントの設定"
+  ws.cells(1, 12).value2 = "異なる材料の共有辺に接合要素を作ります。"
+  ws.cells(2, 11).value2 = "1　材料を登録"
+  ws.cells(2, 12).value2 = "「材料データ」にJOINT材料を追加。種別=JOINT、B列=Kn、L列=Ks。"
+  ws.cells(3, 11).value2 = "2　接合する組合せ"
+  ws.cells(3, 12).value2 = "A列=節点を残す側、B列=節点を増やす側、C列=JOINT材料の番号。"
+  ws.cells(4, 11).value2 = "3　生成"
+  ws.cells(4, 12).value2 = "有効=1にして、メッシュ設定の「形状メッシュを作成②」を実行。"
+  ws.cells(5, 11).value2 = "生成のタイミング"
+  ws.cells(5, 12).value2 = "要素作成②の後と解析開始時に、既存の接合処理を使用。"
+  ws.cells(6, 11).value2 = "入力の意味"
+  ws.cells(6, 12).value2 = "材料A/Bは材料番号。接合材料にも番号を入力。説明は任意。"
+  ws.cells(7, 11).value2 = "剛性と引張"
+  ws.cells(7, 12).value2 = "Kn/Ksは正。M列の引張=0で開口可、1で引張を保持。"
+  ws.cells(8, 11).value2 = "高速化の扱い"
+  ws.cells(8, 12).value2 = "ジョイントを含むモデルでは対応していない高速化方式を見送る。"
+  ws.cells(9, 11).value2 = "モデルの範囲"
+  ws.cells(9, 12).value2 = "履歴なしの応力上限モデル。JOINTのpsiは0。塑性すべり・ダイレタンシーは未対応。"
+  ws.cells(10, 11).value2 = "除荷・反転載荷"
+  ws.cells(10, 12).value2 = "降伏後の残留すべり・除荷剛性・散逸を扱う弾塑性接合モデルではありません。"
+  ws.range("K9:L10").WrapText = True
   ws.rows("9:10").RowHeight = 51
+  ws.cells(1, 6).value2 = "水圧方式": ws.cells(1, 7).value2 = "水位線ID"
+  ws.columns("A:D").ColumnWidth = 12: ws.columns("E").ColumnWidth = 32
+  ws.columns("F:G").ColumnWidth = 20: ws.columns("H:J").ColumnWidth = 3
+  ws.range("F2:G2000").Interior.Color = RGB(255, 249, 210)
+  ws.cells(12, 11).value2 = "水圧方式"
+  ws.cells(12, 12).value2 = "SOIL=地盤側 / CONTINUOUS=地盤間水頭連続 / PRESCRIBED=指定水位線"
+  ws.cells(13, 11).value2 = "水位線ID"
+  ws.cells(13, 12).value2 = "指定水圧のみG列必須。*=現在工程の水位線。水条件NONEでは無視。"
+  ws.columns("K").ColumnWidth = 22: ws.columns("L").ColumnWidth = 90
+  ws.range("K1:L13").WrapText = True
+  FEMUiList ws, "F2:F2000", "SOIL,CONTINUOUS,PRESCRIBED"
   FEMUiList ws, "D2:D2000", "1,0"
   Set ws = ThisWorkbook.Worksheets("載荷")
   ' Selection accepts the five geometric keywords or an existing positive node ID.
@@ -179,7 +190,7 @@ Private Sub FEMUiRestoreGuides()
     .Add Type:=xlValidateCustom, AlertStyle:=xlValidAlertStop, Operator:=xlBetween, _
       Formula1:="=OR(B2=""TOP"",B2=""BOTTOM"",B2=""LEFT"",B2=""RIGHT"",B2=""BOX"",IFERROR(AND(ISNUMBER(B2),B2=INT(B2),B2>0,COUNTIF(INDIRECT(""'節点データ'!$A:$A""),B2)=1),FALSE))"
     .IgnoreBlank = True: .ShowError = True: .ErrorTitle = "入力値"
-    .ErrorMessage = "TOP/BOTTOM/LEFT/RIGHT/BOX、または節点データに存在する正の節点番号を入力してください。"
+    .errorMessage = "TOP/BOTTOM/LEFT/RIGHT/BOX、または節点データに存在する正の節点番号を入力してください。"
   End With
   FEMUiList ws, "C2:C2000", "X,Y"
   FEMUiList ws, "D2:D2000", "DISP,FORCE,FIX"
@@ -194,7 +205,7 @@ Private Sub FEMUiLink(ByVal sheetName As String, ByVal address As String, ByVal 
   Dim ws As Worksheet, cell As range
   Set ws = ThisWorkbook.Worksheets(sheetName): Set cell = ws.range(address)
   cell.Hyperlinks.Delete
-  ws.Hyperlinks.Add Anchor:=cell, address:="", SubAddress:="'" & Replace(destination, "'", "''") & "'!" & targetCell, TextToDisplay:=caption
+  ws.Hyperlinks.Add anchor:=cell, address:="", SubAddress:="'" & Replace(destination, "'", "''") & "'!" & targetCell, TextToDisplay:=caption
   cell.Font.Color = RGB(38, 94, 146): cell.Font.size = 11
 End Sub
 Private Sub FEMUiMakeLinks()
@@ -247,7 +258,7 @@ Private Sub FEMUiButton(ByVal sheetName As String, ByVal objectName As String, B
   shp.Placement = xlMoveAndSize
   Exit Sub
 Failed:
-  Err.Raise Err.Number, "FEMUiButton", sheetName & "/" & objectName & ": " & Err.Description
+  Err.Raise Err.number, "FEMUiButton", sheetName & "/" & objectName & ": " & Err.description
 End Sub
 Private Sub FEMUiMakeButtons()
   Dim ws As Worksheet, shp As shape, actionText As String, marker As Long
@@ -282,7 +293,7 @@ Private Sub FEMUiMakeButtons()
   Next ws
   Exit Sub
 Failed:
-  Err.Raise Err.Number, "FEMUiMakeButtons", ws.name & "/" & shp.name & ": " & Err.Description
+  Err.Raise Err.number, "FEMUiMakeButtons", ws.name & "/" & shp.name & ": " & Err.description
 End Sub
 
 Private Sub FEMUiOrderTabs()
@@ -291,7 +302,7 @@ Private Sub FEMUiOrderTabs()
   names = Array("操作パネル", "操作ガイド", "材料データ", "形状入力", "メッシュ設定", "接合", "載荷", "ステージ", "解析設定", "高速化設定", "出力・表示", "詳細設定", "図", "ステージ結果", "接合結果")
   For Each p In names
     Set ws = ThisWorkbook.Worksheets(CStr(p)): ws.Visible = xlSheetVisible
-    If previous Is Nothing Then ws.Move Before:=ThisWorkbook.Worksheets(1) Else ws.Move After:=previous
+    If previous Is Nothing Then ws.Move before:=ThisWorkbook.Worksheets(1) Else ws.Move After:=previous
     Set previous = ws
   Next p
   ThisWorkbook.Worksheets("設定").Visible = xlSheetVeryHidden

@@ -1,0 +1,856 @@
+{
+  "status": "PASS",
+  "book_sha256": "1702746BB1C0351C59970F50A18A4A73F36F8B63AD7B1451B01E43D535AFC2E7",
+  "joint": {
+    "dry": {
+      "status": "PASS",
+      "case": "joint_water_dry",
+      "seconds": 4.9029638,
+      "effective_contact_kN": 47.99999999999995,
+      "water_support_kN": 0.0,
+      "total_contact_kN": 47.99999999999995,
+      "reaction_y_kN": 87.99999999999997,
+      "residual": 2.8140271219420618e-15,
+      "Fs": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max_head_error_m": 0.0,
+      "max_flux_error_m_s": 0.0,
+      "resume": {},
+      "tangent": [],
+      "fluid_exact": {}
+    },
+    "wet": {
+      "status": "PASS",
+      "case": "joint_water_wet",
+      "seconds": 5.7010562,
+      "effective_contact_kN": 27.99999999999999,
+      "water_support_kN": 20.0,
+      "total_contact_kN": 47.99999999999999,
+      "reaction_y_kN": 88.0,
+      "residual": 1.2799951622030741e-15,
+      "Fs": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max_head_error_m": 0.0,
+      "max_flux_error_m_s": 0.0,
+      "resume": {
+        "max_du_m": 4.235164736271502e-22,
+        "max_physical_stress_error_kPa": 4.942712905631197e-13,
+        "residual": 2.7805923637581374e-14,
+        "seconds": 1.9790061
+      },
+      "tangent": [
+        "STICK|4.1493845799323E-12|0|0|0",
+        "SLIP_POSITIVE|4.42272385754449E-12|61584028.7135601|2|6",
+        "SLIP_NEGATIVE|4.42272385754449E-12|61584028.7135601|2|14",
+        "OPEN|0|0|1|1"
+      ],
+      "fluid_exact": {}
+    },
+    "prescribed": {
+      "status": "PASS",
+      "case": "joint_water_prescribed",
+      "seconds": 5.0947406,
+      "effective_contact_kN": 27.99999999999999,
+      "water_support_kN": 20.0,
+      "total_contact_kN": 47.99999999999999,
+      "reaction_y_kN": 88.0,
+      "residual": 1.2799951622030741e-15,
+      "Fs": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max_head_error_m": 0.0,
+      "max_flux_error_m_s": 0.0,
+      "resume": {
+        "max_du_m": 4.235164736271502e-22,
+        "max_physical_stress_error_kPa": 4.942712905631197e-13,
+        "residual": 2.7805923637581374e-14,
+        "seconds": 1.8069811
+      },
+      "tangent": [],
+      "fluid_exact": {}
+    },
+    "continuous": {
+      "status": "PASS",
+      "case": "joint_water_continuous",
+      "seconds": 4.9234016,
+      "effective_contact_kN": 35.99999999999998,
+      "water_support_kN": 43.99999999999999,
+      "total_contact_kN": 79.99999999999997,
+      "reaction_y_kN": 120.0,
+      "residual": 1.4184533577908155e-15,
+      "Fs": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max_head_error_m": 8.881784197001252e-16,
+      "max_flux_error_m_s": 1.665334536937735e-20,
+      "resume": {
+        "max_du_m": 5.029258124322408e-22,
+        "max_physical_stress_error_kPa": 9.876544027065393e-13,
+        "residual": 2.041823457915469e-14,
+        "seconds": 1.8330485
+      },
+      "tangent": [],
+      "fluid_exact": {}
+    },
+    "prescribed_steady": {
+      "status": "PASS",
+      "case": "joint_water_prescribed_steady",
+      "seconds": 4.9045742,
+      "effective_contact_kN": 27.999999999999986,
+      "water_support_kN": 20.0,
+      "total_contact_kN": 47.999999999999986,
+      "reaction_y_kN": 88.00000000000003,
+      "residual": 5.354838348729748e-16,
+      "Fs": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max_head_error_m": 1.7763568394002505e-15,
+      "max_flux_error_m_s": 2.8865798640254074e-20,
+      "resume": {
+        "max_du_m": 4.499862532288471e-22,
+        "max_physical_stress_error_kPa": 4.991562718714704e-13,
+        "residual": 2.7805852529352046e-14,
+        "seconds": 1.8106025
+      },
+      "tangent": [],
+      "fluid_exact": {}
+    },
+    "soil_steady": {
+      "status": "PASS",
+      "case": "joint_water_soil_steady",
+      "seconds": 4.9318733,
+      "effective_contact_kN": 27.99999999999997,
+      "water_support_kN": 20.000000000000007,
+      "total_contact_kN": 47.999999999999986,
+      "reaction_y_kN": 87.99999999999999,
+      "residual": 3.99020709552608e-15,
+      "Fs": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max_head_error_m": 6.661338147750939e-16,
+      "max_flux_error_m_s": 1.6573114408613423e-20,
+      "resume": {
+        "max_du_m": 4.764560328305439e-22,
+        "max_physical_stress_error_kPa": 9.78772618509538e-13,
+        "residual": 3.209159250858739e-14,
+        "seconds": 2.1401015
+      },
+      "tangent": [],
+      "fluid_exact": {}
+    },
+    "partial": {
+      "status": "PASS",
+      "case": "joint_water_partial",
+      "seconds": 5.6495928,
+      "effective_contact_kN": 36.74999999999998,
+      "water_support_kN": 11.25,
+      "total_contact_kN": 47.99999999999998,
+      "reaction_y_kN": 87.99999999999999,
+      "residual": 1.1578690865399137e-15,
+      "Fs": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max_head_error_m": 0.0,
+      "max_flux_error_m_s": 0.0,
+      "resume": {
+        "max_du_m": 4.499862532288471e-22,
+        "max_physical_stress_error_kPa": 7.673861546209082e-13,
+        "residual": 3.868895686976161e-14,
+        "seconds": 2.3249615
+      },
+      "tangent": [],
+      "fluid_exact": {
+        "fx_kN": 0.0,
+        "fy_kN": 11.25,
+        "moment_kNm": 16.875,
+        "GP_pressure_integral_kN": 11.525537051341576,
+        "contact_plus_actual_fluid_kN": 47.99999999999998
+      }
+    },
+    "slip": {
+      "status": "PASS",
+      "case": "joint_water_slip",
+      "seconds": 5.211336,
+      "effective_contact_kN": 27.99999999999999,
+      "water_support_kN": 20.0,
+      "total_contact_kN": 47.999999999999986,
+      "reaction_y_kN": 88.00000000000001,
+      "residual": 7.050988804720377e-14,
+      "Fs": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max_head_error_m": 0.0,
+      "max_flux_error_m_s": 0.0,
+      "resume": {
+        "max_du_m": 4.499862532288471e-22,
+        "max_physical_stress_error_kPa": 5.648814749292796e-13,
+        "residual": 6.758723795922452e-14,
+        "seconds": 1.8842645
+      },
+      "tangent": [],
+      "fluid_exact": {}
+    },
+    "opening": {
+      "status": "PASS",
+      "case": "joint_water_opening",
+      "seconds": 6.5626761,
+      "effective_contact_kN": 0.0,
+      "water_support_kN": 20.0,
+      "total_contact_kN": 20.0,
+      "reaction_y_kN": 88.00000000000001,
+      "residual": 4.657278092949764e-14,
+      "Fs": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max_head_error_m": 0.0,
+      "max_flux_error_m_s": 0.0,
+      "resume": {
+        "max_du_m": 4.963083675318166e-23,
+        "max_physical_stress_error_kPa": 6.826686543347095e-13,
+        "residual": 6.764261131881933e-14,
+        "seconds": 1.9175134
+      },
+      "tangent": [],
+      "fluid_exact": {}
+    },
+    "stages": {
+      "status": "PASS",
+      "case": "joint_water_stages",
+      "seconds": 5.3792908,
+      "effective_contact_kN": 27.999999999999975,
+      "water_support_kN": 20.0,
+      "total_contact_kN": 47.99999999999997,
+      "reaction_y_kN": 87.99999999999999,
+      "residual": 3.071761067283185e-15,
+      "Fs": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max_head_error_m": 0.0,
+      "max_flux_error_m_s": 0.0,
+      "resume": {
+        "max_du_m": 4.764560328305439e-22,
+        "max_physical_stress_error_kPa": 7.922551503725117e-13,
+        "residual": 3.3905869328235906e-14,
+        "seconds": 1.8350614
+      },
+      "tangent": [],
+      "fluid_exact": {}
+    },
+    "srm": {
+      "status": "PASS",
+      "case": "joint_water_srm",
+      "seconds": 5.0961255,
+      "effective_contact_kN": 27.999999999999986,
+      "water_support_kN": 20.0,
+      "total_contact_kN": 47.999999999999986,
+      "reaction_y_kN": 88.00000000000001,
+      "residual": 6.163813188942682e-16,
+      "Fs": [
+        1.2,
+        1.2,
+        0.0,
+        0.0
+      ],
+      "max_head_error_m": 0.0,
+      "max_flux_error_m_s": 0.0,
+      "resume": {
+        "max_du_m": 4.499862532288471e-22,
+        "max_physical_stress_error_kPa": 6.288303211476887e-13,
+        "residual": 3.8799604496449483e-14,
+        "seconds": 1.8495103
+      },
+      "tangent": [],
+      "fluid_exact": {}
+    },
+    "struct_pair": {
+      "status": "PASS",
+      "case": "joint_water_struct_pair",
+      "seconds": 4.9487712,
+      "effective_contact_kN": 27.99999999999998,
+      "water_support_kN": 20.0,
+      "total_contact_kN": 47.999999999999986,
+      "reaction_y_kN": 87.99999999999997,
+      "residual": 1.9506011356135945e-15,
+      "Fs": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max_head_error_m": 0.0,
+      "max_flux_error_m_s": 0.0,
+      "resume": {
+        "max_du_m": 4.499862532288471e-22,
+        "max_physical_stress_error_kPa": 6.252776074688882e-13,
+        "residual": 2.5986785676975387e-14,
+        "seconds": 1.8941554
+      },
+      "tangent": [],
+      "fluid_exact": {}
+    },
+    "wet_davis": {
+      "status": "PASS",
+      "case": "joint_water_wet",
+      "seconds": 4.9220202,
+      "effective_contact_kN": 27.99999999999999,
+      "water_support_kN": 20.0,
+      "total_contact_kN": 47.99999999999999,
+      "reaction_y_kN": 88.0,
+      "residual": 1.2799951622030741e-15,
+      "Fs": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max_head_error_m": 0.0,
+      "max_flux_error_m_s": 0.0,
+      "resume": {
+        "max_du_m": 4.235164736271502e-22,
+        "max_physical_stress_error_kPa": 4.942712905631197e-13,
+        "residual": 2.7805923637581374e-14,
+        "seconds": 1.813938
+      },
+      "tangent": [
+        "STICK|4.1493845799323E-12|0|0|0",
+        "SLIP_POSITIVE|4.42272385754449E-12|61584028.7135601|2|6",
+        "SLIP_NEGATIVE|4.42272385754449E-12|61584028.7135601|2|14",
+        "OPEN|0|0|1|1"
+      ],
+      "fluid_exact": {}
+    },
+    "slip_davis": {
+      "status": "PASS",
+      "case": "joint_water_slip",
+      "seconds": 5.0259861,
+      "effective_contact_kN": 27.99999999999999,
+      "water_support_kN": 20.0,
+      "total_contact_kN": 47.999999999999986,
+      "reaction_y_kN": 88.00000000000001,
+      "residual": 7.050988804720377e-14,
+      "Fs": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max_head_error_m": 0.0,
+      "max_flux_error_m_s": 0.0,
+      "resume": {
+        "max_du_m": 4.499862532288471e-22,
+        "max_physical_stress_error_kPa": 5.648814749292796e-13,
+        "residual": 6.758723795922452e-14,
+        "seconds": 1.8102066
+      },
+      "tangent": [],
+      "fluid_exact": {}
+    }
+  },
+  "rejected": {
+    "missing_mode": {
+      "fixture_sha256": "83E99915C0DC04AE4A6AD2CB5DE3BC30B9248E92A5611A8E331B7D9A468FFB49",
+      "actual_error": "ERROR|接合F列へSOIL/CONTINUOUS/PRESCRIBEDを指定してください。|FEMJointWater",
+      "expected_error": "接合F列",
+      "book_sha256": "1702746BB1C0351C59970F50A18A4A73F36F8B63AD7B1451B01E43D535AFC2E7",
+      "status": "PASS"
+    },
+    "inconsistent_pressure": {
+      "fixture_sha256": "421ED53245DC129E83254EDBE500CC677A8FA1B7E65C6969BC7B568675523AB5",
+      "expected_error": "水圧が一致しません",
+      "status": "PASS",
+      "actual_error": "ERROR|JOINT両面/指定水位の水圧が一致しません。単純平均は行いません。|FEMJointWater",
+      "book_sha256": "1702746BB1C0351C59970F50A18A4A73F36F8B63AD7B1451B01E43D535AFC2E7"
+    },
+    "conflicting_heads": {
+      "status": "PASS",
+      "expected_error": "固定水頭が競合",
+      "fixture_sha256": "49849060E60CEB11A0239324457A23743DC4F69CCA48F56A3440485A8487C235",
+      "book_sha256": "1702746BB1C0351C59970F50A18A4A73F36F8B63AD7B1451B01E43D535AFC2E7",
+      "actual_error": "ERROR|水頭連続JOINTの固定水頭が競合しています。|FEMJointWater"
+    },
+    "wrong_soil_mode": {
+      "fixture_sha256": "E75209ED396CAFC592E4C87F2E325D2B776398A7B68992EE3F81C4CE3AAC28CB",
+      "expected_error": "SOILは地盤と構造体",
+      "actual_error": "ERROR|SOILは地盤と構造体の接合に使用します。両側地盤はCONTINUOUS、指定水域はPRESCRIBEDを選んでください。|FEMJointWater",
+      "status": "PASS",
+      "book_sha256": "1702746BB1C0351C59970F50A18A4A73F36F8B63AD7B1451B01E43D535AFC2E7"
+    }
+  },
+  "dry_joint_comparison": {
+    "status": "PASS",
+    "max_difference": {
+      "disp": 0.0,
+      "stress": 0.0,
+      "metrics": 0.0
+    },
+    "reference_seconds": 4.7819685,
+    "candidate_seconds": 4.9029638
+  },
+  "unchanged_groundwater": {
+    "box": {
+      "max_difference": {
+        "disp": 0.0,
+        "stress": 0.0,
+        "metrics": 0.0
+      },
+      "previous_seconds": 5.6564509,
+      "current_seconds": 4.9244937,
+      "dofs": 80,
+      "Fs": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "residual": 5.872459907741836e-15
+    },
+    "cutoff": {
+      "max_difference": {
+        "disp": 0.0,
+        "stress": 0.0,
+        "metrics": 0.0
+      },
+      "previous_seconds": 5.8907809,
+      "current_seconds": 5.0886509,
+      "dofs": 194,
+      "Fs": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "residual": 3.2657876496293527e-13
+    },
+    "stages": {
+      "max_difference": {
+        "disp": 0.0,
+        "stress": 0.0,
+        "metrics": 0.0
+      },
+      "previous_seconds": 6.6223544,
+      "current_seconds": 5.4959528,
+      "dofs": 42,
+      "Fs": [
+        1.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "residual": 1.3204293626788342e-13
+    },
+    "box_inside": {
+      "max_difference": {
+        "disp": 0.0,
+        "stress": 0.0,
+        "metrics": 0.0
+      },
+      "previous_seconds": 4.4928178,
+      "current_seconds": 4.9078924,
+      "dofs": 80,
+      "Fs": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "residual": 6.0889089395927955e-15
+    },
+    "separated": {
+      "max_difference": {
+        "disp": 0.0,
+        "stress": 0.0,
+        "metrics": 0.0
+      },
+      "previous_seconds": 4.6162295,
+      "current_seconds": 5.0172016,
+      "dofs": 194,
+      "Fs": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "residual": 1.0349449672344711e-13
+    },
+    "initial_birth": {
+      "max_difference": {
+        "disp": 0.0,
+        "stress": 0.0,
+        "metrics": 0.0
+      },
+      "previous_seconds": 4.7152984,
+      "current_seconds": 5.232641,
+      "dofs": 42,
+      "Fs": [
+        1.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "residual": 2.728978930226887e-15
+    },
+    "all_birth": {
+      "max_difference": {
+        "disp": 0.0,
+        "stress": 0.0,
+        "metrics": 0.0
+      },
+      "previous_seconds": 4.7150282,
+      "current_seconds": 5.2168838,
+      "dofs": 42,
+      "Fs": [
+        1.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "residual": 2.728978930226887e-15
+    },
+    "wet_srm": {
+      "max_difference": {
+        "disp": 0.0,
+        "stress": 0.0,
+        "metrics": 0.0
+      },
+      "previous_seconds": 137.5978232,
+      "current_seconds": 142.9586699,
+      "dofs": 170,
+      "Fs": [
+        1.5500000000000005,
+        1.5500000000000005,
+        1.5625000000000004,
+        0.012499999999999956
+      ],
+      "residual": 2.4831929803956774e-14
+    }
+  },
+  "legacy_comparison": [
+    {
+      "flow": "INCONSISTENT",
+      "suite": "smoke",
+      "case": "Case1",
+      "all_dofs": 170,
+      "max_du": 0,
+      "bracket": [
+        0.5,
+        0.0,
+        0.5,
+        0.0,
+        false,
+        1
+      ],
+      "residual": 9.44350930474515e-16,
+      "reference_seconds": 5.1924998,
+      "candidate_seconds": 5.231168
+    },
+    {
+      "flow": "INCONSISTENT",
+      "suite": "smoke",
+      "case": "Case2",
+      "all_dofs": 170,
+      "max_du": 0,
+      "bracket": [
+        1.1,
+        0.0,
+        1.1,
+        0.0,
+        false,
+        1
+      ],
+      "residual": 1.16074711137257e-13,
+      "reference_seconds": 1.8527494,
+      "candidate_seconds": 1.8970727
+    },
+    {
+      "flow": "INCONSISTENT",
+      "suite": "smoke",
+      "case": "Case3",
+      "all_dofs": 170,
+      "max_du": 0,
+      "bracket": [
+        0.9,
+        0.0,
+        0.9,
+        0.0,
+        false,
+        1
+      ],
+      "residual": 4.72993232520948e-12,
+      "reference_seconds": 1.8687561,
+      "candidate_seconds": 1.9762231
+    },
+    {
+      "flow": "INCONSISTENT",
+      "suite": "smoke",
+      "case": "Case4",
+      "all_dofs": 170,
+      "max_du": 0,
+      "bracket": [
+        2.0,
+        0.0,
+        2.0,
+        0.0,
+        false,
+        1
+      ],
+      "residual": 7.54343291524163e-10,
+      "reference_seconds": 1.7951435,
+      "candidate_seconds": 1.8664892
+    },
+    {
+      "flow": "INCONSISTENT",
+      "suite": "smokesrm",
+      "case": "Case2",
+      "all_dofs": 170,
+      "max_du": 0,
+      "bracket": [
+        1.5500000000000005,
+        1.5625000000000004,
+        1.5562500000000004,
+        0.012499999999999956,
+        true,
+        10
+      ],
+      "residual": 1.94279744827723e-09,
+      "reference_seconds": 20.988368,
+      "candidate_seconds": 21.548428
+    },
+    {
+      "flow": "DAVIS",
+      "suite": "smoke",
+      "case": "Case1",
+      "all_dofs": 170,
+      "max_du": 0,
+      "bracket": [
+        0.5,
+        0.0,
+        0.5,
+        0.0,
+        false,
+        1
+      ],
+      "residual": 1.04568594300454e-15,
+      "reference_seconds": 5.2103008,
+      "candidate_seconds": 5.313504
+    },
+    {
+      "flow": "DAVIS",
+      "suite": "smoke",
+      "case": "Case2",
+      "all_dofs": 170,
+      "max_du": 0,
+      "bracket": [
+        1.1,
+        0.0,
+        1.1,
+        0.0,
+        false,
+        1
+      ],
+      "residual": 2.71604079155516e-09,
+      "reference_seconds": 1.8935327,
+      "candidate_seconds": 1.9007896
+    },
+    {
+      "flow": "DAVIS",
+      "suite": "smoke",
+      "case": "Case3",
+      "all_dofs": 170,
+      "max_du": 0,
+      "bracket": [
+        0.9,
+        0.0,
+        0.9,
+        0.0,
+        false,
+        1
+      ],
+      "residual": 1.46030210111931e-09,
+      "reference_seconds": 1.8554438,
+      "candidate_seconds": 1.8671479
+    },
+    {
+      "flow": "DAVIS",
+      "suite": "smoke",
+      "case": "Case4",
+      "all_dofs": 170,
+      "max_du": 0,
+      "bracket": [
+        2.0,
+        0.0,
+        2.0,
+        0.0,
+        false,
+        1
+      ],
+      "residual": 1.66834088132905e-10,
+      "reference_seconds": 1.8357094,
+      "candidate_seconds": 1.8710381
+    },
+    {
+      "flow": "DAVIS",
+      "suite": "smokesrm",
+      "case": "Case2",
+      "all_dofs": 170,
+      "max_du": 0,
+      "bracket": [
+        1.4750000000000005,
+        1.4875000000000005,
+        1.4812500000000006,
+        0.012499999999999956,
+        true,
+        9
+      ],
+      "residual": 5.52749349515492e-08,
+      "reference_seconds": 5.9065882,
+      "candidate_seconds": 6.0338144
+    },
+    {
+      "case": "wet_OFF_AUTO",
+      "all_dofs": 170,
+      "max_du": 1.1102230246251565e-16,
+      "OFF_seconds": 5.5407079,
+      "AUTO_seconds": 5.6239741,
+      "OFF_residual": 4.977831080218133e-15,
+      "AUTO_residual": 4.495070717406178e-15
+    },
+    {
+      "case": "inside_water",
+      "Fy": 85.0,
+      "M": 127.49999999999997,
+      "Ry": 107.00000000000038
+    },
+    {
+      "case": "stages",
+      "seconds": 5.4959528,
+      "resume_seconds": 1.8320292,
+      "metrics": [
+        80.0,
+        3.2951419370874646e-13,
+        119.22660000000877,
+        1.3204293626788342e-13,
+        1.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "resume_metrics": [
+        80.0,
+        5.080380560684716e-13,
+        119.22660000000879,
+        1.387138622325935e-13,
+        1.0,
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "case": "initial_birth",
+      "seconds": 5.232641,
+      "resume_seconds": 1.856701,
+      "metrics": [
+        80.0,
+        -1.9539925233402755e-14,
+        99.6133,
+        2.728978930226887e-15,
+        1.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "resume_metrics": [
+        80.0,
+        8.881784197001252e-15,
+        99.61330000000054,
+        3.132347580882704e-14,
+        1.0,
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "case": "all_birth",
+      "seconds": 5.2168838,
+      "resume_seconds": 1.8302827,
+      "metrics": [
+        80.0,
+        -1.9539925233402755e-14,
+        99.6133,
+        2.728978930226887e-15,
+        1.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "resume_metrics": [
+        80.0,
+        8.881784197001252e-15,
+        99.61330000000054,
+        3.132347580882704e-14,
+        1.0,
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "case": "wet_srm",
+      "seconds": 142.9586699,
+      "resume_seconds": 2.3691699,
+      "metrics": [
+        3159.9999999999995,
+        5.684341886080802e-14,
+        3160.0000000000005,
+        2.4831929803956774e-14,
+        1.5500000000000005,
+        1.5500000000000005,
+        1.5625000000000004,
+        0.012499999999999956
+      ],
+      "resume_metrics": [
+        3159.9999999999995,
+        -3.936406756110955e-12,
+        3160.0000000000027,
+        2.882489676026334e-14,
+        1.55,
+        1.55,
+        1.5625,
+        0.0125
+      ]
+    }
+  ]
+}

@@ -12,24 +12,24 @@ Public Sub FEMUiPrepareInputs()
     found = False
     For Each p In Array("メッシュ設定", "解析設定", "高速化設定", "出力・表示", "詳細設定")
       With ThisWorkbook.Worksheets(CStr(p))
-        For r = 1 To .Cells(.rows.count, 6).End(xlUp).row
-          If UCase$(Trim$(CStr(.Cells(r, 6).value2))) = CStr(item) Then found = True: Exit For
+        For r = 1 To .cells(.rows.count, 6).End(xlUp).row
+          If UCase$(Trim$(CStr(.cells(r, 6).value2))) = CStr(item) Then found = True: Exit For
         Next r
       End With
       If found Then Exit For
     Next p
     If Not found Then
       legacyRow = 0
-      For r = 5 To legacy.Cells(legacy.rows.count, 5).End(xlUp).row
-        If UCase$(Trim$(CStr(legacy.Cells(r, 5).value2))) = CStr(item) Then legacyRow = r: Exit For
+      For r = 5 To legacy.cells(legacy.rows.count, 5).End(xlUp).row
+        If UCase$(Trim$(CStr(legacy.cells(r, 5).value2))) = CStr(item) Then legacyRow = r: Exit For
       Next r
       If legacyRow = 0 Then Err.Raise vbObjectError + 3830, "FEMUiPrepareInputs", "設定キーがありません: " & CStr(item)
-      targetRow = ws.Cells(ws.rows.count, 6).End(xlUp).row + 1
+      targetRow = ws.cells(ws.rows.count, 6).End(xlUp).row + 1
       If targetRow < 33 Then targetRow = 33
-      ws.Cells(targetRow, 2).value2 = legacy.Cells(legacyRow, 2).value2
-      ws.Cells(targetRow, 3).value2 = legacy.Cells(legacyRow, 3).value2
-      ws.Cells(targetRow, 5).value2 = legacy.Cells(legacyRow, 4).value2
-      ws.Cells(targetRow, 6).value2 = CStr(item)
+      ws.cells(targetRow, 2).value2 = legacy.cells(legacyRow, 2).value2
+      ws.cells(targetRow, 3).value2 = legacy.cells(legacyRow, 3).value2
+      ws.cells(targetRow, 5).value2 = legacy.cells(legacyRow, 4).value2
+      ws.cells(targetRow, 6).value2 = CStr(item)
     End If
   Next item
   FEMUiOrderRuntimePage ws, keys
@@ -39,24 +39,24 @@ Public Sub FEMUiPrepareInputs()
     ws.range("G7").value2 = "推奨・目安"
     ws.range("G7").Interior.Color = RGB(51, 69, 91): ws.range("G7").Font.Color = vbWhite
     ws.range("G7").Font.bOld = True
-    For r = 8 To ws.Cells(ws.rows.count, 6).End(xlUp).row
-      k = UCase$(Trim$(CStr(ws.Cells(r, 6).value2)))
+    For r = 8 To ws.cells(ws.rows.count, 6).End(xlUp).row
+      k = UCase$(Trim$(CStr(ws.cells(r, 6).value2)))
       If Len(k) > 0 Then
-        ws.Cells(r, 7).value2 = FEMUiRecommendation(k)
-        ws.Cells(r, 7).Font.Color = RGB(45, 100, 85)
-        ws.Cells(r, 7).Interior.Color = RGB(238, 245, 242)
-        ws.Cells(r, 7).WrapText = True
-        ws.Cells(r, 3).Interior.Color = RGB(255, 242, 204)
-        ws.Cells(r, 5).WrapText = True
+        ws.cells(r, 7).value2 = FEMUiRecommendation(k)
+        ws.cells(r, 7).Font.Color = RGB(45, 100, 85)
+        ws.cells(r, 7).Interior.Color = RGB(238, 245, 242)
+        ws.cells(r, 7).WrapText = True
+        ws.cells(r, 3).Interior.Color = RGB(255, 242, 204)
+        ws.cells(r, 5).WrapText = True
         If ws.rows(r).RowHeight < 48 Then ws.rows(r).RowHeight = 48
         If left$(k, 14) = "MESH_GEN_LAST_" Then
-          ws.Cells(r, 7).value2 = "自動出力"
-          ws.Cells(r, 3).Interior.Color = RGB(231, 237, 244)
+          ws.cells(r, 7).value2 = "自動出力"
+          ws.cells(r, 3).Interior.Color = RGB(231, 237, 244)
         End If
       End If
     Next r
     ws.range("B7:G7").RowHeight = 28
-    ws.PageSetup.PrintArea = "$B$2:$G$" & CStr(Application.Max(24, ws.Cells(ws.rows.count, 6).End(xlUp).row))
+    ws.PageSetup.PrintArea = "$B$2:$G$" & CStr(Application.Max(24, ws.cells(ws.rows.count, 6).End(xlUp).row))
     ws.PageSetup.Orientation = xlLandscape
     ws.PageSetup.Zoom = False: ws.PageSetup.FitToPagesWide = 1: ws.PageSetup.FitToPagesTall = False
   Next p
@@ -72,21 +72,21 @@ Public Sub FEMUiPrepareInputs()
 End Sub
 
 Public Sub FEMUiPreflightRuntimeLayout(ByVal ws As Worksheet)
-  Dim lastRow As Long, r As Long, k As String, planned As Object, nextRow As Long
-  Dim runtime As Variant, i As Long, sh As Worksheet, f As Range
+  Dim lastRow As Long, r As Long, k As String, planned As Object, NextRow As Long
+  Dim runtime As Variant, i As Long, sh As Worksheet, f As range
   runtime = Array("NATIVE_DLL", "NATIVE_PRECISION", "NATIVE_STATE_COPY", "NATIVE_ASSEMBLY", "NATIVE_GMRES_SIMD", "NATIVE_GMRES_TUNED", "NATIVE_GMRES_PREPARED", "IO_FAST_PATH", "EVENT_LOG_FAST")
   Set planned = CreateObject("Scripting.Dictionary"): planned.CompareMode = vbTextCompare
-  nextRow = 9
+  NextRow = 9
   For i = LBound(runtime) To UBound(runtime)
-    planned(CStr(runtime(i))) = nextRow: nextRow = nextRow + 1
+    planned(CStr(runtime(i))) = NextRow: NextRow = NextRow + 1
   Next i
-  nextRow = nextRow + 2
-  lastRow = ws.Cells(ws.Rows.Count, 6).End(xlUp).Row
+  NextRow = NextRow + 2
+  lastRow = ws.cells(ws.rows.count, 6).End(xlUp).row
   For r = 8 To lastRow
-    k = Trim$(CStr(ws.Cells(r, 6).Value2))
+    k = Trim$(CStr(ws.cells(r, 6).value2))
     If Len(k) > 0 Then
       If Not planned.Exists(k) Then
-        planned(k) = nextRow: nextRow = nextRow + 1
+        planned(k) = NextRow: NextRow = NextRow + 1
       End If
       If r <> CLng(planned(k)) Then GoTo RefuseIfFormula
     End If
@@ -97,19 +97,19 @@ RefuseIfFormula:
     Set f = Nothing
     On Error Resume Next: Set f = sh.UsedRange.SpecialCells(xlCellTypeFormulas): On Error GoTo 0
     If Not f Is Nothing Then Err.Raise vbObjectError + 3832, "FEMUiPreflightRuntimeLayout", _
-      "高速化設定を並べ替える前に停止しました。" & sh.Name & " に数式があります。バックアップを作成し、元の設定位置を手動で戻すか、COPY側の定数設定を使用してください。"
+      "高速化設定を並べ替える前に停止しました。" & sh.name & " に数式があります。バックアップを作成し、元の設定位置を手動で戻すか、COPY側の定数設定を使用してください。"
   Next sh
 End Sub
 
 Private Sub FEMUiOrderRuntimePage(ByVal ws As Worksheet, ByVal runtimeKeys As Variant)
   Dim entries As Object, k As Variant, r As Long, rowNo As Long, lastRow As Long, record As Variant
   Set entries = CreateObject("Scripting.Dictionary"): entries.CompareMode = vbTextCompare
-  lastRow = ws.Cells(ws.rows.count, 6).End(xlUp).row
+  lastRow = ws.cells(ws.rows.count, 6).End(xlUp).row
   For r = 8 To lastRow
-    k = Trim$(CStr(ws.Cells(r, 6).value2))
+    k = Trim$(CStr(ws.cells(r, 6).value2))
     If Len(k) > 0 Then
       If entries.Exists(CStr(k)) Then Err.Raise vbObjectError + 3831, "FEMUiOrderRuntimePage", "設定キーが重複しています: " & CStr(k)
-      entries.Add CStr(k), Array(ws.Cells(r, 2).value2, ws.Cells(r, 3).Formula, ws.Cells(r, 5).value2)
+      entries.Add CStr(k), Array(ws.cells(r, 2).value2, ws.cells(r, 3).formula, ws.cells(r, 5).value2)
     End If
   Next r
   ws.range("B8:G" & CStr(Application.Max(43, lastRow))).UnMerge
@@ -126,15 +126,15 @@ Private Sub FEMUiOrderRuntimePage(ByVal ws As Worksheet, ByVal runtimeKeys As Va
     If entries.Exists(CStr(k)) Then
       record = entries(CStr(k))
       FEMUiRuntimeRow ws, rowNo, CStr(k), record
-      entries.Remove CStr(k)
+      entries.REMOVE CStr(k)
     End If
   Next k
   rowNo = rowNo + 1
-  ws.range(ws.Cells(rowNo, 2), ws.Cells(rowNo, 5)).Merge
-  ws.Cells(rowNo, 2).value2 = "詳細・比較用：V方式（通常は現値を維持）"
-  ws.Cells(rowNo, 2).Interior.Color = RGB(231, 237, 244)
+  ws.range(ws.cells(rowNo, 2), ws.cells(rowNo, 5)).Merge
+  ws.cells(rowNo, 2).value2 = "詳細・比較用：V方式（通常は現値を維持）"
+  ws.cells(rowNo, 2).Interior.Color = RGB(231, 237, 244)
   rowNo = rowNo + 1
-  For Each k In entries.Keys
+  For Each k In entries.keys
     record = entries(CStr(k))
     FEMUiRuntimeRow ws, rowNo, CStr(k), record
   Next k
@@ -143,12 +143,12 @@ End Sub
 Private Sub FEMUiRuntimeRow(ByVal ws As Worksheet, ByRef rowNo As Long, ByVal k As String, ByVal record As Variant)
   Dim legacy As Worksheet, r As Long
   Set legacy = ThisWorkbook.Worksheets("設定")
-  ws.Cells(rowNo, 2).value2 = record(0)
-  ws.Cells(rowNo, 3).NumberFormat = "General": ws.Cells(rowNo, 3).Formula = record(1)
-  ws.Cells(rowNo, 5).value2 = record(2): ws.Cells(rowNo, 6).value2 = k
-  For r = 5 To legacy.Cells(legacy.rows.count, 5).End(xlUp).row
-    If CStr(legacy.Cells(r, 5).value2) = k Then
-      ws.Cells(rowNo, 5).value2 = legacy.Cells(r, 4).value2: Exit For
+  ws.cells(rowNo, 2).value2 = record(0)
+  ws.cells(rowNo, 3).NumberFormat = "General": ws.cells(rowNo, 3).formula = record(1)
+  ws.cells(rowNo, 5).value2 = record(2): ws.cells(rowNo, 6).value2 = k
+  For r = 5 To legacy.cells(legacy.rows.count, 5).End(xlUp).row
+    If CStr(legacy.cells(r, 5).value2) = k Then
+      ws.cells(rowNo, 5).value2 = legacy.cells(r, 4).value2: Exit For
     End If
   Next r
   rowNo = rowNo + 1
@@ -243,7 +243,7 @@ Public Sub FEMUiFinishInputs()
   Dim ws As Worksheet, shp As shape, target As range, item As Variant, rowNo As Long
   Set ws = ThisWorkbook.Worksheets("操作パネル")
   ws.range("B35").value2 = "計算版 " & FEM_BUILD_STAMP & " / 入出力画面 " & FEM_UI_STAMP
-  ws.Hyperlinks.Add Anchor:=ws.range("B14"), address:="", SubAddress:="'操作ガイド'!B2", TextToDisplay:="初めに：対応機能・手順・結果の読み方"
+  ws.Hyperlinks.Add anchor:=ws.range("B14"), address:="", SubAddress:="'操作ガイド'!B2", TextToDisplay:="初めに：対応機能・手順・結果の読み方"
   ws.range("B14").Font.size = 11
   ws.range("B37:H38").Merge: ws.range("B37").value2 = "結果を見る前に：入力を変えた場合は必ず再解析。配布時に残っている数値・図は前回計算の例で、現在の入力に対する結果ではありません。"
   ws.range("B37:H38").WrapText = True: ws.range("B37").Font.Color = RGB(140, 80, 30)
@@ -254,7 +254,7 @@ Public Sub FEMUiFinishInputs()
   Set shp = Nothing
   On Error Resume Next: Set shp = ws.Shapes("UI_RecommendedRuntime"): On Error GoTo 0
   If shp Is Nothing Then Set shp = ws.Shapes.AddShape(msoShapeRoundedRectangle, target.left, target.Top, target.width, target.Height)
-  shp.Left = target.Left: shp.Top = target.Top: shp.Width = target.Width: shp.Height = target.Height
+  shp.left = target.left: shp.Top = target.Top: shp.width = target.width: shp.Height = target.Height
   shp.name = "UI_RecommendedRuntime": shp.TextFrame2.TextRange.text = "DLL・I/Oだけ推奨値に戻す"
   shp.OnAction = "'" & Replace(ThisWorkbook.name, "'", "''") & "'!FEMUiApplyRecommendedRuntime"
   shp.fill.ForeColor.RGB = RGB(49, 91, 79): shp.line.Visible = msoFalse
@@ -263,7 +263,7 @@ Public Sub FEMUiFinishInputs()
   Set target = ws.range("B22:D23"): Set shp = Nothing
   On Error Resume Next: Set shp = ws.Shapes("UI_CheckSettings"): On Error GoTo 0
   If shp Is Nothing Then Set shp = ws.Shapes.AddShape(msoShapeRoundedRectangle, target.left, target.Top, target.width, target.Height)
-  shp.Left = target.Left: shp.Top = target.Top: shp.Width = target.Width: shp.Height = target.Height
+  shp.left = target.left: shp.Top = target.Top: shp.width = target.width: shp.Height = target.Height
   shp.name = "UI_CheckSettings": shp.TextFrame2.TextRange.text = "設定の形式・範囲をチェック"
   shp.OnAction = "'" & Replace(ThisWorkbook.name, "'", "''") & "'!FEMUiCheckSettings"
   shp.fill.ForeColor.RGB = RGB(49, 91, 79): shp.line.Visible = msoFalse
@@ -272,7 +272,7 @@ Public Sub FEMUiFinishInputs()
   Set target = ws.range("B43:D44"): Set shp = Nothing
   On Error Resume Next: Set shp = ws.Shapes("UI_ElementResults"): On Error GoTo 0
   If shp Is Nothing Then Set shp = ws.Shapes.AddShape(msoShapeRoundedRectangle, target.left, target.Top, target.width, target.Height)
-  shp.Left = target.Left: shp.Top = target.Top: shp.Width = target.Width: shp.Height = target.Height
+  shp.left = target.left: shp.Top = target.Top: shp.width = target.width: shp.Height = target.Height
   shp.name = "UI_ElementResults": shp.TextFrame2.TextRange.text = "要素の応力・ひずみ・塑性"
   shp.OnAction = "'" & Replace(ThisWorkbook.name, "'", "''") & "'!FEMUiShowElementResults"
   shp.fill.ForeColor.RGB = RGB(49, 91, 79): shp.line.Visible = msoFalse
@@ -305,12 +305,12 @@ Private Sub FEMUiWriteGuide()
     ws.name = "操作ガイド"
   End If
   ws.Unprotect
-  ws.Cells.Font.name = "Yu Gothic": ws.Cells.Font.size = 11
+  ws.cells.Font.name = "Yu Gothic": ws.cells.Font.size = 11
   ws.range("B2:E42").UnMerge: ws.range("B2:E42").ClearContents
   ws.columns("A").ColumnWidth = 3: ws.columns("B").ColumnWidth = 26: ws.columns("C:E").ColumnWidth = 28
   ws.range("B2:E2").Merge: ws.range("B2").value2 = "操作ガイド / できること・入出力"
   ws.range("B2").Font.size = 20: ws.range("B2").Font.bOld = True
-  ws.Hyperlinks.Add Anchor:=ws.range("B4"), address:="", SubAddress:="'操作パネル'!B2", TextToDisplay:="操作パネルへ戻る"
+  ws.Hyperlinks.Add anchor:=ws.range("B4"), address:="", SubAddress:="'操作パネル'!B2", TextToDisplay:="操作パネルへ戻る"
   sections = Array( _
     Array("1 材料・単位", "材料データ：E、ν、γ、c、φ、ψとSOIL/STRUCT/JOINTを確認。全シートで単位を統一（例 m・kN・kPa、角度deg）。物性・荷重に汎用の推奨値はありません。"), _
     Array("2 メッシュ・支持", "形状入力の座標・境界・格子間隔からメッシュを作成し、図で拘束と品質を確認。底面・側面支持はモデル依存。節点/要素を直接入力する操作も可能。"), _
@@ -325,12 +325,12 @@ Private Sub FEMUiWriteGuide()
     Array("品質修正・再メッシュ", "メッシュ品質修正、塑性域を使った再メッシュ候補の生成と採用が可能。採用後は再解析。品質角度などは形状に合わせる目標値で、材料の収束条件とは別です。"), _
     Array("対象外・注意", "浮力・水位・連成圧密は未対応（有効化は拒否）。JOINTのpsi≠0や履歴塑性すべりも未対応。既定値は設計の妥当性や収束を保証しません。"))
   For i = LBound(sections) To UBound(sections)
-    ws.Cells(6 + i * 2, 2).value2 = sections(i)(0)
-    ws.range(ws.Cells(6 + i * 2, 3), ws.Cells(7 + i * 2, 5)).Merge
-    ws.Cells(6 + i * 2, 3).value2 = sections(i)(1)
+    ws.cells(6 + i * 2, 2).value2 = sections(i)(0)
+    ws.range(ws.cells(6 + i * 2, 3), ws.cells(7 + i * 2, 5)).Merge
+    ws.cells(6 + i * 2, 3).value2 = sections(i)(1)
     ws.rows(CStr(6 + i * 2) & ":" & CStr(7 + i * 2)).RowHeight = 40
-    ws.Cells(6 + i * 2, 2).Font.bOld = True
-    ws.Cells(6 + i * 2, 2).Interior.Color = RGB(231, 237, 244)
+    ws.cells(6 + i * 2, 2).Font.bOld = True
+    ws.cells(6 + i * 2, 2).Interior.Color = RGB(231, 237, 244)
   Next i
   ws.range("B6:E29").WrapText = True: ws.range("B6:E29").VerticalAlignment = xlTop
   ws.range("B6:E29").Font.size = 11
@@ -350,5 +350,5 @@ Public Function FEMUiRefreshInputs() As String
   FEMWriteBuildStamp False
   FEMUiRefreshInputs = "PASS": Exit Function
 Failed:
-  FEMUiRefreshInputs = "ERROR|" & CStr(Err.Number) & "|" & Err.description
+  FEMUiRefreshInputs = "ERROR|" & CStr(Err.number) & "|" & Err.description
 End Function

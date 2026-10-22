@@ -1,0 +1,176 @@
+{
+  "status": "PASS",
+  "pages": 181,
+  "chapters": [
+    [
+      "1. この説明書について",
+      3
+    ],
+    [
+      "2. 必要なもの",
+      5
+    ],
+    [
+      "3. 画面構成",
+      6
+    ],
+    [
+      "4. 解析手順（例題を1回通す）",
+      8
+    ],
+    [
+      "5. 材料が2つ以上あるときの注意",
+      29
+    ],
+    [
+      "6. 拘束（支持条件）の決め方",
+      32
+    ],
+    [
+      "7. 計算の考え方",
+      36
+    ],
+    [
+      "8. 解析例1 材料の強さを変える（粘着力c）",
+      55
+    ],
+    [
+      "9. 解析例2 形状を変える（斜面を高くする）",
+      60
+    ],
+    [
+      "10. 解析例3 支持条件を変える（保存済みメッシュ）",
+      66
+    ],
+    [
+      "11. 解析例4 掘削と盛土（DEATH・BIRTH）",
+      73
+    ],
+    [
+      "12. 解析例5 荷重を加える（節点力FORCE）",
+      79
+    ],
+    [
+      "13. 解析例6 強制変位で押し込む（支持力）",
+      86
+    ],
+    [
+      "14. 解析例7 流れ則を変える（DAVIS）",
+      89
+    ],
+    [
+      "15. 解析例8 道路拡幅の11工程（盛土・掘削・MATSET・再盛土）",
+      96
+    ],
+    [
+      "16. 解析例9 L型擁壁と背面盛土・SRM、断面力の整理",
+      109
+    ],
+    [
+      "17. 解析例10 トンネルの段階掘削（保存メッシュを使う）",
+      117
+    ],
+    [
+      "18. 解析例11 接合（JOINT）で地盤とブロックの境目を表す",
+      123
+    ],
+    [
+      "19. 解析例11-B 接合面のすべり耐力を確かめる（強いブロック）",
+      131
+    ],
+    [
+      "20. 解析例12 アンカー相当力を加える（等大・反対向きの節点力）",
+      138
+    ],
+    [
+      "21. 解析例13 水平地盤と斜面上の支持力（保存メッシュ・追加沈下）",
+      143
+    ],
+    [
+      "22. 入力項目の説明",
+      150
+    ],
+    [
+      "23. 結果の見方",
+      156
+    ],
+    [
+      "24. よくあるエラーと対処",
+      160
+    ],
+    [
+      "25. 水条件と定常浸透（静水圧・浮力・固定水圧SRM）",
+      164
+    ],
+    [
+      "26. 付録",
+      176
+    ]
+  ],
+  "glossary_start": 178,
+  "preserved_chapters_from_3a1be89": [
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    23,
+    24
+  ],
+  "review_related_chapters": [
+    2,
+    3,
+    4,
+    22,
+    25
+  ],
+  "toc_links": 27,
+  "public_uris": [
+    {
+      "page": 5,
+      "uri": "https://github.com/tak063495-prog/excel-vba-soil-fem/raw/main/workbook/SoilFEM_UI_20261023.zip"
+    },
+    {
+      "page": 164,
+      "uri": "https://github.com/tak063495-prog/excel-vba-soil-fem/raw/3a1be89872e2e97b3e6f0bd1b3b7a58e11109389/docs/manuals/examples/groundwater_examples.zip"
+    },
+    {
+      "page": 168,
+      "uri": "https://github.com/tak063495-prog/excel-vba-soil-fem/raw/3a1be89872e2e97b3e6f0bd1b3b7a58e11109389/docs/manuals/examples/groundwater_examples.zip"
+    },
+    {
+      "page": 171,
+      "uri": "https://github.com/tak063495-prog/excel-vba-soil-fem/blob/3a1be89872e2e97b3e6f0bd1b3b7a58e11109389/docs/GROUNDWATER_VALIDATION.md"
+    },
+    {
+      "page": 171,
+      "uri": "https://github.com/tak063495-prog/excel-vba-soil-fem/blob/3a1be89872e2e97b3e6f0bd1b3b7a58e11109389/docs/groundwater-evidence/20261022/comparison.json"
+    },
+    {
+      "page": 174,
+      "uri": "https://github.com/tak063495-prog/excel-vba-soil-fem/blob/3a1be89872e2e97b3e6f0bd1b3b7a58e11109389/docs/JOINT_WATER_VALIDATION.md"
+    },
+    {
+      "page": 174,
+      "uri": "https://github.com/tak063495-prog/excel-vba-soil-fem/raw/3a1be89872e2e97b3e6f0bd1b3b7a58e11109389/docs/manuals/examples/joint_water_examples.zip"
+    }
+  ],
+  "local_uris": 0,
+  "link_conversion_regression": "PASS",
+  "all_pages_rendered": true,
+  "visual_review": "PASS: all 181 page renders reviewed in 10 contact sheets; cover/TOC, p5 and revised p164/171-174 reviewed at full size.",
+  "source_sha256": "4102445c01598230caef223e496d0de059e40b5df2a207b156d4a371b73e579c",
+  "pdf_sha256": "166eea445010e45c15e7c6344e797da5236efbc245c9b4bb45e623f012722ae1"
+}

@@ -1,0 +1,5 @@
+{
+  "status": "PASS",
+  "comparison": "reference A2:E100 vs packaged source22",
+  "unchanged": true
+}

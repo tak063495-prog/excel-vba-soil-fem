@@ -1,11 +1,13 @@
 # VBA版 2D Soil FEM
 
-## 入出力を整理した最新ブック（2026-10-21）
+## 入出力を整理した最新ブック（配布名20261023）
 
-[操作説明書（PDF・最新）](docs/manuals/2DSoilFEM_Manual_20261022_0428.pdf)／[原稿](docs/manuals/2DSoilFEM_Manual.md)
+[操作説明書（PDF・最新）](docs/manuals/2DSoilFEM_Manual_20261023_WATER_02.pdf)／[原稿](docs/manuals/2DSoilFEM_Manual.md)
 
-[一括ダウンロード（XLSM＋DLL 1個、ZIP）](workbook/SoilFEM_UI_20261022.zip)。
-最新版のファイル名は`2DSoilFEM_ui_20261022.xlsm`です（20261022_UI_06：「出力・表示」C18に塑性状態（弾性／現在降伏／過去に降伏）と累積塑性せん断ひずみの色図、シート「結果塑性」を追加。計算部・DLLは20261021版と同じ。[workbook/ui_20261022/README.txt](workbook/ui_20261022/README.txt)）。Excel 2016での画像エラーに対応するため、メッシュ・結果図はExcel標準図形で描画します。[修正・検証記録](docs/reviews/figure_excel2016_fix_20261021.md)。
+[一括ダウンロード（XLSM＋DLL 1個、ZIP）](workbook/SoilFEM_UI_20261023.zip)。
+最新版は`2DSoilFEM_ui_20261023.xlsm`です。配布名のみ変更し、計算識別は`20261022_WATER_02`、検証済み22版とブック・DLLはバイト一致です。[23版の確認とPDF訂正](docs/reviews/groundwater_release23_issue35.md)。`20261022_WATER_01`で水位折れ線、外水圧、空洞の内水位・浮力、飽和定常浸透→力学→固定水圧SRMを追加しました。`20261022_WATER_02`ではJOINTの地盤側水圧・水頭連続・指定水位と、接合F/G列・結果P:T列・移動ボタンを追加しました。[JOINTの検証](docs/JOINT_WATER_VALIDATION.md)。初期設定は水条件なし（NONE）です。[入力手順・出力・適用範囲](docs/GROUNDWATER.md)／[回帰・独立検算・全ログ](docs/GROUNDWATER_VALIDATION.md)を参照してください。DLLは従来と同じ1個です。
+
+UI_06の塑性状態・累積塑性せん断ひずみの色図と「結果塑性」シートも継承しています。Excel 2016での画像エラーに対応するため、メッシュ・結果図はExcel標準図形で描画します。[修正・検証記録](docs/reviews/figure_excel2016_fix_20261021.md)。
 画面版 `20261021_UI_05` は結果を内容名から選択でき、最大せん断ひずみ増分・塑性主ひずみ増分クロスを独立チェックで追加できます。A（等値線追加）を初期値とし、B（増分カラー）に切替可能です。増分図は新しい版で最初から再解析してください。
 UI_05では節点番号の入力規則、DISP=0の凡例、ゼロ局所変位時の塑性増分表示とクロスの赤青・矢印を修正しました。数式を含む設定の危険な再配置は変更前に停止します。[レビュー対応・検証範囲](docs/reviews/2DSoilFEM_manual_response_20261021.md)。
 [増分図の操作・定義・実計算の図・検証](docs/STRAIN_INCREMENT_DISPLAY.md)。UI_04時点の検証ではExcel全体コンパイル、保存・再表示とSRMのFs・全変位・残差・全診断CSVの完全一致を確認しました。

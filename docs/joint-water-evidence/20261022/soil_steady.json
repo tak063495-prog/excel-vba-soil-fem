@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "case": "joint_water_soil_steady",
+  "seconds": 4.9318733,
+  "effective_contact_kN": 27.99999999999997,
+  "water_support_kN": 20.000000000000007,
+  "total_contact_kN": 47.999999999999986,
+  "reaction_y_kN": 87.99999999999999,
+  "residual": 3.99020709552608e-15,
+  "Fs": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "max_head_error_m": 6.661338147750939e-16,
+  "max_flux_error_m_s": 1.6573114408613423e-20,
+  "resume": {
+    "max_du_m": 4.764560328305439e-22,
+    "max_physical_stress_error_kPa": 9.78772618509538e-13,
+    "residual": 3.209159250858739e-14,
+    "seconds": 2.1401015
+  },
+  "tangent": [],
+  "fluid_exact": {}
+}

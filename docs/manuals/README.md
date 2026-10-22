@@ -1,6 +1,10 @@
 # 操作説明書
 
-**最新：[2DSoilFEM_Manual_20261022_0428.pdf](2DSoilFEM_Manual_20261022_0428.pdf)（137ページ、表紙・しおり・ページ番号・目次リンク付き）**（前版 2DSoilFEM_Manual_20261021_2156.pdf も残しています）／原稿 [2DSoilFEM_Manual.md](2DSoilFEM_Manual.md)／作成 `python3 build_manual_pdf_v2.py 2DSoilFEM_Manual.md 出力.pdf`／計算例のブックとログは [examples/README.md](examples/README.md)。
+**最新：[2DSoilFEM_Manual_20261023_WATER_02.pdf](2DSoilFEM_Manual_20261023_WATER_02.pdf)（181ページ、表紙・しおり・ページ番号・目次リンク付き）**（従来の170ページ版 [0751版](2DSoilFEM_Manual_20261022_0751.pdf) も保持）／原稿 [2DSoilFEM_Manual.md](2DSoilFEM_Manual.md)／作成 `python3 build_manual_pdf_v2.py 2DSoilFEM_Manual.md 出力.pdf`／計算例のブックとログは [examples/README.md](examples/README.md)。
+
+第25章（164～175ページ）の水条件説明に、25.9節として接合面JOINTの水圧入力・結果表・実計算の合力比較を加えました。SOIL／CONTINUOUS／PRESCRIBED、接触力と水圧の分担、部分湿潤時の積分、工程・SRM・保存再開の扱いを説明します。Issue #35の配布先・材料と重量・未計算水頭0・JOINT実習と向きの説明を補訂しました。変更不要の第5～21・23・24章の本文は前版から保持しています。付録は第26章（176ページ）、用語集は巻末178～181ページです。[訂正対応と確認](../reviews/groundwater_release23_issue35.md)。前版[WATER_02・178ページ版](2DSoilFEM_Manual_20261022_WATER_02.pdf)も保持します。
+
+[JOINT入力済み例題14冊](examples/joint_water_examples.zip)／[JOINT検算・全ログ・受入一覧](../JOINT_WATER_VALIDATION.md)／[本文保持とPDF確認](../joint-water-evidence/20261022/manual_checks.json)。地下水の[入力済み例題](examples/groundwater_examples.zip)と[従来の検証](../GROUNDWATER_VALIDATION.md)、[WATER_01・176ページ版](2DSoilFEM_Manual_20261022_WATER_01.pdf)も保持します。
 
 旧版の詳細操作説明書（122ページ）は下に残しています。
 

@@ -1,0 +1,80 @@
+{
+  "status": "PASS",
+  "cases": {
+    "wet": {
+      "status": "PASS",
+      "comparisons": [
+        {
+          "phase": "result.json",
+          "max_difference": {
+            "disp": 0.0,
+            "stress": 0.0,
+            "metrics": 0.0
+          },
+          "seconds": 4.9212427
+        },
+        {
+          "phase": "resume.json",
+          "max_difference": {
+            "disp": 0.0,
+            "stress": 0.0,
+            "metrics": 0.0
+          },
+          "seconds": 1.7936879
+        }
+      ],
+      "initial_perf_rows": 1,
+      "initial_log_path": "wet/initial_run_logs/joint_water_wet_out/perf_summary.csv"
+    },
+    "stages": {
+      "status": "PASS",
+      "comparisons": [
+        {
+          "phase": "result.json",
+          "max_difference": {
+            "disp": 0.0,
+            "stress": 0.0,
+            "metrics": 0.0
+          },
+          "seconds": 5.2119248
+        },
+        {
+          "phase": "resume.json",
+          "max_difference": {
+            "disp": 0.0,
+            "stress": 0.0,
+            "metrics": 0.0
+          },
+          "seconds": 1.8109171
+        }
+      ],
+      "initial_perf_rows": 1,
+      "initial_log_path": "stages/initial_run_logs/joint_water_stages_out/perf_summary.csv"
+    },
+    "wet_srm": {
+      "status": "PASS",
+      "comparisons": [
+        {
+          "phase": "result.json",
+          "max_difference": {
+            "disp": 0.0,
+            "stress": 0.0,
+            "metrics": 0.0
+          },
+          "seconds": 144.2555098
+        },
+        {
+          "phase": "resume.json",
+          "max_difference": {
+            "disp": 0.0,
+            "stress": 0.0,
+            "metrics": 0.0
+          },
+          "seconds": 2.3148837
+        }
+      ],
+      "initial_perf_rows": 11,
+      "initial_log_path": "wet_srm/initial_run_logs/groundwater_slope_low_srm_out/perf_summary.csv"
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "status": "PASS",
+  "actions": [
+    {
+      "status": "PASS",
+      "sheet": "水条件",
+      "action": "input",
+      "shapes": 3
+    },
+    {
+      "status": "PASS",
+      "sheet": "図",
+      "action": "stress",
+      "shapes": 3
+    },
+    {
+      "status": "PASS",
+      "sheet": "水圧確認",
+      "action": "preview",
+      "shapes": 141
+    },
+    {
+      "status": "PASS",
+      "sheet": "図",
+      "action": "mesh",
+      "shapes": 3
+    },
+    {
+      "status": "PASS",
+      "sheet": "図",
+      "action": "stress",
+      "shapes": 3
+    },
+    {
+      "status": "PASS",
+      "sheet": "水圧結果",
+      "action": "reopen",
+      "shapes": 141
+    },
+    {
+      "status": "ERROR|入力が変更されています。再解析してください。",
+      "sheet": "水圧結果",
+      "action": "stale",
+      "shapes": 141
+    },
+    {
+      "status": "PASS",
+      "sheet": "水圧結果",
+      "action": "quit",
+      "shapes": 141
+    }
+  ],
+  "note": "Normal UI preview mode; test harness silent progress logging disabled during preview. Screenshots are real Excel16.0 build20430; Excel2016 license edition not separately certified."
+}

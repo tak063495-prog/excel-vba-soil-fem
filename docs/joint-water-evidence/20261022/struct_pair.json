@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "case": "joint_water_struct_pair",
+  "seconds": 4.9487712,
+  "effective_contact_kN": 27.99999999999998,
+  "water_support_kN": 20.0,
+  "total_contact_kN": 47.999999999999986,
+  "reaction_y_kN": 87.99999999999997,
+  "residual": 1.9506011356135945e-15,
+  "Fs": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "max_head_error_m": 0.0,
+  "max_flux_error_m_s": 0.0,
+  "resume": {
+    "max_du_m": 4.499862532288471e-22,
+    "max_physical_stress_error_kPa": 6.252776074688882e-13,
+    "residual": 2.5986785676975387e-14,
+    "seconds": 1.8941554
+  },
+  "tangent": [],
+  "fluid_exact": {}
+}

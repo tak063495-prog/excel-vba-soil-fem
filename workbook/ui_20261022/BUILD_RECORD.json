@@ -1,45 +1,70 @@
 {
-  "ui_stamp": "20261022_UI_06",
-  "calculation_stamp": "20261020_INCO_ELEMENT_01",
-  "base_workbook": "workbook/ui_20261020/2DSoilFEM_ui_20261021.xlsm",
-  "base_sha256": "ee761e2dbd9e84a57de1c9d7d1b3cbb1237785e771faddd9edef5e85e087cfe9",
-  "build": "copy of base + replace 4 modules after checking embedded code == previous src (upd.ps1)",
+  "build": "20261022_WATER_02",
+  "base_commit": "abc79d386536d2f41cfc9446611344b6d7ba31ec",
+  "main_at_start": "a44424711dc5cc25f2e6bbb5209d9fe35b4dcfc8",
+  "scope": "Existing UI_06 features retained; static water/steady seepage to mechanics and wet JOINT input/output; fully resumed ALL output recovers final mechanical tables.",
   "compile": "PASS",
-  "scope": "display only: plastic state / cumulative plastic shear strain colouring, sheet 結果塑性; solver unchanged",
-  "source_modules": [
-    {
-      "name": "FEMPlasticLog",
-      "sha256": "86494b31ce77e3cba47519436697b3ab30a053f30033d9ccdc4497611056076e"
-    },
-    {
-      "name": "FEMViewIncrement",
-      "sha256": "05b6c389c56fa545975b49460e1266d0fb405283f085acdbf55767ab6e433826"
-    },
-    {
-      "name": "FEMViewer",
-      "sha256": "63d6fcfb5e416da525191e1b6350c4f7968bf7dbb0de60e4eb1ec3531a0ae3d1"
-    },
-    {
-      "name": "FEMResultOptions",
-      "sha256": "959822f797a6ae378674f731e29327fa284870276275f88c80052c587efe9689"
-    }
+  "source_verification": "31 updated modules exact before save and after reopen",
+  "canonical_inputs_unchanged": [
+    "形状入力",
+    "載荷",
+    "ステージ",
+    "節点データ",
+    "材料データ",
+    "要素データ"
   ],
+  "defaults": [
+    "NONE",
+    9.80665,
+    "外水",
+    "AUTO"
+  ],
+  "excel_version": "16.0",
+  "excel_build": 20430.0,
+  "modules": [
+    "CONTROL",
+    "FEM",
+    "FEMCore",
+    "FEMSolver",
+    "FEMIo",
+    "FEMEngine",
+    "FEMNative",
+    "FEMNativeMat",
+    "FEMNativeKern",
+    "FEMUiInputs",
+    "FEMUiValidation",
+    "FEMUiLayout",
+    "FEMUi",
+    "FEMViewer",
+    "FEMNativeFigure",
+    "ThisWorkbook",
+    "FEMUiMeshWorkflow",
+    "FEMUiGeometry",
+    "FEMPractical",
+    "MeshAdapt",
+    "FEMResultOptions",
+    "FEMStrainMath",
+    "FEMViewIncrement",
+    "FEMIncrementSvg",
+    "FEMWater",
+    "FEMSeepage",
+    "FEMWaterUi",
+    "FEMWaterGeometry",
+    "FEMWaterView",
+    "FEMSeepageFlux",
+    "FEMJointWater"
+  ],
+  "evidence": "docs/JOINT_WATER_VALIDATION.md",
   "files": [
     {
       "name": "2DSoilFEM_ui_20261022.xlsm",
-      "bytes": 3286027,
-      "sha256": "f33282e599c4fbebe66a6463500338ec9b9209e39cb48fb42043b796fee92d17"
+      "bytes": 3519130,
+      "sha256": "1702746bb1c0351c59970f50a18a4a73f36f8b63ad7b1451b01e43d535afc2e7"
     },
     {
       "name": "soilfem_native_x64.dll",
       "bytes": 170496,
       "sha256": "ad5c2ae81512ba8e977002415a6a5339b621c00a1bbabe5092559f8a7f9e0797"
-    },
-    {
-      "name": "README.txt",
-      "bytes": 1644,
-      "sha256": "055b26f913870b7c8ab0f81b183a3a770711ba315c92cda2ae2eb8d8085db9eb"
     }
-  ],
-  "regression": "docs/manuals/construction-evidence/20261022/plastic-state (ex02 old vs new: stage/elements/nodes identical)"
+  ]
 }

@@ -89,8 +89,8 @@ Public Type Element_Data '要素データ
   u(15) As Double '自由度×8個
   MatNo As Long  '材料番号
   area As Double    '面積
-  ElNode(15) As Long '自由度×8個
-  Bmat(2, 15, 3) As Double 'B行列
+  elnode(15) As Long '自由度×8個
+  bMat(2, 15, 3) As Double 'B行列
   Smat(2, 15, 3) As Double 'S行列
   Spmat(2, 15, 3) As Double 'S行列
   Mfai As Double
@@ -143,7 +143,7 @@ Public NAB As Long '節点配列の最終添え字
 Public x() As Double '節点X座標
 Public y() As Double  '節点Y座標
 Public XXX() As Double
-Public Force() As Double '節点外力
+Public force() As Double '節点外力
 Public Disp() As Double  '節点変位
 Public nmn As Long
 Public ESRR As Double
@@ -254,7 +254,7 @@ Public P3FailureLinearResidual As Double
 Public P3FailureCorrection As Double
 Public P3FailurePlasticPoints As Long
 Public P3FailureMaxDisp As Double
-Public Const FEM_BUILD_STAMP As String = "20261020_INCO_ELEMENT_01"
+Public Const FEM_BUILD_STAMP As String = "20261022_WATER_02"
 Public Const P1_FORMULATION_PLANE_STRESS As String = "PLANE_STRESS_2D"
 Public Const P1_FORMULATION_PLANE_STRAIN As String = "PLANE_STRAIN_2D"
 Public Const P1_RESULT_COUNT As Long = 22
@@ -1122,12 +1122,12 @@ Public Function P6ElasticWeightCacheUsable() As Boolean
     P6ElasticWeightCacheUsable = False
     If Not P6ElasticWeightCacheReady Then Exit Function
     If P6ElasticKCacheElementCount < 1 Then Exit Function
-    On Error GoTo Fail
-    If LBound(P6ElasticElementWeightCache) <> 0 Then GoTo Fail
-    If UBound(P6ElasticElementWeightCache) <> P6ElasticKCacheElementCount - 1 Then GoTo Fail
+    On Error GoTo fail
+    If LBound(P6ElasticElementWeightCache) <> 0 Then GoTo fail
+    If UBound(P6ElasticElementWeightCache) <> P6ElasticKCacheElementCount - 1 Then GoTo fail
     P6ElasticWeightCacheUsable = True
     Exit Function
-Fail:
+fail:
     P6ElasticWeightCacheReady = False
     P6ElasticWeightCacheUsable = False
 End Function
