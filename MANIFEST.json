@@ -1011,8 +1011,8 @@
   },
   {
     "path": "docs/manuals/2DSoilFEM_Manual_20261023_WATER_02.pdf",
-    "bytes": 18948455,
-    "sha256": "c9a6900d37444d0898c5293f6ef54f55fdca9bccf223917d557dd91d25fadfcb"
+    "bytes": 19827690,
+    "sha256": "c5158dbfb842da5ce9590038db6a910ae8f5c8ead558febfceef2ce5c9ea698d"
   },
   {
     "path": "docs/manuals/README.md",
@@ -9428,6 +9428,16 @@
     "path": "docs/water-display-evidence/20261023/page_mapping.json",
     "bytes": 5496,
     "sha256": "d6ab5dfbfed91b0f6401a43dc206588044cf5b8839ce818cad84d17afc67fe69"
+  },
+  {
+    "path": "docs/water-display-evidence/20261023/pdf_checks.json",
+    "bytes": 3952,
+    "sha256": "194ffae8aebf969f058105f64d2201e42f096797a2a95e5aaa70e746536d7a47"
+  },
+  {
+    "path": "docs/water-display-evidence/20261023/pdf_visual_review.zip",
+    "bytes": 14104558,
+    "sha256": "0769ffe9102c46a74a3200459c0203ccfdff4e841d8f2fd0ab3149de4f8812c5"
   },
   {
     "path": "docs/water-display-evidence/20261023/plot_mapping_checks.json",
