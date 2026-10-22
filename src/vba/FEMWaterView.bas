@@ -12,7 +12,7 @@ Public Sub GWDrawWaterView(ByVal ws As Worksheet, ByRef pressures() As Double, B
   ReDim nodeX(0 To NumberOfFreeNode - 1): ReDim nodeY(0 To NumberOfFreeNode - 1): ReDim haveNode(0 To NumberOfFreeNode - 1)
   maxP = 0#: maxF = 0#: shapeCount = 0
   For e = 0 To NumberOfElement - 1
-    If P3IsElementActive(e) Then
+    If P3IsElementActive(e) And Not Elem(e).IsJoint Then
       shapeCount = shapeCount + 5
       For i = 0 To 7
         n = Elem(e).node(i)
@@ -69,11 +69,11 @@ Public Sub GWDrawWaterView(ByVal ws As Worksheet, ByRef pressures() As Double, B
   Set sh = ws.Shapes.AddTextbox(msoTextOrientationHorizontal, x0, ws.range("A8").Top - 25#, 680#, 22#)
   sh.name = "GW_VIEW_TITLE": sh.TextFrame2.TextRange.text = titleText & "  (水圧・等価節点荷重)" & sampleNote
   For e = 0 To NumberOfElement - 1
-    If P3IsElementActive(e) And e Mod drawStride = 0 Then GWDrawElement ws, e, x0, y0, sx, sy, minX, minY
+    If P3IsElementActive(e) And Not Elem(e).IsJoint And e Mod drawStride = 0 Then GWDrawElement ws, e, x0, y0, sx, sy, minX, minY
   Next e
   GWDrawProfiles ws, x0, y0, sx, sy, minX, minY
   For e = 0 To NumberOfElement - 1
-    If P3IsElementActive(e) Then
+    If P3IsElementActive(e) And Not Elem(e).IsJoint Then
       For g = 0 To 3
         If e Mod drawStride <> 0 Then Exit For
         FEMGaussPhysicalXY e, g, px, py

@@ -15,6 +15,8 @@ Public Sub FEMWaterInstallUi()
   FEMWaterButton ws, "GW_UI_INPUT", "入力へ", "FEMWaterShowInputs", 8, 3
   FEMWaterButton ws, "GW_UI_PREVIEW", "水圧プレビュー", "FEMWaterPreview", 8, 5
   FEMWaterButton ws, "GW_UI_RESULTS", "水圧結果", "FEMWaterResults", 8, 7
+  FEMWaterButton ws, "GW_UI_JOINT_INPUT", "接合の水圧入力", "FEMWaterShowJointInput", 4, 3
+  FEMWaterButton ws, "GW_UI_JOINT_RESULTS", "接合の水圧結果", "FEMWaterShowJointResults", 4, 5
   ws.columns("A:J").ColumnWidth = 18
   ws.columns("A").ColumnWidth = 30
   ws.range("A8:J9").Merge
@@ -109,4 +111,29 @@ Private Sub FEMWaterLink(ByVal destination As String, ByVal source As String, By
   On Error Resume Next: anchor.Hyperlinks.Delete: On Error GoTo 0
   ws.Hyperlinks.Add anchor:=anchor, address:="", SubAddress:="'" & source & "'!" & cellAddress, TextToDisplay:=caption
   If wasProtected Then ws.Protect UserInterfaceOnly:=True, DrawingObjects:=False
+End Sub
+
+Public Sub FEMWaterShowJointInput()
+  FEMEnsureStageSheets
+  ThisWorkbook.Worksheets("接合").Activate
+  Application.Goto ThisWorkbook.Worksheets("接合").range("A1"), True
+End Sub
+
+Public Sub FEMWaterShowJointResults()
+  Dim ws As Worksheet
+  On Error GoTo MissingResult
+  If Not GWEnabled() Then Err.Raise vbObjectError + 7912, , "水条件が無効です。通常の接合結果を使用してください。"
+  Set ws = FEMWaterSheet("水圧結果", False)
+  If CStr(ws.range("R5").value2) <> GWInputSignature() Then Err.Raise vbObjectError + 7912, , "入力が変更されています。再解析してください。"
+  If ThisWorkbook.names("_FEMViewerResultsDirty").RefersTo = "=TRUE" Then Err.Raise vbObjectError + 7912, , "計算結果が古くなっています。再解析してください。"
+  Set ws = ThisWorkbook.Worksheets("接合結果")
+  If Not IsNumeric(ws.range("A2").value2) Or Len(CStr(ws.range("A2").value2)) = 0 Then Err.Raise vbObjectError + 7912, , "接合結果がありません。"
+  ws.Activate
+  ActiveWindow.FreezePanes = False: ActiveWindow.SplitColumn = 4: ActiveWindow.SplitRow = 1: ActiveWindow.FreezePanes = True
+  ws.columns("A:D").ColumnWidth = 9
+  Application.Goto ws.range("P1"), True
+  Exit Sub
+MissingResult:
+  If SuppressUserMessages Then Err.Raise Err.number, "FEMWaterShowJointResults", Err.description
+  MsgBox "受理した接合水圧結果を表示できません。" & Err.description, vbExclamation
 End Sub

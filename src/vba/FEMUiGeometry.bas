@@ -17,22 +17,22 @@ Public Sub FEMUiBuildGeometry()
   Set outerSeen = CreateObject("Scripting.Dictionary"): Set innerSeen = CreateObject("Scripting.Dictionary")
   Set nativeIds = CreateObject("Scripting.Dictionary")
   Set outerIds = New Collection: Set innerIds = New Collection: Set boundaries = New Collection
-  lastRow = Application.Max(sourcePage.Cells(sourcePage.rows.count, 2).End(xlUp).row, sourcePage.Cells(sourcePage.rows.count, 3).End(xlUp).row, sourcePage.Cells(sourcePage.rows.count, 4).End(xlUp).row)
+  lastRow = Application.Max(sourcePage.cells(sourcePage.rows.count, 2).End(xlUp).row, sourcePage.cells(sourcePage.rows.count, 3).End(xlUp).row, sourcePage.cells(sourcePage.rows.count, 4).End(xlUp).row)
   For r = 8 To lastRow
-    If Len(Trim$(CStr(sourcePage.Cells(r, 2).value2))) + Len(Trim$(CStr(sourcePage.Cells(r, 3).value2))) + Len(Trim$(CStr(sourcePage.Cells(r, 4).value2))) > 0 Then
-      id = UIGeometryInteger(sourcePage.Cells(r, 2).value2, "座標表の節点番号（行" & CStr(r) & "）")
+    If Len(Trim$(CStr(sourcePage.cells(r, 2).value2))) + Len(Trim$(CStr(sourcePage.cells(r, 3).value2))) + Len(Trim$(CStr(sourcePage.cells(r, 4).value2))) > 0 Then
+      id = UIGeometryInteger(sourcePage.cells(r, 2).value2, "座標表の節点番号（行" & CStr(r) & "）")
       If coords.Exists(CStr(id)) Then Err.Raise vbObjectError + 3890, "FEMUiBuildGeometry", "座標表の節点番号が重複しています: " & CStr(id)
-      If Not IsNumeric(sourcePage.Cells(r, 3).value2) Or Not IsNumeric(sourcePage.Cells(r, 4).value2) Then Err.Raise vbObjectError + 3890, "FEMUiBuildGeometry", "X/Y座標は数値で入力してください（行" & CStr(r) & "）。"
-      If Len(CStr(sourcePage.Cells(r, 3).value2)) = 0 Or Len(CStr(sourcePage.Cells(r, 4).value2)) = 0 Then Err.Raise vbObjectError + 3890, "FEMUiBuildGeometry", "X/Y座標が未入力です（行" & CStr(r) & "）。"
-      coords.Add CStr(id), Array(CDbl(sourcePage.Cells(r, 3).value2), CDbl(sourcePage.Cells(r, 4).value2))
+      If Not IsNumeric(sourcePage.cells(r, 3).value2) Or Not IsNumeric(sourcePage.cells(r, 4).value2) Then Err.Raise vbObjectError + 3890, "FEMUiBuildGeometry", "X/Y座標は数値で入力してください（行" & CStr(r) & "）。"
+      If Len(CStr(sourcePage.cells(r, 3).value2)) = 0 Or Len(CStr(sourcePage.cells(r, 4).value2)) = 0 Then Err.Raise vbObjectError + 3890, "FEMUiBuildGeometry", "X/Y座標が未入力です（行" & CStr(r) & "）。"
+      coords.Add CStr(id), Array(CDbl(sourcePage.cells(r, 3).value2), CDbl(sourcePage.cells(r, 4).value2))
     End If
   Next r
   If coords.count < 3 Or coords.count > 60000 Then Err.Raise vbObjectError + 3890, "FEMUiBuildGeometry", "形状の節点は3～60000点で入力してください。"
-  lastRow = Application.Max(sourcePage.Cells(sourcePage.rows.count, 8).End(xlUp).row, sourcePage.Cells(sourcePage.rows.count, 9).End(xlUp).row, sourcePage.Cells(sourcePage.rows.count, 10).End(xlUp).row)
+  lastRow = Application.Max(sourcePage.cells(sourcePage.rows.count, 8).End(xlUp).row, sourcePage.cells(sourcePage.rows.count, 9).End(xlUp).row, sourcePage.cells(sourcePage.rows.count, 10).End(xlUp).row)
   For r = 8 To lastRow
-    kind = Trim$(CStr(sourcePage.Cells(r, 8).value2))
-    sequence = Replace(Replace(Trim$(CStr(sourcePage.Cells(r, 9).value2)), " ", ""), "、", ",")
-    If Len(kind) + Len(sequence) + Len(CStr(sourcePage.Cells(r, 10).value2)) > 0 Then
+    kind = Trim$(CStr(sourcePage.cells(r, 8).value2))
+    sequence = Replace(Replace(Trim$(CStr(sourcePage.cells(r, 9).value2)), " ", ""), "、", ",")
+    If Len(kind) + Len(sequence) + Len(CStr(sourcePage.cells(r, 10).value2)) > 0 Then
       If kind = "外側" Or UCase$(kind) = "OUTER" Then
         kind = "OUTER": outerCount = outerCount + 1
       ElseIf kind = "内側" Or UCase$(kind) = "INNER" Then
@@ -43,8 +43,8 @@ Public Sub FEMUiBuildGeometry()
       tokens = Split(sequence, ",")
       count = UBound(tokens) - LBound(tokens) + 1
       If count < 3 Or count > 1999 Then Err.Raise vbObjectError + 3890, "FEMUiBuildGeometry", "境界の節点順は3～1999点をカンマで区切って入力してください。"
-      If Not IsNumeric(sourcePage.Cells(r, 10).value2) Then Err.Raise vbObjectError + 3890, "FEMUiBuildGeometry", "格子間隔は正の数値で入力してください。"
-      spacing = CDbl(sourcePage.Cells(r, 10).value2)
+      If Not IsNumeric(sourcePage.cells(r, 10).value2) Then Err.Raise vbObjectError + 3890, "FEMUiBuildGeometry", "格子間隔は正の数値で入力してください。"
+      spacing = CDbl(sourcePage.cells(r, 10).value2)
       If spacing <= 0# Then Err.Raise vbObjectError + 3890, "FEMUiBuildGeometry", "格子間隔は0より大きい値にしてください。"
       Dim boundarySeen As Object
       Set boundarySeen = CreateObject("Scripting.Dictionary")
@@ -64,7 +64,7 @@ Public Sub FEMUiBuildGeometry()
     End If
   Next r
   If outerCount < 1 Or outerCount > 21 Then Err.Raise vbObjectError + 3890, "FEMUiBuildGeometry", "外側境界は1～21行で入力してください。"
-  For Each key In coords.Keys
+  For Each key In coords.keys
     If Not allSeen.Exists(CStr(key)) Then Err.Raise vbObjectError + 3890, "FEMUiBuildGeometry", "境界の節点順に含まれていない座標があります: " & CStr(key)
     If outerSeen.Exists(CStr(key)) And innerSeen.Exists(CStr(key)) Then Err.Raise vbObjectError + 3890, "FEMUiBuildGeometry", "外側境界と内側境界で同じ節点を共有できません: " & CStr(key)
   Next key
@@ -84,36 +84,36 @@ Public Sub FEMUiBuildGeometry()
   eventsSaved = Application.EnableEvents
   On Error GoTo Failed
   Application.EnableEvents = False
-  rowLimit = Application.Max(24 + CLng(Val(legacyPage.Cells(24, 4).value2)), 24 + innerCount)
-  lastRow = legacyPage.Cells(legacyPage.rows.count, 1).End(xlUp).row
-  If lastRow >= 2 Then legacyPage.range(legacyPage.Cells(2, 1), legacyPage.Cells(lastRow, 3)).ClearContents
-  legacyPage.range(legacyPage.Cells(3, 4), legacyPage.Cells(rowLimit, 2005)).ClearContents
+  rowLimit = Application.Max(24 + CLng(val(legacyPage.cells(24, 4).value2)), 24 + innerCount)
+  lastRow = legacyPage.cells(legacyPage.rows.count, 1).End(xlUp).row
+  If lastRow >= 2 Then legacyPage.range(legacyPage.cells(2, 1), legacyPage.cells(lastRow, 3)).ClearContents
+  legacyPage.range(legacyPage.cells(3, 4), legacyPage.cells(rowLimit, 2005)).ClearContents
   legacyPage.range("A1:C1").value2 = Array("No", "X", "Y")
-  legacyPage.range(legacyPage.Cells(2, 1), legacyPage.Cells(coords.count + 1, 3)).value2 = pointData
-  legacyPage.Cells(1, 7).value2 = "外側境界の節点数": legacyPage.Cells(1, 8).value2 = outerIds.count
-  legacyPage.Cells(1, 9).value2 = "内部境界の節点数": legacyPage.Cells(1, 10).value2 = innerIds.count
-  legacyPage.Cells(1, 11).value2 = "座標総数": legacyPage.Cells(1, 12).value2 = coords.count
-  legacyPage.Cells(1, 13).value2 = "境界平均間隔"
-  legacyPage.Cells(2, 5).value2 = "境界節点数": legacyPage.Cells(2, 6).value2 = "格子間隔"
-  legacyPage.Cells(3, 4).value2 = outerCount: legacyPage.Cells(24, 4).value2 = innerCount
+  legacyPage.range(legacyPage.cells(2, 1), legacyPage.cells(coords.count + 1, 3)).value2 = pointData
+  legacyPage.cells(1, 7).value2 = "外側境界の節点数": legacyPage.cells(1, 8).value2 = outerIds.count
+  legacyPage.cells(1, 9).value2 = "内部境界の節点数": legacyPage.cells(1, 10).value2 = innerIds.count
+  legacyPage.cells(1, 11).value2 = "座標総数": legacyPage.cells(1, 12).value2 = coords.count
+  legacyPage.cells(1, 13).value2 = "境界平均間隔"
+  legacyPage.cells(2, 5).value2 = "境界節点数": legacyPage.cells(2, 6).value2 = "格子間隔"
+  legacyPage.cells(3, 4).value2 = outerCount: legacyPage.cells(24, 4).value2 = innerCount
   i = 0: j = 0: spacing = 0#
   For Each record In boundaries
     tokens = record(1): count = UBound(tokens) + 1
     If record(0) = "OUTER" Then i = i + 1: legacyRow = 2 + i Else j = j + 1: legacyRow = 23 + j
-    legacyPage.Cells(legacyRow, 5).value2 = count: legacyPage.Cells(legacyRow, 6).value2 = record(2)
+    legacyPage.cells(legacyRow, 5).value2 = count: legacyPage.cells(legacyRow, 6).value2 = record(2)
     spacing = spacing + CDbl(record(2))
     ReDim memberData(1 To 1, 1 To count)
     For nativeIndex = 1 To count: memberData(1, nativeIndex) = nativeIds(CStr(tokens(nativeIndex - 1))): Next nativeIndex
-    legacyPage.range(legacyPage.Cells(legacyRow, 7), legacyPage.Cells(legacyRow, 6 + count)).value2 = memberData
+    legacyPage.range(legacyPage.cells(legacyRow, 7), legacyPage.cells(legacyRow, 6 + count)).value2 = memberData
   Next record
-  legacyPage.Cells(1, 14).value2 = spacing / boundaries.count
+  legacyPage.cells(1, 14).value2 = spacing / boundaries.count
   Call FEMInvalidateInputCache
   Call FEMViewerMarkDirty
   AnalysisOK = False: ResultRevision = 0: P1ResultReady = False
   Application.EnableEvents = eventsSaved
   Exit Sub
 Failed:
-  errorNo = Err.Number: errorSource = Err.source: errorText = Err.Description
+  errorNo = Err.number: errorSource = Err.source: errorText = Err.description
   Application.EnableEvents = eventsSaved
   Err.Raise errorNo, errorSource, errorText
 End Sub
@@ -135,6 +135,6 @@ Public Sub FEMUiGenerateShape()
   If FEMShapeGenerationOK Then FEMUiPreviewMesh
   Exit Sub
 Failed:
-  FEMUiMeshPreviewError = CStr(Err.Number) & " " & Err.Description
-  If Not SuppressUserMessages Then MsgBox "形状入力を確認してください。" & vbCrLf & Err.Description, vbExclamation
+  FEMUiMeshPreviewError = CStr(Err.number) & " " & Err.description
+  If Not SuppressUserMessages Then MsgBox "形状入力を確認してください。" & vbCrLf & Err.description, vbExclamation
 End Sub

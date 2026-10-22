@@ -4,7 +4,7 @@ if(Get-Process EXCEL -ErrorAction SilentlyContinue){throw 'Another Excel is runn
 $Candidate=(Resolve-Path -LiteralPath $Candidate).Path
 $Destination=[IO.Path]::GetFullPath($Destination)
 if($Candidate -eq $Destination){throw 'Candidate must be preserved.'}
-$names=@('CONTROL','FEM','FEMCore','FEMSolver','FEMIo','FEMEngine','FEMNative','FEMNativeMat','FEMNativeKern','FEMUiInputs','FEMUiValidation','FEMUiLayout','FEMUi','FEMViewer','FEMNativeFigure','ThisWorkbook','FEMUiMeshWorkflow','FEMUiGeometry','FEMPractical','MeshAdapt','FEMResultOptions','FEMStrainMath','FEMViewIncrement','FEMIncrementSvg','FEMWater','FEMSeepage','FEMWaterUi','FEMWaterGeometry','FEMWaterView','FEMSeepageFlux')
+$names=@('CONTROL','FEM','FEMCore','FEMSolver','FEMIo','FEMEngine','FEMNative','FEMNativeMat','FEMNativeKern','FEMUiInputs','FEMUiValidation','FEMUiLayout','FEMUi','FEMViewer','FEMNativeFigure','ThisWorkbook','FEMUiMeshWorkflow','FEMUiGeometry','FEMPractical','MeshAdapt','FEMResultOptions','FEMStrainMath','FEMViewIncrement','FEMIncrementSvg','FEMWater','FEMSeepage','FEMWaterUi','FEMWaterGeometry','FEMWaterView','FEMSeepageFlux','FEMJointWater')
 function Norm([string]$s){(($s -replace "`r`n","`n" -replace "`r","`n") -split "`n" | Where-Object {$_ -notmatch '^Attribute VB_'} | ForEach-Object {$_.TrimEnd()}) -join "`n" -replace "`n+$",""}
 function Verify($book){
  foreach($name in $names){

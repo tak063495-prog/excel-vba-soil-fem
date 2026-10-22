@@ -16,8 +16,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 23888,
-    "sha256": "d23d05262cd9d6c2ea5b405ade7245d177823a567c01a277df48354b7947fa22"
+    "bytes": 24092,
+    "sha256": "e3bfe36c4a47a20ac91ab15e2c7610bb807380fc02ee8f8a444921d4da423c4b"
   },
   {
     "path": "docs/ACCELERATION_HISTORY.md",
@@ -26,13 +26,13 @@
   },
   {
     "path": "docs/GROUNDWATER.md",
-    "bytes": 12116,
-    "sha256": "1780c73e932145e972ef8f1e098831923c4a539bfe7a3778c5f99bdfc87b69f7"
+    "bytes": 15670,
+    "sha256": "1c7d10b35dcb0b47666c0c153a426f00b6e931f15ad8c26e8dad4b70f5c3e4b7"
   },
   {
     "path": "docs/GROUNDWATER_VALIDATION.md",
-    "bytes": 6588,
-    "sha256": "d71684decccc4db576ff34554f65de4c6981cdc910e99538c2dace4d3e399282"
+    "bytes": 6906,
+    "sha256": "334bb7c1ef4daa4872f8a674f014622ca977ddeec558a869f9f6d754bc8d4691"
   },
   {
     "path": "docs/INCONSISTENT_ASSEMBLY_PERF.md",
@@ -83,6 +83,11 @@
     "path": "docs/ISSUE_1_REVIEW.md",
     "bytes": 7602,
     "sha256": "195afefeef12a3b42badbf1f69757c5b0fcb71678df6519b83387f620cde9863"
+  },
+  {
+    "path": "docs/JOINT_WATER_VALIDATION.md",
+    "bytes": 11434,
+    "sha256": "3dd9e565e7477befc03b6f2cd8b04d417f549e9b127297c81f359e53cd78c0a9"
   },
   {
     "path": "docs/LITERATURE_VALIDATION.md",
@@ -570,6 +575,231 @@
     "sha256": "58a93f367e40efbae97aee627ef253c99ec75a4fbcafc064aa93dc2dff67a9c6"
   },
   {
+    "path": "docs/joint-water-evidence/20261022/ACCEPTED_CASES.md",
+    "bytes": 3504,
+    "sha256": "826838605708b9a02ece996324bd879f66068f800333e29e10e8ece57712b7b7"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/README.md",
+    "bytes": 4717,
+    "sha256": "adc740d07522d182adda81faf62bd9002df50afc78032e4fca44e45cf13e2873"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/button_result.jpg",
+    "bytes": 128850,
+    "sha256": "c53fedd084c2261053c214fc6090431bf655fcfa5197b242a634810332aa2d35"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/comparison.json",
+    "bytes": 22140,
+    "sha256": "df3584b82bbe96509219e7fcf943a6ad7d6d07239d222714e54c582ca9901c8a"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/compile.log",
+    "bytes": 7660,
+    "sha256": "1b514b9b256114e7d768c46daf3ffdc84954469126d094cea546a1f062534fe5"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/continuous.json",
+    "bytes": 662,
+    "sha256": "10bbb6e34f1629b32dd0f94b97d3a58dba1c4ad4e436cfdff5ce1e810fafb5ca"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/distribution.json",
+    "bytes": 294,
+    "sha256": "238d60511bd8027070b05bfba43afe84a2fe635941ee18eb1d1f4cd3f9015cc3"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/dry.json",
+    "bytes": 446,
+    "sha256": "bc7ec7324b778f76d3869d7daf46e46e2e633739edfaee520512d12ddaa04803"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/examples_manifest.json",
+    "bytes": 2723,
+    "sha256": "90227a279925e6fa3e7b1f8400d478b581af08a9ca719e5d6caa88e59d1bb0e0"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/figure.json",
+    "bytes": 296,
+    "sha256": "501f81e0561209368d208df0148a0c6ca98ac335b53b89e6df821c3b050b3f51"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/independent.json",
+    "bytes": 1367,
+    "sha256": "1652365c21a617bebe97184e75a62d3b443dc939e5c6cfc8532758a21d7c2d0e"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/joint_input.jpg",
+    "bytes": 135328,
+    "sha256": "2b8c1300e9e09efe459dc77f5dded8fb40577a21104e064885df3edf1041d783"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/joint_input_preserved.json",
+    "bytes": 102,
+    "sha256": "8d353b9f8abe20156decd2145c00864317085a0df51b629b47f021d0e8738be4"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/joint_result.jpg",
+    "bytes": 128893,
+    "sha256": "8eff5a6f7044e13105ee7efa17382b55858475bf63c5f50ab7ae1a94b62133f6"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/manual_checks.json",
+    "bytes": 2932,
+    "sha256": "6b7dab1bc631c25377363a634e7341fab004d05629a645e26f2cde021f3a0e6b"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/manual_review.zip",
+    "bytes": 21607882,
+    "sha256": "78fd740c5cd2054306cd990a9e753af3261f9d062ff9270af70c4910e8ada148"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/mesh.jpg",
+    "bytes": 123461,
+    "sha256": "9e5ef0620342f7490136bb426a9637806e9b36f4445f35e0fe699ad91294dc54"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/opening.json",
+    "bytes": 594,
+    "sha256": "f18e4c2c179f8cfd1fe149daac1292208581677d3592e82730c163b036ec0083"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/output_recovery_comparison.json",
+    "bytes": 1359,
+    "sha256": "ef821d63a8ed641982fb9869bea8e8be19ad38c6d0bdcf3b17242b61598777d3"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/package.json",
+    "bytes": 1227,
+    "sha256": "031ff71eebdf60c3cc8873f7c589988a2df6517b0c32ef79e9f8387827b494ae"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/package.log",
+    "bytes": 72,
+    "sha256": "ffe9d8aad54668493400a84624bd5bfe6eec8cc82af43933c459a6258afd42a5"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/partial.json",
+    "bytes": 801,
+    "sha256": "bff3ca77473f5044cd5e733e2852e7370da78b2886d6d9176edf0bd28bed805f"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/prescribed.json",
+    "bytes": 613,
+    "sha256": "c5ffb9e62e448c106ee47b7d424bc52338569a391b8128005a37955ee0a90421"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/prescribed_steady.json",
+    "bytes": 672,
+    "sha256": "d0ae0151796c5643eb1d30f6bc93df11c724c60e0bf7616cd02c78dbd0f6b5a2"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/preview.jpg",
+    "bytes": 171752,
+    "sha256": "3092e79863ad1ec56b560fa2aaa8f1c9e5cf89414bb026a048389135727fe9b6"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/provenance.json",
+    "bytes": 3968,
+    "sha256": "f2b61a05c1a1dd279396643db37daacd9a727cb3aff8b285b0d096b18d31b974"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/records.zip",
+    "bytes": 1352785,
+    "sha256": "07805988c864bf4e205b82273fb84ab793229d5c54320c49b0844d0e7dba6978"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/reopen.jpg",
+    "bytes": 129167,
+    "sha256": "8d9cd6e9bd4d3a824d3e5e2087209df177ea82ca8d1be974e8eef7732eb3674d"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/retention_checks.json",
+    "bytes": 1891,
+    "sha256": "6fdb9494def8dbad98aca7faa7a8870e10883da308309ee3d3e9d93321f4e72a"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/saved_results.json",
+    "bytes": 4458,
+    "sha256": "4fa57878ffde51635de6032080ee14957943ab45903e1beb50f5c011cd19e88b"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/separated_independent.json",
+    "bytes": 323,
+    "sha256": "e1fb27e8df6766a7c9fcea19b405f4f0f070d14136f2cba97d0655dbda0476ca"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/slip.json",
+    "bytes": 618,
+    "sha256": "8e5973250648cb185327fa6c4f7829fd1e9c67ad45c6c540c4261951dfec61b6"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/slip_davis.json",
+    "bytes": 619,
+    "sha256": "2d03251b38c5244b2017024c2211415f8204817aa72f5e7bdbf0254bb9e4a2d1"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/soil_steady.json",
+    "bytes": 675,
+    "sha256": "46d95109fd2d28112a081e0ed4943f627a1b50eebea9cdd99005f37811d85b47"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/source_audit.json",
+    "bytes": 2471,
+    "sha256": "dbb8bb71ab456e7a6ae0081b32e490d15a3a20bc79a7819fda5381f7d7b84ae3"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/srm.json",
+    "bytes": 620,
+    "sha256": "eb0435d66a21d46db754ebaba3a854e7751ed22c455e6bf7c8464786711889a8"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/stages.json",
+    "bytes": 622,
+    "sha256": "987007a6ed305d5cf9ba96de7eab8eb3afa8146d2002e2a9f58587d34c96ccc8"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/stress.jpg",
+    "bytes": 119417,
+    "sha256": "9f0c512fb2edb1c2525af71b3cb52a40666cfbc55db5ac083455566e64595ca5"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/struct_pair.json",
+    "bytes": 628,
+    "sha256": "97cdf788aa9d7ba1e6fdee126ee380624c0f8018c7f8af56d456fc4df809a1db"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/ui_checks.json",
+    "bytes": 3046,
+    "sha256": "120eb28d9f6e02c9e20ff3f5f01df8b54b12581b22ac31882d9565eab0f13ef0"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/ui_checks_raw.zip",
+    "bytes": 4158,
+    "sha256": "69c2edbdd56b1d39ddf1c69170e1bc601b5bff28c7931eb91561bd5ea8b63036"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/water_input.jpg",
+    "bytes": 163735,
+    "sha256": "993f4f3ef656d8f713963c8ac12ceb349aa7898c0458b249d0a6796ea0e01971"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/water_result.jpg",
+    "bytes": 179418,
+    "sha256": "570b5e37dedf3beddec61ad0fe079bc507e27a963fc54b9fcd610494c24b33bc"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/wet.json",
+    "bytes": 799,
+    "sha256": "ca6035fda5dd8ba9adcb4fa554b84f13d0b5ee8fc4c0578183663e9e294d803a"
+  },
+  {
+    "path": "docs/joint-water-evidence/20261022/wet_davis.json",
+    "bytes": 798,
+    "sha256": "cd5b290bc9a973487ffb334562a9cc051072188b7d34c7ee934eb080aad98c49"
+  },
+  {
     "path": "docs/literature-evidence/comparison.csv",
     "bytes": 4152,
     "sha256": "9ee945b2e7c4b6bc4ee7ccb950d0967ef6db928f1aefe7450bfe96b8f5a89cb3"
@@ -656,8 +886,8 @@
   },
   {
     "path": "docs/manuals/2DSoilFEM_Manual.md",
-    "bytes": 284165,
-    "sha256": "0b92f7272117214f76ce3ebd3ced1ac561e39ac3452b56b3ec4f4a2f3b239fcc"
+    "bytes": 290788,
+    "sha256": "89b4ba167f67686a177f518a6d7c63b49a73ee95ef81f81b6fbcd1e6ea0f5986"
   },
   {
     "path": "docs/manuals/2DSoilFEM_Manual_20261021_2017.pdf",
@@ -710,9 +940,14 @@
     "sha256": "f71d519b073fdc401d0114e040269850037bbd3a231ded3c15f8d1ef08ec0c13"
   },
   {
+    "path": "docs/manuals/2DSoilFEM_Manual_20261022_WATER_02.pdf",
+    "bytes": 17026067,
+    "sha256": "cfb9c81cf8f29715f1c940dbc4f4019c443f005a45dd34ff03aa778ae1533e8c"
+  },
+  {
     "path": "docs/manuals/README.md",
-    "bytes": 14457,
-    "sha256": "f09f4c97033b9e263fac00344c6a399666783d8c0c9cf9513892246bc0e9f37a"
+    "bytes": 14716,
+    "sha256": "334122aa5586f2061dd0f8a1b2e192c44906ddd74803f9945959bb232e2cdbca"
   },
   {
     "path": "docs/manuals/build_manual_pdf.py",
@@ -3771,8 +4006,8 @@
   },
   {
     "path": "docs/manuals/examples/README.md",
-    "bytes": 6989,
-    "sha256": "7d678f9f5e2c212321bd54d520e6e0f26b6f238a4d98217eec9fcab73822a652"
+    "bytes": 7699,
+    "sha256": "bd3226ec811d9265d5f2fe8b03d843d82c2752c743048afd8dcba9e24301a3e4"
   },
   {
     "path": "docs/manuals/examples/ex01_material_20261021.xlsm",
@@ -4730,6 +4965,11 @@
     "sha256": "63a06bbec8208af97cd83a07ce056c1c119ba83e278f60a95377fb01afdfb3fe"
   },
   {
+    "path": "docs/manuals/examples/joint_water_examples.zip",
+    "bytes": 35912187,
+    "sha256": "4de0c8b6d084717b3c004c86c24a9dc7a1e4fc58b418b4b70e1a3e6b5e4f73ed"
+  },
+  {
     "path": "docs/manuals/examples/lit_comparison_20261021.csv",
     "bytes": 4152,
     "sha256": "9ee945b2e7c4b6bc4ee7ccb950d0967ef6db928f1aefe7450bfe96b8f5a89cb3"
@@ -4793,6 +5033,21 @@
     "path": "docs/manuals/images/groundwater/input.png",
     "bytes": 209765,
     "sha256": "730f066bfd95580ac7f54e117eb8c2784a143784f6af166f83a4fed9af686a9c"
+  },
+  {
+    "path": "docs/manuals/images/groundwater/joint_balance.png",
+    "bytes": 103140,
+    "sha256": "ffef0c126d76da6ffd2a2e97f99d48ba2ff7049bfc21e791609806d1fa47f974"
+  },
+  {
+    "path": "docs/manuals/images/groundwater/joint_input.png",
+    "bytes": 94968,
+    "sha256": "c67c3454226f5d86d8594acf7170a1d26d373bde7e0f9ccd6640ffb82041dd9b"
+  },
+  {
+    "path": "docs/manuals/images/groundwater/joint_result.png",
+    "bytes": 113282,
+    "sha256": "b976e41ea2b2f1a60eed71014d83a64790ddf289df82fbd99ff978c81226532c"
   },
   {
     "path": "docs/manuals/images/groundwater/preview.png",
@@ -8291,13 +8546,13 @@
   },
   {
     "path": "src/vba/CONTROL.bas",
-    "bytes": 100882,
-    "sha256": "9cb5052922eb1d2f2b3b6b7621410a0ce4f4a67b5d69f7fb56e2edc4d2a3c202"
+    "bytes": 101320,
+    "sha256": "5c55e98e256ac1980c92407999b72b203a7e2ff8da7a0ae32ff725c0d6d2aed4"
   },
   {
     "path": "src/vba/FEM.bas",
-    "bytes": 169457,
-    "sha256": "bb85e99ff8ab3daf60532c87316e96540178303fbe73a1d50a22d8ab3b6c2052"
+    "bytes": 169483,
+    "sha256": "a55755312c2946e6d8b609aa11d05dacbaac748f96ab7c8d86fbc1ecb2a4f537"
   },
   {
     "path": "src/vba/FEMAccel.bas",
@@ -8312,12 +8567,12 @@
   {
     "path": "src/vba/FEMCore.bas",
     "bytes": 54174,
-    "sha256": "20ca85d94e1ef7b04bc3c8da6372b34adb528a6fcd85be6361d5d10b8a9479e3"
+    "sha256": "8e929d573cd74ef082a12dcadc43c28fecd6db321122f634f201a8c46aaecb32"
   },
   {
     "path": "src/vba/FEMEngine.bas",
-    "bytes": 289399,
-    "sha256": "437ecc2627728d42a9482728e2e1a4fd9ff0ed8d0c1d28e27933b21d730ccb55"
+    "bytes": 290902,
+    "sha256": "adff7a483847d52f3e9f6455be6743e0a74979b919d23661cb2deae79eaa2917"
   },
   {
     "path": "src/vba/FEMIncrementLog.bas",
@@ -8327,32 +8582,37 @@
   {
     "path": "src/vba/FEMIncrementSvg.bas",
     "bytes": 9363,
-    "sha256": "e2811b96f9aeb79f578ed438b34c848c6e8c3a98194605d1be1d803119454f66"
+    "sha256": "028987deafd8b8e2b51a7287f5fd09de2db214b93e90c47a64abd9b933062356"
   },
   {
     "path": "src/vba/FEMIo.bas",
-    "bytes": 177106,
-    "sha256": "1e2817574be21e297319101aeba80e78212e178144c92f1241cf329854c35b0d"
+    "bytes": 178520,
+    "sha256": "ea88bb775d852fb0ff15974e649f73bfe03d15fbb8433677b1dfcf527ae8b4c3"
+  },
+  {
+    "path": "src/vba/FEMJointWater.bas",
+    "bytes": 10612,
+    "sha256": "221bea581a7f2fed46aa24169fdc210339f5f4bd097893f3b1b9f08ef095db56"
   },
   {
     "path": "src/vba/FEMNative.bas",
     "bytes": 24389,
-    "sha256": "5a866de98876ccdac69a5bec28d00f2ee5d0d0d4b4bb579e4d328ab7fec85b4d"
+    "sha256": "8e5d7b1eb0154210a03fb8a74c34f02e30ac91a73a21f7d1d9c656b6bcca4620"
   },
   {
     "path": "src/vba/FEMNativeFigure.bas",
     "bytes": 13855,
-    "sha256": "9a6a77a420b0819d8699301db1683bc7216333de0b5e1f6c9019862b32946510"
+    "sha256": "22c292ee119fc075172f6dc545b0ffc01b5bb1d20e55c615dcad147e82d6f04d"
   },
   {
     "path": "src/vba/FEMNativeKern.bas",
     "bytes": 16022,
-    "sha256": "b8b93afd8d51299e7f71ac7fab15bfa3ca5ec230f3a0f776af5d1c45094ae71e"
+    "sha256": "93184c1086b67748700b0c522ce7fd367983403c9193c07b5d9908fc1c7bb340"
   },
   {
     "path": "src/vba/FEMNativeMat.bas",
     "bytes": 14116,
-    "sha256": "680581631493af158c1f4d73497fa7de4897e214ddfd2f654fdb03b2ea62b923"
+    "sha256": "e6500276c465d6877b7548f81f4a9810c8804edecec9a09865a2d1036664b3b9"
   },
   {
     "path": "src/vba/FEMPlasticLog.bas",
@@ -8366,8 +8626,8 @@
   },
   {
     "path": "src/vba/FEMPractical.bas",
-    "bytes": 5212,
-    "sha256": "2f9e8b7edf183f567ce5404b6fbf0dea9149b7204b8c44ca887a4beb99551745"
+    "bytes": 7255,
+    "sha256": "0f39d154d02a7e487cc3094e7e48a0cadffdf6378b74126906da701d2de79ca2"
   },
   {
     "path": "src/vba/FEMProgress.bas",
@@ -8377,22 +8637,22 @@
   {
     "path": "src/vba/FEMResultOptions.bas",
     "bytes": 8867,
-    "sha256": "959822f797a6ae378674f731e29327fa284870276275f88c80052c587efe9689"
+    "sha256": "42f674605c8000b62c3450e4b5a06986856f8618c9afa1fac517764f49c0986f"
   },
   {
     "path": "src/vba/FEMSeepage.bas",
-    "bytes": 10768,
-    "sha256": "43328ae61b45145ae634261df01fb01adb51789703fd5a7b9b24757d36eab4c4"
+    "bytes": 10781,
+    "sha256": "af9c1c61e53fc5f6f692f72809a9c12e94cd82bea01586290fabff19bf51fd00"
   },
   {
     "path": "src/vba/FEMSeepageFlux.bas",
-    "bytes": 6628,
-    "sha256": "636f1e73e8d864fc3c9724c9caca827015c38d9eecdfa2f32bcce7ae0460aeb2"
+    "bytes": 6636,
+    "sha256": "e1d2bebf1bdda0562959befbbebbbd6e78e688749cae7ffc92190364c3a69f25"
   },
   {
     "path": "src/vba/FEMSolver.bas",
-    "bytes": 193135,
-    "sha256": "7f75ce008b2a41651f4393cb727271f34b45acefed1f8d356ce52ef0a5f37e85"
+    "bytes": 193443,
+    "sha256": "bd8daa3cf81aa90f6e3497e0aef6a2382a5379287b00be75f30b9036c16e3148"
   },
   {
     "path": "src/vba/FEMStepRecovery.bas",
@@ -8406,63 +8666,63 @@
   },
   {
     "path": "src/vba/FEMUi.bas",
-    "bytes": 7074,
-    "sha256": "157d4f4203f869a85687166c63d0394017707cdf4de5046a38f03f0f953b6f8d"
+    "bytes": 7054,
+    "sha256": "8085b9ee4a6730d7c45eec94ae4e9033486ab5a79cf28de2b9b48c3cb14d3a18"
   },
   {
     "path": "src/vba/FEMUiGeometry.bas",
     "bytes": 9973,
-    "sha256": "b1db2f9c7dd5064ce7dc4526df0a7641c4315e602baa45ef04d590ed4164572e"
+    "sha256": "ea085d2d4bc982b6871410b7904bdc0cf02670a491ffa4e183a088cf18dac689"
   },
   {
     "path": "src/vba/FEMUiInputs.bas",
     "bytes": 22891,
-    "sha256": "546a02a11a3895ceef057aa9ffcc2e5fa6870a471421eb43896a865ba299647b"
+    "sha256": "989f9278c9854d7f7cbc86288841c752081c45f9937ef67455eff20714b0db3c"
   },
   {
     "path": "src/vba/FEMUiLayout.bas",
-    "bytes": 19798,
-    "sha256": "cd01a945c17682efcce2847a848d831150838cbadf8474246841a928a445f92e"
+    "bytes": 20587,
+    "sha256": "326ac5d863c1d75e38fe1e4d687e9cb674e68078de84a8a20116fab640abfa9f"
   },
   {
     "path": "src/vba/FEMUiMeshWorkflow.bas",
     "bytes": 7338,
-    "sha256": "3a03692b3fdb830d664ad1808cf0ddde41a2d3c319af9b8dc342baa25b7a65d7"
+    "sha256": "a73203dccd153fbd644cf9c6af464895a7fffb3d969911c1528ba2dbaf2a9218"
   },
   {
     "path": "src/vba/FEMUiValidation.bas",
     "bytes": 13389,
-    "sha256": "e9b00ce0632ae8401dcf1cbceab238ea166236013df191dae5bf170d27cd66b3"
+    "sha256": "53b14ade53e891bc56ddd28f24fe6f487922cb63f040da7e2b496308492fb036"
   },
   {
     "path": "src/vba/FEMViewIncrement.bas",
     "bytes": 14361,
-    "sha256": "05b6c389c56fa545975b49460e1266d0fb405283f085acdbf55767ab6e433826"
+    "sha256": "e57c288a9db3b410b20044b3dfbb551e5bb52f76f7b9d6f93ea7d8a99a3d448c"
   },
   {
     "path": "src/vba/FEMViewer.bas",
     "bytes": 34521,
-    "sha256": "63d6fcfb5e416da525191e1b6350c4f7968bf7dbb0de60e4eb1ec3531a0ae3d1"
+    "sha256": "dabbb142a9eddd07430fcbdaaab376f9a6527c51def2a4d337bceb949dee1387"
   },
   {
     "path": "src/vba/FEMWater.bas",
-    "bytes": 37269,
-    "sha256": "30b5f10d0709149d63dbcf0575a359a358747460beb9e4395a40c003ce96c829"
+    "bytes": 40637,
+    "sha256": "38ebfcb2ca3adc89998f805c1110d072c35e364d78f5dcca39208883212e6daa"
   },
   {
     "path": "src/vba/FEMWaterGeometry.bas",
-    "bytes": 9095,
-    "sha256": "7b36898a0b58e5ea003eabc0ac2529917d4e46881be844faeb8f9db5a492e4d1"
+    "bytes": 9131,
+    "sha256": "3297b5a54128ac87c093603523030ae095fa4af90bad3b42fcd0cf08bc87857a"
   },
   {
     "path": "src/vba/FEMWaterUi.bas",
-    "bytes": 6594,
-    "sha256": "2d23a40968ae6c257882aa22cc5d96b445707c131509327fc6f60536a8b1ae6e"
+    "bytes": 8260,
+    "sha256": "647188d05811378325f2c88a265f7e14813b8e3ca16b1a2537814d4c1dca7dcf"
   },
   {
     "path": "src/vba/FEMWaterView.bas",
-    "bytes": 10935,
-    "sha256": "6c7f01fbc071f6930f6aa3c6e67a32bbcb7f3a60d4e0299a4f78142208725e9c"
+    "bytes": 11007,
+    "sha256": "88e150086db3b6930ff4f0130febcad735fb777a44cd1b42ca28aff31c4ca2ae"
   },
   {
     "path": "src/vba/Mesh.bas",
@@ -8471,8 +8731,8 @@
   },
   {
     "path": "src/vba/MeshAdapt.bas",
-    "bytes": 88163,
-    "sha256": "10914837955f7f06d2529e39fe0181e7b4bddda2ddcf21913df1dd8980408bf0"
+    "bytes": 88157,
+    "sha256": "040c883decff3281affd7cf07652efb832234eedd19b5e9bf9e4a4465a2f2b7a"
   },
   {
     "path": "src/vba/MeshAngle.bas",
@@ -8486,8 +8746,8 @@
   },
   {
     "path": "src/vba/ThisWorkbook.cls",
-    "bytes": 2679,
-    "sha256": "fc64768e32ac6f683bba12b5f55a99879a7490bc04592128e3f5b2a1d478340e"
+    "bytes": 2677,
+    "sha256": "3b5fdb1f4093fa023e353fe9e4fd942cf339afba7f484baf6f6fc5b11130c8c3"
   },
   {
     "path": "src/vba/modules.json",
@@ -8515,6 +8775,16 @@
     "sha256": "b1bad9ffc9d8b0b2f9a48697a18b00958436072eb87cb8a2310213727ac9e419"
   },
   {
+    "path": "tests/check_joint_water.py",
+    "bytes": 6978,
+    "sha256": "91f218302f6a9bb0117e8e53a141cf2239ce592a98522aee34b25c8e7cc86915"
+  },
+  {
+    "path": "tests/check_joint_water_manual.py",
+    "bytes": 3437,
+    "sha256": "18007c7d1a327e30d5aa1f2a0450a8be27cced91297d4075f9ad38dc15e84b50"
+  },
+  {
     "path": "tests/check_manual_applied.py",
     "bytes": 4944,
     "sha256": "a5ec46574aa76d863556354bbd93c985659b801c2af019cac685967b4ea1f72f"
@@ -8538,6 +8808,11 @@
     "path": "tests/compare_groundwater_regression.py",
     "bytes": 3053,
     "sha256": "58f02cbbd8ccc4dc896aa893ffcf5ca5eb146cef1bd2857f9483b1896c3b17d2"
+  },
+  {
+    "path": "tests/compare_joint_water_regression.py",
+    "bytes": 3339,
+    "sha256": "28fe5535ac260ee20e4af52400acb9bd9c72e37dca0796cc241ce4671bec48b0"
   },
   {
     "path": "tests/compare_manual_flows.py",
@@ -8593,6 +8868,86 @@
     "path": "tests/fixtures/groundwater_stages.json",
     "bytes": 4543,
     "sha256": "1480130dcd281276eac9830a81cbd909c27f4de689aa2993f5452929f6e588d5"
+  },
+  {
+    "path": "tests/fixtures/joint_water_conflicting_heads.json",
+    "bytes": 4269,
+    "sha256": "49849060e60ceb11a0239324457a23743dc4f69cca48f56a3440485a8487c235"
+  },
+  {
+    "path": "tests/fixtures/joint_water_continuous.json",
+    "bytes": 4055,
+    "sha256": "a05830925a717dbb065edfd0439568e89d3fe9ad300c8facadf7c7d03b6cd7e8"
+  },
+  {
+    "path": "tests/fixtures/joint_water_dry.json",
+    "bytes": 3366,
+    "sha256": "0a831e1591ca8e73c31d787e03036ca5d2eeee87c29e22bbeb74d931e15e7eb9"
+  },
+  {
+    "path": "tests/fixtures/joint_water_inconsistent_pressure.json",
+    "bytes": 3634,
+    "sha256": "421ed53245dc129e83254edbe500cc677a8fa1b7e65c6969bc7b568675523ab5"
+  },
+  {
+    "path": "tests/fixtures/joint_water_missing_mode.json",
+    "bytes": 3419,
+    "sha256": "83e99915c0dc04ae4a6ad2cb5de3bc30b9248e92a5611a8e331b7d9a468ffb49"
+  },
+  {
+    "path": "tests/fixtures/joint_water_opening.json",
+    "bytes": 3535,
+    "sha256": "0876da557e0bb81b03d28880bfd7eb03f4e69e13904010c7efdae4f04d7a9281"
+  },
+  {
+    "path": "tests/fixtures/joint_water_partial.json",
+    "bytes": 3801,
+    "sha256": "6b82273736d775149f8b9d817d1649b8ef21a7ed725bbfbf747e91e748dd2075"
+  },
+  {
+    "path": "tests/fixtures/joint_water_prescribed.json",
+    "bytes": 3388,
+    "sha256": "d6319c750a2527c04845689b651440a33c91f5e571b7d4eb5282345052156092"
+  },
+  {
+    "path": "tests/fixtures/joint_water_prescribed_steady.json",
+    "bytes": 3485,
+    "sha256": "db3b94352b2823ce325b7e4b7aa81597c14373c32e4b3c450acba3af3ffaf797"
+  },
+  {
+    "path": "tests/fixtures/joint_water_slip.json",
+    "bytes": 3526,
+    "sha256": "b57e9aa238f783aa81f43a55790ed8bced8abff68bbd8690a1ac17f5cfe86146"
+  },
+  {
+    "path": "tests/fixtures/joint_water_soil_steady.json",
+    "bytes": 3928,
+    "sha256": "614dcf463f750d9b3ce79d49bb522c3aa7560676a088f661eb00ad2734178de9"
+  },
+  {
+    "path": "tests/fixtures/joint_water_srm.json",
+    "bytes": 3480,
+    "sha256": "74541914b9147e3abd8b801e06203016ef99bdecb9e2a1403455674d72aad346"
+  },
+  {
+    "path": "tests/fixtures/joint_water_stages.json",
+    "bytes": 3735,
+    "sha256": "1b60c5b4079b12a85950e33409bdc79a6f62fa057f05833802ee168c5b39c653"
+  },
+  {
+    "path": "tests/fixtures/joint_water_struct_pair.json",
+    "bytes": 3387,
+    "sha256": "4dbffae87a46af39484ec63397088bc21851aa03d4ab9ea08aa0c65b0c833c0a"
+  },
+  {
+    "path": "tests/fixtures/joint_water_wet.json",
+    "bytes": 3398,
+    "sha256": "d962eb36a1ab8c8f5432fb2288e51776ddd6d5f3d280b69cc39acb863c07a859"
+  },
+  {
+    "path": "tests/fixtures/joint_water_wrong_soil_mode.json",
+    "bytes": 4109,
+    "sha256": "e75209ed396cafc592e4c87f2e325d2b776398a7b68992ee3f81c4ce3aac28cb"
   },
   {
     "path": "tests/fixtures/smoke_expected.json",
@@ -8738,6 +9093,11 @@
     "path": "tests/inspect_workbook_ui.py",
     "bytes": 5827,
     "sha256": "970d80c91cc874b5a34f77d1b394bf530e711d743cec63f004494ff0f3da6835"
+  },
+  {
+    "path": "tests/joint_tangent_driver.bas",
+    "bytes": 4624,
+    "sha256": "b6fecd2b52273f81ac704e9b2962d4cd9481b4956a4a223c442cf4694d9a9fe2"
   },
   {
     "path": "tests/literature/README.md",
@@ -9281,8 +9641,13 @@
   },
   {
     "path": "tests/package_groundwater.ps1",
-    "bytes": 3812,
-    "sha256": "5d7318cd934f6b7c7792a88fa973fbecdd14dd93346d820ab34e14992ddf1d77"
+    "bytes": 3828,
+    "sha256": "2ddccfff54124638613338158d1f8c4fbedff311de0547887738769f6d526963"
+  },
+  {
+    "path": "tests/plot_joint_water.py",
+    "bytes": 3590,
+    "sha256": "61e523f0da1f538744a05a7d7fa640918b8e23ab3f1f1a9de6eb3e6499180185"
   },
   {
     "path": "tests/refresh_manual_case_ui.ps1",
@@ -9361,13 +9726,18 @@
   },
   {
     "path": "tests/run_groundwater_fixture.ps1",
-    "bytes": 7591,
-    "sha256": "55fbac2f497ae3ba89765b84767d8685c4fa7cb1c659aec363faeae9cf997334"
+    "bytes": 10496,
+    "sha256": "6b269b287c7407613861c97c4407e8a66635aed78992f0233c1fca108a79e59a"
   },
   {
     "path": "tests/run_groundwater_regression.ps1",
     "bytes": 3064,
     "sha256": "7ca3c6fd443d14066dcabae1b3bcd5444e0c857b1124ea4656c868fc184107e9"
+  },
+  {
+    "path": "tests/run_joint_water_regression.ps1",
+    "bytes": 2487,
+    "sha256": "6522c7dd05fea1c53ca64fbcafdd48536304512e31086b3272822206857fc683"
   },
   {
     "path": "tests/run_manual_case.ps1",
@@ -9460,6 +9830,11 @@
     "sha256": "ca9f049d8de5d55a178ea3a8ba81a3fcc1c2982808230179176ca8658f300dcc"
   },
   {
+    "path": "tests/verify_joint_water_ui.ps1",
+    "bytes": 5935,
+    "sha256": "19b041dfbe9d60e039908740f7337a2b91533aba47030f59e039412d290dde62"
+  },
+  {
     "path": "tests/verify_manual_rereview.ps1",
     "bytes": 7401,
     "sha256": "8cdeaefbfb1689e362988dad59eb7fdc27b37490b6f9c9d55a6d837b13c0e046"
@@ -9473,6 +9848,11 @@
     "path": "tests/verify_native_figure.ps1",
     "bytes": 6226,
     "sha256": "5b2003c9da44456e6a9a1016f5bef6b0a8dedd657e84687ed5eda3a646acb3fd"
+  },
+  {
+    "path": "tests/verify_saved_joint_books.ps1",
+    "bytes": 2348,
+    "sha256": "cb9a4eb7d445f90ab2987708575805b220ebaa4f67526c88303464f2895cb85b"
   },
   {
     "path": "workbook/2DSoilFEM_20261008_practical.xlsm",
@@ -9551,8 +9931,8 @@
   },
   {
     "path": "workbook/SoilFEM_UI_20261022.zip",
-    "bytes": 3304542,
-    "sha256": "34d4881d8c8c8686d2909bba9c8b60ad09b005b07c4b594b3783699a6f1cb9b9"
+    "bytes": 3358847,
+    "sha256": "a4f81d9917016fe950afa73461ad02b5402ada4ef761e23ec4a0a0d7a4501511"
   },
   {
     "path": "workbook/inco_assembly_20261020/2DSoilFEM_inco_assembly_20261020.xlsm",
@@ -9786,18 +10166,18 @@
   },
   {
     "path": "workbook/ui_20261022/2DSoilFEM_ui_20261022.xlsm",
-    "bytes": 3457570,
-    "sha256": "df0bc4343ad63c3966a2a05d7eac3d74396dd54dc7b3a6dbf65e399aea3a62ed"
+    "bytes": 3519130,
+    "sha256": "1702746bb1c0351c59970f50a18a4a73f36f8b63ad7b1451b01e43d535afc2e7"
   },
   {
     "path": "workbook/ui_20261022/BUILD_RECORD.json",
-    "bytes": 1635,
-    "sha256": "9167514770ca728ca1bd0c6763c50923e93afe52fae6b80ad3df18238493385b"
+    "bytes": 1724,
+    "sha256": "4164deb5882cd9e8724b58323fabba892b2a8145ae5fe913a7f60bb2d5645eea"
   },
   {
     "path": "workbook/ui_20261022/README.txt",
-    "bytes": 3003,
-    "sha256": "80a3df76279e08afd1d17094f1f86320e88d42aec87cb077aad79476074334f2"
+    "bytes": 3437,
+    "sha256": "312c8b63fb9355906e38db32e6fee2f477355e77498d6503c3554a10c9137228"
   },
   {
     "path": "workbook/ui_20261022/soilfem_native_x64.dll",

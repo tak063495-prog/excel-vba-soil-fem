@@ -55,10 +55,10 @@ Private Function FEMUiValidationRule(ByVal keyName As String, ByVal rowNo As Lon
   End Select
 End Function
 
-Private Sub FEMUiValidationApply(ByVal cell As Range, ByVal keyName As String)
+Private Sub FEMUiValidationApply(ByVal cell As range, ByVal keyName As String)
   Dim listText As String, ruleText As String
   listText = FEMUiValidationList(keyName)
-  ruleText = FEMUiValidationRule(keyName, cell.Row)
+  ruleText = FEMUiValidationRule(keyName, cell.row)
   If Len(listText) = 0 And Len(ruleText) = 0 Then Exit Sub
   On Error Resume Next
   cell.Validation.Delete
@@ -68,13 +68,13 @@ Private Sub FEMUiValidationApply(ByVal cell As Range, ByVal keyName As String)
       .Add Type:=xlValidateList, AlertStyle:=xlValidAlertStop, Operator:=xlBetween, Formula1:=listText
       .IgnoreBlank = (UCase$(keyName) = "EXPORT_LOAD")
       .InCellDropdown = True: .ShowError = True: .ErrorTitle = "入力値"
-      .ErrorMessage = "選択肢から入力してください。"
+      .errorMessage = "選択肢から入力してください。"
     End With
   ElseIf Len(ruleText) > 0 Then
     With cell.Validation
       .Add Type:=xlValidateCustom, AlertStyle:=xlValidAlertStop, Formula1:=ruleText
       .IgnoreBlank = False: .ShowError = True: .ErrorTitle = "入力値"
-      .ErrorMessage = "指定された範囲・形式の数値を入力してください。"
+      .errorMessage = "指定された範囲・形式の数値を入力してください。"
     End With
   End If
 End Sub
@@ -85,10 +85,10 @@ Public Sub FEMUiApplyInputValidation()
     Set ws = Nothing
     On Error Resume Next: Set ws = ThisWorkbook.Worksheets(CStr(page)): On Error GoTo 0
     If Not ws Is Nothing Then
-      lastRow = ws.Cells(ws.Rows.Count, 6).End(xlUp).Row
+      lastRow = ws.cells(ws.rows.count, 6).End(xlUp).row
       For r = 1 To lastRow
-        keyName = UCase$(Trim$(CStr(ws.Cells(r, 6).Value2)))
-        If Len(keyName) > 0 Then FEMUiValidationApply ws.Cells(r, 3), keyName
+        keyName = UCase$(Trim$(CStr(ws.cells(r, 6).value2)))
+        If Len(keyName) > 0 Then FEMUiValidationApply ws.cells(r, 3), keyName
       Next r
     End If
   Next page
@@ -145,12 +145,12 @@ Public Sub FEMUiValidateSettings()
     If Not ws Is Nothing Then
       ' Evaluate pasted/edited formulas even when Excel is in manual calculation.
       ws.Calculate
-      lastRow = ws.Cells(ws.Rows.Count, 6).End(xlUp).Row
+      lastRow = ws.cells(ws.rows.count, 6).End(xlUp).row
       For r = 1 To lastRow
-        keyName = UCase$(Trim$(CStr(ws.Cells(r, 6).Value2)))
+        keyName = UCase$(Trim$(CStr(ws.cells(r, 6).value2)))
         If Len(keyName) > 0 Then
           If FEMUiRetiredMeshKey(keyName) Then GoTo NextCell
-          value = ws.Cells(r, 3).Value2: listText = FEMUiValidationList(keyName): ruleText = FEMUiValidationRule(keyName, r)
+          value = ws.cells(r, 3).value2: listText = FEMUiValidationList(keyName): ruleText = FEMUiValidationRule(keyName, r)
           If IsError(value) Then Err.Raise vbObjectError + 3820, "FEMUiValidateSettings", CStr(page) & "!C" & CStr(r) & " (" & keyName & ") の値がエラーです。"
           If keyName = "VIEW_COLOR_RESULT" Then
             If Not FEMUiValidResultId(value) Then Err.Raise vbObjectError + 3821, "FEMUiValidateSettings", CStr(page) & "!C" & CStr(r) & " (" & keyName & ") は表示量一覧の内容名を選択してください。"

@@ -6,7 +6,7 @@ Public Sub GWWetEdgeLoad(ByVal e As Long, ByVal side As Long, ByRef profileX() A
   Dim t As Double, z As Double, t0 As Double, t1 As Double, h As Double, p As Double, w As Double, thickness As Double
   Dim gx As Double, gy As Double, xx As Double, yy As Double, dx As Double, dy As Double
   Dim edgeNodes As Variant
-  Dim breaks() As Double, px As Double, py As Double, root As Double, lo As Double, hi As Double
+  Dim breaks() As Double, px As Double, py As Double, Root As Double, lo As Double, hi As Double
   Dim nn(0 To 2) As Double, gauss(0 To 2) As Double, weights(0 To 2) As Double
   If e < 0 Or e >= NumberOfElement Then GWGeomFail "element out of range"
   If side < 0 Or side > 3 Then GWGeomFail "side out of range"
@@ -41,8 +41,8 @@ Public Sub GWWetEdgeLoad(ByVal e As Long, ByVal side As Long, ByRef profileX() A
     lo = GWDepthAt(t0, x1, y1, x2, y2, profileX, profileY)
     hi = GWDepthAt(t1, x1, y1, x2, y2, profileX, profileY)
     If lo * hi < 0# Then
-      root = t0 - lo * (t1 - t0) / (hi - lo)
-      If root > t0 + 0.000000000001 And root < t1 - 0.000000000001 Then GWAddBreak breaks, nBreak, root
+      Root = t0 - lo * (t1 - t0) / (hi - lo)
+      If Root > t0 + 0.000000000001 And Root < t1 - 0.000000000001 Then GWAddBreak breaks, nBreak, Root
     End If
   Next k
   Call GWSortBreaks(breaks, nBreak)
@@ -80,7 +80,7 @@ Public Function GWBoundaryLoops(ByVal edgeCounts As Object, ByVal owners As Obje
   Set incoming = CreateObject("Scripting.Dictionary"): Set edgeAt = CreateObject("Scripting.Dictionary"): Set edgeList = New Collection
   For Each key In edgeCounts.keys
     If CLng(edgeCounts(key)) = 1 Then
-      own = owners(key): a = Elem(CLng(own(0))).node(CLng(own(1))): b = Elem(CLng(own(0))).node((CLng(own(1)) + 1) Mod 4)
+      own = owners(key): a = GJTopoNode(Elem(CLng(own(0))).node(CLng(own(1)))): b = GJTopoNode(Elem(CLng(own(0))).node((CLng(own(1)) + 1) Mod 4))
       If outgoing.Exists(CStr(a)) Or incoming.Exists(CStr(b)) Then GWGeomFail "boundary branch"
       outgoing.Add CStr(a), b: incoming.Add CStr(b), a: edgeAt.Add CStr(a), CStr(key): edgeList.Add CStr(key)
     End If
@@ -88,7 +88,7 @@ Public Function GWBoundaryLoops(ByVal edgeCounts As Object, ByVal owners As Obje
   For Each key In edgeList
     If out.Exists(CStr(key)) Then GoTo NextLoop
     Set loopKeys = New Collection
-    own = owners(key): startNode = Elem(CLng(own(0))).node(CLng(own(1))): node = startNode: area = 0#: steps = 0
+    own = owners(key): startNode = GJTopoNode(Elem(CLng(own(0))).node(CLng(own(1)))): node = startNode: area = 0#: steps = 0
     Do
       If Not outgoing.Exists(CStr(node)) Then GWGeomFail "open boundary loop"
       loopKey = edgeAt(CStr(node)): loopKeys.Add loopKey: out(loopKey) = False

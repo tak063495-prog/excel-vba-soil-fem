@@ -1,4 +1,4 @@
-2D Soil FEM / 水条件・定常浸透追加 20261022_WATER_01
+2D Soil FEM / 水条件・定常浸透追加 20261022_WATER_02
 
 2DSoilFEM_ui_20261022.xlsmとsoilfem_native_x64.dll（1個）を同じ新規フォルダーへ展開し、WindowsデスクトップExcelで開きます。DLLは64bit Excel用（20261021版と同一）。
 
@@ -7,7 +7,8 @@
 - 初期値NONEは従来の水条件なしです。HYDROSTATICは指定場、STEADYは固定した飽和領域の定常浸透です。
 - 構造体外面・空洞内面はEXPOSED（水位線）/DRYを指定します。内外面の圧力を積分して浮力・合力・モーメントを求めます。
 - WATER工程で水位線を切り替え、BIRTH/DEATH後は有効な水理領域を再解決します。SRMでは水圧を固定します。
-- 自由水面・不飽和・過渡圧密・JOINT・水ありRESET/MATSETは対象外です。浸透失敗時に静水圧へ自動変更しません。
+- 自由水面・不飽和・過渡圧密・水ありRESET/MATSETは対象外です。浸透失敗時に静水圧へ自動変更しません。
+- 「接合」F/G列でSOIL/CONTINUOUS/PRESCRIBEDを指定し、「接合結果」P:T列で水圧・全法線/有効接触応力・摩擦上限を確認できます。「水条件」から入力・結果へ移動します。有限透水抵抗・開口幅依存透水・二方向連成は対象外です。
 - 詳細は同梱WATER_GUIDE.md（リポジトリではdocs/GROUNDWATER.md）を参照してください。
 
 UI_06で追加した表示機能（今回も継承）：
@@ -21,6 +22,8 @@ UI_06追加時点では計算部・DLLは変更していません。今回の水
 記録：docs/manuals/construction-evidence/20261022/plastic-state/
 Fs区間は数値収束の境界。設計安全率・物理的崩壊の保証ではありません。
 
-追加機能の実Excel画面・実計算は操作説明書第25章（176ページ版）を参照：
-https://github.com/tak063495-prog/excel-vba-soil-fem/blob/feat/groundwater-steady/docs/manuals/2DSoilFEM_Manual_20261022_WATER_01.pdf
+追加機能の実Excel画面・実計算は操作説明書第25章（水圧JOINTの操作を含む）を参照：
+https://github.com/tak063495-prog/excel-vba-soil-fem/blob/feat/groundwater-steady/docs/manuals/2DSoilFEM_Manual_20261022_WATER_02.pdf
 検証記録と全ログ：docs/GROUNDWATER_VALIDATION.md、docs/groundwater-evidence/20261022/records.zip
+
+JOINT水圧の検証記録と全ログ：docs/JOINT_WATER_VALIDATION.md、docs/joint-water-evidence/20261022/records.zip

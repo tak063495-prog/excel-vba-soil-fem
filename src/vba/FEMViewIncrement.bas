@@ -20,7 +20,7 @@ Public Sub FEMIncrementReset()
   FEMIncrementLastError = ""
   Dim ws As Worksheet
   On Error Resume Next: Set ws = ThisWorkbook.Worksheets("結果増分"): On Error GoTo 0
-  If Not ws Is Nothing Then ws.Cells.ClearContents
+  If Not ws Is Nothing Then ws.cells.ClearContents
 End Sub
 
 Public Sub FEMIncrementCapture(ByVal loadFactor As Double)
@@ -38,7 +38,7 @@ Public Sub FEMIncrementCapture(ByVal loadFactor As Double)
       ' Do not report stale plastic increments when no material update occurred.
       zeroLocal = True
       For j = 0 To 15
-        dof = Elem(e).ElNode(j)
+        dof = Elem(e).elnode(j)
         If dof >= 0 Then
           If Abs(TDisp(dof) - P3CommittedDisp(dof)) > 1E-30 Then zeroLocal = False
         End If
@@ -47,8 +47,8 @@ Public Sub FEMIncrementCapture(ByVal loadFactor As Double)
         For c = 0 To 2
           s = 0#
           For j = 0 To 15
-            dof = Elem(e).ElNode(j)
-            If dof >= 0 Then s = s + Elem(e).Bmat(c, j, gp) * (TDisp(dof) - P3CommittedDisp(dof))
+            dof = Elem(e).elnode(j)
+            If dof >= 0 Then s = s + Elem(e).bMat(c, j, gp) * (TDisp(dof) - P3CommittedDisp(dof))
           Next j
           incData(c, gp, e) = s
         Next c
@@ -62,7 +62,7 @@ Public Sub FEMIncrementCapture(ByVal loadFactor As Double)
   incReady = True: FEMIncrementLastError = ""
   Exit Sub
 Failed:
-  FEMIncrementLastError = "増分保存の準備に失敗: " & CStr(Err.Number) & " " & Err.Description
+  FEMIncrementLastError = "増分保存の準備に失敗: " & CStr(Err.number) & " " & Err.description
   incReady = False
 End Sub
 
@@ -88,14 +88,14 @@ Public Sub FEMIncrementSave()
   On Error GoTo Failed
   FEMPlasticStateSave
   On Error Resume Next: Set ws = ThisWorkbook.Worksheets("結果増分"): On Error GoTo Failed
-  If ws Is Nothing Then Set ws = ThisWorkbook.Worksheets.Add(After:=ThisWorkbook.Worksheets("結果要素")): ws.Name = "結果増分"
+  If ws Is Nothing Then Set ws = ThisWorkbook.Worksheets.Add(After:=ThisWorkbook.Worksheets("結果要素")): ws.name = "結果増分"
   stageNo = P3ResultStageNumber()
-  If UCase$(P6ReadTextSetting("OUTPUT_STAGE_MODE", "FINAL")) <> "ALL" Then ws.Cells.ClearContents
+  If UCase$(P6ReadTextSetting("OUTPUT_STAGE_MODE", "FINAL")) <> "ALL" Then ws.cells.ClearContents
   headers = Array("ステージ番号", "要素番号", "積分点", "要素中心X", "要素中心Y", "全ひずみ増分X", "全ひずみ増分Y", "工学せん断ひずみ増分XY", "塑性ひずみ増分X", "塑性ひずみ増分Y", "塑性工学せん断ひずみ増分XY", "塑性ひずみ増分Z", "最大工学せん断ひずみ増分(3D)", "最大塑性工学せん断ひずみ増分(3D)", "面内塑性主ひずみ増分max", "面内塑性主ひずみ増分min", "面内max主軸角rad", "Fs", "荷重増分番号", "荷重係数")
-  For c = 0 To UBound(headers): ws.Cells(1, c + 1).Value2 = headers(c): Next c
-  ws.Range("V1").Value2 = "LAST_CONVERGED_INCREMENT_V1"
+  For c = 0 To UBound(headers): ws.cells(1, c + 1).value2 = headers(c): Next c
+  ws.range("V1").value2 = "LAST_CONVERGED_INCREMENT_V1"
   If Not incReady Then
-    ws.Range("V2").Value2 = "増分結果なし。新しい版で最初から再解析してください。" & FEMIncrementLastError
+    ws.range("V2").value2 = "増分結果なし。新しい版で最初から再解析してください。" & FEMIncrementLastError
     Exit Sub
   End If
   ReDim rows(1 To NumberOfElement * 4, 1 To 20)
@@ -116,15 +116,15 @@ Public Sub FEMIncrementSave()
       Next gp
     End If
   Next e
-  r = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1: If r < 2 Then r = 2
-  If n > 0 Then ws.Range(ws.Cells(r, 1), ws.Cells(r + n - 1, 20)).Value2 = rows
-  ws.Range("V2").Value2 = "最終収束荷重増分。SRMでは最後の成功Fsに対応。圧縮正、XYは工学せん断ひずみ。"
-  ws.Rows(1).Font.Bold = True: ws.Columns("A:C").ColumnWidth = 14
-  ws.Range("F:T").NumberFormat = "0.00000E+00"
+  r = ws.cells(ws.rows.count, 1).End(xlUp).row + 1: If r < 2 Then r = 2
+  If n > 0 Then ws.range(ws.cells(r, 1), ws.cells(r + n - 1, 20)).value2 = rows
+  ws.range("V2").value2 = "最終収束荷重増分。SRMでは最後の成功Fsに対応。圧縮正、XYは工学せん断ひずみ。"
+  ws.rows(1).Font.bOld = True: ws.columns("A:C").ColumnWidth = 14
+  ws.range("F:T").NumberFormat = "0.00000E+00"
   Exit Sub
 Failed:
-  FEMIncrementLastError = "増分結果の出力に失敗: " & CStr(Err.Number) & " " & Err.Description
-  If Not ws Is Nothing Then ws.Range("V1").Value2 = "INVALID": ws.Range("V2").Value2 = FEMIncrementLastError
+  FEMIncrementLastError = "増分結果の出力に失敗: " & CStr(Err.number) & " " & Err.description
+  If Not ws Is Nothing Then ws.range("V1").value2 = "INVALID": ws.range("V2").value2 = FEMIncrementLastError
 End Sub
 
 ' Returns e -> Array(max shear, max plastic shear, mean plastic ex,ey,gxy, Fs,increment,lambda).
@@ -135,10 +135,10 @@ Public Function FEMIncrementRead(ByVal stageNo As Long) As Object
   Dim frame As Variant, frameReady As Boolean
   On Error Resume Next: Set ws = ThisWorkbook.Worksheets("結果増分"): On Error GoTo 0
   If ws Is Nothing Then GoTo Missing
-  If CStr(ws.Range("V1").Value2) <> "LAST_CONVERGED_INCREMENT_V1" Then GoTo Missing
-  r = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row
+  If CStr(ws.range("V1").value2) <> "LAST_CONVERGED_INCREMENT_V1" Then GoTo Missing
+  r = ws.cells(ws.rows.count, 1).End(xlUp).row
   If r < 2 Then GoTo Missing
-  data = ws.Range("A1:T" & CStr(r)).Value2
+  data = ws.range("A1:T" & CStr(r)).value2
   Set result = CreateObject("Scripting.Dictionary"): Set counts = CreateObject("Scripting.Dictionary"): Set seen = CreateObject("Scripting.Dictionary")
   For r = 2 To UBound(data, 1)
     For j = 1 To 3
@@ -168,10 +168,10 @@ Public Function FEMIncrementRead(ByVal stageNo As Long) As Object
       result(e) = v: counts(e) = counts(e) + 1
     End If
   Next r
-  For Each v In result.Keys
+  For Each v In result.keys
     If counts(v) <> 4 Then GoTo Missing
   Next v
-  If result.Count = 0 Then GoTo Missing
+  If result.count = 0 Then GoTo Missing
   Set FEMIncrementRead = result
   Exit Function
 Missing:
@@ -188,12 +188,12 @@ Public Sub FEMPlasticStateSave()
   On Error GoTo Failed
   On Error Resume Next: Set ws = ThisWorkbook.Worksheets("結果塑性"): On Error GoTo Failed
   If ws Is Nothing Then
-    Set ws = ThisWorkbook.Worksheets.Add(After:=ThisWorkbook.Worksheets(ThisWorkbook.Worksheets.Count)): ws.Name = "結果塑性"
+    Set ws = ThisWorkbook.Worksheets.Add(After:=ThisWorkbook.Worksheets(ThisWorkbook.Worksheets.count)): ws.name = "結果塑性"
   End If
   stageNo = P3ResultStageNumber()
-  If UCase$(P6ReadTextSetting("OUTPUT_STAGE_MODE", "FINAL")) <> "ALL" Then ws.Cells.ClearContents
-  ws.Range("A1:M1").Value2 = Array("ステージ番号", "要素番号", "積分点", "降伏関数f", "現在降伏(1/0)", "累積塑性ひずみX", "累積塑性ひずみY", "累積塑性工学せん断ひずみXY", "累積塑性ひずみZ", "累積塑性乗数", "累積最大塑性工学せん断ひずみ(3D)", "塑性状態(2現在降伏/1過去に降伏/0弾性/-1不明)", "累積の範囲")
-  ws.Range("V1").Value2 = "PLASTIC_STATE_V1"
+  If UCase$(P6ReadTextSetting("OUTPUT_STAGE_MODE", "FINAL")) <> "ALL" Then ws.cells.ClearContents
+  ws.range("A1:M1").value2 = Array("ステージ番号", "要素番号", "積分点", "降伏関数f", "現在降伏(1/0)", "累積塑性ひずみX", "累積塑性ひずみY", "累積塑性工学せん断ひずみXY", "累積塑性ひずみZ", "累積塑性乗数", "累積最大塑性工学せん断ひずみ(3D)", "塑性状態(2現在降伏/1過去に降伏/0弾性/-1不明)", "累積の範囲")
+  ws.range("V1").value2 = "PLASTIC_STATE_V1"
   logReady = PlasticLogIsReady()
   If Not logReady Then
     coverage = "NONE"
@@ -229,13 +229,13 @@ Public Sub FEMPlasticStateSave()
       Next gp
     End If
   Next e
-  r = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1: If r < 2 Then r = 2
-  If n > 0 Then ws.Range(ws.Cells(r, 1), ws.Cells(r + n - 1, 13)).Value2 = rows
-  ws.Range("V2").Value2 = "表示している工程の最終状態。現在降伏=降伏点数と同じ判定（P2Yielded）。累積はBIRTH・RESETで0から。"
-  ws.Range("D:K").NumberFormat = "0.00000E+00"
+  r = ws.cells(ws.rows.count, 1).End(xlUp).row + 1: If r < 2 Then r = 2
+  If n > 0 Then ws.range(ws.cells(r, 1), ws.cells(r + n - 1, 13)).value2 = rows
+  ws.range("V2").value2 = "表示している工程の最終状態。現在降伏=降伏点数と同じ判定（P2Yielded）。累積はBIRTH・RESETで0から。"
+  ws.range("D:K").NumberFormat = "0.00000E+00"
   Exit Sub
 Failed:
-  FEMIncrementLastError = "塑性状態の出力に失敗: " & CStr(Err.Number) & " " & Err.Description
+  FEMIncrementLastError = "塑性状態の出力に失敗: " & CStr(Err.number) & " " & Err.description
 End Sub
 
 ' Returns e -> Array(state, cumulative max plastic shear 4-point max, yielded-now count, past count, unknown count)
@@ -243,10 +243,10 @@ Public Function FEMPlasticStateRead(ByVal stageNo As Long) As Object
   Dim ws As Worksheet, data As Variant, result As Object, r As Long, e As Long, v As Variant, st As Long
   On Error Resume Next: Set ws = ThisWorkbook.Worksheets("結果塑性"): On Error GoTo 0
   If ws Is Nothing Then GoTo Missing
-  If CStr(ws.Range("V1").Value2) <> "PLASTIC_STATE_V1" Then GoTo Missing
-  r = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row
+  If CStr(ws.range("V1").value2) <> "PLASTIC_STATE_V1" Then GoTo Missing
+  r = ws.cells(ws.rows.count, 1).End(xlUp).row
   If r < 2 Then GoTo Missing
-  data = ws.Range("A1:M" & CStr(r)).Value2
+  data = ws.range("A1:M" & CStr(r)).value2
   Set result = CreateObject("Scripting.Dictionary")
   For r = 2 To UBound(data, 1)
     If IsNumeric(data(r, 1)) And Not IsEmpty(data(r, 1)) Then
@@ -264,7 +264,7 @@ Public Function FEMPlasticStateRead(ByVal stageNo As Long) As Object
       End If
     End If
   Next r
-  For Each v In result.Keys
+  For Each v In result.keys
     e = CLng(v): data = result(e)
     If data(2) > 0 Then
       data(0) = 2
@@ -277,7 +277,7 @@ Public Function FEMPlasticStateRead(ByVal stageNo As Long) As Object
     End If
     result(e) = data
   Next v
-  If result.Count = 0 Then GoTo Missing
+  If result.count = 0 Then GoTo Missing
   Set FEMPlasticStateRead = result
   Exit Function
 Missing:

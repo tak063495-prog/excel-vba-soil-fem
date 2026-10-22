@@ -42,9 +42,9 @@ Private Function FEMUiFindCanonical(ByVal keyName As String, ByRef page As Works
         Set ws = ThisWorkbook.Worksheets(CStr(p))
         On Error GoTo 0
         If Not ws Is Nothing Then
-            lastRow = ws.Cells(ws.rows.count, 6).End(xlUp).row
+            lastRow = ws.cells(ws.rows.count, 6).End(xlUp).row
             For r = 1 To lastRow
-                If StrComp(Trim$(CStr(ws.Cells(r, 6).value2)), Trim$(keyName), vbTextCompare) = 0 Then
+                If StrComp(Trim$(CStr(ws.cells(r, 6).value2)), Trim$(keyName), vbTextCompare) = 0 Then
                     Set page = ws: rowNo = r: FEMUiFindCanonical = True: Exit Function
                 End If
             Next r
@@ -60,9 +60,9 @@ Public Function FEMUiTryWriteSetting(ByVal keyName As String, ByVal value As Var
     On Error GoTo Failed
     Application.EnableEvents = False
     If UCase$(keyName) = "VIEW_COLOR_RESULT" And FEMResultChoiceId(value) > 0 Then
-        ws.Cells(rowNo, 3).Value2 = FEMResultChoiceLabel(FEMResultChoiceId(value))
+        ws.cells(rowNo, 3).value2 = FEMResultChoiceLabel(FEMResultChoiceId(value))
     Else
-        ws.Cells(rowNo, 3).Value2 = value
+        ws.cells(rowNo, 3).value2 = value
     End If
     FEMUiCalculateSettings
     Application.EnableEvents = oldEvents
@@ -70,14 +70,14 @@ Public Function FEMUiTryWriteSetting(ByVal keyName As String, ByVal value As Var
     Exit Function
 Failed:
     Application.EnableEvents = oldEvents
-    Err.Raise Err.Number, Err.source, Err.Description
+    Err.Raise Err.number, Err.source, Err.description
 End Function
 
 Private Function FEMUiFindLegacyRow(ByVal ws As Worksheet, ByVal keyName As String) As Long
     Dim lastRow As Long, r As Long
-    lastRow = ws.Cells(ws.rows.count, 5).End(xlUp).row
+    lastRow = ws.cells(ws.rows.count, 5).End(xlUp).row
     For r = 1 To lastRow
-        If StrComp(Trim$(CStr(ws.Cells(r, 5).value2)), Trim$(keyName), vbTextCompare) = 0 Then FEMUiFindLegacyRow = r: Exit Function
+        If StrComp(Trim$(CStr(ws.cells(r, 5).value2)), Trim$(keyName), vbTextCompare) = 0 Then FEMUiFindLegacyRow = r: Exit Function
     Next r
 End Function
 
@@ -95,9 +95,9 @@ Public Sub FEMUiBindSettings()
     pages = FEMUiPages()
     For Each p In pages
         Set ws = ThisWorkbook.Worksheets(CStr(p))
-        lastRow = ws.Cells(ws.rows.count, 6).End(xlUp).row
+        lastRow = ws.cells(ws.rows.count, 6).End(xlUp).row
         For r = 1 To lastRow
-            key = Trim$(CStr(ws.Cells(r, 6).value2))
+            key = Trim$(CStr(ws.cells(r, 6).value2))
             If Len(key) > 0 Then
                 If seen.Exists(key) Then Err.Raise vbObjectError + 3801, "FEMUiBindSettings", "重複した設定キー: " & key
                 seen.Add key, True
@@ -115,30 +115,30 @@ Public Sub FEMUiBindSettings()
     On Error GoTo Failed
     Application.EnableEvents = False
     Dim k As Variant
-    For Each k In formulas.Keys
+    For Each k In formulas.keys
         ' Text-formatted cells would keep the formula as literal text.
-        legacy.Cells(CLng(k), 3).NumberFormat = "General"
-        legacy.Cells(CLng(k), 3).formula = formulas(k)
+        legacy.cells(CLng(k), 3).NumberFormat = "General"
+        legacy.cells(CLng(k), 3).formula = formulas(k)
     Next k
     FEMUiCalculateSettings
     Application.EnableEvents = oldEvents
     Exit Sub
 Failed:
     Application.EnableEvents = oldEvents
-    Err.Raise Err.Number, Err.source, Err.Description
+    Err.Raise Err.number, Err.source, Err.description
 End Sub
 
-Public Sub FEMUiSettingsChanged(ByVal Sh As Object, ByVal target As range)
+Public Sub FEMUiSettingsChanged(ByVal sh As Object, ByVal target As range)
     Dim hit As range, cell As range, keyName As String, invalidateAnalysis As Boolean
     If Not FEMUiInstalled() Then Exit Sub
-    If Not FEMUiIsSettingsSheet(Sh.name) Then Exit Sub
-    Set hit = Application.Intersect(target, Union(Sh.columns(3), Sh.columns(6)))
+    If Not FEMUiIsSettingsSheet(sh.name) Then Exit Sub
+    Set hit = Application.Intersect(target, Union(sh.columns(3), sh.columns(6)))
     If hit Is Nothing Then Exit Sub
-    For Each cell In hit.Cells
+    For Each cell In hit.cells
         If cell.column = 6 Then
             invalidateAnalysis = True
         ElseIf cell.column = 3 Then
-            keyName = UCase$(Trim$(CStr(Sh.Cells(cell.row, 6).value2)))
+            keyName = UCase$(Trim$(CStr(sh.cells(cell.row, 6).value2)))
             If Len(keyName) > 0 Then
                 If Not FEMUiIsNonAnalysisKey(keyName) Then invalidateAnalysis = True
             End If
@@ -164,13 +164,3 @@ Private Function FEMUiIsNonAnalysisKey(ByVal keyName As String) As Boolean
         left$(k, 12) = "MESH_REPAIR_" Or left$(k, 18) = "MESH_QUALITY_LAST_" Or _
         left$(k, 20) = "MESH_QUALITY_REPAIR_")
 End Function
-
-
-
-
-
-
-
-
-
-

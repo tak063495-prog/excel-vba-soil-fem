@@ -16,9 +16,9 @@ Public Sub GWRecoverFaceFlows(ByRef conductivity() As Double, ByRef heads() As D
     For s = 0 To 3
       neighbor(s, e) = -1
       If conductivity(e) > 0# Then
-        a = Elem(e).node(s): b = Elem(e).node((s + 1) Mod 4)
+        a = GWFlowNode(e, s): b = GWFlowNode(e, (s + 1) Mod 4)
         If a < b Then k = a & ":" & b Else k = b & ":" & a
-        k = k & ":" & Elem(e).node(s + 4)
+        k = k & ":" & GWFlowNode(e, s + 4)
         raw = GWRawFaceFlow(e, s, conductivity(e), heads)
         If owners.Exists(k) Then
           owner = owners(k)
@@ -37,7 +37,7 @@ Public Sub GWRecoverFaceFlows(ByRef conductivity() As Double, ByRef heads() As D
     If conductivity(e) > 0# Then
       For s = 0 To 3
         If neighbor(s, e) < 0 Then
-          adjustable(s, e) = fixedHead(Elem(e).node(s)) And fixedHead(Elem(e).node((s + 1) Mod 4)) And fixedHead(Elem(e).node(s + 4))
+          adjustable(s, e) = fixedHead(GWFlowNode(e, s)) And fixedHead(GWFlowNode(e, (s + 1) Mod 4)) And fixedHead(GWFlowNode(e, s + 4))
           If Not adjustable(s, e) Then faceFlow(s, e) = 0#
         End If
         If adjustable(s, e) Then diagonal(e) = diagonal(e) + 1#
@@ -121,8 +121,8 @@ Private Function GWRawFaceFlow(ByVal e As Long, ByVal side As Long, ByVal conduc
     det = j11 * j22 - j12 * j21
     If det <= 0# Then Err.Raise vbObjectError + 7960, , "保存流束の境界Jacobianが不正です。"
     For j = 0 To 7
-      hx = hx + (j22 * dxi(j) - j21 * deta(j)) / det * heads(Elem(e).node(j))
-      hy = hy + (-j12 * dxi(j) + j11 * deta(j)) / det * heads(Elem(e).node(j))
+      hx = hx + (j22 * dxi(j) - j21 * deta(j)) / det * heads(GWFlowNode(e, j))
+      hy = hy + (-j12 * dxi(j) + j11 * deta(j)) / det * heads(GWFlowNode(e, j))
     Next j
     Select Case side
       Case 0: dx = j11: dy = j21

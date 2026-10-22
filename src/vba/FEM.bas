@@ -4,9 +4,9 @@ Private Sub ClearDataRows(ByVal sheetName As String, ByVal firstColumn As Long, 
   Dim ws As Worksheet
   Dim lastRow As Long
   Set ws = ThisWorkbook.Worksheets(sheetName)
-  lastRow = ws.Cells(ws.rows.count, firstColumn).End(xlUp).row
+  lastRow = ws.cells(ws.rows.count, firstColumn).End(xlUp).row
   If lastRow >= 2 Then
-    ws.range(ws.Cells(2, firstColumn), ws.Cells(lastRow, lastColumn)).ClearContents
+    ws.range(ws.cells(2, firstColumn), ws.cells(lastRow, lastColumn)).ClearContents
   End If
 End Sub
 
@@ -105,7 +105,7 @@ End Sub
 Private Function ReadNumericCell(ByVal ws As Worksheet, ByVal rowNo As Long, ByVal colNo As Long, _
                                  ByVal fieldName As String, ByVal allowBlank As Boolean) As Double
   Dim cellValue As Variant
-  cellValue = ws.Cells(rowNo, colNo).value2
+  cellValue = ws.cells(rowNo, colNo).value2
   If IsError(cellValue) Then
     Err.Raise vbObjectError + 3001, "FEM.ReadNumericCell", fieldName & " にExcelエラー値があります。行=" & CStr(rowNo)
   End If
@@ -236,12 +236,12 @@ Private Sub P6LoadInputCache()
   Set wsMaterial = ThisWorkbook.Worksheets("材料データ")
   Set wsElement = ThisWorkbook.Worksheets("要素データ")
 
-  lastRow = wsNode.Cells(wsNode.rows.count, 1).End(xlUp).row
+  lastRow = wsNode.cells(wsNode.rows.count, 1).End(xlUp).row
   If lastRow < 2 Then Err.Raise vbObjectError + 3005, "FEM.P6LoadInputCache", "節点データ にデータがありません。"
   P6InputNodeCount = lastRow - 1
   If P6InputNodeCount > FEM_FIXED_DATA_CAPACITY Then Err.Raise vbObjectError + 3011, "FEM.P6LoadInputCache", "節点数が固定配列容量を超えています。"
   geometryFingerprint = P6FingerprintStep(CDbl(P6InputNodeCount), 17#)
-  nodeValues = wsNode.range(wsNode.Cells(2, 1), wsNode.Cells(lastRow, 9)).value2
+  nodeValues = wsNode.range(wsNode.cells(2, 1), wsNode.cells(lastRow, 9)).value2
   ReDim P6InputNodeId(1 To P6InputNodeCount)
   ReDim P6InputNodeX(1 To P6InputNodeCount)
   ReDim P6InputNodeY(1 To P6InputNodeCount)
@@ -278,12 +278,12 @@ Private Sub P6LoadInputCache()
     If Not seen(dataId) Then Err.Raise vbObjectError + 3008, "FEM.P6LoadInputCache", "節点番号に欠番があります。ID=" & CStr(dataId)
   Next dataId
 
-  lastRow = wsMaterial.Cells(wsMaterial.rows.count, 1).End(xlUp).row
+  lastRow = wsMaterial.cells(wsMaterial.rows.count, 1).End(xlUp).row
   If lastRow < 2 Then Err.Raise vbObjectError + 3005, "FEM.P6LoadInputCache", "材料データ にデータがありません。"
   P6InputMaterialCount = lastRow - 1
   If P6InputMaterialCount > 32767 Then Err.Raise vbObjectError + 3013, "FEM.P6LoadInputCache", "材料数が許容範囲を超えています。"
   materialFingerprint = P6FingerprintStep(CDbl(P6InputMaterialCount), 17#)
-  materialValues = wsMaterial.range(wsMaterial.Cells(2, 1), wsMaterial.Cells(lastRow, 13)).value2
+  materialValues = wsMaterial.range(wsMaterial.cells(2, 1), wsMaterial.cells(lastRow, 13)).value2
   ReDim P6InputMaterialId(1 To P6InputMaterialCount)
   ReDim P6InputMaterialYoung(1 To P6InputMaterialCount)
   ReDim P6InputMaterialPoisson(1 To P6InputMaterialCount)
@@ -354,12 +354,12 @@ Private Sub P6LoadInputCache()
     If Not seen(dataId) Then Err.Raise vbObjectError + 3008, "FEM.P6LoadInputCache", "材料番号に欠番があります。ID=" & CStr(dataId)
   Next dataId
 
-  lastRow = wsElement.Cells(wsElement.rows.count, 1).End(xlUp).row
+  lastRow = wsElement.cells(wsElement.rows.count, 1).End(xlUp).row
   If lastRow < 2 Then Err.Raise vbObjectError + 3005, "FEM.P6LoadInputCache", "要素データ にデータがありません。"
   P6InputElementCount = lastRow - 1
   If P6InputElementCount > FEM_FIXED_DATA_CAPACITY Then Err.Raise vbObjectError + 3012, "FEM.P6LoadInputCache", "要素数が固定配列容量を超えています。"
   topologyFingerprint = P6FingerprintStep(CDbl(P6InputNodeCount), CDbl(P6InputElementCount))
-  elementValues = wsElement.range(wsElement.Cells(2, 1), wsElement.Cells(lastRow, 10)).value2
+  elementValues = wsElement.range(wsElement.cells(2, 1), wsElement.cells(lastRow, 10)).value2
   ReDim P6InputElementId(1 To P6InputElementCount)
   ReDim P6InputElementNode(1 To P6InputElementCount, 1 To 8)
   ReDim P6InputElementMaterial(1 To P6InputElementCount)
@@ -865,6 +865,7 @@ Sub SetElementData()
 
     ' Elem()を再生成するため、Bmat/Smat/DJとCSR散布表は再利用不可。
     ' 弾性Kキャッシュ自体は形状・材料署名が一致すれば再利用できる。
+    GWInvalidateTopology
     P6ElasticOperatorCacheReady = False
     P6CSRScatterCount = 0
     P6CSRScatterElementCount = -1
@@ -888,7 +889,7 @@ Sub SetElementData()
     lastDof = nDof - 1
     P6KrylovLast = lastDof
     CoutN = lastDof
-    ReDim Force(CoutN): ReDim Disp(CoutN): ReDim UDisp(CoutN)
+    ReDim force(CoutN): ReDim Disp(CoutN): ReDim UDisp(CoutN)
     ReDim XXX(CoutN): ReDim NodeCond(CoutN): ReDim RForce(CoutN): ReDim eForce(CoutN)
     ReDim TDisp(CoutN): ReDim NForce(CoutN): ReDim mRisp(CoutN): ReDim iNForce(CoutN)
     ReDim OriginalForce(CoutN)
@@ -911,14 +912,14 @@ Sub SetElementData()
                 Elem(ii).node(j) = -1
                 Elem(ii).x(j) = 0#
                 Elem(ii).y(j) = 0#
-                Elem(ii).ElNode(2 * j) = -1
-                Elem(ii).ElNode(2 * j + 1) = -1
+                Elem(ii).elnode(2 * j) = -1
+                Elem(ii).elnode(2 * j + 1) = -1
             Else
                 originalNode = P6InputElementNode(i, j + 1) - 1
                 Elem(ii).node(j) = FEMGetFreeNode(originalNode)
                 Elem(ii).x(j) = x(originalNode): Elem(ii).y(j) = y(originalNode)
-                Elem(ii).ElNode(2 * j) = 2 * Elem(ii).node(j)
-                Elem(ii).ElNode(2 * j + 1) = 2 * Elem(ii).node(j) + 1
+                Elem(ii).elnode(2 * j) = 2 * Elem(ii).node(j)
+                Elem(ii).elnode(2 * j + 1) = 2 * Elem(ii).node(j) + 1
             End If
         Next j
         If Not Elem(ii).IsJoint Then P3EnsureElementCounterClockwise Elem(ii)
@@ -934,7 +935,7 @@ Sub SetElementData()
         XXX(ix) = P6InputNodeX(i): XXX(ix + 1) = P6InputNodeY(i)
         NodeCond(ix) = P6InputNodeCondX(i): NodeCond(ix + 1) = P6InputNodeCondY(i)
         Disp(ix) = P6InputNodeDispX(i): Disp(ix + 1) = P6InputNodeDispY(i)
-        Force(ix) = P6InputNodeForceX(i): Force(ix + 1) = P6InputNodeForceY(i)
+        force(ix) = P6InputNodeForceX(i): force(ix + 1) = P6InputNodeForceY(i)
     Next i
     P3BumpConstraintGeneration
     If SuppressUserMessages Then SaveP0Progress "element_node_load_complete"
@@ -1040,8 +1041,8 @@ Dim i As Long, j As Long, k As Long
     If coordY(i) > maxY Then maxY = coordY(i)
     localDof(2 * i) = 2 * elementData.node(i)
     localDof(2 * i + 1) = localDof(2 * i) + 1
-    elementData.ElNode(2 * i) = localDof(2 * i)
-    elementData.ElNode(2 * i + 1) = localDof(2 * i + 1)
+    elementData.elnode(2 * i) = localDof(2 * i)
+    elementData.elnode(2 * i + 1) = localDof(2 * i + 1)
   Next i
   repLen = maxX - minX
   If maxY - minY > repLen Then repLen = maxY - minY
@@ -1077,10 +1078,10 @@ Dim i As Long, j As Long, k As Long
        For j = 0 To 7
           im = 2 * j
           
-            elementData.Bmat(0, im, i) = -JTF(j, i) '∂N/∂x
-            elementData.Bmat(1, im + 1, i) = -JTF(j + 8, i) '∂N/∂y
-            elementData.Bmat(2, im, i) = -JTF(j + 8, i) '∂N/∂y
-            elementData.Bmat(2, im + 1, i) = -JTF(j, i) '∂N/∂x
+            elementData.bMat(0, im, i) = -JTF(j, i) '∂N/∂x
+            elementData.bMat(1, im + 1, i) = -JTF(j + 8, i) '∂N/∂y
+            elementData.bMat(2, im, i) = -JTF(j + 8, i) '∂N/∂y
+            elementData.bMat(2, im + 1, i) = -JTF(j, i) '∂N/∂x
        
        Next j
   Next i
@@ -1196,7 +1197,7 @@ Dim a As Double: Dim b As Double: Dim c As Double
   Dmat(2, 1) = 0#
   Dmat(2, 2) = c
 End Sub
-Sub SetSmat(Dmat() As Double, Bmat() As Double, Smat() As Double)
+Sub SetSmat(Dmat() As Double, bMat() As Double, Smat() As Double)
 Dim im As Long
 Dim i As Long, j As Long, k As Long
 Dim s As Double
@@ -1212,14 +1213,14 @@ Dim l As Long
          End If
          
            For k = 0 To 2
-             s = s + Dmat(i, k) * Bmat(k, j, im) 'D行列とB行列の積　［S］=［D］［B］
+             s = s + Dmat(i, k) * bMat(k, j, im) 'D行列とB行列の積　［S］=［D］［B］
            Next k
            Smat(i, j, im) = s
         Next j
      Next i
    Next im
 End Sub
-Sub SetElmStiffness(thickness As Double, weight As Double, Bmat() As Double, Smat() As Double, kmat() As Double, ElmWeight As Double, dj() As Double, n() As Double)
+Sub SetElmStiffness(thickness As Double, weight As Double, bMat() As Double, Smat() As Double, kmat() As Double, ElmWeight As Double, dj() As Double, n() As Double)
 Dim im As Long
 Dim i As Long, j As Long, k As Long
 Dim s As Double
@@ -1233,7 +1234,7 @@ Erase kmat
          
           s = 0#
           For k = 0 To 2
-             s = s + Bmat(k, i, im) * Smat(k, j, im) 'B行列転地とS行列の積　［K］＝［B］T［S］
+             s = s + bMat(k, i, im) * Smat(k, j, im) 'B行列転地とS行列の積　［K］＝［B］T［S］
           Next k
           kmat(i, j) = kmat(i, j) + s * dj(im) * thickness '［K］=［K］・V
         Next j
@@ -1363,7 +1364,7 @@ Public Sub P6AddQ8HourglassStabilization(ByRef elementData As Element_Data, ByVa
     For strainId = 0 To 2
       gRow = gaussId * 3 + strainId
       For dofId = 0 To 15
-        gMat(gRow, dofId) = elementData.Bmat(strainId, dofId, gaussId) * elementData.dj(gaussId)
+        gMat(gRow, dofId) = elementData.bMat(strainId, dofId, gaussId) * elementData.dj(gaussId)
       Next dofId
     Next strainId
   Next gaussId
@@ -1665,7 +1666,7 @@ Function SetElmMat() As Boolean
         If Not CheckElementJacobian(Elem(i), i, False) Then Exit Function
         Call SetBmat(Elem(i), i)
         If Not CheckElementJacobian(Elem(i), i, True) Then Exit Function
-        SetSmat .Dmat, .Bmat, .Smat
+        SetSmat .Dmat, .bMat, .Smat
         For im = 0 To 3
           For j = 0 To 2
             For k = 0 To 2
@@ -1688,7 +1689,7 @@ Function SetElmMat() As Boolean
         Call SetBmat(Elem(i), i)
         P6AddQ8HourglassStabilization Elem(i), Material(materialIndex).thickness, False
       Else
-        SetElmStiffness Material(materialIndex).thickness, Material(materialIndex).weight, .Bmat, .Smat, .kmat, .ElmWeight, .dj, P6GaussN
+        SetElmStiffness Material(materialIndex).thickness, Material(materialIndex).weight, .bMat, .Smat, .kmat, .ElmWeight, .dj, P6GaussN
         P6AddQ8HourglassStabilization Elem(i), Material(materialIndex).thickness, True
       End If
       .TangentDirty = False
@@ -1790,9 +1791,9 @@ Dim i As Long, j As Long
     For i = 0 To lastDof
        For j = 0 To BandWidth
        If P6BandArrayReady(P6FactoredBand) Then
-         .Cells(i + 2, j + 2) = P6FactoredBand(i, j)
+         .cells(i + 2, j + 2) = P6FactoredBand(i, j)
        ElseIf P6BandArrayReady(OriginalMat) Then
-         .Cells(i + 2, j + 2) = OriginalMat(i, j)
+         .cells(i + 2, j + 2) = OriginalMat(i, j)
        End If
        Next j
      Next i
@@ -1814,14 +1815,14 @@ Sub SaveStress()
   stageNo = P3ResultStageNumber()
   outputMode = UCase$(Trim$(P6ReadTextSetting("OUTPUT_STAGE_MODE", "FINAL")))
   If outputMode = "ALL" Then
-    startRow = ws.Cells(ws.rows.count, 1).End(xlUp).row
+    startRow = ws.cells(ws.rows.count, 1).End(xlUp).row
     If startRow < 2 Then startRow = 2 Else startRow = startRow + 1
   Else
     startRow = 2
-    lastUsed = ws.Cells(ws.rows.count, 1).End(xlUp).row
+    lastUsed = ws.cells(ws.rows.count, 1).End(xlUp).row
     If P6LastStressOutRow > lastUsed Then lastUsed = P6LastStressOutRow
     If lastUsed >= 2 Then
-      ws.range(ws.Cells(2, 1), ws.Cells(lastUsed, lastDataColumn)).ClearContents
+      ws.range(ws.cells(2, 1), ws.cells(lastUsed, lastDataColumn)).ClearContents
     End If
   End If
   Dim skipInactive As Boolean, writeCount As Long
@@ -1839,7 +1840,7 @@ Sub SaveStress()
       If P3IsElementActive(elementId) Then rows(writeCount, 5) = "接合結果参照"
       GoTo NextStressElement
     End If
-    CalcStrain elementId, Elem(elementId).Bmat, TDisp, Elem(elementId).Stmat
+    CalcStrain elementId, Elem(elementId).bMat, TDisp, Elem(elementId).Stmat
     CalcElePoint elementId, Elem(elementId).x, Elem(elementId).y, Elem(elementId).p
     writeCount = writeCount + 1
     rows(writeCount, 1) = stageNo
@@ -1854,26 +1855,26 @@ Sub SaveStress()
 NextStressElement:
   Next elementId
   If writeCount > 0 Then
-    ws.range(ws.Cells(startRow, 1), ws.Cells(startRow + writeCount - 1, lastDataColumn)).value2 = rows
+    ws.range(ws.cells(startRow, 1), ws.cells(startRow + writeCount - 1, lastDataColumn)).value2 = rows
     P6LastStressOutRow = startRow + writeCount - 1
   End If
 End Sub
 
 Private Sub P6WriteElementResultHeaders(ByVal ws As Worksheet)
   Dim gaussId As Long, resultId As Long, columnId As Long
-  ws.Cells(1, 1).value2 = "ステージ番号"
-  ws.Cells(1, 2).value2 = "要素番号"
-  ws.Cells(1, 3).value2 = "要素X"
-  ws.Cells(1, 4).value2 = "要素Y"
+  ws.cells(1, 1).value2 = "ステージ番号"
+  ws.cells(1, 2).value2 = "要素番号"
+  ws.cells(1, 3).value2 = "要素X"
+  ws.cells(1, 4).value2 = "要素Y"
   For gaussId = 0 To 3
     For resultId = 0 To 16
       columnId = 5 + resultId + 17 * gaussId
-      ws.Cells(1, columnId).value2 = "G" & CStr(gaussId + 1) & " " & P6StressResultName(resultId)
+      ws.cells(1, columnId).value2 = "G" & CStr(gaussId + 1) & " " & P6StressResultName(resultId)
     Next resultId
   Next gaussId
   On Error Resume Next
   If ws.AutoFilterMode Then ws.AutoFilterMode = False
-  ws.range(ws.Cells(1, 1), ws.Cells(1, 72)).AutoFilter
+  ws.range(ws.cells(1, 1), ws.cells(1, 72)).AutoFilter
   On Error GoTo 0
 End Sub
 
@@ -1903,9 +1904,9 @@ Sub GenNode(k, xx, yy)
 '節点データ書込
   With ThisWorkbook.Worksheets("節点データ")
      k = k + 1
-     .Cells(k + 1, 1) = k
-     .Cells(k + 1, 2) = xx
-     .Cells(k + 1, 3) = yy
+     .cells(k + 1, 1) = k
+     .cells(k + 1, 2) = xx
+     .cells(k + 1, 3) = yy
   End With
 End Sub
 Sub GenElm(k, n1, n2, n3, N4, mat)
@@ -1919,7 +1920,7 @@ Dim ii As Long
      With Elem(i)
         ii = .MatNo
         For j = 0 To 15 '
-           k = .ElNode(j)
+           k = .elnode(j)
            If k >= 0 Then .u(j) = TDisp(k)
         Next j
         CalcStress .Smat, .Stmat, .u, Material(ii).fai, Material(ii).cohesion, Material(ii).psai, Material(ii).Poisson
@@ -1947,11 +1948,11 @@ Dim ii As Long: Dim kk As Long
         ii = .MatNo
         .ElNo = i
         For j = 0 To 15 '15
-           kk = .ElNode(j)
+           kk = .elnode(j)
            If kk >= 0 Then .u(j) = Disp(kk)
         Next j
         CalcStress .Smat, .Stmat, .u, Material(ii).fai, Material(ii).cohesion, Material(ii).psai, Material(ii).Poisson
-        CalcForce .ElNo, .Bmat, .dj, .Stmat
+        CalcForce .ElNo, .bMat, .dj, .Stmat
      End With
 NextSetForce:
   Next i
@@ -2004,7 +2005,7 @@ Sub SaveDmat()
       With Elem(i)
       For j = 0 To 15
         For k = 0 To 15
-          ws1.Cells(j + 2, k + 2) = .kmat(j, k)
+          ws1.cells(j + 2, k + 2) = .kmat(j, k)
         Next k
       Next j
       End With
@@ -2032,7 +2033,7 @@ Dim shapeN(0 To 7) As Double, dNxi(0 To 7) As Double, dNeta(0 To 7) As Double
   ReDim P3AppliedForce(lastDof)
   ReDim OriginalForce(lastDof)
   For i = 0 To lastDof
-    P3AppliedForce(i) = Force(i)
+    P3AppliedForce(i) = force(i)
   Next i
   For i = 0 To NumberOfElement - 1
     If Not P3IsElementActive(i) Then GoTo NextWeightElement
@@ -2060,8 +2061,8 @@ Dim shapeN(0 To 7) As Double, dNxi(0 To 7) As Double, dNeta(0 To 7) As Double
           shapeValue = gammaValue * shapeN(j) * dVolume
           k = 2 * Elem(i).node(j)
           If k >= 0 And k < nDof Then
-            Force(k) = Force(k) + shapeValue * nh
-            Force(k + 1) = Force(k + 1) + shapeValue * nv
+            force(k) = force(k) + shapeValue * nh
+            force(k + 1) = force(k + 1) + shapeValue * nv
           End If
         Next j
       Next b
@@ -2072,13 +2073,13 @@ NextWeightElement:
   TotalAppliedLoadX = 0#
   TotalAppliedLoadY = 0#
   For i = 0 To lastDof
-    NForce(i) = Force(i)
-    OriginalForce(i) = Force(i)
-    P3SelfWeightForce(i) = Force(i) - P3AppliedForce(i)
+    NForce(i) = force(i)
+    OriginalForce(i) = force(i)
+    P3SelfWeightForce(i) = force(i) - P3AppliedForce(i)
     If i Mod 2 = 0 Then
-      TotalAppliedLoadX = TotalAppliedLoadX + Force(i)
+      TotalAppliedLoadX = TotalAppliedLoadX + force(i)
     Else
-      TotalAppliedLoadY = TotalAppliedLoadY + Force(i)
+      TotalAppliedLoadY = TotalAppliedLoadY + force(i)
     End If
   Next i
 End Sub
@@ -2120,7 +2121,7 @@ Dim i As Long, rows() As Variant
     rows(ii + 1, 1) = NForce(ii * 2)
     rows(ii + NumberOfFreeNode + 1, 1) = NForce(ii * 2 + 1)
   Next ii
-  ThisWorkbook.Worksheets("力").range(ThisWorkbook.Worksheets("力").Cells(2, 2), ThisWorkbook.Worksheets("力").Cells(NumberOfFreeNode * 2 + 1, 2)).value2 = rows
+  ThisWorkbook.Worksheets("力").range(ThisWorkbook.Worksheets("力").cells(2, 2), ThisWorkbook.Worksheets("力").cells(NumberOfFreeNode * 2 + 1, 2)).value2 = rows
 End Sub
 Sub SaveData1()
 Dim ii As Long: Dim nfreedom As Long
@@ -2132,7 +2133,7 @@ Dim i As Long, rows() As Variant
     rows(ii + 1, 1) = iNForce(ii * 2)
     rows(ii + NumberOfFreeNode + 1, 1) = iNForce(ii * 2 + 1)
   Next ii
-  ThisWorkbook.Worksheets("力").range(ThisWorkbook.Worksheets("力").Cells(2, 2 + nmn), ThisWorkbook.Worksheets("力").Cells(NumberOfFreeNode * 2 + 1, 2 + nmn)).value2 = rows
+  ThisWorkbook.Worksheets("力").range(ThisWorkbook.Worksheets("力").cells(2, 2 + nmn), ThisWorkbook.Worksheets("力").cells(NumberOfFreeNode * 2 + 1, 2 + nmn)).value2 = rows
 End Sub
 Sub SaveData2()
 Dim ii As Long: Dim nfreedom As Long
@@ -2144,7 +2145,7 @@ Dim i As Long, rows() As Variant
     rows(ii + 1, 1) = TDisp(ii * 2)
     rows(ii + NumberOfFreeNode + 1, 1) = TDisp(ii * 2 + 1)
   Next ii
-  ThisWorkbook.Worksheets("変位").range(ThisWorkbook.Worksheets("変位").Cells(2, 2 + nmn), ThisWorkbook.Worksheets("変位").Cells(NumberOfFreeNode * 2 + 1, 2 + nmn)).value2 = rows
+  ThisWorkbook.Worksheets("変位").range(ThisWorkbook.Worksheets("変位").cells(2, 2 + nmn), ThisWorkbook.Worksheets("変位").cells(NumberOfFreeNode * 2 + 1, 2 + nmn)).value2 = rows
 End Sub
 
 Sub SaveDisp()
@@ -2157,25 +2158,25 @@ Dim startRow As Long, stageNo As Long, outputMode As String, lastUsed As Long
   stageNo = P3ResultStageNumber()
   outputMode = UCase$(Trim$(P6ReadTextSetting("OUTPUT_STAGE_MODE", "FINAL")))
   Set ws = ThisWorkbook.Worksheets("結果節点")
-  ws.Cells(1, 1).value2 = "ステージ番号"
-  ws.Cells(1, 2).value2 = "節点番号"
-  ws.Cells(1, 3).value2 = "X"
-  ws.Cells(1, 4).value2 = "Y"
-  ws.Cells(1, 5).value2 = "X変位"
-  ws.Cells(1, 6).value2 = "Y変位"
-  ws.Cells(1, 7).value2 = "X力"
-  ws.Cells(1, 8).value2 = "Y力"
-  ws.Cells(1, 9).value2 = "反力X"
-  ws.Cells(1, 10).value2 = "反力Y"
+  ws.cells(1, 1).value2 = "ステージ番号"
+  ws.cells(1, 2).value2 = "節点番号"
+  ws.cells(1, 3).value2 = "X"
+  ws.cells(1, 4).value2 = "Y"
+  ws.cells(1, 5).value2 = "X変位"
+  ws.cells(1, 6).value2 = "Y変位"
+  ws.cells(1, 7).value2 = "X力"
+  ws.cells(1, 8).value2 = "Y力"
+  ws.cells(1, 9).value2 = "反力X"
+  ws.cells(1, 10).value2 = "反力Y"
   If outputMode = "ALL" Then
-    startRow = ws.Cells(ws.rows.count, 1).End(xlUp).row
+    startRow = ws.cells(ws.rows.count, 1).End(xlUp).row
     If startRow < 2 Then startRow = 2 Else startRow = startRow + 1
   Else
     startRow = 2
-    lastUsed = ws.Cells(ws.rows.count, 1).End(xlUp).row
+    lastUsed = ws.cells(ws.rows.count, 1).End(xlUp).row
     If P6LastDispOutRow > lastUsed Then lastUsed = P6LastDispOutRow
     If lastUsed >= 2 Then
-      ws.range(ws.Cells(2, 1), ws.Cells(lastUsed, 10)).ClearContents
+      ws.range(ws.cells(2, 1), ws.cells(lastUsed, 10)).ClearContents
     End If
   End If
   ReDim rows(1 To NumberOfFreeNode, 1 To 10)
@@ -2194,15 +2195,15 @@ Dim startRow As Long, stageNo As Long, outputMode As String, lastUsed As Long
     rows(ii + 1, 9) = Reaction(i)
     rows(ii + 1, 10) = Reaction(i + 1)
   Next outputNode
-  ws.range(ws.Cells(startRow, 1), ws.Cells(startRow + NumberOfFreeNode - 1, 10)).value2 = rows
+  ws.range(ws.cells(startRow, 1), ws.cells(startRow + NumberOfFreeNode - 1, 10)).value2 = rows
   P6LastDispOutRow = startRow + NumberOfFreeNode - 1
   On Error Resume Next
   If ws.AutoFilterMode Then ws.AutoFilterMode = False
-  ws.range(ws.Cells(1, 1), ws.Cells(1, 10)).AutoFilter
+  ws.range(ws.cells(1, 1), ws.cells(1, 10)).AutoFilter
   On Error GoTo 0
 End Sub
 
-Public Function Nrf(Smat() As Double, Spmat() As Double, UE() As Double, Stmat() As Double, mStmat() As Double, fai As Double, cohesion As Double, psai As Double, young As Double, Poisson As Double, Dmat() As Double, Dpmat() As Double, Bmat() As Double, Optional ByVal materialIndex As Long = -1) As Boolean
+Public Function Nrf(Smat() As Double, Spmat() As Double, UE() As Double, Stmat() As Double, mStmat() As Double, fai As Double, cohesion As Double, psai As Double, young As Double, Poisson As Double, Dmat() As Double, Dpmat() As Double, bMat() As Double, Optional ByVal materialIndex As Long = -1) As Boolean
   Dim inputState As P2_MaterialPointInput, outputState As P2_MaterialPointOutput
   Dim im As Long, i As Long, j As Long, k As Long
   Dim workStmat(0 To 16, 0 To 3) As Double
@@ -2262,7 +2263,7 @@ Public Function Nrf(Smat() As Double, Spmat() As Double, UE() As Double, Stmat()
     For i = 0 To 2
       inputState.StrainIncrement(i) = 0#
       For j = 0 To 15
-        inputState.StrainIncrement(i) = inputState.StrainIncrement(i) + Bmat(i, j, im) * UE(j)
+        inputState.StrainIncrement(i) = inputState.StrainIncrement(i) + bMat(i, j, im) * UE(j)
       Next j
     Next i
     inputState.PreferredSubsteps = 1
@@ -2334,7 +2335,7 @@ Public Function Nrf(Smat() As Double, Spmat() As Double, UE() As Double, Stmat()
       For j = 0 To 15
         s = 0#
         For k = 0 To 2
-          s = s + outputState.tangent(i, k) * Bmat(k, j, im)
+          s = s + outputState.tangent(i, k) * bMat(k, j, im)
         Next k
         workSpmat(i, j, im) = s
       Next j
@@ -2363,8 +2364,8 @@ Public Function Nrf(Smat() As Double, Spmat() As Double, UE() As Double, Stmat()
   Nrf = True
   Exit Function
 ErrLabel:
-  errNumber = Err.Number
-  errDescription = Err.Description
+  errNumber = Err.number
+  errDescription = Err.description
   If errNumber = 18 Then
     SetAnalysisFailure RESULT_NONCONVERGED, "ユーザーが解析を中断しました。", 18, FailureElement, -1, CurrentIncrement, CurrentIteration
     Nrf = False
@@ -2376,7 +2377,7 @@ ErrLabel:
   Nrf = False
 End Function
 
-Private Function NrfLegacyP0(Smat() As Double, Spmat() As Double, UE() As Double, Stmat() As Double, mStmat() As Double, fai As Double, cohesion As Double, psai As Double, Dmat() As Double, Dpmat() As Double, Bmat() As Double) As Boolean
+Private Function NrfLegacyP0(Smat() As Double, Spmat() As Double, UE() As Double, Stmat() As Double, mStmat() As Double, fai As Double, cohesion As Double, psai As Double, Dmat() As Double, Dpmat() As Double, bMat() As Double) As Boolean
 Dim ai As Variant: Dim beta As Variant: Dim cf1 As Variant: Dim cf2 As Variant: Dim cr As Variant
 Dim fa As Variant: Dim fa1 As Variant: Dim fa2 As Variant: Dim im As Variant: Dim msg As Variant
 Dim rs As Variant: Dim sf1 As Variant: Dim sf2 As Variant: Dim txy As Variant: Dim wk As Variant
@@ -2387,7 +2388,7 @@ Dim s As Double
   Dim Dft(2, 2) As Double
   Dim CC As Double
   Dim SS As Double
-  Dim AA As Double
+  Dim aa As Double
   Dim d1 As Double
   Dim d2 As Double
   Dim Si1 As Double
@@ -2481,7 +2482,7 @@ Dim s As Double
       For j = 0 To 15
         s = 0#
         For k = 0 To 2
-          s = s + Dpmat(i, k) * Bmat(k, j, im) 'D行列とB行列の積　［Sp］=［Dep］［B］
+          s = s + Dpmat(i, k) * bMat(k, j, im) 'D行列とB行列の積　［Sp］=［Dep］［B］
         Next k
         Spmat(i, j, im) = s
       Next j
@@ -2567,24 +2568,24 @@ Dim s As Double
   Exit Function
 
 ErrLabel:
-  errNumber = Err.Number
-  errDescription = Err.Description
+  errNumber = Err.number
+  errDescription = Err.description
   If errNumber = 0 Then errNumber = vbObjectError + 3100
   If Len(errDescription) = 0 Then errDescription = "材料点計算で不明なエラーが発生しました。"
   SetAnalysisFailure RESULT_MATERIAL_ERROR, errDescription, errNumber, FailureElement, im, CurrentIncrement, CurrentIteration
   NrfLegacyP0 = False
 End Function
-Sub CalcForce(ElMNo As Long, Bmat() As Double, dj() As Double, Stmat() As Double)
+Sub CalcForce(ElMNo As Long, bMat() As Double, dj() As Double, Stmat() As Double)
 Dim im As Long: Dim jm As Long: Dim kj As Long
 Dim j As Long, modeId As Long
 Dim s As Double, projValue As Double
   For j = 0 To 15   'j　要素各点番号
-    kj = Elem(ElMNo).ElNode(j)  'kj 力番号
+    kj = Elem(ElMNo).elnode(j)  'kj 力番号
     If kj < 0 Then GoTo NextCalcForceDof
     s = 0#
     For im = 0 To 3  'imガウス点　4個
       For jm = 0 To 2 '応力
-        s = s + Bmat(jm, j, im) * Stmat(jm, im) * dj(im) * Material(Elem(ElMNo).MatNo).thickness '［B］T×J×t
+        s = s + bMat(jm, j, im) * Stmat(jm, im) * dj(im) * Material(Elem(ElMNo).MatNo).thickness '［B］T×J×t
       Next jm
     Next im
     iNForce(kj) = iNForce(kj) + s
@@ -2598,13 +2599,13 @@ NextCalcForceDof:
     For modeId = 0 To Elem(ElMNo).HourglassModeCount - 1
       projValue = 0#
       For j = 0 To 15
-        If Elem(ElMNo).ElNode(j) >= 0 Then
-          projValue = projValue + Elem(ElMNo).HourglassMode(modeId, j) * TDisp(Elem(ElMNo).ElNode(j))
+        If Elem(ElMNo).elnode(j) >= 0 Then
+          projValue = projValue + Elem(ElMNo).HourglassMode(modeId, j) * TDisp(Elem(ElMNo).elnode(j))
         End If
       Next j
       projValue = Elem(ElMNo).HourglassScale * projValue
       For j = 0 To 15
-        kj = Elem(ElMNo).ElNode(j)
+        kj = Elem(ElMNo).elnode(j)
         If kj >= 0 Then iNForce(kj) = iNForce(kj) + projValue * Elem(ElMNo).HourglassMode(modeId, j)
       Next j
     Next modeId
@@ -2633,7 +2634,7 @@ Dim s As Double
 
 End Sub
 
-Sub CalcStrain(ElMNo As Long, Bmat() As Double, TDisp() As Double, Stmat() As Double)
+Sub CalcStrain(ElMNo As Long, bMat() As Double, TDisp() As Double, Stmat() As Double)
 Dim im As Long: Dim jm As Long: Dim kj As Long
 Dim j As Long
 Dim s As Double
@@ -2641,8 +2642,8 @@ Dim s As Double
      For jm = 0 To 2 '応力
         s = 0#
         For j = 0 To 15   'j　要素各点番号
-           kj = Elem(ElMNo).ElNode(j)  'kj 力番号
-           s = s + Bmat(jm, j, im) * TDisp(kj)   '［B］×U
+           kj = Elem(ElMNo).elnode(j)  'kj 力番号
+           s = s + bMat(jm, j, im) * TDisp(kj)   '［B］×U
         Next j
         Stmat(10 + jm, im) = s
      Next jm
@@ -2820,157 +2821,157 @@ Public Sub SaveAnalysisReport()
   Set ws = GetDiagnosticSheet()
    P6CaptureDiagnostics
    ws.range("A1:B" & CStr(FEM_DIAGNOSTIC_LAST_ROW)).ClearContents
-  ws.Cells(1, 1).value2 = "2DFEM_ P0診断"
-  ws.Cells(2, 1).value2 = "ResultStatus": ws.Cells(2, 2).value2 = ResultStatus
-  ws.Cells(3, 1).value2 = "AnalysisOK": ws.Cells(3, 2).value2 = AnalysisOK
-  ws.Cells(4, 1).value2 = "AnalysisMessage": ws.Cells(4, 2).value2 = AnalysisMessage
-  ws.Cells(5, 1).value2 = "AnalysisErrorNumber": ws.Cells(5, 2).value2 = AnalysisErrorNumber
-  ws.Cells(6, 1).value2 = "FailureElement": ws.Cells(6, 2).value2 = FailureElement
-  ws.Cells(7, 1).value2 = "FailureGaussPoint": ws.Cells(7, 2).value2 = FailureGaussPoint
-  ws.Cells(8, 1).value2 = "FailureIncrement": ws.Cells(8, 2).value2 = FailureIncrement
-  ws.Cells(9, 1).value2 = "FailureIteration": ws.Cells(9, 2).value2 = FailureIteration
-  ws.Cells(10, 1).value2 = "NumberOfNode": ws.Cells(10, 2).value2 = NumberOfNode
-  ws.Cells(11, 1).value2 = "NumberOfElement": ws.Cells(11, 2).value2 = NumberOfElement
-  ws.Cells(12, 1).value2 = "NumberOfMaterial": ws.Cells(12, 2).value2 = NumberOfMaterial
-  ws.Cells(13, 1).value2 = "NumberOfFreeNode": ws.Cells(13, 2).value2 = NumberOfFreeNode
-  ws.Cells(14, 1).value2 = "nDof": ws.Cells(14, 2).value2 = nDof
-  ws.Cells(15, 1).value2 = "lastDof": ws.Cells(15, 2).value2 = lastDof
-  ws.Cells(16, 1).value2 = "BandWidth": ws.Cells(16, 2).value2 = BandWidth
-  ws.Cells(17, 1).value2 = "RelativeResidualFree": ws.Cells(17, 2).value2 = RelativeResidualFree
-  ws.Cells(18, 1).value2 = "ResidualNormFull": ws.Cells(18, 2).value2 = ResidualNormFull
-  ws.Cells(19, 1).value2 = "MaxAbsResidualFree": ws.Cells(19, 2).value2 = MaxAbsResidualFree
-  ws.Cells(20, 1).value2 = "EnergyError": ws.Cells(20, 2).value2 = EnergyError  ' 無次元 |u?R| / (|F||u|)
-  ws.Cells(21, 1).value2 = "MatrixSymmetryError": ws.Cells(21, 2).value2 = MatrixSymmetryError
-  ws.Cells(22, 1).value2 = "TotalAppliedLoadX": ws.Cells(22, 2).value2 = TotalAppliedLoadX
-   ws.Cells(23, 1).value2 = "TotalAppliedLoadY": ws.Cells(23, 2).value2 = TotalAppliedLoadY
-   ws.Cells(24, 1).value2 = "TotalSelfWeight": ws.Cells(24, 2).value2 = TotalSelfWeight
-   ws.Cells(25, 1).value2 = "MinDetJCorner": ws.Cells(25, 2).value2 = MinDetJCorner
-   ws.Cells(26, 1).value2 = "MaxDetJCorner": ws.Cells(26, 2).value2 = MaxDetJCorner
-   ws.Cells(27, 1).value2 = "MinDetJGauss": ws.Cells(27, 2).value2 = MinDetJGauss
-   ws.Cells(28, 1).value2 = "MaxDetJGauss": ws.Cells(28, 2).value2 = MaxDetJGauss
-   ws.Cells(29, 1).value2 = "ModelRevision": ws.Cells(29, 2).value2 = ModelRevision
-   ws.Cells(30, 1).value2 = "ResultRevision": ws.Cells(30, 2).value2 = ResultRevision
-   ws.Cells(31, 1).value2 = "TimeInput": ws.Cells(31, 2).value2 = TimeInput
-   ws.Cells(32, 1).value2 = "TimeElementStiffness": ws.Cells(32, 2).value2 = TimeElementStiffness
-   ws.Cells(33, 1).value2 = "TimeAssembly": ws.Cells(33, 2).value2 = TimeAssembly
-   ws.Cells(34, 1).value2 = "TimeSolve": ws.Cells(34, 2).value2 = TimeSolve
-   ws.Cells(35, 1).value2 = "TimePlastic": ws.Cells(35, 2).value2 = TimePlastic
-   ws.Cells(36, 1).value2 = "TimeOutput": ws.Cells(36, 2).value2 = TimeOutput
-   ws.Cells(37, 1).value2 = "P1Formulation": ws.Cells(37, 2).value2 = P1Formulation
-   ws.Cells(38, 1).value2 = "P1ResultReady": ws.Cells(38, 2).value2 = P1ResultReady
-   ws.Cells(39, 1).value2 = "P1ResultModelRevision": ws.Cells(39, 2).value2 = P1ResultModelRevision
-   ws.Cells(40, 1).value2 = "P1ModelNote": ws.Cells(40, 2).value2 = "2D平面ひずみ。σz=ν(σx+σy)、3D主応力・3D相当応力を保存。曲げ・横せん断力は現行DOFの対象外。"
-   ws.Cells(41, 1).value2 = "P3SuccessfulIncrementCount": ws.Cells(41, 2).value2 = P3SuccessfulIncrementCount
-   ws.Cells(42, 1).value2 = "P3GlobalIterationCount": ws.Cells(42, 2).value2 = P3GlobalIterationCount
-   ws.Cells(43, 1).value2 = "P3RetryCount": ws.Cells(43, 2).value2 = P3RetryCount
-   ws.Cells(44, 1).value2 = "P3LastConvergedLoadFactor": ws.Cells(44, 2).value2 = P3LastConvergedLoadFactor
-   ws.Cells(45, 1).value2 = "P3CurrentStrengthFactor": ws.Cells(45, 2).value2 = P3CurrentStrengthFactor
-   ws.Cells(46, 1).value2 = "P3UseNonlinearResidual": ws.Cells(46, 2).value2 = P3UseNonlinearResidual
-   ws.Cells(47, 1).value2 = "P3DefaultIncrementCount": ws.Cells(47, 2).value2 = P3DefaultIncrementCount
-   ws.Cells(48, 1).value2 = "P3StateNote": ws.Cells(48, 2).value2 = "mStmat/CommittedStateは確定値、Stmat/TDispは試行値。収束後のみコミットし、失敗時は直前確定状態へ復元。"
-   ws.Cells(49, 1).value2 = "P3MaxTrialDisp": ws.Cells(49, 2).value2 = P3MaxTrialDisp
-   ws.Cells(50, 1).value2 = "P3MaxCorrection": ws.Cells(50, 2).value2 = P3MaxCorrection
-   ws.Cells(51, 1).value2 = "P3LastRelativeResidual": ws.Cells(51, 2).value2 = P3LastRelativeResidual
-   ws.Cells(52, 1).value2 = "P5ModelScale": ws.Cells(52, 2).value2 = P5ModelScale
-   ws.Cells(53, 1).value2 = "P5GeometryTolerance": ws.Cells(53, 2).value2 = P5GeometryTolerance
-   ws.Cells(54, 1).value2 = "P5AreaTolerance": ws.Cells(54, 2).value2 = P5AreaTolerance
-   ws.Cells(55, 1).value2 = "P5MinElementArea": ws.Cells(55, 2).value2 = P5MinElementArea
-   ws.Cells(56, 1).value2 = "P5MinJacobian": ws.Cells(56, 2).value2 = P5MinJacobian
-   ws.Cells(57, 1).value2 = "P5MaxAspectRatio": ws.Cells(57, 2).value2 = P5MaxAspectRatio
-   ws.Cells(58, 1).value2 = "P5MinAngleDeg": ws.Cells(58, 2).value2 = P5MinAngleDeg
-   ws.Cells(59, 1).value2 = "P5MaxAngleDeg": ws.Cells(59, 2).value2 = P5MaxAngleDeg
-   ws.Cells(60, 1).value2 = "P5BoundaryEdgeCount": ws.Cells(60, 2).value2 = P5BoundaryEdgeCount
-   ws.Cells(61, 1).value2 = "P5SharedEdgeCount": ws.Cells(61, 2).value2 = P5SharedEdgeCount
-   ws.Cells(62, 1).value2 = "P5MaterialInterfaceCount": ws.Cells(62, 2).value2 = P5MaterialInterfaceCount
-   ws.Cells(63, 1).value2 = "P5IsolatedNodeCount": ws.Cells(63, 2).value2 = P5IsolatedNodeCount
-   ws.Cells(64, 1).value2 = "P5ConnectedComponentCount": ws.Cells(64, 2).value2 = P5ConnectedComponentCount
-   ws.Cells(65, 1).value2 = "P5BoundarySelfIntersectionCount": ws.Cells(65, 2).value2 = P5BoundarySelfIntersectionCount
-   ws.Cells(66, 1).value2 = "P5LocateCallCount": ws.Cells(66, 2).value2 = P5LocateCallCount
-   ws.Cells(67, 1).value2 = "P5LocateTotalIterations": ws.Cells(67, 2).value2 = P5LocateTotalIterations
-   ws.Cells(68, 1).value2 = "P5LocateMaxIterations": ws.Cells(68, 2).value2 = P5LocateMaxIterations
-   ws.Cells(69, 1).value2 = "P5LocateLastIterations": ws.Cells(69, 2).value2 = P5LocateLastIterations
-   ws.Cells(70, 1).value2 = "P5LocateLastElement": ws.Cells(70, 2).value2 = P5LocateLastElement
-   ws.Cells(71, 1).value2 = "P5LocateLastFailure": ws.Cells(71, 2).value2 = P5LocateLastFailure
-   ws.Cells(72, 1).value2 = "P6MatrixStoragePolicy": ws.Cells(72, 2).value2 = P6MatrixStoragePolicy
-   ws.Cells(73, 1).value2 = "P6BandStorageEntries": ws.Cells(73, 2).value2 = P6BandStorageEntries
-   ws.Cells(74, 1).value2 = "P6BandStorageBytes": ws.Cells(74, 2).value2 = P6BandStorageBytes
-   ws.Cells(75, 1).value2 = "P6DenseStorageBytes": ws.Cells(75, 2).value2 = P6DenseStorageBytes
-   ws.Cells(76, 1).value2 = "P6EstimatedWorkMemoryBytes": ws.Cells(76, 2).value2 = P6EstimatedWorkMemoryBytes
-   ws.Cells(77, 1).value2 = "P6BandSolveCallCount": ws.Cells(77, 2).value2 = P6BandSolveCallCount
-   ws.Cells(78, 1).value2 = "P6FactorizationCount": ws.Cells(78, 2).value2 = P6FactorizationCount
-   ws.Cells(79, 1).value2 = "P6FactorizationReuseCount": ws.Cells(79, 2).value2 = P6FactorizationReuseCount
-   ws.Cells(80, 1).value2 = "P6RenumberingApplied": ws.Cells(80, 2).value2 = P6RenumberingApplied
-   ws.Cells(81, 1).value2 = "P6NodeOrderingPolicy": ws.Cells(81, 2).value2 = P6NodeOrderingPolicy
-   ws.Cells(82, 1).value2 = "P6MeasuredStageTotalSeconds": ws.Cells(82, 2).value2 = P6MeasuredStageTotalSeconds
-   ws.Cells(83, 1).value2 = "P6TimeInput": ws.Cells(83, 2).value2 = TimeInput
-   ws.Cells(84, 1).value2 = "P6TimeElementStiffness": ws.Cells(84, 2).value2 = TimeElementStiffness
-   ws.Cells(85, 1).value2 = "P6TimeAssembly": ws.Cells(85, 2).value2 = TimeAssembly
-   ws.Cells(86, 1).value2 = "P6TimeSolve": ws.Cells(86, 2).value2 = TimeSolve
-   ws.Cells(87, 1).value2 = "P6TimePlastic": ws.Cells(87, 2).value2 = TimePlastic
-   ws.Cells(88, 1).value2 = "P6TimeOutput": ws.Cells(88, 2).value2 = TimeOutput
-   ws.Cells(89, 1).value2 = "P6ModelSignature": ws.Cells(89, 2).value2 = P6ModelSignature
-   ws.Cells(90, 1).value2 = "P6IntegrationStatus": ws.Cells(90, 2).value2 = P6IntegrationStatus
-   ws.Cells(91, 1).value2 = "P6RCMOriginalBandwidth": ws.Cells(91, 2).value2 = P6RCMOriginalBandwidth
-   ws.Cells(92, 1).value2 = "P6RCMCandidateBandwidth": ws.Cells(92, 2).value2 = P6RCMCandidateBandwidth
-   ws.Cells(93, 1).value2 = "P6RCMStatus": ws.Cells(93, 2).value2 = P6RCMStatus
-   ws.Cells(94, 1).value2 = "P6FactorizationReady": ws.Cells(94, 2).value2 = P6FactorReady
-   ws.Cells(95, 1).value2 = "P6SolverMode": ws.Cells(95, 2).value2 = P6SolverMode
-   ws.Cells(96, 1).value2 = "P6OptimizationPolicy": ws.Cells(96, 2).value2 = P6OptimizationPolicy
-   ws.Cells(97, 1).value2 = "P6ElasticKCacheStatus": ws.Cells(97, 2).value2 = P6ElasticKCacheStatus
-   ws.Cells(98, 1).value2 = "P6SolverMemoryLimitBytes": ws.Cells(98, 2).value2 = P6SolverMemoryLimitBytes
-   ws.Cells(99, 1).value2 = "P6SolverPolicy": ws.Cells(99, 2).value2 = P6SolverPolicy
-   ws.Cells(100, 1).value2 = "P6SolverEvaluationStatus": ws.Cells(100, 2).value2 = P6SolverEvaluationStatus
-   ws.Cells(101, 1).value2 = "P6CacheMissReason": ws.Cells(101, 2).value2 = P6CacheMissReason
-   ws.Cells(102, 1).value2 = "P6QuadratureArea": ws.Cells(102, 2).value2 = P6QuadratureArea
-   ws.Cells(103, 1).value2 = "P6MeshRevision": ws.Cells(103, 2).value2 = P6MeshRevision
-   ws.Cells(104, 1).value2 = "P6GeometryRevision": ws.Cells(104, 2).value2 = P6GeometryRevision
-   ws.Cells(105, 1).value2 = "P6MaterialGeneration": ws.Cells(105, 2).value2 = P6MaterialGeneration
-   ws.Cells(105, 3).value2 = "P6StrengthGeneration": ws.Cells(105, 4).value2 = P6StrengthGeneration
-   ws.Cells(106, 1).value2 = "P6MaterialInputRevision": ws.Cells(106, 2).value2 = P6MaterialInputRevision
-   ws.Cells(107, 1).value2 = "P6IterativeFallbackStatus": ws.Cells(107, 2).value2 = P6IterativeFallbackStatus
-   ws.Cells(108, 1).value2 = "FEM_BUILD_STAMP": ws.Cells(108, 2).value2 = FEM_BUILD_STAMP
-   ws.Cells(109, 1).value2 = "Q8_HOURGLASS_FACTOR": ws.Cells(109, 2).value2 = P6HourglassFactor
-   ws.Cells(110, 1).value2 = "P6HourglassModeCount": ws.Cells(110, 2).value2 = P6HourglassModeCount
-   ws.Cells(111, 1).value2 = "MIXED_UP": ws.Cells(111, 2).value2 = P6MixedUP
-   ws.Cells(112, 1).value2 = "P6PressureCount": ws.Cells(112, 2).value2 = P6PressureCount
-   ws.Cells(113, 1).value2 = "P6UzawaIterations": ws.Cells(113, 2).value2 = P6UzawaIterations
-   ws.Cells(114, 1).value2 = "P6ConsolActive": ws.Cells(114, 2).value2 = P6ConsolActive
-   ws.Cells(115, 1).value2 = "P6ConsolTime": ws.Cells(115, 2).value2 = P6ConsolTime
-   ws.Cells(116, 1).value2 = "P6ConsolStep": ws.Cells(116, 2).value2 = P6ConsolStep
-   ws.Cells(117, 1).value2 = "P6MaxPressure": ws.Cells(117, 2).value2 = P6MaxPressure
-   ws.Cells(118, 1).value2 = "P6DrainCount": ws.Cells(118, 2).value2 = P6DrainCount
-   ws.Cells(119, 1).value2 = "P6WeightMode": ws.Cells(119, 2).value2 = P6WeightMode
-   ws.Cells(120, 1).value2 = "P6WeightNote": ws.Cells(120, 2).value2 = P6WeightNote
-   ws.Cells(121, 1).value2 = "P3MaxBoundaryDispError": ws.Cells(121, 2).value2 = P3MaxBoundaryDispError
-   ws.Cells(122, 1).value2 = "P3RelativeBoundaryDispError": ws.Cells(122, 2).value2 = P3RelativeBoundaryDispError
-   ws.Cells(123, 1).value2 = "P6ReactionSumX": ws.Cells(123, 2).value2 = P6ReactionSumX
-   ws.Cells(124, 1).value2 = "P6ReactionSumY": ws.Cells(124, 2).value2 = P6ReactionSumY
-   ws.Cells(125, 1).value2 = "P3SrmEnabled": ws.Cells(125, 2).value2 = P3SrmEnabled
-   ws.Cells(126, 1).value2 = "P3SrmTrialCount": ws.Cells(126, 2).value2 = P3SrmTrialCount
-   ws.Cells(127, 1).value2 = "P3SrmLower": ws.Cells(127, 2).value2 = P3SrmLower
-   ws.Cells(128, 1).value2 = "P3SrmUpper": ws.Cells(128, 2).value2 = P3SrmUpper
-   ws.Cells(129, 1).value2 = "P3SrmNote": ws.Cells(129, 2).value2 = P3SrmNote
-   ws.Cells(130, 1).value2 = "P3StagePlanText": ws.Cells(130, 2).value2 = P3StagePlanText
-   ws.Cells(131, 1).value2 = "P6HourglassReuseCount": ws.Cells(131, 2).value2 = P6HourglassReuseCount
-   ws.Cells(132, 1).value2 = "P6ScatterN": ws.Cells(132, 2).value2 = P6ScatterN
-   ws.Cells(133, 1).value2 = "P6ProfHgMs": ws.Cells(133, 2).value2 = P6ProfHgMs
-   ws.Cells(134, 1).value2 = "P6ProfAssembleMs": ws.Cells(134, 2).value2 = P6ProfAssembleMs
-   ws.Cells(135, 1).value2 = "P6ProfFactorMs": ws.Cells(135, 2).value2 = P6ProfFactorMs
-   ws.Cells(136, 1).value2 = "P6ProfSolveMs": ws.Cells(136, 2).value2 = P6ProfSolveMs
-   ws.Cells(137, 1).value2 = "P6ProfLoadMs": ws.Cells(137, 2).value2 = P6ProfLoadMs
-   ws.Cells(138, 1).value2 = "P6ProfTangentMs": ws.Cells(138, 2).value2 = P6ProfTangentMs
-   ws.Cells(139, 1).value2 = "P6ProfEvalCount": ws.Cells(139, 2).value2 = P6ProfEvalCount
-   ws.Cells(140, 1).value2 = "P6ProfEvalMs": ws.Cells(140, 2).value2 = P6ProfEvalMs
-   ws.Cells(141, 1).value2 = "FLOW_POLICY": ws.Cells(141, 2).value2 = P3FlowPolicyText()
-   ws.Cells(142, 1).value2 = "FOS_INTERPRETATION": ws.Cells(142, 2).value2 = P3FosInterpretation
-   ws.Cells(143, 1).value2 = "SRM_TRIAL_CLASS": ws.Cells(143, 2).value2 = P3SrmTrialClassification
-   ws.Cells(144, 1).value2 = "FAILURE_KIND": ws.Cells(144, 2).value2 = P3FailureKind
-   ws.Cells(145, 1).value2 = "FAILED_TRIAL_LAMBDA": ws.Cells(145, 2).value2 = P3FailureLambda
-   ws.Cells(146, 1).value2 = "FAILED_TRIAL_RELRES": ws.Cells(146, 2).value2 = P3FailureResidual
-   ws.Cells(147, 1).value2 = "FAILED_TRIAL_LINEAR_RELRES": ws.Cells(147, 2).value2 = P3FailureLinearResidual
-   ws.Cells(148, 1).value2 = "FAILED_TRIAL_CORRECTION": ws.Cells(148, 2).value2 = P3FailureCorrection
-   ws.Cells(149, 1).value2 = "FAILED_TRIAL_PLASTIC_POINTS": ws.Cells(149, 2).value2 = P3FailurePlasticPoints
-   ws.Cells(150, 1).value2 = "FAILED_TRIAL_UMAX": ws.Cells(150, 2).value2 = P3FailureMaxDisp
+  ws.cells(1, 1).value2 = "2DFEM_ P0診断"
+  ws.cells(2, 1).value2 = "ResultStatus": ws.cells(2, 2).value2 = ResultStatus
+  ws.cells(3, 1).value2 = "AnalysisOK": ws.cells(3, 2).value2 = AnalysisOK
+  ws.cells(4, 1).value2 = "AnalysisMessage": ws.cells(4, 2).value2 = AnalysisMessage
+  ws.cells(5, 1).value2 = "AnalysisErrorNumber": ws.cells(5, 2).value2 = AnalysisErrorNumber
+  ws.cells(6, 1).value2 = "FailureElement": ws.cells(6, 2).value2 = FailureElement
+  ws.cells(7, 1).value2 = "FailureGaussPoint": ws.cells(7, 2).value2 = FailureGaussPoint
+  ws.cells(8, 1).value2 = "FailureIncrement": ws.cells(8, 2).value2 = FailureIncrement
+  ws.cells(9, 1).value2 = "FailureIteration": ws.cells(9, 2).value2 = FailureIteration
+  ws.cells(10, 1).value2 = "NumberOfNode": ws.cells(10, 2).value2 = NumberOfNode
+  ws.cells(11, 1).value2 = "NumberOfElement": ws.cells(11, 2).value2 = NumberOfElement
+  ws.cells(12, 1).value2 = "NumberOfMaterial": ws.cells(12, 2).value2 = NumberOfMaterial
+  ws.cells(13, 1).value2 = "NumberOfFreeNode": ws.cells(13, 2).value2 = NumberOfFreeNode
+  ws.cells(14, 1).value2 = "nDof": ws.cells(14, 2).value2 = nDof
+  ws.cells(15, 1).value2 = "lastDof": ws.cells(15, 2).value2 = lastDof
+  ws.cells(16, 1).value2 = "BandWidth": ws.cells(16, 2).value2 = BandWidth
+  ws.cells(17, 1).value2 = "RelativeResidualFree": ws.cells(17, 2).value2 = RelativeResidualFree
+  ws.cells(18, 1).value2 = "ResidualNormFull": ws.cells(18, 2).value2 = ResidualNormFull
+  ws.cells(19, 1).value2 = "MaxAbsResidualFree": ws.cells(19, 2).value2 = MaxAbsResidualFree
+  ws.cells(20, 1).value2 = "EnergyError": ws.cells(20, 2).value2 = EnergyError  ' 無次元 |u?R| / (|F||u|)
+  ws.cells(21, 1).value2 = "MatrixSymmetryError": ws.cells(21, 2).value2 = MatrixSymmetryError
+  ws.cells(22, 1).value2 = "TotalAppliedLoadX": ws.cells(22, 2).value2 = TotalAppliedLoadX
+   ws.cells(23, 1).value2 = "TotalAppliedLoadY": ws.cells(23, 2).value2 = TotalAppliedLoadY
+   ws.cells(24, 1).value2 = "TotalSelfWeight": ws.cells(24, 2).value2 = TotalSelfWeight
+   ws.cells(25, 1).value2 = "MinDetJCorner": ws.cells(25, 2).value2 = MinDetJCorner
+   ws.cells(26, 1).value2 = "MaxDetJCorner": ws.cells(26, 2).value2 = MaxDetJCorner
+   ws.cells(27, 1).value2 = "MinDetJGauss": ws.cells(27, 2).value2 = MinDetJGauss
+   ws.cells(28, 1).value2 = "MaxDetJGauss": ws.cells(28, 2).value2 = MaxDetJGauss
+   ws.cells(29, 1).value2 = "ModelRevision": ws.cells(29, 2).value2 = ModelRevision
+   ws.cells(30, 1).value2 = "ResultRevision": ws.cells(30, 2).value2 = ResultRevision
+   ws.cells(31, 1).value2 = "TimeInput": ws.cells(31, 2).value2 = TimeInput
+   ws.cells(32, 1).value2 = "TimeElementStiffness": ws.cells(32, 2).value2 = TimeElementStiffness
+   ws.cells(33, 1).value2 = "TimeAssembly": ws.cells(33, 2).value2 = TimeAssembly
+   ws.cells(34, 1).value2 = "TimeSolve": ws.cells(34, 2).value2 = TimeSolve
+   ws.cells(35, 1).value2 = "TimePlastic": ws.cells(35, 2).value2 = TimePlastic
+   ws.cells(36, 1).value2 = "TimeOutput": ws.cells(36, 2).value2 = TimeOutput
+   ws.cells(37, 1).value2 = "P1Formulation": ws.cells(37, 2).value2 = P1Formulation
+   ws.cells(38, 1).value2 = "P1ResultReady": ws.cells(38, 2).value2 = P1ResultReady
+   ws.cells(39, 1).value2 = "P1ResultModelRevision": ws.cells(39, 2).value2 = P1ResultModelRevision
+   ws.cells(40, 1).value2 = "P1ModelNote": ws.cells(40, 2).value2 = "2D平面ひずみ。σz=ν(σx+σy)、3D主応力・3D相当応力を保存。曲げ・横せん断力は現行DOFの対象外。"
+   ws.cells(41, 1).value2 = "P3SuccessfulIncrementCount": ws.cells(41, 2).value2 = P3SuccessfulIncrementCount
+   ws.cells(42, 1).value2 = "P3GlobalIterationCount": ws.cells(42, 2).value2 = P3GlobalIterationCount
+   ws.cells(43, 1).value2 = "P3RetryCount": ws.cells(43, 2).value2 = P3RetryCount
+   ws.cells(44, 1).value2 = "P3LastConvergedLoadFactor": ws.cells(44, 2).value2 = P3LastConvergedLoadFactor
+   ws.cells(45, 1).value2 = "P3CurrentStrengthFactor": ws.cells(45, 2).value2 = P3CurrentStrengthFactor
+   ws.cells(46, 1).value2 = "P3UseNonlinearResidual": ws.cells(46, 2).value2 = P3UseNonlinearResidual
+   ws.cells(47, 1).value2 = "P3DefaultIncrementCount": ws.cells(47, 2).value2 = P3DefaultIncrementCount
+   ws.cells(48, 1).value2 = "P3StateNote": ws.cells(48, 2).value2 = "mStmat/CommittedStateは確定値、Stmat/TDispは試行値。収束後のみコミットし、失敗時は直前確定状態へ復元。"
+   ws.cells(49, 1).value2 = "P3MaxTrialDisp": ws.cells(49, 2).value2 = P3MaxTrialDisp
+   ws.cells(50, 1).value2 = "P3MaxCorrection": ws.cells(50, 2).value2 = P3MaxCorrection
+   ws.cells(51, 1).value2 = "P3LastRelativeResidual": ws.cells(51, 2).value2 = P3LastRelativeResidual
+   ws.cells(52, 1).value2 = "P5ModelScale": ws.cells(52, 2).value2 = P5ModelScale
+   ws.cells(53, 1).value2 = "P5GeometryTolerance": ws.cells(53, 2).value2 = P5GeometryTolerance
+   ws.cells(54, 1).value2 = "P5AreaTolerance": ws.cells(54, 2).value2 = P5AreaTolerance
+   ws.cells(55, 1).value2 = "P5MinElementArea": ws.cells(55, 2).value2 = P5MinElementArea
+   ws.cells(56, 1).value2 = "P5MinJacobian": ws.cells(56, 2).value2 = P5MinJacobian
+   ws.cells(57, 1).value2 = "P5MaxAspectRatio": ws.cells(57, 2).value2 = P5MaxAspectRatio
+   ws.cells(58, 1).value2 = "P5MinAngleDeg": ws.cells(58, 2).value2 = P5MinAngleDeg
+   ws.cells(59, 1).value2 = "P5MaxAngleDeg": ws.cells(59, 2).value2 = P5MaxAngleDeg
+   ws.cells(60, 1).value2 = "P5BoundaryEdgeCount": ws.cells(60, 2).value2 = P5BoundaryEdgeCount
+   ws.cells(61, 1).value2 = "P5SharedEdgeCount": ws.cells(61, 2).value2 = P5SharedEdgeCount
+   ws.cells(62, 1).value2 = "P5MaterialInterfaceCount": ws.cells(62, 2).value2 = P5MaterialInterfaceCount
+   ws.cells(63, 1).value2 = "P5IsolatedNodeCount": ws.cells(63, 2).value2 = P5IsolatedNodeCount
+   ws.cells(64, 1).value2 = "P5ConnectedComponentCount": ws.cells(64, 2).value2 = P5ConnectedComponentCount
+   ws.cells(65, 1).value2 = "P5BoundarySelfIntersectionCount": ws.cells(65, 2).value2 = P5BoundarySelfIntersectionCount
+   ws.cells(66, 1).value2 = "P5LocateCallCount": ws.cells(66, 2).value2 = P5LocateCallCount
+   ws.cells(67, 1).value2 = "P5LocateTotalIterations": ws.cells(67, 2).value2 = P5LocateTotalIterations
+   ws.cells(68, 1).value2 = "P5LocateMaxIterations": ws.cells(68, 2).value2 = P5LocateMaxIterations
+   ws.cells(69, 1).value2 = "P5LocateLastIterations": ws.cells(69, 2).value2 = P5LocateLastIterations
+   ws.cells(70, 1).value2 = "P5LocateLastElement": ws.cells(70, 2).value2 = P5LocateLastElement
+   ws.cells(71, 1).value2 = "P5LocateLastFailure": ws.cells(71, 2).value2 = P5LocateLastFailure
+   ws.cells(72, 1).value2 = "P6MatrixStoragePolicy": ws.cells(72, 2).value2 = P6MatrixStoragePolicy
+   ws.cells(73, 1).value2 = "P6BandStorageEntries": ws.cells(73, 2).value2 = P6BandStorageEntries
+   ws.cells(74, 1).value2 = "P6BandStorageBytes": ws.cells(74, 2).value2 = P6BandStorageBytes
+   ws.cells(75, 1).value2 = "P6DenseStorageBytes": ws.cells(75, 2).value2 = P6DenseStorageBytes
+   ws.cells(76, 1).value2 = "P6EstimatedWorkMemoryBytes": ws.cells(76, 2).value2 = P6EstimatedWorkMemoryBytes
+   ws.cells(77, 1).value2 = "P6BandSolveCallCount": ws.cells(77, 2).value2 = P6BandSolveCallCount
+   ws.cells(78, 1).value2 = "P6FactorizationCount": ws.cells(78, 2).value2 = P6FactorizationCount
+   ws.cells(79, 1).value2 = "P6FactorizationReuseCount": ws.cells(79, 2).value2 = P6FactorizationReuseCount
+   ws.cells(80, 1).value2 = "P6RenumberingApplied": ws.cells(80, 2).value2 = P6RenumberingApplied
+   ws.cells(81, 1).value2 = "P6NodeOrderingPolicy": ws.cells(81, 2).value2 = P6NodeOrderingPolicy
+   ws.cells(82, 1).value2 = "P6MeasuredStageTotalSeconds": ws.cells(82, 2).value2 = P6MeasuredStageTotalSeconds
+   ws.cells(83, 1).value2 = "P6TimeInput": ws.cells(83, 2).value2 = TimeInput
+   ws.cells(84, 1).value2 = "P6TimeElementStiffness": ws.cells(84, 2).value2 = TimeElementStiffness
+   ws.cells(85, 1).value2 = "P6TimeAssembly": ws.cells(85, 2).value2 = TimeAssembly
+   ws.cells(86, 1).value2 = "P6TimeSolve": ws.cells(86, 2).value2 = TimeSolve
+   ws.cells(87, 1).value2 = "P6TimePlastic": ws.cells(87, 2).value2 = TimePlastic
+   ws.cells(88, 1).value2 = "P6TimeOutput": ws.cells(88, 2).value2 = TimeOutput
+   ws.cells(89, 1).value2 = "P6ModelSignature": ws.cells(89, 2).value2 = P6ModelSignature
+   ws.cells(90, 1).value2 = "P6IntegrationStatus": ws.cells(90, 2).value2 = P6IntegrationStatus
+   ws.cells(91, 1).value2 = "P6RCMOriginalBandwidth": ws.cells(91, 2).value2 = P6RCMOriginalBandwidth
+   ws.cells(92, 1).value2 = "P6RCMCandidateBandwidth": ws.cells(92, 2).value2 = P6RCMCandidateBandwidth
+   ws.cells(93, 1).value2 = "P6RCMStatus": ws.cells(93, 2).value2 = P6RCMStatus
+   ws.cells(94, 1).value2 = "P6FactorizationReady": ws.cells(94, 2).value2 = P6FactorReady
+   ws.cells(95, 1).value2 = "P6SolverMode": ws.cells(95, 2).value2 = P6SolverMode
+   ws.cells(96, 1).value2 = "P6OptimizationPolicy": ws.cells(96, 2).value2 = P6OptimizationPolicy
+   ws.cells(97, 1).value2 = "P6ElasticKCacheStatus": ws.cells(97, 2).value2 = P6ElasticKCacheStatus
+   ws.cells(98, 1).value2 = "P6SolverMemoryLimitBytes": ws.cells(98, 2).value2 = P6SolverMemoryLimitBytes
+   ws.cells(99, 1).value2 = "P6SolverPolicy": ws.cells(99, 2).value2 = P6SolverPolicy
+   ws.cells(100, 1).value2 = "P6SolverEvaluationStatus": ws.cells(100, 2).value2 = P6SolverEvaluationStatus
+   ws.cells(101, 1).value2 = "P6CacheMissReason": ws.cells(101, 2).value2 = P6CacheMissReason
+   ws.cells(102, 1).value2 = "P6QuadratureArea": ws.cells(102, 2).value2 = P6QuadratureArea
+   ws.cells(103, 1).value2 = "P6MeshRevision": ws.cells(103, 2).value2 = P6MeshRevision
+   ws.cells(104, 1).value2 = "P6GeometryRevision": ws.cells(104, 2).value2 = P6GeometryRevision
+   ws.cells(105, 1).value2 = "P6MaterialGeneration": ws.cells(105, 2).value2 = P6MaterialGeneration
+   ws.cells(105, 3).value2 = "P6StrengthGeneration": ws.cells(105, 4).value2 = P6StrengthGeneration
+   ws.cells(106, 1).value2 = "P6MaterialInputRevision": ws.cells(106, 2).value2 = P6MaterialInputRevision
+   ws.cells(107, 1).value2 = "P6IterativeFallbackStatus": ws.cells(107, 2).value2 = P6IterativeFallbackStatus
+   ws.cells(108, 1).value2 = "FEM_BUILD_STAMP": ws.cells(108, 2).value2 = FEM_BUILD_STAMP
+   ws.cells(109, 1).value2 = "Q8_HOURGLASS_FACTOR": ws.cells(109, 2).value2 = P6HourglassFactor
+   ws.cells(110, 1).value2 = "P6HourglassModeCount": ws.cells(110, 2).value2 = P6HourglassModeCount
+   ws.cells(111, 1).value2 = "MIXED_UP": ws.cells(111, 2).value2 = P6MixedUP
+   ws.cells(112, 1).value2 = "P6PressureCount": ws.cells(112, 2).value2 = P6PressureCount
+   ws.cells(113, 1).value2 = "P6UzawaIterations": ws.cells(113, 2).value2 = P6UzawaIterations
+   ws.cells(114, 1).value2 = "P6ConsolActive": ws.cells(114, 2).value2 = P6ConsolActive
+   ws.cells(115, 1).value2 = "P6ConsolTime": ws.cells(115, 2).value2 = P6ConsolTime
+   ws.cells(116, 1).value2 = "P6ConsolStep": ws.cells(116, 2).value2 = P6ConsolStep
+   ws.cells(117, 1).value2 = "P6MaxPressure": ws.cells(117, 2).value2 = P6MaxPressure
+   ws.cells(118, 1).value2 = "P6DrainCount": ws.cells(118, 2).value2 = P6DrainCount
+   ws.cells(119, 1).value2 = "P6WeightMode": ws.cells(119, 2).value2 = P6WeightMode
+   ws.cells(120, 1).value2 = "P6WeightNote": ws.cells(120, 2).value2 = P6WeightNote
+   ws.cells(121, 1).value2 = "P3MaxBoundaryDispError": ws.cells(121, 2).value2 = P3MaxBoundaryDispError
+   ws.cells(122, 1).value2 = "P3RelativeBoundaryDispError": ws.cells(122, 2).value2 = P3RelativeBoundaryDispError
+   ws.cells(123, 1).value2 = "P6ReactionSumX": ws.cells(123, 2).value2 = P6ReactionSumX
+   ws.cells(124, 1).value2 = "P6ReactionSumY": ws.cells(124, 2).value2 = P6ReactionSumY
+   ws.cells(125, 1).value2 = "P3SrmEnabled": ws.cells(125, 2).value2 = P3SrmEnabled
+   ws.cells(126, 1).value2 = "P3SrmTrialCount": ws.cells(126, 2).value2 = P3SrmTrialCount
+   ws.cells(127, 1).value2 = "P3SrmLower": ws.cells(127, 2).value2 = P3SrmLower
+   ws.cells(128, 1).value2 = "P3SrmUpper": ws.cells(128, 2).value2 = P3SrmUpper
+   ws.cells(129, 1).value2 = "P3SrmNote": ws.cells(129, 2).value2 = P3SrmNote
+   ws.cells(130, 1).value2 = "P3StagePlanText": ws.cells(130, 2).value2 = P3StagePlanText
+   ws.cells(131, 1).value2 = "P6HourglassReuseCount": ws.cells(131, 2).value2 = P6HourglassReuseCount
+   ws.cells(132, 1).value2 = "P6ScatterN": ws.cells(132, 2).value2 = P6ScatterN
+   ws.cells(133, 1).value2 = "P6ProfHgMs": ws.cells(133, 2).value2 = P6ProfHgMs
+   ws.cells(134, 1).value2 = "P6ProfAssembleMs": ws.cells(134, 2).value2 = P6ProfAssembleMs
+   ws.cells(135, 1).value2 = "P6ProfFactorMs": ws.cells(135, 2).value2 = P6ProfFactorMs
+   ws.cells(136, 1).value2 = "P6ProfSolveMs": ws.cells(136, 2).value2 = P6ProfSolveMs
+   ws.cells(137, 1).value2 = "P6ProfLoadMs": ws.cells(137, 2).value2 = P6ProfLoadMs
+   ws.cells(138, 1).value2 = "P6ProfTangentMs": ws.cells(138, 2).value2 = P6ProfTangentMs
+   ws.cells(139, 1).value2 = "P6ProfEvalCount": ws.cells(139, 2).value2 = P6ProfEvalCount
+   ws.cells(140, 1).value2 = "P6ProfEvalMs": ws.cells(140, 2).value2 = P6ProfEvalMs
+   ws.cells(141, 1).value2 = "FLOW_POLICY": ws.cells(141, 2).value2 = P3FlowPolicyText()
+   ws.cells(142, 1).value2 = "FOS_INTERPRETATION": ws.cells(142, 2).value2 = P3FosInterpretation
+   ws.cells(143, 1).value2 = "SRM_TRIAL_CLASS": ws.cells(143, 2).value2 = P3SrmTrialClassification
+   ws.cells(144, 1).value2 = "FAILURE_KIND": ws.cells(144, 2).value2 = P3FailureKind
+   ws.cells(145, 1).value2 = "FAILED_TRIAL_LAMBDA": ws.cells(145, 2).value2 = P3FailureLambda
+   ws.cells(146, 1).value2 = "FAILED_TRIAL_RELRES": ws.cells(146, 2).value2 = P3FailureResidual
+   ws.cells(147, 1).value2 = "FAILED_TRIAL_LINEAR_RELRES": ws.cells(147, 2).value2 = P3FailureLinearResidual
+   ws.cells(148, 1).value2 = "FAILED_TRIAL_CORRECTION": ws.cells(148, 2).value2 = P3FailureCorrection
+   ws.cells(149, 1).value2 = "FAILED_TRIAL_PLASTIC_POINTS": ws.cells(149, 2).value2 = P3FailurePlasticPoints
+   ws.cells(150, 1).value2 = "FAILED_TRIAL_UMAX": ws.cells(150, 2).value2 = P3FailureMaxDisp
    If P6ReadSetting("OUTPUT_AUTOFIT", 0#) <> 0# Then ws.columns("A:B").AutoFit
 End Sub
 
@@ -3395,12 +3396,12 @@ Private Sub ClearP1ResultSheet(ByRef ws As Worksheet)
   If P1LastOutputLastRow > 0 Then
     lastRow = P1LastOutputLastRow
   Else
-    lastRow = ws.Cells(ws.rows.count, 1).End(xlUp).row
+    lastRow = ws.cells(ws.rows.count, 1).End(xlUp).row
   End If
   lastColumn = P1_RESULT_COUNT + 14
   If lastRow < startRow Then lastRow = startRow
   If lastColumn > P1_RESULT_COUNT + 14 Then lastColumn = P1_RESULT_COUNT + 14
-  ws.range(ws.Cells(startRow, 1), ws.Cells(lastRow, lastColumn)).ClearContents
+  ws.range(ws.cells(startRow, 1), ws.cells(lastRow, lastColumn)).ClearContents
   P1LastOutputLastRow = 0
 End Sub
 
@@ -3420,12 +3421,12 @@ Public Sub SaveP1Results()
   Set ws = GetP1ResultSheet()
   ClearP1ResultSheet ws
   sectionStart = FEM_INTEGRATED_P1_START_ROW
-  ws.Cells(sectionStart, 1).value2 = "P1詳細は結果節点・結果要素。Gauss状態はブック横 *_out"
-  ws.Cells(sectionStart + 1, 1).value2 = "Elements"
-  ws.Cells(sectionStart + 1, 2).value2 = NumberOfElement
-  ws.Cells(sectionStart + 2, 1).value2 = "Nodes"
-  ws.Cells(sectionStart + 2, 2).value2 = NumberOfFreeNode
-  ws.Cells(sectionStart + 3, 1).value2 = "P2塑性点は本シート AN列（適応メッシュ用）"
+  ws.cells(sectionStart, 1).value2 = "P1詳細は結果節点・結果要素。Gauss状態はブック横 *_out"
+  ws.cells(sectionStart + 1, 1).value2 = "Elements"
+  ws.cells(sectionStart + 1, 2).value2 = NumberOfElement
+  ws.cells(sectionStart + 2, 1).value2 = "Nodes"
+  ws.cells(sectionStart + 2, 2).value2 = NumberOfFreeNode
+  ws.cells(sectionStart + 3, 1).value2 = "P2塑性点は本シート AN列（適応メッシュ用）"
   P1LastOutputLastRow = sectionStart + 3
 End Sub
 
@@ -3440,11 +3441,11 @@ Private Sub ClearP2MaterialResultSheet(ByRef ws As Worksheet)
   If P2LastOutputLastRow > 0 Then
     lastRow = P2LastOutputLastRow
   Else
-    lastRow = ws.Cells(ws.rows.count, startColumn).End(xlUp).row
+    lastRow = ws.cells(ws.rows.count, startColumn).End(xlUp).row
   End If
   If lastRow < startRow Then lastRow = startRow
   If lastRow > 1000000 Then lastRow = 1000000
-  ws.range(ws.Cells(startRow, startColumn), ws.Cells(lastRow, startColumn + 13)).ClearContents
+  ws.range(ws.cells(startRow, startColumn), ws.cells(lastRow, startColumn + 13)).ClearContents
   P2LastOutputLastRow = 0
 End Sub
 
@@ -3466,31 +3467,31 @@ Public Sub SaveP2MaterialResults()
   startRow = FEM_INTEGRATED_P2_RESULT_START_ROW
   startColumn = FEM_INTEGRATED_P2_RESULT_START_COLUMN
   ClearP2MaterialResultSheet ws
-  ws.Cells(startRow, startColumn).value2 = "2DFEM_ P2 Material Point Results"
-  ws.Cells(startRow + 1, startColumn).value2 = "Formulation"
-  ws.Cells(startRow + 1, startColumn + 1).value2 = P1Formulation
-  ws.Cells(startRow + 2, startColumn).value2 = "Yield function"
-  ws.Cells(startRow + 2, startColumn + 1).value2 = "f = sigmaMax_3D - sigmaMin_3D - (sigmaMax_3D + sigmaMin_3D) * sin(phi) - 2 * cohesion * cos(phi)"
-  ws.Cells(startRow + 3, startColumn).value2 = "Flow rule"
-  ws.Cells(startRow + 3, startColumn + 1).value2 = "3D non-associated potential uses DilationAngle psi; sigmaZ is included and psi is independent from phi"
-  ws.Cells(startRow + 4, startColumn).value2 = "Tension cutoff"
-  ws.Cells(startRow + 4, startColumn + 1).value2 = "Not applied in P2; tensile-domain policy remains explicit for later extension"
-  ws.Cells(startRow + 5, startColumn).value2 = "State meaning"
-  ws.Cells(startRow + 5, startColumn + 1).value2 = "Plastic strain and multiplier are the latest local update; global commit/rollback remains a P3 responsibility"
-  ws.Cells(startRow + 6, startColumn).value2 = "Element"
-  ws.Cells(startRow + 6, startColumn + 1).value2 = "GaussPoint"
-  ws.Cells(startRow + 6, startColumn + 2).value2 = "PlasticStrainX"
-  ws.Cells(startRow + 6, startColumn + 3).value2 = "PlasticStrainY"
-  ws.Cells(startRow + 6, startColumn + 4).value2 = "PlasticStrainZ"
-  ws.Cells(startRow + 6, startColumn + 5).value2 = "PlasticGammaXY"
-  ws.Cells(startRow + 6, startColumn + 6).value2 = "PlasticMultiplier"
-  ws.Cells(startRow + 6, startColumn + 7).value2 = "YieldFunction"
-  ws.Cells(startRow + 6, startColumn + 8).value2 = "Yielded"
-  ws.Cells(startRow + 6, startColumn + 9).value2 = "SigmaMax_3D"
-  ws.Cells(startRow + 6, startColumn + 10).value2 = "SigmaMid_3D"
-  ws.Cells(startRow + 6, startColumn + 11).value2 = "SigmaMin_3D"
-  ws.Cells(startRow + 6, startColumn + 12).value2 = "SigmaZ_OutOfPlane"
-  ws.Cells(startRow + 6, startColumn + 13).value2 = "PrincipalAngle_deg"
+  ws.cells(startRow, startColumn).value2 = "2DFEM_ P2 Material Point Results"
+  ws.cells(startRow + 1, startColumn).value2 = "Formulation"
+  ws.cells(startRow + 1, startColumn + 1).value2 = P1Formulation
+  ws.cells(startRow + 2, startColumn).value2 = "Yield function"
+  ws.cells(startRow + 2, startColumn + 1).value2 = "f = sigmaMax_3D - sigmaMin_3D - (sigmaMax_3D + sigmaMin_3D) * sin(phi) - 2 * cohesion * cos(phi)"
+  ws.cells(startRow + 3, startColumn).value2 = "Flow rule"
+  ws.cells(startRow + 3, startColumn + 1).value2 = "3D non-associated potential uses DilationAngle psi; sigmaZ is included and psi is independent from phi"
+  ws.cells(startRow + 4, startColumn).value2 = "Tension cutoff"
+  ws.cells(startRow + 4, startColumn + 1).value2 = "Not applied in P2; tensile-domain policy remains explicit for later extension"
+  ws.cells(startRow + 5, startColumn).value2 = "State meaning"
+  ws.cells(startRow + 5, startColumn + 1).value2 = "Plastic strain and multiplier are the latest local update; global commit/rollback remains a P3 responsibility"
+  ws.cells(startRow + 6, startColumn).value2 = "Element"
+  ws.cells(startRow + 6, startColumn + 1).value2 = "GaussPoint"
+  ws.cells(startRow + 6, startColumn + 2).value2 = "PlasticStrainX"
+  ws.cells(startRow + 6, startColumn + 3).value2 = "PlasticStrainY"
+  ws.cells(startRow + 6, startColumn + 4).value2 = "PlasticStrainZ"
+  ws.cells(startRow + 6, startColumn + 5).value2 = "PlasticGammaXY"
+  ws.cells(startRow + 6, startColumn + 6).value2 = "PlasticMultiplier"
+  ws.cells(startRow + 6, startColumn + 7).value2 = "YieldFunction"
+  ws.cells(startRow + 6, startColumn + 8).value2 = "Yielded"
+  ws.cells(startRow + 6, startColumn + 9).value2 = "SigmaMax_3D"
+  ws.cells(startRow + 6, startColumn + 10).value2 = "SigmaMid_3D"
+  ws.cells(startRow + 6, startColumn + 11).value2 = "SigmaMin_3D"
+  ws.cells(startRow + 6, startColumn + 12).value2 = "SigmaZ_OutOfPlane"
+  ws.cells(startRow + 6, startColumn + 13).value2 = "PrincipalAngle_deg"
   Call P6EnsureVariantBuffer(P2OutputRows, P2OutputRowCount, P2OutputColumnCount, rowCount, 14)
   rowNo = 0
   For elementId = 0 To NumberOfElement - 1
@@ -3512,7 +3513,7 @@ Public Sub SaveP2MaterialResults()
       P2OutputRows(rowNo, 14) = Elem(elementId).Stmat(6, gaussNo)
     Next gaussNo
   Next elementId
-  If rowCount > 0 Then ws.range(ws.Cells(startRow + 7, startColumn), ws.Cells(startRow + 6 + rowCount, startColumn + 13)).value2 = P2OutputRows
+  If rowCount > 0 Then ws.range(ws.cells(startRow + 7, startColumn), ws.cells(startRow + 6 + rowCount, startColumn + 13)).value2 = P2OutputRows
   P2LastOutputLastRow = startRow + 6 + rowCount
   If P6ReadSetting("OUTPUT_AUTOFIT", 0#) <> 0# Then
     ws.range(ws.columns(startColumn), ws.columns(startColumn + 13)).EntireColumn.AutoFit
@@ -3523,17 +3524,17 @@ Public Sub SaveP0Progress(ByVal stageName As String)
   Dim ws As Worksheet
   If left$(stageName, 8) = "p3_retry" Or InStr(1, stageName, "increment", vbTextCompare) > 0 Then Exit Sub
   Set ws = GetDiagnosticSheet()
-  ws.Cells(1, 1).value2 = "2DFEM_P0進捗"
-  ws.Cells(2, 1).value2 = "Stage"
-  ws.Cells(2, 2).value2 = stageName
-  ws.Cells(3, 1).value2 = "ResultStatus"
-  ws.Cells(3, 2).value2 = ResultStatus
-  ws.Cells(4, 1).value2 = "CurrentIncrement"
-  ws.Cells(4, 2).value2 = CurrentIncrement
-  ws.Cells(5, 1).value2 = "CurrentIteration"
-  ws.Cells(5, 2).value2 = CurrentIteration
-  ws.Cells(6, 1).value2 = "FailureElement"
-  ws.Cells(6, 2).value2 = FailureElement
+  ws.cells(1, 1).value2 = "2DFEM_P0進捗"
+  ws.cells(2, 1).value2 = "Stage"
+  ws.cells(2, 2).value2 = stageName
+  ws.cells(3, 1).value2 = "ResultStatus"
+  ws.cells(3, 2).value2 = ResultStatus
+  ws.cells(4, 1).value2 = "CurrentIncrement"
+  ws.cells(4, 2).value2 = CurrentIncrement
+  ws.cells(5, 1).value2 = "CurrentIteration"
+  ws.cells(5, 2).value2 = CurrentIteration
+  ws.cells(6, 1).value2 = "FailureElement"
+  ws.cells(6, 2).value2 = FailureElement
   If SuppressUserMessages Then
     If stageName = "start" Then ThisWorkbook.Save
   End If

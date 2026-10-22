@@ -102,13 +102,13 @@ Private Sub SaveForceAnchors()
     End If
     rows = Table("載荷", 9)
     If ws Is Nothing Then Set ws = ThisWorkbook.Worksheets.Add(After:=ThisWorkbook.Worksheets(ThisWorkbook.Worksheets.count)): ws.name = "メッシュ引継"
-    ws.Cells.ClearContents: ws.Cells(1, 1).value2 = "種類": ws.Cells(1, 2).value2 = "載荷行の署名": ws.Cells(1, 3).value2 = "元の節点上限"
+    ws.cells.ClearContents: ws.cells(1, 1).value2 = "種類": ws.cells(1, 2).value2 = "載荷行の署名": ws.cells(1, 3).value2 = "元の節点上限"
     writeRow = 2
     For r = 1 To UBound(rows, 1)
         If UCase$(Trim$(CStr(rows(r, 4)))) = "FORCE" Then
             key = LoadRowKey(rows, r): limit = originalNN
             If old.Exists(key) Then limit = CLng(old(key))
-            ws.Cells(writeRow, 1).value2 = "FORCE": ws.Cells(writeRow, 2).value2 = key: ws.Cells(writeRow, 3).value2 = limit
+            ws.cells(writeRow, 1).value2 = "FORCE": ws.cells(writeRow, 2).value2 = key: ws.cells(writeRow, 3).value2 = limit
             writeRow = writeRow + 1
         End If
     Next r
@@ -118,9 +118,9 @@ End Sub
 Private Function Table(ByVal sheetName As String, ByVal cols As Long) As Variant
     Dim ws As Worksheet, last As Long
     Set ws = ThisWorkbook.Worksheets(sheetName)
-    last = ws.Cells(ws.rows.count, 1).End(xlUp).row
+    last = ws.cells(ws.rows.count, 1).End(xlUp).row
     If last < 2 Then last = 2
-    Table = ws.range(ws.Cells(2, 1), ws.Cells(last, cols)).value2
+    Table = ws.range(ws.cells(2, 1), ws.cells(last, cols)).value2
 End Function
 
 Private Function d(ByVal v As Variant) As Double
@@ -540,12 +540,12 @@ Private Sub RefinePlastic(Optional ByVal transferred As Boolean = False, Optiona
         GoTo ScoresReady
     End If
     Set ws = ThisWorkbook.Worksheets("診断")
-    If CStr(ws.Cells(2, 2).value2) <> "PASS" Then Err.Raise vbObjectError + 3806, , "正常終了した計算結果が必要です。"
+    If CStr(ws.cells(2, 2).value2) <> "PASS" Then Err.Raise vbObjectError + 3806, , "正常終了した計算結果が必要です。"
     On Error Resume Next: dirty = ThisWorkbook.names("_FEMViewerResultsDirty").RefersTo: On Error GoTo 0
     If dirty = "=TRUE" Then Err.Raise vbObjectError + 3806, , "入力変更後です。再解析してください。"
     If SavedSignature() <> MeshInputSignature() Then Err.Raise vbObjectError + 3806, , "入力と保存結果の署名が一致しません。再解析してください。"
-    If CStr(ws.Cells(106, 40).value2) <> "Element" Or CStr(ws.Cells(106, 48).value2) <> "Yielded" Then Err.Raise vbObjectError + 3806, , "塑性積分点結果がありません。再解析してください。"
-    p2 = ws.range(ws.Cells(107, 40), ws.Cells(106 + ne * 4, 53)).value2
+    If CStr(ws.cells(106, 40).value2) <> "Element" Or CStr(ws.cells(106, 48).value2) <> "Yielded" Then Err.Raise vbObjectError + 3806, , "塑性積分点結果がありません。再解析してください。"
+    p2 = ws.range(ws.cells(107, 40), ws.cells(106 + ne * 4, 53)).value2
     operationStep = "塑性結果の読込"
     ReDim scores(1 To ne): ReDim ranked(1 To ne): ReDim countGP(1 To ne)
     Set gpSeen = CreateObject("Scripting.Dictionary")
@@ -662,7 +662,7 @@ Private Sub CheckCandidate()
     If estimatedBand > 2 * nn - 1 Then estimatedBand = 2 * nn - 1
     estimatedMemory = 4# * 8# * (2# * nn) * (estimatedBand + 1#) + ne * 16384#
     If estimatedMemory > FEMReadSetting("SOLVER_MEMORY_LIMIT_MB", 512#) * 1048576# Then Err.Raise vbObjectError + 3807, , "概算の作業メモリが上限を超えます。要素数倍率を下げてください。"
-    For Each key In oldAreaByMaterial.Keys
+    For Each key In oldAreaByMaterial.keys
         If Not sums.Exists(key) Then Err.Raise vbObjectError + 3807, , "材料領域が失われました。"
         If Abs(sums(key) - oldAreaByMaterial(key)) > 0.00000001 * (1# + Abs(oldAreaByMaterial(key))) Then Err.Raise vbObjectError + 3807, , "材料ごとの面積が変わりました。"
     Next key
@@ -726,7 +726,7 @@ Public Function MeshPrepareCandidate(ByVal kind As String) As Boolean
     candidateReady = True: MeshPrepareCandidate = True
     GoTo Finish
 Failed:
-    MeshAdaptLastError = operationStep & ": " & Err.Description
+    MeshAdaptLastError = operationStep & ": " & Err.description
 Finish:
     Application.StatusBar = oldStatus: busy = False
 End Function
@@ -759,7 +759,7 @@ Public Function MeshApplyCandidate(Optional ByVal skipBackup As Boolean = False)
     settingsSaved = Table("設定", 5)
     wasOK = AnalysisOK: wasP1 = P1ResultReady: oldRevision = ResultRevision
     On Error Resume Next
-    dirtySaved = ThisWorkbook.names("_FEMViewerResultsDirty").RefersTo: hadDirty = (Err.Number = 0): Err.Clear
+    dirtySaved = ThisWorkbook.names("_FEMViewerResultsDirty").RefersTo: hadDirty = (Err.number = 0): Err.Clear
     Set metaSheet = ThisWorkbook.Worksheets("メッシュ引継")
     On Error GoTo Failed
     hadMeta = Not metaSheet Is Nothing
@@ -788,10 +788,10 @@ Public Function MeshApplyCandidate(Optional ByVal skipBackup As Boolean = False)
     Next i
     Set wsN = ThisWorkbook.Worksheets("節点データ"): Set wsE = ThisWorkbook.Worksheets("要素データ")
     changed = True
-    If nn < originalNN Then wsN.range(wsN.Cells(nn + 2, 1), wsN.Cells(originalNN + 1, 14)).ClearContents
-    If ne < originalNE Then wsE.range(wsE.Cells(ne + 2, 1), wsE.Cells(originalNE + 1, 10)).ClearContents
-    wsN.range(wsN.Cells(2, 1), wsN.Cells(nn + 1, 14)).value2 = outN
-    wsE.range(wsE.Cells(2, 1), wsE.Cells(ne + 1, 10)).value2 = outE
+    If nn < originalNN Then wsN.range(wsN.cells(nn + 2, 1), wsN.cells(originalNN + 1, 14)).ClearContents
+    If ne < originalNE Then wsE.range(wsE.cells(ne + 2, 1), wsE.cells(originalNE + 1, 10)).ClearContents
+    wsN.range(wsN.cells(2, 1), wsN.cells(nn + 1, 14)).value2 = outN
+    wsE.range(wsE.cells(2, 1), wsE.cells(ne + 1, 10)).value2 = outE
     Call FEMInvalidateRemeshedModel
     Call FEMInvalidateSettingCache
     P5EvaluateCurrentSheet "全体最適化・適応Q8"
@@ -803,25 +803,25 @@ Public Function MeshApplyCandidate(Optional ByVal skipBackup As Boolean = False)
     candidateReady = False: MeshApplyCandidate = True
     GoTo Finish
 Failed:
-    MeshAdaptLastError = Err.Description
+    MeshAdaptLastError = Err.description
     Resume Rollback
 Rollback:
     If changed Then
         On Error Resume Next
-        wsN.range(wsN.Cells(2, 1), wsN.Cells(nn + 1, 14)).ClearContents
-        wsE.range(wsE.Cells(2, 1), wsE.Cells(ne + 1, 10)).ClearContents
-        wsN.range(wsN.Cells(2, 1), wsN.Cells(originalNN + 1, 14)).value2 = oldNodes
-        wsE.range(wsE.Cells(2, 1), wsE.Cells(originalNE + 1, 10)).value2 = oldElements
+        wsN.range(wsN.cells(2, 1), wsN.cells(nn + 1, 14)).ClearContents
+        wsE.range(wsE.cells(2, 1), wsE.cells(ne + 1, 10)).ClearContents
+        wsN.range(wsN.cells(2, 1), wsN.cells(originalNN + 1, 14)).value2 = oldNodes
+        wsE.range(wsE.cells(2, 1), wsE.cells(originalNE + 1, 10)).value2 = oldElements
         With ThisWorkbook.Worksheets("設定")
-            settingsLast = .Cells(.rows.count, 5).End(xlUp).row
-            If settingsLast >= 2 Then .range(.Cells(2, 1), .Cells(settingsLast, 5)).ClearContents
-            .range(.Cells(2, 1), .Cells(UBound(settingsSaved, 1) + 1, 5)).value2 = settingsSaved
+            settingsLast = .cells(.rows.count, 5).End(xlUp).row
+            If settingsLast >= 2 Then .range(.cells(2, 1), .cells(settingsLast, 5)).ClearContents
+            .range(.cells(2, 1), .cells(UBound(settingsSaved, 1) + 1, 5)).value2 = settingsSaved
         End With
         Set metaSheet = Nothing: Set metaSheet = ThisWorkbook.Worksheets("メッシュ引継")
         If Not metaSheet Is Nothing Then
             If hadMeta Then
-                metaSheet.Cells.ClearContents
-                metaSheet.range(metaSheet.Cells(1, 1), metaSheet.Cells(UBound(metaSaved, 1), UBound(metaSaved, 2))).value2 = metaSaved
+                metaSheet.cells.ClearContents
+                metaSheet.range(metaSheet.cells(1, 1), metaSheet.cells(UBound(metaSaved, 1), UBound(metaSaved, 2))).value2 = metaSaved
             Else
                 oldAlerts = Application.DisplayAlerts: Application.DisplayAlerts = False: metaSheet.Delete: Application.DisplayAlerts = oldAlerts
             End If
@@ -848,12 +848,12 @@ Private Sub PreviewCandidate()
     If ws Is Nothing Then Set ws = ThisWorkbook.Worksheets.Add(After:=ThisWorkbook.Worksheets(ThisWorkbook.Worksheets.count)): ws.name = "再メッシュ候補"
     ws.Visible = xlSheetVisible
     For i = ws.Shapes.count To 1 Step -1: ws.Shapes(i).Delete: Next i
-    ws.Cells.ClearContents
+    ws.cells.ClearContents
     ws.range("A1:P1").Merge
     ws.range("A1:P1").Interior.Color = RGB(31, 70, 105)
     ws.range("A1:P1").Font.Color = vbWhite
     ws.range("A1:P1").Font.bOld = True
-    ws.Cells(1, 1).value2 = "候補です。元のメッシュは採用するまで変更されません。"
+    ws.cells(1, 1).value2 = "候補です。元のメッシュは採用するまで変更されません。"
     ws.range("A2:P10").Merge: ws.range("A2:P10").WrapText = True
     ws.range("A2:P10").Font.size = 10
     ws.range("A2:P10").value2 = MeshAdaptLastSummary
@@ -1052,8 +1052,8 @@ Private Function QualityLine(ByVal title As String, ByRef q As QualityRecord) As
         "、角度 " & Format$(q.minA, "0.000") & "～" & Format$(q.maxA, "0.000") & "°"
 End Function
 Private Sub OptimizeAngles()
-    Dim k As Long, a As Long, b As Long, limit As Long, it As Long, bx() As Double, by() As Double, oldSteps As Long, q0 As QualityRecord, q1 As QualityRecord
-    bx = xx: by = yy: oldSteps = sweepCount
+    Dim k As Long, a As Long, b As Long, limit As Long, it As Long, bX() As Double, bY() As Double, oldSteps As Long, q0 As QualityRecord, q1 As QualityRecord
+    bX = xx: bY = yy: oldSteps = sweepCount
     Call GetQuality(q0)
     On Error GoTo Reject
     Call MakeLocks
@@ -1081,7 +1081,7 @@ Private Sub OptimizeAngles()
     End If
     Exit Sub
 Reject:
-    xx = bx: yy = by: sweepCount = oldSteps
+    xx = bX: yy = bY: sweepCount = oldSteps
     Call CacheMetrics
 End Sub
 Private Sub CorrectRightCorners()
@@ -1202,7 +1202,7 @@ Private Function GenerateAndCompare() As Boolean
     End If
     GoTo Done
 TerrainFailed:
-    terrainReason = Err.Description
+    terrainReason = Err.description
     Resume TerrainSkipped
 TerrainSkipped:
     comparisonText = comparisonText & vbCrLf & "地形追従：候補除外（" & terrainReason & "）"
@@ -1428,13 +1428,13 @@ End Function
 ' Exact overlap of straight convex parent/candidate quadrilaterals for indicator transport.
 Private Function OverlapArea(ByVal e As Long, ByVal source As Long) As Double
     Dim px(0 To 15) As Double, py(0 To 15) As Double, qx(0 To 15) As Double, qy(0 To 15) As Double
-    Dim n As Long, m As Long, i As Long, j As Long, k As Long, a As Long, b As Long, ax As Double, ay As Double, bx As Double, by As Double
+    Dim n As Long, m As Long, i As Long, j As Long, k As Long, a As Long, b As Long, ax As Double, ay As Double, bX As Double, bY As Double
     Dim d1 As Double, d2 As Double, t As Double, ux As Double, uy As Double
     n = 4
     For i = 0 To 3: px(i) = xx(conn(e, i + 1)): py(i) = yy(conn(e, i + 1)): Next i
     For k = 0 To 3
         a = CLng(oldElements(source, k + 2)): b = CLng(oldElements(source, (k + 1) Mod 4 + 2))
-        ax = srcX(source, k): ay = srcY(source, k): bx = srcX(source, (k + 1) Mod 4): by = srcY(source, (k + 1) Mod 4): ux = bx - ax: uy = by - ay
+        ax = srcX(source, k): ay = srcY(source, k): bX = srcX(source, (k + 1) Mod 4): bY = srcY(source, (k + 1) Mod 4): ux = bX - ax: uy = bY - ay
         m = 0
         For i = 0 To n - 1
             j = (i + 1) Mod n: d1 = ux * (py(i) - ay) - uy * (px(i) - ax): d2 = ux * (py(j) - ay) - uy * (px(j) - ax)
@@ -1703,6 +1703,3 @@ Private Function HasInteriorBoundary() As Boolean
         End If
     Next start
 End Function
-
-
-

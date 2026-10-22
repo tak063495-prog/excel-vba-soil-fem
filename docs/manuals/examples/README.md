@@ -60,3 +60,8 @@
 ## 水条件・定常浸透の追加例
 
 [入力・実計算結果入りXLSM 5例とDLL 1個](groundwater_examples.zip)。cutoff（遮水構造下の定常浸透）、box（乾燥空洞）、box_inside（内水位1.5 m）、stages（WATER→DEATH→BIRTH→SRM）、slope_low_srm（水位1 mの固定水圧SRM）です。操作説明書第25章と[全計算ログ・照合値](../../GROUNDWATER_VALIDATION.md)を参照してください。元の例は変更していません。
+
+
+## 接合面の水圧（WATER_02）
+
+[JOINT水圧の検証済み例題14冊とDLL1個](joint_water_examples.zip)。接合面の乾燥・水圧、指定水位、水頭連続、定常浸透、部分湿潤、開離・すべり、BIRTH/DEATH、固定Fs=1.2、DAVISの保存済み計算です。[ケースと入力・検算・ログの対応](../../joint-water-evidence/20261022/ACCEPTED_CASES.md)から条件を確認してください。通常配布ブックにはない検証補助マクロを含みます。DLLとブックを同じフォルダーへ展開します。全工程を再開した後の表は受理した最終状態で、初回の途中履歴は別途保存したログ・CSVを参照します。

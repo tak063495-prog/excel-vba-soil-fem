@@ -74,7 +74,7 @@ Public Function FEMMatAvailable() As Boolean
     loadedPath = String$(32768, vbNullChar)
     size = GetModuleFileNameW(mHandle, StrPtr(loadedPath), Len(loadedPath))
     If size = 0 Or size >= Len(loadedPath) Then mReason = "DLL_PATH_UNVERIFIED": Exit Function
-    If StrComp(Left$(loadedPath, size), path, vbTextCompare) <> 0 Then mReason = "DLL_ALREADY_LOADED_OTHER_PATH": Exit Function
+    If StrComp(left$(loadedPath, size), path, vbTextCompare) <> 0 Then mReason = "DLL_ALREADY_LOADED_OTHER_PATH": Exit Function
   Else
     mHandle = LoadLibraryExW(StrPtr(path), 0, &H1100)
   End If
@@ -94,8 +94,8 @@ Public Function FEMMatAvailable() As Boolean
 #End If
   Exit Function
 LoadFailed:
-  If Err.Number = 18 Then mChecked = False: Err.Raise 18 ' ユーザー中断は利用可否を確定せず呼出側へ送る
-  mReason = "DLL_ERROR_" & CStr(Err.Number)
+  If Err.number = 18 Then mChecked = False: Err.Raise 18 ' ユーザー中断は利用可否を確定せず呼出側へ送る
+  mReason = "DLL_ERROR_" & CStr(Err.number)
   mAvailable = False
   FEMMatAvailable = False
   Err.Clear
@@ -117,8 +117,8 @@ Private Function FEMMatBuildOffsets() As Boolean
   If NumberOfElement >= 2 Then mOff(0) = VarPtr(Elem(1)) - b Else mOff(0) = 0
   mOff(1) = VarPtr(Elem(0).u(0)) - b
   mOff(2) = VarPtr(Elem(0).MatNo) - b
-  mOff(3) = VarPtr(Elem(0).ElNode(0)) - b
-  mOff(4) = VarPtr(Elem(0).Bmat(0, 0, 0)) - b
+  mOff(3) = VarPtr(Elem(0).elnode(0)) - b
+  mOff(4) = VarPtr(Elem(0).bMat(0, 0, 0)) - b
   mOff(5) = VarPtr(Elem(0).Smat(0, 0, 0)) - b
   mOff(6) = VarPtr(Elem(0).Spmat(0, 0, 0)) - b
   mOff(7) = VarPtr(Elem(0).Stmat(0, 0)) - b
@@ -141,11 +141,11 @@ Private Function FEMMatBuildOffsets() As Boolean
   mOff(24) = VarPtr(Elem(0).SpmatValid(0)) - b
   mOff(25) = VarPtr(Elem(0).TangentDirty) - b
   ' Layout checks: column-major inline arrays, 2-byte Boolean, 4-byte Long.
-  If VarPtr(Elem(0).Bmat(1, 0, 0)) - VarPtr(Elem(0).Bmat(0, 0, 0)) <> 8 Then mReason = "LAYOUT_BMAT": Exit Function
-  If VarPtr(Elem(0).Bmat(0, 1, 0)) - VarPtr(Elem(0).Bmat(0, 0, 0)) <> 24 Then mReason = "LAYOUT_BMAT_COL": Exit Function
+  If VarPtr(Elem(0).bMat(1, 0, 0)) - VarPtr(Elem(0).bMat(0, 0, 0)) <> 8 Then mReason = "LAYOUT_BMAT": Exit Function
+  If VarPtr(Elem(0).bMat(0, 1, 0)) - VarPtr(Elem(0).bMat(0, 0, 0)) <> 24 Then mReason = "LAYOUT_BMAT_COL": Exit Function
   If VarPtr(Elem(0).Stmat(0, 1)) - VarPtr(Elem(0).Stmat(0, 0)) <> 136 Then mReason = "LAYOUT_STMAT": Exit Function
   If VarPtr(Elem(0).P2Yielded(1)) - VarPtr(Elem(0).P2Yielded(0)) <> 2 Then mReason = "LAYOUT_BOOLEAN": Exit Function
-  If VarPtr(Elem(0).ElNode(1)) - VarPtr(Elem(0).ElNode(0)) <> 4 Then mReason = "LAYOUT_LONG": Exit Function
+  If VarPtr(Elem(0).elnode(1)) - VarPtr(Elem(0).elnode(0)) <> 4 Then mReason = "LAYOUT_LONG": Exit Function
   If VarPtr(Elem(0).HourglassMode(0, 1)) - VarPtr(Elem(0).HourglassMode(0, 0)) <> 32 Then mReason = "LAYOUT_HGMODE": Exit Function
   If VarPtr(Elem(0).kmat(0, 1)) - VarPtr(Elem(0).kmat(0, 0)) <> 128 Then mReason = "LAYOUT_KMAT": Exit Function
   For i = 1 To 25
@@ -241,8 +241,8 @@ Public Function FEMMatEval(ByVal kStart As Long, ByRef incrementBase() As Double
   FEMMatEval = r
   Exit Function
 Failed:
-  If Err.Number = 18 Then Err.Raise 18 ' ユーザー中断はDLL無効化・VBA代替へ進めず呼出側へ送る
-  FEMMatDisable "EVAL_ERR_" & CStr(Err.Number)
+  If Err.number = 18 Then Err.Raise 18 ' ユーザー中断はDLL無効化・VBA代替へ進めず呼出側へ送る
+  FEMMatDisable "EVAL_ERR_" & CStr(Err.number)
   Err.Clear
 #End If
 End Function
@@ -271,8 +271,8 @@ Public Function FEMMatTangent(ByVal elasticCorrection As Boolean, ByVal inconsis
   FEMMatTangent = True
   Exit Function
 Failed:
-  If Err.Number = 18 Then Err.Raise 18 ' ユーザー中断はDLL無効化・VBA代替へ進めず呼出側へ送る
-  FEMMatDisable "TANGENT_ERR_" & CStr(Err.Number)
+  If Err.number = 18 Then Err.Raise 18 ' ユーザー中断はDLL無効化・VBA代替へ進めず呼出側へ送る
+  FEMMatDisable "TANGENT_ERR_" & CStr(Err.number)
   Err.Clear
 #End If
 End Function

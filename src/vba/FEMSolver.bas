@@ -67,7 +67,7 @@ Public Function P6BandArrayReady(ByRef mat() As Double) As Boolean
   If lastDof < 0 Or BandWidth < 0 Then Exit Function
   On Error Resume Next
   P6BandArrayReady = (UBound(mat, 1) = lastDof And UBound(mat, 2) = BandWidth)
-  If Err.Number <> 0 Then P6BandArrayReady = False
+  If Err.number <> 0 Then P6BandArrayReady = False
   Err.Clear
   On Error GoTo 0
 End Function
@@ -89,11 +89,11 @@ Dim bandValue As Long
    bandValue = 0
    For k = 0 To NumberOfElement - 1
      For i = 0 To 15
-        If Elem(k).ElNode(i) < 0 Then GoTo NextBandI
+        If Elem(k).elnode(i) < 0 Then GoTo NextBandI
         For j = 0 To 15
-           If Elem(k).ElNode(j) < 0 Then GoTo NextBandJ
-           ii = Elem(k).ElNode(i)
-           jj = Elem(k).ElNode(j) - ii
+           If Elem(k).elnode(j) < 0 Then GoTo NextBandJ
+           ii = Elem(k).elnode(i)
+           jj = Elem(k).elnode(j) - ii
            If jj >= 0 Then
               If jj > bandValue Then bandValue = jj
            End If
@@ -249,12 +249,12 @@ Private Function P6ComputeRCMCandidateBandwidth(ByRef oldToNew() As Long) As Lon
   candidateBandwidth = 0
   For elementId = 0 To NumberOfElement - 1
     For localI = 0 To 15
-      If Elem(elementId).ElNode(localI) < 0 Then GoTo NextRcmCandI
+      If Elem(elementId).elnode(localI) < 0 Then GoTo NextRcmCandI
       nodeA = Elem(elementId).node(localI \ 2)
       If nodeA < 0 Then GoTo NextRcmCandI
       dofA = 2 * oldToNew(nodeA) + localI - (localI \ 2) * 2
       For localJ = 0 To 15
-        If Elem(elementId).ElNode(localJ) < 0 Then GoTo NextRcmCandJ
+        If Elem(elementId).elnode(localJ) < 0 Then GoTo NextRcmCandJ
         nodeB = Elem(elementId).node(localJ \ 2)
         If nodeB < 0 Then GoTo NextRcmCandJ
         dofB = 2 * oldToNew(nodeB) + localJ - (localJ \ 2) * 2
@@ -332,7 +332,7 @@ Private Sub P6ApplyRCMOrdering(ByRef oldToNew() As Long, ByRef newToOld() As Lon
   ReDim vectorSnapshot(0 To 9, 0 To lastDof)
   ReDim conditionSnapshot(0 To lastDof)
   For oldDof = 0 To lastDof
-    vectorSnapshot(0, oldDof) = Force(oldDof)
+    vectorSnapshot(0, oldDof) = force(oldDof)
     vectorSnapshot(1, oldDof) = Disp(oldDof)
     vectorSnapshot(2, oldDof) = UDisp(oldDof)
     vectorSnapshot(3, oldDof) = XXX(oldDof)
@@ -350,7 +350,7 @@ Private Sub P6ApplyRCMOrdering(ByRef oldToNew() As Long, ByRef newToOld() As Lon
     For localDof = 0 To 1
       oldDof = 2 * oldNode + localDof
       newDof = 2 * newNode + localDof
-      Force(newDof) = vectorSnapshot(0, oldDof)
+      force(newDof) = vectorSnapshot(0, oldDof)
       Disp(newDof) = vectorSnapshot(1, oldDof)
       UDisp(newDof) = vectorSnapshot(2, oldDof)
       XXX(newDof) = vectorSnapshot(3, oldDof)
@@ -375,10 +375,10 @@ Private Sub P6ApplyRCMOrdering(ByRef oldToNew() As Long, ByRef newToOld() As Lon
     Next localNode
     For localDof = 0 To 15
       If Elem(elementId).node(localDof \ 2) < 0 Then
-        Elem(elementId).ElNode(localDof) = -1
+        Elem(elementId).elnode(localDof) = -1
       Else
         newNode = Elem(elementId).node(localDof \ 2)
-        Elem(elementId).ElNode(localDof) = 2 * newNode + (localDof Mod 2)
+        Elem(elementId).elnode(localDof) = 2 * newNode + (localDof Mod 2)
       End If
     Next localDof
   Next elementId
@@ -461,8 +461,8 @@ Private Sub P6EvaluateRCMBandwidth(ByVal originalBandwidth As Long)
   End If
   Exit Sub
 RCMFailed:
-  failureNumber = Err.Number
-  failureDescription = Err.Description
+  failureNumber = Err.number
+  failureDescription = Err.description
   P6RCMCandidateBandwidth = P6RCMOriginalBandwidth
   P6RenumberingApplied = False
   P6RCMMapReady = False
@@ -498,7 +498,7 @@ Private Sub P6SelectSolverMode()
     If P6SolverReevaluationThreshold < 1 Then P6SolverReevaluationThreshold = 2000
   End If
   isLargeProblem = (nDof >= P6SolverReevaluationThreshold)
-  If P6SolverSelectionReady And Not isLargeProblem And Not P3FlowPolicyIsInconsistent() And Not P6UseCSR Then
+  If P6SolverSelectionReady And Not isLargeProblem And Not P6NeedsFullNonsymmetric() And Not P6UseCSR Then
     P6SolverEvaluationStatus = "reuse_small"
     Exit Sub
   End If
@@ -513,7 +513,7 @@ Private Sub P6SelectSolverMode()
   P6SolverPolicy = "BAND"
   P6UseCSR = False
   P6SolverMode = "BAND_LU"
-  If P3FlowPolicyIsInconsistent() Then
+  If P6NeedsFullNonsymmetric() Then
     P6UseCSR = True
     P6SolverPolicy = "NONSYMMETRIC"
     P6SolverMode = "NONSYM_BAND_LU"
@@ -578,11 +578,11 @@ Private Sub P6EnsureBandScatter()
   For k = 0 To NumberOfElement - 1
     If P3IsElementActive(k) Then
       For i = 0 To 15
-        If Elem(k).ElNode(i) < 0 Then GoTo NextScatterPairA
+        If Elem(k).elnode(i) < 0 Then GoTo NextScatterPairA
         For j = 0 To 15
-          If Elem(k).ElNode(j) < 0 Then GoTo NextScatterColA
-          ii = Elem(k).ElNode(i)
-          jj = Elem(k).ElNode(j) - ii
+          If Elem(k).elnode(j) < 0 Then GoTo NextScatterColA
+          ii = Elem(k).elnode(i)
+          jj = Elem(k).elnode(j) - ii
           If jj >= 0 Then
             If ii < 0 Or ii > lastDof Then Err.Raise vbObjectError + 3307, "FEM.P6EnsureBandScatter", "剛性組立の行番号が範囲外です。要素=" & CStr(k + 1) & " ii=" & CStr(ii)
             If jj > BandWidth Then Err.Raise vbObjectError + 3307, "FEM.P6EnsureBandScatter", "剛性組立が帯域幅を超えました。要素=" & CStr(k + 1) & " jj=" & CStr(jj) & " Band=" & CStr(BandWidth)
@@ -612,11 +612,11 @@ NextScatterPairA:
   For k = 0 To NumberOfElement - 1
     If P3IsElementActive(k) Then
       For i = 0 To 15
-        If Elem(k).ElNode(i) < 0 Then GoTo NextScatterPairB
+        If Elem(k).elnode(i) < 0 Then GoTo NextScatterPairB
         For j = 0 To 15
-          If Elem(k).ElNode(j) < 0 Then GoTo NextScatterColB
-          ii = Elem(k).ElNode(i)
-          jj = Elem(k).ElNode(j) - ii
+          If Elem(k).elnode(j) < 0 Then GoTo NextScatterColB
+          ii = Elem(k).elnode(i)
+          jj = Elem(k).elnode(j) - ii
           If jj >= 0 Then
             P6ScatterRow(n) = ii
             P6ScatterCol(n) = jj
@@ -733,9 +733,9 @@ P6FactorPivotTolerance = 0#
 MatrixFactored = False
  GoTo AssembleDone
 AssembleFail:
- errNum = Err.Number
+ errNum = Err.number
  errSrc = Err.source
- errDesc = Err.Description
+ errDesc = Err.description
  Resume AssembleDone
 AssembleDone:
  On Error GoTo 0
@@ -751,7 +751,7 @@ Dim i As Long
      P6ForceBeforeBoundaryN = lastDof
    End If
    For i = 0 To lastDof
-     P6ForceBeforeBoundary(i) = Force(i)
+     P6ForceBeforeBoundary(i) = force(i)
    Next i
    P6ForceBeforeBoundaryReady = True
    If P6UseCSR Then
@@ -762,14 +762,14 @@ Dim i As Long
        ApplyCSRBoundaryRHS
        For i = 0 To lastDof
            If NodeCond(i) <> 0 Then
-               Force(i) = Disp(i)
+               force(i) = Disp(i)
            End If
        Next i
        Exit Sub
    End If
    For i = 0 To lastDof
        If NodeCond(i) <> 0 Then
-           Force(i) = 1E+30 * Disp(i)
+           force(i) = 1E+30 * Disp(i)
        End If
    Next i
    If P6MixedUP Then P6ApplySchurRHS
@@ -826,7 +826,7 @@ Private Function P6BuildCSRPattern() As Boolean
   ReDim markers(0 To lastDof)
   For elementId = 0 To NumberOfElement - 1
     For localRow = 0 To 15
-      rowId = Elem(elementId).ElNode(localRow)
+      rowId = Elem(elementId).elnode(localRow)
       If rowId < 0 Then GoTo NextCsrOccRow
       If rowId > lastDof Then Err.Raise vbObjectError + 3505, "FEM.P6BuildCSRPattern", "CSR行番号が範囲外です。"
       occurrenceElement(occurrenceIndex) = elementId
@@ -844,7 +844,7 @@ NextCsrOccRow:
       elementId = occurrenceElement(occurrenceIndex)
       localRow = occurrenceLocalRow(occurrenceIndex)
       For localCol = 0 To 15
-        columnId = Elem(elementId).ElNode(localCol)
+        columnId = Elem(elementId).elnode(localCol)
         If columnId < 0 Then GoTo NextCsrMarkCol
         If columnId > lastDof Then Err.Raise vbObjectError + 3506, "FEM.P6BuildCSRPattern", "CSR列番号が範囲外です。"
         If markers(columnId) <> rowNo + 1 Then
@@ -881,7 +881,7 @@ NextCsrMarkCol:
       elementId = occurrenceElement(occurrenceIndex)
       localRow = occurrenceLocalRow(occurrenceIndex)
       For localCol = 0 To 15
-        columnId = Elem(elementId).ElNode(localCol)
+        columnId = Elem(elementId).elnode(localCol)
         If columnId < 0 Then GoTo NextCsrFillCol
         If fillMarkers(columnId) <> rowNo + 1 Then
           fillMarkers(columnId) = rowNo + 1
@@ -920,9 +920,9 @@ NextCsrFillCol:
   ReDim P6CSRElementPosition(0 To NumberOfElement - 1, 0 To 15, 0 To 15)
   For elementId = 0 To NumberOfElement - 1
     For localRow = 0 To 15
-      rowId = Elem(elementId).ElNode(localRow)
+      rowId = Elem(elementId).elnode(localRow)
       For localCol = 0 To 15
-        columnId = Elem(elementId).ElNode(localCol)
+        columnId = Elem(elementId).elnode(localCol)
         If rowId < 0 Or columnId < 0 Then
           P6CSRElementPosition(elementId, localRow, localCol) = -1
         Else
@@ -1024,7 +1024,7 @@ ScatterListReady:
   Exit Function
 
 ScatterBuildFailed:
-  If Err.Number = 18 Then P6RaiseUserCancel
+  If Err.number = 18 Then P6RaiseUserCancel
   P6CSRScatterCount = 0
   P6CSRScatterElementCount = -1
   P6CSRScatterTangentGeneration = -1
@@ -1084,10 +1084,10 @@ Private Function P6AssembleCSRValuesDirect() As Boolean
   For elementId = 0 To NumberOfElement - 1
     If Not P3IsElementActive(elementId) Then GoTo NextCsrDirectElement
     For localRow = 0 To 15
-      rowId = Elem(elementId).ElNode(localRow)
+      rowId = Elem(elementId).elnode(localRow)
       If rowId < 0 Or rowId > lastDof Then Exit Function
       For localCol = 0 To 15
-        columnId = Elem(elementId).ElNode(localCol)
+        columnId = Elem(elementId).elnode(localCol)
         If columnId < 0 Or columnId > lastDof Then Exit Function
         ' 散布位置キャッシュ自体が壊れているケースも復旧できるよう、
         ' フォールバックではCSR行内を直接検索して位置を再解決する。
@@ -1195,9 +1195,9 @@ Private Function P6BuildCSRFromElements() As Boolean
   P6BuildCSRFromElements = True
   Exit Function
 CSRBuildFailed:
-  If Err.Number = 18 Then P6RaiseUserCancel
-  errorNumber = Err.Number
-  errorDescription = Err.Description
+  If Err.number = 18 Then P6RaiseUserCancel
+  errorNumber = Err.number
+  errorDescription = Err.description
   If errorNumber = 0 Then errorNumber = vbObjectError + 3504
   If Len(errorDescription) = 0 Then errorDescription = "CSR疎行列の組立で不明なエラーが発生しました。"
   SetAnalysisFailure RESULT_CAPACITY_ERROR, errorDescription, errorNumber, -1, -1, CurrentIncrement, CurrentIteration
@@ -1296,7 +1296,7 @@ Private Sub ApplyCSRBoundaryRHS()
     If Not P6BuildCSRBoundaryExtraction() Then Exit Sub
   End If
   For i = 0 To P6CSRBoundaryRHSCount - 1
-    Force(P6CSRBoundaryRHSRow(i)) = Force(P6CSRBoundaryRHSRow(i)) - _
+    force(P6CSRBoundaryRHSRow(i)) = force(P6CSRBoundaryRHSRow(i)) - _
         P6CSROriginalValues(P6CSRBoundaryRHSPosition(i)) * Disp(P6CSRBoundaryRHSColumn(i))
   Next i
 End Sub
@@ -1464,10 +1464,10 @@ Private Function P6SolveBandRHS() As Boolean
     GoTo SolveDone
   End If
   If P6BandKernelIsNew() Then
-    i = FEMNativeBandSolve(P6Packed, Force, Disp, n2, BandWidth, P6FactorPivotTolerance, j)
+    i = FEMNativeBandSolve(P6Packed, force, Disp, n2, BandWidth, P6FactorPivotTolerance, j)
     If i = 0 Then P6SolveBandRHS = True: GoTo SolveDone
     If i = 1 Then P6BandSolveFailK = j: GoTo PackedSolveFailed
-    If Not P6BandSolve1D(P6Packed, P6PackRowOff, Force, Disp, n2, BandWidth, P6FactorPivotTolerance) Then
+    If Not P6BandSolve1D(P6Packed, P6PackRowOff, force, Disp, n2, BandWidth, P6FactorPivotTolerance) Then
 PackedSolveFailed:
       k = P6BandSolveFailK
       If k < 0 Then k = 0
@@ -1483,20 +1483,20 @@ PackedSolveFailed:
       SetAnalysisFailure RESULT_GLOBAL_SINGULAR, "右辺前進消去中にゼロまたは小さすぎるピボットが発生しました。自由度=" & CStr(k), vbObjectError + 3305, -1, -1, CurrentIncrement, CurrentIteration
       GoTo SolveDone
     End If
-    Force(k) = Force(k) / P6FactoredBand(k, 0)
+    force(k) = force(k) / P6FactoredBand(k, 0)
     m = BandWidth + 1
     If (k + BandWidth + 1) > n2 Then m = n2 - k
     For i = 1 To m - 1
       it = i + k
-      Force(it) = Force(it) - P6FactoredBand(k, i) * Force(k)
+      force(it) = force(it) - P6FactoredBand(k, i) * force(k)
     Next i
   Next k
   If Abs(P6FactoredBand(n2 - 1, 0)) <= P6FactorPivotTolerance Then
     SetAnalysisFailure RESULT_GLOBAL_SINGULAR, "後退代入中にゼロまたは小さすぎる最終ピボットが発生しました。", vbObjectError + 3306, -1, -1, CurrentIncrement, CurrentIteration
     GoTo SolveDone
   End If
-  Disp(n2 - 1) = Force(n2 - 1) / P6FactoredBand(n2 - 1, 0)
-  Force(n2 - 1) = 0#
+  Disp(n2 - 1) = force(n2 - 1) / P6FactoredBand(n2 - 1, 0)
+  force(n2 - 1) = 0#
   For k = n2 - 2 To 0 Step -1
     s = 0#
     m = BandWidth + 1
@@ -1505,14 +1505,14 @@ PackedSolveFailed:
       jt = j + k
       s = s + P6FactoredBand(k, j) * Disp(jt)
     Next j
-    Disp(k) = Force(k) - s / P6FactoredBand(k, 0)
+    Disp(k) = force(k) - s / P6FactoredBand(k, 0)
   Next k
   P6SolveBandRHS = True
   GoTo SolveDone
 SolveFail:
-  errNum = Err.Number
+  errNum = Err.number
   errSrc = Err.source
-  errDesc = Err.Description
+  errDesc = Err.description
   Resume SolveDone
 SolveDone:
   On Error GoTo 0
@@ -2234,8 +2234,8 @@ Private Sub P6SubtractVolumetricFromCSR()
       For localCol = 0 To 15
         kVol = 0#
         For gaussId = 0 To 3
-          rowVol = Elem(elementId).Bmat(0, localRow, gaussId) + Elem(elementId).Bmat(1, localRow, gaussId)
-          colVol = Elem(elementId).Bmat(0, localCol, gaussId) + Elem(elementId).Bmat(1, localCol, gaussId)
+          rowVol = Elem(elementId).bMat(0, localRow, gaussId) + Elem(elementId).bMat(1, localRow, gaussId)
+          colVol = Elem(elementId).bMat(0, localCol, gaussId) + Elem(elementId).bMat(1, localCol, gaussId)
           kVol = kVol + lambdaValue * rowVol * colVol * Elem(elementId).dj(gaussId) * thicknessValue
         Next gaussId
         position = P6CSRElementPosition(elementId, localRow, localCol)
@@ -2269,7 +2269,7 @@ Private Sub P6AssembleMixedCoupling()
         If pressureIndex < 0 Then GoTo NextMixMapCorner
         P6MixedCompress(pressureIndex) = P6MixedCompress(pressureIndex) + shapeValue * Elem(elementId).dj(gaussId) * thicknessValue / lambdaValue
         For localDof = 0 To 15
-          volStrain = Elem(elementId).Bmat(0, localDof, gaussId) + Elem(elementId).Bmat(1, localDof, gaussId)
+          volStrain = Elem(elementId).bMat(0, localDof, gaussId) + Elem(elementId).bMat(1, localDof, gaussId)
           P6MixedQ(elementId, localDof, cornerId) = P6MixedQ(elementId, localDof, cornerId) + volStrain * shapeValue * Elem(elementId).dj(gaussId) * thicknessValue
         Next localDof
 NextMixMapCorner:
@@ -2293,7 +2293,7 @@ Private Sub P6BuildMixedSchur()
       pressureIndex = P6NodePressure(nodeId)
       If pressureIndex < 0 Then GoTo NextSchurCorner
       For localDof = 0 To 15
-        uDof = Elem(elementId).ElNode(localDof)
+        uDof = Elem(elementId).elnode(localDof)
         If uDof < 0 Or uDof > lastDof Then GoTo NextSchurLocal
         diagPos = P6CSRDiagonalPosition(uDof)
         diagValue = 1#
@@ -2394,7 +2394,7 @@ Private Sub P6AssembleBiotCoupling()
         pressureIndex = P6NodePressure(nodeId)
         If pressureIndex < 0 Then GoTo NextBiotCorner
         For localDof = 0 To 15
-          volStrain = Elem(elementId).Bmat(0, localDof, gaussId) + Elem(elementId).Bmat(1, localDof, gaussId)
+          volStrain = Elem(elementId).bMat(0, localDof, gaussId) + Elem(elementId).bMat(1, localDof, gaussId)
           P6MixedQ(elementId, localDof, cornerId) = P6MixedQ(elementId, localDof, cornerId) + volStrain * shapeValue * Elem(elementId).dj(gaussId) * thicknessValue
         Next localDof
 NextBiotCorner:
@@ -2490,7 +2490,7 @@ NextQCountCorner:
       If pressureIndex < 0 Then GoTo NextQFillCorner
       For localDof = 0 To 15
         cursor = counts(pressureIndex)
-        P6QUDof(cursor) = Elem(elementId).ElNode(localDof)
+        P6QUDof(cursor) = Elem(elementId).elnode(localDof)
         P6QVal(cursor) = P6MixedQ(elementId, localDof, cornerId)
         counts(pressureIndex) = cursor + 1
       Next localDof
@@ -2645,7 +2645,7 @@ Private Sub P6ApplySchurRHS()
     For entryIndex = P6QStart(pressureIndex) To P6QStart(pressureIndex + 1) - 1
       uDof = P6QUDof(entryIndex)
       If uDof >= 0 And uDof <= lastDof Then
-        If NodeCond(uDof) = 0 Then Force(uDof) = Force(uDof) + P6QVal(entryIndex) * scaledP
+        If NodeCond(uDof) = 0 Then force(uDof) = force(uDof) + P6QVal(entryIndex) * scaledP
       End If
     Next entryIndex
 NextRhsPressure:
@@ -2688,7 +2688,7 @@ Private Function P6PrepareMixedUP() As Boolean
   P6PrepareMixedUP = False
   P6MixedUP = False
   P6KrylovLast = lastDof
-  If Not P6UseCSR Or P3FlowPolicyIsInconsistent() Then
+  If Not P6UseCSR Or P6NeedsFullNonsymmetric() Then
     ' Total-stress displacement formulation. CSR must not silently activate
     ' the dormant mixed pressure formulation through MIXED_UP's default.
     P6PrepareMixedUP = True
@@ -2732,7 +2732,7 @@ Private Sub P6MixedCompleteMatVec(ByRef inputVector() As Double, ByRef outputVec
       If pressureIndex < 0 Then GoTo NextApplyCorner
       pressureValue = inputVector(nDof + pressureIndex)
       For localDof = 0 To 15
-        uDof = Elem(elementId).ElNode(localDof)
+        uDof = Elem(elementId).elnode(localDof)
         couplingValue = P6MixedQ(elementId, localDof, cornerId)
         outputVector(uDof) = outputVector(uDof) + couplingValue * pressureValue
         outputVector(nDof + pressureIndex) = outputVector(nDof + pressureIndex) + couplingValue * inputVector(uDof)
@@ -2949,7 +2949,7 @@ Private Function P6SolveCSRBICGSTAB() As Boolean
   P6EnsureIterativeWorkspace P6KrylovLast + 1, P6GMRESRestart
   normBSquare = 0#
   For i = 0 To P6KrylovLast
-    If i <= lastDof Then P6BiCGB(i) = Force(i) Else P6BiCGB(i) = 0#
+    If i <= lastDof Then P6BiCGB(i) = force(i) Else P6BiCGB(i) = 0#
     P6BiCGX(i) = 0#
     P6BiCGAX(i) = 0#
     P6BiCGR(i) = P6BiCGB(i)
@@ -3086,7 +3086,7 @@ Private Function P6SolveCSRGMRES() As Boolean
   Dim restart As Long, normB As Double, beta As Double, nextNorm As Double
   Dim inner As Double, rot As Double, tmp As Double, residual As Double, tol As Double
   Dim zBasis() As Double
-  Dim kRc As Long, kEv() As Double, kN As Long, kIt As Long, kRes As Double, kEvIt As Long
+  Dim kRc As Long, kEv() As Double, kn As Long, kIt As Long, kRes As Double, kEvIt As Long
   P6SolveCSRGMRES = False
   P6IterativeLastResidual = 1E+100
   If P6CSRILUReady Then
@@ -3108,12 +3108,12 @@ Private Function P6SolveCSRGMRES() As Boolean
     End If
   End If
   If P6CSRILUReady And Not P6MixedUP And P6KrylovLast = lastDof Then
-    kRc = FEMKernGmres(lastDof + 1, P6CSRRowPtr, P6CSRColumnIndex, P6CSRValues, P6CSRILUValues, Force, Disp, restart, P6IterativeMaxIterations, P6IterativeTolerance, kRes, kIt, kEv, kN)
+    kRc = FEMKernGmres(lastDof + 1, P6CSRRowPtr, P6CSRColumnIndex, P6CSRValues, P6CSRILUValues, force, Disp, restart, P6IterativeMaxIterations, P6IterativeTolerance, kRes, kIt, kEv, kn)
     If kRc >= 0 Then
       P6CSRPreconditionerMode = "ILU0"
       P6IterativeLastResidual = kRes: P6IterativeLastIterations = kIt
-      If Not FEMIoNativeGmresEvents(kEv, kN, restart, P6CSRPreconditionerMode) Then
-      For i = 0 To kN - 1
+      If Not FEMIoNativeGmresEvents(kEv, kn, restart, P6CSRPreconditionerMode) Then
+      For i = 0 To kn - 1
         kEvIt = CLng(kEv(3 * i + 1))
         Select Case CLng(kEv(3 * i))
           Case 1: P6SolverEvent "GMRES_RESTART", "restart=" & CStr(kEvIt \ restart) & ";iterations=" & CStr(kEvIt) & ";preconditioner=" & P6CSRPreconditionerMode & ";true_relres=" & Format$(kEv(3 * i + 2), "0.000E+00")
@@ -3132,9 +3132,9 @@ Private Function P6SolveCSRGMRES() As Boolean
   P6EnsureIterativeWorkspace P6KrylovLast + 1, restart
   ReDim zBasis(0 To P6KrylovLast, 0 To restart - 1)
   For i = 0 To P6KrylovLast
-    If Not P2IsFinite(Force(i)) Then Exit Function
-    P6GMRESB(i) = Force(i): P6GMRESX(i) = 0#
-    normB = normB + Force(i) * Force(i)
+    If Not P2IsFinite(force(i)) Then Exit Function
+    P6GMRESB(i) = force(i): P6GMRESX(i) = 0#
+    normB = normB + force(i) * force(i)
   Next i
   normB = Sqr(normB)
   If Not P2IsFinite(normB) Then Exit Function
@@ -3227,8 +3227,8 @@ Private Function P6SolveCSRGMRES() As Boolean
   Exit Function
 GMRESFailed:
   ' ユーザー中断（Err18）は数値失敗として消去せず、既存の中断処理へ送る。
-  If Err.Number = 18 Then P6RaiseUserCancel
-  If Err.Number = 7 Then SetAnalysisFailure RESULT_CAPACITY_ERROR, "非対称GMRESのメモリ確保に失敗しました。", Err.Number, -1, -1, CurrentIncrement, CurrentIteration
+  If Err.number = 18 Then P6RaiseUserCancel
+  If Err.number = 7 Then SetAnalysisFailure RESULT_CAPACITY_ERROR, "非対称GMRESのメモリ確保に失敗しました。", Err.number, -1, -1, CurrentIncrement, CurrentIteration
   Err.Clear
 End Function
 
@@ -3324,7 +3324,7 @@ Private Sub P6MixedApplyQp(ByRef pressure() As Double, ByRef outU() As Double)
       pressureIndex = P6NodePressure(nodeId)
       If pressureIndex < 0 Then GoTo NextQpCorner
       For localDof = 0 To 15
-        uDof = Elem(elementId).ElNode(localDof)
+        uDof = Elem(elementId).elnode(localDof)
         If NodeCond(uDof) = 0 Then
           outU(uDof) = outU(uDof) + P6MixedQ(elementId, localDof, cornerId) * pressure(pressureIndex)
         End If
@@ -3347,7 +3347,7 @@ Private Sub P6MixedApplyQTu(ByRef uVec() As Double, ByRef outP() As Double)
       pressureIndex = P6NodePressure(nodeId)
       If pressureIndex < 0 Then GoTo NextQtCorner
       For localDof = 0 To 15
-        uDof = Elem(elementId).ElNode(localDof)
+        uDof = Elem(elementId).elnode(localDof)
         outP(pressureIndex) = outP(pressureIndex) + P6MixedQ(elementId, localDof, cornerId) * uVec(uDof)
       Next localDof
 NextQtCorner:
@@ -3391,7 +3391,7 @@ Private Function P6SolveMixedUzawa() As Boolean
   ReDim P6UzawaRP(0 To P6PressureCount - 1)
   If P6PressureCount > 0 And (Not P6MixedUP) Then Exit Function
   For i = 0 To lastDof
-    P6UzawaRhs(i) = Force(i)
+    P6UzawaRhs(i) = force(i)
   Next i
   For i = 0 To P6PressureCount - 1
     P6Pressure(i) = 0#
@@ -3445,9 +3445,9 @@ Private Function P6SolveMixedUzawa() As Boolean
     P6MixedApplyQp P6Pressure, P6UzawaQP
     For i = 0 To lastDof
       If NodeCond(i) = 0 Then
-        Force(i) = P6UzawaRhs(i) - P6UzawaQP(i)
+        force(i) = P6UzawaRhs(i) - P6UzawaQP(i)
       Else
-        Force(i) = P6UzawaRhs(i)
+        force(i) = P6UzawaRhs(i)
       End If
     Next i
 
@@ -3486,9 +3486,9 @@ Private Function P6SolveMixedUzawa() As Boolean
       P6MixedApplyQp P6Pressure, P6UzawaQP
       For i = 0 To lastDof
         If NodeCond(i) = 0 Then
-          Force(i) = P6UzawaRhs(i) - P6UzawaQP(i)
+          force(i) = P6UzawaRhs(i) - P6UzawaQP(i)
         Else
-          Force(i) = P6UzawaRhs(i)
+          force(i) = P6UzawaRhs(i)
         End If
       Next i
       If useDirectA Then
@@ -3551,7 +3551,7 @@ Public Function P6SolveResidualRecovery(ByVal damping As Double) As Boolean
   On Error GoTo Failed
   startedAt = Timer
   P6FactorizationCount = P6FactorizationCount + 1
-  kRr = FEMKernRegularized(lastDof + 1, bw, P6CSRRowPtr, P6CSRColumnIndex, P6CSROriginalValues, NodeCond, Force, Disp, damping, P6IterativeTolerance, kNres, factorDone)
+  kRr = FEMKernRegularized(lastDof + 1, bw, P6CSRRowPtr, P6CSRColumnIndex, P6CSROriginalValues, NodeCond, force, Disp, damping, P6IterativeTolerance, kNres, factorDone)
   If kRr >= 0 Then
     If kRr = 1 Then
       P6SolverEvent "REGULARIZED_SOLVE", "damping=" & Format$(damping, "0.000E+00") & ";normal_relres=" & Format$(kNres, "0.000E+00")
@@ -3566,7 +3566,7 @@ Public Function P6SolveResidualRecovery(ByVal damping As Double) As Boolean
   On Error GoTo Failed
   For row = 0 To lastDof
     If NodeCond(row) = 0 Then
-      If Not P2IsFinite(Force(row)) Then GoTo Rejected
+      If Not P2IsFinite(force(row)) Then GoTo Rejected
       For p = P6CSRRowPtr(row) To P6CSRRowPtr(row + 1) - 1
         col = P6CSRColumnIndex(p)
         If NodeCond(col) = 0 Then
@@ -3587,7 +3587,7 @@ Public Function P6SolveResidualRecovery(ByVal damping As Double) As Boolean
         c1 = P6CSRColumnIndex(p)
         If NodeCond(c1) = 0 And P6CSROriginalValues(p) <> 0# Then
           v = P6CSROriginalValues(p) / columnScale(c1)
-          rhs(c1) = rhs(c1) + v * Force(row)
+          rhs(c1) = rhs(c1) + v * force(row)
           For q = p To P6CSRRowPtr(row + 1) - 1
             c2 = P6CSRColumnIndex(q)
             If NodeCond(c2) = 0 And P6CSROriginalValues(q) <> 0# Then
@@ -3672,11 +3672,11 @@ LegacyDimensions48:
   Exit Function
 AllocationFailed48:
   ' Only allocation is covered: no operator or direction has been touched yet.
-  If Err.Number = 18 Then
+  If Err.number = 18 Then
     P6AddSolveProfile startedAt, factorDone
     P6RaiseUserCancel
   End If
-  If Err.Number = 7 Then Resume LegacyAllocation48
+  If Err.number = 7 Then Resume LegacyAllocation48
   Resume Failed
 LegacyAllocation48:
   ' Release all partial work arrays before trying the original allocation layout.
@@ -3688,7 +3688,7 @@ LegacyAllocation48:
   Exit Function
 Failed:
   ' ユーザー中断（Err18）は次のdamping試行へ進めず、既存の中断処理へ送る。
-  If Err.Number = 18 Then
+  If Err.number = 18 Then
     P6AddSolveProfile startedAt, factorDone
     P6RaiseUserCancel
   End If
@@ -3729,7 +3729,7 @@ Private Function P6SolveResidualRecoveryLegacy48(ByVal damping As Double) As Boo
   ReDim rhs(0 To lastDof): ReDim solution(0 To lastDof): ReDim columnScale(0 To lastDof)
   For row = 0 To lastDof
     If NodeCond(row) = 0 Then
-      If Not P2IsFinite(Force(row)) Then GoTo Rejected
+      If Not P2IsFinite(force(row)) Then GoTo Rejected
       For p = P6CSRRowPtr(row) To P6CSRRowPtr(row + 1) - 1
         col = P6CSRColumnIndex(p)
         If NodeCond(col) = 0 Then
@@ -3750,7 +3750,7 @@ Private Function P6SolveResidualRecoveryLegacy48(ByVal damping As Double) As Boo
         c1 = P6CSRColumnIndex(p)
         If NodeCond(c1) = 0 And P6CSROriginalValues(p) <> 0# Then
           v = P6CSROriginalValues(p) / columnScale(c1)
-          rhs(c1) = rhs(c1) + v * Force(row)
+          rhs(c1) = rhs(c1) + v * force(row)
           For q = p To P6CSRRowPtr(row + 1) - 1
             c2 = P6CSRColumnIndex(q)
             If NodeCond(c2) = 0 And P6CSROriginalValues(q) <> 0# Then
@@ -3824,7 +3824,7 @@ Private Function P6SolveResidualRecoveryLegacy48(ByVal damping As Double) As Boo
   GoTo Rejected
 Failed:
   ' ユーザー中断（Err18）は次のdamping試行へ進めず、既存の中断処理へ送る。
-  If Err.Number = 18 Then
+  If Err.number = 18 Then
     P6AddSolveProfile startedAt, factorDone
     P6RaiseUserCancel
   End If
@@ -3876,8 +3876,8 @@ Public Function P6SolveNonsymmetricBand() As Boolean
   End If
   ReDim rhs(0 To lastDof): ReDim solution(0 To lastDof): ReDim residualVector(0 To lastDof)
   For i = 0 To lastDof
-    If Not P2IsFinite(Force(i)) Then P6BandRejectReason = "NONFINITE_RHS": GoTo Rejected
-    rhs(i) = Force(i): normB = normB + rhs(i) * rhs(i)
+    If Not P2IsFinite(force(i)) Then P6BandRejectReason = "NONFINITE_RHS": GoTo Rejected
+    rhs(i) = force(i): normB = normB + rhs(i) * rhs(i)
     If Not reused Then
     For p = P6CSRRowPtr(i) To P6CSRRowPtr(i + 1) - 1
       columnId = P6CSRColumnIndex(p)
@@ -3950,7 +3950,7 @@ NsFactorDone:
     If Not P2IsFinite(solution(i)) Then GoTo Rejected
   Next i
 NsBackDone:
-  residual = P6CSRMatVecResidualNorm(solution, Force, residualVector, P6CSRValues)
+  residual = P6CSRMatVecResidualNorm(solution, force, residualVector, P6CSRValues)
   If Not P2IsFinite(residual) Or Not P2IsFinite(normB) Then P6BandRejectReason = "NONFINITE_RESIDUAL": GoTo Rejected
   If normB > 1E-30 Then
     P6IterativeLastResidual = residual / normB
@@ -3985,7 +3985,7 @@ NsRefineSolved:
           solution(i) = solution(i) + correction(i)
           If Not P2IsFinite(solution(i)) Then GoTo Rejected
         Next i
-        residual = P6CSRMatVecResidualNorm(solution, Force, residualVector, P6CSRValues)
+        residual = P6CSRMatVecResidualNorm(solution, force, residualVector, P6CSRValues)
         If Not P2IsFinite(residual) Then GoTo Rejected
         P6IterativeLastResidual = residual / normB
         P6SolverEvent "NONSYM_BAND_REFINEMENT", "iteration=" & CStr(refineIter) & ";relative_residual=" & Format$(P6IterativeLastResidual, "0.000E+00")
@@ -4003,12 +4003,12 @@ NsRefineSolved:
   GoTo Rejected
 Failed:
   ' ユーザー中断（Err18）はGMRESへ切り替えず、既存の中断処理へ送る。
-  If Err.Number = 18 Then
+  If Err.number = 18 Then
     P6ClearElasticRecoveryCSR
     P6AddSolveProfile startedAt, factorDone
     P6RaiseUserCancel
   End If
-  If Err.Number = 7 Then SetAnalysisFailure RESULT_CAPACITY_ERROR, "非対称帯域LUのメモリ確保に失敗しました。", Err.Number, -1, -1, CurrentIncrement, CurrentIteration
+  If Err.number = 7 Then SetAnalysisFailure RESULT_CAPACITY_ERROR, "非対称帯域LUのメモリ確保に失敗しました。", Err.number, -1, -1, CurrentIncrement, CurrentIteration
   Err.Clear
 Rejected:
   If Not P6SolveNonsymmetricBand Then
@@ -4050,7 +4050,7 @@ Private Function P6BandCSRCacheMatches(ByVal b As Long) As Boolean
   Next i
   P6BandCSRCacheMatches = True
 NotMatching:
-  If Err.Number = 18 Then P6RaiseUserCancel
+  If Err.number = 18 Then P6RaiseUserCancel
 End Function
 
 Private Sub P6BandReplayForward(ByRef rhs() As Double, ByRef pivots() As Long, ByRef multipliers() As Double, ByVal b As Long)
@@ -4082,7 +4082,7 @@ Private Function P6SolveCSR() As Boolean
     P6SolveCSR = P6SolveMixedUzawa()
     Exit Function
   End If
-  If P3FlowPolicyIsInconsistent() Then
+  If P6NeedsFullNonsymmetric() Then
     If P6SolveNonsymmetricBand() Then
       P6SolveCSR = True
       Exit Function
@@ -4091,7 +4091,7 @@ Private Function P6SolveCSR() As Boolean
     P6IterativeFallbackStatus = "right_gmres_after_nonsymmetric_band"
     P6SolverMode = "CSR_GMRES"
   End If
-  If P3FlowPolicyIsInconsistent() And Not P6CSRILUReady Then
+  If P6NeedsFullNonsymmetric() And Not P6CSRILUReady Then
     ' ILU(0) is only a preconditioner; convergence uses the true CSR residual.
     If P6SolverMemoryLimitBytes > 0# Then
       If P6CSRStorageBytes + CDbl(P6CSRNNZ) * 8# + CDbl(nDof) * (23# + 2# * P6GMRESRestart) * 8# + CDbl(P6GMRESRestart + 1) ^ 2 * 8# > P6SolverMemoryLimitBytes Then
@@ -4133,11 +4133,11 @@ Private Function P6RebuildBandFromElements() As Boolean
   For k = 0 To NumberOfElement - 1
     If Not P3IsElementActive(k) Then GoTo NextRebuildElement
     For i = 0 To 15
-      If Elem(k).ElNode(i) < 0 Then GoTo NextRebuildI
+      If Elem(k).elnode(i) < 0 Then GoTo NextRebuildI
       For j = 0 To 15
-        If Elem(k).ElNode(j) < 0 Then GoTo NextRebuildJ
-        ii = Elem(k).ElNode(i)
-        jj = Elem(k).ElNode(j) - ii
+        If Elem(k).elnode(j) < 0 Then GoTo NextRebuildJ
+        ii = Elem(k).elnode(i)
+        jj = Elem(k).elnode(j) - ii
         If jj >= 0 Then OriginalMat(ii, jj) = OriginalMat(ii, jj) + Elem(k).kmat(i, j)
 NextRebuildJ:
       Next j
@@ -4166,10 +4166,10 @@ Private Function P6TryBandDirectFallback() As Boolean
   MatrixFactored = False
   For i = 0 To lastDof
     If P6ForceBeforeBoundaryReady Then
-      Force(i) = P6ForceBeforeBoundary(i)
+      force(i) = P6ForceBeforeBoundary(i)
     End If
     If NodeCond(i) <> 0 Then
-      Force(i) = 1E+30 * Disp(i)
+      force(i) = 1E+30 * Disp(i)
     End If
   Next i
   P6CopyBand OriginalMat, P6FactoredBand
@@ -4220,7 +4220,7 @@ Private Sub P6CaptureLdltRhs()
   Dim i As Long
   P6EnsureLdltWorkspace
   For i = 0 To lastDof
-    P6LdltRhs(i) = Force(i)
+    P6LdltRhs(i) = force(i)
   Next i
   P6LdltRhsReady = True
 End Sub
@@ -4423,7 +4423,7 @@ Private Sub P6ShadowBandLDLT()
   P6SolverEvent "LDLT_SHADOW", detailText
   Exit Sub
 ShadowFail:
-  If Err.Number = 18 Then P6RaiseUserCancel
+  If Err.number = 18 Then P6RaiseUserCancel
   If Not counted Then
     P6LdltN = P6LdltN + 1
     P6LdltFail = P6LdltFail + 1
@@ -4441,7 +4441,7 @@ Function BandSolver() As Boolean
   ldltShadow = False
   If P6UseCSR Then
     csrOk = P6SolveCSR()
-    If P3FlowPolicyIsInconsistent() Then
+    If P6NeedsFullNonsymmetric() Then
       If csrOk Then MatrixFactored = True: BandSolver = True
       Exit Function
     End If
@@ -4452,7 +4452,7 @@ Function BandSolver() As Boolean
         Exit Function
       End If
     End If
-    If P3FlowPolicyIsInconsistent() Then Exit Function
+    If P6NeedsFullNonsymmetric() Then Exit Function
     If P6TryBandDirectFallback() Then
       MatrixFactored = True
       BandSolver = True
@@ -4524,7 +4524,7 @@ Private Sub P6RememberFactorKeys()
         If Elem(k).IsJoint Then
           P6FactorJointElem(cursor) = k
           For gp = 0 To 2
-            P6FactorJointContact(gp, cursor) = Elem(k).JointContact(gp)
+            P6FactorJointContact(gp, cursor) = P3JointTangentState(k, gp)
           Next gp
           cursor = cursor + 1
         End If
@@ -4571,7 +4571,7 @@ Private Sub P6AccelCapturePreconditioner()
   Exit Sub
 CapturePreSkip:
   mPreReady = False
-  If Err.Number = 18 Then Err.Raise 18
+  If Err.number = 18 Then Err.Raise 18
   Err.Clear
 End Sub
 
@@ -4663,7 +4663,7 @@ Private Function P6AccelGMRESCore(ByRef mat() As Double, ByRef packed() As Doubl
   P6AccelGMRESCore = (relres <= tol)
   Exit Function
 GMRESFail:
-  If Err.Number = 18 Then Err.Raise 18
+  If Err.number = 18 Then Err.Raise 18
   Err.Clear
 End Function
 
@@ -4730,7 +4730,7 @@ Private Function P6AccelTryGMRES() As Boolean
   If AccelTrace Then P6SolverEvent "GMRES_LU", "ok=" & CStr(P6AccelTryGMRES) & ";iterations=" & CStr(iters) & ";true_relres=" & Format$(relres, "0.000E+00") & ";tol=" & Format$(tol, "0.000E+00")
   Exit Function
 GMRESOptionalFail:
-  If Err.Number = 18 Then Err.Raise 18
+  If Err.number = 18 Then Err.Raise 18
   Err.Clear
   mPreReady = False: P6AccelTryGMRES = False
   AccelGMRESFallback = AccelGMRESFallback + 1
@@ -4763,6 +4763,8 @@ Public Function P6AccelLinearSelfTest() As String
   P6AccelLinearSelfTest = "PASS: old-LU GMRES, true residual, iteration-budget rejection"
 End Function
 
-
-
-
+Public Function P6NeedsFullNonsymmetric() As Boolean
+  ' Solver/operator choice only; the continuum flow/material policy is unchanged.
+  ' A wet JOINT retains its nonsymmetric friction derivative even with DAVIS soil.
+  P6NeedsFullNonsymmetric = P3FlowPolicyIsInconsistent() Or (GWEnabled() And P3HasJointElements)
+End Function

@@ -61,3 +61,8 @@ Copy-Item workbook/ui_20261022/soilfem_native_x64.dll tests/tmp/soilfem_native_x
 |DAVIS|5.343|5.243|完全一致、Fs 1.475–1.4875|
 
 各1回の計測です。高速化の評価や同一処理時間の保証ではありません。水あり137.598 sは別条件の例なので、上表との差を水圧処理だけの時間と解釈できません。
+
+
+## WATER_02で追加した接合面水圧の受入
+
+従来結果は上記のWATER_01記録として保持します。JOINT水圧と保存再開後の結果表復元、同一条件による従来8ケースの再比較は[JOINT水圧対応・検証記録](JOINT_WATER_VALIDATION.md)を参照してください。

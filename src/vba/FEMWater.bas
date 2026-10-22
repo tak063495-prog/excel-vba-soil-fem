@@ -2,6 +2,7 @@ Option Explicit
 ' Physical pore water is independent of the mechanical MIXED_UP pressure.
 ' All stored mechanical Stmat values remain compression-positive TOTAL stress.
 Public GWActive As Boolean
+Public GWContext As String
 Private mOverrideProfile As String
 Private mMode As String, mProfile As String, mGamma As Double, mAuto As Boolean
 Private mWs As Worksheet, mReady As Boolean, mFlowSolved As Boolean
@@ -59,7 +60,7 @@ Public Function GWInputSignature() As String
         Case "要素データ": lastRow = ws.cells(ws.rows.count, 1).End(xlUp).row: cols = 10
         Case "材料データ": lastRow = ws.cells(ws.rows.count, 1).End(xlUp).row: cols = 13
         Case "ステージ": lastRow = ws.cells(ws.rows.count, 1).End(xlUp).row: cols = 6
-        Case "接合": lastRow = ws.cells(ws.rows.count, 1).End(xlUp).row: cols = 5
+        Case "接合": lastRow = ws.cells(ws.rows.count, 1).End(xlUp).row: cols = 7
       End Select
       If lastRow < 2 Then lastRow = 2
       values = ws.range(ws.cells(1, 1), ws.cells(lastRow, cols)).value2
@@ -89,6 +90,7 @@ End Function
 
 Public Sub GWValidateScope()
   Dim ws As Worksheet, r As Long, kind As String
+  GJReady = False: mReady = False
   GWActive = GWEnabled()
   If Not GWActive Then Exit Sub
   If P6ReadSetting("CONSOL_ENABLE", 0#) <> 0# Then GWFail "水条件は指定水圧/定常浸透です。過渡圧密と同時には使えません。"
@@ -129,7 +131,7 @@ End Function
 
 Private Function GWEdgeKey(ByVal e As Long, ByVal side As Long) As String
   Dim a As Long, b As Long, c As Long
-  a = Elem(e).node(side): b = Elem(e).node((side + 1) Mod 4): c = Elem(e).node(side + 4)
+  a = GJTopoNode(Elem(e).node(side)): b = GJTopoNode(Elem(e).node((side + 1) Mod 4)): c = GJTopoNode(Elem(e).node(side + 4))
   If a < b Then
     GWEdgeKey = CStr(a) & ":" & CStr(b) & ":" & CStr(c)
   Else
@@ -140,6 +142,7 @@ End Function
 Private Sub GWLoadDefinition()
   Dim r As Long, mat As Long, e As Long, side As Long, k As String, spec As String
   Dim seen As Object, kind As String, hydroNodes As Object, j As Long, nodeKey As String, pAtNode As Double
+  GJReady = False
   Set mWs = ThisWorkbook.Worksheets("水条件")
   mMode = UCase$(Trim$(CStr(mWs.range("B3").value2)))
   If mMode <> "HYDROSTATIC" And mMode <> "STEADY" Then GWFail "水圧方式はNONE/HYDROSTATIC/STEADYです。"
@@ -160,8 +163,8 @@ Private Sub GWLoadDefinition()
       seen.Add CStr(mat), True
       kind = UCase$(Trim$(CStr(mWs.cells(r, 7).value2)))
       If kind <> "TOTAL" And kind <> "EFFECTIVE" Then GWFail "材料の応力基準をTOTAL/EFFECTIVEで指定してください。"
-      If Material(mat).kind = "STRUCT" And kind <> "TOTAL" Then GWFail "構造材料へ地盤の有効応力を適用できません。"
-      If Material(mat).kind = "STRUCT" Then
+      If (Material(mat).kind = "STRUCT" Or Material(mat).kind = "JOINT") And kind <> "TOTAL" Then GWFail "構造材料へ地盤の有効応力を適用できません。"
+      If Material(mat).kind = "STRUCT" Or Material(mat).kind = "JOINT" Then
         If GWNum(mWs.cells(r, 8).value2, "構造体のK（初期版は遮水0）") <> 0# Then GWFail "構造体の透水は初期版の適用外です。遮水K=0を明示してください。"
       End If
       mBasis(mat) = (kind = "EFFECTIVE")
@@ -175,8 +178,9 @@ Private Sub GWLoadDefinition()
       Next e
     End If
   Next r
+  GWContext = "GJPrepare"
+  GJPrepare
   For e = 0 To NumberOfElement - 1
-    If Elem(e).IsJoint Then GWFail "水条件とJOINTの水圧伝達は未解禁です。連続体共有節点の構造を使用してください。"
     If P3IsElementActive(e) And Not seen.Exists(CStr(Elem(e).MatNo)) Then GWFail "有効材料すべてに水理材料表の応力基準が必要です。材料=" & CStr(Elem(e).MatNo + 1)
   Next e
   If mMode = "HYDROSTATIC" Then
@@ -184,7 +188,7 @@ Private Sub GWLoadDefinition()
     For e = 0 To NumberOfElement - 1
       If P3IsElementActive(e) And Material(Elem(e).MatNo).kind = "SOIL" Then
         For j = 0 To 7
-          nodeKey = CStr(Elem(e).node(j))
+          nodeKey = CStr(GWFlowNode(e, j))
           pAtNode = GWPressure(mMatProfile(Elem(e).MatNo), Elem(e).x(j), Elem(e).y(j))
           If hydroNodes.Exists(nodeKey) Then
             If Abs(CDbl(hydroNodes(nodeKey)) - pAtNode) > 0.0000001 Then GWFail "連続地盤の共有節点に異なる指定水圧があります。水域の遮水/接続を確認し、定常浸透を設定してください。"
@@ -198,7 +202,7 @@ Private Sub GWLoadDefinition()
   Set mBoundary = CreateObject("Scripting.Dictionary")
   Set mEdges = CreateObject("Scripting.Dictionary"): Set mOwners = CreateObject("Scripting.Dictionary")
   For e = 0 To NumberOfElement - 1
-    If P3IsElementActive(e) Then
+    If P3IsElementActive(e) And Not Elem(e).IsJoint Then
       For side = 0 To 3
         k = GWEdgeKey(e, side)
         If mEdges.Exists(k) Then
@@ -216,6 +220,7 @@ Private Sub GWLoadDefinition()
       e = GWId(mWs.cells(r, 1).value2, "境界要素") - 1
       side = GWId(mWs.cells(r, 2).value2, "辺番号") - 1
       If e < 0 Or e >= NumberOfElement Or side < 0 Or side > 3 Then GWFail "境界の要素/辺番号が範囲外です。"
+      If Elem(e).IsJoint Then GWFail "水境界はJOINTではなく隣接Q8要素に指定してください。"
       spec = CStr(e) & ":" & CStr(side)
       If mBoundary.Exists(spec) Then GWFail "同一面に水条件が重複しています。"
       kind = UCase$(Trim$(CStr(mWs.cells(r, 3).value2)))
@@ -311,13 +316,16 @@ Public Sub GWRebuild()
   If Not GWActive Then mReady = False: Exit Sub
   t = Timer: mReady = False: mFlowSolved = False
   mLocalError = 0#: mFluxCorrection = 0#
+  GWContext = "GWLoadDefinition"
   GWLoadDefinition
   ReDim mTarget(0 To 3, 0 To NumberOfElement - 1): ReDim mWaterForce(lastDof)
   If mMode = "STEADY" Then
     ReDim fixed(NumberOfFreeNode - 1): ReDim prescribed(NumberOfFreeNode - 1)
     GWApplyHeads fixed, prescribed
+    GJApplyHeads fixed, prescribed
     mHeadFixed = fixed
     GWSeepSolve mK, fixed, prescribed, mHeads, mFx, mFy, mFlowReaction, mRel, mBalance
+    GJExpandHeads mHeads
     GWRecoverFaceFlows mK, mHeads, fixed, mFaceFlows, mLocalError, mFluxCorrection
     If mRel > 0.0000000001 Or mBalance > 0.00000001 Then GWFail "定常浸透の真残差/全体水収支が許容値を超えています。"
     For e = 0 To NumberOfElement - 1
@@ -350,7 +358,12 @@ Public Sub GWRebuild()
       Next gp
     End If
   Next e
+  GWContext = "GJSetPressures"
+  GJSetPressures mTarget, mGamma, (mMode = "STEADY")
+  GWContext = "GWBuildSurfaceForce"
   GWBuildSurfaceForce
+  GWContext = "GJAddForces"
+  GJAddForces mTarget, mWaterForce, (mMode = "STEADY")
   mSig = GWInputSignature(): mSource = mMode & ":" & mProfile & ":" & mSig & ":" & CStr(P3ActiveSetGen)
   mSeconds = Timer - t: If mSeconds < 0# Then mSeconds = mSeconds + 86400#
   mReady = True
@@ -430,6 +443,7 @@ Public Sub GWResetState()
   mOverrideProfile = ""
   GWActive = GWEnabled()
   If Not GWActive Then mReady = False: Exit Sub
+  GWContext = "GWRebuild"
   GWRebuild
   ReDim mCurrent(0 To 3, 0 To NumberOfElement - 1): ReDim mCommitted(0 To 3, 0 To NumberOfElement - 1)
   ReDim mStart(0 To 3, 0 To NumberOfElement - 1)
@@ -498,6 +512,7 @@ Public Sub GWStage(ByVal profile As String)
   If Not GWEnabled() Then GWFail "WATER工程には水条件の有効化が必要です。"
   ' Stage profile is a separate selector; do not rewrite the input sheet.
   mOverrideProfile = profile
+  GWContext = "GWRebuild"
   GWRebuild
 End Sub
 
@@ -513,7 +528,7 @@ Public Sub GWWriteResults(ByVal stageNo As Long)
   row = ws.cells(ws.rows.count, 1).End(xlUp).row + 1
   If row < 36 Then row = 36
   For e = 0 To NumberOfElement - 1
-    If P3IsElementActive(e) Then
+    If P3IsElementActive(e) And Not Elem(e).IsJoint Then
       For g = 0 To 3
         FEMGaussPhysicalXY e, g, px, py: p = mCurrent(g, e)
         ws.cells(row, 1).Resize(1, 12).value2 = Array(stageNo, e + 1, g + 1, px, py, p, Elem(e).Stmat(0, g), Elem(e).Stmat(0, g) - p, Elem(e).Stmat(1, g), Elem(e).Stmat(1, g) - p, Elem(e).Stmat(16, g), Elem(e).Stmat(16, g) - p)
@@ -544,10 +559,15 @@ Public Sub GWPreviewCompute()
   Dim px As Double, py As Double, normalX As Double, normalY As Double
   If Not GWEnabled() Then GWFail "水条件はNONEです。水圧を確認する場合はHYDROSTATICまたはSTEADYを選んでください。"
   FEMInvalidateInputCache
-ValidateInputData:   SetNodeData: SetMaterialData: SetElementData
+  GJReady = False: mReady = False
+  Call SetNodeData
+  Call SetMaterialData
+  Call SetElementData
   P3ElementActiveReady = False
   If Not SetElmMat() Then GWFail AnalysisMessage
+  GWContext = "P3InitElementActive"
   P3InitElementActive
+  GWContext = "GWRebuild"
   GWRebuild
   On Error Resume Next
   Set ws = ThisWorkbook.Worksheets("水圧確認")
@@ -557,7 +577,7 @@ ValidateInputData:   SetNodeData: SetMaterialData: SetElementData
   ws.range("A35:H35").value2 = Array("要素", "GP", "X[m]", "Y[m]", "水圧[kPa]", "方式", "真相対残差", "全体水収支")
   row = 36
   For e = 0 To NumberOfElement - 1
-    If P3IsElementActive(e) Then
+    If P3IsElementActive(e) And Not Elem(e).IsJoint Then
       For g = 0 To 3
         FEMGaussPhysicalXY e, g, px, py
         ws.cells(row, 1).Resize(1, 8).value2 = Array(e + 1, g + 1, px, py, mTarget(g, e), mMode, mRel, mBalance): row = row + 1
@@ -566,7 +586,7 @@ ValidateInputData:   SetNodeData: SetMaterialData: SetElementData
   Next e
   ws.range("Q35:U35").value2 = Array("水圧外力DOF", "Fx[kN]", "Fy[kN]", "節点X", "節点Y")
   For e = 0 To NumberOfElement - 1
-    For g = 0 To 7
+    For g = 0 To IIf(Elem(e).IsJoint, 5, 7)
       row = Elem(e).node(g) + 36
       ws.cells(row, 17).Resize(1, 5).value2 = Array(Elem(e).node(g) + 1, mWaterForce(2 * Elem(e).node(g)), mWaterForce(2 * Elem(e).node(g) + 1), Elem(e).x(g), Elem(e).y(g))
     Next g
@@ -577,7 +597,9 @@ ValidateInputData:   SetNodeData: SetMaterialData: SetElementData
   ws.range("D2").value2 = "真相対残差": ws.range("E2").value2 = mRel
   ws.range("G2").value2 = "水収支": ws.range("H2").value2 = mBalance
   ws.range("A4").value2 = "水位線・GP水圧・等価節点水圧荷重を確認。全数値は35行目以降。"
+  GWContext = "GWWriteHydraulicTables"
   GWWriteHydraulicTables ws, 0
+  GWContext = "GWDrawWaterView"
   GWDrawWaterView ws, mTarget, mWaterForce, "解析前水圧 " & mMode
   ws.Activate
 End Sub
@@ -597,7 +619,7 @@ Public Function GWCharacteristicForce() As Double
     If P3IsElementActive(e) And mBasis(Elem(e).MatNo) Then
       For g = 0 To 3
         For j = 0 To 15
-          value = value + Abs(mTarget(g, e) * (Elem(e).Bmat(0, j, g) + Elem(e).Bmat(1, j, g)) * Elem(e).dj(g) * Material(Elem(e).MatNo).thickness)
+          value = value + Abs(mTarget(g, e) * (Elem(e).bMat(0, j, g) + Elem(e).bMat(1, j, g)) * Elem(e).dj(g) * Material(Elem(e).MatNo).thickness)
         Next j
       Next g
     End If
@@ -684,6 +706,7 @@ Public Sub GWReadCheckpoint(ByVal folder As String)
     Next resultRow
   End If
   mOverrideProfile = profile
+  GWContext = "GWRebuild"
   GWRebuild
   For e = 0 To NumberOfElement - 1
     For g = 0 To 3
@@ -728,7 +751,7 @@ Private Sub GWWriteHydraulicTables(ByVal ws As Worksheet, ByVal stageNo As Long)
   If Not mFlowSolved Then Exit Sub
   ReDim nodeX(NumberOfFreeNode - 1): ReDim nodeY(NumberOfFreeNode - 1)
   For e = 0 To NumberOfElement - 1
-    For j = 0 To 7
+    For j = 0 To IIf(Elem(e).IsJoint, 5, 7)
       nodeX(Elem(e).node(j)) = Elem(e).x(j): nodeY(Elem(e).node(j)) = Elem(e).y(j)
     Next j
   Next e
@@ -758,8 +781,14 @@ Public Sub GWRebuildAcceptedInternalForce()
   Next i
   For e = 0 To NumberOfElement - 1
     ' Strain output is derived from the restored displacement; gauss.csv stores stresses only.
-    If Not Elem(e).IsJoint Then CalcStrain e, Elem(e).Bmat, TDisp, Elem(e).Stmat
-    If P3IsElementActive(e) Then CalcForce Elem(e).ElNo, Elem(e).Bmat, Elem(e).dj, Elem(e).Stmat
+    If Not Elem(e).IsJoint Then CalcStrain e, Elem(e).bMat, TDisp, Elem(e).Stmat
+    If P3IsElementActive(e) Then
+      If Elem(e).IsJoint Then
+        P3JointEval e, True
+      Else
+        CalcForce Elem(e).ElNo, Elem(e).bMat, Elem(e).dj, Elem(e).Stmat
+      End If
+    End If
   Next e
   If P6MixedUP Then P6AddPressureToInternalForce
   For i = 0 To lastDof
@@ -774,3 +803,53 @@ End Function
 Private Function GWParseNumber(ByVal text As String) As Double
   GWParseNumber = GWNum(Replace$(text, ".", Application.International(xlDecimalSeparator)), "チェックポイント数値")
 End Function
+
+Public Function GWProfileLevel(ByVal profile As String, ByVal x As Double) As Double
+  GWProfileLevel = GWLevel(profile, x)
+End Function
+
+Public Function GWMaterialProfile(ByVal mat As Long) As String
+  GWMaterialProfile = mMatProfile(mat)
+End Function
+
+Public Function GWJointPressure(ByVal e As Long, ByVal gp As Long) As Double
+  If Not GWActive Or Not mReady Then Exit Function
+  If Elem(e).IsJoint And P3IsElementActive(e) Then GWJointPressure = mCurrent(gp, e)
+End Function
+
+Public Function GWFacePressure(ByVal e As Long, ByVal side As Long, ByVal xi As Double, ByVal startNode As Long) As Double
+  Dim a As Long, n As Long, ids As Variant, nn(0 To 2) As Double, x As Double, y As Double, h As Double
+  ' Opposite owners have duplicated IDs, so compare the hydraulic/topological alias.
+  If GJTopoNode(Elem(e).node(side)) <> GJTopoNode(startNode) Then xi = -xi
+  ids = Array(side, (side + 1) Mod 4, side + 4)
+  nn(0) = 0.5 * xi * (xi - 1#): nn(1) = 0.5 * xi * (xi + 1#): nn(2) = 1# - xi * xi
+  For a = 0 To 2
+    n = CLng(ids(a)): x = x + nn(a) * Elem(e).x(n): y = y + nn(a) * Elem(e).y(n)
+    If mMode = "STEADY" Then h = h + nn(a) * mHeads(Elem(e).node(n))
+  Next a
+  If mMode <> "STEADY" Then h = GWLevel(mMatProfile(Elem(e).MatNo), x)
+  GWFacePressure = mGamma * (h - y)
+  If mMode = "STEADY" And GWFacePressure < -0.0000001 Then GWFail "JOINT面の負水圧は固定飽和領域の適用外です。"
+  If GWFacePressure < 0# Then GWFacePressure = 0#
+End Function
+
+Public Sub GWAddProfileFaceLoad(ByVal e As Long, ByVal side As Long, ByVal profile As String, ByRef force() As Double)
+  Dim px() As Double, py() As Double, count As Long, r As Long
+  If profile = "*" Then profile = mProfile
+  For r = 12 To 211
+    If Trim$(CStr(mWs.cells(r, 1).value2)) = profile Then count = count + 1
+  Next r
+  If count < 2 Then GWFail "JOINTの水位線には2点以上が必要です。"
+  ReDim px(count - 1): ReDim py(count - 1): count = 0
+  For r = 12 To 211
+    If Trim$(CStr(mWs.cells(r, 1).value2)) = profile Then
+      px(count) = GWNum(mWs.cells(r, 2).value2, "水位X"): py(count) = GWNum(mWs.cells(r, 3).value2, "水位Y"): count = count + 1
+    End If
+  Next r
+  GWWetEdgeLoad e, side, px, py, mGamma, force
+End Sub
+
+' A new mechanical mesh invalidates all node alias maps and cached water state.
+Public Sub GWInvalidateTopology()
+  GWActive = False: GJReady = False: mReady = False: mFlowSolved = False
+End Sub

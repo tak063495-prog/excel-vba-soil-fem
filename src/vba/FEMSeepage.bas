@@ -8,7 +8,7 @@ Public Sub GWSeepSolve(ByRef conductivity() As Double, ByRef fixedHead() As Bool
   Dim lm() As Double, rhs() As Double, rr() As Double, zz() As Double
   Dim pp() As Double, aa() As Double, diag() As Double
   Dim parent() As Long, activeNode() As Boolean, hasBC() As Boolean
-  Dim q As Long, ni As Long, nj As Long, root As Long, col As Long
+  Dim q As Long, ni As Long, nj As Long, Root As Long, col As Long
   Dim rho As Double, rhoNew As Double, denom As Double, alpha As Double, beta As Double
   Dim normR As Double, normB As Double, value As Double
   Dim gp(0 To 2) As Double, gw(0 To 2) As Double, Nshape(0 To 7) As Double
@@ -56,7 +56,7 @@ Public Sub GWSeepSolve(ByRef conductivity() As Double, ByRef fixedHead() As Bool
     If Not P2IsFinite(kValue) Or kValue < 0# Then GWFail "Invalid conductivity."
     If kValue <= 0# Then GoTo NextElement
     For i = 0 To 7
-      ni = Elem(e).node(i)
+      ni = GWFlowNode(e, i)
       If ni < 0 Or ni >= nn Then GWFail "Element node out of range."
       activeNode(ni) = True
     Next i
@@ -64,8 +64,8 @@ Public Sub GWSeepSolve(ByRef conductivity() As Double, ByRef fixedHead() As Bool
     If thick <= 0# Then thick = 1#
     For g = 0 To 8
       q = g Mod 3
-      root = g \ 3
-      P6Q8Shape gp(q), gp(root), Nshape, dxi, deta
+      Root = g \ 3
+      P6Q8Shape gp(q), gp(Root), Nshape, dxi, deta
       j11 = 0#: j12 = 0#: j21 = 0#: j22 = 0#
       For i = 0 To 7
         j11 = j11 + dxi(i) * Elem(e).x(i)
@@ -79,7 +79,7 @@ Public Sub GWSeepSolve(ByRef conductivity() As Double, ByRef fixedHead() As Bool
         dNx(i) = (j22 * dxi(i) - j21 * deta(i)) / detJ
         dNy(i) = (-j12 * dxi(i) + j11 * deta(i)) / detJ
       Next i
-      value = gw(q) * gw(root) * detJ * thick * kValue
+      value = gw(q) * gw(Root) * detJ * thick * kValue
       For i = 0 To 7
         For j = 0 To 7
           lm(i, j, e) = lm(i, j, e) + value * (dNx(i) * dNx(j) + dNy(i) * dNy(j))
@@ -87,7 +87,7 @@ Public Sub GWSeepSolve(ByRef conductivity() As Double, ByRef fixedHead() As Bool
       Next i
     Next g
     For i = 1 To 7
-      GWUnion parent, Elem(e).node(0), Elem(e).node(i)
+      GWUnion parent, GWFlowNode(e, 0), GWFlowNode(e, i)
     Next i
 NextElement:
   Next e
@@ -100,11 +100,11 @@ NextElement:
   Next i
   For i = 0 To nn - 1
     If activeNode(i) Then
-      root = GWFind(parent, i)
+      Root = GWFind(parent, i)
       foundBC = False
       For j = 0 To nn - 1
         If activeNode(j) Then
-          If GWFind(parent, j) = root Then
+          If GWFind(parent, j) = Root Then
             If hasBC(j) Then
               foundBC = True
               Exit For
@@ -118,9 +118,9 @@ NextElement:
   For e = 0 To ne - 1
     If conductivity(e) > 0# Then
       For i = 0 To 7
-        ni = Elem(e).node(i)
+        ni = GWFlowNode(e, i)
         For j = 0 To 7
-          nj = Elem(e).node(j)
+          nj = GWFlowNode(e, j)
           If ni = nj Then diag(ni) = diag(ni) + lm(i, j, e)
           If fixedHead(nj) Then rhs(ni) = rhs(ni) - lm(i, j, e) * prescribedHead(nj)
         Next j
@@ -179,10 +179,10 @@ NextElement:
   For e = 0 To ne - 1
     If conductivity(e) > 0# Then
       For i = 0 To 7
-        ni = Elem(e).node(i)
+        ni = GWFlowNode(e, i)
         If locked(ni) Then
           For j = 0 To 7
-            nj = Elem(e).node(j)
+            nj = GWFlowNode(e, j)
             reactionFlow(ni) = reactionFlow(ni) + lm(i, j, e) * heads(nj)
           Next j
         End If
@@ -225,10 +225,10 @@ Private Sub GWMatVec(ByRef lm() As Double, ByRef x() As Double, ByRef y() As Dou
   For e = 0 To ne - 1
     If conductivity(e) > 0# Then
       For i = 0 To 7
-        ni = Elem(e).node(i)
+        ni = GWFlowNode(e, i)
         If Not fixedHead(ni) Then
           For j = 0 To 7
-            nj = Elem(e).node(j)
+            nj = GWFlowNode(e, j)
             If Not fixedHead(nj) Then y(ni) = y(ni) + lm(i, j, e) * x(nj)
           Next j
         End If
@@ -245,10 +245,10 @@ Private Sub GWComputeResidual(ByRef lm() As Double, ByRef h() As Double, ByRef r
   For e = 0 To ne - 1
     If conductivity(e) > 0# Then
       For i = 0 To 7
-        ni = Elem(e).node(i)
+        ni = GWFlowNode(e, i)
         If Not fixedHead(ni) Then
           For j = 0 To 7
-            nj = Elem(e).node(j)
+            nj = GWFlowNode(e, j)
             rr(ni) = rr(ni) + lm(i, j, e) * h(nj)
           Next j
         End If
@@ -285,7 +285,7 @@ Private Sub GWComputeFlux(ByRef conductivity() As Double, ByRef h() As Double, B
         For i = 0 To 7
           dx = (j22 * dxi(i) - j21 * deta(i)) / detJ
           dy = (-j12 * dxi(i) + j11 * deta(i)) / detJ
-          gx = gx + dx * h(Elem(e).node(i)): gy = gy + dy * h(Elem(e).node(i))
+          gx = gx + dx * h(GWFlowNode(e, i)): gy = gy + dy * h(GWFlowNode(e, i))
         Next i
         fx(g, e) = -conductivity(e) * gx: fy(g, e) = -conductivity(e) * gy
       Next g
