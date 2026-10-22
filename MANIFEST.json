@@ -16,8 +16,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 27167,
-    "sha256": "9435071b9f2c37e67550e9d8fff0ccf0f580057b00533e78c58d4986e7949196"
+    "bytes": 27377,
+    "sha256": "32ca8792ad971c73897a86bdabccc85f8057054e22f7a5e880c18963d12fe4d6"
   },
   {
     "path": "docs/ACCELERATION_HISTORY.md",
@@ -93,6 +93,11 @@
     "path": "docs/LITERATURE_VALIDATION.md",
     "bytes": 20844,
     "sha256": "bc3158e0fb13616d058ee94be060a69bb5ad646be4254e370fbe40cb251813dd"
+  },
+  {
+    "path": "docs/MANUAL_20261024_VALIDATION.md",
+    "bytes": 5555,
+    "sha256": "46650f5e62ea801cb79933095b2520f80532d775804790fe5ed9ae7494ff1b52"
   },
   {
     "path": "docs/MESH_DELAUNAY_MEMORY.md",
@@ -955,6 +960,106 @@
     "sha256": "a98c5f7cb13325baf83e553d2a47e6791f25f6aed2abab2b251936366f0b7446"
   },
   {
+    "path": "docs/manual24-evidence/20261024/README.md",
+    "bytes": 3231,
+    "sha256": "89f14ec9b27c3e333d343ad4a75462027e9eb01d4ef7a33f0660321cb5a5c1c4"
+  },
+  {
+    "path": "docs/manual24-evidence/20261024/basic_calculation_logs.zip",
+    "bytes": 120014,
+    "sha256": "28604a925127c0d364f15893afc669251aec75a26e76c6c582f8f4068a3751dd"
+  },
+  {
+    "path": "docs/manual24-evidence/20261024/basic_nodes.json",
+    "bytes": 73122,
+    "sha256": "1c84de6bbf4ce6f32638a4a48327f3771e27271c8d2612a23ee10af8396ab345"
+  },
+  {
+    "path": "docs/manual24-evidence/20261024/basic_result.json",
+    "bytes": 140553,
+    "sha256": "54428369eb872873fcde8bb4af972b31b81b15429bcc2eb390d5bf743db97efb"
+  },
+  {
+    "path": "docs/manual24-evidence/20261024/basic_stages.json",
+    "bytes": 754,
+    "sha256": "4a6e6c48054294a1adbc22596bd56465bb7412f0e756bdc7380d27e076f8f85e"
+  },
+  {
+    "path": "docs/manual24-evidence/20261024/build.log",
+    "bytes": 159,
+    "sha256": "e318933ba450737b7fb0586ff24179dac263573505b51b60161de2aa04789dfe"
+  },
+  {
+    "path": "docs/manual24-evidence/20261024/capture_plan.json",
+    "bytes": 19029,
+    "sha256": "684e684e9b2897f38e53b5fab1979deb52a226e26b0ac871db2cb54475b4214e"
+  },
+  {
+    "path": "docs/manual24-evidence/20261024/coverage.json",
+    "bytes": 291,
+    "sha256": "2049b34944735a17b4e8d4cabd7f7d10293492862f334bf37530b0e0d05380ed"
+  },
+  {
+    "path": "docs/manual24-evidence/20261024/figure_hashes.json",
+    "bytes": 10412,
+    "sha256": "6e3dc3cb54a2a52850d52b779e26d52e43c3ca8357a8b3dabfa75df311e569d1"
+  },
+  {
+    "path": "docs/manual24-evidence/20261024/image_annotations.json",
+    "bytes": 3241,
+    "sha256": "e8e5e9d3f310264f953335d163061b2cfa51b0e5dcdc7f28e2373dcd781a8d54"
+  },
+  {
+    "path": "docs/manual24-evidence/20261024/independent_checks.json",
+    "bytes": 827,
+    "sha256": "81218eef3634a585334cd6b938fe4d791159a836aba06ce376c5d74543313c21"
+  },
+  {
+    "path": "docs/manual24-evidence/20261024/page_contact_sheets.zip",
+    "bytes": 10090001,
+    "sha256": "f3596f19687dc391602b5759e2720f9c0d4ac8e6e6119572dfc22742b2407f9f"
+  },
+  {
+    "path": "docs/manual24-evidence/20261024/page_mapping_extra.json",
+    "bytes": 3638,
+    "sha256": "3c0fa74c5f59b9dc50e091be7091d21cdc625aba097adb4de92328e78cd88f3f"
+  },
+  {
+    "path": "docs/manual24-evidence/20261024/page_mapping_headings.json",
+    "bytes": 3686,
+    "sha256": "2ea5ad398833c965b8c666c2e35ca7570239e0c23f9e812df9d722e07cffaf61"
+  },
+  {
+    "path": "docs/manual24-evidence/20261024/page_mapping_initial.json",
+    "bytes": 5910,
+    "sha256": "fde570f34ade1767fe9d3ce3f2a9e65d81b429213076dcf219608768537cae65"
+  },
+  {
+    "path": "docs/manual24-evidence/20261024/page_mapping_layout.json",
+    "bytes": 3626,
+    "sha256": "a3004ff85e0c4c5ae2f52bfdbb3c46614709877ddf4bd3c994682fbf77065144"
+  },
+  {
+    "path": "docs/manual24-evidence/20261024/pdf_checks.json",
+    "bytes": 3256,
+    "sha256": "fa38fcb460ed25f95f8f024d72c9baffdb180b2acb18f7de387707edde778bc5"
+  },
+  {
+    "path": "docs/manual24-evidence/20261024/pdf_link_bounds_checks.json",
+    "bytes": 2994,
+    "sha256": "5a5b6a605d0a63b1c3b2f37dbbb1dc6d734cb89bc59b3e6837bb5090aa04f40c"
+  },
+  {
+    "path": "docs/manual24-evidence/20261024/screen_checks.json",
+    "bytes": 127643,
+    "sha256": "acbd85c410a8433d97f841b2f684967f544ae160afd7ec68fbb7a8878f2cb513"
+  },
+  {
+    "path": "docs/manual24-evidence/20261024/visual_review.json",
+    "bytes": 29157,
+    "sha256": "97a125e5dd49767dcebb9bc44e7c81e71e852c4205a6b5e4442245356d62cae6"
+  },
+  {
     "path": "docs/manuals/2DSoilFEM_Detailed_Manual_20261020.pdf",
     "bytes": 9258293,
     "sha256": "db57705b694f4d9bf419728404f2486ab2d73f470f9031c27755f307ef0449cc"
@@ -1025,9 +1130,19 @@
     "sha256": "12a3441a25dc74c4036a42d354039b6b238314be2903b7cdcb9ae4b6c6aa3642"
   },
   {
+    "path": "docs/manuals/2DSoilFEM_Manual_20261024.md",
+    "bytes": 339535,
+    "sha256": "d765dc8082aea294592342e10d84a9bf3fe47bb502f766a5105eb046d49dee22"
+  },
+  {
+    "path": "docs/manuals/2DSoilFEM_Manual_20261024.pdf",
+    "bytes": 39040287,
+    "sha256": "eb4787bdcbfb328579e0ed4b5d31d21d15c85436fd0093ed329866b1965b7457"
+  },
+  {
     "path": "docs/manuals/README.md",
-    "bytes": 15789,
-    "sha256": "9531a503786fb82400f8403724b7ad1fbe81e322e88e2c626b486d787abaab2a"
+    "bytes": 16630,
+    "sha256": "e8dce1f354a405c58f62a168f9d448027390246044bbda7f18f90b545e1cb175"
   },
   {
     "path": "docs/manuals/build_manual_pdf.py",
@@ -1036,8 +1151,8 @@
   },
   {
     "path": "docs/manuals/build_manual_pdf_v2.py",
-    "bytes": 5860,
-    "sha256": "47a61a626daa92a4c50401aff1a5905a1c50b2e13c74e0530bb1694e0b283254"
+    "bytes": 6133,
+    "sha256": "09769ebfc50c81ade255a9bc685f8613b9fa4eb62411cb1184a670b9f245b5e0"
   },
   {
     "path": "docs/manuals/construction-evidence/20261020/anchor09/adaptive_v2a.csv.gz",
@@ -4086,8 +4201,8 @@
   },
   {
     "path": "docs/manuals/examples/README.md",
-    "bytes": 8210,
-    "sha256": "d5211ca560b9628d409f50bd0b248fb41031f7f9072c1ad33e9e903c4fa7256f"
+    "bytes": 8488,
+    "sha256": "961ff607dc4f8e408e8b9967ccb63c9552efb91f18e5ab63e6258ea57001ff96"
   },
   {
     "path": "docs/manuals/examples/ex01_material_20261021.xlsm",
@@ -5075,6 +5190,11 @@
     "sha256": "ad81576fb84c5f90ec52129dd41cb3145719830ea1e07a02161d176af7e60df8"
   },
   {
+    "path": "docs/manuals/examples/manual24_basic.zip",
+    "bytes": 3493778,
+    "sha256": "5b6f796f5e212e08bc39ed814c37dcd5bc0490bc948c81f92761fca7dd405d27"
+  },
+  {
     "path": "docs/manuals/examples/water_display_examples.zip",
     "bytes": 22091626,
     "sha256": "eb2c774047384b0dd27012941eab65e40d8673183db8726da7ae3fc272996e3b"
@@ -5333,6 +5453,351 @@
     "path": "docs/manuals/images/theory/x2y_yield_select.png",
     "bytes": 49018,
     "sha256": "bc18008e46c82f3218a39191cdef5fb0074aa11f1a44a4916726a6e30eecead2"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_analysis.png",
+    "bytes": 423364,
+    "sha256": "80545cad49c9f4a39c0e77a6b1a020bc308127ba15ac83e7da7d8b3d115bbbca"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_coords.png",
+    "bytes": 199828,
+    "sha256": "45df4bd2dde198d804880d189ffe3bf571fbbc44ef9d17c2c90eedb3d04f8aa1"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_diagnostic.png",
+    "bytes": 646916,
+    "sha256": "408d8419ffbd9747e78b3e3263404cda96637ac586d70d045776d43e4d395eff"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_elements.png",
+    "bytes": 1142520,
+    "sha256": "c596fa6c618043bbf7b817e3735dee45506838db5adccc65182cde77a917e2a3"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_joints.png",
+    "bytes": 184215,
+    "sha256": "304cde420f2237f7e949dff96bacf6a94d0579af603a386880b1292081833c55"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_loads.png",
+    "bytes": 200424,
+    "sha256": "fc7a71c8e91bec9cc06ea2444009c8ab4faad436f0c490b1844903e13e26d4b9"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_materials.png",
+    "bytes": 216409,
+    "sha256": "d26cc4d72fb96c3196ac530afc6e801819f0d475efcd59b717f4d3d08fdd7f2f"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_mesh.png",
+    "bytes": 373844,
+    "sha256": "bfd2693275c99fddec459811455a16f949c2367dd7d1f8d963e64022bd9c6f1d"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_nodes.png",
+    "bytes": 583503,
+    "sha256": "60eebce93f6908f52d62388a35fc5114cf54387cb19eba41e1b4f3ee063dad34"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_plot.png",
+    "bytes": 587496,
+    "sha256": "d25b7d522dfe9d24dc2554bbb6482f1601df42181f7fc8b8effc3a69192a940c"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_plot50.png",
+    "bytes": 532061,
+    "sha256": "3751120b1994f67b84822eed39e49b5d4e36a08ee205e25f66a29abab2d4d506"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_preview.png",
+    "bytes": 617652,
+    "sha256": "340d99a384b39300aa2a90e500c19b96a4bc3771ed1324390149af90fcba5caa"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_regions.png",
+    "bytes": 184908,
+    "sha256": "06c272e635d0e44f4d1e168000a81b94f4cc88cbb731b022777f45cc8c106ff8"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_save.png",
+    "bytes": 344205,
+    "sha256": "7b2c05bb610887f1d6219ac242b1e5638206772788bb810aba30f35d581846c3"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_shape.png",
+    "bytes": 385173,
+    "sha256": "ac77f01989ad82ef8b328d782a6eabecf143a8bf0580cf68503680276d68f30c"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_speed.png",
+    "bytes": 624634,
+    "sha256": "25e2d00da8de545e2eb8f85b95f57f84cd8147c0f7a63b72953b1c05fef061bb"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_stage_results.png",
+    "bytes": 286050,
+    "sha256": "c719f3ffe5aa50ac4bccebc7089e785bb5ab5a585bc614e6ce3b29afaa53c6b4"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_stages.png",
+    "bytes": 280131,
+    "sha256": "1c7846ed8830b779c075c7a358d0d2c482fd555a255a12ebd009893aa4ae28ac"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_start.png",
+    "bytes": 425308,
+    "sha256": "933b87edb62a73ce3570de45fbd49f3fbd27ff701decd86ac93d9d8383d514d4"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_time.png",
+    "bytes": 30883,
+    "sha256": "6230d18aa72a20f46462cafe13bbc44c5f220285a0aab6344a5e74d6d823432a"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_view50.png",
+    "bytes": 391040,
+    "sha256": "b2dc479e654d1994c42c61ce5d6e3a38aa23900db3be3621832f317bf2522acb"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_view_xy.png",
+    "bytes": 390261,
+    "sha256": "f5d6763e02a01604d9b943a2585e8d0829649b7c7a8ab2abc5b05b1b63f9f53c"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex01_analysis.png",
+    "bytes": 410002,
+    "sha256": "8e1174c39570e24fac064237191361b6a39639d8b785721c03e0b3c4474094a6"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex01_materials.png",
+    "bytes": 216383,
+    "sha256": "7cc81a048f29cfe70e57ddffaa01c34d81cb0c2d5ecd4633366811fe4de7ae0b"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex01_view.png",
+    "bytes": 389764,
+    "sha256": "8e5f5ababb7b7619133b826552e0d122fc56cb67aaf646a8718954508873689d"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex02_shape.png",
+    "bytes": 385144,
+    "sha256": "14ecab5f325bef41527fc273b02a752614d533c5d644592c1c4efd0bc851aba5"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex03_nodes.png",
+    "bytes": 351032,
+    "sha256": "cd8f2784b97dc165ab91e7d1ad041b73061c74c018977daf80cb570e5fc82b19"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex03_stages.png",
+    "bytes": 235239,
+    "sha256": "528474a36e7d437beb76ac5124151f8aa371b8f3d1234ea3d9090a4b1dd024f9"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex03_view.png",
+    "bytes": 389765,
+    "sha256": "a0594577d9ad0a5671080177c32445a5abc87f6fd8eee4cd83092d6a74edd434"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex04_materials.png",
+    "bytes": 246549,
+    "sha256": "9cfe00c4a7419879810623d766da10f7292591c88268d8f344935c9274895e95"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex04_shape.png",
+    "bytes": 411214,
+    "sha256": "c6f3874d5fd476bbe115c5365108081c745d95fa07c6b6411017f399ed4caca7"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex04_stages.png",
+    "bytes": 255617,
+    "sha256": "42c2aed759881b19f7fa52baeabd7787813d48ee417f6717486bc3c0a5f80228"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex05_loads.png",
+    "bytes": 211890,
+    "sha256": "330212e1b7916c4d37eb4bb432684962a8f328b5ea456e4bbad2c23a3892c14a"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex05_materials.png",
+    "bytes": 216409,
+    "sha256": "d26cc4d72fb96c3196ac530afc6e801819f0d475efcd59b717f4d3d08fdd7f2f"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex05_shape.png",
+    "bytes": 374196,
+    "sha256": "431ca2462a3cd4a141d0ccd432041a75f7f99ff97f0c242c17f7e33e2dd39f20"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex05_stages.png",
+    "bytes": 243979,
+    "sha256": "663c28efabac12b90532ff38ce21c5e15fc15b59fceb7be42fa49a1e1e764d2d"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex06_loads.png",
+    "bytes": 211197,
+    "sha256": "01a593b46dd388a320494c1e5a83fa521db97cab75ec8a3fb498a6445027d8c7"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex07_analysis.png",
+    "bytes": 406757,
+    "sha256": "86b33f2885ee7a9cf2e95d1d21890a55e864660ffcff37083c7710d85eab9fe1"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex08_materials.png",
+    "bytes": 321526,
+    "sha256": "d4182fef64943b3b2060ae8a839d722feb78995033d3375edebdf331da99840b"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex08_shape.png",
+    "bytes": 498213,
+    "sha256": "9cdf5010d2ca27e59dfafebf8f74de36b975da3617206fefbe90a5250d5e5af7"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex08_stages.png",
+    "bytes": 458728,
+    "sha256": "fa66f6a0fd8d5270f92808feff21f430faaa855da2a9009f6e357b0d14b0b225"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex08_view.png",
+    "bytes": 385600,
+    "sha256": "72ba4a00923081d09753484c152fd44deb4dfb840431a0a42b2090caf05602a5"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex08taller_coords.png",
+    "bytes": 255848,
+    "sha256": "b076ee15a85bec379d77b3d56bb10fa65f1efe788d2f2745c0bd24fa1aaa8430"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex09_materials.png",
+    "bytes": 250815,
+    "sha256": "ce6374b7857fc940dfbfa971719766f7f72773e6bd7a48f6a158156a2c85e30e"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex09_shape.png",
+    "bytes": 459734,
+    "sha256": "bf2b73784947a8616f790a9fd9f30d03e192b695266ec35b569b6d3e40afe672"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex09_stages.png",
+    "bytes": 296287,
+    "sha256": "f344de09174b98c220240c9277a05661ab847c9f3329001e76a58c16aeabc9a8"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex10_materials.png",
+    "bytes": 303132,
+    "sha256": "e9555d7dd15b184863289430a5a72fb08e61983dd1e397929bcbdda224b66440"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex10_stages.png",
+    "bytes": 383301,
+    "sha256": "fbd54b7ded78e8041c8d1c0c898b4b65c7682f295756a3ce9553bbb6f073cdc2"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex11_joints.png",
+    "bytes": 220434,
+    "sha256": "b6654eca5867ab42d4f3fbeb453c9a71210294609d5bef007b11e75ef31e9f5f"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex11_loads.png",
+    "bytes": 214587,
+    "sha256": "ada7deef3eeed25b12e2453ed563518b576e1a7e4da35f97c7602a8985faf068"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex11_materials.png",
+    "bytes": 248336,
+    "sha256": "272cee712b9ae2819f864482be65dbe6a53e95036baa034dc74e26a7cef1a393"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex11_shape.png",
+    "bytes": 400171,
+    "sha256": "1afc3c9ed2d3fd0d3f6ebae3069e4e1d5b7acfc6472cb940d1e22f8e0c237f5f"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex11_stages.png",
+    "bytes": 235239,
+    "sha256": "528474a36e7d437beb76ac5124151f8aa371b8f3d1234ea3d9090a4b1dd024f9"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex11b_loads.png",
+    "bytes": 211932,
+    "sha256": "b5bf99c78b081832174daf2cad144d5e9462dab08241446219a602ddcadedf17"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex11b_materials.png",
+    "bytes": 249052,
+    "sha256": "b1f7695963f14a29d6368b9e8cce354db5d15b6e6c0271265756c1ffcf94dae2"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex11b_stages.png",
+    "bytes": 247864,
+    "sha256": "606e13cc0fcfb17ba10ee7113cd42facc31a84fd3d0f1822ee8765b16afc942c"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex12_loads.png",
+    "bytes": 570353,
+    "sha256": "7ab52810a78c98c51760f182d9fdc049da14264dade4a76222bec589644aebb1"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex12_stages.png",
+    "bytes": 305433,
+    "sha256": "cd25b81dd663df4298fbd06447e450e1a3ea98a445d6cb39ee0f0bb57acd2743"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex13_loads.png",
+    "bytes": 397016,
+    "sha256": "cd0566e4ae6f5f83be06e80e8fa59729545e1fef9961f0a79efc20eb151532a3"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex13_stages.png",
+    "bytes": 262332,
+    "sha256": "cbbaa33739566711f2f82cc1737661957b660ebc49e08aabde280438af6971bc"
+  },
+  {
+    "path": "docs/manuals/images/ui24/home.png",
+    "bytes": 307088,
+    "sha256": "15881cd16f67d491f7104e96997c0490035fca00e6a4604c0ccb1de83a36546a"
+  },
+  {
+    "path": "docs/manuals/images/ui24/plastic_select.png",
+    "bytes": 397958,
+    "sha256": "0917983b7ace407487a0b7f1685fd6ca27cc4427128591b412917b797d0f11ac"
+  },
+  {
+    "path": "docs/manuals/images/ui24/polyline_input.png",
+    "bytes": 445193,
+    "sha256": "6ede7de93f71a267663702ec13a24c06a9bdc523bed36349a2ef4d70a64e6005"
+  },
+  {
+    "path": "docs/manuals/images/ui24/water_boundary.png",
+    "bytes": 389598,
+    "sha256": "a4bf501e18795923b893a20d0d5bfbb555334d88ae13de202fee1e3955672698"
+  },
+  {
+    "path": "docs/manuals/images/ui24/water_joint.png",
+    "bytes": 194581,
+    "sha256": "605ce661bb2e1a9105d32aabf093e13a59ab99cb63e3a07a0aa405af2ae4d36b"
+  },
+  {
+    "path": "docs/manuals/images/ui24/water_materials.png",
+    "bytes": 208218,
+    "sha256": "5ceacb52f27295fdb47c05bf18050ca18f272f0f69bb1b0e951db8f726dc0342"
+  },
+  {
+    "path": "docs/manuals/images/ui24/water_mode.png",
+    "bytes": 221466,
+    "sha256": "010e464dbedebd5614c62603a67dab62d66696449623668a051b8717f31dca7a"
+  },
+  {
+    "path": "docs/manuals/images/ui24/water_profiles.png",
+    "bytes": 216883,
+    "sha256": "39c2a3a2d99f24cd6496fce5db71306ce8c529e913f85b288e6e629370b94e57"
+  },
+  {
+    "path": "docs/manuals/images/ui24/water_stages.png",
+    "bytes": 288844,
+    "sha256": "8b22c6d2743a93ead699765aa34a248fa9ad987daa0186dac638a88fedc0eb35"
   },
   {
     "path": "docs/manuals/images/v2/lit_01_griffiths.png",
@@ -9970,6 +10435,11 @@
     "sha256": "2f7584c5c2362c998861d565a4fc7fb88f7ea09010de26b6f1a2474a7ac2f297"
   },
   {
+    "path": "tests/capture_manual24.ps1",
+    "bytes": 4928,
+    "sha256": "dc497346c3527b81e4cdccd467bd3e43af3c7883790de24aafa583edca8bcde2"
+  },
+  {
     "path": "tests/check_bearing_case.py",
     "bytes": 5481,
     "sha256": "4d9c2bfd0277783f115388ed4e55472d1b4a8e4d727c76bcadd227dc461fda91"
@@ -10013,6 +10483,21 @@
     "path": "tests/check_joint_water_manual.py",
     "bytes": 3437,
     "sha256": "18007c7d1a327e30d5aa1f2a0450a8be27cced91297d4075f9ad38dc15e84b50"
+  },
+  {
+    "path": "tests/check_manual24_basic.py",
+    "bytes": 3208,
+    "sha256": "d33e9ac270f672d736784f5121b94fdad22577be201fd5f234f3d89fb7421557"
+  },
+  {
+    "path": "tests/check_manual24_coverage.py",
+    "bytes": 1292,
+    "sha256": "3c6c71d8d8e5553397dd26b11aeaa313e00c78f4e1f12332c4b8aa923b5ce3e3"
+  },
+  {
+    "path": "tests/check_manual24_pdf.py",
+    "bytes": 2302,
+    "sha256": "ccd6d0fdf59aac1be9344b92f67ea73ee31b3f87aade2e23ab555d77a50b2784"
   },
   {
     "path": "tests/check_manual_applied.py",
@@ -10233,6 +10718,11 @@
     "path": "tests/fixtures/joint_water_wrong_soil_mode.json",
     "bytes": 4109,
     "sha256": "e75209ed396cafc592e4c87f2e325d2b776398a7b68992ee3f81c4ce3aac28cb"
+  },
+  {
+    "path": "tests/fixtures/manual24_basic.json",
+    "bytes": 45738,
+    "sha256": "e4f117fedafa72e86059c4025c6c30e3e582a16ccad26f2a6129240fdbd48040"
   },
   {
     "path": "tests/fixtures/smoke_expected.json",
@@ -11035,6 +11525,11 @@
     "sha256": "ea93a06fbc7bb964ae1fd8ba18bc44efa0b0d394662607c69d605e2207764ca6"
   },
   {
+    "path": "tests/prepare_manual24_images.py",
+    "bytes": 5382,
+    "sha256": "952904e7b1aeb5e9a494cec5ad0ea8c89f2a52da5b26e9f6d4fbdcfb18788ba1"
+  },
+  {
     "path": "tests/refresh_manual_case_ui.ps1",
     "bytes": 2695,
     "sha256": "d09907482a6fa03db64de801e211b4ce826f1b949459d783fcc43ec9cd737767"
@@ -11101,8 +11596,8 @@
   },
   {
     "path": "tests/review_water_manual.py",
-    "bytes": 3344,
-    "sha256": "6b183067491e304255b0613769fbc8e1628e76a540ba3078847bc70d0d5df877"
+    "bytes": 3406,
+    "sha256": "d4da7caf4c21aa120f5fde5a99c0f145c9df2f56c85ce9335f43ef6a433e71d6"
   },
   {
     "path": "tests/run.ps1",

@@ -1,0 +1,275 @@
+{
+  "home": [],
+  "basic_materials": [
+    "1",
+    "2"
+  ],
+  "basic_coords": [
+    "1"
+  ],
+  "basic_regions": [
+    "2",
+    "3",
+    "4"
+  ],
+  "basic_mesh": [
+    "1",
+    "2",
+    "3",
+    "4"
+  ],
+  "basic_joints": [
+    "1",
+    "2"
+  ],
+  "basic_loads": [
+    "1",
+    "2"
+  ],
+  "basic_stages": [
+    "1"
+  ],
+  "basic_analysis": [
+    "1",
+    "2"
+  ],
+  "basic_save": [
+    "1"
+  ],
+  "basic_speed": [
+    "1"
+  ],
+  "basic_view": [
+    "1",
+    "2"
+  ],
+  "basic_stage_results": [],
+  "basic_nodes": [],
+  "basic_elements": [],
+  "basic_diagnostic": [],
+  "ex01_materials": [
+    "1",
+    "2"
+  ],
+  "ex01_analysis": [
+    "1",
+    "2"
+  ],
+  "ex01_view": [
+    "1",
+    "2"
+  ],
+  "ex02_coords": [
+    "1"
+  ],
+  "ex02_regions": [
+    "2",
+    "3",
+    "4"
+  ],
+  "ex02_view": [
+    "1",
+    "2"
+  ],
+  "ex03_stages": [
+    "1"
+  ],
+  "ex03_nodes": [
+    "1",
+    "2"
+  ],
+  "ex03_view": [
+    "1",
+    "2"
+  ],
+  "ex04_materials": [
+    "1",
+    "2"
+  ],
+  "ex04_coords": [
+    "1"
+  ],
+  "ex04_regions": [
+    "2",
+    "3",
+    "4"
+  ],
+  "ex04_stages": [
+    "1",
+    "2"
+  ],
+  "ex05_materials": [
+    "1",
+    "2"
+  ],
+  "ex05_coords": [
+    "1"
+  ],
+  "ex05_regions": [
+    "2",
+    "3",
+    "4"
+  ],
+  "ex05_loads": [
+    "1",
+    "2"
+  ],
+  "ex05_stages": [
+    "1",
+    "2"
+  ],
+  "ex06_loads": [
+    "1",
+    "2"
+  ],
+  "ex07_analysis": [
+    "1",
+    "2"
+  ],
+  "ex08_materials": [
+    "1",
+    "2"
+  ],
+  "ex08_coords": [
+    "1"
+  ],
+  "ex08_regions": [
+    "2",
+    "3",
+    "4"
+  ],
+  "ex08_stages": [
+    "1",
+    "2"
+  ],
+  "ex08_view": [
+    "1",
+    "2",
+    "3"
+  ],
+  "ex08taller_coords": [
+    "1",
+    "2"
+  ],
+  "ex09_materials": [
+    "1",
+    "2"
+  ],
+  "ex09_coords": [
+    "1"
+  ],
+  "ex09_regions": [
+    "2",
+    "3",
+    "4"
+  ],
+  "ex09_stages": [
+    "1"
+  ],
+  "ex10_stages": [
+    "1",
+    "2"
+  ],
+  "ex11_materials": [
+    "1",
+    "2"
+  ],
+  "ex11_coords": [
+    "1"
+  ],
+  "ex11_regions": [
+    "2",
+    "3",
+    "4"
+  ],
+  "ex11_joints": [
+    "1",
+    "2"
+  ],
+  "ex11_loads": [
+    "1",
+    "2"
+  ],
+  "ex11_stages": [
+    "1"
+  ],
+  "ex12_loads": [
+    "1",
+    "2",
+    "3",
+    "4"
+  ],
+  "ex13_loads": [
+    "1",
+    "2",
+    "3",
+    "4"
+  ],
+  "water_mode": [
+    "1"
+  ],
+  "water_profiles": [
+    "2"
+  ],
+  "water_materials": [
+    "3"
+  ],
+  "water_boundary": [
+    "1"
+  ],
+  "water_stages": [
+    "1",
+    "2"
+  ],
+  "water_joint": [
+    "1",
+    "2"
+  ],
+  "polyline_mode": [
+    "1"
+  ],
+  "polyline_profiles": [
+    "2"
+  ],
+  "basic_preview": [],
+  "basic_plot": [],
+  "basic_view_xy": [
+    "1",
+    "2"
+  ],
+  "basic_plot50": [],
+  "basic_view50": [
+    "1",
+    "2"
+  ],
+  "basic_start": [
+    "1",
+    "2"
+  ],
+  "plastic_select": [
+    "1",
+    "2"
+  ],
+  "ex10_materials": [
+    "1",
+    "2"
+  ],
+  "ex11b_materials": [
+    "1",
+    "2"
+  ],
+  "ex11b_loads": [
+    "1",
+    "2"
+  ],
+  "ex11b_stages": [
+    "1"
+  ],
+  "ex12_stages": [
+    "1",
+    "2"
+  ],
+  "ex13_stages": [
+    "1"
+  ]
+}

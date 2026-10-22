@@ -1,0 +1,242 @@
+{
+  "status": "PASS",
+  "mapping": [
+    {
+      "old": 3,
+      "new": 3,
+      "chapter": 1,
+      "matching_text_fraction": 1.0,
+      "reason": "同章の本文一致で照合"
+    },
+    {
+      "old": 4,
+      "new": 4,
+      "chapter": 1,
+      "matching_text_fraction": 0.9683333333333334,
+      "reason": "同章の本文一致で照合"
+    },
+    {
+      "old": 5,
+      "new": 5,
+      "chapter": 2,
+      "matching_text_fraction": 0.7157584683357879,
+      "reason": "同章の本文一致で照合"
+    },
+    {
+      "old": 6,
+      "new": 10,
+      "chapter": 3,
+      "matching_text_fraction": 0.06948640483383686,
+      "reason": "材料特性の入力表へ移動"
+    },
+    {
+      "old": 7,
+      "new": 36,
+      "chapter": 3,
+      "matching_text_fraction": 0.0,
+      "reason": "変位倍率1の結果図へ移動"
+    },
+    {
+      "old": 9,
+      "new": 11,
+      "chapter": 4,
+      "matching_text_fraction": 0.6576980568011959,
+      "reason": "同章の本文一致で照合"
+    },
+    {
+      "old": 10,
+      "new": 11,
+      "chapter": 4,
+      "matching_text_fraction": 0.8963165075034106,
+      "reason": "同章の本文一致で照合"
+    },
+    {
+      "old": 11,
+      "new": 13,
+      "chapter": 4,
+      "matching_text_fraction": 0.2679738562091503,
+      "reason": "形状の領域・外側/内側の定義へ移動"
+    },
+    {
+      "old": 16,
+      "new": 18,
+      "chapter": 4,
+      "matching_text_fraction": 0.5382436260623229,
+      "reason": "同章の本文一致で照合"
+    },
+    {
+      "old": 17,
+      "new": 19,
+      "chapter": 4,
+      "matching_text_fraction": 0.7604456824512534,
+      "reason": "同章の本文一致で照合"
+    },
+    {
+      "old": 23,
+      "new": 26,
+      "chapter": 4,
+      "matching_text_fraction": 0.7495462794918331,
+      "reason": "同章の本文一致で照合"
+    },
+    {
+      "old": 27,
+      "new": 31,
+      "chapter": 4,
+      "matching_text_fraction": 0.6309226932668329,
+      "reason": "同章の本文一致で照合"
+    },
+    {
+      "old": 29,
+      "new": 33,
+      "chapter": 4,
+      "matching_text_fraction": 0.5358090185676393,
+      "reason": "同章の本文一致で照合"
+    },
+    {
+      "old": 30,
+      "new": 34,
+      "chapter": 4,
+      "matching_text_fraction": 0.17159763313609466,
+      "reason": "節点・要素結果のページへ移動"
+    },
+    {
+      "old": 31,
+      "new": 36,
+      "chapter": 4,
+      "matching_text_fraction": 0.8958333333333334,
+      "reason": "同章の本文一致で照合"
+    },
+    {
+      "old": 33,
+      "new": 39,
+      "chapter": 4,
+      "matching_text_fraction": 0.6692307692307692,
+      "reason": "同章の本文一致で照合"
+    },
+    {
+      "old": 42,
+      "new": 48,
+      "chapter": 7,
+      "matching_text_fraction": 1.0,
+      "reason": "同章の本文一致で照合"
+    },
+    {
+      "old": 43,
+      "new": 49,
+      "chapter": 7,
+      "matching_text_fraction": 0.9772727272727273,
+      "reason": "同章の本文一致で照合"
+    },
+    {
+      "old": 45,
+      "new": 51,
+      "chapter": 7,
+      "matching_text_fraction": 1.0,
+      "reason": "同章の本文一致で照合"
+    },
+    {
+      "old": 46,
+      "new": 52,
+      "chapter": 7,
+      "matching_text_fraction": 1.0,
+      "reason": "同章の本文一致で照合"
+    },
+    {
+      "old": 47,
+      "new": 53,
+      "chapter": 7,
+      "matching_text_fraction": 1.0,
+      "reason": "同章の本文一致で照合"
+    },
+    {
+      "old": 49,
+      "new": 55,
+      "chapter": 7,
+      "matching_text_fraction": 1.0,
+      "reason": "同章の本文一致で照合"
+    },
+    {
+      "old": 50,
+      "new": 56,
+      "chapter": 7,
+      "matching_text_fraction": 1.0,
+      "reason": "同章の本文一致で照合"
+    },
+    {
+      "old": 51,
+      "new": 57,
+      "chapter": 7,
+      "matching_text_fraction": 1.0,
+      "reason": "同章の本文一致で照合"
+    },
+    {
+      "old": 52,
+      "new": 58,
+      "chapter": 7,
+      "matching_text_fraction": 0.9922360248447205,
+      "reason": "同章の本文一致で照合"
+    },
+    {
+      "old": 53,
+      "new": 59,
+      "chapter": 7,
+      "matching_text_fraction": 0.8180242634315424,
+      "reason": "同章の本文一致で照合"
+    },
+    {
+      "old": 54,
+      "new": 60,
+      "chapter": 7,
+      "matching_text_fraction": 0.9765258215962441,
+      "reason": "同章の本文一致で照合"
+    },
+    {
+      "old": 75,
+      "new": 82,
+      "chapter": 10,
+      "matching_text_fraction": 1.0,
+      "reason": "同章の本文一致で照合"
+    },
+    {
+      "old": 101,
+      "new": 107,
+      "chapter": 14,
+      "matching_text_fraction": 1.0,
+      "reason": "同章の本文一致で照合"
+    },
+    {
+      "old": 128,
+      "new": 134,
+      "chapter": 17,
+      "matching_text_fraction": 0.6430769230769231,
+      "reason": "同章の本文一致で照合"
+    },
+    {
+      "old": 131,
+      "new": 136,
+      "chapter": 18,
+      "matching_text_fraction": 0.9705882352941176,
+      "reason": "同章の本文一致で照合"
+    },
+    {
+      "old": 189,
+      "new": 196,
+      "chapter": 29,
+      "matching_text_fraction": 0.8575221238938053,
+      "reason": "同章の本文一致で照合"
+    }
+  ],
+  "term_specific_targets": {
+    "BOX（載荷の選択）": 20,
+    "Kn・Ks": 55,
+    "開口（JOINT）": 55,
+    "追加沈下": 167,
+    "主応力": 135,
+    "平滑化": 197,
+    "試行中の最大変位": 197,
+    "不釣合い残差（モーメント）": 134,
+    "表示倍率（変位倍率）": 36,
+    "チェックポイント": 39,
+    "Jacobian": 19
+  }
+}

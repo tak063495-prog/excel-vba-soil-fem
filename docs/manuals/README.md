@@ -1,6 +1,13 @@
 # 操作説明書
 
-**最新：[2DSoilFEM_Manual_20261023_WATER_02.pdf](2DSoilFEM_Manual_20261023_WATER_02.pdf)（192ページ、表紙・しおり・ページ番号・目次リンク付き）**（従来の170ページ版 [0751版](2DSoilFEM_Manual_20261022_0751.pdf) も保持）／原稿 [2DSoilFEM_Manual.md](2DSoilFEM_Manual.md)／作成 `python3 build_manual_pdf_v2.py 2DSoilFEM_Manual.md 出力.pdf`／計算例のブックとログは [examples/README.md](examples/README.md)。
+**最新：[1024版 PDF・212ページ](2DSoilFEM_Manual_20261024.pdf)**／[原稿](2DSoilFEM_Manual_20261024.md)／[確認結果](../MANUAL_20261024_VALIDATION.md)。全31章、解析例1～18と11-B、理論・結果整理・巻末用語集を継承し、入力手順・セル番地・画面を7画面UIへ更新しました。PDFのブック・資料リンクはmainを参照します。
+
+作成：`MANUAL_PUBLIC_REF=main MANUAL_PDF_TITLE="2DSoilFEM 操作説明書 20261024" python build_manual_pdf_v2.py 2DSoilFEM_Manual_20261024.md 2DSoilFEM_Manual_20261024.pdf`。Windows PowerShellでは各環境変数を`$env:変数名`で指定します。
+
+[1024版 基本斜面の計算済みブック・DLL・入力](examples/manual24_basic.zip)／[生ログ・独立検算・画面記録](../manual24-evidence/20261024/README.md)。
+
+
+**1023版：[2DSoilFEM_Manual_20261023_WATER_02.pdf](2DSoilFEM_Manual_20261023_WATER_02.pdf)（201ページ、表紙・しおり・ページ番号・目次リンク付き）**（従来の170ページ版 [0751版](2DSoilFEM_Manual_20261022_0751.pdf) も保持）／原稿 [2DSoilFEM_Manual.md](2DSoilFEM_Manual.md)／作成 `python3 build_manual_pdf_v2.py 2DSoilFEM_Manual.md 出力.pdf`／計算例のブックとログは [examples/README.md](examples/README.md)。
 
 水条件は理論の次の第8章へ移し、基本操作の第4章にも入力セル一覧と実Excel画面を追加しました。入力水位と計算水頭・流束の見分け方、工程IDで指定するONE_WAY、水位変更・空洞浮力・JOINT・湿潤斜面SRMのモデル図と結果を掲載しています。将来のfixed-stress時間圧密用の予約欄は、現行機能と区別して説明します。旧第8～24章は第9～25章へ繰り下げ、既存19章の本文は章参照・ページ参照を除いて保持しました。図と説明文の改ページ分離を防ぎ、用語集の参照を更新しています。表紙は従来の斜面入力メッシュ、用語集は巻末です。[今回の入力・表示・実計算の検証](../WATER_DISPLAY_VALIDATION.md)。Issue #35の訂正も保持しています。[訂正対応の履歴](../reviews/groundwater_release23_issue35.md)。前版[WATER_02・178ページ版](2DSoilFEM_Manual_20261022_WATER_02.pdf)も保持します。
 

@@ -6,11 +6,11 @@
 
 `2DSoilFEM_ui_20261024.xlsm` は、普段使う画面を「ホーム・モデル・材料／接合・境界／水条件・施工工程・解析／保存・結果」の7つに集約しました。各画面内で項目を切り替え、施工工程は日本語の操作選択、追加・複製・削除・順序変更・直前の取消しに対応します。工程IDに対応する水位指定を保持し、無効工程の水理設定は実行時にスキップします。元の詳細入力表と結果表も開けます。Double・材料則・収束条件・SRM条件とDLLを維持しています。
 
-1023版のPDF説明書とブックは以下に保持しています。理論・解析例は同PDF、1024版の操作の移動先は上の7画面手順を参照してください。
+[1024版 操作説明書（PDF・212ページ）](docs/manuals/2DSoilFEM_Manual_20261024.pdf)／[原稿](docs/manuals/2DSoilFEM_Manual_20261024.md)／[画面・数値・全ページ確認](docs/MANUAL_20261024_VALIDATION.md)。全31章、解析例1～18と11-B、理論、出力整理、巻末用語集を収録しています。1023版の説明書とブックは下に保持しています。
 
 ## 1023版（従来画面・説明書対応）
 
-[操作説明書（PDF・最新）](docs/manuals/2DSoilFEM_Manual_20261023_WATER_02.pdf)／[原稿](docs/manuals/2DSoilFEM_Manual.md)
+[1023版 操作説明書（PDF）](docs/manuals/2DSoilFEM_Manual_20261023_WATER_02.pdf)／[原稿](docs/manuals/2DSoilFEM_Manual.md)
 
 [一括ダウンロード（XLSM＋DLL 1個、ZIP）](workbook/SoilFEM_UI_20261023.zip)。
 従来画面版は`2DSoilFEM_ui_20261023.xlsm`です。地形格子の直接生成と、段差・複数材料・トンネル・テーパー擁壁への拡張を追加しました。[対応形状・ブロック入力・円形近似・検証](docs/MESH_TERRAIN_COMPLEX.md)。デローニの境界情報も疎な辺辞書へ変更し、入力1,800点の境界処理中のメモリー増加量を52.8→1.1MBに削減しました。[実測条件・旧版との照合](docs/MESH_DELAUNAY_MEMORY.md)。「メッシュ設定」C29を2にするとデローニを省き、適用できない場合は理由付きで停止します。斜面・水平地盤で生成から表示まで約67～83%短縮（各3回中央値）。[操作・適用条件・メッシュ構成の違い・検証](docs/MESH_TERRAIN_PERF.md)。計算識別は`20261022_WATER_02`、メッシュ更新識別は`20261022_TERRAIN_BLOCKS_02`です（初回直接生成の速度比較はDIRECT_01の記録）。DLLは同一ですがブックは初回23版から更新しています。[初回23版とPDF訂正の履歴](docs/reviews/groundwater_release23_issue35.md)。`20261022_WATER_01`で水位折れ線、外水圧、空洞の内水位・浮力、飽和定常浸透→力学→固定水圧SRMを追加しました。`20261022_WATER_02`ではJOINTの地盤側水圧・水頭連続・指定水位と、接合F/G列・結果P:T列・移動ボタンを追加しました。[JOINTの検証](docs/JOINT_WATER_VALIDATION.md)。初期設定は水条件なし（NONE）です。[入力手順・出力・適用範囲](docs/GROUNDWATER.md)／[回帰・独立検算・全ログ](docs/GROUNDWATER_VALIDATION.md)を参照してください。DLLは従来と同じ1個です。
@@ -129,9 +129,9 @@ Excel上で2次元地盤FEM、強度低減法（SRM）、ジョイント、施�
 
 ## 説明書
 
-**新版の操作説明書（画面付き・PR #33で作成中）：[2DSoilFEM_Manual_20261022_0751.pdf](docs/manuals/2DSoilFEM_Manual_20261022_0751.pdf)**（170ページ、しおり・ページ番号付き）。原稿と計算例は [docs/manuals/README.md](docs/manuals/README.md)。
+**[1024版 操作説明書（PDF・212ページ）](docs/manuals/2DSoilFEM_Manual_20261024.pdf)**。7画面の実Excelキャプチャ、施工工程の編集、水理、既存解析例、出力整理、理論・巻末用語集を収録しています。[説明書と計算例の一覧](docs/manuals/README.md)。
 
-初めて使う方は **[詳細操作説明書PDF](docs/manuals/2DSoilFEM_Detailed_Manual_20261020.pdf)** の道路実習（9ページ）から始めてください。[旧INCO_24操作説明書](docs/USER_GUIDE.md)は履歴資料です。ダウンロード・マクロ起動、シートの役割、メッシュ生成、載荷・施工・接合の例、SRM、結果保存まで記載しています。
+初めて使う方は **[1024版操作説明書PDF](docs/manuals/2DSoilFEM_Manual_20261024.pdf)** の第4章から始めてください。[旧INCO_24操作説明書](docs/USER_GUIDE.md)は履歴資料です。ダウンロード・マクロ起動、シートの役割、メッシュ生成、載荷・施工・接合の例、SRM、結果保存まで記載しています。
 
 |文書|内容|
 |---|---|

@@ -1,0 +1,278 @@
+[
+  {
+    "path": "docs/manuals/images/ui24/basic_analysis.png",
+    "sha256": "80545cad49c9f4a39c0e77a6b1a020bc308127ba15ac83e7da7d8b3d115bbbca"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_coords.png",
+    "sha256": "45df4bd2dde198d804880d189ffe3bf571fbbc44ef9d17c2c90eedb3d04f8aa1"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_diagnostic.png",
+    "sha256": "408d8419ffbd9747e78b3e3263404cda96637ac586d70d045776d43e4d395eff"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_elements.png",
+    "sha256": "c596fa6c618043bbf7b817e3735dee45506838db5adccc65182cde77a917e2a3"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_joints.png",
+    "sha256": "304cde420f2237f7e949dff96bacf6a94d0579af603a386880b1292081833c55"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_loads.png",
+    "sha256": "fc7a71c8e91bec9cc06ea2444009c8ab4faad436f0c490b1844903e13e26d4b9"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_materials.png",
+    "sha256": "d26cc4d72fb96c3196ac530afc6e801819f0d475efcd59b717f4d3d08fdd7f2f"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_mesh.png",
+    "sha256": "bfd2693275c99fddec459811455a16f949c2367dd7d1f8d963e64022bd9c6f1d"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_nodes.png",
+    "sha256": "60eebce93f6908f52d62388a35fc5114cf54387cb19eba41e1b4f3ee063dad34"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_plot.png",
+    "sha256": "d25b7d522dfe9d24dc2554bbb6482f1601df42181f7fc8b8effc3a69192a940c"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_plot50.png",
+    "sha256": "3751120b1994f67b84822eed39e49b5d4e36a08ee205e25f66a29abab2d4d506"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_preview.png",
+    "sha256": "340d99a384b39300aa2a90e500c19b96a4bc3771ed1324390149af90fcba5caa"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_regions.png",
+    "sha256": "06c272e635d0e44f4d1e168000a81b94f4cc88cbb731b022777f45cc8c106ff8"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_save.png",
+    "sha256": "7b2c05bb610887f1d6219ac242b1e5638206772788bb810aba30f35d581846c3"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_shape.png",
+    "sha256": "ac77f01989ad82ef8b328d782a6eabecf143a8bf0580cf68503680276d68f30c"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_speed.png",
+    "sha256": "25e2d00da8de545e2eb8f85b95f57f84cd8147c0f7a63b72953b1c05fef061bb"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_stage_results.png",
+    "sha256": "c719f3ffe5aa50ac4bccebc7089e785bb5ab5a585bc614e6ce3b29afaa53c6b4"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_stages.png",
+    "sha256": "1c7846ed8830b779c075c7a358d0d2c482fd555a255a12ebd009893aa4ae28ac"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_start.png",
+    "sha256": "933b87edb62a73ce3570de45fbd49f3fbd27ff701decd86ac93d9d8383d514d4"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_time.png",
+    "sha256": "6230d18aa72a20f46462cafe13bbc44c5f220285a0aab6344a5e74d6d823432a"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_view50.png",
+    "sha256": "b2dc479e654d1994c42c61ce5d6e3a38aa23900db3be3621832f317bf2522acb"
+  },
+  {
+    "path": "docs/manuals/images/ui24/basic_view_xy.png",
+    "sha256": "f5d6763e02a01604d9b943a2585e8d0829649b7c7a8ab2abc5b05b1b63f9f53c"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex01_analysis.png",
+    "sha256": "8e1174c39570e24fac064237191361b6a39639d8b785721c03e0b3c4474094a6"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex01_materials.png",
+    "sha256": "7cc81a048f29cfe70e57ddffaa01c34d81cb0c2d5ecd4633366811fe4de7ae0b"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex01_view.png",
+    "sha256": "8e5f5ababb7b7619133b826552e0d122fc56cb67aaf646a8718954508873689d"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex02_shape.png",
+    "sha256": "14ecab5f325bef41527fc273b02a752614d533c5d644592c1c4efd0bc851aba5"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex03_nodes.png",
+    "sha256": "cd8f2784b97dc165ab91e7d1ad041b73061c74c018977daf80cb570e5fc82b19"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex03_stages.png",
+    "sha256": "528474a36e7d437beb76ac5124151f8aa371b8f3d1234ea3d9090a4b1dd024f9"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex03_view.png",
+    "sha256": "a0594577d9ad0a5671080177c32445a5abc87f6fd8eee4cd83092d6a74edd434"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex04_materials.png",
+    "sha256": "9cfe00c4a7419879810623d766da10f7292591c88268d8f344935c9274895e95"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex04_shape.png",
+    "sha256": "c6f3874d5fd476bbe115c5365108081c745d95fa07c6b6411017f399ed4caca7"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex04_stages.png",
+    "sha256": "42c2aed759881b19f7fa52baeabd7787813d48ee417f6717486bc3c0a5f80228"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex05_loads.png",
+    "sha256": "330212e1b7916c4d37eb4bb432684962a8f328b5ea456e4bbad2c23a3892c14a"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex05_materials.png",
+    "sha256": "d26cc4d72fb96c3196ac530afc6e801819f0d475efcd59b717f4d3d08fdd7f2f"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex05_shape.png",
+    "sha256": "431ca2462a3cd4a141d0ccd432041a75f7f99ff97f0c242c17f7e33e2dd39f20"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex05_stages.png",
+    "sha256": "663c28efabac12b90532ff38ce21c5e15fc15b59fceb7be42fa49a1e1e764d2d"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex06_loads.png",
+    "sha256": "01a593b46dd388a320494c1e5a83fa521db97cab75ec8a3fb498a6445027d8c7"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex07_analysis.png",
+    "sha256": "86b33f2885ee7a9cf2e95d1d21890a55e864660ffcff37083c7710d85eab9fe1"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex08_materials.png",
+    "sha256": "d4182fef64943b3b2060ae8a839d722feb78995033d3375edebdf331da99840b"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex08_shape.png",
+    "sha256": "9cdf5010d2ca27e59dfafebf8f74de36b975da3617206fefbe90a5250d5e5af7"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex08_stages.png",
+    "sha256": "fa66f6a0fd8d5270f92808feff21f430faaa855da2a9009f6e357b0d14b0b225"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex08_view.png",
+    "sha256": "72ba4a00923081d09753484c152fd44deb4dfb840431a0a42b2090caf05602a5"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex08taller_coords.png",
+    "sha256": "b076ee15a85bec379d77b3d56bb10fa65f1efe788d2f2745c0bd24fa1aaa8430"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex09_materials.png",
+    "sha256": "ce6374b7857fc940dfbfa971719766f7f72773e6bd7a48f6a158156a2c85e30e"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex09_shape.png",
+    "sha256": "bf2b73784947a8616f790a9fd9f30d03e192b695266ec35b569b6d3e40afe672"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex09_stages.png",
+    "sha256": "f344de09174b98c220240c9277a05661ab847c9f3329001e76a58c16aeabc9a8"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex10_materials.png",
+    "sha256": "e9555d7dd15b184863289430a5a72fb08e61983dd1e397929bcbdda224b66440"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex10_stages.png",
+    "sha256": "fbd54b7ded78e8041c8d1c0c898b4b65c7682f295756a3ce9553bbb6f073cdc2"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex11_joints.png",
+    "sha256": "b6654eca5867ab42d4f3fbeb453c9a71210294609d5bef007b11e75ef31e9f5f"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex11_loads.png",
+    "sha256": "ada7deef3eeed25b12e2453ed563518b576e1a7e4da35f97c7602a8985faf068"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex11_materials.png",
+    "sha256": "272cee712b9ae2819f864482be65dbe6a53e95036baa034dc74e26a7cef1a393"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex11_shape.png",
+    "sha256": "1afc3c9ed2d3fd0d3f6ebae3069e4e1d5b7acfc6472cb940d1e22f8e0c237f5f"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex11_stages.png",
+    "sha256": "528474a36e7d437beb76ac5124151f8aa371b8f3d1234ea3d9090a4b1dd024f9"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex11b_loads.png",
+    "sha256": "b5bf99c78b081832174daf2cad144d5e9462dab08241446219a602ddcadedf17"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex11b_materials.png",
+    "sha256": "b1f7695963f14a29d6368b9e8cce354db5d15b6e6c0271265756c1ffcf94dae2"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex11b_stages.png",
+    "sha256": "606e13cc0fcfb17ba10ee7113cd42facc31a84fd3d0f1822ee8765b16afc942c"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex12_loads.png",
+    "sha256": "7ab52810a78c98c51760f182d9fdc049da14264dade4a76222bec589644aebb1"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex12_stages.png",
+    "sha256": "cd25b81dd663df4298fbd06447e450e1a3ea98a445d6cb39ee0f0bb57acd2743"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex13_loads.png",
+    "sha256": "cd0566e4ae6f5f83be06e80e8fa59729545e1fef9961f0a79efc20eb151532a3"
+  },
+  {
+    "path": "docs/manuals/images/ui24/ex13_stages.png",
+    "sha256": "cbbaa33739566711f2f82cc1737661957b660ebc49e08aabde280438af6971bc"
+  },
+  {
+    "path": "docs/manuals/images/ui24/home.png",
+    "sha256": "15881cd16f67d491f7104e96997c0490035fca00e6a4604c0ccb1de83a36546a"
+  },
+  {
+    "path": "docs/manuals/images/ui24/plastic_select.png",
+    "sha256": "0917983b7ace407487a0b7f1685fd6ca27cc4427128591b412917b797d0f11ac"
+  },
+  {
+    "path": "docs/manuals/images/ui24/polyline_input.png",
+    "sha256": "6ede7de93f71a267663702ec13a24c06a9bdc523bed36349a2ef4d70a64e6005"
+  },
+  {
+    "path": "docs/manuals/images/ui24/water_boundary.png",
+    "sha256": "a4bf501e18795923b893a20d0d5bfbb555334d88ae13de202fee1e3955672698"
+  },
+  {
+    "path": "docs/manuals/images/ui24/water_joint.png",
+    "sha256": "605ce661bb2e1a9105d32aabf093e13a59ab99cb63e3a07a0aa405af2ae4d36b"
+  },
+  {
+    "path": "docs/manuals/images/ui24/water_materials.png",
+    "sha256": "5ceacb52f27295fdb47c05bf18050ca18f272f0f69bb1b0e951db8f726dc0342"
+  },
+  {
+    "path": "docs/manuals/images/ui24/water_mode.png",
+    "sha256": "010e464dbedebd5614c62603a67dab62d66696449623668a051b8717f31dca7a"
+  },
+  {
+    "path": "docs/manuals/images/ui24/water_profiles.png",
+    "sha256": "39c2a3a2d99f24cd6496fce5db71306ce8c529e913f85b288e6e629370b94e57"
+  },
+  {
+    "path": "docs/manuals/images/ui24/water_stages.png",
+    "sha256": "8b22c6d2743a93ead699765aa34a248fa9ad987daa0186dac638a88fedc0eb35"
+  }
+]

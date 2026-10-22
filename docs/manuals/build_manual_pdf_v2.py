@@ -18,7 +18,7 @@ if not chrome: raise RuntimeError('Chrome/Edge executable not found; set CHROME_
 heads=re.findall(r'^## (.+)$',md,re.M)
 css="""@page{size:A4;margin:14mm 14mm 18mm}body{font-family:'Noto Sans CJK JP','Noto Sans JP',sans-serif;font-size:10.5pt;line-height:1.7;color:#222}
 h1{font-size:21pt;border-bottom:3px solid #2f5d50}h2{font-size:15pt;background:#2f5d50;color:#fff;padding:4px 8px;break-before:page}
-h3{font-size:12.5pt;border-left:6px solid #c00;padding-left:8px;margin-top:18px}table{border-collapse:collapse;width:100%;font-size:9pt;margin:6px 0}th,td{border:1px solid #aaa;padding:3px 5px;vertical-align:top}th{background:#e6efe9}
+h3{break-after:avoid-page;page-break-after:avoid;font-size:12.5pt;border-left:6px solid #c00;padding-left:8px;margin-top:18px}table{border-collapse:collapse;width:100%;font-size:9pt;margin:6px 0}th,td{border:1px solid #aaa;padding:3px 5px;vertical-align:top}th{background:#e6efe9}
 p:has(>img){break-inside:avoid;margin:10px 0 0}.figure{break-inside:avoid}img{max-width:100%;max-height:150mm;border:1px solid #888;display:block;margin:0 auto}code{background:#f3f3f3;padding:0 3px}
 blockquote{margin:8px 0;padding:6px 10px;background:#f1f6f3;border-left:6px solid #2f5d50;font-size:10pt;break-inside:avoid}blockquote p{margin:3px 0}.toc td{border:none;border-bottom:1px dotted #999;font-size:11pt}"""
 tmp=os.path.join(here,'_manual_v2.html')
@@ -76,6 +76,10 @@ for lv,h in sub:
         p=next((i+1 for i in range(cur-1,len(txt)) if any(l.strip()==h for l in txt[i].splitlines())),None)
         if p: toc.append([2,h,p]);cur=p
 doc.set_toc(toc)
+if os.environ.get('MANUAL_PDF_TITLE'):
+    metadata = doc.metadata
+    metadata.update(title=os.environ['MANUAL_PDF_TITLE'], author='2DSoilFEM', subject='操作・解析例・理論・用語集')
+    doc.set_metadata(metadata)
 # internal links on the TOC page(s)
 for pno in range(min(4,len(doc))):
     pg=doc[pno]
