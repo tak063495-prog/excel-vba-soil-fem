@@ -951,8 +951,8 @@
   },
   {
     "path": "docs/manuals/2DSoilFEM_Manual.md",
-    "bytes": 326336,
-    "sha256": "2b7b52c649e802ada0ccf8982902301788dbd740a075bcdbce684e3810964e08"
+    "bytes": 326340,
+    "sha256": "b1ae68d9d9fc25f3719c6013f6fa278ca30acf0d19fcf31342f0582d1c03efc4"
   },
   {
     "path": "docs/manuals/2DSoilFEM_Manual_20261021_2017.pdf",
@@ -10901,8 +10901,8 @@
   },
   {
     "path": "tests/review_water_manual.py",
-    "bytes": 3153,
-    "sha256": "86fc4007541d627a05b1e8ada755fdbd22e99a851ea52c85ae90509418c89022"
+    "bytes": 3344,
+    "sha256": "6b183067491e304255b0613769fbc8e1628e76a540ba3078847bc70d0d5df877"
   },
   {
     "path": "tests/run.ps1",

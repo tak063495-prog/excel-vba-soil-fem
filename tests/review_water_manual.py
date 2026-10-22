@@ -23,6 +23,9 @@ def main():
   assert [int(n) for n in re.findall(r'^図'+str(prefix)+r'-(\d+)[　 ]',md,re.M)]==list(range(1,count+1)),prefix
  examples=[int(re.match(r'解析例(\d+)',t)[1]) for n,t in chapters if t.startswith('解析例')]
  assert examples==list(range(1,12))+[11]+list(range(12,19)),examples
+ captions=re.findall(r'^図([0-9]+(?:-[0-9A-Za-z]+)*)[　 ]',md,re.M)
+ assert len(captions)==len(set(captions))
+ assert not set(re.findall(r'図([0-9]+(?:-[0-9A-Za-z]+)*)',md))-set(captions)
  assert all(1<=int(n)<=len(d) for n in re.findall(r'p\.(\d+)',md))
  links=[link.get('uri','') for p in d for link in p.get_links() if link.get('uri')]
  assert not any(x.lower().startswith(('file:','c:')) for x in links)
