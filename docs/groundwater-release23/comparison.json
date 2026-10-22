@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "max_difference": {
+    "disp": 0.0,
+    "stress": 0.0,
+    "metrics": 0.0
+  },
+  "reference_seconds": 5.7010562,
+  "candidate_seconds": 4.8207367,
+  "resume_max_difference": {
+    "disp": 0.0,
+    "stress": 0.0,
+    "metrics": 0.0
+  },
+  "timing_note": "Single measurements; this filename/documentation-only release makes no performance claim."
+}

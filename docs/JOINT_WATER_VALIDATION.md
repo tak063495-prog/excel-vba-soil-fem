@@ -4,7 +4,7 @@
 
 ## 入出力と適用範囲
 
-[入力・結果の操作](GROUNDWATER.md#jointの水圧と水頭dof)、[PDF説明書](manuals/2DSoilFEM_Manual_20261022_WATER_02.pdf)25.9節を参照してください。入力は接合F/G、出力は接合結果P:Tです。従来A:Eの接合入力・A:Oの結果は保持します。水条件NONEでは従来の乾燥接合です。
+[入力・結果の操作](GROUNDWATER.md#jointの水圧と水頭dof)、[PDF説明書](manuals/2DSoilFEM_Manual_20261023_WATER_02.pdf)25.9節を参照してください。入力は接合F/G、出力は接合結果P:Tです。従来A:Eの接合入力・A:Oの結果は保持します。水条件NONEでは従来の乾燥接合です。
 
 SOILは地盤・STRUCT間、CONTINUOUSは両側SOILの水頭だけを連続化、PRESCRIBEDはG列の水位線（`*`は現在のWATER工程）を使います。初期同位置の3節点対・直線・一意な両側Q8面・厚さ一致を必要とします。指定圧と地盤面圧の不一致、競合水頭、不適切なモードは平均せず停止します。開口による透水性変化、有限透水抵抗、沿面流、塑性すべり履歴、ダイレタンシー、二方向連成、自由水面、不飽和・過渡流れは追加しません。定常浸透は固定した飽和領域です。
 
@@ -79,3 +79,7 @@ python tests/compare_joint_water_regression.py --joint <JOINT出力先> --legacy
 再開開始は通常のrun/perf/eventログを更新するため、受入22の各result.json・出力表JSON・チェックポイントCSVを初回受理数値の根拠とします。wet、stages、wet_srmは初回の詳細反復・Fs試行ログも退避して再取得し、初回・再開それぞれの全変位・全応力・metricsが受入22と差0でした。[ログ保存と再取得の照合](joint-water-evidence/20261022/retention_checks.json)。records.zip内の通常_outログは再開側、retention/*/initial_run_logsは初回側です。その他の再開ケースの初回詳細反復ログは、このZIPには残っていません。公開ドライバーは今後の全再開試験で初回ログを退避します。
 
 説明書は178ページ。第25章25.9節に実画面と実計算の接触28＋水圧20＝48kNの図を追加し、第2～24章の本文はWATER_01から保持しました。全ページを画像化し、9枚の一覧、追加ページ、表紙・目次・巻末用語集を確認しました。[本文・リンク・ページ・目視確認](joint-water-evidence/20261022/manual_checks.json)。[受入ケース台帳](joint-water-evidence/20261022/ACCEPTED_CASES.md)に入力・結果・検算・画面・再現記録を対応付けています。
+
+## 配布名20261023
+
+ユーザー指定によりXLSMを20261023へ改名しました。計算識別WATER_02と本体・DLLのバイトは同一です。[実Excelのコンパイル・再読込・表示と水圧JOINT再計算](reviews/groundwater_release23_issue35.md)を確認済みです。このページの14例・旧回帰の数値と記録は保持しています。
