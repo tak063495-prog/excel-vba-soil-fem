@@ -1,0 +1,797 @@
+[
+  {
+    "name": "home",
+    "case": "tests/tmp/manual24/basic/manual24_basic.xlsm",
+    "page": "ホーム",
+    "section": "作業の流れ",
+    "macro": "FEM24Home",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "basic_materials",
+    "case": "tests/tmp/manual24/basic/manual24_basic.xlsm",
+    "page": "材料・接合",
+    "section": "材料特性",
+    "macro": "FEM24Materials",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "basic_coords",
+    "case": "tests/tmp/manual24/basic/manual24_basic.xlsm",
+    "page": "モデル",
+    "section": "形状の座標",
+    "macro": "FEM24Model",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "basic_regions",
+    "case": "tests/tmp/manual24/basic/manual24_basic.xlsm",
+    "page": "モデル",
+    "section": "形状の領域",
+    "macro": "FEM24Model",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "basic_mesh",
+    "case": "tests/tmp/manual24/basic/manual24_basic.xlsm",
+    "page": "モデル",
+    "section": "メッシュ生成・支持条件",
+    "macro": "FEM24Model",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "basic_joints",
+    "case": "tests/tmp/manual24/basic/manual24_basic.xlsm",
+    "page": "材料・接合",
+    "section": "接合条件",
+    "macro": "FEM24Materials",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "basic_loads",
+    "case": "tests/tmp/manual24/basic/manual24_basic.xlsm",
+    "page": "境界・水条件",
+    "section": "載荷条件",
+    "macro": "FEM24Water",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "basic_stages",
+    "case": "tests/tmp/manual24/basic/manual24_basic.xlsm",
+    "page": "施工工程",
+    "section": "工程の編集",
+    "macro": "FEM24Stages",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "basic_analysis",
+    "case": "tests/tmp/manual24/basic/manual24_basic.xlsm",
+    "page": "解析・保存",
+    "section": "解析・SRM",
+    "macro": "FEM24Analysis",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "basic_save",
+    "case": "tests/tmp/manual24/basic/manual24_basic.xlsm",
+    "page": "解析・保存",
+    "section": "保存・再開",
+    "macro": "FEM24Analysis",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "basic_speed",
+    "case": "tests/tmp/manual24/basic/manual24_basic.xlsm",
+    "page": "解析・保存",
+    "section": "高速化",
+    "macro": "FEM24Analysis",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "basic_view",
+    "case": "tests/tmp/manual24/basic/manual24_basic.xlsm",
+    "page": "結果",
+    "section": "表示設定",
+    "macro": "FEM24Results",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "basic_stage_results",
+    "case": "tests/tmp/manual24/basic/manual24_basic.xlsm",
+    "page": "結果",
+    "section": "工程別数値",
+    "macro": "FEM24Results",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "basic_nodes",
+    "case": "tests/tmp/manual24/basic/manual24_basic.xlsm",
+    "page": "結果",
+    "section": "節点結果",
+    "macro": "FEM24Results",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "basic_elements",
+    "case": "tests/tmp/manual24/basic/manual24_basic.xlsm",
+    "page": "結果",
+    "section": "要素結果",
+    "macro": "FEM24Results",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "basic_diagnostic",
+    "case": "tests/tmp/manual24/basic/manual24_basic.xlsm",
+    "page": "結果",
+    "section": "診断",
+    "macro": "FEM24Results",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex01_materials",
+    "case": "docs/manuals/examples/ex01_material_20261021.xlsm",
+    "page": "材料・接合",
+    "section": "材料特性",
+    "macro": "FEM24Materials",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex01_analysis",
+    "case": "docs/manuals/examples/ex01_material_20261021.xlsm",
+    "page": "解析・保存",
+    "section": "解析・SRM",
+    "macro": "FEM24Analysis",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex01_view",
+    "case": "docs/manuals/examples/ex01_material_20261021.xlsm",
+    "page": "結果",
+    "section": "表示設定",
+    "macro": "FEM24Results",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex02_coords",
+    "case": "docs/manuals/examples/ex02_shape_mesh1m_20261022.xlsm",
+    "page": "モデル",
+    "section": "形状の座標",
+    "macro": "FEM24Model",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex02_regions",
+    "case": "docs/manuals/examples/ex02_shape_mesh1m_20261022.xlsm",
+    "page": "モデル",
+    "section": "形状の領域",
+    "macro": "FEM24Model",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex02_view",
+    "case": "docs/manuals/examples/ex02_shape_mesh1m_20261022.xlsm",
+    "page": "結果",
+    "section": "表示設定",
+    "macro": "FEM24Results",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex03_stages",
+    "case": "docs/manuals/examples/ex03_support_20261021.xlsm",
+    "page": "施工工程",
+    "section": "工程の編集",
+    "macro": "FEM24Stages",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex03_nodes",
+    "case": "docs/manuals/examples/ex03_support_20261021.xlsm",
+    "page": "境界・水条件",
+    "section": "節点の支持・変位",
+    "macro": "FEM24Water",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex03_view",
+    "case": "docs/manuals/examples/ex03_support_20261021.xlsm",
+    "page": "結果",
+    "section": "表示設定",
+    "macro": "FEM24Results",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex04_materials",
+    "case": "docs/manuals/examples/ex04_staged_20261021.xlsm",
+    "page": "材料・接合",
+    "section": "材料特性",
+    "macro": "FEM24Materials",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex04_coords",
+    "case": "docs/manuals/examples/ex04_staged_20261021.xlsm",
+    "page": "モデル",
+    "section": "形状の座標",
+    "macro": "FEM24Model",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex04_regions",
+    "case": "docs/manuals/examples/ex04_staged_20261021.xlsm",
+    "page": "モデル",
+    "section": "形状の領域",
+    "macro": "FEM24Model",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex04_stages",
+    "case": "docs/manuals/examples/ex04_staged_20261021.xlsm",
+    "page": "施工工程",
+    "section": "工程の編集",
+    "macro": "FEM24Stages",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex05_materials",
+    "case": "docs/manuals/examples/ex05_load_20261021.xlsm",
+    "page": "材料・接合",
+    "section": "材料特性",
+    "macro": "FEM24Materials",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex05_coords",
+    "case": "docs/manuals/examples/ex05_load_20261021.xlsm",
+    "page": "モデル",
+    "section": "形状の座標",
+    "macro": "FEM24Model",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex05_regions",
+    "case": "docs/manuals/examples/ex05_load_20261021.xlsm",
+    "page": "モデル",
+    "section": "形状の領域",
+    "macro": "FEM24Model",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex05_loads",
+    "case": "docs/manuals/examples/ex05_load_20261021.xlsm",
+    "page": "境界・水条件",
+    "section": "載荷条件",
+    "macro": "FEM24Water",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex05_stages",
+    "case": "docs/manuals/examples/ex05_load_20261021.xlsm",
+    "page": "施工工程",
+    "section": "工程の編集",
+    "macro": "FEM24Stages",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex06_loads",
+    "case": "docs/manuals/examples/ex06_bearing_20261021.xlsm",
+    "page": "境界・水条件",
+    "section": "載荷条件",
+    "macro": "FEM24Water",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex07_analysis",
+    "case": "docs/manuals/examples/ex07_flow_20261021.xlsm",
+    "page": "解析・保存",
+    "section": "解析・SRM",
+    "macro": "FEM24Analysis",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex08_materials",
+    "case": "docs/manuals/examples/ex08_road_result_20261021.xlsm",
+    "page": "材料・接合",
+    "section": "材料特性",
+    "macro": "FEM24Materials",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex08_coords",
+    "case": "docs/manuals/examples/ex08_road_result_20261021.xlsm",
+    "page": "モデル",
+    "section": "形状の座標",
+    "macro": "FEM24Model",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex08_regions",
+    "case": "docs/manuals/examples/ex08_road_result_20261021.xlsm",
+    "page": "モデル",
+    "section": "形状の領域",
+    "macro": "FEM24Model",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex08_stages",
+    "case": "docs/manuals/examples/ex08_road_result_20261021.xlsm",
+    "page": "施工工程",
+    "section": "工程の編集",
+    "macro": "FEM24Stages",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex08_view",
+    "case": "docs/manuals/examples/ex08_road_result_20261021.xlsm",
+    "page": "結果",
+    "section": "表示設定",
+    "macro": "FEM24Results",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex08taller_coords",
+    "case": "docs/manuals/examples/ex08_road_taller_20261021.xlsm",
+    "page": "モデル",
+    "section": "形状の座標",
+    "macro": "FEM24Model",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex09_materials",
+    "case": "docs/manuals/examples/ex09_wall_result_20261021.xlsm",
+    "page": "材料・接合",
+    "section": "材料特性",
+    "macro": "FEM24Materials",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex09_coords",
+    "case": "docs/manuals/examples/ex09_wall_result_20261021.xlsm",
+    "page": "モデル",
+    "section": "形状の座標",
+    "macro": "FEM24Model",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex09_regions",
+    "case": "docs/manuals/examples/ex09_wall_result_20261021.xlsm",
+    "page": "モデル",
+    "section": "形状の領域",
+    "macro": "FEM24Model",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex09_stages",
+    "case": "docs/manuals/examples/ex09_wall_result_20261021.xlsm",
+    "page": "施工工程",
+    "section": "工程の編集",
+    "macro": "FEM24Stages",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex10_stages",
+    "case": "docs/manuals/examples/ex10_tunnel_result_20261021.xlsm",
+    "page": "施工工程",
+    "section": "工程の編集",
+    "macro": "FEM24Stages",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex11_materials",
+    "case": "docs/manuals/examples/ex11_joint_20261021.xlsm",
+    "page": "材料・接合",
+    "section": "材料特性",
+    "macro": "FEM24Materials",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex11_coords",
+    "case": "docs/manuals/examples/ex11_joint_20261021.xlsm",
+    "page": "モデル",
+    "section": "形状の座標",
+    "macro": "FEM24Model",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex11_regions",
+    "case": "docs/manuals/examples/ex11_joint_20261021.xlsm",
+    "page": "モデル",
+    "section": "形状の領域",
+    "macro": "FEM24Model",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex11_joints",
+    "case": "docs/manuals/examples/ex11_joint_20261021.xlsm",
+    "page": "材料・接合",
+    "section": "接合条件",
+    "macro": "FEM24Materials",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex11_loads",
+    "case": "docs/manuals/examples/ex11_joint_20261021.xlsm",
+    "page": "境界・水条件",
+    "section": "載荷条件",
+    "macro": "FEM24Water",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex11_stages",
+    "case": "docs/manuals/examples/ex11_joint_20261021.xlsm",
+    "page": "施工工程",
+    "section": "工程の編集",
+    "macro": "FEM24Stages",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex12_loads",
+    "case": "docs/manuals/examples/ex12_anchor_srm_20261021.xlsm",
+    "page": "境界・水条件",
+    "section": "載荷条件",
+    "macro": "FEM24Water",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "ex13_loads",
+    "case": "docs/manuals/examples/ex13_bearing_flat_s010_20261021.xlsm",
+    "page": "境界・水条件",
+    "section": "載荷条件",
+    "macro": "FEM24Water",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "water_mode",
+    "case": "tests/tmp/manual24/cases/water_display_examples/cutoff/groundwater_cutoff.xlsm",
+    "page": "境界・水条件",
+    "section": "水条件の基本",
+    "macro": "FEM24Water",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "water_profiles",
+    "case": "tests/tmp/manual24/cases/water_display_examples/cutoff/groundwater_cutoff.xlsm",
+    "page": "境界・水条件",
+    "section": "水位線",
+    "macro": "FEM24Water",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "water_materials",
+    "case": "tests/tmp/manual24/cases/water_display_examples/cutoff/groundwater_cutoff.xlsm",
+    "page": "材料・接合",
+    "section": "材料の水理特性",
+    "macro": "FEM24Materials",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "water_boundary",
+    "case": "tests/tmp/manual24/cases/water_display_examples/cutoff/groundwater_cutoff.xlsm",
+    "page": "境界・水条件",
+    "section": "水理境界",
+    "macro": "FEM24Water",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "water_stages",
+    "case": "tests/tmp/manual24/cases/water_display_examples/one_way/water_stage_one_way.xlsm",
+    "page": "施工工程",
+    "section": "工程の編集",
+    "macro": "FEM24Stages",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "water_joint",
+    "case": "tests/tmp/manual24/cases/water_display_examples/joint/joint_water_wet.xlsm",
+    "page": "材料・接合",
+    "section": "接合条件",
+    "macro": "FEM24Materials",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "polyline_mode",
+    "case": "tests/tmp/manual24/cases/water_polyline_example/water_slope_polyline.xlsm",
+    "page": "境界・水条件",
+    "section": "水条件の基本",
+    "macro": "FEM24Water",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "polyline_profiles",
+    "case": "tests/tmp/manual24/cases/water_polyline_example/water_slope_polyline.xlsm",
+    "page": "境界・水条件",
+    "section": "水位線",
+    "macro": "FEM24Water",
+    "ranges": [
+      "A7:M12"
+    ]
+  },
+  {
+    "name": "basic_preview",
+    "case": "tests/tmp/manual24/basic/manual24_basic.xlsm",
+    "macro": "FEM24Preview",
+    "page": "結果",
+    "section": "",
+    "overrides": [],
+    "ranges": [
+      "D8:D19"
+    ]
+  },
+  {
+    "name": "basic_plot",
+    "case": "tests/tmp/manual24/basic/manual24_basic.xlsm",
+    "macro": "FEM24Plot",
+    "page": "結果",
+    "section": "",
+    "overrides": [
+      {
+        "sheet": "出力・表示",
+        "cell": "C17",
+        "value": 1
+      },
+      {
+        "sheet": "出力・表示",
+        "cell": "C18",
+        "value": "XYせん断ひずみ（累積）（積分点1）"
+      },
+      {
+        "sheet": "出力・表示",
+        "cell": "J28:J29",
+        "value": false
+      }
+    ],
+    "ranges": [
+      "D8:D19"
+    ]
+  },
+  {
+    "name": "basic_view_xy",
+    "case": "tests/tmp/manual24/basic/manual24_basic.xlsm",
+    "macro": "FEM24Results",
+    "page": "結果",
+    "section": "表示設定",
+    "overrides": [],
+    "ranges": [
+      "D8:D19"
+    ]
+  },
+  {
+    "name": "basic_plot50",
+    "case": "tests/tmp/manual24/basic/manual24_basic.xlsm",
+    "macro": "FEM24Plot",
+    "page": "結果",
+    "section": "",
+    "overrides": [
+      {
+        "sheet": "出力・表示",
+        "cell": "C17",
+        "value": 50
+      }
+    ],
+    "ranges": [
+      "D8:D19"
+    ]
+  },
+  {
+    "name": "basic_view50",
+    "case": "tests/tmp/manual24/basic/manual24_basic.xlsm",
+    "macro": "FEM24Results",
+    "page": "結果",
+    "section": "表示設定",
+    "overrides": [],
+    "ranges": [
+      "D8:D19"
+    ]
+  },
+  {
+    "name": "basic_start",
+    "case": "tests/tmp/manual24/basic/manual24_basic.xlsm",
+    "macro": "FEM24Analysis",
+    "page": "解析・保存",
+    "section": "解析・SRM",
+    "overrides": [],
+    "ranges": [
+      "D8:D19"
+    ]
+  },
+  {
+    "name": "plastic_select",
+    "case": "docs/manuals/examples/ex02_plastic_state_20261022.xlsm",
+    "macro": "FEM24Results",
+    "page": "結果",
+    "section": "表示設定",
+    "overrides": [
+      {
+        "sheet": "出力・表示",
+        "cell": "C18",
+        "value": "塑性状態（弾性／現在降伏／過去に降伏・要素の4点）"
+      }
+    ],
+    "ranges": [
+      "D8:D19"
+    ]
+  },
+  {
+    "name": "ex10_materials",
+    "case": "docs/manuals/examples/ex10_tunnel_result_20261021.xlsm",
+    "page": "材料・接合",
+    "section": "材料特性",
+    "macro": "FEM24Materials",
+    "ranges": [
+      "A7:M13"
+    ]
+  },
+  {
+    "name": "ex11b_materials",
+    "case": "docs/manuals/examples/ex11b_joint_strongblock_20261021_1958.xlsm",
+    "page": "材料・接合",
+    "section": "材料特性",
+    "macro": "FEM24Materials",
+    "ranges": [
+      "A7:M10"
+    ]
+  },
+  {
+    "name": "ex11b_loads",
+    "case": "docs/manuals/examples/ex11b_joint_strongblock_20261021_1958.xlsm",
+    "page": "境界・水条件",
+    "section": "載荷条件",
+    "macro": "FEM24Water",
+    "ranges": [
+      "A7:J8"
+    ]
+  },
+  {
+    "name": "ex11b_stages",
+    "case": "docs/manuals/examples/ex11b_joint_strongblock_20261021_1958.xlsm",
+    "page": "施工工程",
+    "section": "工程の編集",
+    "macro": "FEM24Stages",
+    "ranges": [
+      "A7:I9"
+    ]
+  },
+  {
+    "name": "ex12_stages",
+    "case": "docs/manuals/examples/ex12_anchor_srm_20261021.xlsm",
+    "page": "施工工程",
+    "section": "工程の編集",
+    "macro": "FEM24Stages",
+    "ranges": [
+      "A7:I12"
+    ]
+  },
+  {
+    "name": "ex13_stages",
+    "case": "docs/manuals/examples/ex13_bearing_flat_s010_20261021.xlsm",
+    "page": "施工工程",
+    "section": "工程の編集",
+    "macro": "FEM24Stages",
+    "ranges": [
+      "A7:I9"
+    ]
+  }
+]

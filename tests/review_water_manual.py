@@ -5,7 +5,7 @@ import pymupdf
 from PIL import Image,ImageDraw
 
 def main():
- ap=argparse.ArgumentParser();ap.add_argument('pdf',type=Path);ap.add_argument('out',type=Path);ap.add_argument('--source',type=Path,default=Path('docs/manuals/2DSoilFEM_Manual.md'));ap.add_argument('--public-ref');a=ap.parse_args()
+ ap=argparse.ArgumentParser();ap.add_argument('pdf',type=Path);ap.add_argument('out',type=Path);ap.add_argument('--source',type=Path,default=Path('docs/manuals/2DSoilFEM_Manual.md'));ap.add_argument('--public-ref');ap.add_argument('--book-version',default='20261023');a=ap.parse_args()
  a.out.mkdir(parents=True,exist_ok=True);md=a.source.read_text(encoding='utf-8');d=pymupdf.open(a.pdf)
  chapters=re.findall(r'^## (\d+)\. (.+)$',md,re.M)
  assert [int(n) for n,t in chapters]==list(range(1,len(chapters)+1))
@@ -32,7 +32,7 @@ def main():
  assert all(x.lower().startswith(('http:','https:','mailto:')) for x in links)
  assert any('water_display_examples.zip' in x for x in links)
  if a.public_ref:
-  for name in ('SoilFEM_UI_20261023.zip','water_display_examples.zip','water_polyline_example.zip'):
+  for name in (f'SoilFEM_UI_{a.book_version}.zip','water_display_examples.zip','water_polyline_example.zip'):
    assert any('/'+a.public_ref+'/' in x and name in x for x in links),name
  thumbs=[]
  for i,p in enumerate(d):

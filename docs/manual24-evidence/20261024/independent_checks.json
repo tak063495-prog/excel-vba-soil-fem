@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "fixture_sha256": "E4F117FEDAFA72E86059C4025C6C30E3E582A16CCAD26F2A6129240FDBD48040",
+  "release_book_sha256": "16161736280992174173430F9A163FCA72CC4F3D408683CDCE1990461910B560",
+  "nodes": 261,
+  "elements": 72,
+  "stage": 2.0,
+  "area_m2": 66.0,
+  "weight_kN": 1188.0,
+  "support_reaction_y_kN": 1187.999999999991,
+  "free_residual_y_kN": 8.97570906488454e-12,
+  "global_closure_y_kN": -2.2737367544323206e-13,
+  "reference_coordinate_error_m": 0.0,
+  "fixed_displacement_max_m": 0.0,
+  "max_displacement_m": 0.48249146758059497,
+  "dense_11x11_min_jacobian": {
+    "reference": 0.14999999999999647,
+    "scale1": 0.12098280848750796
+  },
+  "fs_pass": 2.6250000000000013,
+  "fs_fail": 2.637500000000001,
+  "relative_residual": 1.2822499905154632e-10,
+  "seconds": 72.8523451
+}
