@@ -9,8 +9,8 @@ $copy=Join-Path $Out ($data.name+'.xlsm');Copy-Item -LiteralPath $Book -Destinat
 Copy-Item -LiteralPath (Join-Path (Split-Path $Book) 'soilfem_native_x64.dll') -Destination $Out
 $xl=New-Object -ComObject Excel.Application
 try{
- $xl.DisplayAlerts=$false;$xl.EnableEvents=$false;$xl.AutomationSecurity=1
- $wb=$xl.Workbooks.Open($copy,0,$false)
+ $xl.DisplayAlerts=$false;$xl.EnableEvents=[bool]$data.shape;$xl.AutomationSecurity=1
+ $wb=$xl.Workbooks.Open($copy,0,$false);$xl.EnableEvents=$false
  $mod=$wb.VBProject.VBComponents.Add(1);$mod.Name='WaterFixtureDriver'
  $mod.CodeModule.AddFromString(@'
 Public Function WFPreview() As String
@@ -79,6 +79,12 @@ End Function
  Rows $wb.Worksheets.Item('ステージ') 2 1 $data.stages 6
  if($data.loads){Rows $wb.Worksheets.Item('載荷') 2 1 $data.loads 10}
  if($data.jointPairs){Rows $wb.Worksheets.Item('接合') 2 1 $data.jointPairs 7}
+ if($data.shape){
+  $shapePage=$wb.Worksheets.Item('形状入力')
+  $shapePage.Range('B8:D2000').ClearContents();$shapePage.Range('G8:J2000').ClearContents()
+  Rows $shapePage 8 2 $data.shape.points 3
+  Rows $shapePage 8 7 $data.shape.boundaries 4
+ }
  $null=Call 'FEMWaterInstallUi'
  $water=$wb.Worksheets.Item('水条件')
  $water.Range('B3').Value2=[string]$data.water.mode;$water.Range('B4').Value2=[double]$data.water.gamma
@@ -86,6 +92,7 @@ End Function
  Rows $water 12 1 $data.water.profiles 4
  Rows $water 12 6 $data.water.materials 5
  Rows $water 216 1 $data.water.boundaries 6
+ if($data.water.stagePlans){Rows $water 12 12 $data.water.stagePlans 9}
  SetSetting 'EXPORT_MODE' $(if($Resume){'STAGE'}else{'OFF'});SetSetting 'EXPORT_LOAD' '';SetSetting 'FLOW_POLICY' $Flow;SetSetting 'NATIVE_DLL' $Native;SetSetting 'OUTPUT_STAGE_MODE' 'ALL'
  if($data.settings){foreach($property in $data.settings.PSObject.Properties){SetSetting $property.Name $property.Value}}
  if($Resume){SetSetting 'EXPORT_MODE' 'STAGE'}
@@ -99,6 +106,12 @@ End Function
  }
  if($preview -ne 'PASS'){throw "Preview: $preview"}
  $timer=[Diagnostics.Stopwatch]::StartNew();$status=Call 'WFRun';$timer.Stop()
+ # Failed input/setup may leave no elements allocated. Do not mask its message
+ # with a second error while collecting an unallocated stress/DOF array.
+ if($status -notlike 'PASS|*'){
+  @{case=$data.name;status=$status;seconds=$timer.Elapsed.TotalSeconds}|ConvertTo-Json|Set-Content (Join-Path $Out 'failure.json') -Encoding UTF8
+  throw "Analysis: $status"
+ }
  $record=@{case=$data.name;status=$status;seconds=$timer.Elapsed.TotalSeconds;metrics=@(Call 'WFMetrics');disp=@(Call 'WFDisplacements');stress=@(Call 'WFStress');book_sha256=(Get-FileHash $Book).Hash;fixture_sha256=(Get-FileHash $Fixture).Hash;excel_version=$xl.Version;excel_build=$xl.Build;build=(Call 'WFBuild');native=(Call 'WFNative');requested_native=$Native;flow=$Flow}
  $record|ConvertTo-Json -Depth 8|Set-Content (Join-Path $Out 'result.json') -Encoding UTF8
  Write-Output ($record|ConvertTo-Json -Depth 2 -Compress)

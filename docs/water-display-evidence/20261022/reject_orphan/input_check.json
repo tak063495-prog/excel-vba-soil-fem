@@ -1,0 +1,7 @@
+{
+  "expected_error": "工程番号",
+  "book_sha256": "A13396A4A88C4F77200C280AF17882FCE997E3909ED6832B2B99ACD82F32E96A",
+  "actual_error": "ERROR|工程別水理設定の工程番号を入力してください。|FEMWater",
+  "status": "PASS",
+  "fixture_sha256": "D09B64D12640235E13655F6451C702FB2D7329638C91987CF6D6EB9AA43D54B5"
+}

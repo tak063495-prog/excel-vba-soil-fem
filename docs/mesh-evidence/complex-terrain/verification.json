@@ -1,0 +1,197 @@
+{
+  "status": "PASS",
+  "elastic": [
+    {
+      "case": "step_wall_fill",
+      "all_dofs": 1090,
+      "stress_values": 10880,
+      "max_difference": {
+        "disp": 0.0,
+        "stress": 0.0,
+        "metrics": 0.0
+      },
+      "weight_kN": 3236.0,
+      "reaction_y_kN": 3235.9999999999923,
+      "relative_residual": 5.26600089641718e-14,
+      "Fs_diagnostics": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "reference_seconds": 2.0843881,
+      "candidate_seconds": 2.4728481
+    },
+    {
+      "case": "box_tunnel",
+      "all_dofs": 1728,
+      "stress_values": 17408,
+      "max_difference": {
+        "disp": 0.0,
+        "stress": 0.0,
+        "metrics": 0.0
+      },
+      "weight_kN": 5232.0,
+      "reaction_y_kN": 5232.00000000024,
+      "relative_residual": 8.112587963138637e-13,
+      "Fs_diagnostics": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "reference_seconds": 2.2829153,
+      "candidate_seconds": 2.8346765
+    },
+    {
+      "case": "octagon_tunnel",
+      "all_dofs": 7168,
+      "stress_values": 78336,
+      "max_difference": {
+        "disp": 0.0,
+        "stress": 0.0,
+        "metrics": 0.0
+      },
+      "weight_kN": 4950.294372515222,
+      "reaction_y_kN": 4950.294372513003,
+      "relative_residual": 1.003291863647581e-11,
+      "Fs_diagnostics": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "reference_seconds": 15.3333929,
+      "candidate_seconds": 16.3030606
+    },
+    {
+      "case": "gravity_taper_blocks",
+      "all_dofs": 566,
+      "stress_values": 5440,
+      "max_difference": {
+        "disp": 0.0,
+        "stress": 0.0,
+        "metrics": 0.0
+      },
+      "weight_kN": 1270.0,
+      "reaction_y_kN": 1269.999999999999,
+      "relative_residual": 4.087492416325101e-13,
+      "Fs_diagnostics": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "reference_seconds": 2.0363777,
+      "candidate_seconds": 2.0327468
+    },
+    {
+      "case": "lwall_taper_blocks",
+      "all_dofs": 642,
+      "stress_values": 6256,
+      "max_difference": {
+        "disp": 0.0,
+        "stress": 0.0,
+        "metrics": 0.0
+      },
+      "weight_kN": 1367.0,
+      "reaction_y_kN": 1366.9999999999427,
+      "relative_residual": 3.29203629211843e-13,
+      "Fs_diagnostics": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "reference_seconds": 2.0259574,
+      "candidate_seconds": 2.1579107
+    },
+    {
+      "case": "circle64_tunnel",
+      "all_dofs": 4864,
+      "stress_values": 52224,
+      "max_difference": {
+        "disp": 0.0,
+        "stress": 0.0,
+        "metrics": 0.0
+      },
+      "weight_kN": 4931.8070905672475,
+      "reaction_y_kN": 4931.807090568005,
+      "relative_residual": 7.351366628380945e-12,
+      "Fs_diagnostics": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "reference_seconds": 5.4524317,
+      "candidate_seconds": 5.4914975
+    }
+  ],
+  "simple_routes": [
+    {
+      "case": "slope2",
+      "all_node_element_cells_exact": true,
+      "seconds": 1.0880218
+    },
+    {
+      "case": "slope1",
+      "all_node_element_cells_exact": true,
+      "seconds": 2.930663
+    },
+    {
+      "case": "flat1",
+      "all_node_element_cells_exact": true,
+      "seconds": 3.0170496
+    },
+    {
+      "case": "slope2_quality",
+      "all_node_element_cells_exact": true,
+      "seconds": 6.3752397
+    }
+  ],
+  "policy1_exact": true,
+  "protected_input_rejections": 6,
+  "water_joint": {
+    "status": "PASS",
+    "case": "joint_water_wet",
+    "seconds": 4.6674924,
+    "effective_contact_kN": 27.99999999999999,
+    "water_support_kN": 20.0,
+    "total_contact_kN": 47.99999999999999,
+    "reaction_y_kN": 88.0,
+    "residual": 1.2799951622030741e-15,
+    "Fs": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "max_head_error_m": 0.0,
+    "max_flux_error_m_s": 0.0,
+    "resume": {
+      "max_du_m": 4.235164736271502e-22,
+      "max_physical_stress_error_kPa": 4.942712905631197e-13,
+      "residual": 2.7805923637581374e-14,
+      "seconds": 1.6932186
+    },
+    "tangent": [
+      "STICK|4.1493845799323E-12|0|0|0",
+      "SLIP_POSITIVE|4.42272385754449E-12|61584028.7135601|2|6",
+      "SLIP_NEGATIVE|4.42272385754449E-12|61584028.7135601|2|14",
+      "OPEN|0|0|1|1"
+    ],
+    "fluid_exact": {}
+  },
+  "water_joint_previous": {
+    "status": "PASS",
+    "max_difference": {
+      "disp": 0.0,
+      "stress": 0.0,
+      "metrics": 0.0
+    },
+    "reference_seconds": 4.9944665,
+    "candidate_seconds": 4.6674924
+  },
+  "limitations": "Elastic self-weight and existing wet-JOINT/resume regression; not a new full SRM search, construction excavation validation or mesh-convergence study."
+}

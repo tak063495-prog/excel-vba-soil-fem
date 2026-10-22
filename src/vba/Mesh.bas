@@ -93,6 +93,32 @@ Private Sub P5WriteTextSetting(ByVal keyName As String, ByVal value As String)
     FEMWriteTextSetting keyName, value
 End Sub
 
+' PINPUT の境界辺情報は疎な辺集合なので、節点数×節点数の密行列を作らない。
+' Dictionary のキーは元の節点番号の順序を保持し、未登録値は従来のゼロと同じにする。
+Private Function P5EdgeKey(ByVal nodeA As Long, ByVal nodeB As Long) As String
+    P5EdgeKey = CStr(nodeA) & ":" & CStr(nodeB)
+End Function
+
+Private Function P5EdgeDouble(ByVal values As Object, ByVal nodeA As Long, ByVal nodeB As Long) As Double
+    Dim key As String
+    key = P5EdgeKey(nodeA, nodeB)
+    If values.Exists(key) Then P5EdgeDouble = CDbl(values(key)) Else P5EdgeDouble = 0#
+End Function
+
+Private Sub P5SetEdgeDouble(ByVal values As Object, ByVal nodeA As Long, ByVal nodeB As Long, ByVal amount As Double)
+    values(P5EdgeKey(nodeA, nodeB)) = amount
+End Sub
+
+Private Function P5EdgeLong(ByVal values As Object, ByVal nodeA As Long, ByVal nodeB As Long) As Long
+    Dim key As String
+    key = P5EdgeKey(nodeA, nodeB)
+    If values.Exists(key) Then P5EdgeLong = CLng(values(key)) Else P5EdgeLong = 0
+End Function
+
+Private Sub P5SetEdgeLong(ByVal values As Object, ByVal nodeA As Long, ByVal nodeB As Long, ByVal amount As Long)
+    values(P5EdgeKey(nodeA, nodeB)) = amount
+End Sub
+
 Public Sub ValidateMeshInputCapacity(ByVal externalBoundaryCount As Long, ByVal internalBoundaryCount As Long, _
                                      ByVal boundaryNodeCount As Long, ByVal interiorNodeCount As Long)
     Dim totalBoundary As Long
@@ -862,9 +888,9 @@ Dim pinStage As String: Dim pinErrorNumber As Long: Dim pinErrorDescription As S
     Dim r As Long
     
     Dim alpha As Double
-    Dim imno() As Double
-    Dim deno() As Long
-    Dim sms() As Long
+    Dim imno As Object
+    Dim deno As Object
+    Dim sms As Object
     
     Dim NMAX As Long
     On Error GoTo PinputErrorHandler
@@ -880,9 +906,9 @@ Dim pinStage As String: Dim pinErrorNumber As Long: Dim pinErrorDescription As S
     NIB = CLng(Val(headerValues(1, 10)))
     NEX = CLng(Val(headerValues(3, 4)))
     NIN = CLng(Val(headerValues(24, 4)))
-    ReDim imno(1 To IIf(NOB + NIB > 200, NOB + NIB, 200), 1 To IIf(NOB + NIB > 200, NOB + NIB, 200))
-    ReDim deno(1 To IIf(NOB + NIB > 200, NOB + NIB, 200), 1 To IIf(NOB + NIB > 200, NOB + NIB, 200))
-    ReDim sms(1 To IIf(NOB + NIB > 200, NOB + NIB, 200), 1 To IIf(NOB + NIB > 200, NOB + NIB, 200))
+    Set imno = CreateObject("Scripting.Dictionary")
+    Set deno = CreateObject("Scripting.Dictionary")
+    Set sms = CreateObject("Scripting.Dictionary")
     ValidateMeshInputCapacity NEX, NIN, NOB, NIB
     pinStage = "節点座標読込"
     nodeCoordValues = ws0.range(ws0.Cells(2, 2), ws0.Cells(NOB + NIB + 1, 3)).value2
@@ -948,18 +974,18 @@ Dim pinStage As String: Dim pinErrorNumber As Long: Dim pinErrorDescription As S
                no2 = mibno(i, j)
             End If
 
-            dx = imno(no1, no2)
+            dx = P5EdgeDouble(imno, no1, no2)
             If dx = 0 Or delx(i) < dx Then
-                imno(no1, no2) = delx(i) 'imnoには点間隔を入力する
+                P5SetEdgeDouble imno, no1, no2, delx(i) 'imnoには点間隔を入力する
             End If
-            dx = imno(no2, no1)
+            dx = P5EdgeDouble(imno, no2, no1)
             If dx = 0 Or delx(i) < dx Then
-                imno(no2, no1) = delx(i) 'imnoには点間隔を入力する
+                P5SetEdgeDouble imno, no2, no1, delx(i) 'imnoには点間隔を入力する
             End If
-            If imno(no1, no2) > imno(no2, no1) Then
-               imno(no1, no2) = imno(no2, no1)
+            If P5EdgeDouble(imno, no1, no2) > P5EdgeDouble(imno, no2, no1) Then
+               P5SetEdgeDouble imno, no1, no2, P5EdgeDouble(imno, no2, no1)
             Else
-               imno(no2, no1) = imno(no1, no2)
+               P5SetEdgeDouble imno, no2, no1, P5EdgeDouble(imno, no1, no2)
             End If
         Next j
     Next i
@@ -969,10 +995,10 @@ Dim pinStage As String: Dim pinErrorNumber As Long: Dim pinErrorDescription As S
     
     
     newno = NOB + NIB 'NOB + NIB
-    ' 固定配列時のEraseはゼロ化でしたが、動的配列では未確保化になります。
-    ' 後段で再利用するため、元節点数の範囲で確保し直してゼロ化する。
-    ReDim deno(1 To NOB + NIB, 1 To NOB + NIB)
-    ReDim sms(1 To NOB + NIB, 1 To NOB + NIB)
+    ' 境界辺の細分化番号表は前半の間隔表と別段階で使うため、値を消去する。
+    ' 辺辞書は登録済みの辺だけを保持するので、節点数の二乗配列を確保しない。
+    deno.RemoveAll
+    sms.RemoveAll
     
     pinStage = "細分化ノード生成"
     If NEX > 0 Then
@@ -993,29 +1019,29 @@ Dim pinStage As String: Dim pinErrorNumber As Long: Dim pinErrorDescription As S
                                   
                  xc = Sqr((px(no2) - px(no1)) ^ 2 + (py(no2) - py(no1)) ^ 2)
                  
-                 lx = deno(no1, no2)
-                 ddx = imno(no1, no2)
+                 lx = P5EdgeLong(deno, no1, no2)
+                 ddx = P5EdgeDouble(imno, no1, no2)
 
 
                  If lx = 0 Then
                      If Int(xc / ddx) >= 2 Then
                          dx = Int(xc / ddx) - 1
-                         sms(no1, no2) = dx
-                         sms(no2, no1) = dx
-                         If deno(no1, no2) = 0 Or deno(no2, no1) = 0 Then
+                         P5SetEdgeLong sms, no1, no2, dx
+                         P5SetEdgeLong sms, no2, no1, dx
+                         If P5EdgeLong(deno, no1, no2) = 0 Or P5EdgeLong(deno, no2, no1) = 0 Then
                             For k = 1 To dx
                                newno = newno + 1
                                If no1 < no2 Then
                                    If k = 1 Then
-                                      deno(no1, no2) = newno
-                                      deno(no2, no1) = newno + dx - 1
+                                      P5SetEdgeLong deno, no1, no2, newno
+                                      P5SetEdgeLong deno, no2, no1, newno + dx - 1
                                    End If
                                    px(newno) = px(no1) + (px(no2) - px(no1)) * k / (dx + 1)
                                    py(newno) = py(no1) + (py(no2) - py(no1)) * k / (dx + 1)
                                Else
                                    If k = 1 Then
-                                      deno(no2, no1) = newno
-                                      deno(no1, no2) = newno + (dx - 1)
+                                      P5SetEdgeLong deno, no2, no1, newno
+                                      P5SetEdgeLong deno, no1, no2, newno + (dx - 1)
                                    End If
                                    px(newno) = px(no2) + (px(no1) - px(no2)) * k / (dx + 1)
                                    py(newno) = py(no2) + (py(no1) - py(no2)) * k / (dx + 1)
@@ -1052,22 +1078,22 @@ Dim pinStage As String: Dim pinErrorNumber As Long: Dim pinErrorDescription As S
                  Else
                      no2 = mibno(i, j)
                  End If
-                 If sms(no1, no2) >= 1 Then
+                 If P5EdgeLong(sms, no1, no2) >= 1 Then
                      If no1 < no2 Then
-                         For k = 1 To sms(no1, no2)
+                         For k = 1 To P5EdgeLong(sms, no1, no2)
                               r = r + 1
                               If k = 1 Then
-                                 newno = deno(no1, no2)
+                                 newno = P5EdgeLong(deno, no1, no2)
                               Else
                                  newno = newno + 1
                               End If
                               ibno(i, r) = newno
                          Next k
                      Else
-                         For k = 1 To sms(no1, no2)
+                         For k = 1 To P5EdgeLong(sms, no1, no2)
                               r = r + 1
                               If k = 1 Then
-                                 newno = deno(no1, no2)
+                                 newno = P5EdgeLong(deno, no1, no2)
                               Else
                                  newno = newno - 1
                               End If

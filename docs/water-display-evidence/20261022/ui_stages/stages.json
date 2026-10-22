@@ -1,0 +1,16 @@
+{
+  "source_book_sha256": "27207C7CA2BD7B3AFB80AF27EFD23FA9B53E4D6E5F1061E35B65495D813AEB26",
+  "sheet": "ステージ",
+  "action": "stages",
+  "shapes": [
+    {
+      "left": 48.0,
+      "width": 117.0,
+      "top": 42.0,
+      "height": 45.75,
+      "text": null,
+      "name": "Drop Down 1"
+    }
+  ],
+  "status": "PASS"
+}

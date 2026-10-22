@@ -1,0 +1,7 @@
+{
+  "actual_error": "ERROR|現在実行できる連携方式はONE_WAYです。FIXED_STRESSは時間圧密の将来拡張です。工程=2|FEMWater",
+  "book_sha256": "A13396A4A88C4F77200C280AF17882FCE997E3909ED6832B2B99ACD82F32E96A",
+  "status": "PASS",
+  "expected_error": "現在実行できる",
+  "fixture_sha256": "D61595B330AD90BDA27EDB3BCFB57EC689AD3FC76C2843711DE25B89A3346717"
+}

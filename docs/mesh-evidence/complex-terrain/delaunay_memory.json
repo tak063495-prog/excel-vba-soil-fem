@@ -1,0 +1,84 @@
+{
+  "status": "PASS",
+  "boundary_outputs_exact": true,
+  "cases": [
+    {
+      "case": "polygon",
+      "input_points": 200,
+      "old": {
+        "private_commit_before": 240119808,
+        "private_commit_at_tables": 240726016,
+        "private_commit_increase": 606208,
+        "working_set_at_tables": 347590656,
+        "pinput_seconds": 0.08000000000174623
+      },
+      "new": {
+        "private_commit_before": 241381376,
+        "private_commit_at_tables": 241438720,
+        "private_commit_increase": 57344,
+        "working_set_at_tables": 348405760,
+        "pinput_seconds": 0.11000000000058208
+      },
+      "private_commit_increase_saved_bytes": 548864
+    },
+    {
+      "case": "polygon",
+      "input_points": 1000,
+      "old": {
+        "private_commit_before": 240988160,
+        "private_commit_at_tables": 257589248,
+        "private_commit_increase": 16601088,
+        "working_set_at_tables": 364027904,
+        "pinput_seconds": 1.3300000000017462
+      },
+      "new": {
+        "private_commit_before": 242278400,
+        "private_commit_at_tables": 242917376,
+        "private_commit_increase": 638976,
+        "working_set_at_tables": 349663232,
+        "pinput_seconds": 1.389999999999418
+      },
+      "private_commit_increase_saved_bytes": 15962112
+    },
+    {
+      "case": "polygon",
+      "input_points": 1800,
+      "old": {
+        "private_commit_before": 241319936,
+        "private_commit_at_tables": 294084608,
+        "private_commit_increase": 52764672,
+        "working_set_at_tables": 400207872,
+        "pinput_seconds": 4.3400000000110595
+      },
+      "new": {
+        "private_commit_before": 242761728,
+        "private_commit_at_tables": 243838976,
+        "private_commit_increase": 1077248,
+        "working_set_at_tables": 350597120,
+        "pinput_seconds": 4.239999999990687
+      },
+      "private_commit_increase_saved_bytes": 51687424
+    },
+    {
+      "case": "shared_reverse_subdivided",
+      "input_points": 6,
+      "old": {
+        "private_commit_before": 240566272,
+        "private_commit_at_tables": 241418240,
+        "private_commit_increase": 851968,
+        "working_set_at_tables": 348528640,
+        "pinput_seconds": 0.020000000004074536
+      },
+      "new": {
+        "private_commit_before": 242454528,
+        "private_commit_at_tables": 242466816,
+        "private_commit_increase": 12288,
+        "working_set_at_tables": 349065216,
+        "pinput_seconds": 0.029999999998835847
+      },
+      "private_commit_increase_saved_bytes": 839680
+    }
+  ],
+  "measurement": "GetProcessMemoryInfo PagefileUsage (private committed memory) and WorkingSetSize sampled inside PINPUT before allocation and while tables are live; whole Excel process, not isolated allocator or lifetime peak.",
+  "limitations": "One sequential run per book/case. Regular polygons do not add subdivision nodes; the separate shared-edge case exercises reverse numbering and different subdivision spacings. Timing includes instrumentation and is not a full-meshing speed benchmark."
+}

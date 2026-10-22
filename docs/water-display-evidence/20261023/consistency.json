@@ -1,0 +1,161 @@
+{
+  "status": "PASS",
+  "water_priority": "N (matching stage ID), C, B5; N/C conflict rejected",
+  "screen_sources": [
+    {
+      "figure": "図4-5-A",
+      "image": "input_mode_guided.png",
+      "image_sha256": "df201bef12145c91b607b1f0fd7d2c82ad7c8be8e4f3339cbb343584adb088f0",
+      "model": "cutoff",
+      "fixture": "tests/fixtures/groundwater_cutoff.json",
+      "fixture_sha256": "fc2487a2d6a712e401834c923ae8490e742080e61888a85695d13e098af804dc",
+      "mode": "STEADY",
+      "profiles": [
+        [
+          "L",
+          0,
+          5,
+          "left water level"
+        ],
+        [
+          "L",
+          6,
+          5,
+          "left water level"
+        ],
+        [
+          "R",
+          0,
+          4,
+          "right water level"
+        ],
+        [
+          "R",
+          6,
+          4,
+          "right water level"
+        ]
+      ],
+      "ui_action": "docs/water-display-evidence/20261022/ui_cutoff/input.json",
+      "calculated_book_sha256": "E013A1DD566831EEC91EA2033E19CE6FF078BAAA38364B7AABE83A2DD28B1040",
+      "original_image": "input_mode.png",
+      "original_image_sha256": "392babf0d0332c0f3829bba87b8759e40b6c139a4f7e6847eed86aed0326bc2f",
+      "annotation": "Red frames and number markers added for manual only; source screenshot and workbook unchanged."
+    },
+    {
+      "figure": "図4-5-B",
+      "image": "stage_plan_guided.png",
+      "image_sha256": "9fb04c2fe3ea572946ccc8fc3e65820c71ab3ce0e3d7810d22a45150f0d4ef8b",
+      "model": "one_way",
+      "fixture": "tests/fixtures/water_stage_one_way.json",
+      "fixture_sha256": "0d35b3229a0a00c8860a5472a4417ac809ee205abff6621b23c1adaf7dd71374",
+      "mode": "STEADY",
+      "profiles": [
+        [
+          "W",
+          0,
+          3,
+          "initial"
+        ],
+        [
+          "W",
+          2,
+          3,
+          "initial"
+        ],
+        [
+          "V",
+          0,
+          4,
+          "raise"
+        ],
+        [
+          "V",
+          2,
+          4,
+          "raise"
+        ]
+      ],
+      "ui_action": "docs/water-display-evidence/20261022/ui_stages/plans.json",
+      "calculated_book_sha256": "27207C7CA2BD7B3AFB80AF27EFD23FA9B53E4D6E5F1061E35B65495D813AEB26",
+      "original_image": "stage_plan.png",
+      "original_image_sha256": "c782b170192f7e43358511828aa2bf76d5d7628fb2a1110f7fdf9000cdabecdb",
+      "annotation": "Red frames and number markers added for manual only; source screenshot and workbook unchanged."
+    },
+    {
+      "figure": "図4-5-C",
+      "image": "hydro_preview.png",
+      "image_sha256": "522fb015431b87668f28663d4bf1ccb60d435e3e39f7a0344b39e2d2f7b85029",
+      "model": "fixed13",
+      "fixture": "tests/fixtures/water_slope_fixed13.json",
+      "fixture_sha256": "790b989323cf3d51f2a91b904dd92c8341b22e5b856dffb86bc2e6d1f4e31dc1",
+      "mode": "HYDROSTATIC",
+      "profiles": [
+        [
+          "W",
+          0,
+          1,
+          "horizontal"
+        ],
+        [
+          "W",
+          20.0,
+          1,
+          "horizontal"
+        ]
+      ],
+      "ui_action": "docs/water-display-evidence/20261022/ui_hydro/preview.json",
+      "calculated_book_sha256": "14815B053218BCAE01EB9B62DA98E490BFE2BCBBA1D2E763FDE6D1AB46BE269C"
+    },
+    {
+      "figure": "図4-5-D",
+      "image": "steady_preview.png",
+      "image_sha256": "98a1d38616015b17978ad28cc4227634aef257a709176f3c540496ab6f659860",
+      "model": "cutoff",
+      "fixture": "tests/fixtures/groundwater_cutoff.json",
+      "fixture_sha256": "fc2487a2d6a712e401834c923ae8490e742080e61888a85695d13e098af804dc",
+      "mode": "STEADY",
+      "profiles": [
+        [
+          "L",
+          0,
+          5,
+          "left water level"
+        ],
+        [
+          "L",
+          6,
+          5,
+          "left water level"
+        ],
+        [
+          "R",
+          0,
+          4,
+          "right water level"
+        ],
+        [
+          "R",
+          6,
+          4,
+          "right water level"
+        ]
+      ],
+      "ui_action": "docs/water-display-evidence/20261022/ui_cutoff/preview.json",
+      "calculated_book_sha256": "E013A1DD566831EEC91EA2033E19CE6FF078BAAA38364B7AABE83A2DD28B1040"
+    }
+  ],
+  "saved_mesh_counts": [
+    {
+      "book": "ex01_material_20261021.xlsm",
+      "nodes": 261,
+      "elements": 72
+    },
+    {
+      "book": "ex02_shape_mesh1m_20261022.xlsm",
+      "nodes": 1065,
+      "elements": 330
+    }
+  ],
+  "scope": "Documentation/static input inspection only; no Excel recalculation or XLSM/VBA/DLL modification."
+}

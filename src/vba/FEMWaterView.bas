@@ -6,6 +6,13 @@ Public Sub GWDrawWaterView(ByVal ws As Worksheet, ByRef pressures() As Double, B
   Dim nodeX() As Double, nodeY() As Double, haveNode() As Boolean, p As Double, value As Double, px As Double, py As Double
   Dim sh As shape, key As Variant, prof As String, r As Long, x As Double, y As Double, wsIn As Worksheet
   Dim drawStride As Long, sampleNote As String, canvasTop As Double, canvasHeight As Double, plotHeight As Double
+  Dim mode As String, originText As String
+  mode = GWViewMode()
+  If mode = "STEADY" Then
+    originText = "浸透計算済：h・qから水圧を算出。破線は入力境界用水位で、自由水面の計算結果ではありません。"
+  Else
+    originText = "指定場：入力水位から静水圧を換算。浸透計算・水位の再計算は行いません。"
+  End If
   If NumberOfElement < 1 Or NumberOfFreeNode < 1 Then Err.Raise vbObjectError + 7950, "GWDrawWaterView", "No mesh to draw."
   If UBound(pressures, 1) < 3 Or UBound(pressures, 2) < NumberOfElement - 1 Then Err.Raise vbObjectError + 7950, "GWDrawWaterView", "Pressure array is too small."
   If UBound(surfaceForce) < NumberOfFreeNode * 2 - 1 Then Err.Raise vbObjectError + 7950, "GWDrawWaterView", "Surface force array is too small."
@@ -50,7 +57,8 @@ Public Sub GWDrawWaterView(ByVal ws As Worksheet, ByRef pressures() As Double, B
   For n = 0 To NumberOfFreeNode - 1
     If haveNode(n) Then forceNodes = forceNodes + 1
   Next n
-  shapeCount = shapeCount + forceNodes + profilePoints + 9
+  If mode = "STEADY" Then shapeCount = shapeCount * 10
+  shapeCount = shapeCount + forceNodes + profilePoints + 12
   drawStride = 1
   If shapeCount > 3500 Then
     drawStride = (shapeCount + 3499) \ 3500
@@ -59,15 +67,19 @@ Public Sub GWDrawWaterView(ByVal ws As Worksheet, ByRef pressures() As Double, B
   GWClearWaterView ws
   canvasTop = ws.range("A8").Top
   canvasHeight = ws.range("A35").Top - canvasTop - 12#
-  plotHeight = canvasHeight - 90#
+  plotHeight = canvasHeight - 165#
   If plotHeight < 90# Then Err.Raise vbObjectError + 7950, , "水圧図の表示領域が狭すぎます。8～34行の高さを戻してください。"
-  x0 = ws.range("A8").left + 20#: y0 = canvasTop + plotHeight + 20#
+  x0 = ws.range("A8").left + 20#: y0 = canvasTop + plotHeight + 35#
   GWViewScale minX, maxX, minY, maxY, 600#, plotHeight, sx, sy
   Set sh = ws.Shapes.AddShape(msoShapeRectangle, ws.range("A8").left, canvasTop, 680#, canvasHeight)
   sh.name = "GW_VIEW_CANVAS": sh.fill.ForeColor.RGB = RGB(255, 255, 255): sh.line.ForeColor.RGB = RGB(210, 210, 210)
   sh.ZOrder msoSendToBack
-  Set sh = ws.Shapes.AddTextbox(msoTextOrientationHorizontal, x0, ws.range("A8").Top - 25#, 680#, 22#)
-  sh.name = "GW_VIEW_TITLE": sh.TextFrame2.TextRange.text = titleText & "  (水圧・等価節点荷重)" & sampleNote
+  Set sh = ws.Shapes.AddTextbox(msoTextOrientationHorizontal, x0, canvasTop + 2#, 650#, 22#)
+  sh.name = "GW_VIEW_TITLE": sh.TextFrame2.TextRange.text = titleText & sampleNote
+  ws.range("A4").value2 = originText
+  ws.range("A5").value2 = "入力線：橙破線 / GP水圧：青点 / 水圧外力：橙矢印。数値は35行目以降。"
+  ws.range("A6").value2 = "HYDROSTATIC=指定水位から換算 / STEADY=境界水頭を固定して内部水頭を計算。未知自由水面は対象外。"
+  ws.rows("4:6").RowHeight = 18
   For e = 0 To NumberOfElement - 1
     If P3IsElementActive(e) And Not Elem(e).IsJoint And e Mod drawStride = 0 Then GWDrawElement ws, e, x0, y0, sx, sy, minX, minY
   Next e
@@ -81,6 +93,7 @@ Public Sub GWDrawWaterView(ByVal ws As Worksheet, ByRef pressures() As Double, B
       Next g
     End If
   Next e
+  If mode = "STEADY" Then GWDrawHydraulicSolution ws, drawStride, x0, y0, sx, sy, minX, minY
   GWDrawForces ws, nodeX, nodeY, haveNode, surfaceForce, maxF, x0, y0, sx, sy, minX, minY
   GWDrawLegend ws, x0, y0, maxP, maxF
 End Sub
@@ -123,7 +136,7 @@ Private Sub GWDrawProfiles(ByVal ws As Worksheet, ByVal x0 As Double, ByVal y0 A
     If Len(prof) > 0 And IsNumeric(wsIn.cells(r, 2).value2) And IsNumeric(wsIn.cells(r, 3).value2) Then
       qx = CDbl(wsIn.cells(r, 2).value2): qy = CDbl(wsIn.cells(r, 3).value2)
       If prof = prevProf Then
-        GWLine ws, "GW_VIEW_PROFILE_" & r, x0 + (px - minX) * sx, y0 + (minY - py) * sy, x0 + (qx - minX) * sx, y0 + (minY - qy) * sy, RGB(0, 150, 220)
+        GWLine ws, "GW_VIEW_PROFILE_" & r, x0 + (px - minX) * sx, y0 + (minY - py) * sy, x0 + (qx - minX) * sx, y0 + (minY - qy) * sy, RGB(195, 100, 0)
         ws.Shapes("GW_VIEW_PROFILE_" & r).line.DashStyle = msoLineDash
       Else
         n = n + 1
@@ -137,7 +150,9 @@ End Sub
 Private Sub GWProfileLabel(ByVal ws As Worksheet, ByVal textValue As String, ByVal x As Double, ByVal y As Double, ByVal x0 As Double, ByVal y0 As Double, ByVal sx As Double, ByVal sy As Double, ByVal minX As Double, ByVal minY As Double, ByVal indexValue As Long)
   Dim sh As shape
   Set sh = ws.Shapes.AddTextbox(msoTextOrientationHorizontal, x0 + (x - minX) * sx + 3#, y0 + (minY - y) * sy - 10#, 100#, 16#)
-  sh.name = "GW_VIEW_PROFILE_LABEL_" & indexValue: sh.TextFrame2.TextRange.text = textValue
+  sh.name = "GW_VIEW_PROFILE_LABEL_" & indexValue: sh.TextFrame2.TextRange.text = "入力線：" & textValue
+  sh.TextFrame2.TextRange.Font.Size = 9
+  sh.TextFrame2.TextRange.Font.fill.ForeColor.RGB = RGB(160, 75, 0)
 End Sub
 
 Private Sub GWDrawForces(ByVal ws As Worksheet, ByRef nodeX() As Double, ByRef nodeY() As Double, ByRef haveNode() As Boolean, ByRef force() As Double, ByVal maxF As Double, ByVal x0 As Double, ByVal y0 As Double, ByVal sx As Double, ByVal sy As Double, ByVal minX As Double, ByVal minY As Double)
@@ -158,8 +173,111 @@ End Sub
 
 Private Sub GWDrawLegend(ByVal ws As Worksheet, ByVal x0 As Double, ByVal y0 As Double, ByVal maxP As Double, ByVal maxF As Double)
   Dim sh As shape
-  Set sh = ws.Shapes.AddTextbox(msoTextOrientationHorizontal, x0, y0 + 12#, 320#, 40#)
-  sh.name = "GW_VIEW_LEGEND": sh.TextFrame2.TextRange.text = "GP水圧 max=" & Format$(maxP, "0.000") & " kPa / 等価荷重 max=" & Format$(maxF, "0.000") & " kN"
+  Set sh = ws.Shapes.AddTextbox(msoTextOrientationHorizontal, x0, y0 + 40#, 630#, 70#)
+  sh.name = "GW_VIEW_LEGEND"
+  sh.TextFrame2.TextRange.Font.Size = 9
+  sh.TextFrame2.TextRange.text = "橙破線＝登録した入力水位線（境界用。計算結果の水面ではない）" & vbLf & _
+    "青点＝GP水圧 max=" & Format$(maxP, "0.000") & " kPa / 橙矢印＝水圧の等価節点荷重 max=" & Format$(maxF, "0.000") & " kN"
+  If GWViewMode() = "STEADY" Then
+    sh.TextFrame2.TextRange.text = sh.TextFrame2.TextRange.text & vbLf & "紫実線＝計算全水頭h [m] の等値線（表示用補間） / 紫菱形＝固定水頭境界" & vbLf & _
+      "緑矢印＝計算Darcy流束q [m/s]（外力矢印とは別）。飽和領域は入力メッシュで固定。"
+  Else
+    sh.TextFrame2.TextRange.text = sh.TextFrame2.TextRange.text & vbLf & "HYDROSTATIC：水圧p=γw max(入力水位-y,0)。水頭・流束は解いていません。"
+  End If
+End Sub
+
+Private Sub GWDrawHydraulicSolution(ByVal ws As Worksheet, ByVal stride As Long, ByVal x0 As Double, ByVal y0 As Double, ByVal sx As Double, ByVal sy As Double, ByVal minX As Double, ByVal minY As Double)
+  Dim e As Long, j As Long, g As Long, k As Long, a As Long, b As Long, n As Long, counter As Long
+  Dim h(0 To 7) As Double, low As Double, high As Double, have As Boolean, locked As Boolean, value As Double
+  Dim qx As Double, qy As Double, maxQ As Double, fx As Double, fy As Double, cx As Double, cy As Double, ch As Double
+  Dim order As Variant, level As Double, seen As Object, labels As Object, levels As Object, key As String, sh As shape
+  Set seen = CreateObject("Scripting.Dictionary"): Set labels = CreateObject("Scripting.Dictionary")
+  Set levels = CreateObject("Scripting.Dictionary")
+  order = Array(0, 4, 1, 5, 2, 6, 3, 7)
+  For e = 0 To NumberOfElement - 1
+    For j = 0 To 7
+      If GWViewHead(e, j, value, locked) Then
+        If Not have Then low = value: high = value: have = True
+        If value < low Then low = value
+        If value > high Then high = value
+      End If
+    Next j
+    For g = 0 To 3
+      If GWViewFlux(e, g, qx, qy) Then
+        value = Sqr(qx * qx + qy * qy): If value > maxQ Then maxQ = value
+      End If
+    Next g
+  Next e
+  If Not have Then Exit Sub
+  For e = 0 To NumberOfElement - 1
+    If e Mod stride <> 0 Then GoTo NextHydraulicElement
+    If Not GWViewHead(e, 0, value, locked) Then GoTo NextHydraulicElement
+    cx = 0#: cy = 0#: ch = 0#: fx = 0#: fy = 0#
+    For j = 0 To 7
+      Call GWViewHead(e, j, h(j), locked)
+      value = 0.5: If j < 4 Then value = -0.25
+      cx = cx + value * Elem(e).x(j): cy = cy + value * Elem(e).y(j): ch = ch + value * h(j)
+      n = Elem(e).node(j): key = CStr(n)
+      If locked And Not seen.Exists(key) Then
+        seen.Add key, True
+        Set sh = ws.Shapes.AddShape(msoShapeDiamond, x0 + (Elem(e).x(j) - minX) * sx - 3#, y0 + (minY - Elem(e).y(j)) * sy - 3#, 6#, 6#)
+        sh.name = "GW_VIEW_HEAD_FIXED_" & key: sh.fill.ForeColor.RGB = RGB(130, 40, 170): sh.line.Visible = msoFalse
+        key = Format$(h(j), "0.000000")
+        If Not labels.Exists(key) Then
+          labels.Add key, True
+          Set sh = ws.Shapes.AddTextbox(msoTextOrientationHorizontal, x0 + (Elem(e).x(j) - minX) * sx + 5#, y0 + (minY - Elem(e).y(j)) * sy, 110#, 17#)
+          sh.name = "GW_VIEW_HEAD_LABEL_" & CStr(labels.count): sh.TextFrame2.TextRange.text = "固定h=" & Format$(h(j), "0.###") & " m": sh.TextFrame2.TextRange.Font.Size = 9
+        End If
+      End If
+    Next j
+    If high - low > 0.000000001 Then
+      For k = 1 To 5
+        level = low + (high - low) * CDbl(k) / 6#
+        For j = 0 To 7
+          a = CLng(order(j)): b = CLng(order((j + 1) Mod 8))
+          GWHeadTriangle ws, cx, cy, ch, Elem(e).x(a), Elem(e).y(a), h(a), Elem(e).x(b), Elem(e).y(b), h(b), level, counter, levels, x0, y0, sx, sy, minX, minY
+        Next j
+      Next k
+    End If
+    For g = 0 To 3
+      If GWViewFlux(e, g, qx, qy) Then fx = fx + qx / 4#: fy = fy + qy / 4#
+    Next g
+    If high - low > 0.000000001 And maxQ > 1E-24 And Abs(fx) + Abs(fy) > maxQ * 0.000001 Then
+      GWLine ws, "GW_VIEW_FLUX_" & CStr(e), x0 + (cx - minX) * sx, y0 + (minY - cy) * sy, x0 + (cx - minX) * sx + 30# * fx / maxQ, y0 + (minY - cy) * sy - 30# * fy / maxQ, RGB(0, 135, 70)
+      ws.Shapes("GW_VIEW_FLUX_" & CStr(e)).line.EndArrowheadStyle = msoArrowheadTriangle
+    End If
+NextHydraulicElement:
+  Next e
+  Set sh = ws.Shapes.AddTextbox(msoTextOrientationHorizontal, x0, y0 + 20#, 630#, 18#)
+  sh.name = "GW_VIEW_HEAD_RANGE": sh.TextFrame2.TextRange.Font.Size = 9
+  sh.TextFrame2.TextRange.text = "計算h=" & Format$(low, "0.###") & "～" & Format$(high, "0.###") & " m / max|q|=" & Format$(maxQ, "0.00E+00") & " m/s"
+  If high - low <= 0.000000001 Then sh.TextFrame2.TextRange.text = sh.TextFrame2.TextRange.text & "（一定水頭：流向矢印を省略）"
+End Sub
+
+Private Sub GWHeadTriangle(ByVal ws As Worksheet, ByVal ax As Double, ByVal ay As Double, ByVal ah As Double, ByVal bx As Double, ByVal by As Double, ByVal bh As Double, ByVal cx As Double, ByVal cy As Double, ByVal ch As Double, ByVal level As Double, ByRef counter As Long, ByVal levels As Object, ByVal x0 As Double, ByVal y0 As Double, ByVal sx As Double, ByVal sy As Double, ByVal minX As Double, ByVal minY As Double)
+  Dim x As Variant, y As Variant, h As Variant, i As Long, j As Long, count As Long, t As Double, px(0 To 1) As Double, py(0 To 1) As Double
+  x = Array(ax, bx, cx): y = Array(ay, by, cy): h = Array(ah, bh, ch)
+  For i = 0 To 2
+    j = (i + 1) Mod 3
+    If (h(i) <= level And h(j) > level) Or (h(j) <= level And h(i) > level) Then
+      t = (level - h(i)) / (h(j) - h(i))
+      If count < 2 Then px(count) = x(i) + t * (x(j) - x(i)): py(count) = y(i) + t * (y(j) - y(i))
+      count = count + 1
+    End If
+  Next i
+  If count = 2 Then
+    counter = counter + 1
+    GWLine ws, "GW_VIEW_HEAD_CONTOUR_" & CStr(counter), x0 + (px(0) - minX) * sx, y0 + (minY - py(0)) * sy, x0 + (px(1) - minX) * sx, y0 + (minY - py(1)) * sy, RGB(130, 40, 170)
+    ws.Shapes("GW_VIEW_HEAD_CONTOUR_" & CStr(counter)).AlternativeText = "計算全水頭h=" & Format$(level, "0.###") & " m"
+    If Not levels.Exists(CStr(level)) Then
+      levels.Add CStr(level), True
+      Dim label As shape
+      Set label = ws.Shapes.AddTextbox(msoTextOrientationHorizontal, x0 + ((px(0) + px(1)) / 2# - minX) * sx, y0 + (minY - (py(0) + py(1)) / 2#) * sy, 75#, 15#)
+      label.name = "GW_VIEW_CONTOUR_VALUE_" & CStr(levels.count): label.TextFrame2.TextRange.text = Format$(level, "0.###") & " m"
+      label.TextFrame2.TextRange.Font.Size = 8: label.TextFrame2.TextRange.Font.fill.ForeColor.RGB = RGB(130, 40, 170)
+      label.fill.Visible = msoFalse: label.line.Visible = msoFalse
+    End If
+  End If
 End Sub
 
 Private Sub GWLine(ByVal ws As Worksheet, ByVal nameText As String, ByVal x1 As Double, ByVal y1 As Double, ByVal x2 As Double, ByVal y2 As Double, ByVal colorValue As Long)

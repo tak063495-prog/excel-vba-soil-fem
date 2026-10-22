@@ -1,0 +1,15 @@
+PASS tests/tmp/water_display/final7/basic.log
+PASS tests/tmp/water_display/final7/box_inside.log
+PASS tests/tmp/water_display/final7/stages.log
+PASS tests/tmp/water_display/final7/one_way.log
+PASS tests/tmp/water_display/final7/reject_fixed_stress.log
+PASS tests/tmp/water_display/final7/reject_time_reserved.log
+PASS tests/tmp/water_display/final7/reject_missing_stage.log
+PASS tests/tmp/water_display/final7/reject_conflicting_profile.log
+PASS tests/tmp/water_display/final7/reject_orphan.log
+PASS tests/tmp/water_display/final7/reject_duplicate.log
+PASS tests/tmp/water_display/final7/reject_unknown_profile.log
+PASS tests/tmp/water_display/final7/joint.log
+PASS tests/tmp/water_display/final7/wet_srm_INCONSISTENT.log
+PASS tests/tmp/water_display/final7/wet_srm_DAVIS.log
+ALL PASS

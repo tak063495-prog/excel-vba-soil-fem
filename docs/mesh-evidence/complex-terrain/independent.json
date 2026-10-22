@@ -1,0 +1,238 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "case": "step_wall_fill",
+      "nodes": 545,
+      "elements": 160,
+      "areas": {
+        "3": 103.0,
+        "1": 9.0,
+        "2": 48.0
+      },
+      "min_jacobian_25": 0.25,
+      "min_angle": 90.0,
+      "max_angle": 90.0,
+      "max_aspect": 1.0,
+      "connected": true,
+      "shared_midpoints": true,
+      "no_artificial_internal_boundaries": true,
+      "input_boundary_chains": true,
+      "seconds": 1.596831,
+      "true_circle_area_deficit_percent": null
+    },
+    {
+      "case": "box_tunnel",
+      "nodes": 864,
+      "elements": 256,
+      "areas": {
+        "2": 228.0,
+        "1": 28.0
+      },
+      "min_jacobian_25": 0.25,
+      "min_angle": 90.0,
+      "max_angle": 90.0,
+      "max_aspect": 1.0,
+      "connected": true,
+      "shared_midpoints": true,
+      "no_artificial_internal_boundaries": true,
+      "input_boundary_chains": true,
+      "seconds": 1.7794735,
+      "true_circle_area_deficit_percent": null
+    },
+    {
+      "case": "octagon_tunnel",
+      "nodes": 3584,
+      "elements": 1152,
+      "areas": {
+        "1": 14.142135623730919,
+        "2": 230.54415587728397
+      },
+      "min_jacobian_25": 0.01034606407104073,
+      "min_angle": 45.00000000000001,
+      "max_angle": 134.25925005172257,
+      "max_aspect": 2.3491466040492393,
+      "connected": true,
+      "shared_midpoints": true,
+      "no_artificial_internal_boundaries": true,
+      "input_boundary_chains": true,
+      "seconds": 4.8213922,
+      "true_circle_area_deficit_percent": null
+    },
+    {
+      "case": "diagonal_regions_reject",
+      "status": "EXPECTED_REJECT",
+      "mesh_unchanged": true
+    },
+    {
+      "case": "thin_strip_reject",
+      "status": "EXPECTED_REJECT",
+      "mesh_unchanged": true
+    },
+    {
+      "case": "two_holes",
+      "nodes": 519,
+      "elements": 148,
+      "areas": {
+        "1": 148.0
+      },
+      "min_jacobian_25": 0.25,
+      "min_angle": 90.0,
+      "max_angle": 90.0,
+      "max_aspect": 1.0,
+      "connected": true,
+      "shared_midpoints": true,
+      "no_artificial_internal_boundaries": true,
+      "input_boundary_chains": true,
+      "seconds": 1.3156575,
+      "true_circle_area_deficit_percent": null
+    },
+    {
+      "case": "concave_tunnel_reject",
+      "status": "EXPECTED_REJECT",
+      "mesh_unchanged": true
+    },
+    {
+      "case": "reversed_rings_reject",
+      "status": "EXPECTED_REJECT",
+      "mesh_unchanged": true
+    },
+    {
+      "case": "disconnected_reject",
+      "status": "EXPECTED_REJECT",
+      "mesh_unchanged": true
+    },
+    {
+      "case": "hidden_material_reject",
+      "status": "EXPECTED_REJECT",
+      "mesh_unchanged": true
+    },
+    {
+      "case": "gravity_taper_blocks",
+      "nodes": 283,
+      "elements": 80,
+      "areas": {
+        "1": 8.0,
+        "2": 6.0,
+        "3": 10.000000000000002,
+        "4": 10.000000000000004,
+        "5": 27.499999999999993
+      },
+      "min_jacobian_25": 0.06944444444444396,
+      "min_angle": 78.69006752597976,
+      "max_angle": 101.30993247402029,
+      "max_aspect": 2.549509756796394,
+      "connected": true,
+      "shared_midpoints": true,
+      "no_artificial_internal_boundaries": true,
+      "input_boundary_chains": true,
+      "seconds": 2.5654,
+      "true_circle_area_deficit_percent": null
+    },
+    {
+      "case": "lwall_taper_blocks",
+      "nodes": 321,
+      "elements": 92,
+      "areas": {
+        "1": 8.0,
+        "2": 2.0,
+        "3": 6.0,
+        "4": 8.0,
+        "5": 4.0,
+        "6": 1.0,
+        "7": 2.25,
+        "8": 2.9999999999999996,
+        "9": 3.5000000000000036,
+        "10": 12.249999999999998,
+        "11": 17.0
+      },
+      "min_jacobian_25": 0.09374999999999999,
+      "min_angle": 80.53767779197439,
+      "max_angle": 99.46232220802563,
+      "max_aspect": 1.6124515496597114,
+      "connected": true,
+      "shared_midpoints": true,
+      "no_artificial_internal_boundaries": true,
+      "input_boundary_chains": true,
+      "seconds": 2.807634,
+      "true_circle_area_deficit_percent": null
+    },
+    {
+      "case": "tjunction_reject",
+      "status": "EXPECTED_REJECT",
+      "mesh_unchanged": true
+    },
+    {
+      "case": "concave_block_reject",
+      "status": "EXPECTED_REJECT",
+      "mesh_unchanged": true
+    },
+    {
+      "case": "circle32_tunnel",
+      "nodes": 1824,
+      "elements": 576,
+      "areas": {
+        "1": 15.607225761290254,
+        "2": 227.90699362967754
+      },
+      "min_jacobian_25": 0.02120749809079126,
+      "min_angle": 45.0,
+      "max_angle": 133.41606853099933,
+      "max_aspect": 2.49550894726174,
+      "connected": true,
+      "shared_midpoints": true,
+      "no_artificial_internal_boundaries": true,
+      "input_boundary_chains": true,
+      "seconds": 2.7336355,
+      "true_circle_area_deficit_percent": 0.6413148855794248
+    },
+    {
+      "case": "circle64_tunnel",
+      "nodes": 2432,
+      "elements": 768,
+      "areas": {
+        "1": 15.682742452729684,
+        "2": 227.77106358508675
+      },
+      "min_jacobian_25": 0.018828056148003612,
+      "min_angle": 45.00000000000001,
+      "max_angle": 133.44089698354884,
+      "max_aspect": 2.290152065206067,
+      "connected": true,
+      "shared_midpoints": true,
+      "no_artificial_internal_boundaries": true,
+      "input_boundary_chains": true,
+      "seconds": 3.535428,
+      "true_circle_area_deficit_percent": 0.16056069643816118
+    },
+    {
+      "case": "block_capacity_reject",
+      "status": "EXPECTED_REJECT",
+      "mesh_unchanged": true
+    },
+    {
+      "case": "point_touch_reject",
+      "status": "EXPECTED_REJECT",
+      "mesh_unchanged": true
+    },
+    {
+      "case": "sloping_bottom_blocks",
+      "nodes": 563,
+      "elements": 168,
+      "areas": {
+        "1": 149.99999999999994
+      },
+      "min_jacobian_25": 0.20833333333332926,
+      "min_angle": 87.13759477388814,
+      "max_angle": 92.86240522611186,
+      "max_aspect": 1.0897950690884783,
+      "connected": true,
+      "shared_midpoints": true,
+      "no_artificial_internal_boundaries": true,
+      "input_boundary_chains": true,
+      "seconds": 1.1096748,
+      "true_circle_area_deficit_percent": null
+    }
+  ],
+  "method": "Independent polygon membership, analytic material areas, full Q8 25-point derivatives, edge/midpoint incidence, connectedness and boundary classification."
+}

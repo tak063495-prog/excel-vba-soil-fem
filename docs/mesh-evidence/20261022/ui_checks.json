@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "mesh": {
+    "status": "PASS",
+    "result": "PASS|地形追従格子（直接生成）|最小面積=5.000E-01、最小Jacobian=1.250E-01、最小角度=56.3°、最大アスペクト比=2.40",
+    "error": "メッシュ作成 [地形格子の適用確認・直接生成]：地形格子を適用できません：品質目標を満たしません。最小面積=3.000E-01、最小Jacobian=5.000E-02、最小角度=5.7°、最大アスペクト比=8.04",
+    "compile": "PASS",
+    "legend": "0=品質比較。1=デローニ優先。2=地形格子を直接生成（適用不可は停止）。"
+  },
+  "settings": {
+    "error": "メッシュ作成 [地形格子の適用確認・直接生成]：地形格子を適用できません：品質目標を満たしません。最小面積=3.000E-01、最小Jacobian=5.000E-02、最小角度=5.7°、最大アスペクト比=8.04",
+    "legend": "0=品質比較。1=デローニ優先。2=地形格子を直接生成（適用不可は停止）。",
+    "compile": "PASS",
+    "status": "PASS",
+    "result": "PASS|地形追従格子（直接生成）|最小面積=5.000E-01、最小Jacobian=1.250E-01、最小角度=56.3°、最大アスペクト比=2.40"
+  },
+  "visual_review": "Actual Excel screenshots reviewed: generated mesh, method2 description without button overlap, reason-specific error dialog."
+}

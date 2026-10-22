@@ -1,8 +1,10 @@
 # 配布名20261023とIssue #35への対応
 
+このページは初回23版（コミット6930bf0）の履歴です。後続の[地形格子直接生成版](../MESH_TERRAIN_PERF.md)では同じ配布名のブックを更新しています。下記のバイト一致・ハッシュは初回配布時のものです。
+
 作成・検証日は2026-10-22です。20261023はユーザー指定の配布名です。[PR #39](https://github.com/tak063495-prog/excel-vba-soil-fem/pull/39)の地下水・JOINT水圧対応を含むブックを `2DSoilFEM_ui_20261023.xlsm` として配布します。計算識別は `20261022_WATER_02` のままです。
 
-[配布ZIP](../../workbook/SoilFEM_UI_20261023.zip)／[181ページの説明書](../manuals/2DSoilFEM_Manual_20261023_WATER_02.pdf)／[ビルド記録](../../workbook/ui_20261023/BUILD_RECORD.json)。旧22版と過去の説明書・実計算記録も保持します。
+[配布ZIP](https://github.com/tak063495-prog/excel-vba-soil-fem/raw/6930bf04c29932fa37bfc125ee04004dd645cfd4/workbook/SoilFEM_UI_20261023.zip)／[181ページの説明書](../manuals/2DSoilFEM_Manual_20261023_WATER_02.pdf)／[ビルド記録](https://github.com/tak063495-prog/excel-vba-soil-fem/blob/6930bf04c29932fa37bfc125ee04004dd645cfd4/workbook/ui_20261023/BUILD_RECORD.json)。旧22版と過去の説明書・実計算記録も保持します。
 
 ## 指摘との対応
 

@@ -4,10 +4,10 @@ Public Sub FEMWaterInstallUi()
   Dim ws As Worksheet, r As Long
   Set ws = FEMWaterSheet("水条件", True)
   If Len(CStr(ws.range("A1").value2)) = 0 Then ws.range("A1").value2 = "水条件・定常浸透"
-  ws.range("A3").value2 = "モード": If Len(CStr(ws.range("B3").value2)) = 0 Then ws.range("B3").value2 = "NONE"
+  ws.range("A3").value2 = "水条件の方式": If Len(CStr(ws.range("B3").value2)) = 0 Then ws.range("B3").value2 = "NONE"
   ws.range("A4").value2 = "水の単位体積重量 γw [kN/m3]": If Len(CStr(ws.range("B4").value2)) = 0 Then ws.range("B4").value2 = 9.80665
-  ws.range("A5").value2 = "外水位線ID": If Len(CStr(ws.range("B5").value2)) = 0 Then ws.range("B5").value2 = "外水"
-  ws.range("A6").value2 = "外水圧AUTO": If Len(CStr(ws.range("B6").value2)) = 0 Then ws.range("B6").value2 = "AUTO"
+  ws.range("A5").value2 = "既定の入力水位線ID": If Len(CStr(ws.range("B5").value2)) = 0 Then ws.range("B5").value2 = "外水"
+  ws.range("A6").value2 = "外水圧の自動付与": If Len(CStr(ws.range("B6").value2)) = 0 Then ws.range("B6").value2 = "AUTO"
   ws.range("A7").value2 = "入力確認署名": ws.range("A8").value2 = "単位：座標・水位・全水頭はm、Kはm/s。飽和水の流れと外水圧を確認します。既存の自重（全応力）は変更しません。"
   ws.rows("3:7").RowHeight = 24
   FEMWaterHeaders ws
@@ -15,8 +15,8 @@ Public Sub FEMWaterInstallUi()
   FEMWaterButton ws, "GW_UI_INPUT", "入力へ", "FEMWaterShowInputs", 8, 3
   FEMWaterButton ws, "GW_UI_PREVIEW", "水圧プレビュー", "FEMWaterPreview", 8, 5
   FEMWaterButton ws, "GW_UI_RESULTS", "水圧結果", "FEMWaterResults", 8, 7
-  FEMWaterButton ws, "GW_UI_JOINT_INPUT", "接合の水圧入力", "FEMWaterShowJointInput", 4, 3
-  FEMWaterButton ws, "GW_UI_JOINT_RESULTS", "接合の水圧結果", "FEMWaterShowJointResults", 4, 5
+  FEMWaterButton ws, "GW_UI_JOINT_INPUT", "接合の水圧入力", "FEMWaterShowJointInput", 4, 7
+  FEMWaterButton ws, "GW_UI_JOINT_RESULTS", "接合の水圧結果", "FEMWaterShowJointResults", 6, 7
   ws.columns("A:J").ColumnWidth = 18
   ws.columns("A").ColumnWidth = 30
   ws.range("A8:J9").Merge
@@ -24,9 +24,27 @@ Public Sub FEMWaterInstallUi()
   ws.rows("8:9").RowHeight = 24
   ws.rows(11).RowHeight = 54: ws.rows(215).RowHeight = 54
   ws.range("A11:J11").WrapText = True: ws.range("A215:F215").WrapText = True
+  ws.range("G11").value2 = "応力基準" & vbLf & "TOTAL /" & vbLf & "EFFECTIVE"
   ws.range("A11:J11").Interior.Color = RGB(218, 232, 246)
   ws.range("A215:F215").Interior.Color = RGB(218, 232, 246)
   ws.range("B3:B6").Interior.Color = RGB(255, 249, 210)
+  ws.range("D3:G6").Merge: ws.range("D3:G6").WrapText = True
+  ws.range("D3").value2 = "NONE：水条件なし" & vbLf & "HYDROSTATIC：指定水位から水圧を換算（浸透は解かない）" & vbLf & "STEADY：K・境界条件から水頭と流束を計算→力学へ片方向連携" & vbLf & "未知の自由水面・時間圧密は対象外。工程別入力は右側L列から。"
+  ws.range("D3:G6").Font.Size = 10
+  ws.range("L3:T7").Merge: ws.range("L3:T7").WrapText = True
+  ws.range("L3").value2 = "工程別の水理・連携設定（任意）" & vbLf & "L列は「ステージ」A列の工程番号。現在はONE_WAY（指定水圧／定常浸透→力学）だけ実行できます。N列はWATER工程の水位線ID。ステージC列との重複指定は同じIDにそろえます。" & vbLf & "将来は必要な工程だけFIXED_STRESSで時間圧密を扱う計画です。O:S列はその予約入力で、現版で入力すると停止します。入力を空欄のままにすれば従来の工程表を使います。"
+  ws.range("L3:T7").Font.Size = 11
+  ws.range("L11:T11").value2 = Array("工程番号", "連携方式", "WATER水位線ID", "工程継続時間[s]（予約）", "時間刻み[s]（予約）", "排水条件ID（予約）", "反復上限（予約）", "連成許容値（予約）", "説明")
+  ws.range("L11:T11").WrapText = True: ws.range("L11:T11").Interior.Color = RGB(218, 232, 246)
+  ws.columns("L:T").ColumnWidth = 16
+  ws.range("L12:N211").Interior.Color = RGB(255, 249, 210)
+  ws.range("O12:S211").Interior.Color = RGB(232, 232, 232)
+  On Error Resume Next
+  ws.range("D2").Hyperlinks.Delete: ws.range("F2").Hyperlinks.Delete: ws.range("L2").Hyperlinks.Delete
+  On Error GoTo 0
+  ws.Hyperlinks.Add anchor:=ws.range("D2"), address:="", SubAddress:="'水条件'!L2", TextToDisplay:="工程別の水理設定 →"
+  ws.Hyperlinks.Add anchor:=ws.range("F2"), address:="", SubAddress:="'ステージ'!A1", TextToDisplay:="施工順（ステージ）→"
+  ws.Hyperlinks.Add anchor:=ws.range("L2"), address:="", SubAddress:="'水条件'!A1", TextToDisplay:="← 水条件の共通入力"
   FEMWaterLink "解析設定", "水条件", "A3", "水条件"
   FEMWaterLink "出力・表示", "水条件", "A3", "水圧入力"
 End Sub
@@ -94,6 +112,7 @@ Private Sub FEMWaterValidation(ByVal ws As Worksheet)
   ws.range("B6").Validation.Delete: ws.range("B6").Validation.Add Type:=xlValidateList, AlertStyle:=xlValidAlertStop, Formula1:="AUTO,OFF"
   ws.range("G12:G211").Validation.Delete: ws.range("G12:G211").Validation.Add Type:=xlValidateList, AlertStyle:=xlValidAlertStop, Formula1:="TOTAL,EFFECTIVE"
   ws.range("C216:C415").Validation.Delete: ws.range("C216:C415").Validation.Add Type:=xlValidateList, AlertStyle:=xlValidAlertStop, Formula1:="HEAD,NOFLOW,EXPOSED,DRY"
+  ws.range("M12:M211").Validation.Delete: ws.range("M12:M211").Validation.Add Type:=xlValidateList, AlertStyle:=xlValidAlertStop, Formula1:="ONE_WAY,FIXED_STRESS"
   On Error GoTo 0
 End Sub
 

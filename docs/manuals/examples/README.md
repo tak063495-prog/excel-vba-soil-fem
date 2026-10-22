@@ -1,5 +1,7 @@
 # 解析例データ（2026-10-21 作成）
 
+水理表示・工程別入力の更新に対応する計算済み例題は [water_display_examples.zip](water_display_examples.zip) です（2026-10-22、配布23版）。遮水体、空洞内水、工程別水位線、JOINT、湿潤斜面の両流れ則SRM、固定Fs=1.3を収録し、DLLはZIP直下に1個です。再計算するブックの隣へDLLをコピーしてください。[条件・結果・制約と全ログ](../../WATER_DISPLAY_VALIDATION.md)。以下は従来の解析例の記録です。
+
 マニュアル `docs/manuals/2DSoilFEM_Manual.md` の解析例で使った入力と結果を保存したものです。ファイル名の日付は作成日です。
 元の `workbook/ui_20261020/2DSoilFEM_ui_20261021.xlsm` は変更していません。どのファイルも、元ブックをコピーして入力し、保存したものです。
 

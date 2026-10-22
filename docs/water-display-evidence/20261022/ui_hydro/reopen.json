@@ -1,0 +1,848 @@
+{
+  "source_book_sha256": "14815B053218BCAE01EB9B62DA98E490BFE2BCBBA1D2E763FDE6D1AB46BE269C",
+  "status": "PASS",
+  "sheet": "水圧結果",
+  "action": "reopen",
+  "shapes": [
+    {
+      "width": 680.0,
+      "top": 129.0,
+      "text": "",
+      "height": 494.25,
+      "left": 0.0,
+      "name": "GW_VIEW_CANVAS"
+    },
+    {
+      "width": 650.0,
+      "top": 131.0,
+      "text": "受理水圧 工程=2 HYDROSTATIC",
+      "height": 22.0,
+      "left": 20.0,
+      "name": "GW_VIEW_TITLE"
+    },
+    {
+      "width": 60.00008,
+      "top": 343.25,
+      "text": "",
+      "height": 150.00008,
+      "left": 20.0,
+      "name": "GW_VIEW_MESH_0"
+    },
+    {
+      "width": 60.00008,
+      "top": 343.25,
+      "text": "",
+      "height": 150.00008,
+      "left": 80.0,
+      "name": "GW_VIEW_MESH_1"
+    },
+    {
+      "width": 60.00008,
+      "top": 343.25,
+      "text": "",
+      "height": 150.00008,
+      "left": 140.0,
+      "name": "GW_VIEW_MESH_2"
+    },
+    {
+      "width": 60.00008,
+      "top": 343.25,
+      "text": "",
+      "height": 150.00008,
+      "left": 200.0,
+      "name": "GW_VIEW_MESH_3"
+    },
+    {
+      "width": 60.00008,
+      "top": 343.25,
+      "text": "",
+      "height": 150.00008,
+      "left": 260.0,
+      "name": "GW_VIEW_MESH_4"
+    },
+    {
+      "width": 60.00008,
+      "top": 343.25,
+      "text": "",
+      "height": 150.00008,
+      "left": 320.0,
+      "name": "GW_VIEW_MESH_5"
+    },
+    {
+      "width": 60.00008,
+      "top": 373.25,
+      "text": "",
+      "height": 120.00008,
+      "left": 380.0,
+      "name": "GW_VIEW_MESH_6"
+    },
+    {
+      "width": 60.00008,
+      "top": 403.25,
+      "text": "",
+      "height": 90.00008,
+      "left": 440.0,
+      "name": "GW_VIEW_MESH_7"
+    },
+    {
+      "width": 60.00008,
+      "top": 433.25,
+      "text": "",
+      "height": 60.00008,
+      "left": 500.0,
+      "name": "GW_VIEW_MESH_8"
+    },
+    {
+      "width": 60.00008,
+      "top": 433.25,
+      "text": "",
+      "height": 60.00008,
+      "left": 560.0,
+      "name": "GW_VIEW_MESH_9"
+    },
+    {
+      "width": 60.00008,
+      "top": 193.25,
+      "text": "",
+      "height": 150.00008,
+      "left": 20.0,
+      "name": "GW_VIEW_MESH_10"
+    },
+    {
+      "width": 60.00008,
+      "top": 193.25,
+      "text": "",
+      "height": 150.00008,
+      "left": 80.0,
+      "name": "GW_VIEW_MESH_11"
+    },
+    {
+      "width": 60.00008,
+      "top": 193.25,
+      "text": "",
+      "height": 150.00008,
+      "left": 140.0,
+      "name": "GW_VIEW_MESH_12"
+    },
+    {
+      "width": 60.00008,
+      "top": 193.25,
+      "text": "",
+      "height": 150.00008,
+      "left": 200.0,
+      "name": "GW_VIEW_MESH_13"
+    },
+    {
+      "width": 60.00008,
+      "top": 193.25,
+      "text": "",
+      "height": 150.00008,
+      "left": 260.0,
+      "name": "GW_VIEW_MESH_14"
+    },
+    {
+      "width": 60.00008,
+      "top": 193.25,
+      "text": "",
+      "height": 180.00008,
+      "left": 320.0,
+      "name": "GW_VIEW_MESH_15"
+    },
+    {
+      "width": 60.00008,
+      "top": 253.25,
+      "text": "",
+      "height": 150.00008,
+      "left": 380.0,
+      "name": "GW_VIEW_MESH_16"
+    },
+    {
+      "width": 60.00008,
+      "top": 313.25,
+      "text": "",
+      "height": 120.00008,
+      "left": 440.0,
+      "name": "GW_VIEW_MESH_17"
+    },
+    {
+      "width": 60.00008,
+      "top": 373.25,
+      "text": "",
+      "height": 60.00008,
+      "left": 500.0,
+      "name": "GW_VIEW_MESH_18"
+    },
+    {
+      "width": 60.00008,
+      "top": 373.25,
+      "text": "",
+      "height": 60.00008,
+      "left": 560.0,
+      "name": "GW_VIEW_MESH_19"
+    },
+    {
+      "width": 100.0,
+      "top": 453.25,
+      "text": "入力線：W",
+      "height": 16.0,
+      "left": 23.0,
+      "name": "GW_VIEW_PROFILE_LABEL_1"
+    },
+    {
+      "width": 600.0,
+      "top": 463.25,
+      "text": null,
+      "height": 0.0,
+      "left": 20.0,
+      "name": "GW_VIEW_PROFILE_13"
+    },
+    {
+      "width": 7.0,
+      "top": 458.05127,
+      "text": "",
+      "height": 7.0,
+      "left": 29.179527,
+      "name": "GW_VIEW_GP_0_0"
+    },
+    {
+      "width": 7.0,
+      "top": 458.05127,
+      "text": "",
+      "height": 7.0,
+      "left": 63.820473,
+      "name": "GW_VIEW_GP_0_1"
+    },
+    {
+      "width": 7.0,
+      "top": 371.44873,
+      "text": "",
+      "height": 7.0,
+      "left": 63.820473,
+      "name": "GW_VIEW_GP_0_2"
+    },
+    {
+      "width": 7.0,
+      "top": 371.44873,
+      "text": "",
+      "height": 7.0,
+      "left": 29.179527,
+      "name": "GW_VIEW_GP_0_3"
+    },
+    {
+      "width": 7.0,
+      "top": 458.05127,
+      "text": "",
+      "height": 7.0,
+      "left": 89.17953,
+      "name": "GW_VIEW_GP_1_0"
+    },
+    {
+      "width": 7.0,
+      "top": 458.05127,
+      "text": "",
+      "height": 7.0,
+      "left": 123.82047,
+      "name": "GW_VIEW_GP_1_1"
+    },
+    {
+      "width": 7.0,
+      "top": 371.44873,
+      "text": "",
+      "height": 7.0,
+      "left": 123.82047,
+      "name": "GW_VIEW_GP_1_2"
+    },
+    {
+      "width": 7.0,
+      "top": 371.44873,
+      "text": "",
+      "height": 7.0,
+      "left": 89.17953,
+      "name": "GW_VIEW_GP_1_3"
+    },
+    {
+      "width": 7.0,
+      "top": 458.05127,
+      "text": "",
+      "height": 7.0,
+      "left": 149.17953,
+      "name": "GW_VIEW_GP_2_0"
+    },
+    {
+      "width": 7.0,
+      "top": 458.05127,
+      "text": "",
+      "height": 7.0,
+      "left": 183.82047,
+      "name": "GW_VIEW_GP_2_1"
+    },
+    {
+      "width": 7.0,
+      "top": 371.44873,
+      "text": "",
+      "height": 7.0,
+      "left": 183.82047,
+      "name": "GW_VIEW_GP_2_2"
+    },
+    {
+      "width": 7.0,
+      "top": 371.44873,
+      "text": "",
+      "height": 7.0,
+      "left": 149.17953,
+      "name": "GW_VIEW_GP_2_3"
+    },
+    {
+      "width": 7.0,
+      "top": 458.05127,
+      "text": "",
+      "height": 7.0,
+      "left": 209.17953,
+      "name": "GW_VIEW_GP_3_0"
+    },
+    {
+      "width": 7.0,
+      "top": 458.05127,
+      "text": "",
+      "height": 7.0,
+      "left": 243.82047,
+      "name": "GW_VIEW_GP_3_1"
+    },
+    {
+      "width": 7.0,
+      "top": 371.44873,
+      "text": "",
+      "height": 7.0,
+      "left": 243.82047,
+      "name": "GW_VIEW_GP_3_2"
+    },
+    {
+      "width": 7.0,
+      "top": 371.44873,
+      "text": "",
+      "height": 7.0,
+      "left": 209.17953,
+      "name": "GW_VIEW_GP_3_3"
+    },
+    {
+      "width": 7.0,
+      "top": 458.05127,
+      "text": "",
+      "height": 7.0,
+      "left": 269.17953,
+      "name": "GW_VIEW_GP_4_0"
+    },
+    {
+      "width": 7.0,
+      "top": 458.05127,
+      "text": "",
+      "height": 7.0,
+      "left": 303.82047,
+      "name": "GW_VIEW_GP_4_1"
+    },
+    {
+      "width": 7.0,
+      "top": 371.44873,
+      "text": "",
+      "height": 7.0,
+      "left": 303.82047,
+      "name": "GW_VIEW_GP_4_2"
+    },
+    {
+      "width": 7.0,
+      "top": 371.44873,
+      "text": "",
+      "height": 7.0,
+      "left": 269.17953,
+      "name": "GW_VIEW_GP_4_3"
+    },
+    {
+      "width": 7.0,
+      "top": 459.39102,
+      "text": "",
+      "height": 7.0,
+      "left": 329.17953,
+      "name": "GW_VIEW_GP_5_0"
+    },
+    {
+      "width": 7.0,
+      "top": 463.05127,
+      "text": "",
+      "height": 7.0,
+      "left": 363.82047,
+      "name": "GW_VIEW_GP_5_1"
+    },
+    {
+      "width": 7.0,
+      "top": 390.10898,
+      "text": "",
+      "height": 7.0,
+      "left": 363.82047,
+      "name": "GW_VIEW_GP_5_2"
+    },
+    {
+      "width": 7.0,
+      "top": 376.44873,
+      "text": "",
+      "height": 7.0,
+      "left": 329.17953,
+      "name": "GW_VIEW_GP_5_3"
+    },
+    {
+      "width": 7.0,
+      "top": 465.73077,
+      "text": "",
+      "height": 7.0,
+      "left": 389.17953,
+      "name": "GW_VIEW_GP_6_0"
+    },
+    {
+      "width": 7.0,
+      "top": 469.39102,
+      "text": "",
+      "height": 7.0,
+      "left": 423.82047,
+      "name": "GW_VIEW_GP_6_1"
+    },
+    {
+      "width": 7.0,
+      "top": 413.76923,
+      "text": "",
+      "height": 7.0,
+      "left": 423.82047,
+      "name": "GW_VIEW_GP_6_2"
+    },
+    {
+      "width": 7.0,
+      "top": 400.10898,
+      "text": "",
+      "height": 7.0,
+      "left": 389.17953,
+      "name": "GW_VIEW_GP_6_3"
+    },
+    {
+      "width": 7.0,
+      "top": 472.07047,
+      "text": "",
+      "height": 7.0,
+      "left": 449.17953,
+      "name": "GW_VIEW_GP_7_0"
+    },
+    {
+      "width": 7.0,
+      "top": 475.73077,
+      "text": "",
+      "height": 7.0,
+      "left": 483.82047,
+      "name": "GW_VIEW_GP_7_1"
+    },
+    {
+      "width": 7.0,
+      "top": 437.42953,
+      "text": "",
+      "height": 7.0,
+      "left": 483.82047,
+      "name": "GW_VIEW_GP_7_2"
+    },
+    {
+      "width": 7.0,
+      "top": 423.76923,
+      "text": "",
+      "height": 7.0,
+      "left": 449.17953,
+      "name": "GW_VIEW_GP_7_3"
+    },
+    {
+      "width": 7.0,
+      "top": 477.07047,
+      "text": "",
+      "height": 7.0,
+      "left": 509.17953,
+      "name": "GW_VIEW_GP_8_0"
+    },
+    {
+      "width": 7.0,
+      "top": 477.07047,
+      "text": "",
+      "height": 7.0,
+      "left": 543.8205,
+      "name": "GW_VIEW_GP_8_1"
+    },
+    {
+      "width": 7.0,
+      "top": 442.42953,
+      "text": "",
+      "height": 7.0,
+      "left": 543.8205,
+      "name": "GW_VIEW_GP_8_2"
+    },
+    {
+      "width": 7.0,
+      "top": 442.42953,
+      "text": "",
+      "height": 7.0,
+      "left": 509.17953,
+      "name": "GW_VIEW_GP_8_3"
+    },
+    {
+      "width": 7.0,
+      "top": 477.07047,
+      "text": "",
+      "height": 7.0,
+      "left": 569.1795,
+      "name": "GW_VIEW_GP_9_0"
+    },
+    {
+      "width": 7.0,
+      "top": 477.07047,
+      "text": "",
+      "height": 7.0,
+      "left": 603.8205,
+      "name": "GW_VIEW_GP_9_1"
+    },
+    {
+      "width": 7.0,
+      "top": 442.42953,
+      "text": "",
+      "height": 7.0,
+      "left": 603.8205,
+      "name": "GW_VIEW_GP_9_2"
+    },
+    {
+      "width": 7.0,
+      "top": 442.42953,
+      "text": "",
+      "height": 7.0,
+      "left": 569.1795,
+      "name": "GW_VIEW_GP_9_3"
+    },
+    {
+      "width": 7.0,
+      "top": 308.05127,
+      "text": "",
+      "height": 7.0,
+      "left": 29.179527,
+      "name": "GW_VIEW_GP_10_0"
+    },
+    {
+      "width": 7.0,
+      "top": 308.05127,
+      "text": "",
+      "height": 7.0,
+      "left": 63.820473,
+      "name": "GW_VIEW_GP_10_1"
+    },
+    {
+      "width": 7.0,
+      "top": 221.44875,
+      "text": "",
+      "height": 7.0,
+      "left": 63.820473,
+      "name": "GW_VIEW_GP_10_2"
+    },
+    {
+      "width": 7.0,
+      "top": 221.44875,
+      "text": "",
+      "height": 7.0,
+      "left": 29.179527,
+      "name": "GW_VIEW_GP_10_3"
+    },
+    {
+      "width": 7.0,
+      "top": 308.05127,
+      "text": "",
+      "height": 7.0,
+      "left": 89.17953,
+      "name": "GW_VIEW_GP_11_0"
+    },
+    {
+      "width": 7.0,
+      "top": 308.05127,
+      "text": "",
+      "height": 7.0,
+      "left": 123.82047,
+      "name": "GW_VIEW_GP_11_1"
+    },
+    {
+      "width": 7.0,
+      "top": 221.44875,
+      "text": "",
+      "height": 7.0,
+      "left": 123.82047,
+      "name": "GW_VIEW_GP_11_2"
+    },
+    {
+      "width": 7.0,
+      "top": 221.44875,
+      "text": "",
+      "height": 7.0,
+      "left": 89.17953,
+      "name": "GW_VIEW_GP_11_3"
+    },
+    {
+      "width": 7.0,
+      "top": 308.05127,
+      "text": "",
+      "height": 7.0,
+      "left": 149.17953,
+      "name": "GW_VIEW_GP_12_0"
+    },
+    {
+      "width": 7.0,
+      "top": 308.05127,
+      "text": "",
+      "height": 7.0,
+      "left": 183.82047,
+      "name": "GW_VIEW_GP_12_1"
+    },
+    {
+      "width": 7.0,
+      "top": 221.44875,
+      "text": "",
+      "height": 7.0,
+      "left": 183.82047,
+      "name": "GW_VIEW_GP_12_2"
+    },
+    {
+      "width": 7.0,
+      "top": 221.44875,
+      "text": "",
+      "height": 7.0,
+      "left": 149.17953,
+      "name": "GW_VIEW_GP_12_3"
+    },
+    {
+      "width": 7.0,
+      "top": 308.05127,
+      "text": "",
+      "height": 7.0,
+      "left": 209.17953,
+      "name": "GW_VIEW_GP_13_0"
+    },
+    {
+      "width": 7.0,
+      "top": 308.05127,
+      "text": "",
+      "height": 7.0,
+      "left": 243.82047,
+      "name": "GW_VIEW_GP_13_1"
+    },
+    {
+      "width": 7.0,
+      "top": 221.44875,
+      "text": "",
+      "height": 7.0,
+      "left": 243.82047,
+      "name": "GW_VIEW_GP_13_2"
+    },
+    {
+      "width": 7.0,
+      "top": 221.44875,
+      "text": "",
+      "height": 7.0,
+      "left": 209.17953,
+      "name": "GW_VIEW_GP_13_3"
+    },
+    {
+      "width": 7.0,
+      "top": 308.05127,
+      "text": "",
+      "height": 7.0,
+      "left": 269.17953,
+      "name": "GW_VIEW_GP_14_0"
+    },
+    {
+      "width": 7.0,
+      "top": 308.05127,
+      "text": "",
+      "height": 7.0,
+      "left": 303.82047,
+      "name": "GW_VIEW_GP_14_1"
+    },
+    {
+      "width": 7.0,
+      "top": 221.44875,
+      "text": "",
+      "height": 7.0,
+      "left": 303.82047,
+      "name": "GW_VIEW_GP_14_2"
+    },
+    {
+      "width": 7.0,
+      "top": 221.44875,
+      "text": "",
+      "height": 7.0,
+      "left": 269.17953,
+      "name": "GW_VIEW_GP_14_3"
+    },
+    {
+      "width": 7.0,
+      "top": 315.73077,
+      "text": "",
+      "height": 7.0,
+      "left": 329.17953,
+      "name": "GW_VIEW_GP_15_0"
+    },
+    {
+      "width": 7.0,
+      "top": 336.7115,
+      "text": "",
+      "height": 7.0,
+      "left": 363.82047,
+      "name": "GW_VIEW_GP_15_1"
+    },
+    {
+      "width": 7.0,
+      "top": 263.76923,
+      "text": "",
+      "height": 7.0,
+      "left": 363.82047,
+      "name": "GW_VIEW_GP_15_2"
+    },
+    {
+      "width": 7.0,
+      "top": 232.7885,
+      "text": "",
+      "height": 7.0,
+      "left": 329.17953,
+      "name": "GW_VIEW_GP_15_3"
+    },
+    {
+      "width": 7.0,
+      "top": 352.07047,
+      "text": "",
+      "height": 7.0,
+      "left": 389.17953,
+      "name": "GW_VIEW_GP_16_0"
+    },
+    {
+      "width": 7.0,
+      "top": 373.05127,
+      "text": "",
+      "height": 7.0,
+      "left": 423.82047,
+      "name": "GW_VIEW_GP_16_1"
+    },
+    {
+      "width": 7.0,
+      "top": 317.42953,
+      "text": "",
+      "height": 7.0,
+      "left": 423.82047,
+      "name": "GW_VIEW_GP_16_2"
+    },
+    {
+      "width": 7.0,
+      "top": 286.44873,
+      "text": "",
+      "height": 7.0,
+      "left": 389.17953,
+      "name": "GW_VIEW_GP_16_3"
+    },
+    {
+      "width": 7.0,
+      "top": 388.41025,
+      "text": "",
+      "height": 7.0,
+      "left": 449.17953,
+      "name": "GW_VIEW_GP_17_0"
+    },
+    {
+      "width": 7.0,
+      "top": 409.39102,
+      "text": "",
+      "height": 7.0,
+      "left": 483.82047,
+      "name": "GW_VIEW_GP_17_1"
+    },
+    {
+      "width": 7.0,
+      "top": 371.08975,
+      "text": "",
+      "height": 7.0,
+      "left": 483.82047,
+      "name": "GW_VIEW_GP_17_2"
+    },
+    {
+      "width": 7.0,
+      "top": 340.10898,
+      "text": "",
+      "height": 7.0,
+      "left": 449.17953,
+      "name": "GW_VIEW_GP_17_3"
+    },
+    {
+      "width": 7.0,
+      "top": 417.07047,
+      "text": "",
+      "height": 7.0,
+      "left": 509.17953,
+      "name": "GW_VIEW_GP_18_0"
+    },
+    {
+      "width": 7.0,
+      "top": 417.07047,
+      "text": "",
+      "height": 7.0,
+      "left": 543.8205,
+      "name": "GW_VIEW_GP_18_1"
+    },
+    {
+      "width": 7.0,
+      "top": 382.42953,
+      "text": "",
+      "height": 7.0,
+      "left": 543.8205,
+      "name": "GW_VIEW_GP_18_2"
+    },
+    {
+      "width": 7.0,
+      "top": 382.42953,
+      "text": "",
+      "height": 7.0,
+      "left": 509.17953,
+      "name": "GW_VIEW_GP_18_3"
+    },
+    {
+      "width": 7.0,
+      "top": 417.07047,
+      "text": "",
+      "height": 7.0,
+      "left": 569.1795,
+      "name": "GW_VIEW_GP_19_0"
+    },
+    {
+      "width": 7.0,
+      "top": 417.07047,
+      "text": "",
+      "height": 7.0,
+      "left": 603.8205,
+      "name": "GW_VIEW_GP_19_1"
+    },
+    {
+      "width": 7.0,
+      "top": 382.42953,
+      "text": "",
+      "height": 7.0,
+      "left": 603.8205,
+      "name": "GW_VIEW_GP_19_2"
+    },
+    {
+      "width": 7.0,
+      "top": 382.42953,
+      "text": "",
+      "height": 7.0,
+      "left": 569.1795,
+      "name": "GW_VIEW_GP_19_3"
+    },
+    {
+      "width": 630.0,
+      "top": 533.25,
+      "text": "橙破線＝登録した入力水位線（境界用。計算結果の水面ではない）\n青点＝GP水圧 max=5.662 kPa / 橙矢印＝水圧の等価節点荷重 max=0.000 kN\nHYDROSTATIC：水圧p=γw max(入力水位-y,0)。水頭・流束は解いていません。",
+      "height": 70.0,
+      "left": 20.0,
+      "name": "GW_VIEW_LEGEND"
+    }
+  ]
+}

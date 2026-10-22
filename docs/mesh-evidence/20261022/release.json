@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "book_sha256": "fdb6215362b57d6d7437364e9d2c6d228733cc7ffbcd1828875aef0a557d5e42",
+  "dll_sha256": "ad5c2ae81512ba8e977002415a6a5339b621c00a1bbabe5092559f8a7f9e0797",
+  "zip_sha256": "f10f0e6f4d8c7b18aa20d62f2c9c2836fe4cf7d0a9a8ec39417dabcb40e89b2e",
+  "zip_entries": 6,
+  "dll_count": 1,
+  "records_sha256": "48b7c78e89498a3df8cffbdb1d1287e9914eedf9c881a0b88d1060d4820c2e5b"
+}

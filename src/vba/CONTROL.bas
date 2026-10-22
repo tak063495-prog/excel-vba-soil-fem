@@ -281,6 +281,7 @@ Private Sub CreateMeshFromGeometryDefinition()
     Dim errorDescription As String
     Dim stateWasSaved As Boolean
     Dim currentStage As String
+    Dim terrainX() As Double, terrainY() As Double, terrainElements() As Variant
 
     On Error GoTo ErrorHandler
     currentStage = "開始"
@@ -298,6 +299,23 @@ Private Sub CreateMeshFromGeometryDefinition()
     Application.Calculation = xlCalculationManual
     Err.Clear
     On Error GoTo ErrorHandler
+
+    If FEMReadSetting("MESH_GEN_COMPARE", 1#) >= 1.5 Then
+        currentStage = "地形格子の適用確認・直接生成"
+        MeshPrepareTerrainDirect terrainX, terrainY, terrainElements
+        ' All geometric/quality checks passed before invalidating or replacing existing data.
+        Call ControlInvalidateP1Output
+        Call ControlInvalidateP2Output
+        Call FEMInvalidateRemeshedModel
+        Call FEMInvalidateSettingCache
+        MeshCommitGeneratedMesh UBound(terrainX), UBound(terrainElements, 1), terrainX, terrainY, terrainElements
+        P5EvaluateCurrentSheet "地形格子・直接生成"
+        FEMWriteTextSetting "MESH_GEN_LAST_METHOD", "地形追従格子（直接生成）"
+        FEMWriteTextSetting "MESH_GEN_LAST_COMPARE", MeshAdaptLastSummary
+        FEMShapeGenerationOK = True
+        If stateWasSaved Then RestoreApplicationState
+        MeshPerfLeave "CONTROL.CreateMeshFromGeometryDefinition": Exit Sub
+    End If
 
     ' ①の座標点メッシュ生成とは別に、図形定義を入力として
     ' デローニ分割・細分化・四角形化を実行する。
@@ -347,12 +365,13 @@ Private Sub CreateMeshFromGeometryDefinition()
 ErrorHandler:
     errorNumber = Err.number
     errorDescription = Err.description
+    FEMUiMeshPreviewError = "メッシュ作成 [" & currentStage & "]：" & errorDescription
     On Error Resume Next
     P5ReleaseGeometryDefinitionWorkspace
     On Error GoTo 0
     If stateWasSaved Then RestoreApplicationState
     If Not SuppressUserMessages Then
-        MsgBox "要素作成②（図形定義→デローニ分割）に失敗しました [" & CStr(errorNumber) & "] " & currentStage & "：" & errorDescription, vbCritical
+        MsgBox "形状メッシュを作成できません [" & CStr(errorNumber) & "] " & currentStage & "：" & errorDescription, vbCritical
     End If
     MeshPerfLeave "CONTROL.CreateMeshFromGeometryDefinition"
 End Sub

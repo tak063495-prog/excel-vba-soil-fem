@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "fixture_sha256": "D91EA9399E4D51917175ACD2BADB4A97BE1AFD47D27073A506C891EA3A23E00B",
+  "source_book_sha256": "A13396A4A88C4F77200C280AF17882FCE997E3909ED6832B2B99ACD82F32E96A",
+  "nodes": 85,
+  "elements": 20,
+  "GP_rows": 160,
+  "pressure_max_abs_error_kPa": 0.0,
+  "total_effective_pressure_max_abs_error_kPa": 1.0658141036401503e-14,
+  "weight_kN": 3160.0,
+  "reactionY_kN": 3160.000000000001,
+  "max_displacement_norm_m": 0.07343709156491705,
+  "relative_residual": 5.484856167235777e-15,
+  "fixed_Fs": 1.0,
+  "seconds": 5.2993111,
+  "resume_max_du_m": 4.989272883726414e-13,
+  "resume_relative_residual": 1.507664292313693e-14,
+  "profile": [
+    [
+      0,
+      3
+    ],
+    [
+      8,
+      3
+    ],
+    [
+      14,
+      1.5
+    ],
+    [
+      20,
+      1.5
+    ]
+  ],
+  "scope": "Prescribed polyline pore pressure; no flow/free-surface solve or Fs-bracket search."
+}

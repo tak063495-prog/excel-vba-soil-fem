@@ -1,0 +1,234 @@
+{
+  "status": "PASS",
+  "source_before_sha256": "a6e81556d0d01687bd9c260eca73ff7a3762ee11e08e7a952f79751ac58ec58e",
+  "source_after_sha256": "2b7b52c649e802ada0ccf8982902301788dbd740a075bcdbce684e3810964e08",
+  "mapping": [
+    {
+      "old": 3,
+      "new": 3,
+      "chapter": 1,
+      "matching_text_fraction": 1.0,
+      "minimum_matching_text_fraction": 0.9964726631393298
+    },
+    {
+      "old": 4,
+      "new": 4,
+      "chapter": 1,
+      "matching_text_fraction": 1.0,
+      "minimum_matching_text_fraction": 1.0
+    },
+    {
+      "old": 5,
+      "new": 5,
+      "chapter": 2,
+      "matching_text_fraction": 1.0,
+      "minimum_matching_text_fraction": 1.0
+    },
+    {
+      "old": 6,
+      "new": 6,
+      "chapter": 3,
+      "matching_text_fraction": 1.0,
+      "minimum_matching_text_fraction": 1.0
+    },
+    {
+      "old": 7,
+      "new": 7,
+      "chapter": 3,
+      "matching_text_fraction": 1.0,
+      "minimum_matching_text_fraction": 0.9847856154910097
+    },
+    {
+      "old": 9,
+      "new": 9,
+      "chapter": 4,
+      "matching_text_fraction": 1.0,
+      "minimum_matching_text_fraction": 1.0
+    },
+    {
+      "old": 10,
+      "new": 10,
+      "chapter": 4,
+      "matching_text_fraction": 1.0,
+      "minimum_matching_text_fraction": 1.0
+    },
+    {
+      "old": 11,
+      "new": 11,
+      "chapter": 4,
+      "matching_text_fraction": 1.0,
+      "minimum_matching_text_fraction": 1.0
+    },
+    {
+      "old": 14,
+      "new": 15,
+      "chapter": 4,
+      "matching_text_fraction": 0.9528718703976435,
+      "minimum_matching_text_fraction": 0.9528718703976435
+    },
+    {
+      "old": 15,
+      "new": 16,
+      "chapter": 4,
+      "matching_text_fraction": 1.0,
+      "minimum_matching_text_fraction": 1.0
+    },
+    {
+      "old": 21,
+      "new": 22,
+      "chapter": 4,
+      "matching_text_fraction": 1.0,
+      "minimum_matching_text_fraction": 1.0
+    },
+    {
+      "old": 25,
+      "new": 26,
+      "chapter": 4,
+      "matching_text_fraction": 1.0,
+      "minimum_matching_text_fraction": 1.0
+    },
+    {
+      "old": 27,
+      "new": 28,
+      "chapter": 4,
+      "matching_text_fraction": 1.0,
+      "minimum_matching_text_fraction": 1.0
+    },
+    {
+      "old": 28,
+      "new": 29,
+      "chapter": 4,
+      "matching_text_fraction": 1.0,
+      "minimum_matching_text_fraction": 1.0
+    },
+    {
+      "old": 29,
+      "new": 30,
+      "chapter": 4,
+      "matching_text_fraction": 1.0,
+      "minimum_matching_text_fraction": 1.0
+    },
+    {
+      "old": 31,
+      "new": 32,
+      "chapter": 4,
+      "matching_text_fraction": 1.0,
+      "minimum_matching_text_fraction": 1.0
+    },
+    {
+      "old": 40,
+      "new": 41,
+      "chapter": 7,
+      "matching_text_fraction": 1.0,
+      "minimum_matching_text_fraction": 1.0
+    },
+    {
+      "old": 41,
+      "new": 42,
+      "chapter": 7,
+      "matching_text_fraction": 1.0,
+      "minimum_matching_text_fraction": 1.0
+    },
+    {
+      "old": 43,
+      "new": 44,
+      "chapter": 7,
+      "matching_text_fraction": 1.0,
+      "minimum_matching_text_fraction": 1.0
+    },
+    {
+      "old": 44,
+      "new": 45,
+      "chapter": 7,
+      "matching_text_fraction": 1.0,
+      "minimum_matching_text_fraction": 1.0
+    },
+    {
+      "old": 45,
+      "new": 46,
+      "chapter": 7,
+      "matching_text_fraction": 1.0,
+      "minimum_matching_text_fraction": 1.0
+    },
+    {
+      "old": 47,
+      "new": 48,
+      "chapter": 7,
+      "matching_text_fraction": 1.0,
+      "minimum_matching_text_fraction": 1.0
+    },
+    {
+      "old": 48,
+      "new": 49,
+      "chapter": 7,
+      "matching_text_fraction": 1.0,
+      "minimum_matching_text_fraction": 1.0
+    },
+    {
+      "old": 49,
+      "new": 50,
+      "chapter": 7,
+      "matching_text_fraction": 1.0,
+      "minimum_matching_text_fraction": 1.0
+    },
+    {
+      "old": 50,
+      "new": 51,
+      "chapter": 7,
+      "matching_text_fraction": 1.0,
+      "minimum_matching_text_fraction": 1.0
+    },
+    {
+      "old": 51,
+      "new": 52,
+      "chapter": 7,
+      "matching_text_fraction": 1.0,
+      "minimum_matching_text_fraction": 1.0
+    },
+    {
+      "old": 52,
+      "new": 53,
+      "chapter": 7,
+      "matching_text_fraction": 1.0,
+      "minimum_matching_text_fraction": 1.0
+    },
+    {
+      "old": 83,
+      "new": 74,
+      "chapter": 10,
+      "matching_text_fraction": 0.6547945205479452,
+      "minimum_matching_text_fraction": 0.6547945205479452
+    },
+    {
+      "old": 109,
+      "new": 100,
+      "chapter": 14,
+      "matching_text_fraction": 1.0,
+      "minimum_matching_text_fraction": 1.0
+    },
+    {
+      "old": 136,
+      "new": 127,
+      "chapter": 17,
+      "matching_text_fraction": 1.0,
+      "minimum_matching_text_fraction": 1.0
+    },
+    {
+      "old": 139,
+      "new": 130,
+      "chapter": 18,
+      "matching_text_fraction": 1.0,
+      "minimum_matching_text_fraction": 1.0
+    },
+    {
+      "old": 180,
+      "new": 188,
+      "chapter": 24,
+      "matching_text_fraction": 1.0,
+      "minimum_matching_text_fraction": 1.0
+    }
+  ],
+  "old_pages": 192,
+  "new_pages": 200,
+  "method": "Composition of same-chapter/content matching across the layout edits; water examples moved to chapters 23-27; old reference chapters shifted to 28-31."
+}

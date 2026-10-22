@@ -4289,11 +4289,11 @@ Private Function P3ExecuteStage(ByVal stageIndex As Long) As Boolean
   If Not P3ReplayQuiet Then FEMProgressStage logNo, kindText
   If Not P3ReplayQuiet Then FEMAppendRunLog "ステージ開始", "RUN", kindText
   If kindText = "WATER" Then
-    GWStage P3StageGroup(stageIndex)
+    GWStage GWResolveStageProfile(logNo, P3StageGroup(stageIndex))
     P3AssembleSelfWeightOnly
     P3PlanHasGravity = True: P3PlanHasApply = False
     If Not P3RunLoadStages() Then Exit Function
-    P3LogStageResult logNo, kindText, P3StageGroup(stageIndex), True, 1#, "水圧場固定・再平衡"
+    P3LogStageResult logNo, kindText, GWResolveStageProfile(logNo, P3StageGroup(stageIndex)), True, 1#, "水圧場固定・再平衡"
     P3WriteStageSnapshot
   ElseIf kindText = "GRAVITY" Then
     P3PlanHasGravity = True

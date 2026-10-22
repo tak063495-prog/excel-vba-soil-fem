@@ -1,0 +1,93 @@
+{
+  "description": "BuildTerrain legacy dictionary versus direct structured edge arrays",
+  "numbering_preserved": true,
+  "on_segment_prefilter": {
+    "passed": true,
+    "segments": 4,
+    "points_per_segment": 1009,
+    "original_matches": 6,
+    "filtered_matches": 6,
+    "x_prefilter_candidates": 1847,
+    "x_prefilter_reduction": 0.542368681863231,
+    "tolerance": 1e-09,
+    "mesh_scale": 10.0,
+    "note": "Filtered scan invokes exact OnSegment after conservative x bounds."
+  },
+  "comparisons": [
+    {
+      "name": "flat",
+      "nx": 1,
+      "ny": 1,
+      "nodes": 8,
+      "elements": 1,
+      "exact_match": true,
+      "legacy_xx_capacity": 130,
+      "actual_node_count": 8,
+      "capacity_over_allocation": 122
+    },
+    {
+      "name": "slope",
+      "nx": 3,
+      "ny": 2,
+      "nodes": 29,
+      "elements": 6,
+      "exact_match": true,
+      "legacy_xx_capacity": 280,
+      "actual_node_count": 29,
+      "capacity_over_allocation": 251
+    },
+    {
+      "name": "kink",
+      "nx": 5,
+      "ny": 4,
+      "nodes": 79,
+      "elements": 20,
+      "exact_match": true,
+      "legacy_xx_capacity": 700,
+      "actual_node_count": 79,
+      "capacity_over_allocation": 621
+    },
+    {
+      "name": "large_slope",
+      "nx": 40,
+      "ny": 30,
+      "nodes": 3741,
+      "elements": 1200,
+      "exact_match": true,
+      "legacy_xx_capacity": 36100,
+      "actual_node_count": 3741,
+      "capacity_over_allocation": 32359
+    }
+  ],
+  "timings": [
+    {
+      "name": "flat",
+      "legacy_ms": 0.0029966666867646077,
+      "structured_ms": 0.0027433333646816513,
+      "loops": 30
+    },
+    {
+      "name": "slope",
+      "legacy_ms": 0.011506666972612342,
+      "structured_ms": 0.009713333080677936,
+      "loops": 30
+    },
+    {
+      "name": "kink",
+      "legacy_ms": 0.03508333320496604,
+      "structured_ms": 0.02808666661924993,
+      "loops": 30
+    },
+    {
+      "name": "large_slope",
+      "legacy_ms": 2.2551000001840293,
+      "structured_ms": 1.5107999934116378,
+      "loops": 1
+    }
+  ],
+  "memory_model": {
+    "legacy_xx_and_nodeRows_capacity": "ne*30+100",
+    "structured_node_count": "3*nx*ny+2*nx+2*ny+1",
+    "note": "Python timings are directional only; they do not claim VBA speedup."
+  }
+}

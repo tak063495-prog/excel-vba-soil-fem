@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "expected_error": "予約項目",
+  "actual_error": "ERROR|時間・排水・連成反復の入力はFIXED_STRESS用の予約項目です。現版では空欄にしてください。工程=2|FEMWater",
+  "fixture_sha256": "42D17D5EF69970C5EA5A5A3F97ABEB5E37A759705198B89C4B328319F00956BA",
+  "book_sha256": "A13396A4A88C4F77200C280AF17882FCE997E3909ED6832B2B99ACD82F32E96A"
+}

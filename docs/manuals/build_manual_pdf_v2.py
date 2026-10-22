@@ -19,13 +19,14 @@ heads=re.findall(r'^## (.+)$',md,re.M)
 css="""@page{size:A4;margin:14mm 14mm 18mm}body{font-family:'Noto Sans CJK JP','Noto Sans JP',sans-serif;font-size:10.5pt;line-height:1.7;color:#222}
 h1{font-size:21pt;border-bottom:3px solid #2f5d50}h2{font-size:15pt;background:#2f5d50;color:#fff;padding:4px 8px;break-before:page}
 h3{font-size:12.5pt;border-left:6px solid #c00;padding-left:8px;margin-top:18px}table{border-collapse:collapse;width:100%;font-size:9pt;margin:6px 0}th,td{border:1px solid #aaa;padding:3px 5px;vertical-align:top}th{background:#e6efe9}
-p:has(>img){break-inside:avoid;margin:10px 0 0}img{max-width:100%;max-height:150mm;border:1px solid #888;display:block;margin:0 auto}code{background:#f3f3f3;padding:0 3px}
+p:has(>img){break-inside:avoid;margin:10px 0 0}.figure{break-inside:avoid}img{max-width:100%;max-height:150mm;border:1px solid #888;display:block;margin:0 auto}code{background:#f3f3f3;padding:0 3px}
 blockquote{margin:8px 0;padding:6px 10px;background:#f1f6f3;border-left:6px solid #2f5d50;font-size:10pt;break-inside:avoid}blockquote p{margin:3px 0}.toc td{border:none;border-bottom:1px dotted #999;font-size:11pt}"""
 tmp=os.path.join(here,'_manual_v2.html')
 def public_document_links(body):
     """Publish document links; keep image sources local for rendering."""
     root = Path(__file__).resolve().parents[2]
-    base = 'https://github.com/tak063495-prog/excel-vba-soil-fem/blob/main/'
+    public_ref = os.environ.get('MANUAL_PUBLIC_REF', 'main')
+    base = 'https://github.com/tak063495-prog/excel-vba-soil-fem/blob/' + quote(public_ref, safe='') + '/'
     def replace_link(match):
         href = unescape(match.group(3))
         url = urlsplit(href)
@@ -47,6 +48,7 @@ def public_document_links(body):
 
 def render(toc):
     body=markdown.markdown(md.replace('{{TOC}}',toc),extensions=['tables'])
+    body=re.sub(r'(<p>\s*<img\b[^>]*>\s*</p>)\s*(<p>図[^<]*(?:<(?!/?p\b)[^>]*>[^<]*)*</p>)',r'<div class="figure">\1\2</div>',body)
     body=public_document_links(body)
     open(tmp,'w',encoding='utf8').write(f"<html><head><meta charset=utf-8><style>{css}</style></head><body>{body}</body></html>")
     subprocess.run([chrome,'--headless=new','--no-sandbox','--disable-gpu','--no-pdf-header-footer','--print-to-pdf='+os.path.abspath(out),Path(tmp).as_uri()],check=True,capture_output=True,timeout=300)

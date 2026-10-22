@@ -1,0 +1,7 @@
+{
+  "actual_error": "ERROR|工程別の水位線IDは、水位線表へ2点以上登録してください。|FEMWater",
+  "book_sha256": "A13396A4A88C4F77200C280AF17882FCE997E3909ED6832B2B99ACD82F32E96A",
+  "status": "PASS",
+  "fixture_sha256": "01C506726DD9F06E18CADD20A8C6B6332296BC3DD2AFBFE3B0364D9BFE7DB405",
+  "expected_error": "2点以上"
+}

@@ -1,0 +1,173 @@
+{
+  "status": "PASS",
+  "pages": 200,
+  "chapters": [
+    [
+      1,
+      "1. この説明書について",
+      3
+    ],
+    [
+      1,
+      "2. 必要なもの",
+      5
+    ],
+    [
+      1,
+      "3. 画面構成",
+      6
+    ],
+    [
+      1,
+      "4. 解析手順（例題を1回通す）",
+      8
+    ],
+    [
+      1,
+      "5. 材料が2つ以上あるときの注意",
+      33
+    ],
+    [
+      1,
+      "6. 拘束（支持条件）の決め方",
+      36
+    ],
+    [
+      1,
+      "7. 計算の考え方",
+      40
+    ],
+    [
+      1,
+      "8. 水条件と定常浸透（入力・出力の共通操作）",
+      59
+    ],
+    [
+      1,
+      "9. 解析例1 材料の強さを変える（粘着力c）",
+      67
+    ],
+    [
+      1,
+      "10. 解析例2 形状を変える（斜面を高くする）",
+      72
+    ],
+    [
+      1,
+      "11. 解析例3 支持条件を変える（保存済みメッシュ）",
+      78
+    ],
+    [
+      1,
+      "12. 解析例4 掘削と盛土（DEATH・BIRTH）",
+      85
+    ],
+    [
+      1,
+      "13. 解析例5 荷重を加える（節点力FORCE）",
+      91
+    ],
+    [
+      1,
+      "14. 解析例6 強制変位で押し込む（支持力）",
+      98
+    ],
+    [
+      1,
+      "15. 解析例7 流れ則を変える（DAVIS）",
+      101
+    ],
+    [
+      1,
+      "16. 解析例8 道路拡幅の11工程（盛土・掘削・MATSET・再盛土）",
+      108
+    ],
+    [
+      1,
+      "17. 解析例9 L型擁壁と背面盛土・SRM、断面力の整理",
+      121
+    ],
+    [
+      1,
+      "18. 解析例10 トンネルの段階掘削（保存メッシュを使う）",
+      130
+    ],
+    [
+      1,
+      "19. 解析例11 接合（JOINT）で地盤とブロックの境目を表す",
+      136
+    ],
+    [
+      1,
+      "20. 解析例11-B 接合面のすべり耐力を確かめる（強いブロック）",
+      145
+    ],
+    [
+      1,
+      "21. 解析例12 アンカー相当力を加える（等大・反対向きの節点力）",
+      152
+    ],
+    [
+      1,
+      "22. 解析例13 水平地盤と斜面上の支持力（保存メッシュ・追加沈下）",
+      157
+    ],
+    [
+      1,
+      "23. 解析例14 折れ線の地下水位を指定する",
+      164
+    ],
+    [
+      1,
+      "24. 解析例15 遮水構造体の下を回り込む定常浸透",
+      168
+    ],
+    [
+      1,
+      "25. 解析例16 空洞を持つボックスと内外水位・浮力",
+      172
+    ],
+    [
+      1,
+      "26. 解析例17 水位変更を含む施工と固定水圧SRM",
+      173
+    ],
+    [
+      1,
+      "27. 解析例18 水圧を受ける接合面（JOINT）",
+      177
+    ],
+    [
+      1,
+      "28. 入力項目の説明",
+      181
+    ],
+    [
+      1,
+      "29. 結果の見方",
+      187
+    ],
+    [
+      1,
+      "30. よくあるエラーと対処",
+      191
+    ],
+    [
+      1,
+      "31. 付録",
+      195
+    ]
+  ],
+  "bookmarks": 217,
+  "images": 196,
+  "public_links": 15,
+  "rendered_pages": 200,
+  "visual_review": "PASS: all 200 pages reviewed through contact sheets, changed water input/plots and numbered examples inspected enlarged; no clipped/overlapping content. Final renders differ from reviewed layout only on p125 (wall band figure reference) and p198 (glossary page target), both re-inspected.",
+  "pdf_sha256": "c5158dbfb842da5ce9590038db6a910ae8f5c8ead558febfceef2ce5c9ea698d",
+  "source_sha256": "b1ae68d9d9fc25f3719c6013f6fa278ca30acf0d19fcf31342f0582d1c03efc4",
+  "public_ref": "a7074f4979e6fca2fab0e9f946a9cbd12c420fdf",
+  "figure_captions": 195,
+  "figure_references": "all referenced figure IDs have unique captions",
+  "printed_reference_targets": 32,
+  "book_vba_dll": "unchanged for this documentation correction"
+}
