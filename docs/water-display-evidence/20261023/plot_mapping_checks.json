@@ -1,0 +1,35 @@
+[
+  {
+    "case": "wet_srm_INCONSISTENT",
+    "stage": 2.0,
+    "nodes": 85,
+    "max_norm_from_node_table_m": 1.4381894332529443,
+    "max_norm_from_internal_pairs_m": 1.4381894332529443,
+    "source_table": "docs/water-display-evidence/20261022/wet_srm_INCONSISTENT/結果節点.json.gz",
+    "table_sha256": "e37314edc1bd52394729252b06896452fcaabb615dab5110ba2df739c574166c",
+    "checks": "fixture coordinate and fixed-DOF checks executed in plot_water_srm.py",
+    "deformed": false
+  },
+  {
+    "case": "wet_srm_DAVIS",
+    "stage": 2.0,
+    "nodes": 85,
+    "max_norm_from_node_table_m": 6.723718797090521,
+    "max_norm_from_internal_pairs_m": 6.723718797090521,
+    "source_table": "docs/water-display-evidence/20261022/wet_srm_DAVIS/結果節点.json.gz",
+    "table_sha256": "d941505c2e5fa5a024a721712c515feeb6e37f25e4954fa201f2ee92d268115f",
+    "checks": "fixture coordinate and fixed-DOF checks executed in plot_water_srm.py",
+    "deformed": false
+  },
+  {
+    "case": "fixed13",
+    "stage": 2.0,
+    "nodes": 85,
+    "max_norm_from_node_table_m": 0.08382340337760563,
+    "max_norm_from_internal_pairs_m": 0.08382340337760563,
+    "source_table": "docs/water-display-evidence/20261022/fixed13/結果節点.json.gz",
+    "table_sha256": "8b6852cf6475380f3c65904a3f9ff4b765189556bad21cb1e1a473e90172c478",
+    "checks": "fixture coordinate and fixed-DOF checks executed in plot_water_srm.py",
+    "deformed": true
+  }
+]

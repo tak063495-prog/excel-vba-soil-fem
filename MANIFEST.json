@@ -16,8 +16,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 25835,
-    "sha256": "5d0289a8728b574866ec1d815716834f530f1a73a7983a22bb641f1cafee5557"
+    "bytes": 26097,
+    "sha256": "03e02b6bd4bad07bcf5929813e2ea38eee5020231485ac09de230d5432d0d221"
   },
   {
     "path": "docs/ACCELERATION_HISTORY.md",
@@ -101,8 +101,8 @@
   },
   {
     "path": "docs/MESH_TERRAIN_COMPLEX.md",
-    "bytes": 12519,
-    "sha256": "ab05cd551fe868ac73a44542f182fd679e8b3cdc0cf1ca2add2ebe475da97ef5"
+    "bytes": 12687,
+    "sha256": "8bdb178bf5d1d11f3e63fbfc83b529961f17791c2e56fec0ce8b71622de9ffff"
   },
   {
     "path": "docs/MESH_TERRAIN_PERF.md",
@@ -951,8 +951,8 @@
   },
   {
     "path": "docs/manuals/2DSoilFEM_Manual.md",
-    "bytes": 312429,
-    "sha256": "3656d90e4d7f4e4772e254d5a97f85b1655caf4b0d480f031aa8f4fe2be1d2ee"
+    "bytes": 326336,
+    "sha256": "2b7b52c649e802ada0ccf8982902301788dbd740a075bcdbce684e3810964e08"
   },
   {
     "path": "docs/manuals/2DSoilFEM_Manual_20261021_2017.pdf",
@@ -5070,6 +5070,11 @@
     "sha256": "eb2c774047384b0dd27012941eab65e40d8673183db8726da7ae3fc272996e3b"
   },
   {
+    "path": "docs/manuals/examples/water_polyline_example.zip",
+    "bytes": 2958997,
+    "sha256": "7eeb57001260e35a4ad0ce756ecdeaf209516f82ea05e82b71742f2a4e71260d"
+  },
+  {
     "path": "docs/manuals/images/cover/cover_slope_mesh.png",
     "bytes": 72513,
     "sha256": "566841d6d88cad6930d4db410c26d1de06099f8e9aa22f39ef696caa53b2b4d8"
@@ -6085,6 +6090,11 @@
     "sha256": "742bcb3863eeaef78972606217df364d78e692b53c09e286a959b3a71ea40f85"
   },
   {
+    "path": "docs/manuals/images/water_display/boundary_guided.png",
+    "bytes": 234622,
+    "sha256": "82aa1d8dfde9328cfd5f0e2d810ae95d6971fea681f4ea97dc7164f11adea8b3"
+  },
+  {
     "path": "docs/manuals/images/water_display/hydro_preview.png",
     "bytes": 162645,
     "sha256": "522fb015431b87668f28663d4bf1ccb60d435e3e39f7a0344b39e2d2f7b85029"
@@ -6095,9 +6105,29 @@
     "sha256": "d7e89ae9763db120611b082a3b32677a06eb525f0bf48f30ed9df8b2c18c2c66"
   },
   {
+    "path": "docs/manuals/images/water_display/input_guided.png",
+    "bytes": 258922,
+    "sha256": "0214ba3e1b5075a1a7bda66a983f34cd98f23aca671efa7a6737eb7041994266"
+  },
+  {
     "path": "docs/manuals/images/water_display/input_mode.png",
     "bytes": 58610,
     "sha256": "392babf0d0332c0f3829bba87b8759e40b6c139a4f7e6847eed86aed0326bc2f"
+  },
+  {
+    "path": "docs/manuals/images/water_display/input_mode_guided.png",
+    "bytes": 56929,
+    "sha256": "df201bef12145c91b607b1f0fd7d2c82ad7c8be8e4f3339cbb343584adb088f0"
+  },
+  {
+    "path": "docs/manuals/images/water_display/joint_input.png",
+    "bytes": 94968,
+    "sha256": "c67c3454226f5d86d8594acf7170a1d26d373bde7e0f9ccd6640ffb82041dd9b"
+  },
+  {
+    "path": "docs/manuals/images/water_display/joint_input_guided.png",
+    "bytes": 91582,
+    "sha256": "a430f326bfe2be1e8e79139e34a50095e5a49b165dbc8de1ffff5e90994e50ee"
   },
   {
     "path": "docs/manuals/images/water_display/model_cutoff.png",
@@ -6105,9 +6135,39 @@
     "sha256": "9435f934209bd8d26741f529e025214f0286b33547ba6cc88e54552d66ab7ba4"
   },
   {
+    "path": "docs/manuals/images/water_display/polyline_input.png",
+    "bytes": 270578,
+    "sha256": "def46d09fb75c525136e0a4a221271c2d565d3ec1b07ab1ec52dd2be07035140"
+  },
+  {
+    "path": "docs/manuals/images/water_display/polyline_input_guided.png",
+    "bytes": 259210,
+    "sha256": "69e90cb532f803dd46a663241b98a997dfe2c5b2f64de0cbd26b2bb04d4113ca"
+  },
+  {
+    "path": "docs/manuals/images/water_display/polyline_preview.png",
+    "bytes": 170508,
+    "sha256": "2258150aedff422a98ec13008a57d22c51761971a513d35c50a56e7ac546882c"
+  },
+  {
+    "path": "docs/manuals/images/water_display/polyline_result.png",
+    "bytes": 109338,
+    "sha256": "15bf82917d7ebe88d929e431117b3249c61c37a541bae779640c61d4646ef0bb"
+  },
+  {
+    "path": "docs/manuals/images/water_display/polyline_stress.png",
+    "bytes": 229637,
+    "sha256": "e071c9bcb7498d971490b3638e887c1bd8a25d0cbb285947169851223077218d"
+  },
+  {
     "path": "docs/manuals/images/water_display/stage_plan.png",
     "bytes": 167289,
     "sha256": "c782b170192f7e43358511828aa2bf76d5d7628fb2a1110f7fdf9000cdabecdb"
+  },
+  {
+    "path": "docs/manuals/images/water_display/stage_plan_guided.png",
+    "bytes": 163481,
+    "sha256": "9fb04c2fe3ea572946ccc8fc3e65820c71ab3ce0e3d7810d22a45150f0d4ef8b"
   },
   {
     "path": "docs/manuals/images/water_display/stage_result.png",
@@ -6118,6 +6178,11 @@
     "path": "docs/manuals/images/water_display/stages.png",
     "bytes": 176904,
     "sha256": "1d1f6a7a31657e13ab5edbfc07f47f87d5b93084eca262d4c460f976fd0c0739"
+  },
+  {
+    "path": "docs/manuals/images/water_display/stages_guided.png",
+    "bytes": 172485,
+    "sha256": "c07f8ad0f464cda06446a981ad2b9bf391a2d7f7b90d6d9f14676c300792f966"
   },
   {
     "path": "docs/manuals/images/water_display/steady_preview.png",
@@ -6136,18 +6201,18 @@
   },
   {
     "path": "docs/manuals/images/water_display/wet_fixed13.png",
-    "bytes": 109173,
-    "sha256": "a9757f5b1fa149d5b529e5db1d6cced29f529ae147984703fc2013cac7214b14"
+    "bytes": 107662,
+    "sha256": "24264ff53b63a2701ec7bc0d4874ed68168b1481400253fe80a5eff81f49ea37"
   },
   {
     "path": "docs/manuals/images/water_display/wet_srm_davis.png",
-    "bytes": 89624,
-    "sha256": "59fca250756307fa35cf7700f960e014bdf3c6fd141645dc460dc573cc806321"
+    "bytes": 91338,
+    "sha256": "83204cefa8818ad58f36ce7762e840b4408b0bfe4d76f104bdee6adc3f77ea21"
   },
   {
     "path": "docs/manuals/images/water_display/wet_srm_inco.png",
-    "bytes": 93057,
-    "sha256": "6711b4e1e974821551ae7c52906f3e0107ec421b625a227fa237cee1fe4204bc"
+    "bytes": 94085,
+    "sha256": "6c47d3c7b981521a07479c03e95217ee7d36848808d8c0e64621a177e2b76a71"
   },
   {
     "path": "docs/manuals/manual_validation_20261020.json",
@@ -6158,6 +6223,11 @@
     "path": "docs/manuals/old_manual_audit_20261022.csv",
     "bytes": 54372,
     "sha256": "1de6868f4865b9c232fac8c9977d66dad06cbd7bde9db6de51bd93cf2417d701"
+  },
+  {
+    "path": "docs/manuals/water_screen_sources.json",
+    "bytes": 3927,
+    "sha256": "a63cfaf6a9f2f864d91665967f332ebeec4ee7dd86be0964adaa3e1cdc18f5de"
   },
   {
     "path": "docs/mesh-evidence/20261022/comparison.json",
@@ -8340,6 +8410,11 @@
     "sha256": "6e1ed535b11e57d99345602872bca98682c1fbf640c41fd5b0646766f03a8cdc"
   },
   {
+    "path": "docs/reviews/manual_consistency_20261023.md",
+    "bytes": 5622,
+    "sha256": "d58d25505aa41fbcd1976f91f803ef038007302e123f24cb89c4530ea3dbfa96"
+  },
+  {
     "path": "docs/shape-mesh-evidence/20261020/combined_dll_numeric.json",
     "bytes": 1391,
     "sha256": "5bdddd3e4f030d3313bcef25cb1428d2422fb110c0bed530727f3d74c34a3216"
@@ -9345,6 +9420,86 @@
     "sha256": "e37314edc1bd52394729252b06896452fcaabb615dab5110ba2df739c574166c"
   },
   {
+    "path": "docs/water-display-evidence/20261023/consistency.json",
+    "bytes": 4693,
+    "sha256": "8255b77a492261c19777d3c5a69159414f729b39bef7ffffe17ea78e224fd5d5"
+  },
+  {
+    "path": "docs/water-display-evidence/20261023/page_mapping.json",
+    "bytes": 5496,
+    "sha256": "d6ab5dfbfed91b0f6401a43dc206588044cf5b8839ce818cad84d17afc67fe69"
+  },
+  {
+    "path": "docs/water-display-evidence/20261023/plot_mapping_checks.json",
+    "bytes": 1470,
+    "sha256": "ea0201c5a516f28d14a5be2d7d54dd26bf060de3b8a8887d9e6fbcb470ec876d"
+  },
+  {
+    "path": "docs/water-display-evidence/20261023/polyline/calculation_logs.zip",
+    "bytes": 29899,
+    "sha256": "7d0d02a2646e9a23d448a24ad508beb02de39f7c67a2aec6a34fe910574a8ff0"
+  },
+  {
+    "path": "docs/water-display-evidence/20261023/polyline/checks.json",
+    "bytes": 939,
+    "sha256": "838f23ff8ec18db038c824ff07d4df1f5214568034fc2927066f432fdd4f8e42"
+  },
+  {
+    "path": "docs/water-display-evidence/20261023/polyline/result.json",
+    "bytes": 39504,
+    "sha256": "bb65a41f56568ee53412d62d6fc4d7dad563e60b7da560b0c3db208b28ec8611"
+  },
+  {
+    "path": "docs/water-display-evidence/20261023/polyline/resume.json",
+    "bytes": 37098,
+    "sha256": "717fe089412665d20c31eba620a5d9e26d26b468d351e02b183cb8ad2deee03f"
+  },
+  {
+    "path": "docs/water-display-evidence/20261023/polyline/sources.json",
+    "bytes": 1161,
+    "sha256": "a07b92930ef6661fc9b74a57e4bbf63a136a773015e0bf531bc61caf8f1b99ea"
+  },
+  {
+    "path": "docs/water-display-evidence/20261023/polyline/ui/input.json",
+    "bytes": 1051,
+    "sha256": "fa928d298fc1e605ccdffa300009fd58b56c40d86694d1dd385c9987dec39b4f"
+  },
+  {
+    "path": "docs/water-display-evidence/20261023/polyline/ui/preview.json",
+    "bytes": 17717,
+    "sha256": "08f71137a97752715c0f0512072e5398ad5aa5d113b2155c1437dddcc7316433"
+  },
+  {
+    "path": "docs/water-display-evidence/20261023/polyline/ui/result.json",
+    "bytes": 17722,
+    "sha256": "969a5a3a2dd40b45d71922dd812fa772465d2b8c277d75da4596a5e35c9e2804"
+  },
+  {
+    "path": "docs/water-display-evidence/20261023/polyline/ui/stress.json",
+    "bytes": 709,
+    "sha256": "1a2c30d95b0f63eeab1ee7b7a6352c8cd7f92e932004cf0bd6efa212e22c1315"
+  },
+  {
+    "path": "docs/water-display-evidence/20261023/polyline/ステージ結果.json.gz",
+    "bytes": 313,
+    "sha256": "4cc9b94d5843a03d404157e6cecdddc96a34779e586e3926f3c36783af04033d"
+  },
+  {
+    "path": "docs/water-display-evidence/20261023/polyline/水圧確認.json.gz",
+    "bytes": 2146,
+    "sha256": "a11acd3e9329abcac24b89f07c707d0645400a1ffa1309f96180ec66907dd169"
+  },
+  {
+    "path": "docs/water-display-evidence/20261023/polyline/水圧結果.json.gz",
+    "bytes": 10300,
+    "sha256": "68245fc0cbeba92020c797175afbaad965449e6072779c45e16781c163d32aed"
+  },
+  {
+    "path": "docs/water-display-evidence/20261023/polyline/結果節点.json.gz",
+    "bytes": 16589,
+    "sha256": "c4de383a293a5d43a3ba55d64fb1625c7f0f787fdb53d1faee154b7993a2c9d5"
+  },
+  {
     "path": "native/build.cmd",
     "bytes": 1192,
     "sha256": "6500ad3dba257cdc6660126bb4cf1cf4ae10634039af0b9c450681eb5863d893"
@@ -9635,6 +9790,11 @@
     "sha256": "ee8fc0948d63d6e7467fd66268dee0d328b879863019828c17342943fcb5c567"
   },
   {
+    "path": "tests/annotate_water_manual.py",
+    "bytes": 1756,
+    "sha256": "5c9190c0976d31ab0ef5083dd27aae685185e859501d7e4fc208ceda9f0d5184"
+  },
+  {
     "path": "tests/build_workbook_ui.ps1",
     "bytes": 4195,
     "sha256": "2f7584c5c2362c998861d565a4fc7fb88f7ea09010de26b6f1a2474a7ac2f297"
@@ -9695,6 +9855,11 @@
     "sha256": "5b3695c8cab77085c1ca8b5e7134dff6e10691cc2e348b5cf41164bbf294d88a"
   },
   {
+    "path": "tests/check_manual_consistency.py",
+    "bytes": 3661,
+    "sha256": "0a9b18bffcfb820b37af2730ead20d4bcae9245588b61a77afe034063e335c76"
+  },
+  {
     "path": "tests/check_manual_rereview.py",
     "bytes": 2942,
     "sha256": "0fec646f0be7a64e7b6eb430496d3f4bd6b5f2fe906616bdb979cc93a10b25a0"
@@ -9708,6 +9873,11 @@
     "path": "tests/check_mesh_benchmark.py",
     "bytes": 4425,
     "sha256": "3767a6a623e94ded9d204279e5a57faa7aeecff97940656baf5b99a7ec2e94b9"
+  },
+  {
+    "path": "tests/check_polyline_water.py",
+    "bytes": 3023,
+    "sha256": "639db1856e004d6c5a2dd9dddb09441f0d39dfba4e5b0d5a699b70dd98bbe4af"
   },
   {
     "path": "tests/check_release23_manual.py",
@@ -9928,6 +10098,11 @@
     "path": "tests/fixtures/water_slope_fixed13.json",
     "bytes": 13779,
     "sha256": "790b989323cf3d51f2a91b904dd92c8341b22e5b856dffb86bc2e6d1f4e31dc1"
+  },
+  {
+    "path": "tests/fixtures/water_slope_polyline.json",
+    "bytes": 13958,
+    "sha256": "d91ea9399e4d51917175acd2badb4a97be1afd47d27073a506c891ea3a23e00b"
   },
   {
     "path": "tests/fixtures/water_stage_guards/conflicting_profile.json",
@@ -10656,13 +10831,18 @@
   },
   {
     "path": "tests/plot_water_srm.py",
-    "bytes": 4540,
-    "sha256": "2e78d884b11996eb4f8f4e651edc14ef5ceafd41602c107d52a13ff07e292937"
+    "bytes": 6441,
+    "sha256": "ea93a06fbc7bb964ae1fd8ba18bc44efa0b0d394662607c69d605e2207764ca6"
   },
   {
     "path": "tests/refresh_manual_case_ui.ps1",
     "bytes": 2695,
     "sha256": "d09907482a6fa03db64de801e211b4ce826f1b949459d783fcc43ec9cd737767"
+  },
+  {
+    "path": "tests/remap_manual_references.py",
+    "bytes": 2131,
+    "sha256": "09c97c950c4f445c027fd112421f6a3b89deba9610a7b48df9c34b16710258be"
   },
   {
     "path": "tests/render_manual_review.ps1",
@@ -10721,8 +10901,8 @@
   },
   {
     "path": "tests/review_water_manual.py",
-    "bytes": 2815,
-    "sha256": "16c486f29f554f06a4b37f1f138fcdd3b0396e761ae7e256a028f8e6d19eea7c"
+    "bytes": 3153,
+    "sha256": "86fc4007541d627a05b1e8ada755fdbd22e99a851ea52c85ae90509418c89022"
   },
   {
     "path": "tests/run.ps1",

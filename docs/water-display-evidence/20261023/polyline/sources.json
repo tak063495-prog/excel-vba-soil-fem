@@ -1,0 +1,28 @@
+{
+  "source_book": "water_slope_polyline.xlsm",
+  "calculated_book_sha256": "d1e5a1d6bf52ab41dc9fc92a13dd09d2e2617fab442a6ea82522901ee28e8b48",
+  "fixture": "tests/fixtures/water_slope_polyline.json",
+  "fixture_sha256": "d91ea9399e4d51917175acd2badb4a97be1afd47d27073a506c891ea3a23e00b",
+  "images": [
+    {
+      "image": "docs/manuals/images/water_display/polyline_input.png",
+      "sha256": "def46d09fb75c525136e0a4a221271c2d565d3ec1b07ab1ec52dd2be07035140",
+      "ui_action": "ui/input.json"
+    },
+    {
+      "image": "docs/manuals/images/water_display/polyline_input_guided.png",
+      "sha256": "69e90cb532f803dd46a663241b98a997dfe2c5b2f64de0cbd26b2bb04d4113ca",
+      "ui_action": "ui/input.json"
+    },
+    {
+      "image": "docs/manuals/images/water_display/polyline_preview.png",
+      "sha256": "2258150aedff422a98ec13008a57d22c51761971a513d35c50a56e7ac546882c",
+      "ui_action": "ui/preview.json"
+    },
+    {
+      "image": "docs/manuals/images/water_display/polyline_stress.png",
+      "sha256": "e071c9bcb7498d971490b3638e887c1bd8a25d0cbb285947169851223077218d",
+      "ui_action": "ui/stress.json"
+    }
+  ]
+}

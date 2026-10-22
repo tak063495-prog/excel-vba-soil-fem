@@ -9,7 +9,7 @@ fixture_sha256 when it is available, or by --fixture.  No Excel calculation is
 performed by this script.
 """
 from __future__ import annotations
-import argparse, hashlib, json
+import argparse, gzip, hashlib, json
 from pathlib import Path
 import matplotlib
 matplotlib.use("Agg")
@@ -22,6 +22,31 @@ DEFAULT_FIXTURE = ROOT / "tests/fixtures/groundwater_slope_low_srm.json"
 
 def read(path):
     return json.loads(Path(path).read_text(encoding="utf-8-sig"))
+
+def read_node_result(run):
+    candidates = list(run.glob("結果節点.json.gz")) + list(run.glob("結果節点.json"))
+    if not candidates:
+        raise SystemExit(f"missing saved 結果節点 table in {run}; displacement mapping must not be guessed")
+    path = candidates[0]
+    if path.suffix == ".gz":
+        with gzip.open(path, "rt", encoding="utf-8-sig") as fh:
+            rows = json.load(fh)
+    else:
+        rows = read(path)
+    if not isinstance(rows, list) or len(rows) < 2:
+        raise SystemExit(f"invalid 結果節点 table: {path}")
+    stage = [r for r in rows[1:] if len(r) > 5 and r[0] is not None and r[1] is not None]
+    if not stage:
+        raise SystemExit(f"結果節点 table has no stage rows: {path}")
+    last = max(float(r[0]) for r in stage)
+    final = [r for r in stage if abs(float(r[0]) - last) < 1e-12]
+    mapped = {}
+    for r in final:
+        node = int(round(float(r[1])))
+        mapped[node] = (float(r[2]), float(r[3]), float(r[4]), float(r[5]))
+    if not mapped:
+        raise SystemExit(f"結果節点 table has no final-stage displacement rows: {path}")
+    return mapped, last, path
 
 def main():
     ap = argparse.ArgumentParser()
@@ -39,10 +64,21 @@ def main():
         raise SystemExit(f"fixture hash mismatch: result={expected_hash}, fixture={actual_hash}")
 
     nodes = {int(r[0]): (float(r[1]), float(r[2])) for r in fixture["nodes"]}
-    disp = [float(v) for v in result["disp"]]
-    if len(disp) != 2 * len(nodes):
-        raise SystemExit("result displacement length does not match fixture nodes")
-    u = {n: (disp[2*(n-1)], disp[2*(n-1)+1]) for n in nodes}
+    fixed = {int(r[0]): (int(float(r[3] or 0)), int(float(r[4] or 0))) for r in fixture["nodes"]}
+    saved, final_stage, node_path = read_node_result(run)
+    missing = sorted(set(nodes) - set(saved))
+    if missing:
+        raise SystemExit(f"saved 結果節点 table does not cover fixture nodes (first missing {missing[:5]})")
+    # 結果節点 is the authoritative node-number/coordinate/disp mapping;
+    # result.disp is in the solver's internal RCM order and is deliberately not used here.
+    for n, (x, y) in nodes.items():
+        sx, sy, _, _ = saved[n]
+        if abs(x - sx) > 1e-9 or abs(y - sy) > 1e-9:
+            raise SystemExit(f"coordinate mismatch for node {n} in {node_path}")
+    u = {n: (saved[n][2], saved[n][3]) for n in nodes}
+    for n, (fx, fy) in fixed.items():
+        if fx and abs(u[n][0]) > 1e-9 or fy and abs(u[n][1]) > 1e-9:
+            raise SystemExit(f"fixed-node displacement is not zero for node {n}: {u[n]}")
     perimeter = (0, 4, 1, 5, 2, 6, 3, 7)
     original, deformed, mags = [], [], []
     for row in fixture["elements"]:
@@ -81,7 +117,7 @@ def main():
         fs = f" | accepted Fs {float(metrics[4]):.4f}"
         if float(metrics[6]) > 0:
             fs += f" / failed Fs {float(metrics[6]):.4f}"
-    title = f"verified water SRM | status={result.get('status','')}" + fs
+    title = f"verified water SRM | stage={final_stage:g} | status={result.get('status','')}" + fs
     fig.suptitle(title, fontsize=10)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(args.out, dpi=180)
