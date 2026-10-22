@@ -2315,6 +2315,7 @@ Private Function FEMIoContentHash() As String
   End If
   h = FEMIoMixText(h, FEMIoStagePlanHash())
   h = FEMIoMixText(h, FEMIoLoadingHash())
+  If GWEnabled() Then h = FEMIoMixText(h, "WATER_V2:" & GWInputSignature())
   FEMIoContentHash = Format$(h, "0")
 End Function
 
@@ -2457,6 +2458,7 @@ Public Sub FEMIoExportStage(ByVal stageNo As Long, ByVal kindText As String, ByV
   If fullState Then
     If Not FEMIoWriteNode(tmpFolder) Then GoTo ExportFail
     If Not FEMIoWriteGauss(tmpFolder) Then GoTo ExportFail
+    If Not GWWriteCheckpoint(tmpFolder) Then GoTo ExportFail
     If Not PlasticLogWrite(tmpFolder) Then FEMIoLog "累積塑性診断", "WARN", "plastic_cumulative.csvを保存できませんでした。"
     If Not FEMIoWriteDofLock(tmpFolder) Then GoTo ExportFail
     If Not FEMIoWriteOrigin(tmpFolder) Then GoTo ExportFail
@@ -3285,9 +3287,14 @@ Public Function FEMIoFinishResume() As Boolean
   End If
   If femIoResumeFss > 0# Then FSS = femIoResumeFss
   If Not FEMIoRebuildResumeGeometry() Then Exit Function
+  GWReadCheckpoint femIoResumeFolder
   P3AssembleSelfWeightOnly
   FEMIoRefreshDerivedStressState
   P3CommitMaterialState
+  If GWActive Then
+    GWRebuildAcceptedInternalForce
+    If UCase$(Trim$(FEMReadTextSetting("OUTPUT_STAGE_MODE", "FINAL"))) = "ALL" Then GWWriteResults femIoResumeStage
+  End If
   PlasticLogResumeUnknown
   P3RecountActivePlasticPoints
   P3TrialStateValid = False
@@ -3316,15 +3323,18 @@ Private Sub FEMIoRefreshDerivedStressState()
       p1 = centerValue + radiusValue
       p2 = centerValue - radiusValue
       P1SortPrincipal3 p1, p2, sz, sMax, sMid, sMin
-      Elem(k).P2PrincipalStress(0, im) = sMax
-      Elem(k).P2PrincipalStress(1, im) = sMid
-      Elem(k).P2PrincipalStress(2, im) = sMin
+      Elem(k).P2PrincipalStress(0, im) = sMax - GWNewPressure(k, im)
+      Elem(k).P2PrincipalStress(1, im) = sMid - GWNewPressure(k, im)
+      Elem(k).P2PrincipalStress(2, im) = sMin - GWNewPressure(k, im)
       Elem(k).Stmat(3, im) = sMax
       Elem(k).Stmat(4, im) = sMin
       Elem(k).Stmat(5, im) = 0.5 * (sMax - sMin)
       angleRad = 0.5 * P1Atan2(2# * txy, sx - sy)
       Elem(k).Stmat(6, im) = angleRad * 180# / piValue
       Elem(k).Stmat(7, im) = P1VonMises3D(sx, sy, sz, txy)
+      If GWActive Then
+        sMax = sMax - GWNewPressure(k, im): sMin = sMin - GWNewPressure(k, im)
+      End If
       If sMin > 0# Then
         Elem(k).Stmat(8, im) = sMax
       ElseIf sMax > 0# Then
@@ -3698,7 +3708,7 @@ Private Sub FEMApplyNumericValidation(ByVal targetRange As range, ByVal ruleText
 End Sub
 
 Private Sub FEMApplyStageValidation(ByVal ws As Worksheet)
-  FEMApplyListValidation ws.range("B2:B2000"), "GRAVITY,LOAD,UNLOAD,BIRTH,DEATH,SRM,RESET_U,RESET_STRESS,MATSET"
+  FEMApplyListValidation ws.range("B2:B2000"), "GRAVITY,LOAD,UNLOAD,BIRTH,DEATH,SRM,RESET_U,RESET_STRESS,MATSET,WATER"
   FEMApplyListValidation ws.range("E2:E2000"), "1,0"
 End Sub
 

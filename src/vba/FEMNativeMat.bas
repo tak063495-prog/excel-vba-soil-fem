@@ -60,6 +60,7 @@ End Function
 Public Function FEMMatAvailable() As Boolean
   Dim path As String, loadedPath As String, size As Long, dllName As String
   Dim exportName As Variant
+  If GWActive Then mReason = "PHYSICAL_WATER_VBA_MATERIAL": Exit Function
   If mChecked Then FEMMatAvailable = mAvailable: Exit Function
   mChecked = True: mAvailable = False
   On Error GoTo LoadFailed

@@ -2208,11 +2208,11 @@ Public Function Nrf(Smat() As Double, Spmat() As Double, UE() As Double, Stmat()
   Dim workStmat(0 To 16, 0 To 3) As Double
   Dim workSpmat(0 To 2, 0 To 15, 0 To 3) As Double
   Dim workDpmat(0 To 2, 0 To 2, 0 To 3) As Double
-  Dim s As Double, avg As Double
+  Dim s As Double, avg As Double, waterOld As Double, waterNew As Double
   Dim errNumber As Long, errDescription As String
   Nrf = False
   On Error GoTo ErrLabel
-  If P3CurrentElementZeroIncrement And CurrentIncrement >= 0 Then
+  If P3CurrentElementZeroIncrement And CurrentIncrement >= 0 And Not GWActive Then
     ' 増分開始時は試行ひずみがゼロなので、確定応力を再利用する。
     ' 構成則の降伏判定・リターンマップは非ゼロ増分時に必ず実行する。
     For im = 0 To 3
@@ -2252,6 +2252,13 @@ Public Function Nrf(Smat() As Double, Spmat() As Double, UE() As Double, Stmat()
     inputState.PreviousStress(1) = mStmat(1, im)
     inputState.PreviousStress(2) = mStmat(2, im)
     inputState.PreviousStress(3) = mStmat(16, im)
+    If GWActive Then
+      waterOld = GWOldPressure(FailureElement, im)
+      waterNew = GWNewPressure(FailureElement, im)
+    End If
+    inputState.PreviousStress(0) = inputState.PreviousStress(0) - waterOld
+    inputState.PreviousStress(1) = inputState.PreviousStress(1) - waterOld
+    inputState.PreviousStress(3) = inputState.PreviousStress(3) - waterOld
     For i = 0 To 2
       inputState.StrainIncrement(i) = 0#
       For j = 0 To 15
@@ -2277,11 +2284,11 @@ Public Function Nrf(Smat() As Double, Spmat() As Double, UE() As Double, Stmat()
       Exit Function
     End If
     ' Preserve the complete algorithmic tangent from the constitutive update.
-    workStmat(0, im) = outputState.Stress(0)
-    workStmat(1, im) = outputState.Stress(1)
+    workStmat(0, im) = outputState.Stress(0) + waterNew
+    workStmat(1, im) = outputState.Stress(1) + waterNew
     workStmat(2, im) = outputState.Stress(2)
-    workStmat(3, im) = outputState.PrincipalStress(0)
-    workStmat(4, im) = outputState.PrincipalStress(2)
+    workStmat(3, im) = outputState.PrincipalStress(0) + waterNew
+    workStmat(4, im) = outputState.PrincipalStress(2) + waterNew
     workStmat(5, im) = 0.5 * (outputState.PrincipalStress(0) - outputState.PrincipalStress(2))
     workStmat(6, im) = outputState.principalAngle
     workStmat(7, im) = P2VonMises3D(outputState.Stress(0), outputState.Stress(1), outputState.Stress(3), outputState.Stress(2))
@@ -2293,7 +2300,7 @@ Public Function Nrf(Smat() As Double, Spmat() As Double, UE() As Double, Stmat()
       workStmat(8, im) = -outputState.PrincipalStress(2)
     End If
     workStmat(9, im) = outputState.YieldFunction
-    workStmat(16, im) = outputState.Stress(3)
+    workStmat(16, im) = outputState.Stress(3) + waterNew
     If P3TrialStateInitialized And FailureElement >= 0 And FailureElement < NumberOfElement Then
       For i = 0 To 3
         Elem(FailureElement).P2PlasticStrain(i, im) = outputState.PlasticStrain(i)

@@ -1,6 +1,8 @@
 # 操作説明書
 
-**最新：[2DSoilFEM_Manual_20261022_0428.pdf](2DSoilFEM_Manual_20261022_0428.pdf)（137ページ、表紙・しおり・ページ番号・目次リンク付き）**（前版 2DSoilFEM_Manual_20261021_2156.pdf も残しています）／原稿 [2DSoilFEM_Manual.md](2DSoilFEM_Manual.md)／作成 `python3 build_manual_pdf_v2.py 2DSoilFEM_Manual.md 出力.pdf`／計算例のブックとログは [examples/README.md](examples/README.md)。
+**最新：[2DSoilFEM_Manual_20261022_WATER_01.pdf](2DSoilFEM_Manual_20261022_WATER_01.pdf)（176ページ、表紙・しおり・ページ番号・目次リンク付き）**（直前の170ページ版 [0751版](2DSoilFEM_Manual_20261022_0751.pdf) も保持）／原稿 [2DSoilFEM_Manual.md](2DSoilFEM_Manual.md)／作成 `python3 build_manual_pdf_v2.py 2DSoilFEM_Manual.md 出力.pdf`／計算例のブックとログは [examples/README.md](examples/README.md)。
+
+今回の追記は第25章（164～170ページ）の水位線・外水圧・空洞内水位と浮力・定常浸透→力学→固定水圧SRMです。実Excelの入力画面と実計算からの浸透・浮力図を追加し、既存の解析例は保持しました。付録は第26章、用語集は巻末です。矛盾する適用範囲と水条件への参照だけを既存部分で補訂しています。[入力済み例題](examples/groundwater_examples.zip)／[回帰・独立検算・ログ](../GROUNDWATER_VALIDATION.md)／[本文保持とPDF確認](../groundwater-evidence/20261022/manual_checks.json)。
 
 旧版の詳細操作説明書（122ページ）は下に残しています。
 

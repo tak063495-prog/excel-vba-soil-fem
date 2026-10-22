@@ -55,3 +55,8 @@
 
 | `ex12_anchor_srm_20261021.xlsm` | 解析例12：工程1〜5（SRMまで、INCONSISTENT）を計算済みのブック | Fs区間1.725〜1.7375（NUMERICAL_BRACKET、3819秒、試行12回）。旧版の記録値と一致 |
 | `ex12_anchor_srm_logs_20261021/` | 上の result.json.gz、case_out（run.log・perf_summary・manifest・increment_summary・solver_events・各工程のmeta/node/gauss等）、実行ログ・スクリプト | 相対残差4.657×10⁻⁸、最大変位ノルム0.0235 m |
+
+
+## 水条件・定常浸透の追加例
+
+[入力・実計算結果入りXLSM 5例とDLL 1個](groundwater_examples.zip)。cutoff（遮水構造下の定常浸透）、box（乾燥空洞）、box_inside（内水位1.5 m）、stages（WATER→DEATH→BIRTH→SRM）、slope_low_srm（水位1 mの固定水圧SRM）です。操作説明書第25章と[全計算ログ・照合値](../../GROUNDWATER_VALIDATION.md)を参照してください。元の例は変更していません。

@@ -3,11 +3,16 @@ PDF bookmarks (chapters and sections) and printed page numbers.
 New file (2026-10-21); build_manual_pdf.py is kept unchanged.
 usage: python3 build_manual_pdf_v2.py MANUAL.md OUT.pdf
 needs: markdown, google-chrome, pdftotext, pymupdf"""
-import markdown,re,subprocess,sys,os,tempfile
+import markdown,re,subprocess,sys,os,tempfile,shutil
+from pathlib import Path
 import pymupdf
 src,out=sys.argv[1],sys.argv[2]
 here=os.path.dirname(os.path.abspath(src))
 md=open(src,encoding='utf8').read()
+chrome=os.environ.get('CHROME_PATH') or shutil.which('google-chrome') or shutil.which('chrome')
+if not chrome:
+    chrome=next((p for p in [r'C:\Program Files\Google\Chrome\Application\chrome.exe',r'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe'] if os.path.isfile(p)),None)
+if not chrome: raise RuntimeError('Chrome/Edge executable not found; set CHROME_PATH')
 heads=re.findall(r'^## (.+)$',md,re.M)
 css="""@page{size:A4;margin:14mm 14mm 18mm}body{font-family:'Noto Sans CJK JP','Noto Sans JP',sans-serif;font-size:10.5pt;line-height:1.7;color:#222}
 h1{font-size:21pt;border-bottom:3px solid #2f5d50}h2{font-size:15pt;background:#2f5d50;color:#fff;padding:4px 8px;break-before:page}
@@ -18,11 +23,16 @@ tmp=os.path.join(here,'_manual_v2.html')
 def render(toc):
     body=markdown.markdown(md.replace('{{TOC}}',toc),extensions=['tables'])
     open(tmp,'w',encoding='utf8').write(f"<html><head><meta charset=utf-8><style>{css}</style></head><body>{body}</body></html>")
-    subprocess.run(['google-chrome','--headless=new','--no-sandbox','--disable-gpu','--no-pdf-header-footer','--print-to-pdf='+out,'file://'+tmp],check=True,capture_output=True,timeout=300)
+    subprocess.run([chrome,'--headless=new','--no-sandbox','--disable-gpu','--no-pdf-header-footer','--print-to-pdf='+os.path.abspath(out),Path(tmp).as_uri()],check=True,capture_output=True,timeout=300)
 def toc_of(pages): return '<table class="toc"><tr><th>目次</th><th>ページ</th></tr>'+''.join(f'<tr><td>{x}</td><td style="text-align:right">{p}</td></tr>' for x,p in zip(heads,pages))+'</table>'
 def find_pages():
-    txt=subprocess.run(['pdftotext','-layout',out,'-'],capture_output=True,text=True).stdout.split('\f')
-    return [next((i+1 for i,t in enumerate(txt) if i>0 and t.lstrip().startswith(h)),'?') for h in heads],txt
+    # Explicit UTF-8 prevents Japanese heading/bookmark corruption on Windows.
+    if shutil.which('pdftotext'):
+        txt=subprocess.run(['pdftotext','-enc','UTF-8','-layout',out,'-'],capture_output=True,text=True,encoding='utf-8',check=True).stdout.split('\f')
+    else:
+        with pymupdf.open(out) as d: txt=[p.get_text(sort=True) for p in d]
+    compact=lambda s:re.sub(r'\s+','',s)
+    return [next((i+1 for i,t in enumerate(txt) if i>0 and compact(t).startswith(compact(h))),'?') for h in heads],txt
 render(toc_of(['00']*len(heads)))
 for _ in range(2):
     pages,txt=find_pages(); render(toc_of(pages))

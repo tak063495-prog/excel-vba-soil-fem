@@ -1,0 +1,358 @@
+[
+  {
+    "case": "dry",
+    "settlement": -0.0029714285714285706,
+    "analytic": -0.0029714285714285715,
+    "error": 8.673617379884035e-19
+  },
+  {
+    "case": "hydro",
+    "settlement": -0.0015144405714285717,
+    "analytic": -0.0015144405714285715,
+    "error": 2.168404344971009e-19
+  },
+  {
+    "case": "submerged",
+    "settlement": -0.0015144405714350598,
+    "analytic": -0.0015144405714285715,
+    "error": 6.488299481022253e-15
+  },
+  {
+    "case": "steady",
+    "settlement": -0.0015144405714350596,
+    "analytic": -0.0015144405714285715,
+    "error": 6.488082640587756e-15
+  },
+  {
+    "case": "total",
+    "settlement": -0.0029714285714285706,
+    "analytic": -0.0029714285714285715,
+    "error": 8.673617379884035e-19
+  },
+  {
+    "case": "box",
+    "water_Fx_kN": 1.7763568394002505e-15,
+    "water_Fy_kN": 90.0,
+    "water_M_kNm": 134.99999999999997,
+    "reaction_Y_kN": 102.00000000000034,
+    "resume_max_du_m": 4.905505149596721e-13,
+    "resume_residual": 2.482803270354078e-09
+  },
+  {
+    "case": "cutoff",
+    "max_pressure_error_kPa": 6.256684059735562e-10,
+    "max_flux_error_m_s": 2.5336902680897413e-15,
+    "max_head_error_m": 1.4061107833640563e-10,
+    "local_balance": 9.736189507628007e-15,
+    "inflow_m3_s": 2.448829190658377e-06,
+    "outflow_m3_s": 2.4488291906585465e-06
+  }
+]
+[
+  {
+    "case": "cutoff",
+    "max_pressure_error_kPa": 5.241318490334379e-11,
+    "max_flux_error_m_s": 6.362688154126772e-18,
+    "max_head_error_m": 2.4780177909633494e-13,
+    "local_balance": 2.0796639087881965e-15,
+    "inflow_m3_s": 6.776263578034403e-20,
+    "outflow_m3_s": 2.0667603913004928e-19
+  }
+]
+[
+  {
+    "flow": "INCONSISTENT",
+    "suite": "smoke",
+    "case": "Case1",
+    "all_dofs": 170,
+    "max_du": 0,
+    "bracket": [
+      0.5,
+      0.0,
+      0.5,
+      0.0,
+      false,
+      1
+    ],
+    "residual": 9.44350930474515e-16,
+    "reference_seconds": 4.6845814,
+    "candidate_seconds": 4.623903
+  },
+  {
+    "flow": "INCONSISTENT",
+    "suite": "smoke",
+    "case": "Case2",
+    "all_dofs": 170,
+    "max_du": 0,
+    "bracket": [
+      1.1,
+      0.0,
+      1.1,
+      0.0,
+      false,
+      1
+    ],
+    "residual": 1.16074711137257e-13,
+    "reference_seconds": 1.5479373,
+    "candidate_seconds": 1.6052144
+  },
+  {
+    "flow": "INCONSISTENT",
+    "suite": "smoke",
+    "case": "Case3",
+    "all_dofs": 170,
+    "max_du": 0,
+    "bracket": [
+      0.9,
+      0.0,
+      0.9,
+      0.0,
+      false,
+      1
+    ],
+    "residual": 4.72993232520948e-12,
+    "reference_seconds": 1.5697272,
+    "candidate_seconds": 1.6295503
+  },
+  {
+    "flow": "INCONSISTENT",
+    "suite": "smoke",
+    "case": "Case4",
+    "all_dofs": 170,
+    "max_du": 0,
+    "bracket": [
+      2.0,
+      0.0,
+      2.0,
+      0.0,
+      false,
+      1
+    ],
+    "residual": 7.54343291524163e-10,
+    "reference_seconds": 1.514951,
+    "candidate_seconds": 1.5786542
+  },
+  {
+    "flow": "INCONSISTENT",
+    "suite": "smokesrm",
+    "case": "Case2",
+    "all_dofs": 170,
+    "max_du": 0,
+    "bracket": [
+      1.5500000000000005,
+      1.5625000000000004,
+      1.5562500000000004,
+      0.012499999999999956,
+      true,
+      10
+    ],
+    "residual": 1.94279744827723e-09,
+    "reference_seconds": 20.6284159,
+    "candidate_seconds": 21.8116195
+  },
+  {
+    "flow": "DAVIS",
+    "suite": "smoke",
+    "case": "Case1",
+    "all_dofs": 170,
+    "max_du": 0,
+    "bracket": [
+      0.5,
+      0.0,
+      0.5,
+      0.0,
+      false,
+      1
+    ],
+    "residual": 1.04568594300454e-15,
+    "reference_seconds": 4.7046595,
+    "candidate_seconds": 4.5571148
+  },
+  {
+    "flow": "DAVIS",
+    "suite": "smoke",
+    "case": "Case2",
+    "all_dofs": 170,
+    "max_du": 0,
+    "bracket": [
+      1.1,
+      0.0,
+      1.1,
+      0.0,
+      false,
+      1
+    ],
+    "residual": 2.71604079155516e-09,
+    "reference_seconds": 1.5256563,
+    "candidate_seconds": 1.6403181
+  },
+  {
+    "flow": "DAVIS",
+    "suite": "smoke",
+    "case": "Case3",
+    "all_dofs": 170,
+    "max_du": 0,
+    "bracket": [
+      0.9,
+      0.0,
+      0.9,
+      0.0,
+      false,
+      1
+    ],
+    "residual": 1.46030210111931e-09,
+    "reference_seconds": 1.5691541,
+    "candidate_seconds": 1.8284963
+  },
+  {
+    "flow": "DAVIS",
+    "suite": "smoke",
+    "case": "Case4",
+    "all_dofs": 170,
+    "max_du": 0,
+    "bracket": [
+      2.0,
+      0.0,
+      2.0,
+      0.0,
+      false,
+      1
+    ],
+    "residual": 1.66834088132905e-10,
+    "reference_seconds": 1.530265,
+    "candidate_seconds": 1.572826
+  },
+  {
+    "flow": "DAVIS",
+    "suite": "smokesrm",
+    "case": "Case2",
+    "all_dofs": 170,
+    "max_du": 0,
+    "bracket": [
+      1.4750000000000005,
+      1.4875000000000005,
+      1.4812500000000006,
+      0.012499999999999956,
+      true,
+      9
+    ],
+    "residual": 5.52749349515492e-08,
+    "reference_seconds": 5.3433299,
+    "candidate_seconds": 5.2430174
+  },
+  {
+    "case": "wet_OFF_AUTO",
+    "all_dofs": 170,
+    "max_du": 1.1102230246251565e-16,
+    "OFF_seconds": 5.0222024,
+    "AUTO_seconds": 5.0360891,
+    "OFF_residual": 4.977831080218133e-15,
+    "AUTO_residual": 4.495070717406178e-15
+  },
+  {
+    "case": "inside_water",
+    "Fy": 85.0,
+    "M": 127.49999999999997,
+    "Ry": 107.00000000000038
+  },
+  {
+    "case": "stages",
+    "seconds": 6.6223544,
+    "resume_seconds": 2.0507321,
+    "metrics": [
+      80.0,
+      3.2951419370874646e-13,
+      119.22660000000877,
+      1.3204293626788342e-13,
+      1.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    "resume_metrics": [
+      80.0,
+      5.080380560684716e-13,
+      119.22660000000879,
+      1.387138622325935e-13,
+      1.0,
+      1.0,
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "case": "initial_birth",
+    "seconds": 4.7152984,
+    "resume_seconds": 1.5913932,
+    "metrics": [
+      80.0,
+      -1.9539925233402755e-14,
+      99.6133,
+      2.728978930226887e-15,
+      1.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    "resume_metrics": [
+      80.0,
+      8.881784197001252e-15,
+      99.61330000000054,
+      3.132347580882704e-14,
+      1.0,
+      1.0,
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "case": "all_birth",
+    "seconds": 4.7150282,
+    "resume_seconds": 1.5687927,
+    "metrics": [
+      80.0,
+      -1.9539925233402755e-14,
+      99.6133,
+      2.728978930226887e-15,
+      1.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    "resume_metrics": [
+      80.0,
+      8.881784197001252e-15,
+      99.61330000000054,
+      3.132347580882704e-14,
+      1.0,
+      1.0,
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "case": "wet_srm",
+    "seconds": 137.5978232,
+    "resume_seconds": 2.0244171,
+    "metrics": [
+      3159.9999999999995,
+      5.684341886080802e-14,
+      3160.0000000000005,
+      2.4831929803956774e-14,
+      1.5500000000000005,
+      1.5500000000000005,
+      1.5625000000000004,
+      0.012499999999999956
+    ],
+    "resume_metrics": [
+      3159.9999999999995,
+      -3.936406756110955e-12,
+      3160.0000000000027,
+      2.882489676026334e-14,
+      1.55,
+      1.55,
+      1.5625,
+      0.0125
+    ]
+  }
+]

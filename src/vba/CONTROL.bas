@@ -1027,6 +1027,8 @@ Sub ボタン5_Click()
     FEMLastProc = "P0_RunAnalysis"
     FEMInvalidateSettingCache
     FEMValidateAnalysisScope
+    GWValidateScope
+    GWClearResults
     FEMWriteBuildStamp
     FEMInvalidateInputCache
     FEMInvalidateSettingCache
@@ -1097,6 +1099,7 @@ Sub ボタン5_Click()
         FEMIncrementSave
         SaveDisp
     End If
+    If UCase$(Trim$(FEMReadTextSetting("OUTPUT_STAGE_MODE", "FINAL"))) <> "ALL" Then GWWriteResults P3RunLogStageNo
     SaveP1Results
     SaveP2MaterialResults
     TimeOutput = TimerElapsed(stageStart)

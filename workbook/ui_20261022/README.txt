@@ -1,14 +1,26 @@
-2D Soil FEM / 表示追補 20261022_UI_06
+2D Soil FEM / 水条件・定常浸透追加 20261022_WATER_01
 
 2DSoilFEM_ui_20261022.xlsmとsoilfem_native_x64.dll（1個）を同じ新規フォルダーへ展開し、WindowsデスクトップExcelで開きます。DLLは64bit Excel用（20261021版と同一）。
 
-20261021_UI_05への追加（表示のみ）：
+水条件の操作：
+- 「水条件」へ水位折れ線・材料のTOTAL/EFFECTIVE・透水係数・境界を入力し、「水圧プレビュー」で確認してから解析します。
+- 初期値NONEは従来の水条件なしです。HYDROSTATICは指定場、STEADYは固定した飽和領域の定常浸透です。
+- 構造体外面・空洞内面はEXPOSED（水位線）/DRYを指定します。内外面の圧力を積分して浮力・合力・モーメントを求めます。
+- WATER工程で水位線を切り替え、BIRTH/DEATH後は有効な水理領域を再解決します。SRMでは水圧を固定します。
+- 自由水面・不飽和・過渡圧密・JOINT・水ありRESET/MATSETは対象外です。浸透失敗時に静水圧へ自動変更しません。
+- 詳細は同梱WATER_GUIDE.md（リポジトリではdocs/GROUNDWATER.md）を参照してください。
+
+UI_06で追加した表示機能（今回も継承）：
 - 「出力・表示」C18に「塑性状態（弾性／現在降伏／過去に降伏・要素の4点）」：赤=現在降伏(4点中1点以上)、黄=過去に降伏・現在弾性、淡青=弾性、灰=累積記録なし。凡例に要素数。
 - C18に「累積塑性せん断ひずみ（4点最大）」：白(0)→赤の色図。
 - 解析後にシート「結果塑性」（積分点ごとの f・現在降伏・累積塑性ひずみ・累積塑性乗数・状態・累積の範囲）を出力。
 変更モジュール：FEMPlasticLog（読み取り専用の参照関数）、FEMViewIncrement（結果塑性の書出し・読込）、FEMViewer（色・凡例）、FEMResultOptions（選択肢71・72）。
-計算部（FEMEngine・FEM・CONTROL・DLL）は変更なし。新しい色図は20261022版で最初から解析した結果が必要です。
+UI_06追加時点では計算部・DLLは変更していません。今回の水対応ではVBAへ水圧経路を追加し、DLLは維持しています。新しい色図は20261022版で最初から解析した結果が必要です。
 
 検証（Rico、2026-10-22）：解析例2を旧版・新版で再計算し「ステージ結果」「結果要素」「結果節点」の全セルが一致（Fs区間1.5125〜1.525）。塑性状態は現在降伏168・過去に降伏29・弾性133要素で、結果要素の降伏関数の集計（168）と一致。
 記録：docs/manuals/construction-evidence/20261022/plastic-state/
 Fs区間は数値収束の境界。設計安全率・物理的崩壊の保証ではありません。
+
+追加機能の実Excel画面・実計算は操作説明書第25章（176ページ版）を参照：
+https://github.com/tak063495-prog/excel-vba-soil-fem/blob/feat/groundwater-steady/docs/manuals/2DSoilFEM_Manual_20261022_WATER_01.pdf
+検証記録と全ログ：docs/GROUNDWATER_VALIDATION.md、docs/groundwater-evidence/20261022/records.zip

@@ -899,7 +899,7 @@ Public Function P3IsElementActive(ByVal elementId As Long) As Boolean
   P3IsElementActive = P3ElementActive(elementId)
 End Function
 
-Private Sub P3InitElementActive()
+Public Sub P3InitElementActive()
   Dim i As Long, materialIndex As Long
   If NumberOfElement <= 0 Then
     P3ElementActiveReady = False
@@ -940,6 +940,7 @@ End Sub
 Private Sub P3ResetElementHistory(ByVal elementId As Long)
   Dim i As Long, j As Long, im As Long
   If elementId < 0 Or elementId > NumberOfElement - 1 Then Exit Sub
+  GWResetElement elementId
   For im = 0 To 3
     For i = 0 To 16
       Elem(elementId).Stmat(i, im) = 0#
@@ -1106,6 +1107,7 @@ Public Sub P3AssembleSelfWeightOnly()
     Next a
 NextSelfWeightElement:
   Next i
+  GWAddSurfaceForce P3SelfWeightForce
 End Sub
 
 Private Sub P3CaptureSupportBoundary()
@@ -1843,6 +1845,7 @@ Private Sub P3WriteStageSnapshot()
   outputMode = UCase$(Trim$(P6ReadTextSetting("OUTPUT_STAGE_MODE", "FINAL")))
   If outputMode <> "ALL" Then Exit Sub
   P3PrepareOutputResidual
+  GWWriteResults P3RunLogStageNo
   SaveDisp
   SaveStress
   FEMIncrementSave
@@ -1988,6 +1991,7 @@ Private Sub P3InitializeTrialState()
     ReDim P3LockedApplied(lastDof)
   End If
   P3InitElementActive
+  GWResetState
   If lastDof >= 0 Then
     If Not P3SupportCondReady Then
       P3CaptureSupportBoundary
@@ -2154,6 +2158,7 @@ End Function
 Public Sub P3CommitMaterialState()
   Dim i As Long, j As Long, k As Long, im As Long
   Dim wasActive As Boolean, isActive As Boolean, historyYielded As Boolean
+  GWCommit
   For k = 0 To NumberOfElement - 1
     For im = 0 To 3
       For i = 0 To 16
@@ -2206,7 +2211,7 @@ Private Function P3EvaluateTrialState(ByRef incrementBase() As Double, ByRef int
   ' Native material/force kernel (FEMNativeMat): evaluates runs of elements in
   ' order and stops at the first element it does not handle, which the
   ' unchanged VBA code below evaluates. Force sums keep the element order.
-  nativeOn = FEMMatAvailable()
+  nativeOn = FEMMatAvailable() And Not GWActive
   If nativeOn Then
     If CurrentIncrement >= 0 Then nativeFlags = 1
     If P3TrialStateInitialized Then nativeFlags = nativeFlags Or 2
@@ -2697,6 +2702,7 @@ Private Function P3RunLoadStages() As Boolean
   Dim elWinRes As Double, elWinIter As Long, elRate As Double, elNeed As Double
   P3IncoElasticCorrection = False
   P3ApplyNewtonPolicy P3RunLogKind
+  GWBeginLoad
   If P3SrmEnabled And P3FlowPolicyIsInconsistent() Then P6SolverEvent "SRM_MATERIAL_FORCE", "hourglass_force=False;newton_hourglass_tangent=False;elastic_hourglass_tangent=iteration_regularization"
   P3ResetFailureDiagnostics
   P3EvalSkipCount = 0
@@ -2716,6 +2722,7 @@ Private Function P3RunLoadStages() As Boolean
   hasAppliedLoad = (appliedSquare > 1E-30)
   hasPrescribedDisp = P3HasNonzeroPrescribedDisp()
   P3ForceRef = Sqr(selfWeightSquare) + Sqr(appliedSquare)
+  If GWActive And P3ForceRef <= 0.000000000001 Then P3ForceRef = GWCharacteristicForce()
   If P3ForceRef <= 0.000000000001 Then
     ' During force unloading, zero target load is not the characteristic scale.
     ' Retain the last committed external load; do not demand roundoff / 1E-12.
@@ -2744,6 +2751,7 @@ Private Function P3RunLoadStages() As Boolean
   P3LineSearchCuts = 0
   P3JointAssembleCount = 0
   wantGravity = P3PlanWantsKind("GRAVITY")
+  If GWNeedsRamp() Then wantGravity = True
   wantApply = P3PlanWantsKind("APPLY")
   gravityRan = False
   applyRan = False
@@ -2753,7 +2761,7 @@ Private Function P3RunLoadStages() As Boolean
     elasticPreference = False
     If stageId = 1 Then
       If Not wantGravity Then GoTo P3NextStage
-      If Not hasSelfWeight And Not P3VectorHasChange(P3LockedSelfWeight, P3SelfWeightForce) Then GoTo P3NextStage
+      If Not hasSelfWeight And Not P3VectorHasChange(P3LockedSelfWeight, P3SelfWeightForce) And Not GWNeedsRamp() Then GoTo P3NextStage
       stepSize = P3_GRAVITY_STEP_SIZE
     Else
       If Not wantApply Then GoTo P3NextStage
@@ -2808,6 +2816,7 @@ P3RetrySameIncrement:
         selfWeightFactor = 0#
         appliedFactor = targetFactor
       End If
+      If stageId = 1 Then GWTrialFactor targetFactor
       P3BuildTargetForce selfWeightFactor, appliedFactor, targetForce
       P3ClearTransientFailure
       mAccelAttemptFailure = "": mLineSearchFailure = "": mLineSearchTries = 0: mLineSearchMaterialRejects = 0: mLineSearchBestQ = -1#
@@ -3315,7 +3324,7 @@ Private Sub P3LoadStagePlan()
     P3StageParam(P3StageN) = Trim$(CStr(ws.Cells(rowNo, 4).value2))
     P3StageOn(P3StageN) = (enabledValue <> 0#)
     If P3StageOn(P3StageN) Then
-      If kindText <> "GRAVITY" And kindText <> "APPLY" And kindText <> "LOAD" And kindText <> "UNLOAD" And kindText <> "SRM" And kindText <> "BIRTH" And kindText <> "DEATH" And kindText <> "RESET_U" And kindText <> "RESET_STRESS" And kindText <> "MATSET" Then
+      If kindText <> "GRAVITY" And kindText <> "APPLY" And kindText <> "LOAD" And kindText <> "UNLOAD" And kindText <> "SRM" And kindText <> "BIRTH" And kindText <> "DEATH" And kindText <> "RESET_U" And kindText <> "RESET_STRESS" And kindText <> "MATSET" And kindText <> "WATER" Then
         SetAnalysisFailure RESULT_INPUT_ERROR, "未対応のステージ種別です。行=" & CStr(rowNo) & " 種別=" & kindText, vbObjectError + 3233, -1, -1, CurrentIncrement, CurrentIteration
         Exit Sub
       End If
@@ -3339,7 +3348,7 @@ Private Sub P3FlagsFromPrefix(ByVal lastIndex As Long)
   P3ActivePrefix = lastIndex
   For i = 1 To lastIndex
     If P3StageOn(i) Then
-      If P3StageKind(i) = "GRAVITY" Then P3PlanHasGravity = True
+      If P3StageKind(i) = "GRAVITY" Or P3StageKind(i) = "WATER" Then P3PlanHasGravity = True
       If P3StageKind(i) = "APPLY" Or P3StageKind(i) = "LOAD" Then P3PlanHasApply = True
     End If
   Next i
@@ -3898,6 +3907,7 @@ Private Function P3RestoreSrmSuccessSnapshot() As Boolean
     Next gp
   Next k
   P3RestoreCommittedMaterialState False
+  GWUseFinalPressure
   P3MarkAllTangentDirty
   P3TrialStateValid = False
   If Not P3RebuildTangentFromSpmat() Then Exit Function
@@ -4263,7 +4273,14 @@ Private Function P3ExecuteStage(ByVal stageIndex As Long) As Boolean
   End If
   If Not P3ReplayQuiet Then FEMProgressStage logNo, kindText
   If Not P3ReplayQuiet Then FEMAppendRunLog "ステージ開始", "RUN", kindText
-  If kindText = "GRAVITY" Then
+  If kindText = "WATER" Then
+    GWStage P3StageGroup(stageIndex)
+    P3AssembleSelfWeightOnly
+    P3PlanHasGravity = True: P3PlanHasApply = False
+    If Not P3RunLoadStages() Then Exit Function
+    P3LogStageResult logNo, kindText, P3StageGroup(stageIndex), True, 1#, "水圧場固定・再平衡"
+    P3WriteStageSnapshot
+  ElseIf kindText = "GRAVITY" Then
     P3PlanHasGravity = True
     P3PlanHasApply = False
     If Not P3ReplayQuiet Then P6PerfMark
@@ -4311,6 +4328,7 @@ Private Function P3ExecuteStage(ByVal stageIndex As Long) As Boolean
       Exit Function
     End If
     P3SetMaterialElementsActive materialId, True
+    If GWEnabled() Then GWRebuild
     P3HoldOrphanDofs
     P3AssembleSelfWeightOnly
     P3RefreshActiveStiffness
@@ -4325,6 +4343,7 @@ Private Function P3ExecuteStage(ByVal stageIndex As Long) As Boolean
       Exit Function
     End If
     P3SetMaterialElementsActive materialId, False
+    If GWEnabled() Then GWRebuild
     P3HoldOrphanDofs
     P3AssembleSelfWeightOnly
     P3RefreshActiveStiffness

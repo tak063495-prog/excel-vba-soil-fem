@@ -1,0 +1,11 @@
+[
+  {
+    "case": "cutoff",
+    "max_pressure_error_kPa": 5.241318490334379e-11,
+    "max_flux_error_m_s": 6.362688154126772e-18,
+    "max_head_error_m": 2.4780177909633494e-13,
+    "local_balance": 2.0796639087881965e-15,
+    "inflow_m3_s": 6.776263578034403e-20,
+    "outflow_m3_s": 2.0667603913004928e-19
+  }
+]
