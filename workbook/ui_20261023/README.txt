@@ -1,6 +1,7 @@
-地形格子の直接生成対応 20261022_TERRAIN_DIRECT_01 / 配布名20261023
+地形格子の複雑形状対応 20261022_TERRAIN_BLOCKS_02 / 配布名20261023
 方式2ではデローニを通らず、適用できない場合は理由付きで停止します。基本の計算識別は20261022_WATER_02です。DLLは従来と同一ですが、ブックはメッシュ生成を更新しているため初回23版とは異なります。
-操作・適用条件・実測・制約は同梱MESH_GUIDE.mdを参照してください。
+段差・切土の水平/鉛直な複数材料、矩形空洞、凸多角形トンネルと覆工を追加。32/64角形の円形近似も検証。重力式擁壁や縦壁・底盤のテーパーは、土を含め凸四辺形ブロックへ分けた入力で対応（穴なし、完全共有辺、重なり・T字接続不可）。ブロックごとに材料番号を登録します。
+操作・適用条件・実測・制約はMESH_COMPLEX_GUIDE.md、初回直接生成の速度比較はMESH_GUIDE.mdを参照してください。
 
 2D Soil FEM / 水条件・定常浸透追加 20261022_WATER_02
 
@@ -31,3 +32,5 @@ https://github.com/tak063495-prog/excel-vba-soil-fem/blob/main/docs/manuals/2DSo
 検証記録と全ログ：docs/GROUNDWATER_VALIDATION.md、docs/groundwater-evidence/20261022/records.zip
 
 JOINT水圧の検証記録と全ログ：docs/JOINT_WATER_VALIDATION.md、docs/joint-water-evidence/20261022/records.zip
+
+デローニ分割の境界情報を疎な辺辞書へ変更し、入力点数の二乗配列を廃止。旧版との境界出力一致・Excelメモリー実測はMESH_MEMORY_GUIDE.mdを参照してください。

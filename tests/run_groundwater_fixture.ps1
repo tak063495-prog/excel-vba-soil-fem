@@ -9,8 +9,8 @@ $copy=Join-Path $Out ($data.name+'.xlsm');Copy-Item -LiteralPath $Book -Destinat
 Copy-Item -LiteralPath (Join-Path (Split-Path $Book) 'soilfem_native_x64.dll') -Destination $Out
 $xl=New-Object -ComObject Excel.Application
 try{
- $xl.DisplayAlerts=$false;$xl.EnableEvents=$false;$xl.AutomationSecurity=1
- $wb=$xl.Workbooks.Open($copy,0,$false)
+ $xl.DisplayAlerts=$false;$xl.EnableEvents=[bool]$data.shape;$xl.AutomationSecurity=1
+ $wb=$xl.Workbooks.Open($copy,0,$false);$xl.EnableEvents=$false
  $mod=$wb.VBProject.VBComponents.Add(1);$mod.Name='WaterFixtureDriver'
  $mod.CodeModule.AddFromString(@'
 Public Function WFPreview() As String
@@ -79,6 +79,12 @@ End Function
  Rows $wb.Worksheets.Item('ステージ') 2 1 $data.stages 6
  if($data.loads){Rows $wb.Worksheets.Item('載荷') 2 1 $data.loads 10}
  if($data.jointPairs){Rows $wb.Worksheets.Item('接合') 2 1 $data.jointPairs 7}
+ if($data.shape){
+  $shapePage=$wb.Worksheets.Item('形状入力')
+  $shapePage.Range('B8:D2000').ClearContents();$shapePage.Range('G8:J2000').ClearContents()
+  Rows $shapePage 8 2 $data.shape.points 3
+  Rows $shapePage 8 7 $data.shape.boundaries 4
+ }
  $null=Call 'FEMWaterInstallUi'
  $water=$wb.Worksheets.Item('水条件')
  $water.Range('B3').Value2=[string]$data.water.mode;$water.Range('B4').Value2=[double]$data.water.gamma

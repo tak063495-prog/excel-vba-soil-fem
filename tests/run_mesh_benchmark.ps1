@@ -81,8 +81,10 @@ End Function
  $cases=@(@{name='slope2';h=2.0;flat=$false;policy=2},@{name='slope1';h=1.0;flat=$false;policy=2},@{name='flat1';h=1.0;flat=$true;policy=2},@{name='slope2_quality';h=2.0;flat=$false;policy=0})
  if($Extended){$cases=@(@{name='steep_fallback';h=2.0;flat=$false;policy=2;geometryKind=1},@{name='hole_fallback';h=2.0;flat=$true;policy=2;geometryKind=2},@{name='slope2_delaunay';h=2.0;flat=$false;policy=1})}
  if($Extended -and $Direct){
-  $cases[0].reject=$true;$cases[1].reject=$true
-  $cases+=@(@{name='sloping_bottom_rejected';h=2.0;flat=$true;policy=2;geometryKind=3;reject=$true},@{name='overhang_rejected';h=2.0;flat=$false;policy=2;geometryKind=4;reject=$true})
+  # Holes are now supported by the complex terrain regression, not a rejection.
+  $cases=@($cases|Where-Object {$_.geometryKind -ne 2})
+  $cases[0].reject=$true
+  $cases+=@(@{name='sloping_bottom_blocks';h=2.0;flat=$true;policy=2;geometryKind=3},@{name='overhang_rejected';h=2.0;flat=$false;policy=2;geometryKind=4;reject=$true})
   $cases+=@(@{name='force_rejected';h=2.0;flat=$false;policy=2;geometryKind=6;reject=$true},@{name='joint_rejected';h=2.0;flat=$false;policy=2;geometryKind=7;reject=$true},@{name='water_boundary_rejected';h=2.0;flat=$false;policy=2;geometryKind=8;reject=$true},@{name='too_fine_rejected';h=1e-12;flat=$false;policy=2;reject=$true},@{name='clockwise';h=2.0;flat=$false;policy=2;geometryKind=9})
  }
  function MeshSnapshot {

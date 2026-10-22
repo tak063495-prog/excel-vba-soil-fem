@@ -16,8 +16,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 24718,
-    "sha256": "a49e5aeecbd31b9f630f3e309bdc949338aa7b599e14f8ae379eef57a9e9cda0"
+    "bytes": 25168,
+    "sha256": "e1bc8eb58c93a6a0d5e522f2414857b476626ed1feb643e8d20ec775d9f4c71b"
   },
   {
     "path": "docs/ACCELERATION_HISTORY.md",
@@ -95,9 +95,19 @@
     "sha256": "bc3158e0fb13616d058ee94be060a69bb5ad646be4254e370fbe40cb251813dd"
   },
   {
+    "path": "docs/MESH_DELAUNAY_MEMORY.md",
+    "bytes": 4872,
+    "sha256": "070a5f5031a907eb7ee998c8c4a7a87c1e5e0428d4c70f6bc941d93d28485633"
+  },
+  {
+    "path": "docs/MESH_TERRAIN_COMPLEX.md",
+    "bytes": 12519,
+    "sha256": "ab05cd551fe868ac73a44542f182fd679e8b3cdc0cf1ca2add2ebe475da97ef5"
+  },
+  {
     "path": "docs/MESH_TERRAIN_PERF.md",
-    "bytes": 7224,
-    "sha256": "d6a803e82fa575d23b6aceb14709e45dfcc9bfef75fc304a1ac4dbd49a527c64"
+    "bytes": 7698,
+    "sha256": "f14d94ff2b879d2a887da90ef6ca832cbed3555360f3e6ed148819cd89c9634c"
   },
   {
     "path": "docs/MODEL_INPUTS.md",
@@ -6140,6 +6150,96 @@
     "sha256": "416bf2856357a038a0c3c10e85dfc1c592175f68cd8836e1e6eed921cf1c4f95"
   },
   {
+    "path": "docs/mesh-evidence/complex-terrain/box_tunnel.png",
+    "bytes": 29225,
+    "sha256": "c8910da0742ed1a28a3bc57dca2c2e04564dec6c127e4c11e017ffd9fde858c6"
+  },
+  {
+    "path": "docs/mesh-evidence/complex-terrain/circle32_tunnel.png",
+    "bytes": 283913,
+    "sha256": "02659a575df82738b57002ee6c3c0e315d55176eb2fb6b905e0f3a2b784f0393"
+  },
+  {
+    "path": "docs/mesh-evidence/complex-terrain/circle64_tunnel.png",
+    "bytes": 314152,
+    "sha256": "a486e150042764490e77a195c9db5e887c93930eb3ff8e458814c330c13569d4"
+  },
+  {
+    "path": "docs/mesh-evidence/complex-terrain/delaunay_memory.json",
+    "bytes": 3131,
+    "sha256": "4c9231f203ab49a14a757308442f3cc28737fb5e5b5087ce52f84d91ecc521d8"
+  },
+  {
+    "path": "docs/mesh-evidence/complex-terrain/excel_tunnel.jpg",
+    "bytes": 196831,
+    "sha256": "5f39ed1c6edd0387df494c446d23715f70e1e78cc8a0eab083a1295652d559b7"
+  },
+  {
+    "path": "docs/mesh-evidence/complex-terrain/excel_wall.jpg",
+    "bytes": 202303,
+    "sha256": "d1eaac8394e63749a850471355babb3adf9121134773588dd31c28318985baed"
+  },
+  {
+    "path": "docs/mesh-evidence/complex-terrain/generation.json",
+    "bytes": 7143,
+    "sha256": "75bb415d52f90807e73056d97b57e78bb3926e86a07ab1592a4ee20096ea994b"
+  },
+  {
+    "path": "docs/mesh-evidence/complex-terrain/gravity_taper_blocks.png",
+    "bytes": 70360,
+    "sha256": "3e7a672ba34d3bf48d776dd2c579f24947da137945df91c592679f0f43443510"
+  },
+  {
+    "path": "docs/mesh-evidence/complex-terrain/independent.json",
+    "bytes": 6379,
+    "sha256": "072dd54207a501554e4cd3823ac46f2f18cc78df1d7c661ad934d5d4c20329cf"
+  },
+  {
+    "path": "docs/mesh-evidence/complex-terrain/lwall_taper_blocks.png",
+    "bytes": 59083,
+    "sha256": "7e13e11b2da514e33bc958a729bfd27951224458daefd817f5ebcb4034cb8fa2"
+  },
+  {
+    "path": "docs/mesh-evidence/complex-terrain/octagon_tunnel.png",
+    "bytes": 287466,
+    "sha256": "9db6c2f8fef3003d4f30c48f48f065f294498a75d2685b5dfdb0a5095d3baae6"
+  },
+  {
+    "path": "docs/mesh-evidence/complex-terrain/package.json",
+    "bytes": 1265,
+    "sha256": "e39609a3aff3cd999347a4650a3f9e5a6957f8c0a29b64a3595be1a5fa23e3a1"
+  },
+  {
+    "path": "docs/mesh-evidence/complex-terrain/records.zip",
+    "bytes": 34918323,
+    "sha256": "85046302cddd01d625cf3246a49c77af7b245ab4c3e2ba335e0389c4263f4e2a"
+  },
+  {
+    "path": "docs/mesh-evidence/complex-terrain/release.json",
+    "bytes": 479,
+    "sha256": "8cbf524dcd5e6f9952127566a4a72a8a2a658a68d379e99309306c7f13040e04"
+  },
+  {
+    "path": "docs/mesh-evidence/complex-terrain/sources.json",
+    "bytes": 3107,
+    "sha256": "62b7f8ff7bbc7266f869c8af969c86d4f0e26a74606d223348ff0410c936c9fa"
+  },
+  {
+    "path": "docs/mesh-evidence/complex-terrain/step_wall_fill.png",
+    "bytes": 30967,
+    "sha256": "9e273318e162a5006b4d3083fb54310855d26b35536eaae5cbc11adf3dfbb612"
+  },
+  {
+    "path": "docs/mesh-evidence/complex-terrain/two_holes.png",
+    "bytes": 31049,
+    "sha256": "5e85f80c101bb9474f53249c8b4b35571aab66e72a28c56f45630f5d97e2f08f"
+  },
+  {
+    "path": "docs/mesh-evidence/complex-terrain/verification.json",
+    "bytes": 4713,
+    "sha256": "2e3e0615426212dab1c93ca00b33b978ddafae00bc7b8f728c0b250261d408ca"
+  },
+  {
     "path": "docs/native-evidence/assembly_20261020/DAVIS_0.json",
     "bytes": 51733,
     "sha256": "f6dde4d41d2c4c0d2fe9a03db43fc12858c06d4ef40bc224af6bc0820edb24ac"
@@ -8800,6 +8900,11 @@
     "sha256": "e000500ea75139a191cd0de8493e6d89fd635c327bcbd7bc3daf199de4c55bd7"
   },
   {
+    "path": "src/vba/FEMTerrainBlocks.bas",
+    "bytes": 32300,
+    "sha256": "2385d13f223907a3f4354646c6e285e2f295f4494341846909f27496baa09468"
+  },
+  {
     "path": "src/vba/FEMUi.bas",
     "bytes": 7054,
     "sha256": "8085b9ee4a6730d7c45eec94ae4e9033486ab5a79cf28de2b9b48c3cb14d3a18"
@@ -8821,8 +8926,8 @@
   },
   {
     "path": "src/vba/FEMUiMeshWorkflow.bas",
-    "bytes": 7353,
-    "sha256": "ccefbe9e2bac11b829db51088d5a197f0e4dbe273b4747fe4d1c8b219c9e922b"
+    "bytes": 7370,
+    "sha256": "ebe602bc14dc6ef24baa86fb0d72a4d71b443454feba0655bdb51a6982a84ff2"
   },
   {
     "path": "src/vba/FEMUiValidation.bas",
@@ -8861,13 +8966,13 @@
   },
   {
     "path": "src/vba/Mesh.bas",
-    "bytes": 135015,
-    "sha256": "dfb1caf47fbb2193b7882dc268ee9272ca2d35af8375eb98f5f5176de2aae372"
+    "bytes": 136409,
+    "sha256": "c621083aed6fc85cf376625fdeadfd52e80319b201dc79915c08531dc786649a"
   },
   {
     "path": "src/vba/MeshAdapt.bas",
-    "bytes": 99649,
-    "sha256": "9a42f7e8b562841af15cb5ff3417aa64840d7589053a6e98bea53641cdf32225"
+    "bytes": 100395,
+    "sha256": "dc03d02bd7eb449fcc267bd0975bf32ec18602aca79b91b0a24704760b144a13"
   },
   {
     "path": "src/vba/MeshAngle.bas",
@@ -8898,6 +9003,26 @@
     "path": "tests/check_bearing_case.py",
     "bytes": 5481,
     "sha256": "4d9c2bfd0277783f115388ed4e55472d1b4a8e4d727c76bcadd227dc461fda91"
+  },
+  {
+    "path": "tests/check_complex_terrain.py",
+    "bytes": 7021,
+    "sha256": "5444497a769d9b165432697e7e35a8a3889ee9c7c0c46e7988e459dceb5e2b85"
+  },
+  {
+    "path": "tests/check_complex_terrain_regression.py",
+    "bytes": 3196,
+    "sha256": "c728afe05975180434644a83991ca9bea8d9f826b88e672f370b3952c198390b"
+  },
+  {
+    "path": "tests/check_delaunay_memory.py",
+    "bytes": 6608,
+    "sha256": "06372e0d02b891f486142198e8bf664c8228250ac4dec28bb76450721cff97b6"
+  },
+  {
+    "path": "tests/check_embedded_sources.py",
+    "bytes": 1775,
+    "sha256": "0450d14c07ecb94e8a7cc803bdd974dd6f920027a677710ce686e697f334fc93"
   },
   {
     "path": "tests/check_groundwater.py",
@@ -8965,9 +9090,19 @@
     "sha256": "dd630c7b3cd753f9a708b6733830745f80fa4f28d1e3a4416d543c7f7c28f8f8"
   },
   {
+    "path": "tests/experiment_complex_terrain.py",
+    "bytes": 6380,
+    "sha256": "482c04dd7506fb3318053cff2673af8135efdd016eb786639082672cd1235dff"
+  },
+  {
     "path": "tests/experiment_mesh_terrain.py",
     "bytes": 7338,
     "sha256": "ddf356aeba7c2821b123e4a69f0e04d38da90e679ac6cc8c60072782bbcce9d4"
+  },
+  {
+    "path": "tests/fixtures/complex_terrain.json",
+    "bytes": 37570,
+    "sha256": "3e24a5570afcb35cbddbc23dad4f8c249a68ebf4993f00d153ace3e50cd092c5"
   },
   {
     "path": "tests/fixtures/groundwater_all_birth.json",
@@ -9616,8 +9751,8 @@
   },
   {
     "path": "tests/native/make_native_workbook.ps1",
-    "bytes": 4717,
-    "sha256": "2b7cf8346311797c175d6663668f8da2ec21f9efacd0ee74e3006daec56f44ba"
+    "bytes": 4743,
+    "sha256": "9e1361be4391ae89c904955af03f234d30e04468321d58b3f61a22b3bb13ab29"
   },
   {
     "path": "tests/native/measure_event_buffer.ps1",
@@ -9790,9 +9925,14 @@
     "sha256": "0603728aa4cd557abbaab9413e364ff4cc1e59635739e7686f648e767f0db941"
   },
   {
+    "path": "tests/package_complex_terrain.py",
+    "bytes": 8271,
+    "sha256": "69bddafdd497efe456ac4ebecedc9855fbe9621254c57a6cb4b27b8d083accd9"
+  },
+  {
     "path": "tests/package_groundwater.ps1",
-    "bytes": 3828,
-    "sha256": "2ddccfff54124638613338158d1f8c4fbedff311de0547887738769f6d526963"
+    "bytes": 3854,
+    "sha256": "f27c02669d027df083188de97d47cb067cb58b20cfacaccb19385f04d4c508bd"
   },
   {
     "path": "tests/package_release23.py",
@@ -9885,14 +10025,24 @@
     "sha256": "1691ed19e16bf61f549dbaccf3154aa420a2e08b1dbfbc9c0a9c932fc4a09509"
   },
   {
+    "path": "tests/run_complex_terrain.ps1",
+    "bytes": 4257,
+    "sha256": "241cb048cbe53061b228a56a9ecf174ac1ff0a7e83fe5a1182a4e7f1e9b95965"
+  },
+  {
+    "path": "tests/run_delaunay_memory.ps1",
+    "bytes": 6924,
+    "sha256": "ace6175aa4f9c4dd030631b2fc66bd6c51ba6d12da5f74b82c4049198f9b00e1"
+  },
+  {
     "path": "tests/run_groundwater.ps1",
     "bytes": 7096,
     "sha256": "e79585a7dcb4be7543b329558fe4d55c7044b1f8d70a522b452dd5ba8c054371"
   },
   {
     "path": "tests/run_groundwater_fixture.ps1",
-    "bytes": 10863,
-    "sha256": "db60d7f278285995c9dec9365ed4294b801517c0da4556d7ee7310c83b5576d2"
+    "bytes": 11156,
+    "sha256": "c39a805bec2acfd57efbecc8a2ecb2b3d4a80c528c6c5fcabdfbf5fa86b464f9"
   },
   {
     "path": "tests/run_groundwater_regression.ps1",
@@ -9911,8 +10061,8 @@
   },
   {
     "path": "tests/run_mesh_benchmark.ps1",
-    "bytes": 7928,
-    "sha256": "9fba4dd05473567b8eddc5b489831c2ecd71ea486974e113487363a8bab29a21"
+    "bytes": 8026,
+    "sha256": "0e07537e9404b19e378f50e6a08e4abc4d60075cecafbd94416673015b743b3e"
   },
   {
     "path": "tests/test_best03_defaults.ps1",
@@ -10116,8 +10266,8 @@
   },
   {
     "path": "workbook/SoilFEM_UI_20261023.zip",
-    "bytes": 3393367,
-    "sha256": "f10f0e6f4d8c7b18aa20d62f2c9c2836fe4cf7d0a9a8ec39417dabcb40e89b2e"
+    "bytes": 3471080,
+    "sha256": "191be7e4b17587d61e36a534ffb5569fb7fe896fd12c2b9fdf1265c29547f404"
   },
   {
     "path": "workbook/inco_assembly_20261020/2DSoilFEM_inco_assembly_20261020.xlsm",
@@ -10371,18 +10521,18 @@
   },
   {
     "path": "workbook/ui_20261023/2DSoilFEM_ui_20261023.xlsm",
-    "bytes": 3542405,
-    "sha256": "fdb6215362b57d6d7437364e9d2c6d228733cc7ffbcd1828875aef0a557d5e42"
+    "bytes": 3607252,
+    "sha256": "c6410acfa198d793877db73cc2bfefd2323914b1786345867a8d417bf2e3b7ea"
   },
   {
     "path": "workbook/ui_20261023/BUILD_RECORD.json",
-    "bytes": 1874,
-    "sha256": "db3e70a54a27fbceab92b8893adb2357062dc8c5f5e7285f68df4a9f6ec673a3"
+    "bytes": 16025,
+    "sha256": "d1f31f4edb7cfa57b4da9f3824bf2fa3700dfbea50b9d339f3c1a8f89d6c164d"
   },
   {
     "path": "workbook/ui_20261023/README.txt",
-    "bytes": 3868,
-    "sha256": "b93c28db6034c5c9f047e5120dc13578a1e2086bc34a371c3660f13558220a10"
+    "bytes": 4524,
+    "sha256": "137240033a23c46ee0e146ed138d335c846b9aedbee931248a77d0da6b20d408"
   },
   {
     "path": "workbook/ui_20261023/soilfem_native_x64.dll",

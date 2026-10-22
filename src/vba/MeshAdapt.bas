@@ -1360,21 +1360,21 @@ Private Sub ValidateTerrainConditions()
     Next i
 End Sub
 Public Sub MeshPrepareTerrainDirect(ByRef outX() As Double, ByRef outY() As Double, ByRef outElements() As Variant)
-    Dim ws As Worksheet, raw As Variant, header As Variant, n As Long, i As Long, j As Long, k As Long
-    Dim ext(1 To 1) As Long, inner(1 To 1) As Long, boundary() As Long, gx() As Double, gy() As Double
-    Dim spacing As Double, area As Double, rows As Variant, token As String, target As String, q As QualityRecord
-    Dim lowX As Double, highX As Double, lowY As Double, highY As Double, mat As Long
-    ' Validate everything in arrays. No node/element/result worksheet is replaced on rejection.
     If busy Or AnalysisRunning Then Err.Raise vbObjectError + 3860, , "解析またはメッシュ処理中です。"
     candidateReady = False: MeshAdaptLastError = "": selectedMethod = ""
-    Set ws = ThisWorkbook.Worksheets("図形定義")
-    header = ws.Range("A1:N24").Value2
-    If CLng(Val(header(3, 4))) <> 1 Or CLng(Val(header(24, 4))) <> 0 Then Err.Raise vbObjectError + 3860, , "地形格子は外周1つ・穴なしの単一領域だけです。複数領域・穴には適用できません。"
-    n = CLng(Val(header(3, 5)))
-    If n < 4 Or n > 1999 Then Err.Raise vbObjectError + 3860, , "地形格子の外周は4～1999点が必要です。"
-    spacing = CDbl(header(3, 6))
-    If spacing <= 0# Then Err.Raise vbObjectError + 3860, , "格子間隔は正数が必要です。"
-    If MeshJointPairsDefined() Then Err.Raise vbObjectError + 3860, , "地形格子の直接生成は単一材料です。接合境界を含むモデルには適用できません。"
+    Call MeshTerrainInputGuards
+    On Error GoTo Blocks
+    MeshPrepareTerrainSimple outX, outY, outElements
+    Exit Sub
+Blocks:
+    On Error GoTo 0
+    MeshPrepareTerrainBlocks outX, outY, outElements
+    selectedMethod = "地形追従格子（直接生成）"
+End Sub
+
+Private Sub MeshTerrainInputGuards()
+    Dim ws As Worksheet, rows As Variant, i As Long, token As String, target As String
+    If MeshJointPairsDefined() Then Err.Raise vbObjectError + 3860, , "接合境界を含むモデルは、地形格子生成前に接合設定を解除し、生成後に設定してください。"
     rows = Table("載荷", 9)
     For i = 1 To UBound(rows, 1)
         If Left$(Trim$(CStr(rows(i, 1))), 1) <> "(" Then
@@ -1390,6 +1390,23 @@ Public Sub MeshPrepareTerrainDirect(ByRef outX() As Double, ByRef outY() As Doub
     If Not ws Is Nothing Then
         If Application.CountA(ws.Range("A216:F" & CStr(Application.Max(216, ws.Cells(ws.Rows.Count, 1).End(xlUp).Row)))) > 0 Then Err.Raise vbObjectError + 3860, , "要素・辺番号を指定した水理境界があります。地形格子生成前に解除し、生成後に設定してください。"
     End If
+End Sub
+
+Private Sub MeshPrepareTerrainSimple(ByRef outX() As Double, ByRef outY() As Double, ByRef outElements() As Variant)
+    Dim ws As Worksheet, raw As Variant, header As Variant, n As Long, i As Long, j As Long, k As Long
+    Dim ext(1 To 1) As Long, inner(1 To 1) As Long, boundary() As Long, gx() As Double, gy() As Double
+    Dim spacing As Double, area As Double, rows As Variant, token As String, target As String, q As QualityRecord
+    Dim lowX As Double, highX As Double, lowY As Double, highY As Double, mat As Long
+    ' Validate everything in arrays. No node/element/result worksheet is replaced on rejection.
+    If busy Or AnalysisRunning Then Err.Raise vbObjectError + 3860, , "解析またはメッシュ処理中です。"
+    candidateReady = False: MeshAdaptLastError = "": selectedMethod = ""
+    Set ws = ThisWorkbook.Worksheets("図形定義")
+    header = ws.Range("A1:N24").Value2
+    If CLng(Val(header(3, 4))) <> 1 Or CLng(Val(header(24, 4))) <> 0 Then Err.Raise vbObjectError + 3860, , "地形格子は外周1つ・穴なしの単一領域だけです。複数領域・穴には適用できません。"
+    n = CLng(Val(header(3, 5)))
+    If n < 4 Or n > 1999 Then Err.Raise vbObjectError + 3860, , "地形格子の外周は4～1999点が必要です。"
+    spacing = CDbl(header(3, 6))
+    If spacing <= 0# Then Err.Raise vbObjectError + 3860, , "格子間隔は正数が必要です。"
     Set ws = ThisWorkbook.Worksheets("図形定義")
     raw = ws.Range(ws.Cells(2, 2), ws.Cells(n + 1, 3)).Value2
     ReDim gx(1 To n): ReDim gy(1 To n): ReDim boundary(1 To 1, 1 To n + 1)
