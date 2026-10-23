@@ -1,70 +1,63 @@
-"""Check the issue #50 WATER resume matrix.
-
-The runner may optionally emit ``resume_water.json`` and
-``resume_水圧結果.json`` when the boundary observables hook is enabled.  The
-checks below intentionally require those records: displacement-only resume
-checks cannot detect a stale boundary profile when the saved pore pressure is
-still readable.
-"""
-from __future__ import annotations
-import argparse, json, math
+"""Compare actual accepted, restored and following-WAIT hydraulic states."""
 from pathlib import Path
+import argparse,json,math
 
-
-def load(p: Path):
-    return json.loads(p.read_text(encoding="utf-8-sig"))
-
-
-def finite_values(value):
-    if isinstance(value, (int, float)):
-        return [float(value)] if math.isfinite(float(value)) else []
-    if isinstance(value, list):
-        out = []
-        for x in value:
-            out.extend(finite_values(x))
-        return out
-    return []
-
-
-def main() -> None:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--root", type=Path, required=True)
-    ap.add_argument("--out", type=Path, required=True)
-    args = ap.parse_args()
-    cases = ["default_start_no_detail", "explicit_hold", "explicit_start", "explicit_linear"]
-    report = {"issue": 50, "cases": {}, "status": "PASS"}
-    for suffix in cases:
-        d = args.root / ("issue50_" + suffix)
-        fresh = load(d / "result.json")
-        resumed = load(d / "resume.json")
-        if not str(fresh.get("status", "")).startswith("PASS|") or not str(resumed.get("status", "")).startswith("PASS|"):
-            raise SystemExit(f"non-PASS run: {suffix}")
-        disp = fresh.get("disp", [])
-        rdisp = resumed.get("disp", [])
-        if len(disp) != len(rdisp) or any(abs(float(a) - float(b)) > 1e-9 for a, b in zip(disp, rdisp)):
-            raise SystemExit(f"resume displacement mismatch: {suffix}")
-        # The fixture runner extension writes these values before closing the
-        # fresh workbook and after reopening the checkpoint.  A missing file is
-        # a test failure rather than an implicit pass.
-        for name in ("water_observables.json", "resume_water_observables.json"):
-            p = d / name
-            if not p.exists():
-                raise SystemExit(f"missing boundary observables: {d.name}/{name}")
-        a = load(d / "water_observables.json")
-        b = load(d / "resume_water_observables.json")
-        keys = ("profile", "external_load", "flow", "next_wait_profile")
-        missing = [k for k in keys if k not in a or k not in b]
-        if missing:
-            raise SystemExit(f"missing observable keys {missing}: {suffix}")
-        for k in keys:
-            av, bv = a[k], b[k]
-            va, vb = finite_values(av), finite_values(bv)
-            if len(va) != len(vb) or any(abs(x - y) > 1e-10 for x, y in zip(va, vb)):
-                raise SystemExit(f"resume {k} mismatch: {suffix}")
-        report["cases"][suffix] = {"status": "PASS", "dofs": len(disp), "observables": list(keys)}
-    args.out.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print("PASS")
-
-
-if __name__ == "__main__":
-    main()
+def read(p):return json.loads(Path(p).read_text(encoding='utf-8-sig'))
+def close(a,b,tol=1e-9):
+ if isinstance(a,bool) or isinstance(b,bool):
+  assert type(a) is type(b) and a==b,(a,b);return 0.
+ if isinstance(a,(int,float)) and isinstance(b,(int,float)):
+  assert math.isfinite(a) and math.isfinite(b),(a,b)
+  d=abs(a-b);assert d<=tol,(d,tol,a,b);return d
+ if isinstance(a,list):
+  assert isinstance(b,list) and len(a)==len(b) and len(a)>0
+  return max(close(x,y,tol) for x,y in zip(a,b))
+ assert isinstance(a,str) and isinstance(b,str) and a==b,(a,b);return 0.
+FIELDS={'profile':0,'external_load':1e-9,'boundary_locked':0,'boundary_pressure':1e-8,'heads':1e-9,'flow':1e-12,'flow_reaction':1e-12,'gp_pressure':1e-8}
+def state(a,b):
+ for k in FIELDS:
+  if k=='profile':assert isinstance(a[k],str) and a[k] and isinstance(b[k],str) and b[k]
+  else:assert isinstance(a[k],list) and a[k] and isinstance(b[k],list) and b[k],k
+ return {k:close(a[k],b[k],tol) for k,tol in FIELDS.items()}
+def check(root,cases):
+ report={'status':'PASS','cases':[]}
+ for suffix in cases:
+  for checkpoint in ['mid','completed']:
+   p=root/f'issue50_{suffix}_{checkpoint}';a=read(p/'result.json');b=read(p/'resume.json')
+   assert a['status'].startswith('PASS|') and b['status'].startswith('PASS|')
+   if a['requested_native']=='OFF':assert 'VBA(OFF_SELECTED)' in a['native'],a['native']
+   else:assert a['requested_native']=='AUTO' and a['native'].startswith('NATIVE('),a['native']
+   du=close(a['disp'],b['disp'],1e-9);metrics=close(a['metrics'],b['metrics'],1e-6)
+   fresh=read(p/'water_observables.json');resumed=read(p/'resume_water_observables.json')
+   final=state(fresh,resumed)
+   loaded=resumed['loaded'];assert loaded['stage']==3 and loaded['duration']==40
+   if checkpoint=='mid':assert 0<loaded['elapsed']<40
+   else:assert loaded['elapsed']==40
+   matching=[v for v in fresh['frames'] if v['stage']==3 and v['elapsed']==loaded['elapsed']]
+   assert len(matching)==1
+   load_delta=state(matching[0],loaded)
+   wait=[]
+   for v in resumed['frames']:
+    if v['stage']!=4:continue
+    candidates=[w for w in fresh['frames'] if w['stage']==4 and w['elapsed']==v['elapsed']]
+    assert len(candidates)==1;wait.append({'elapsed':v['elapsed'],'delta':state(candidates[0],v)})
+   assert len(wait)==2
+   model=read(Path('tests/fixtures/issue50')/f'issue50_{suffix}.json')
+   expected_profile='W' if suffix in ['explicit_hold','explicit_blank_mode_hold'] else 'W2'
+   assert fresh['profile']==resumed['profile']==loaded['profile']==expected_profile
+   levels=[r[2] for r in model['water']['profiles'] if r[0]==expected_profile];assert levels and max(levels)==min(levels)
+   width=max(n[1] for n in model['nodes'])-min(n[1] for n in model['nodes']);top=max(n[2] for n in model['nodes'])
+   expected_force=-model['water']['gamma']*(levels[0]-top)*width
+   close(sum(fresh['external_load'][1::2]),expected_force,1e-8)
+   close(sum(resumed['external_load'][1::2]),expected_force,1e-8)
+   close(a['metrics'][2],a['metrics'][0]-expected_force,1e-6)
+   # Distinguish a genuine named-profile change from a shared stale answer.
+   if suffix=='default_start_no_detail':assert sum(resumed['external_load'][1::2])< -25
+   report['cases'].append({'case':suffix,'checkpoint':checkpoint,'native':a['requested_native'],'book_sha256':a['book_sha256'],'status':'PASS','dofs':len(a['disp']),'max_u_m':du,'max_metrics_delta':metrics,'restored_elapsed_s':loaded['elapsed'],'restored_delta':load_delta,'final_delta':final,'following_WAIT':wait,'final_profile':resumed['profile'],'final_surface_force_y_kN':sum(resumed['external_load'][1::2]),'fresh_seconds':a['seconds'],'resume_seconds':b['seconds']})
+ if 'default_start_no_detail' in cases and 'explicit_start' in cases:
+  a=read(root/'issue50_default_start_no_detail_completed/result.json');b=read(root/'issue50_explicit_start_completed/result.json')
+  report['default_vs_explicit_start']={'max_u_m':close(a['disp'],b['disp'],1e-12),
+   'state':state(read(root/'issue50_default_start_no_detail_completed/water_observables.json'),read(root/'issue50_explicit_start_completed/water_observables.json'))}
+ return report
+if __name__=='__main__':
+ ap=argparse.ArgumentParser();ap.add_argument('--root',type=Path,required=True);ap.add_argument('--out',type=Path,required=True);ap.add_argument('--cases',nargs='+',default=['default_start_no_detail','explicit_hold','explicit_start','explicit_linear','explicit_blank_mode_hold','water_series']);a=ap.parse_args();r=check(a.root,a.cases);a.out.write_text(json.dumps(r,ensure_ascii=False,indent=2)+'\n',encoding='utf8');print('PASS',len(r['cases']),'resume cases including immediate load and following WAIT')

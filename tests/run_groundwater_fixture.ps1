@@ -1,4 +1,4 @@
-param([Parameter(Mandatory=$true)][string]$Book,[Parameter(Mandatory=$true)][string]$Fixture,[Parameter(Mandatory=$true)][string]$Out,[switch]$Resume,[string]$Flow="INCONSISTENT",[string]$Native="AUTO",[switch]$FrontUi,[string]$ResumeState='',[switch]$ReopenResume,[ValidateSet('','FS','FS_UI','FLAG','CAPTURE','SAVE','PLASTIC','WRITE_TIME','WRITE_STAGE','PLCSV_TIME','PLCSV_STAGE','FSCSV_TIME','FSCSV_STAGE','LEDGERCSV_TIME','LEDGERCSV_STAGE','GWCSV_TIME','GWCSV_STAGE','FSCSV_TIME_UI')][string]$CancelAt='',[ValidateSet(5,18)][int]$FaultNumber=18,[ValidateRange(0,100)][int]$CancelAfterAccepted=2,[switch]$CheckLedger,[switch]$ExpectedOrdinaryFailure)
+param([Parameter(Mandatory=$true)][string]$Book,[Parameter(Mandatory=$true)][string]$Fixture,[Parameter(Mandatory=$true)][string]$Out,[switch]$Resume,[string]$Flow="INCONSISTENT",[string]$Native="AUTO",[switch]$FrontUi,[string]$ResumeState='',[switch]$ReopenResume,[ValidateSet('','FS','FS_UI','FLAG','CAPTURE','SAVE','PLASTIC','WRITE_TIME','WRITE_STAGE','PLCSV_TIME','PLCSV_STAGE','FSCSV_TIME','FSCSV_STAGE','LEDGERCSV_TIME','LEDGERCSV_STAGE','GWCSV_TIME','GWCSV_STAGE','FSCSV_TIME_UI')][string]$CancelAt='',[ValidateSet(5,18)][int]$FaultNumber=18,[ValidateRange(0,100)][int]$CancelAfterAccepted=2,[switch]$CheckLedger,[switch]$ExpectedOrdinaryFailure,[switch]$WaterObservables)
 $ErrorActionPreference='Stop'
 if(Get-Process EXCEL -ErrorAction SilentlyContinue){throw 'Another Excel is running; do not dispatch.'}
 if(Test-Path -LiteralPath $Out){throw 'Preserve previous evidence.'}
@@ -109,11 +109,29 @@ Unavailable:
 End Function
 '@)
  }
+ if($WaterObservables){
+  $observer=$wb.VBProject.VBComponents.Add(1);$observer.Name='Issue50Observer'
+  $observer.CodeModule.AddFromString([IO.File]::ReadAllText("$PSScriptRoot/issue50_observer.bas"))
+  foreach($hook in @(@('FEMFixedStressResults','    EnsureRunFolder','    WF50Accepted'),@('FEMFixedStress','  FSLedgerRead folder','  WF50Restored'))){
+   $cm=$wb.VBProject.VBComponents.Item($hook[0]).CodeModule;$text=$cm.Lines(1,$cm.CountOfLines)
+   if($text.IndexOf($hook[1]) -lt 0){throw 'Water observation hook missing'}
+   $cm.DeleteLines(1,$cm.CountOfLines);$cm.AddFromString($text.Replace($hook[1],$hook[2]+"`r`n"+$hook[1]))
+  }
+ }
  if($data.checkTangent){
   $testModule=$wb.VBProject.VBComponents.Add(1);$testModule.Name='JointTangentDriver'
   $testModule.CodeModule.AddFromString([IO.File]::ReadAllText("$PSScriptRoot/joint_tangent_driver.bas"))
  }
  function Call([string]$name){$xl.Run("'"+$wb.Name+"'!"+$name)}
+ function WaterState($v){
+  return @{stage=$v[0];elapsed=$v[1];duration=$v[2];time=$v[3];accepted=$v[4];profile=$v[5];selectors=@($v[6],$v[7],$v[8]);external_load=@($v[9]);boundary_locked=@($v[10]);boundary_pressure=@($v[11]);heads=@($v[12]);flow=@($v[13]);flow_reaction=@($v[14]);gp_pressure=@($v[15])}
+ }
+ function WriteWater([string]$name,[switch]$Loaded){
+  $a=Call 'WF50State';$r=WaterState $a;$r['next_wait_profile']=$r.profile
+  $r['frames']=@(foreach($v in (Call 'WF50Frames')){WaterState $v})
+  if($Loaded){$r['loaded']=WaterState (Call 'WF50Loaded')}
+  $r|ConvertTo-Json -Depth 12|Set-Content (Join-Path $Out $name) -Encoding UTF8
+ }
  function SetSetting([string]$key,$value){if($value -is [string]){$null=$xl.Run("'"+$wb.Name+"'!FEMWriteTextSetting",$key,$value)}else{$null=$xl.Run("'"+$wb.Name+"'!FEMWriteNumericSetting",$key,[double]$value)}}
  function Rows($ws,[int]$firstRow,[int]$firstColumn,$rows,[int]$cols){
   if($null -eq $rows -or $rows.Count -eq 0){return}
@@ -340,6 +358,7 @@ End Sub
   for($r=1;$r -le $array.GetLength(0);$r++){$row=[Collections.Generic.List[object]]::new();for($c=1;$c -le $array.GetLength(1);$c++){$row.Add($array[$r,$c])};$values.Add(@($row))}
   ConvertTo-Json -InputObject @($values) -Depth 8 | Set-Content (Join-Path $Out ($name+'.json')) -Encoding UTF8
  }
+ if($WaterObservables){WriteWater 'water_observables.json'}
  $wb.Save()
  if($Resume){
   $wb.SaveCopyAs((Join-Path $Out 'fresh_results.xlsm'))
@@ -367,6 +386,7 @@ End Sub
   $ws=$wb.Worksheets.Item('接合結果');$array=$ws.UsedRange.Value2;$values=[Collections.Generic.List[object]]::new()
   for($r=1;$r -le $array.GetLength(0);$r++){$row=[Collections.Generic.List[object]]::new();for($c=1;$c -le $array.GetLength(1);$c++){$row.Add($array[$r,$c])};$values.Add(@($row))}
   ConvertTo-Json -InputObject @($values) -Depth 8 | Set-Content (Join-Path $Out 'resume_接合結果.json') -Encoding UTF8
+  if($WaterObservables){WriteWater 'resume_water_observables.json' -Loaded}
   if($status -notlike 'PASS|*'){throw "Resume: $status"}
   for($i=4;$i -lt 8;$i++){if([Math]::Abs($oldMetrics[$i]-$resumed.metrics[$i]) -gt 1e-10){throw "Resume Fs mismatch index=$i"}}
   # Principal directions are undefined for equal eigenvalues. Large yield-function

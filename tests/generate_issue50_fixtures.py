@@ -16,7 +16,7 @@ def main() -> None:
     ap.add_argument("--out", type=Path, required=True)
     args = ap.parse_args()
     base = json.loads(args.source.read_text(encoding="utf-8"))
-    # Stage 4 is the WATER transition W -> W2; stage 5 is the following WAIT.
+    # Stage 3 is the WATER transition W -> W2; stage 4 is the following WAIT.
     # Keep the stage-plan rows in every case so this matrix does not exercise
     # the unrelated "no WATER plan" rejection path.
     modes = {
@@ -24,6 +24,11 @@ def main() -> None:
         "explicit_hold": "HOLD",
         "explicit_start": "START",
         "explicit_linear": "LINEAR",
+        # A populated detail row with an empty mode is the compatibility
+        # control for legacy sheets; it must retain the documented HOLD
+        # interpretation and must not be confused with an omitted row.
+        "explicit_blank_mode_hold": "",
+        "water_series": "LINEAR",
     }
     args.out.mkdir(parents=True, exist_ok=True)
     for suffix, mode in modes.items():
@@ -32,7 +37,10 @@ def main() -> None:
         if mode is None:
             d["water"].pop("timeOptions", None)
         else:
-            d["water"]["timeOptions"] = [[4, "D", mode, "INSTANT", 0.0001, 0.1, 0.2, "", "", ""]]
+            d["water"]["timeOptions"] = [[3, "S", mode, "INSTANT", 0.01, 10, 10, "", "", ""]]
+        if suffix == "water_series":
+            d["water"]["timeOptions"][0][7] = "CURVE"
+            d["water"]["timeCurves"] = [["CURVE", 0, "W"], ["CURVE", 20, "W2"], ["CURVE", 40, "W2"]]
         (args.out / (d["name"] + ".json")).write_text(
             json.dumps(d, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
         )

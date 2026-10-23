@@ -1,0 +1,173 @@
+{
+  "status": "PASS",
+  "cold": [
+    {
+      "case": "mid",
+      "status": "PASS",
+      "loaded_elapsed_s": 20.0,
+      "loaded_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 4.440892098500626e-15,
+        "flow": 2.3540236744279083e-19,
+        "flow_reaction": 3.970466940254533e-23,
+        "gp_pressure": 3.552713678800501e-14
+      },
+      "final_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 4.440892098500626e-14,
+        "flow": 5.649577409288175e-19,
+        "flow_reaction": 2.4756523116977055e-19,
+        "gp_pressure": 4.334310688136611e-13
+      },
+      "u_max_m": 4.912817114927082e-13,
+      "metrics_max_delta": 1.4210854715202004e-14,
+      "seconds": 7.8355416
+    },
+    {
+      "case": "completed",
+      "status": "PASS",
+      "loaded_elapsed_s": 40.0,
+      "loaded_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 4.440892098500626e-15,
+        "flow": 2.2815543809621375e-19,
+        "flow_reaction": 1.9852334701272664e-23,
+        "gp_pressure": 3.552713678800501e-14
+      },
+      "final_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 2.4868995751603507e-14,
+        "flow": 3.186961464044305e-19,
+        "flow_reaction": 1.367428814223661e-19,
+        "gp_pressure": 2.3447910280083306e-13
+      },
+      "u_max_m": 4.757095325297334e-13,
+      "metrics_max_delta": 1.3766765505351941e-14,
+      "seconds": 6.3323219
+    },
+    {
+      "case": "old07",
+      "status": "PASS",
+      "loaded_elapsed_s": 40.0,
+      "loaded_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 4.440892098500626e-15,
+        "flow": 2.2815543809621375e-19,
+        "flow_reaction": 1.9852334701272664e-23,
+        "gp_pressure": 3.552713678800501e-14
+      },
+      "final_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 2.4868995751603507e-14,
+        "flow": 3.186961464044305e-19,
+        "flow_reaction": 1.367428814223661e-19,
+        "gp_pressure": 2.3447910280083306e-13
+      },
+      "u_max_m": 4.757095325297334e-13,
+      "metrics_max_delta": 1.3766765505351941e-14,
+      "seconds": 6.7096259
+    }
+  ],
+  "view": [
+    {
+      "case": "mid",
+      "status": "PASS",
+      "view_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 4.440892098500626e-15,
+        "flow": 2.3540236744279083e-19,
+        "flow_reaction": 3.970466940254533e-23,
+        "gp_pressure": 3.552713678800501e-14
+      },
+      "loaded_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 4.440892098500626e-15,
+        "flow": 2.3540236744279083e-19,
+        "flow_reaction": 3.970466940254533e-23,
+        "gp_pressure": 3.552713678800501e-14
+      }
+    },
+    {
+      "case": "completed",
+      "status": "PASS",
+      "view_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 4.440892098500626e-15,
+        "flow": 2.2815543809621375e-19,
+        "flow_reaction": 1.9852334701272664e-23,
+        "gp_pressure": 3.552713678800501e-14
+      },
+      "loaded_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 4.440892098500626e-15,
+        "flow": 2.2815543809621375e-19,
+        "flow_reaction": 1.9852334701272664e-23,
+        "gp_pressure": 3.552713678800501e-14
+      }
+    }
+  ],
+  "observer_result": {
+    "u_max_m": 0.0,
+    "stress_max_kPa": 0.0,
+    "metrics_max_delta": 0.0
+  },
+  "observer_resume": {
+    "u_max_m": 0.0,
+    "stress_max_kPa": 0.0,
+    "metrics_max_delta": 0.0
+  },
+  "fractional_series": {
+    "status": "PASS",
+    "loaded_delta": {
+      "profile": 0.0,
+      "external_load": 0.0,
+      "boundary_locked": 0.0,
+      "boundary_pressure": 0.0,
+      "heads": 4.440892098500626e-15,
+      "flow": 3.1145045782877226e-19,
+      "flow_reaction": 2.6469779601696886e-23,
+      "gp_pressure": 3.197442310920451e-14
+    },
+    "final_delta": {
+      "profile": 0.0,
+      "external_load": 0.0,
+      "boundary_locked": 0.0,
+      "boundary_pressure": 0.0,
+      "heads": 8.881784197001252e-15,
+      "flow": 5.921157348001585e-19,
+      "flow_reaction": 1.1083558463720528e-19,
+      "gp_pressure": 7.105427357601002e-14
+    },
+    "fraction": 0.5
+  }
+}

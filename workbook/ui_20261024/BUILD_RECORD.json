@@ -3,7 +3,7 @@
   "ui_stamp": "20261024_STAGE_01",
   "calculation_stamp": "20261024_FIXED_STRESS_07",
   "base_commit": "7451200a93ace785632f19396e051f8be456b90d",
-  "book_sha256": "508c99ef084129a0b70e01c28dd1d1e75de23a0ef78e212919f044998e0223bd",
+  "book_sha256": "597a168818ccc73ee46278a430f261a3d8d173de83264adcd2dc1c25935ddaf8",
   "dll_sha256": "ad5c2ae81512ba8e977002415a6a5339b621c00a1bbabe5092559f8a7f9e0797",
   "compile": "PASS",
   "source_verification": "before-save and reopen",
@@ -77,7 +77,7 @@
   "legacy_scope": "Issue models21 + partial LINEAR, material points50, coupled17, legacy issue models17 and viewer guards, mixed17, cold-process resumes3, UI9 checks; all completed. Coupled all u/stress/Fs/reaction/residual exact versus prior06; Q8 slope SRM all u/stress/Fs exact versus main06.",
   "calculation_settings_unchanged": true,
   "parent_feature_commit": "1e88299d2bbf9212d7d650f5b851d03f38c2e918",
-  "full_regression_book_sha256": "726f625b04782c88c89e09fef399962cd894291410471ec47dde1cf0fc4b0342",
+  "full_regression_book_sha256": "597a168818ccc73ee46278a430f261a3d8d173de83264adcd2dc1c25935ddaf8",
   "final_focused_boundary_cases": 15,
   "issue_fixes": [
     38,
@@ -94,9 +94,9 @@
     "src/vba/FEMAdaptive.bas": "3561df14eb010ed34f917bbc7739076691ab8e18667334979a8b04070333ad11",
     "src/vba/FEMCore.bas": "a251fff7053162544b05e3573d41b9f1ea6772c09d7d63f1a75c706bdbe5d8fe",
     "src/vba/FEMEngine.bas": "f715fdfa4970d8d2dc960b71c4c81abddc2eef4a9433e072f4a9c2be0b81e0bf",
-    "src/vba/FEMFixedStress.bas": "a71fca27f8aa674b4532dff7f328857f4200cf5535fe172c171999160f5f3408",
+    "src/vba/FEMFixedStress.bas": "b2e2c930d5b28ec2d46c2ff93cba90428607e45d63a53014fba70bf890bcdf31",
     "src/vba/FEMFixedStressGauge.bas": "357946f4db7ff28ced2d500aee5abf836f009151f73dbc2df1eebe1e25796712",
-    "src/vba/FEMFixedStressInput.bas": "230e6d8c50bfc66837d521c95bfcc1441da786c2191dffcb3a23114ec77fd4b9",
+    "src/vba/FEMFixedStressInput.bas": "f9f2c8751b23612bb8270372271fbd9d412a9b4a9e3a76c3676de0b00f8cf0f2",
     "src/vba/FEMFixedStressLedger.bas": "94ad2bdb55205e778b3d95a1c9764587024916e2891497551dc6d7c1506de15f",
     "src/vba/FEMFixedStressMatrix.bas": "07d41a418b2a21da9340688e5e354bb996e6e37d861700ed957a388c4137215e",
     "src/vba/FEMFixedStressResults.bas": "7c61c329881b40aef905f1edb3a34b273890cfaf86d6c1f0d9b045701a349692",
@@ -141,11 +141,14 @@
     "src/vba/MeshPerf.bas": "9dc06d77de5c612efc6db4037b038adeada3dd6f584375d145f0b2414933b301",
     "src/vba/ThisWorkbook.cls": "d864498c2074bcf0443546ef5c5249b55749aa79b6f673757e7332e3fe756b3c"
   },
-  "validation_record": "docs/validation/issue3_inner/validation.json",
+  "validation_record": "docs/validation/issue50_default/validation.json",
   "pdf_sha256": "a79a362c11deb66d36f2215b0d3f8d7ba4b5e30fa0cec0a2120602cfb048ed3c",
   "manual_revision": "Issue35 R58-01/R58-02: ALL result extraction, permanent road point19, inactive tunnel gaps/reference stages; 242 pages /37 chapters",
-  "previous_validation_record": "docs/validation/issue3_59/validation.json",
+  "previous_validation_record": "docs/validation/issue3_inner/validation.json",
   "issue3_59_patch": "Err18 propagation/accepted rollback; Q8 full-domain Bernstein geometry validation. Calculation/checkpoint schema07 unchanged.",
   "issue3_inner_patch": "Preserve Err18 before closing PlasticLogWrite/FSWriteCheckpoint/FSLedgerWrite/GWWriteCheckpoint. Ordinary stage/time error behavior and checkpoint schema07 unchanged.",
-  "manual_validation": "docs/validation/issue35_stage_routes/checks.json"
+  "manual_validation": "docs/validation/issue35_stage_routes/checks.json",
+  "issue50_default_resume_patch": "Resolve missing time-detail WATER default START in shared FSGetOptions for execution/read/view; explicit HOLD and blank-mode rows unchanged. Schema07 unchanged; original main07 WATER checkpoint tested in separate Excel.",
+  "issue50_base_main": "deeeb4532ad76fd2375899622fe7bac3ddde5d7b",
+  "current_validation_scope": "AUTO12 + OFF2 mid/completed; fractional series1; cold3; view2; observer-free control; normal17 + savedCSV/input comparison"
 }

@@ -41,11 +41,16 @@ Public Function FSUnitFactor(ByVal unit As String) As Double
   End Select
 End Function
 
-Public Sub FSGetOptions(ByVal stageId As Long, ByRef unit As Double, ByRef waterMode As String, ByRef loadMode As String, ByRef minimum As Double, ByRef maximum As Double, ByRef saveEvery As Double, ByRef series As String)
+Public Sub FSGetOptions(ByVal stageId As Long, ByVal stageKind As String, ByRef unit As Double, ByRef waterMode As String, ByRef loadMode As String, ByRef minimum As Double, ByRef maximum As Double, ByRef saveEvery As Double, ByRef series As String)
   Dim r As Long, ws As Worksheet
   Set ws = ThisWorkbook.Worksheets("水条件"): r = FSDetailRow(stageId)
   unit = 1#: waterMode = "HOLD": loadMode = "INSTANT": minimum = 0#: maximum = 0#: saveEvery = 0#: series = ""
-  If r = 0 Then Exit Sub
+  ' WATER without an AC:AL row starts at its target profile; an explicit
+  ' detail row (even with a blank mode) keeps the configured HOLD default.
+  If r = 0 Then
+    If stageKind = "WATER" Then waterMode = "START"
+    Exit Sub
+  End If
   unit = FSUnitFactor(CStr(ws.cells(r, 30).value2))
   waterMode = UCase$(Trim$(CStr(ws.cells(r, 31).value2)))
   loadMode = UCase$(Trim$(CStr(ws.cells(r, 32).value2)))
@@ -237,7 +242,7 @@ End Sub
 
 Public Sub FSValidateTimeDefinitions()
   Dim ws As Worksheet, seen As Object, r As Long, i As Long, id As Double, matches As Long, active As Boolean
-  Dim unit As Double, waterMode As String, loadMode As String, minimum As Double, maximum As Double, saveEvery As Double, series As String
+  Dim unit As Double, waterMode As String, loadMode As String, minimum As Double, maximum As Double, saveEvery As Double, series As String, stageKind As String
   Set ws = ThisWorkbook.Worksheets("水条件"): Set seen = CreateObject("Scripting.Dictionary")
   For r = 12 To 211
     If Application.CountA(ws.cells(r, 29).Resize(1, 10)) > 0 Then
@@ -246,10 +251,10 @@ Public Sub FSValidateTimeDefinitions()
       If seen.Exists(CStr(id)) Then FSCoupledInputError "時間詳細の工程IDが重複しています。"
       seen.Add CStr(id), True: matches = 0: active = False
       For i = 1 To P3StageN
-        If P3StageId(i) = CLng(id) Then matches = matches + 1: active = P3StageOn(i)
+        If P3StageId(i) = CLng(id) Then matches = matches + 1: active = P3StageOn(i): stageKind = P3StageKind(i)
       Next i
       If matches <> 1 Then FSCoupledInputError "時間詳細の工程IDが工程表に一意に対応していません。ID=" & CStr(id)
-      If active Then FSGetOptions CLng(id), unit, waterMode, loadMode, minimum, maximum, saveEvery, series
+      If active Then FSGetOptions CLng(id), stageKind, unit, waterMode, loadMode, minimum, maximum, saveEvery, series
     End If
   Next r
 End Sub
