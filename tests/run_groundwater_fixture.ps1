@@ -1,4 +1,4 @@
-﻿param([Parameter(Mandatory=$true)][string]$Book,[Parameter(Mandatory=$true)][string]$Fixture,[Parameter(Mandatory=$true)][string]$Out,[switch]$Resume,[string]$Flow="INCONSISTENT",[string]$Native="AUTO",[switch]$FrontUi)
+﻿param([Parameter(Mandatory=$true)][string]$Book,[Parameter(Mandatory=$true)][string]$Fixture,[Parameter(Mandatory=$true)][string]$Out,[switch]$Resume,[string]$Flow="INCONSISTENT",[string]$Native="AUTO",[switch]$FrontUi,[string]$ResumeState='',[switch]$ReopenResume)
 $ErrorActionPreference='Stop'
 if(Get-Process EXCEL -ErrorAction SilentlyContinue){throw 'Another Excel is running; do not dispatch.'}
 if(Test-Path -LiteralPath $Out){throw 'Preserve previous evidence.'}
@@ -47,6 +47,7 @@ Public Function WFBuild() As String
 End Function
 Public Function WFStress() As Variant
  Dim v() As Double, e As Long, g As Long, j As Long, n As Long
+ On Error GoTo Unavailable
  If NumberOfElement < 1 Then WFStress = Array(): Exit Function
  ReDim v(NumberOfElement * 4 * 17 - 1)
  For e = 0 To NumberOfElement - 1
@@ -57,24 +58,27 @@ Public Function WFStress() As Variant
   Next g
  Next e
  WFStress = v
+Unavailable:
 End Function
 Public Function WFDisplacements() As Variant
  WFDisplacements = TDisp
 End Function
 '@)
- if($data.water.coupledMaterials){
+ & {
   $mod.CodeModule.AddFromString(@'
 Public Function WFCoupledState() As Variant
  WFCoupledState = Array(FSActive,FSTime,FSAccepted,FSRunningStage,FSStageElapsed,FSResumePending)
 End Function
 Public Function WFPressure() As Variant
  Dim result() As Double,e As Long,g As Long
+ On Error GoTo Unavailable
  If NumberOfElement < 1 Then WFPressure = Array(): Exit Function
  ReDim result(0 To NumberOfElement*4-1)
  For e=0 To NumberOfElement-1
   For g=0 To 3: result(e*4+g)=GWNewPressure(e,g): Next g
  Next e
  WFPressure=result
+Unavailable:
 End Function
 Public Function WFOriginalNodes() As Variant
  Dim result() As Double,n As Long,k As Long
@@ -86,6 +90,18 @@ Public Function WFOriginalNodes() As Variant
   result(n,0)=n+1: result(n,1)=TDisp(2*k): result(n,2)=TDisp(2*k+1)
  Next n
  WFOriginalNodes=result
+Unavailable:
+End Function
+Public Function WFReferenceCoordinates() As Variant
+ Dim result() As Double,n As Long,k As Long
+ On Error GoTo Unavailable
+ If NumberOfFreeNode < 1 Then Exit Function
+ ReDim result(0 To NumberOfFreeNode-1,0 To 2)
+ For n=0 To NumberOfFreeNode-1
+  k=P6GetInternalFreeNode(n)
+  result(n,0)=n+1: result(n,1)=XXX(2*k): result(n,2)=XXX(2*k+1)
+ Next n
+ WFReferenceCoordinates=result
 Unavailable:
 End Function
 '@)
@@ -165,7 +181,14 @@ End Function
   if($status -like 'PASS|*' -or -not $status.Contains([string]$data.expectedAnalysisError)){throw "Expected rejection was not observed: $status"}
   $v=$xl.Run("'"+$wb.Name+"'!WFOriginalNodes");$nodes=[Collections.Generic.List[object]]::new()
   if($null -ne $v){for($n=0;$n -lt $v.GetLength(0);$n++){$nodes.Add(@($v[$n,0],$v[$n,1],$v[$n,2]))}}
-  @{case=$data.name;status=$status;expected=[string]$data.expectedAnalysisError;coupled=@(Call 'WFCoupledState');nodes=@($nodes);pressure=@(Call 'WFPressure');stress=@(Call 'WFStress');profile=(Call 'GWViewDefaultProfile')}|ConvertTo-Json -Depth 7|Set-Content (Join-Path $Out 'expected_failure.json') -Encoding UTF8
+  $failure=@{case=$data.name;status=$status;expected=[string]$data.expectedAnalysisError;nodes=@($nodes);book_sha256=(Get-FileHash $Book).Hash;fixture_sha256=(Get-FileHash $Fixture).Hash}
+  if($data.name -eq 'reset_t6_nonaffine' -or $data.checkResetPreservation){
+   $v=$xl.Run("'"+$wb.Name+"'!WFReferenceCoordinates");$coords=[Collections.Generic.List[object]]::new()
+   for($n=0;$n -lt $v.GetLength(0);$n++){$coords.Add(@($v[$n,0],$v[$n,1],$v[$n,2]))}
+   $failure.reference_coordinates=@($coords);$failure.stress=@(Call 'WFStress')
+  }
+  if($data.water.coupledMaterials){$failure.coupled=@(Call 'WFCoupledState');$failure.pressure=@(Call 'WFPressure');$failure.stress=@(Call 'WFStress');$failure.profile=Call 'GWViewDefaultProfile'}
+  $failure|ConvertTo-Json -Depth 7|Set-Content (Join-Path $Out 'expected_failure.json') -Encoding UTF8
   $wb.Close($false)
   return
  }
@@ -198,7 +221,14 @@ End Function
    Get-ChildItem $_.FullName -File | Where-Object {$_.Extension -in '.csv','.log','.txt','.json'} | Copy-Item -Destination $destination
   }
   $oldDisp=@($record.disp);$oldMetrics=@($record.metrics)
-  SetSetting 'EXPORT_LOAD' 'AUTO'
+  $resumeFolder='AUTO'
+  if($ResumeState){
+   $matches=@(Get-ChildItem -LiteralPath $Out -Recurse -Directory|Where-Object {$_.Name -eq $ResumeState -and $_.FullName -notlike '*initial_run_logs*'})
+   if($matches.Count -ne 1){throw "ResumeState must match exactly one checkpoint: $ResumeState"}
+   $resumeFolder=$matches[0].FullName
+  }
+  if($ReopenResume){$wb.Close($false);$wb=$xl.Workbooks.Open($copy,0,$false);$xl.EnableEvents=$false}
+  SetSetting 'EXPORT_LOAD' $resumeFolder
   $timer.Restart();$status=Call 'WFRun';$timer.Stop()
   $resumed=@{case=$data.name;status=$status;seconds=$timer.Elapsed.TotalSeconds;metrics=@(Call 'WFMetrics');disp=@(Call 'WFDisplacements');stress=@(Call 'WFStress')}
   $resumed|ConvertTo-Json -Depth 8|Set-Content (Join-Path $Out 'resume.json') -Encoding UTF8

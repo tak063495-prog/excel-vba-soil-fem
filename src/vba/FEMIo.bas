@@ -3312,6 +3312,9 @@ NextDofLine:
     NodeCond(intDof) = loadCond(origDof)
     P3CommittedNodeCond(intDof) = loadCond(origDof)
   Next origDof
+  ' Accepted state is also the next HOLD/WAIT target. A partially completed
+  ' LINEAR stage restores its distinct end target from fixed_stress.csv.
+  P3AppliedForce = P3LockedApplied
   P3CommittedBoundaryReady = True
   FEMIoLoadDofLock = True
 End Function

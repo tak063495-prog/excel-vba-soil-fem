@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "scope": "All populated cells in nine canonical input/settings sheets, including complete hydraulic/time tables; styles and formula cached values excluded",
+  "reference": "tests\\tmp\\issue49_57\\main06_source.xlsm",
+  "candidate": "workbook\\ui_20261024\\2DSoilFEM_ui_20261024.xlsm",
+  "reference_sha256": "538d20bb2e071adb4a0ba0e52b7bc5f361ff38d89847121e5ba75b66eb6c0e91",
+  "candidate_sha256": "c0e75c6c9fad2b47d6b37680fa6e591126031989860e03c9bf55ee81a356840f",
+  "cells": {
+    "節点データ": 5039,
+    "形状入力": 33,
+    "接合": 31,
+    "要素データ": 4347,
+    "載荷": 42,
+    "水条件": 67,
+    "材料データ": 37,
+    "ステージ": 41,
+    "設定": 478
+  }
+}

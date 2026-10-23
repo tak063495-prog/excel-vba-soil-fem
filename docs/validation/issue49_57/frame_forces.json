@@ -1,0 +1,54 @@
+{
+  "status": "PASS",
+  "fixture": "tests\\fixtures\\issue49_57\\water_linear.json",
+  "actual_book_sha256": "EC044C0BB58D8C03DE1B0956803DEAFC27D074B51A166F7094A0BEDFD7F7CE37",
+  "frames": [
+    {
+      "id": "C000005",
+      "frame": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\issue49_57\\targeted6\\water_linear\\water_linear_out\\time_20261023_205342\\C000005",
+      "max_locked_force_error_kN": 0.0,
+      "max_reaction_error_kN": 2.3033663865135168e-10,
+      "affine_displacement_error_m": 0.0,
+      "adopted_head_m": 5.0,
+      "head_spread_m": 0.0,
+      "water_fraction": 1.0,
+      "start_profile": "W",
+      "target_profile": "W2",
+      "support_Ry_kN": 69.42999999999984,
+      "expected_Ry_kN": 69.43,
+      "support_Ry_error_kN": 1.7053025658242404e-13
+    },
+    {
+      "id": "C000002",
+      "frame": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\issue49_57\\targeted6\\water_linear\\water_linear_out\\time_20261023_205342\\C000002",
+      "max_locked_force_error_kN": 0.0,
+      "max_reaction_error_kN": 2.2925661369299632e-10,
+      "affine_displacement_error_m": 0.0,
+      "adopted_head_m": 4.25,
+      "head_spread_m": 0.0,
+      "water_fraction": 0.25,
+      "start_profile": "W",
+      "target_profile": "W2",
+      "support_Ry_kN": 62.072499999999835,
+      "expected_Ry_kN": 62.072500000000005,
+      "support_Ry_error_kN": 1.7053025658242404e-13
+    },
+    {
+      "id": "C000005",
+      "frame": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\issue49_57\\targeted6\\water_linear\\water_linear_out\\time_20261023_205342\\C000005",
+      "max_locked_force_error_kN": 0.0,
+      "max_reaction_error_kN": 2.3033663865135168e-10,
+      "affine_displacement_error_m": 0.0,
+      "adopted_head_m": 5.0,
+      "head_spread_m": 0.0,
+      "water_fraction": 1.0,
+      "start_profile": "W",
+      "target_profile": "W2",
+      "support_Ry_kN": 69.42999999999984,
+      "expected_Ry_kN": 69.43,
+      "support_Ry_error_kN": 1.7053025658242404e-13
+    }
+  ],
+  "tolerance_kN": 1e-07,
+  "basis": "G/H=accepted locked self+applied loads; I/J=-B^T(sigma-alpha*pI)-Qp-load"
+}

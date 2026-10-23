@@ -568,7 +568,9 @@ Public Sub GWTransientProfile(ByVal first As String, ByVal last As String, ByVal
   GWLoadDefinition
   ReDim mWaterForce(lastDof)
   GWBuildSurfaceForce
-  GJSetPressures mCurrent, mGamma, False
+  ' Boundary preparation precedes the new pressure solve. Keep adjacent
+  ' accepted pressure for the load base; validate again on the solved field.
+  GJSetPressures mCurrent, mGamma, False, False
   GJAddForces mCurrent, mWaterForce, True
 End Sub
 

@@ -16,8 +16,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 28594,
-    "sha256": "de2bdc8aea599502d8d17a6b87c1289d3a8783aeef96b6cc239832d2c72e0c41"
+    "bytes": 29171,
+    "sha256": "1fcc81b07a46deb2362091eaf538c25cdec1b674f857e3cd34fecdf0df1a92f4"
   },
   {
     "path": "docs/ACCELERATION_HISTORY.md",
@@ -26,8 +26,8 @@
   },
   {
     "path": "docs/FIXED_STRESS_STAGES.md",
-    "bytes": 10342,
-    "sha256": "477633bc5b0ebfe8ad5ae947ede8d1d4ef0329c547924588d296101618906208"
+    "bytes": 10428,
+    "sha256": "8f8f0462160c996eff50f1bb7edc93668fd95628913a8edeada1917ae7ad0c06"
   },
   {
     "path": "docs/FIXED_STRESS_STAGE_PLAN.md",
@@ -95,6 +95,11 @@
     "sha256": "db61ad4a7e80da98c6774689569302053cbfa8d0cf90ec5f49388a7cdf19125f"
   },
   {
+    "path": "docs/ISSUE49_57_VALIDATION.md",
+    "bytes": 10468,
+    "sha256": "789170d461abb5b8efba5c910c11beb657096cb585965415bda3b09fac1e297f"
+  },
+  {
     "path": "docs/ISSUE_1_REVIEW.md",
     "bytes": 7602,
     "sha256": "195afefeef12a3b42badbf1f69757c5b0fcb71678df6519b83387f620cde9863"
@@ -116,8 +121,8 @@
   },
   {
     "path": "docs/MANUAL_FIXED_STRESS_VALIDATION.md",
-    "bytes": 5811,
-    "sha256": "b313c9e68dbf424cbc5045626a582c969d1dfeb191e7f6d3028cf68785311554"
+    "bytes": 6180,
+    "sha256": "f57c48dbf6f1cafb187d590f7d0bf39eb135a6faf6a31365a9b58947fb509902"
   },
   {
     "path": "docs/MESH_DELAUNAY_MEMORY.md",
@@ -126,8 +131,8 @@
   },
   {
     "path": "docs/MESH_MIXED_T6.md",
-    "bytes": 5064,
-    "sha256": "f6dd556f7604add2e8c58c18868450f7fa4316b42f9504cf6a9f1dfac5e697bc"
+    "bytes": 5430,
+    "sha256": "ba11eb7c22046c42d488eb7516759f2d7a46370ddeb9c6086e0bf7ea4e68c94a"
   },
   {
     "path": "docs/MESH_MIXED_T6_VALIDATION.md",
@@ -146,8 +151,8 @@
   },
   {
     "path": "docs/MODEL_INPUTS.md",
-    "bytes": 11647,
-    "sha256": "1c211cff9af23198fb5cb3220d7c63be380e558b4fd7cb29bd6a8cf77acba180"
+    "bytes": 11840,
+    "sha256": "db45bc7a8b3a2f48e967a6bac69751624dea5dbe4cf4c2d85968f5d89b2f64e0"
   },
   {
     "path": "docs/NATIVE_DLL.md",
@@ -241,8 +246,8 @@
   },
   {
     "path": "docs/XLSM_ISSUE_VALIDATION.md",
-    "bytes": 9473,
-    "sha256": "472e7a73529fb6b58a7a3081a2d286e71c9869e38ef14cfb5c62a7539d2b982f"
+    "bytes": 9674,
+    "sha256": "427431aeb49d35224f820bd3bed94e25d4a5a7e2729b8adee6fe5999f5f48c14"
   },
   {
     "path": "docs/benchmark-summary.csv",
@@ -1476,13 +1481,13 @@
   },
   {
     "path": "docs/manuals/2DSoilFEM_Manual_20261024.md",
-    "bytes": 376169,
-    "sha256": "0edb1b113f6a972af6eafc4f5579d2415d11af885b55a3271061fc7af5152c8b"
+    "bytes": 376838,
+    "sha256": "99cda5e0556477e54e66aec4cca12af079b3f228c29c8e72e063cce8be6ea6bd"
   },
   {
     "path": "docs/manuals/2DSoilFEM_Manual_20261024.pdf",
-    "bytes": 43021517,
-    "sha256": "8b6462df8be4691d3879661fd6dd7ee11647ab0336f6ee897130bb669d028165"
+    "bytes": 43023359,
+    "sha256": "bcf30fcd3f92e75faacdcc18c54435fbc976bf7e8ed5d3e311c7b1fe2a22e907"
   },
   {
     "path": "docs/manuals/README.md",
@@ -9950,6 +9955,161 @@
     "sha256": "1c3c49305de92b3c126c032bad1799dfcd4202ec002a5304affe953e76740059"
   },
   {
+    "path": "docs/validation/issue49_57/README.md",
+    "bytes": 3220,
+    "sha256": "ca1ad2207c8d77251af79bd8eae777edb8fcb2ebf7674cee23bfddced6546d68"
+  },
+  {
+    "path": "docs/validation/issue49_57/all_inputs.json",
+    "bytes": 736,
+    "sha256": "3b23066020af0d5471920346898190f076cab9476c9b074fec0f6b6ed482d537"
+  },
+  {
+    "path": "docs/validation/issue49_57/build4.log",
+    "bytes": 10941,
+    "sha256": "4f85c7ce3c8a2148e2dc2accd78345c150c5abcc42ed3ca4865a6cdfbe1cec23"
+  },
+  {
+    "path": "docs/validation/issue49_57/cold_named_disp.json",
+    "bytes": 358,
+    "sha256": "34b9e491694c27e371bac280a89479995ccf7baf8be9343bf37e0e2c3878b3b0"
+  },
+  {
+    "path": "docs/validation/issue49_57/cold_named_partial.json",
+    "bytes": 357,
+    "sha256": "7ac276800b965bfb3242a26959d5008077d12f75635e7f32e3df9b0fe5dd8849"
+  },
+  {
+    "path": "docs/validation/issue49_57/cold_water_hold.json",
+    "bytes": 338,
+    "sha256": "f88d5a6427536ff71f437e1bbcdbc19b3fe35a0913c10fced13967dbc6f66b86"
+  },
+  {
+    "path": "docs/validation/issue49_57/coupled_regression.json",
+    "bytes": 9632,
+    "sha256": "24c1a0ada5fa8338bbbd53bc29fedb51c50ccab784b716a8be2ef64b6f7b0904"
+  },
+  {
+    "path": "docs/validation/issue49_57/extra.json",
+    "bytes": 1086,
+    "sha256": "8f47ac9e4b9b6fbf7561bab0d82fa8352f8af0e15f052d01e5dc000ecdb2020e"
+  },
+  {
+    "path": "docs/validation/issue49_57/final_queue_retry.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "docs/validation/issue49_57/frame_forces.json",
+    "bytes": 2251,
+    "sha256": "10e034fb39471bcfec21b7bfa2ed4567591823e8173fbaf573cdc9813df47014"
+  },
+  {
+    "path": "docs/validation/issue49_57/full3.log",
+    "bytes": 1909,
+    "sha256": "7e11a804577415b4f5d2593ced9408ae19fb81301c4205fff7652194b76f1756"
+  },
+  {
+    "path": "docs/validation/issue49_57/legacy3.log",
+    "bytes": 2117,
+    "sha256": "7a8580ba5f2a3ba91d083b525c79037afde4754781895f3ebb16021d362f7a46"
+  },
+  {
+    "path": "docs/validation/issue49_57/manual.json",
+    "bytes": 54025,
+    "sha256": "6efea2881c953bc2a6cc7b98dbd0f86e0a68c01ab5b6cd17cb24f8c5712cdc7f"
+  },
+  {
+    "path": "docs/validation/issue49_57/manual_review.zip",
+    "bytes": 22976453,
+    "sha256": "f811791727547263733ba5f890b9de4cc7b81c1bffba3f3fa2cd8ddbeb00fb65"
+  },
+  {
+    "path": "docs/validation/issue49_57/material.json",
+    "bytes": 12621,
+    "sha256": "1b47fa2cbbe884c18b8961a17c8b7fa0ca3da85a2ccfe0c972b106c2dbe729e5"
+  },
+  {
+    "path": "docs/validation/issue49_57/mixed.json",
+    "bytes": 3769,
+    "sha256": "322eeb12213b539861e978268d86445a47d0089891e7bcce19881ae36a8205bb"
+  },
+  {
+    "path": "docs/validation/issue49_57/mixed3.log",
+    "bytes": 4144,
+    "sha256": "1b9d095b625f3f99486682dbf96cf09d2691a176919a0e67c7a261c8f0317858"
+  },
+  {
+    "path": "docs/validation/issue49_57/monolithic.json",
+    "bytes": 2947,
+    "sha256": "8a96c12e8e5104752f1ae82160b1dfbb0dc2d2419eb0ef16291bb625846239bf"
+  },
+  {
+    "path": "docs/validation/issue49_57/monolithic_anisotropic.json",
+    "bytes": 2948,
+    "sha256": "4bdb4c8271fc7c144686588fa4cbc7b6313fad9897ba7947c1e8f8e4a819771b"
+  },
+  {
+    "path": "docs/validation/issue49_57/old_issue_states.json",
+    "bytes": 7274,
+    "sha256": "d35a5f961ccb0cb489440f056ab02aae5b554d4c59c4ffc9d09043cc8e5fef2a"
+  },
+  {
+    "path": "docs/validation/issue49_57/package.json",
+    "bytes": 1729,
+    "sha256": "0b73eeb55f9d605a35d461480610ae3ccd33dfcf13c622539dde795733e20baa"
+  },
+  {
+    "path": "docs/validation/issue49_57/package3.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "docs/validation/issue49_57/partial_before_completion_fix.zip",
+    "bytes": 346983,
+    "sha256": "ed4474899f5e79ec2e425fc0493bdf24f36313b58f1a5783477b8187eee9b3bb"
+  },
+  {
+    "path": "docs/validation/issue49_57/records.zip",
+    "bytes": 11151491,
+    "sha256": "b0e60ed7c2f1599ff02e5b6c028117064aff2e5f954cddfca6cbcfdab0fad9ba"
+  },
+  {
+    "path": "docs/validation/issue49_57/source_snapshot.zip",
+    "bytes": 453578,
+    "sha256": "a77a477534738d76ecf6ffb236a9074063c4612850d25f6f2764731f2272c8f7"
+  },
+  {
+    "path": "docs/validation/issue49_57/supplemental.log",
+    "bytes": 2543,
+    "sha256": "8c486b920afd1cf21d1d6baf4f0e2d1441ecaa3c629e9e30eea9f53129f03f01"
+  },
+  {
+    "path": "docs/validation/issue49_57/targeted.json",
+    "bytes": 3712,
+    "sha256": "cb78ed05133b3d4f61e61766e3d285c0742c377c207c0af11946587f25909946"
+  },
+  {
+    "path": "docs/validation/issue49_57/targeted6.log",
+    "bytes": 2305,
+    "sha256": "aa2c72971387964f1c0a333c2951b51a5da157adcc371d329d97b14dedd34410"
+  },
+  {
+    "path": "docs/validation/issue49_57/ui.json",
+    "bytes": 384,
+    "sha256": "a3ba3c27d87c2a4e3be8bc10b6a539aa8123aabac6ea05375f97fa273b32efff"
+  },
+  {
+    "path": "docs/validation/issue49_57/validation.json",
+    "bytes": 9331,
+    "sha256": "74bd336e147594d282b1730177de02d56b01503dcbce95b89ba1288fbb1ea692"
+  },
+  {
+    "path": "docs/validation/issue49_57/water_analytic.json",
+    "bytes": 3795,
+    "sha256": "89876a6574e7e35100164a327e0c740950b9efb15b1b427740276119835d1074"
+  },
+  {
     "path": "docs/viewer-evidence/20261020/viewer_build.log",
     "bytes": 3505,
     "sha256": "fb73a25d7a67f2a9681a8aa2a79444dafad4cf9625cb1e00e5d0aec4c585867b"
@@ -10931,8 +11091,8 @@
   },
   {
     "path": "src/vba/FEM.bas",
-    "bytes": 173340,
-    "sha256": "538736069227385a5bd0aeac2748e1d72dddc9e85d6a3092e07da38be20721c3"
+    "bytes": 178060,
+    "sha256": "557b9def9a794dfefd28ccbb169c558d943773fc75edbe7641cd1db8c97a1bbc"
   },
   {
     "path": "src/vba/FEMAccel.bas",
@@ -10947,17 +11107,17 @@
   {
     "path": "src/vba/FEMCore.bas",
     "bytes": 54181,
-    "sha256": "98a699592aa31bf7a79395d9d049aade1ab3cebd4d8c1bf235dad2240e9bc8bb"
+    "sha256": "a251fff7053162544b05e3573d41b9f1ea6772c09d7d63f1a75c706bdbe5d8fe"
   },
   {
     "path": "src/vba/FEMEngine.bas",
-    "bytes": 303826,
-    "sha256": "a5369f896ecfac6c175fcc61c344233dc995a3a98ae45af0f59864d9e2cc9440"
+    "bytes": 302372,
+    "sha256": "f715fdfa4970d8d2dc960b71c4c81abddc2eef4a9433e072f4a9c2be0b81e0bf"
   },
   {
     "path": "src/vba/FEMFixedStress.bas",
-    "bytes": 44759,
-    "sha256": "2bcb5caa8ebcc5231649875f50dd1511da9817eb16b0c70b714893d0f23495ff"
+    "bytes": 44969,
+    "sha256": "4c14eaec72e885a0023214f34e3f6fcce55d6d9d3f2606a75377ada0c0bbd379"
   },
   {
     "path": "src/vba/FEMFixedStressGauge.bas",
@@ -10966,8 +11126,8 @@
   },
   {
     "path": "src/vba/FEMFixedStressInput.bas",
-    "bytes": 12980,
-    "sha256": "772e98fcfe2c0fe3bd1ac894ab7c3869d59b28e88c65061dd1cacbb92cbd3c30"
+    "bytes": 15401,
+    "sha256": "230e6d8c50bfc66837d521c95bfcc1441da786c2191dffcb3a23114ec77fd4b9"
   },
   {
     "path": "src/vba/FEMFixedStressLedger.bas",
@@ -11001,13 +11161,13 @@
   },
   {
     "path": "src/vba/FEMIo.bas",
-    "bytes": 181730,
-    "sha256": "e494b11051c15d29ba38afca0b5661d6fb76d5b3808e12ddc34b8c70ba53f542"
+    "bytes": 181917,
+    "sha256": "59cac4fb749ea85063ee630b3be540069c5804f68f05e42d16040dfcd3bea17b"
   },
   {
     "path": "src/vba/FEMJointWater.bas",
-    "bytes": 10691,
-    "sha256": "964a317d142f86b288a653e620a0802ba91e1cc384f2c86ce68762130d7ef5d9"
+    "bytes": 10759,
+    "sha256": "3c6a98389a28d9420c639206020eaf3edd52bd18077d17a0d4f9d6d69b6118e6"
   },
   {
     "path": "src/vba/FEMMixedElement.bas",
@@ -11141,8 +11301,8 @@
   },
   {
     "path": "src/vba/FEMWater.bas",
-    "bytes": 58873,
-    "sha256": "b77a26cf6a2314d3e5a804cb3c7ae53ac2a2fe18483290470987ea15f0548e12"
+    "bytes": 59029,
+    "sha256": "3fdb491a9caca9a451e619dfe50d1c58b825bb61b65756c8b980f363920d44be"
   },
   {
     "path": "src/vba/FEMWaterGeometry.bas",
@@ -11293,6 +11453,31 @@
     "path": "tests/check_issue44_joint.py",
     "bytes": 4193,
     "sha256": "7231e8a93fb8ece620c437c691a9b442ebe5591032aee400b1be9c838f8e3a2a"
+  },
+  {
+    "path": "tests/check_issue49_57.py",
+    "bytes": 8967,
+    "sha256": "dc2a87b63ef4baf6e9363235335c44bab076275f754507f7a73096ff1a8ff700"
+  },
+  {
+    "path": "tests/check_issue49_57_extra.py",
+    "bytes": 2558,
+    "sha256": "86c69b13c09ca0dec628fbc7837ff3703cc1b2cc2895f136b7a65236805860ad"
+  },
+  {
+    "path": "tests/check_issue51_frame_forces.py",
+    "bytes": 13726,
+    "sha256": "e11ebd4652f3375ba1af758e62f769fc20018c9c9a87111dd229bdb1172381d5"
+  },
+  {
+    "path": "tests/check_issue54_55_material.py",
+    "bytes": 8898,
+    "sha256": "a98578732e5adabd81cdb97ad07d20b9d2df65d9dfa18308822fc2da2c8c749c"
+  },
+  {
+    "path": "tests/check_issue_release_inputs.py",
+    "bytes": 2987,
+    "sha256": "a495ba07629cfa345db70f024503dd7b6747a01701a467d5e7f0bc8d7927776b"
   },
   {
     "path": "tests/check_issue_water_profiles.py",
@@ -11635,6 +11820,111 @@
     "sha256": "1480130dcd281276eac9830a81cbd909c27f4de689aa2993f5452929f6e588d5"
   },
   {
+    "path": "tests/fixtures/issue49_57/apex_native.json",
+    "bytes": 3731,
+    "sha256": "5ad33036a02488f3b4e29f1694a90d5c37e04896a760f75efba5c184b076e025"
+  },
+  {
+    "path": "tests/fixtures/issue49_57/conforming_q8.json",
+    "bytes": 7696,
+    "sha256": "08903826c7b1159e83fb2e24341c1a43acf224ff1d67bd0b08af3e924391ae93"
+  },
+  {
+    "path": "tests/fixtures/issue49_57/hanging_q8.json",
+    "bytes": 2919,
+    "sha256": "9cc32f02af2c34928877d17552b5d4370b984248c84708cd744afe6e6115fcc2"
+  },
+  {
+    "path": "tests/fixtures/issue49_57/joint_down.json",
+    "bytes": 4750,
+    "sha256": "03201e62830ac6a423222c94c029d70e981a2b35b20e980a1b6f5c05e0caabe5"
+  },
+  {
+    "path": "tests/fixtures/issue49_57/joint_linear.json",
+    "bytes": 4748,
+    "sha256": "43b17d5b6aebc5a87096a46def91f0b842c981dfce0a82fe055011ac1edd1221"
+  },
+  {
+    "path": "tests/fixtures/issue49_57/joint_series.json",
+    "bytes": 4981,
+    "sha256": "bbf9ead0bf7e0bb9b58c2a73275652625fa32a29f33d88f8c4685c41fa631cea"
+  },
+  {
+    "path": "tests/fixtures/issue49_57/joint_start.json",
+    "bytes": 4746,
+    "sha256": "479fdcb6874295cc909340d178ba2f968a85f344c1b9b07fabf06db3788bb88b"
+  },
+  {
+    "path": "tests/fixtures/issue49_57/named_disp.json",
+    "bytes": 8870,
+    "sha256": "98b881d651d8d55b6998dcdb696dd8adcfe9cb127451439731ca9464fc3187d0"
+  },
+  {
+    "path": "tests/fixtures/issue49_57/named_instant.json",
+    "bytes": 8853,
+    "sha256": "2acdf2fdd10da3059e657f283c93e8d808c8bde31ae13c3a43648c2eb9fbbd6a"
+  },
+  {
+    "path": "tests/fixtures/issue49_57/named_linear.json",
+    "bytes": 8859,
+    "sha256": "e1135d44c838b7883f939a275819b1b22fa35af291d78169f838fab390713e87"
+  },
+  {
+    "path": "tests/fixtures/issue49_57/noflow_exterior.json",
+    "bytes": 7929,
+    "sha256": "92dd039a1bea92f35cb6893008f4d729ef10a6828654238e3c89d0bf630e7a44"
+  },
+  {
+    "path": "tests/fixtures/issue49_57/noflow_internal.json",
+    "bytes": 7845,
+    "sha256": "7f2f441b8a08e6640ab8d6baed069897a070b5b215ee96c6f5817ee10a85ab04"
+  },
+  {
+    "path": "tests/fixtures/issue49_57/noflow_joint_continuous.json",
+    "bytes": 4772,
+    "sha256": "d40a36febeccd8556f3d1e604b6ed00f92280452fd635aac63a82d3ef908891c"
+  },
+  {
+    "path": "tests/fixtures/issue49_57/noflow_joint_prescribed.json",
+    "bytes": 4735,
+    "sha256": "6b719a78ce46389a7fdeb6281633d8ad38b3873d10d36fc8f1dafb1ed9a159f9"
+  },
+  {
+    "path": "tests/fixtures/issue49_57/reset_t6_affine.json",
+    "bytes": 4415,
+    "sha256": "b78fe644ee92f8c52caf96ad3c4b77d5c90e690341cc05271315613540043fe7"
+  },
+  {
+    "path": "tests/fixtures/issue49_57/reset_t6_nonaffine.json",
+    "bytes": 1900,
+    "sha256": "4b71ea163109a6ac23b863025952f63586a0c5b74cc5427ec8e332f2a2bd2a77"
+  },
+  {
+    "path": "tests/fixtures/issue49_57/reset_t6_zero.json",
+    "bytes": 1854,
+    "sha256": "65927927ee432cb34bd1d16c6252eca533ffa74a65325ccb790c6b21749ccd91"
+  },
+  {
+    "path": "tests/fixtures/issue49_57/water_hold.json",
+    "bytes": 7764,
+    "sha256": "94cd187d4a0738f626849f0f9f8fb0e8a10a4e2efdfc820a37c46e8721c7166b"
+  },
+  {
+    "path": "tests/fixtures/issue49_57/water_linear.json",
+    "bytes": 7768,
+    "sha256": "5bf53fcb0ba3b53f0f983b903735049bc476c7127e9ad7b540bd2c3b43302a40"
+  },
+  {
+    "path": "tests/fixtures/issue49_57/water_series.json",
+    "bytes": 7991,
+    "sha256": "007aa4f8d155ceec8ef461edb790e1048920e86249b1bcf3e95dfee0a1d3225d"
+  },
+  {
+    "path": "tests/fixtures/issue49_57/water_start.json",
+    "bytes": 7766,
+    "sha256": "e8d65d313d374b297cf4f44792e52a81596c90ee612bcd8badfc38b4de09a6c0"
+  },
+  {
     "path": "tests/fixtures/issues_xlsm/README.md",
     "bytes": 2604,
     "sha256": "00b74fc5ae3baf800135936236cb1965125f34566d1c48cf22b297798d1841bd"
@@ -11745,6 +12035,11 @@
     "sha256": "d1199219fbf950012ee6f542dab6cda660e1285a1b772e2d76fd41de1e6350d3"
   },
   {
+    "path": "tests/fixtures/issues_xlsm/issue57_mixed_reset.json",
+    "bytes": 2990,
+    "sha256": "4f2fa040305da2c0c77744f2733b9ca22614646b83c58b31a43e0850906b0c54"
+  },
+  {
     "path": "tests/fixtures/joint_water_conflicting_heads.json",
     "bytes": 4269,
     "sha256": "49849060e60ceb11a0239324457a23743dc4f69cca48f56a3440485a8487c235"
@@ -11828,6 +12123,11 @@
     "path": "tests/fixtures/manual24_basic.json",
     "bytes": 45738,
     "sha256": "e4f117fedafa72e86059c4025c6c30e3e582a16ccad26f2a6129240fdbd48040"
+  },
+  {
+    "path": "tests/fixtures/material_issue54_55.json",
+    "bytes": 22733,
+    "sha256": "b4fef75999526aa8b7cd25418b7b3d9b3480cc6e7fd4749a0a1c0144c77fb516"
   },
   {
     "path": "tests/fixtures/mixed_t6/mixed_gravity.json",
@@ -11998,6 +12298,11 @@
     "path": "tests/generate_fixed_stress_mandel.py",
     "bytes": 5310,
     "sha256": "a6b84ecb675bf3ce95f6b7620d53597639c0cea411e34b8a3ba53fbc4e616253"
+  },
+  {
+    "path": "tests/generate_issue49_57_fixtures.py",
+    "bytes": 6813,
+    "sha256": "616e59a7ea05b5931d92aed8473868ed3f352413b386ec6bd1890eab8b3cb7c8"
   },
   {
     "path": "tests/inconsistent/README.md",
@@ -12680,6 +12985,11 @@
     "sha256": "f27c02669d027df083188de97d47cb067cb58b20cfacaccb19385f04d4c508bd"
   },
   {
+    "path": "tests/package_issue49_57_evidence.py",
+    "bytes": 5393,
+    "sha256": "a6f479cf392d621746e9ee06c0d575e429ac016b0c86dec6b706bb1c978aae13"
+  },
+  {
     "path": "tests/package_release23.py",
     "bytes": 4969,
     "sha256": "006f35d08744d020a08e989904d4513187da33289a5a0874142a634be0b3edb4"
@@ -12841,8 +13151,8 @@
   },
   {
     "path": "tests/run_fixed_stress_ui.ps1",
-    "bytes": 4789,
-    "sha256": "0acf88a3a128f8fae582f1c553a2bb42520473df016f3adde5c6684df3d8b94b"
+    "bytes": 5519,
+    "sha256": "3e5ff10f0d4b69408e9433af1e23dd9e1b48e091bc692bb38b389fb402c34697"
   },
   {
     "path": "tests/run_fixed_stress_water_profiles.ps1",
@@ -12856,8 +13166,8 @@
   },
   {
     "path": "tests/run_groundwater_fixture.ps1",
-    "bytes": 15873,
-    "sha256": "92e1b34e6dd149e5fa04895a42729282d581c582e496ca83d0a5129a7167433f"
+    "bytes": 17368,
+    "sha256": "30ac1cf7f2d773f6ce2e21af9a211c433576eb87e0a5c442d5b558c83999e5f4"
   },
   {
     "path": "tests/run_groundwater_regression.ps1",
@@ -12888,6 +13198,26 @@
     "path": "tests/run_issue46_viewer.ps1",
     "bytes": 3801,
     "sha256": "3b41430aedfeafa72542e8e42c260470907493e646da3b6ce640ba42b2677cdc"
+  },
+  {
+    "path": "tests/run_issue49_57_regression.ps1",
+    "bytes": 1209,
+    "sha256": "730da3b2fda746c6c34e2a17852d13f511d741ecdac38188fa679f304217e9f9"
+  },
+  {
+    "path": "tests/run_issue51_frame_forces.ps1",
+    "bytes": 3022,
+    "sha256": "81876ee1ec0226750ee95e06b13dce224e23add946792c1e08412da19b7cbe86"
+  },
+  {
+    "path": "tests/run_issue54_55_material.ps1",
+    "bytes": 3738,
+    "sha256": "5fbeb8b7c805d31a022ddc68ca636d9211e8082b1a8c749b5b0518637e3bcb8a"
+  },
+  {
+    "path": "tests/run_issue_cold_resume.ps1",
+    "bytes": 2061,
+    "sha256": "930e9c4f6756c36fea748d72b8e35a4f4b1210e9747a531de54e81c89e17e4b3"
   },
   {
     "path": "tests/run_joint_water_regression.ps1",
@@ -13161,8 +13491,8 @@
   },
   {
     "path": "workbook/SoilFEM_UI_20261024.zip",
-    "bytes": 4040351,
-    "sha256": "1801f9bc37b52a668859baee8c36d14a3f8256cfbbc0184b13f4928631a02f32"
+    "bytes": 4057120,
+    "sha256": "f3153629fee6c4173cf19572fbc3374fe84f5802c195ee26f4c42579692d1786"
   },
   {
     "path": "workbook/inco_assembly_20261020/2DSoilFEM_inco_assembly_20261020.xlsm",
@@ -13436,18 +13766,18 @@
   },
   {
     "path": "workbook/ui_20261024/2DSoilFEM_ui_20261024.xlsm",
-    "bytes": 4544681,
-    "sha256": "538d20bb2e071adb4a0ba0e52b7bc5f361ff38d89847121e5ba75b66eb6c0e91"
+    "bytes": 4559522,
+    "sha256": "c0e75c6c9fad2b47d6b37680fa6e591126031989860e03c9bf55ee81a356840f"
   },
   {
     "path": "workbook/ui_20261024/BUILD_RECORD.json",
-    "bytes": 2584,
-    "sha256": "4d356e96fd33970e90fdad305a533aa0e3601334ab37d154df8fbdb59f729ddc"
+    "bytes": 8047,
+    "sha256": "7c238be61175b0104198ae4739453491a4e76de86e0a3be1084c855ce9c5ed95"
   },
   {
     "path": "workbook/ui_20261024/README.md",
-    "bytes": 3273,
-    "sha256": "b2927d69b1bd2ce1dfacf60d95d77a9febf7b446d1c3177bf598b506931e7b33"
+    "bytes": 3475,
+    "sha256": "d12123b3b047837d4d951ea2a7c60d97aac88053142bf9c0159ce4b9e6cebee0"
   },
   {
     "path": "workbook/ui_20261024/soilfem_native_x64.dll",

@@ -184,7 +184,6 @@ Public Sub FSReadCheckpoint(ByVal folder As String)
   mP = p: mOldP = p: mReference = reference
   FSTime = savedTime: FSAccepted = savedCount
   FSFluidResidual = savedFluid: FSMassError = savedMass: FSOuterIteration = savedOuter
-  FSUpdateField mP, True
   FSRestoreTimeBoundary
   GWTransientBoundary locked, boundary
   FSDrainApply mDrainSet, locked, boundary, mSource
@@ -204,7 +203,7 @@ Private Sub FSRestoreTimeBoundary()
         p1 = mStageStartProfile: p2 = p1
         If Len(series) > 0 Then
           FSCurveAt series, FSStageElapsed, unit, FSStageDuration, p1, p2, fraction, knot
-        Else
+        ElseIf waterMode = "START" Or waterMode = "LINEAR" Then
           p2 = GWResolveStageProfile(FSRunningStage, P3StageGroup(i))
           If p2 = "" Then p2 = p1
           If waterMode = "LINEAR" Then
@@ -769,6 +768,9 @@ Public Function FSRunStage(ByVal stageId As Long, ByVal kind As String) As Boole
     End If
   Loop
   FSResumePending = False
+  ' A resumed LINEAR stage started from accepted intermediate loads. Its
+  ' completed end target must become the inherited target of the next stage.
+  P3AppliedForce = finalApplied
   P3AssembleSelfWeightOnly
   FSRunStage = True
 End Function

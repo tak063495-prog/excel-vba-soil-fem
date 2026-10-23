@@ -1,0 +1,134 @@
+{
+  "status": "PASS",
+  "book_sha256": "c0e75c6c9fad2b47d6b37680fa6e591126031989860e03c9bf55ee81a356840f",
+  "cases": [
+    {
+      "case": "apex_native",
+      "status": "PASS"
+    },
+    {
+      "case": "conforming_q8",
+      "status": "PASS",
+      "patch_u_max_m": 4.336808689942018e-19
+    },
+    {
+      "case": "hanging_q8",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "case": "joint_down",
+      "status": "PASS"
+    },
+    {
+      "case": "joint_linear",
+      "status": "PASS"
+    },
+    {
+      "case": "joint_series",
+      "status": "PASS"
+    },
+    {
+      "case": "joint_start",
+      "status": "PASS"
+    },
+    {
+      "case": "named_disp",
+      "status": "PASS",
+      "resume_u_max_m": 4.963253657890021e-13,
+      "resume_Fs_max": 0.0,
+      "resume_reaction_max_kN": 2.842170943040401e-14,
+      "resume_gp_pressure_max_kPa": 1.4495071809506044e-11
+    },
+    {
+      "case": "named_instant",
+      "status": "PASS",
+      "resume_u_max_m": 4.819265646271997e-13,
+      "resume_Fs_max": 0.0,
+      "resume_reaction_max_kN": 2.842170943040401e-14,
+      "resume_gp_pressure_max_kPa": 2.2396307031158358e-11
+    },
+    {
+      "case": "named_linear",
+      "status": "PASS",
+      "resume_u_max_m": 4.844813786264446e-13,
+      "resume_Fs_max": 0.0,
+      "resume_reaction_max_kN": 2.1316282072803006e-14,
+      "resume_gp_pressure_max_kPa": 2.3497648271586513e-11
+    },
+    {
+      "case": "noflow_exterior",
+      "status": "PASS"
+    },
+    {
+      "case": "noflow_internal",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "case": "noflow_joint_continuous",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "case": "noflow_joint_prescribed",
+      "status": "PASS"
+    },
+    {
+      "case": "reset_t6_affine",
+      "status": "PASS"
+    },
+    {
+      "case": "reset_t6_nonaffine",
+      "status": "EXPECTED_REJECTION",
+      "preserved_u_max_m": 9.789044574937122e-15,
+      "preserved_stress_analytic_error_kPa": 1.6645707034967927e-10
+    },
+    {
+      "case": "reset_t6_zero",
+      "status": "PASS"
+    },
+    {
+      "case": "water_hold",
+      "status": "PASS",
+      "reaction_analytic_error_kN": 1.4452439245360438e-11,
+      "resume_u_max_m": 4.341264760870933e-13,
+      "resume_Fs_max": 0.0,
+      "resume_reaction_max_kN": 4.405364961712621e-13,
+      "resume_gp_pressure_max_kPa": 0.0
+    },
+    {
+      "case": "water_linear",
+      "status": "PASS",
+      "reaction_analytic_error_kN": 0.0,
+      "resume_u_max_m": 4.93053081002115e-13,
+      "resume_Fs_max": 0.0,
+      "resume_reaction_max_kN": 1.4210854715202004e-14,
+      "resume_gp_pressure_max_kPa": 0.0
+    },
+    {
+      "case": "water_series",
+      "status": "PASS",
+      "reaction_analytic_error_kN": 7.105427357601002e-14,
+      "resume_u_max_m": 4.2590475417270124e-13,
+      "resume_Fs_max": 0.0,
+      "resume_reaction_max_kN": 1.4210854715202004e-14,
+      "resume_gp_pressure_max_kPa": 9.947598300641403e-14
+    },
+    {
+      "case": "water_start",
+      "status": "PASS",
+      "reaction_analytic_error_kN": 2.842170943040401e-14,
+      "resume_u_max_m": 4.757095325297334e-13,
+      "resume_Fs_max": 0.0,
+      "resume_reaction_max_kN": 1.3766765505351941e-14,
+      "resume_gp_pressure_max_kPa": 2.984279490192421e-13
+    },
+    {
+      "case": "named_linear_partial",
+      "status": "PASS",
+      "resume_u_max_m": 4.797121901101153e-13,
+      "reaction_max_kN": 2.6645352591003757e-15,
+      "pressure_max_kPa": 4.9602988383412594e-11,
+      "stage4_B_locked_applied_kN": -4.0,
+      "stage6_B_locked_applied_kN": -4.0
+    }
+  ]
+}

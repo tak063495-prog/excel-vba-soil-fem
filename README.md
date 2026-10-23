@@ -12,6 +12,8 @@
 
 工程ごとの**飽和fixed-stress時間連成**に対応しました。盛土・載荷→途中SRM→圧密→SRM→水位変動→次施工を同じ工程表で設定し、工程・時刻から結果を確認できます。[材料・排水・時間・載荷の入力と結果](docs/FIXED_STRESS_STAGES.md)／[受入検証と再現記録](docs/FIXED_STRESS_VALIDATION.md)。片方向の既存解析とDLL1個を保持します。 [水条件・工程・結果出力のissue修正と検証](docs/XLSM_ISSUE_VALIDATION.md)。
 
+計算識別 `20261024_FIXED_STRESS_07` で、保存再開時の荷重・水位、時刻別の節点力・反力、頂点の材料点計算と塑性乗数、内部NOFLOW・部分重複接続・T6のRESET入力検査を修正しました。[Issue #49〜#57の修正・実測値・再現ログ](docs/ISSUE49_57_VALIDATION.md)。説明書は234ページ・既存の章立てと計算例を保持し、関係する注意点と用語だけ補足しています。旧計算識別の途中保存は元ブックで継続するか、新版で入力から再解析してください。
+
 ## 1023版（従来画面・説明書対応）
 
 [1023版 操作説明書（PDF）](docs/manuals/2DSoilFEM_Manual_20261023_WATER_02.pdf)／[原稿](docs/manuals/2DSoilFEM_Manual.md)

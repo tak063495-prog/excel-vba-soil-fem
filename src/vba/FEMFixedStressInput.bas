@@ -119,6 +119,9 @@ Public Sub FSDrainApply(ByVal setId As String, ByRef locked() As Boolean, ByRef 
       If kind <> "HEAD" And kind <> "PRESSURE" And kind <> "NOFLOW" And kind <> "FLUX" Then FSCoupledInputError "排水境界はHEAD/PRESSURE/NOFLOW/FLUXです。"
       If Not P3IsElementActive(e) Then GoTo NextDrain
       If Not GWMaterialEffective(Elem(e).MatNo) Then FSCoupledInputError "時間排水条件は連成するEFFECTIVE地盤へ指定してください。"
+      If kind = "NOFLOW" Then
+        If FSInternalPermeableFace(e, side) Then FSCoupledInputError "共有する内部透水面へNOFLOWを指定できません。外周面、または遮水JOINT面を指定してください。要素=" & CStr(e + 1) & "、辺=" & CStr(side + 1)
+      End If
       a = side: b = (side + 1) Mod 4
       na = GWFlowNode(e, a): nb = GWFlowNode(e, b)
       profile = Trim$(CStr(ws.cells(r, 26).value2))
@@ -153,6 +156,51 @@ NextDrain:
   If count = 0 Then FSCoupledInputError "排水条件セットIDが登録されていません。"
   GWTransientJointConstraints locked, pressure
 End Sub
+
+' A physical neighbour is not necessarily a hydraulic neighbour: PRESCRIBED/SOIL
+' JOINT faces keep separate hydraulic aliases.  Conversely, a shared SOIL face
+' with the same GWFlowNode aliases is an internal permeable face and cannot be
+' made NOFLOW in a stage drain set.  The check is deliberately local and also
+' respects the collapsed side convention used by T6.
+Private Function FSInternalPermeableFace(ByVal e As Long, ByVal side As Long) As Boolean
+  Dim q As Long, qs As Long, key As String, qkey As String
+  If Not FEMElementSideValid(e, side) Then Exit Function
+  If Material(Elem(e).MatNo).kind <> "SOIL" Then Exit Function
+  If Not P3IsElementActive(e) Then Exit Function
+  If Not GWMaterialEffective(Elem(e).MatNo) Then Exit Function
+  key = FSPhysicalFaceKey(e, side)
+  For q = 0 To NumberOfElement - 1
+    If q <> e And Not Elem(q).IsJoint Then
+      If Material(Elem(q).MatNo).kind = "SOIL" And P3IsElementActive(q) Then
+        If GWMaterialEffective(Elem(q).MatNo) Then
+          For qs = 0 To 3
+            If FEMElementSideValid(q, qs) Then
+              If FSPhysicalFaceKey(q, qs) = key Then
+                qkey = FSFlowFaceKey(q, qs)
+                FSInternalPermeableFace = (FSFlowFaceKey(e, side) = qkey)
+                Exit Function
+              End If
+            End If
+          Next qs
+        End If
+      End If
+    End If
+  Next q
+End Function
+
+Private Function FSPhysicalFaceKey(ByVal e As Long, ByVal side As Long) As String
+  Dim a As Long, b As Long, c As Long, t As Long
+  a = GJTopoNode(Elem(e).node(side)): b = GJTopoNode(Elem(e).node((side + 1) Mod 4)): c = GJTopoNode(Elem(e).node(side + 4))
+  If a > b Then t = a: a = b: b = t
+  FSPhysicalFaceKey = CStr(a) & ":" & CStr(b) & ":" & CStr(c)
+End Function
+
+Private Function FSFlowFaceKey(ByVal e As Long, ByVal side As Long) As String
+  Dim a As Long, b As Long, c As Long, t As Long
+  a = GWFlowNode(e, side): b = GWFlowNode(e, (side + 1) Mod 4): c = GWFlowNode(e, side + 4)
+  If a > b Then t = a: a = b: b = t
+  FSFlowFaceKey = CStr(a) & ":" & CStr(b) & ":" & CStr(c)
+End Function
 
 Public Function FSLoadingSet(ByVal stageId As Long) As String
   Dim row As Long

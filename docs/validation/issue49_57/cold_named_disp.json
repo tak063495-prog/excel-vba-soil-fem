@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "nodes": 43,
+  "pressure_points": 32,
+  "max_u_difference_m": 8.437940016842171e-13,
+  "max_pressure_difference_kPa": 1.4495071809506044e-11,
+  "max_stress_difference_kPa": 3.4770764045788383e-10,
+  "diagnostics": "principal direction at repeated eigenvalues is excluded; yield sentinel uses CSV relative-rounding allowance"
+}

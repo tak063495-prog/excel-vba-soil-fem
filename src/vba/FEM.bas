@@ -714,10 +714,83 @@ NextMidUnion:
     Next j
 NextTopoElement:
   Next i
+  P5ValidatePartialEdges edgeMap, connectivity
   For i = 1 To nodeCount
     If P5FindRoot(parent, i) = i Then P5ConnectedComponentCount = P5ConnectedComponentCount + 1
   Next i
   If P5ConnectedComponentCount > 1 Then Err.Raise vbObjectError + 3474, "FEM.P5ValidateAnalysisMesh", "メッシュが複数の非接続領域に分かれています。領域数=" & CStr(P5ConnectedComponentCount)
+End Sub
+
+' Only unmatched continuum edges can form an unsupported hanging interface.
+' Sweep their bounding intervals, rather than comparing every element pair.
+Private Sub P5ValidatePartialEdges(ByVal edgeMap As Object, ByRef conn() As Long)
+  Dim ed() As Double, order() As Long, key As Variant, info As Variant, ids As Variant
+  Dim n As Long, i As Long, j As Long, k As Long, e As Long, side As Long, a As Long, b As Long, mid As Long
+  Dim axis As Long, loX As Double, hiX As Double, loY As Double, hiY As Double, tol As Double
+  Dim dx As Double, dy As Double, length As Double, t0 As Double, t1 As Double, start As Double, finish As Double
+  If edgeMap.count = 0 Then Exit Sub
+  ReDim ed(1 To edgeMap.count, 1 To 10): ReDim order(1 To edgeMap.count)
+  tol = P5GeometryTolerance
+  For Each key In edgeMap.keys
+    info = Split(CStr(edgeMap(key)), "|")
+    If CLng(info(0)) = 1 Then
+      ids = Split(CStr(key), ":"): a = CLng(ids(0)): b = CLng(ids(1)): e = CLng(info(1)): mid = CLng(info(3))
+      dx = P6InputNodeX(b) - P6InputNodeX(a): dy = P6InputNodeY(b) - P6InputNodeY(a): length = Sqr(dx * dx + dy * dy)
+      If length > tol Then
+        ' Curved Q8 boundaries are not approximated by their endpoint chord.
+        If Abs(dx * (P6InputNodeY(mid) - P6InputNodeY(a)) - dy * (P6InputNodeX(mid) - P6InputNodeX(a))) <= tol * length Then
+          n = n + 1: order(n) = n: ed(n, 1) = e
+          ed(n, 2) = P6InputNodeX(a): ed(n, 3) = P6InputNodeY(a): ed(n, 4) = P6InputNodeX(b): ed(n, 5) = P6InputNodeY(b)
+          ed(n, 6) = WorksheetFunction.Min(ed(n, 2), ed(n, 4)): ed(n, 7) = WorksheetFunction.Max(ed(n, 2), ed(n, 4))
+          ed(n, 8) = WorksheetFunction.Min(ed(n, 3), ed(n, 5)): ed(n, 9) = WorksheetFunction.Max(ed(n, 3), ed(n, 5))
+          For side = 1 To 4
+            If (conn(e, side) = a And conn(e, (side Mod 4) + 1) = b) Or (conn(e, side) = b And conn(e, (side Mod 4) + 1) = a) Then ed(n, 10) = side: Exit For
+          Next side
+          If n = 1 Then loX = ed(n, 6): hiX = ed(n, 7): loY = ed(n, 8): hiY = ed(n, 9)
+          If ed(n, 6) < loX Then loX = ed(n, 6)
+          If ed(n, 7) > hiX Then hiX = ed(n, 7)
+          If ed(n, 8) < loY Then loY = ed(n, 8)
+          If ed(n, 9) > hiY Then hiY = ed(n, 9)
+        End If
+      End If
+    End If
+  Next key
+  If n < 2 Then Exit Sub
+  axis = 6: If hiY - loY > hiX - loX Then axis = 8
+  P5SortEdgeIntervals order, ed, axis, 1, n
+  For k = 1 To n - 1
+    i = order(k)
+    dx = ed(i, 4) - ed(i, 2): dy = ed(i, 5) - ed(i, 3): length = Sqr(dx * dx + dy * dy)
+    dx = dx / length: dy = dy / length
+    For side = k + 1 To n
+      j = order(side)
+      If ed(j, axis) > ed(i, axis + 1) + tol Then Exit For
+      If ed(i, 1) = ed(j, 1) Then GoTo NextPartialEdge
+      If ed(j, 6) > ed(i, 7) + tol Or ed(j, 7) < ed(i, 6) - tol Or ed(j, 8) > ed(i, 9) + tol Or ed(j, 9) < ed(i, 8) - tol Then GoTo NextPartialEdge
+      If Abs(dx * (ed(j, 3) - ed(i, 3)) - dy * (ed(j, 2) - ed(i, 2))) > tol Then GoTo NextPartialEdge
+      If Abs(dx * (ed(j, 5) - ed(i, 3)) - dy * (ed(j, 4) - ed(i, 2))) > tol Then GoTo NextPartialEdge
+      t0 = dx * (ed(j, 2) - ed(i, 2)) + dy * (ed(j, 3) - ed(i, 3))
+      t1 = dx * (ed(j, 4) - ed(i, 2)) + dy * (ed(j, 5) - ed(i, 3))
+      start = WorksheetFunction.Min(t0, t1): finish = WorksheetFunction.Max(t0, t1)
+      If WorksheetFunction.Min(length, finish) - WorksheetFunction.Max(0#, start) <= tol Then GoTo NextPartialEdge
+      ' Full coincident faces include intentionally separated JOINT nodes.
+      If Abs(start) <= tol And Abs(finish - length) <= tol Then GoTo NextPartialEdge
+      Err.Raise vbObjectError + 3980, "FEM.P5ValidateAnalysisMesh", "辺が部分重複する不適合接続（hanging node）は未対応です。メッシュを適合する分割へ修正してください。要素=" & CStr(CLng(ed(i, 1))) & "/辺=" & CStr(CLng(ed(i, 10))) & " と要素=" & CStr(CLng(ed(j, 1))) & "/辺=" & CStr(CLng(ed(j, 10)))
+NextPartialEdge:
+    Next side
+  Next k
+End Sub
+
+Private Sub P5SortEdgeIntervals(ByRef order() As Long, ByRef ed() As Double, ByVal axis As Long, ByVal first As Long, ByVal last As Long)
+  Dim i As Long, j As Long, temp As Long, pivot As Double
+  i = first: j = last: pivot = ed(order((first + last) \ 2), axis)
+  Do
+    Do While ed(order(i), axis) < pivot: i = i + 1: Loop
+    Do While ed(order(j), axis) > pivot: j = j - 1: Loop
+    If i <= j Then temp = order(i): order(i) = order(j): order(j) = temp: i = i + 1: j = j - 1
+  Loop While i <= j
+  If first < j Then P5SortEdgeIntervals order, ed, axis, first, j
+  If i < last Then P5SortEdgeIntervals order, ed, axis, i, last
 End Sub
 
 Private Sub P5Union(ByRef parent() As Long, ByVal leftNode As Long, ByVal rightNode As Long)
