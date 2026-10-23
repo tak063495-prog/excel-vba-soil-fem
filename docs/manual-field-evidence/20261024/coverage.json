@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "chapters": 37,
+  "contiguous_example_chapters": [
+    13,
+    36
+  ],
+  "numbered_examples": 23,
+  "additional_example": "11-B",
+  "confirmation_sections": 14,
+  "preserved_numeric_confirmation_rows": 131,
+  "corrected_definition_rows": 1,
+  "old_source": "docs\\manuals\\2DSoilFEM_Manual.md",
+  "new_source": "docs\\manuals\\2DSoilFEM_Manual_20261024.md"
+}

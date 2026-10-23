@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "pdf_sha256": "a79a362c11deb66d36f2215b0d3f8d7ba4b5e30fa0cec0a2120602cfb048ed3c",
+  "pages": 242,
+  "chapters": 37,
+  "figures": 221,
+  "book_sha256_unchanged": "508c99ef084129a0b70e01c28dd1d1e75de23a0ef78e212919f044998e0223bd",
+  "dll_sha256_unchanged": "ad5c2ae81512ba8e977002415a6a5339b621c00a1bbabe5092559f8a7f9e0797",
+  "analysis_source_code_changed": false,
+  "zip": "workbook/SoilFEM_UI_20261024.zip",
+  "zip_sha256": "6732f8c3f848d995fa22fa67326d32e65a2d85077919bd1965550ed67ef31610",
+  "zip_change": "BUILD_RECORD PDF/validation metadata only",
+  "basis_commit": "9d6172597a0ae154edb2acb83662e0ce9ae22e8d"
+}

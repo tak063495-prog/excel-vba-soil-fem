@@ -568,7 +568,9 @@ Public Sub GWTransientProfile(ByVal first As String, ByVal last As String, ByVal
   GWLoadDefinition
   ReDim mWaterForce(lastDof)
   GWBuildSurfaceForce
-  GJSetPressures mCurrent, mGamma, False
+  ' Boundary preparation precedes the new pressure solve. Keep adjacent
+  ' accepted pressure for the load base; validate again on the solved field.
+  GJSetPressures mCurrent, mGamma, False, False
   GJAddForces mCurrent, mWaterForce, True
 End Sub
 
@@ -835,6 +837,7 @@ Public Function GWWriteCheckpoint(ByVal folder As String) As Boolean
   Dim f As Integer, e As Long, g As Long, decimalMark As String
   GWWriteCheckpoint = False
   If Not GWActive Then GWWriteCheckpoint = True: Exit Function
+  Dim failedNumber As Long
   On Error GoTo Failed
   f = FreeFile
   Open folder & Application.PathSeparator & "water.csv" For Output As #f
@@ -852,8 +855,14 @@ Public Function GWWriteCheckpoint(ByVal folder As String) As Boolean
   GWWriteCheckpoint = True
   Exit Function
 Failed:
+  failedNumber = Err.number
   On Error Resume Next
-  Close #f
+  If f > 0 Then Close #f
+  On Error GoTo 0
+  If failedNumber = 18 Then
+    P3UserCancel = True: P3SearchFatal = True
+    Err.Raise 18
+  End If
 End Function
 
 Public Sub GWReadCheckpoint(ByVal folder As String)

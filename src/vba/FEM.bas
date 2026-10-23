@@ -587,6 +587,7 @@ Public Sub P5ValidateAnalysisMesh()
 End Sub
 
 Private Sub P5EvaluateQuadQuality(ByVal elementId As Long, ByRef connectivity() As Long, ByRef x() As Double, ByRef y() As Double)
+  Dim certifyX(0 To 7) As Double, certifyY(0 To 7) As Double, certifyReason As String
   Dim nodeNo(1 To 8) As Long, edgeLength(1 To 4) As Double
   Dim i As Long, previousIndex As Long, nextIndex As Long
   Dim area As Double, minJacobian As Double, jacobianValue As Double
@@ -643,7 +644,93 @@ Private Sub P5EvaluateQuadQuality(ByVal elementId As Long, ByRef connectivity() 
   Next i
   If minJacobian < P5MinJacobian Then P5MinJacobian = minJacobian
   If minJacobian <= P5AreaTolerance Then Err.Raise vbObjectError + 3472, "FEM.P5ValidateAnalysisMesh", "要素Jacobianが正でないか小さすぎます。要素=" & CStr(elementId)
+  For i = 0 To 7: certifyX(i) = x(nodeNo(i + 1)): certifyY(i) = y(nodeNo(i + 1)): Next i
+  If Not FEMQ8GeometryCertified(certifyX, certifyY, P5AreaTolerance, certifyReason) Then Err.Raise vbObjectError + 3472, "FEM.P5ValidateAnalysisMesh", certifyReason & "。要素=" & CStr(elementId)
 End Sub
+
+' detJ of a serendipity Q8 is bicubic (or lower degree). Tensor Bernstein
+' coefficients bound its value on the ENTIRE reference square. Sampling here
+' constructs that polynomial; sample signs alone never authorize acceptance.
+Public Function FEMQ8GeometryCertified(ByRef px() As Double, ByRef py() As Double, ByVal tolerance As Double, ByRef reason As String) As Boolean
+  Dim x(1 To 8) As Double, y(1 To 8) As Double, nodes(1 To 8) As Long
+  Dim b(0 To 3, 0 To 3) As Double, work(0 To 3) As Double
+  Dim i As Long, j As Long, span As Double, value As Double, tol As Double, budget As Long, roundGuard As Double
+  reason = "": span = 0#
+  For i = 0 To 7
+    value = Abs(px(i) - px(0)): If value > span Then span = value
+    value = Abs(py(i) - py(0)): If value > span Then span = value
+  Next i
+  If span = 0# Then reason = "Q8のJacobianが退化しています": Exit Function
+  For i = 1 To 8
+    nodes(i) = i: x(i) = (px(i - 1) - px(0)) / span: y(i) = (py(i - 1) - py(0)) / span
+  Next i
+  tol = (tolerance / span) / span
+  For j = 0 To 3
+    For i = 0 To 3: work(i) = P5Q8Jacobian(x, y, nodes, -1# + 2# * i / 3#, -1# + 2# * j / 3#): Next i
+    Q8ValuesToBernstein work
+    For i = 0 To 3: b(i, j) = work(i): Next i
+  Next j
+  For i = 0 To 3
+    For j = 0 To 3: work(j) = b(i, j): Next j
+    Q8ValuesToBernstein work
+    For j = 0 To 3: b(i, j) = work(j): Next j
+  Next i
+  For i = 0 To 3
+    For j = 0 To 3: If Abs(b(i, j)) > roundGuard Then roundGuard = Abs(b(i, j))
+    Next j
+  Next i
+  roundGuard = 0.0000000001 * (1# + roundGuard)
+  budget = 4096
+  FEMQ8GeometryCertified = Q8PositiveBox(b, tol, 0, budget, roundGuard, reason)
+End Function
+
+Private Sub Q8ValuesToBernstein(ByRef v() As Double)
+  Dim a As Double, b As Double
+  a = 27# * v(1) - 8# * v(0) - v(3)
+  b = 27# * v(2) - v(0) - 8# * v(3)
+  v(1) = (2# * a - b) / 18#: v(2) = (2# * b - a) / 18#
+End Sub
+
+Private Function Q8PositiveBox(ByRef b() As Double, ByVal tol As Double, ByVal depth As Long, ByRef budget As Long, ByVal roundGuard As Double, ByRef reason As String) As Boolean
+  Dim low As Double, high As Double, pad As Double, i As Long, j As Long
+  Dim left(0 To 3, 0 To 3) As Double, right(0 To 3, 0 To 3) As Double
+  Dim v(0 To 3) As Double, a As Double, c As Double, d As Double, e As Double, f As Double, mid As Double
+  low = b(0, 0): high = low: budget = budget - 1
+  For i = 0 To 3
+    For j = 0 To 3
+      If b(i, j) < low Then low = b(i, j)
+      If b(i, j) > high Then high = b(i, j)
+    Next j
+  Next i
+  ' Coordinates are translated and scaled to |x|,|y| <= 1. The guard is
+  ' deliberately conservative for Double evaluation/conversion/subdivision;
+  ' uncertain near-zero elements are rejected, never accepted by a grid test.
+  pad = roundGuard + depth * 0.0000000000001 * (1# + Abs(low) + Abs(high))
+  If low > tol + pad Then Q8PositiveBox = True: Exit Function
+  For i = 0 To 3 Step 3
+    For j = 0 To 3 Step 3
+      If b(i, j) < -pad Then reason = "Q8のJacobianが参照領域内で負です": Exit Function
+      If b(i, j) <= tol + pad Then reason = "Q8のJacobianが退化または許容値近傍です": Exit Function
+    Next j
+  Next i
+  If depth >= 24 Or budget <= 0 Then reason = "Q8のJacobianの全域正値性を確認できません（強い歪み）": Exit Function
+  For j = 0 To 3
+    For i = 0 To 3
+      If depth Mod 2 = 0 Then v(i) = b(i, j) Else v(i) = b(j, i)
+    Next i
+    a = (v(0) + v(1)) / 2#: c = (v(1) + v(2)) / 2#: d = (v(2) + v(3)) / 2#
+    e = (a + c) / 2#: f = (c + d) / 2#: mid = (e + f) / 2#
+    If depth Mod 2 = 0 Then
+      left(0, j) = v(0): left(1, j) = a: left(2, j) = e: left(3, j) = mid
+      right(0, j) = mid: right(1, j) = f: right(2, j) = d: right(3, j) = v(3)
+    Else
+      left(j, 0) = v(0): left(j, 1) = a: left(j, 2) = e: left(j, 3) = mid
+      right(j, 0) = mid: right(j, 1) = f: right(j, 2) = d: right(j, 3) = v(3)
+    End If
+  Next j
+  If Not Q8PositiveBox(left, tol, depth + 1, budget, roundGuard, reason) Then Exit Function
+  Q8PositiveBox = Q8PositiveBox(right, tol, depth + 1, budget, roundGuard, reason)
+End Function
 
 Private Function P5Q8Jacobian(ByRef x() As Double, ByRef y() As Double, ByRef nodeNo() As Long, ByVal xi As Double, ByVal eta As Double) As Double
   Dim dNxi(1 To 8) As Double, dNeta(1 To 8) As Double
@@ -714,10 +801,83 @@ NextMidUnion:
     Next j
 NextTopoElement:
   Next i
+  P5ValidatePartialEdges edgeMap, connectivity
   For i = 1 To nodeCount
     If P5FindRoot(parent, i) = i Then P5ConnectedComponentCount = P5ConnectedComponentCount + 1
   Next i
   If P5ConnectedComponentCount > 1 Then Err.Raise vbObjectError + 3474, "FEM.P5ValidateAnalysisMesh", "メッシュが複数の非接続領域に分かれています。領域数=" & CStr(P5ConnectedComponentCount)
+End Sub
+
+' Only unmatched continuum edges can form an unsupported hanging interface.
+' Sweep their bounding intervals, rather than comparing every element pair.
+Private Sub P5ValidatePartialEdges(ByVal edgeMap As Object, ByRef conn() As Long)
+  Dim ed() As Double, order() As Long, key As Variant, info As Variant, ids As Variant
+  Dim n As Long, i As Long, j As Long, k As Long, e As Long, side As Long, a As Long, b As Long, mid As Long
+  Dim axis As Long, loX As Double, hiX As Double, loY As Double, hiY As Double, tol As Double
+  Dim dx As Double, dy As Double, length As Double, t0 As Double, t1 As Double, start As Double, finish As Double
+  If edgeMap.count = 0 Then Exit Sub
+  ReDim ed(1 To edgeMap.count, 1 To 10): ReDim order(1 To edgeMap.count)
+  tol = P5GeometryTolerance
+  For Each key In edgeMap.keys
+    info = Split(CStr(edgeMap(key)), "|")
+    If CLng(info(0)) = 1 Then
+      ids = Split(CStr(key), ":"): a = CLng(ids(0)): b = CLng(ids(1)): e = CLng(info(1)): mid = CLng(info(3))
+      dx = P6InputNodeX(b) - P6InputNodeX(a): dy = P6InputNodeY(b) - P6InputNodeY(a): length = Sqr(dx * dx + dy * dy)
+      If length > tol Then
+        ' Curved Q8 boundaries are not approximated by their endpoint chord.
+        If Abs(dx * (P6InputNodeY(mid) - P6InputNodeY(a)) - dy * (P6InputNodeX(mid) - P6InputNodeX(a))) <= tol * length Then
+          n = n + 1: order(n) = n: ed(n, 1) = e
+          ed(n, 2) = P6InputNodeX(a): ed(n, 3) = P6InputNodeY(a): ed(n, 4) = P6InputNodeX(b): ed(n, 5) = P6InputNodeY(b)
+          ed(n, 6) = WorksheetFunction.Min(ed(n, 2), ed(n, 4)): ed(n, 7) = WorksheetFunction.Max(ed(n, 2), ed(n, 4))
+          ed(n, 8) = WorksheetFunction.Min(ed(n, 3), ed(n, 5)): ed(n, 9) = WorksheetFunction.Max(ed(n, 3), ed(n, 5))
+          For side = 1 To 4
+            If (conn(e, side) = a And conn(e, (side Mod 4) + 1) = b) Or (conn(e, side) = b And conn(e, (side Mod 4) + 1) = a) Then ed(n, 10) = side: Exit For
+          Next side
+          If n = 1 Then loX = ed(n, 6): hiX = ed(n, 7): loY = ed(n, 8): hiY = ed(n, 9)
+          If ed(n, 6) < loX Then loX = ed(n, 6)
+          If ed(n, 7) > hiX Then hiX = ed(n, 7)
+          If ed(n, 8) < loY Then loY = ed(n, 8)
+          If ed(n, 9) > hiY Then hiY = ed(n, 9)
+        End If
+      End If
+    End If
+  Next key
+  If n < 2 Then Exit Sub
+  axis = 6: If hiY - loY > hiX - loX Then axis = 8
+  P5SortEdgeIntervals order, ed, axis, 1, n
+  For k = 1 To n - 1
+    i = order(k)
+    dx = ed(i, 4) - ed(i, 2): dy = ed(i, 5) - ed(i, 3): length = Sqr(dx * dx + dy * dy)
+    dx = dx / length: dy = dy / length
+    For side = k + 1 To n
+      j = order(side)
+      If ed(j, axis) > ed(i, axis + 1) + tol Then Exit For
+      If ed(i, 1) = ed(j, 1) Then GoTo NextPartialEdge
+      If ed(j, 6) > ed(i, 7) + tol Or ed(j, 7) < ed(i, 6) - tol Or ed(j, 8) > ed(i, 9) + tol Or ed(j, 9) < ed(i, 8) - tol Then GoTo NextPartialEdge
+      If Abs(dx * (ed(j, 3) - ed(i, 3)) - dy * (ed(j, 2) - ed(i, 2))) > tol Then GoTo NextPartialEdge
+      If Abs(dx * (ed(j, 5) - ed(i, 3)) - dy * (ed(j, 4) - ed(i, 2))) > tol Then GoTo NextPartialEdge
+      t0 = dx * (ed(j, 2) - ed(i, 2)) + dy * (ed(j, 3) - ed(i, 3))
+      t1 = dx * (ed(j, 4) - ed(i, 2)) + dy * (ed(j, 5) - ed(i, 3))
+      start = WorksheetFunction.Min(t0, t1): finish = WorksheetFunction.Max(t0, t1)
+      If WorksheetFunction.Min(length, finish) - WorksheetFunction.Max(0#, start) <= tol Then GoTo NextPartialEdge
+      ' Full coincident faces include intentionally separated JOINT nodes.
+      If Abs(start) <= tol And Abs(finish - length) <= tol Then GoTo NextPartialEdge
+      Err.Raise vbObjectError + 3980, "FEM.P5ValidateAnalysisMesh", "辺が部分重複する不適合接続（hanging node）は未対応です。メッシュを適合する分割へ修正してください。要素=" & CStr(CLng(ed(i, 1))) & "/辺=" & CStr(CLng(ed(i, 10))) & " と要素=" & CStr(CLng(ed(j, 1))) & "/辺=" & CStr(CLng(ed(j, 10)))
+NextPartialEdge:
+    Next side
+  Next k
+End Sub
+
+Private Sub P5SortEdgeIntervals(ByRef order() As Long, ByRef ed() As Double, ByVal axis As Long, ByVal first As Long, ByVal last As Long)
+  Dim i As Long, j As Long, temp As Long, pivot As Double
+  i = first: j = last: pivot = ed(order((first + last) \ 2), axis)
+  Do
+    Do While ed(order(i), axis) < pivot: i = i + 1: Loop
+    Do While ed(order(j), axis) > pivot: j = j - 1: Loop
+    If i <= j Then temp = order(i): order(i) = order(j): order(j) = temp: i = i + 1: j = j - 1
+  Loop While i <= j
+  If first < j Then P5SortEdgeIntervals order, ed, axis, first, j
+  If i < last Then P5SortEdgeIntervals order, ed, axis, i, last
 End Sub
 
 Private Sub P5Union(ByRef parent() As Long, ByVal leftNode As Long, ByVal rightNode As Long)
@@ -1613,6 +1773,7 @@ Private Function CornerJacobian(ByRef elementData As Element_Data, ByVal xi As D
 End Function
 
 Private Function CheckElementJacobian(ByRef elementData As Element_Data, ByVal elementId As Long, Optional ByVal checkGauss As Boolean = True) As Boolean
+  Dim certifyReason As String
   Dim cornerXi(0 To 3) As Double, cornerEta(0 To 3) As Double
   Dim cornerId As Long, gaussId As Long
   Dim determinant As Double
@@ -1643,6 +1804,10 @@ Private Function CheckElementJacobian(ByRef elementData As Element_Data, ByVal e
     End If
   Next cornerId
   If Not checkGauss Then
+    If Not FEMQ8GeometryCertified(elementData.x, elementData.y, 0.000000000001, certifyReason) Then
+      SetAnalysisFailure RESULT_INPUT_ERROR, certifyReason & "。要素=" & CStr(elementId + 1), vbObjectError + 3023, elementId + 1, -1, CurrentIncrement, CurrentIteration
+      Exit Function
+    End If
     CheckElementJacobian = True
     Exit Function
   End If

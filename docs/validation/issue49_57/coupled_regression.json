@@ -1,0 +1,334 @@
+{
+  "status": "PASS",
+  "scope": "all coupled displacement/stress/Fs values exact; output diagnostics within 1e-10; rejected states exact",
+  "cases": [
+    {
+      "case": "closed",
+      "status": "PASS",
+      "records": [
+        {
+          "record": "result.json",
+          "displacement_values": 86,
+          "stress_values": 544,
+          "u_stress_Fs_exact": true,
+          "diagnostic_max_difference": 0.0,
+          "reference_seconds": 7.073289,
+          "candidate_seconds": 8.2405352
+        },
+        {
+          "record": "resume.json",
+          "displacement_values": 86,
+          "stress_values": 544,
+          "u_stress_Fs_exact": true,
+          "diagnostic_max_difference": 0.0,
+          "reference_seconds": 2.213827,
+          "candidate_seconds": 2.2991712
+        }
+      ]
+    },
+    {
+      "case": "column_biot_anisotropic",
+      "status": "PASS",
+      "records": [
+        {
+          "record": "result.json",
+          "displacement_values": 86,
+          "stress_values": 544,
+          "u_stress_Fs_exact": true,
+          "diagnostic_max_difference": 0.0,
+          "reference_seconds": 8.2337851,
+          "candidate_seconds": 9.5739294
+        },
+        {
+          "record": "resume.json",
+          "displacement_values": 86,
+          "stress_values": 544,
+          "u_stress_Fs_exact": true,
+          "diagnostic_max_difference": 0.0,
+          "reference_seconds": 2.2788787,
+          "candidate_seconds": 2.3584246
+        }
+      ]
+    },
+    {
+      "case": "column_nonlinear_srm",
+      "status": "PASS",
+      "records": [
+        {
+          "record": "result.json",
+          "displacement_values": 86,
+          "stress_values": 544,
+          "u_stress_Fs_exact": true,
+          "diagnostic_max_difference": 0.0,
+          "reference_seconds": 9.9742179,
+          "candidate_seconds": 10.8086084
+        },
+        {
+          "record": "resume.json",
+          "displacement_values": 86,
+          "stress_values": 544,
+          "u_stress_Fs_exact": true,
+          "diagnostic_max_difference": 0.0,
+          "reference_seconds": 2.3180662,
+          "candidate_seconds": 2.3149408
+        }
+      ]
+    },
+    {
+      "case": "column_smoke",
+      "status": "PASS",
+      "records": [
+        {
+          "record": "result.json",
+          "displacement_values": 86,
+          "stress_values": 544,
+          "u_stress_Fs_exact": true,
+          "diagnostic_max_difference": 0.0,
+          "reference_seconds": 8.4124709,
+          "candidate_seconds": 8.801724
+        },
+        {
+          "record": "resume.json",
+          "displacement_values": 86,
+          "stress_values": 544,
+          "u_stress_Fs_exact": true,
+          "diagnostic_max_difference": 0.0,
+          "reference_seconds": 2.2327425,
+          "candidate_seconds": 2.2854027
+        }
+      ]
+    },
+    {
+      "case": "fill_30day",
+      "status": "PASS",
+      "records": [
+        {
+          "record": "result.json",
+          "displacement_values": 96,
+          "stress_values": 612,
+          "u_stress_Fs_exact": true,
+          "diagnostic_max_difference": 0.0,
+          "reference_seconds": 9.4526845,
+          "candidate_seconds": 10.1353393
+        },
+        {
+          "record": "resume.json",
+          "displacement_values": 96,
+          "stress_values": 612,
+          "u_stress_Fs_exact": true,
+          "diagnostic_max_difference": 0.0,
+          "reference_seconds": 2.2845919,
+          "candidate_seconds": 2.4018658
+        }
+      ]
+    },
+    {
+      "case": "joint_transient",
+      "status": "PASS",
+      "records": [
+        {
+          "record": "result.json",
+          "displacement_values": 32,
+          "stress_values": 204,
+          "u_stress_Fs_exact": true,
+          "diagnostic_max_difference": 0.0,
+          "reference_seconds": 6.3545314,
+          "candidate_seconds": 6.5725592
+        },
+        {
+          "record": "resume.json",
+          "displacement_values": 32,
+          "stress_values": 204,
+          "u_stress_Fs_exact": true,
+          "diagnostic_max_difference": 0.0,
+          "reference_seconds": 2.0836698,
+          "candidate_seconds": 2.1883692
+        }
+      ]
+    },
+    {
+      "case": "named_unload",
+      "status": "PASS",
+      "records": [
+        {
+          "record": "result.json",
+          "displacement_values": 86,
+          "stress_values": 544,
+          "u_stress_Fs_exact": true,
+          "diagnostic_max_difference": 0.0,
+          "reference_seconds": 15.8234987,
+          "candidate_seconds": 16.4998276
+        },
+        {
+          "record": "resume.json",
+          "displacement_values": 86,
+          "stress_values": 544,
+          "u_stress_Fs_exact": true,
+          "diagnostic_max_difference": 0.0,
+          "reference_seconds": 2.2670201,
+          "candidate_seconds": 2.4517231
+        }
+      ]
+    },
+    {
+      "case": "nonlinear_control",
+      "status": "PASS",
+      "records": [
+        {
+          "record": "result.json",
+          "displacement_values": 86,
+          "stress_values": 544,
+          "u_stress_Fs_exact": true,
+          "diagnostic_max_difference": 0.0,
+          "reference_seconds": 8.9198119,
+          "candidate_seconds": 9.7333212
+        },
+        {
+          "record": "resume.json",
+          "displacement_values": 86,
+          "stress_values": 544,
+          "u_stress_Fs_exact": true,
+          "diagnostic_max_difference": 0.0,
+          "reference_seconds": 2.2444608,
+          "candidate_seconds": 2.355141
+        }
+      ]
+    },
+    {
+      "case": "pressure_gauge",
+      "status": "EXPECTED_REJECTION_UNCHANGED"
+    },
+    {
+      "case": "rollback_instant",
+      "status": "EXPECTED_REJECTION_UNCHANGED"
+    },
+    {
+      "case": "saturated_slope_srm",
+      "status": "PASS",
+      "records": [
+        {
+          "record": "result.json",
+          "displacement_values": 170,
+          "stress_values": 1360,
+          "u_stress_Fs_exact": true,
+          "diagnostic_max_difference": 0.0,
+          "reference_seconds": 14.6390915,
+          "candidate_seconds": 16.8810193
+        },
+        {
+          "record": "resume.json",
+          "displacement_values": 170,
+          "stress_values": 1360,
+          "u_stress_Fs_exact": true,
+          "diagnostic_max_difference": 0.0,
+          "reference_seconds": 2.6096259,
+          "candidate_seconds": 3.6699611
+        }
+      ]
+    },
+    {
+      "case": "saturation_rejection",
+      "status": "EXPECTED_REJECTION_UNCHANGED"
+    },
+    {
+      "case": "srm_time_rejection",
+      "status": "EXPECTED_REJECTION_UNCHANGED"
+    },
+    {
+      "case": "t6",
+      "status": "PASS",
+      "records": [
+        {
+          "record": "result.json",
+          "displacement_values": 102,
+          "stress_values": 1088,
+          "u_stress_Fs_exact": true,
+          "diagnostic_max_difference": 0.0,
+          "reference_seconds": 10.4297952,
+          "candidate_seconds": 11.2897599
+        },
+        {
+          "record": "resume.json",
+          "displacement_values": 102,
+          "stress_values": 1088,
+          "u_stress_Fs_exact": true,
+          "diagnostic_max_difference": 0.0,
+          "reference_seconds": 2.4073238,
+          "candidate_seconds": 2.5343018
+        }
+      ]
+    },
+    {
+      "case": "water_external_linear",
+      "status": "PASS",
+      "records": [
+        {
+          "record": "result.json",
+          "displacement_values": 86,
+          "stress_values": 544,
+          "u_stress_Fs_exact": true,
+          "diagnostic_max_difference": 0.0,
+          "reference_seconds": 7.0658753,
+          "candidate_seconds": 7.1971107
+        },
+        {
+          "record": "resume.json",
+          "displacement_values": 86,
+          "stress_values": 544,
+          "u_stress_Fs_exact": true,
+          "diagnostic_max_difference": 0.0,
+          "reference_seconds": 2.382768,
+          "candidate_seconds": 2.3166691
+        }
+      ]
+    },
+    {
+      "case": "watercurve",
+      "status": "PASS",
+      "records": [
+        {
+          "record": "result.json",
+          "displacement_values": 86,
+          "stress_values": 544,
+          "u_stress_Fs_exact": true,
+          "diagnostic_max_difference": 0.0,
+          "reference_seconds": 13.0429444,
+          "candidate_seconds": 13.8059176
+        },
+        {
+          "record": "resume.json",
+          "displacement_values": 86,
+          "stress_values": 544,
+          "u_stress_Fs_exact": true,
+          "diagnostic_max_difference": 0.0,
+          "reference_seconds": 2.252075,
+          "candidate_seconds": 2.4380995
+        }
+      ]
+    },
+    {
+      "case": "wet_birth_ramp",
+      "status": "PASS",
+      "records": [
+        {
+          "record": "result.json",
+          "displacement_values": 86,
+          "stress_values": 544,
+          "u_stress_Fs_exact": true,
+          "diagnostic_max_difference": 0.0,
+          "reference_seconds": 13.9761936,
+          "candidate_seconds": 14.7476447
+        },
+        {
+          "record": "resume.json",
+          "displacement_values": 86,
+          "stress_values": 544,
+          "u_stress_Fs_exact": true,
+          "diagnostic_max_difference": 0.0,
+          "reference_seconds": 2.2656337,
+          "candidate_seconds": 2.4103539
+        }
+      ]
+    }
+  ]
+}

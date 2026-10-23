@@ -22,6 +22,14 @@ Public Sub FSUQuiet()
  SuppressUserMessages = True
 End Sub
 '@)
+ # Use an explicit middle-stage fixture. The distributed book may legitimately
+ # have only two stages; uniqueness and DOWN must not depend on its defaults.
+ $uiStage=$wb.Worksheets.Item('ステージ');$uiStage.Range('A2:F2000').ClearContents()
+ $uiKinds=@('GRAVITY','LOAD','SRM')
+ for($r=0;$r -lt 3;$r++){
+  $uiStage.Cells($r+2,1).Value2=[double]($r+1);$uiStage.Cells($r+2,2).Value2=$uiKinds[$r]
+  $uiStage.Cells($r+2,4).Value2=1.;$uiStage.Cells($r+2,5).Value2=1.
+ }
  $null=Run 'FSUQuiet';$null=Run 'FEM24Install'
  $water=$wb.Worksheets.Item('水条件');$stage=$wb.Worksheets.Item('ステージ');$front=$wb.Worksheets.Item('施工工程')
  # Use actual front-sheet change events for coupled material and time detail.
@@ -32,7 +40,10 @@ End Sub
  Assert ([double]$water.Range('X12').Value2 -eq 2e-6) 'Material front event did not update storage'
  $mat.Range('C8').Value2=$old
  $xl.EnableEvents=$false
- $water.Range('AC12:AL12').ClearContents()
+ $water.Range('L12:T211').ClearContents();$water.Range('AC12:AL211').ClearContents()
+ $water.Range('B3').Value2='HYDROSTATIC'
+ $water.Range('L12').Value2=2.;$water.Range('M12').Value2='FIXED_STRESS'
+ $water.Range('O12').Value2=1.;$water.Range('P12').Value2=0.25
  $water.Range('AC12').Value2=2.;$water.Range('AD12').Value2='D';$water.Range('AE12').Value2='HOLD';$water.Range('AF12').Value2='INSTANT'
  $water.Range('AK12').Value2='UI_SET'
  $front.Activate();$xl.EnableEvents=$true;$front.Range('C4').Value2='時間の詳細設定'
@@ -43,7 +54,8 @@ End Sub
  $xl.EnableEvents=$false
  $before=[int]$stage.Cells($stage.Rows.Count,1).End(-4162).Row
  $front.Range('A9').Select();$null=Run 'FEM24StageCopy'
- Assert ((Run 'FSUStatus') -eq '|') 'Copy returned UI error'
+ $uiStatus=Run 'FSUStatus'
+ Assert ($uiStatus -eq '|') "Copy returned UI error: $uiStatus"
  $newId=[int]$stage.Cells($before+1,1).Value2
  Assert ($newId -gt 3) 'Copy stage ID not unique'
  $found=$false

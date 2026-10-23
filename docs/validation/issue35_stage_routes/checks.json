@@ -1,0 +1,120 @@
+{
+  "status": "PASS",
+  "scope": "Live Excel public UI route; historical figure data remain separately identified",
+  "cases": [
+    {
+      "name": "road",
+      "normal_stage_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "node_rows": 3608,
+      "element_rows": 879,
+      "filtered_node": 19,
+      "filtered_values": {
+        "1": {
+          "uy_m": -0.008914285714285711,
+          "additional_settlement_mm": -0.0
+        },
+        "4": {
+          "uy_m": -0.013775697231346262,
+          "additional_settlement_mm": 4.86141151706055
+        },
+        "6": {
+          "uy_m": -0.012619322720321818,
+          "additional_settlement_mm": 3.705037006036107
+        },
+        "11": {
+          "uy_m": -0.020300427400649704,
+          "additional_settlement_mm": 11.386141686363992
+        }
+      },
+      "max_absolute_delta_from_historical_nodes": {
+        "ux_m": 1.925929944387236e-34,
+        "uy_m": 0.0,
+        "Rx_kN": 6.310887241768095e-30,
+        "Ry_kN": 0.0
+      },
+      "historical_archive_sha256": "aedb61abac761c92945b4844f40e4106a950c8987c59ce969fc273014c619a17",
+      "current_book_sha256": "508c99ef084129a0b70e01c28dd1d1e75de23a0ef78e212919f044998e0223bd",
+      "result_sha256": "98756131ce403b6d7a5119c3f4652faef9f5c19b2b29e9de087091713ca517e8",
+      "seconds": 7.8140218,
+      "filter_checks": 4
+    },
+    {
+      "name": "tunnel",
+      "normal_stage_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "node_rows": 4473,
+      "element_rows": 1120,
+      "filtered_node": 351,
+      "filtered_values": {
+        "1": {
+          "uy_m": -0.07040310754715898,
+          "additional_settlement_mm": -0.0
+        },
+        "2": {
+          "uy_m": -0.07485266157961039,
+          "additional_settlement_mm": 4.449554032451411
+        },
+        "3": {
+          "uy_m": -0.07543526789621494,
+          "additional_settlement_mm": 5.0321603490559585
+        },
+        "4": {
+          "uy_m": -0.07543526789621494,
+          "additional_settlement_mm": 5.0321603490559585
+        },
+        "5": {
+          "uy_m": -0.07563797290834383,
+          "additional_settlement_mm": 5.234865361184851
+        },
+        "6": {
+          "uy_m": -0.07564124819543529,
+          "additional_settlement_mm": 5.2381406482763095
+        },
+        "7": {
+          "uy_m": -0.0759656565310837,
+          "additional_settlement_mm": 5.56254898392472
+        },
+        "8": {
+          "uy_m": -0.0759656565310837,
+          "additional_settlement_mm": 5.56254898392472
+        },
+        "9": {
+          "uy_m": -0.07609755768528906,
+          "additional_settlement_mm": 5.6944501381300805
+        }
+      },
+      "max_absolute_delta_from_historical_nodes": {
+        "ux_m": 0.00018393679898252922,
+        "uy_m": 0.0001013530185397099,
+        "Rx_kN": 0.8236591491838681,
+        "Ry_kN": 0.7141840405947733
+      },
+      "historical_archive_sha256": "27503033f4536c4edb3535d0ba0ce5214871a0455ad459ba30dbdab20ab6fb66",
+      "current_book_sha256": "508c99ef084129a0b70e01c28dd1d1e75de23a0ef78e212919f044998e0223bd",
+      "result_sha256": "773cd5370db0112a7119cf98953527aaa90051f5c13467b941fdd97da053b5bb",
+      "seconds": 8.549971,
+      "filter_checks": 9
+    }
+  ]
+}

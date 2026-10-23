@@ -1,0 +1,448 @@
+{
+  "status": "PASS",
+  "fixture": "tests\\fixtures\\material_issue54_55.json",
+  "records": 50,
+  "checks": [
+    {
+      "id": "ray_1_r0",
+      "mode": "cone",
+      "accept": true,
+      "oracle": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+      "multiplier_sum": 1.0000000000000009,
+      "strict_interior": false
+    },
+    {
+      "id": "ray_1_r30",
+      "mode": "cone",
+      "accept": true,
+      "oracle": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+      "multiplier_sum": 1.0000000000000009,
+      "strict_interior": false
+    },
+    {
+      "id": "ray_2_r0",
+      "mode": "cone",
+      "accept": true,
+      "oracle": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+      "multiplier_sum": 1.0000000000000009,
+      "strict_interior": false
+    },
+    {
+      "id": "ray_2_r30",
+      "mode": "cone",
+      "accept": true,
+      "oracle": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+      "multiplier_sum": 1.0000000000000007,
+      "strict_interior": false
+    },
+    {
+      "id": "ray_3_r0",
+      "mode": "cone",
+      "accept": true,
+      "oracle": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+      "multiplier_sum": 1.0000000000000009,
+      "strict_interior": false
+    },
+    {
+      "id": "ray_3_r30",
+      "mode": "cone",
+      "accept": true,
+      "oracle": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+      "multiplier_sum": 1.0000000000000009,
+      "strict_interior": false
+    },
+    {
+      "id": "ray_4_r0",
+      "mode": "cone",
+      "accept": true,
+      "oracle": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+      "multiplier_sum": 1.0000000000000009,
+      "strict_interior": false
+    },
+    {
+      "id": "ray_4_r30",
+      "mode": "cone",
+      "accept": true,
+      "oracle": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+      "multiplier_sum": 1.0000000000000009,
+      "strict_interior": false
+    },
+    {
+      "id": "ray_5_r0",
+      "mode": "cone",
+      "accept": true,
+      "oracle": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+      "multiplier_sum": 1.0000000000000009,
+      "strict_interior": false
+    },
+    {
+      "id": "ray_5_r30",
+      "mode": "cone",
+      "accept": true,
+      "oracle": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+      "multiplier_sum": 1.0000000000000007,
+      "strict_interior": false
+    },
+    {
+      "id": "ray_6_r0",
+      "mode": "cone",
+      "accept": true,
+      "oracle": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+      "multiplier_sum": 1.0000000000000009,
+      "strict_interior": false
+    },
+    {
+      "id": "ray_6_r30",
+      "mode": "cone",
+      "accept": true,
+      "oracle": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+      "multiplier_sum": 1.0000000000000009,
+      "strict_interior": false
+    },
+    {
+      "id": "all_six_positive_interior_r0",
+      "mode": "cone",
+      "accept": true,
+      "oracle": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+      "multiplier_sum": 3.6000000000000036,
+      "strict_interior": true
+    },
+    {
+      "id": "all_six_positive_interior_r27",
+      "mode": "cone",
+      "accept": true,
+      "oracle": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+      "multiplier_sum": 3.6000000000000036,
+      "strict_interior": true
+    },
+    {
+      "id": "outside_closed_cone",
+      "mode": "cone",
+      "accept": false,
+      "oracle": "The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is Infeasible)"
+    },
+    {
+      "id": "psi0_ray",
+      "mode": "cone",
+      "accept": true,
+      "oracle": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+      "multiplier_sum": 1.0,
+      "strict_interior": false
+    },
+    {
+      "id": "psi0_rotated",
+      "mode": "cone",
+      "accept": true,
+      "oracle": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+      "multiplier_sum": 1.0,
+      "strict_interior": false
+    },
+    {
+      "id": "psi0_two_faces",
+      "mode": "cone",
+      "accept": true,
+      "oracle": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+      "multiplier_sum": 2.0,
+      "strict_interior": false
+    },
+    {
+      "id": "psi0_other",
+      "mode": "cone",
+      "accept": true,
+      "oracle": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+      "multiplier_sum": 2.0,
+      "strict_interior": false
+    },
+    {
+      "id": "psi0_nontraceless_reject",
+      "mode": "cone",
+      "accept": false,
+      "oracle": "The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is Infeasible)"
+    },
+    {
+      "id": "physical_apex_psi0_steps1",
+      "mode": "material",
+      "ok": false,
+      "failure_code": 4103
+    },
+    {
+      "id": "physical_apex_psi0_steps2",
+      "mode": "material",
+      "ok": false,
+      "failure_code": 4103
+    },
+    {
+      "id": "physical_apex_psi0_steps4",
+      "mode": "material",
+      "ok": false,
+      "failure_code": 4103
+    },
+    {
+      "id": "physical_apex_psi0_steps8",
+      "mode": "material",
+      "ok": false,
+      "failure_code": 4103
+    },
+    {
+      "id": "physical_apex_psi1e-05_steps1",
+      "mode": "material",
+      "ok": true,
+      "failure_code": 4105,
+      "multiplier": 57295.77951308266,
+      "yield_residual": 0.0,
+      "tangent_ready": true,
+      "max_abs_tangent": 0.0
+    },
+    {
+      "id": "physical_apex_psi1e-05_steps2",
+      "mode": "material",
+      "ok": true,
+      "failure_code": 4105,
+      "multiplier": 57295.77951308266,
+      "yield_residual": 0.0,
+      "tangent_ready": false,
+      "max_abs_tangent": 0.0
+    },
+    {
+      "id": "physical_apex_psi1e-05_steps4",
+      "mode": "material",
+      "ok": true,
+      "failure_code": 4105,
+      "multiplier": 57295.77951308266,
+      "yield_residual": 0.0,
+      "tangent_ready": false,
+      "max_abs_tangent": 0.0
+    },
+    {
+      "id": "physical_apex_psi1e-05_steps8",
+      "mode": "material",
+      "ok": true,
+      "failure_code": 4105,
+      "multiplier": 57295.779513082656,
+      "yield_residual": 0.0,
+      "tangent_ready": false,
+      "max_abs_tangent": 0.0
+    },
+    {
+      "id": "physical_apex_psi0.0001_steps1",
+      "mode": "material",
+      "ok": true,
+      "failure_code": 4105,
+      "multiplier": 5729.5779513111465,
+      "yield_residual": 0.0,
+      "tangent_ready": true,
+      "max_abs_tangent": 0.0
+    },
+    {
+      "id": "physical_apex_psi0.0001_steps2",
+      "mode": "material",
+      "ok": true,
+      "failure_code": 4105,
+      "multiplier": 5729.5779513111465,
+      "yield_residual": 0.0,
+      "tangent_ready": false,
+      "max_abs_tangent": 0.0
+    },
+    {
+      "id": "physical_apex_psi0.0001_steps4",
+      "mode": "material",
+      "ok": true,
+      "failure_code": 4105,
+      "multiplier": 5729.5779513111465,
+      "yield_residual": 0.0,
+      "tangent_ready": false,
+      "max_abs_tangent": 0.0
+    },
+    {
+      "id": "physical_apex_psi0.0001_steps8",
+      "mode": "material",
+      "ok": true,
+      "failure_code": 4105,
+      "multiplier": 5729.577951311147,
+      "yield_residual": 0.0,
+      "tangent_ready": false,
+      "max_abs_tangent": 0.0
+    },
+    {
+      "id": "physical_apex_psi0.001_steps1",
+      "mode": "material",
+      "ok": true,
+      "failure_code": 4105,
+      "multiplier": 572.9577951599125,
+      "yield_residual": 0.0,
+      "tangent_ready": true,
+      "max_abs_tangent": 0.0
+    },
+    {
+      "id": "physical_apex_psi0.001_steps2",
+      "mode": "material",
+      "ok": true,
+      "failure_code": 4105,
+      "multiplier": 572.9577951599125,
+      "yield_residual": 0.0,
+      "tangent_ready": false,
+      "max_abs_tangent": 0.0
+    },
+    {
+      "id": "physical_apex_psi0.001_steps4",
+      "mode": "material",
+      "ok": true,
+      "failure_code": 4105,
+      "multiplier": 572.9577951599125,
+      "yield_residual": 0.0,
+      "tangent_ready": false,
+      "max_abs_tangent": 0.0
+    },
+    {
+      "id": "physical_apex_psi0.001_steps8",
+      "mode": "material",
+      "ok": true,
+      "failure_code": 4105,
+      "multiplier": 572.9577951599125,
+      "yield_residual": 0.0,
+      "tangent_ready": false,
+      "max_abs_tangent": 0.0
+    },
+    {
+      "id": "physical_apex_psi0.01_steps1",
+      "mode": "material",
+      "ok": true,
+      "failure_code": 4105,
+      "multiplier": 57.29577980397059,
+      "yield_residual": 0.0,
+      "tangent_ready": true,
+      "max_abs_tangent": 0.0
+    },
+    {
+      "id": "physical_apex_psi0.01_steps2",
+      "mode": "material",
+      "ok": true,
+      "failure_code": 4105,
+      "multiplier": 57.29577980397059,
+      "yield_residual": 0.0,
+      "tangent_ready": false,
+      "max_abs_tangent": 0.0
+    },
+    {
+      "id": "physical_apex_psi0.01_steps4",
+      "mode": "material",
+      "ok": true,
+      "failure_code": 4105,
+      "multiplier": 57.29577980397059,
+      "yield_residual": 0.0,
+      "tangent_ready": false,
+      "max_abs_tangent": 0.0
+    },
+    {
+      "id": "physical_apex_psi0.01_steps8",
+      "mode": "material",
+      "ok": true,
+      "failure_code": 4105,
+      "multiplier": 57.2957798039706,
+      "yield_residual": 0.0,
+      "tangent_ready": false,
+      "max_abs_tangent": 0.0
+    },
+    {
+      "id": "physical_apex_psi1_steps1",
+      "mode": "material",
+      "ok": true,
+      "failure_code": 4105,
+      "multiplier": 0.5729868849855024,
+      "yield_residual": 0.0,
+      "tangent_ready": true,
+      "max_abs_tangent": 0.0
+    },
+    {
+      "id": "physical_apex_psi1_steps2",
+      "mode": "material",
+      "ok": true,
+      "failure_code": 4105,
+      "multiplier": 0.5729868849855024,
+      "yield_residual": 0.0,
+      "tangent_ready": false,
+      "max_abs_tangent": 0.0
+    },
+    {
+      "id": "physical_apex_psi1_steps4",
+      "mode": "material",
+      "ok": true,
+      "failure_code": 4105,
+      "multiplier": 0.5729868849855024,
+      "yield_residual": 0.0,
+      "tangent_ready": false,
+      "max_abs_tangent": 0.0
+    },
+    {
+      "id": "physical_apex_psi1_steps8",
+      "mode": "material",
+      "ok": true,
+      "failure_code": 4105,
+      "multiplier": 0.5729868849855024,
+      "yield_residual": 0.0,
+      "tangent_ready": false,
+      "max_abs_tangent": 0.0
+    },
+    {
+      "id": "physical_apex_psi30_steps1",
+      "mode": "material",
+      "ok": true,
+      "failure_code": 4105,
+      "multiplier": 0.020000000000000018,
+      "yield_residual": 0.0,
+      "tangent_ready": true,
+      "max_abs_tangent": 0.0
+    },
+    {
+      "id": "physical_apex_psi30_steps2",
+      "mode": "material",
+      "ok": true,
+      "failure_code": 4105,
+      "multiplier": 0.020000000000000018,
+      "yield_residual": 0.0,
+      "tangent_ready": false,
+      "max_abs_tangent": 0.0
+    },
+    {
+      "id": "physical_apex_psi30_steps4",
+      "mode": "material",
+      "ok": true,
+      "failure_code": 4105,
+      "multiplier": 0.020000000000000018,
+      "yield_residual": 0.0,
+      "tangent_ready": false,
+      "max_abs_tangent": 0.0
+    },
+    {
+      "id": "physical_apex_psi30_steps8",
+      "mode": "material",
+      "ok": true,
+      "failure_code": 4105,
+      "multiplier": 0.020000000000000018,
+      "yield_residual": 0.0,
+      "tangent_ready": false,
+      "max_abs_tangent": 0.0
+    },
+    {
+      "id": "issue54_exact_multiplier",
+      "mode": "material",
+      "ok": true,
+      "failure_code": 4105,
+      "multiplier": 0.019999999999999997,
+      "yield_residual": 1.4210854715202004e-14,
+      "tangent_ready": true,
+      "max_abs_tangent": 0.0
+    },
+    {
+      "id": "zero_dilation_isochoric_apex",
+      "mode": "material",
+      "ok": true,
+      "failure_code": 4105,
+      "multiplier": 0.010000000000000009,
+      "yield_residual": 1.4210854715202004e-14,
+      "tangent_ready": false,
+      "max_abs_tangent": 1442.3076923300578
+    }
+  ],
+  "oracle": "scipy.linprog original six flow rays; tiny-psi constructed cases use analytic construction"
+}

@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "scope": "All populated cells in nine canonical input/settings sheets, including complete hydraulic/time tables; styles and formula cached values excluded",
+  "reference": "workbook\\ui_20261024\\2DSoilFEM_ui_20261024.xlsm",
+  "candidate": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\issue3_cancel\\release7\\2DSoilFEM_ui_20261024.xlsm",
+  "reference_sha256": "c0e75c6c9fad2b47d6b37680fa6e591126031989860e03c9bf55ee81a356840f",
+  "candidate_sha256": "98952de07b4cf389ee4503704a2824a1cfc3a7210d3a04a4fe570df168b2d251",
+  "cells": {
+    "節点データ": 5039,
+    "形状入力": 33,
+    "接合": 31,
+    "要素データ": 4347,
+    "載荷": 42,
+    "水条件": 67,
+    "材料データ": 37,
+    "ステージ": 41,
+    "設定": 478
+  }
+}

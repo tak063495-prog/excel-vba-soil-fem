@@ -1,0 +1,186 @@
+{
+  "status": "PASS",
+  "pressure": {
+    "issue43_water_ramp_cache": {
+      "gp_count": 4,
+      "max_effective_principal_error": 1.7763568394002505e-15,
+      "stage": 2.0
+    },
+    "issue43_water_srm": {
+      "gp_count": 80,
+      "max_effective_principal_error": 2.842170943040401e-14,
+      "stage": 3.0
+    }
+  },
+  "resets": {
+    "issue46_reordered": {
+      "max_du": 4.4445667307137227e-13,
+      "fresh_reaction": 3.0000000000000004,
+      "resumed_reaction": 3.000000000103954,
+      "fresh_residual": 9.05452249696242e-16,
+      "resumed_residual": 1.2639273586272896e-10
+    },
+    "issue46_multiple": {
+      "max_du": 4.800147502788746e-13,
+      "fresh_reaction": 3.0000000000000018,
+      "resumed_reaction": 3.000000000045814,
+      "fresh_residual": 1.7915980672534625e-15,
+      "resumed_residual": 8.944597538079533e-11
+    },
+    "issue46_final_reset": {
+      "max_du": 0.0,
+      "fresh_reaction": 0.0,
+      "resumed_reaction": 0.0,
+      "fresh_residual": 0.0,
+      "resumed_residual": 0.0
+    },
+    "issue46_no_reset": {
+      "max_du": 4.0225863005144413e-13,
+      "fresh_reaction": 19.999999999999993,
+      "resumed_reaction": 20.0000000000001,
+      "fresh_residual": 5.863634044049841e-16,
+      "resumed_residual": 4.218304338517181e-13
+    },
+    "issue46_final_output": {
+      "max_du": 4.4445667307137227e-13,
+      "fresh_reaction": 3.0000000000000004,
+      "resumed_reaction": 3.000000000103954,
+      "fresh_residual": 9.05452249696242e-16,
+      "resumed_residual": 1.2639273586272896e-10
+    }
+  },
+  "views": {
+    "issue46_reordered": {
+      "book_sha256": "C5D4B57050122D137BF0274E36B349F6A2367179B07625D17F2876D0D507203A",
+      "note": "Prepared analysis with reordered IDs; saved/reopened test copy; real SheetChange input guard",
+      "saved_coordinate_guard": "NOT_REQUESTED",
+      "status": "PASS",
+      "plot": "PASS",
+      "native_figure": {
+        "type": 6,
+        "native_shape_count": 54,
+        "height": 540.0,
+        "width": 860.0
+      },
+      "reopen": "PASS",
+      "coordinate_guard": "ERROR|-2147217798 [保存結果と入力の照合] 入力変更後のため、再解析してから結果表示してください。"
+    },
+    "issue46_multiple": {
+      "plot": "PASS",
+      "note": "Prepared analysis with reordered IDs; saved/reopened test copy; real SheetChange input guard",
+      "saved_coordinate_guard": "NOT_REQUESTED",
+      "reopen": "PASS",
+      "book_sha256": "A3650E0ACFB9D17A4E6A61C0C11E0BB066123E501976C09AEC0FDA506D88E332",
+      "native_figure": {
+        "type": 6,
+        "height": 540.0,
+        "width": 860.0,
+        "native_shape_count": 54
+      },
+      "coordinate_guard": "ERROR|-2147217798 [保存結果と入力の照合] 入力変更後のため、再解析してから結果表示してください。",
+      "status": "PASS"
+    },
+    "issue46_final_reset": {
+      "saved_coordinate_guard": "NOT_REQUESTED",
+      "status": "PASS",
+      "native_figure": {
+        "type": 6,
+        "width": 860.0,
+        "native_shape_count": 54,
+        "height": 540.0
+      },
+      "coordinate_guard": "ERROR|-2147217798 [保存結果と入力の照合] 入力変更後のため、再解析してから結果表示してください。",
+      "note": "Prepared analysis with reordered IDs; saved/reopened test copy; real SheetChange input guard",
+      "book_sha256": "1FB62E558021A854EA7A726CA173A603FE9D66E585B6D56FC485AE98A6FCEF90",
+      "plot": "PASS",
+      "reopen": "PASS"
+    },
+    "issue46_no_reset": {
+      "saved_coordinate_guard": "ERROR|-2147217794 [保存結果と入力の照合] 結果と入力の座標が一致しません。再解析してください。",
+      "plot": "PASS",
+      "status": "PASS",
+      "note": "Prepared analysis with reordered IDs; saved/reopened test copy; real SheetChange input guard",
+      "reopen": "PASS",
+      "native_figure": {
+        "type": 6,
+        "width": 860.0,
+        "native_shape_count": 54,
+        "height": 540.0
+      },
+      "coordinate_guard": "ERROR|-2147217798 [保存結果と入力の照合] 入力変更後のため、再解析してから結果表示してください。",
+      "book_sha256": "78EB5EA0198F4A2A94D3EAA11492C2A0FF31529F3103AD4A50D3228C2FDFD140"
+    },
+    "issue46_final_output": {
+      "book_sha256": "5FB272F6CA35D8B8C9CCB38AEA53732AC3BC02A23F3DF34A07407459F77A88F3",
+      "note": "Prepared analysis with reordered IDs; saved/reopened test copy; real SheetChange input guard",
+      "coordinate_guard": "ERROR|-2147217798 [保存結果と入力の照合] 入力変更後のため、再解析してから結果表示してください。",
+      "reopen": "PASS",
+      "native_figure": {
+        "height": 540.0,
+        "type": 6,
+        "native_shape_count": 54,
+        "width": 860.0
+      },
+      "status": "PASS",
+      "saved_coordinate_guard": "NOT_REQUESTED",
+      "plot": "PASS"
+    }
+  },
+  "natural_srm_residual": {
+    "resumed": 5.669133153753804e-07,
+    "delta": 1.1093231579978173e-15,
+    "fresh": 5.669133142660572e-07,
+    "limit": 1e-05,
+    "production_tolerance_changed": false,
+    "status": "PASS",
+    "source": "P3_ENGINEERING_RESIDUAL"
+  },
+  "hold": {
+    "plastic_increment_max": 4.542714688846043e-05,
+    "unchanged_stage_row_counts": {
+      "2": 32,
+      "4": 32
+    },
+    "unchanged_stage_max_plastic": {
+      "2": 0.0,
+      "4": 0.0
+    },
+    "note": "Unchanged stages may have no accepted increment; no prior increment may be relabelled as that stage."
+  },
+  "rerun": {
+    "old_plastic": 0.0008744227829643403,
+    "new_plastic": 0.0,
+    "rows": 128,
+    "clean_control_max_differences": {
+      "disp": 0.0,
+      "stress": 0.0,
+      "metrics": 0.0
+    }
+  },
+  "formula_guard": {
+    "guard": "ERROR|-2147217672|高速化設定を並べ替える前に停止しました。操作パネル に数式があります。バックアップを作成し、元の設定位置を手動で戻すか、COPY側の定数設定を使用してください。",
+    "reopen": true,
+    "book_sha256": "C0E75C6C9FAD2B47D6B37680FA6E591126031989860E03C9BF55EE81A356840F",
+    "status": "PASS",
+    "settings_unchanged": true,
+    "normal": "PASS"
+  },
+  "snapshots": {
+    "snapshot_hydro": {
+      "dirty": "DIRTY",
+      "require_transient_flow": false,
+      "status": "PASS",
+      "scope": "actual private SRM save/restore with deliberately changed later-trial water/active topology; no claim that the dirty state was generated by natural mechanical nonconvergence",
+      "book_sha256": "45A8AB2657380164D155D846889D3417B008D4755418208ED625B493F7F702A5",
+      "deactivated_material": 0
+    },
+    "snapshot_steady": {
+      "scope": "actual private SRM save/restore with deliberately changed later-trial water/active topology; no claim that the dirty state was generated by natural mechanical nonconvergence",
+      "dirty": "DIRTY",
+      "deactivated_material": 2,
+      "status": "PASS",
+      "require_transient_flow": false,
+      "book_sha256": "489A428BB4029E80894916DE34D9A1A21F355F957749BD2DECD4FCB6ED370D31"
+    }
+  }
+}

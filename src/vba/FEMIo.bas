@@ -2436,6 +2436,7 @@ End Function
 
 ' Write a stage folder under *_out. SUCCESS also stores node/gauss/dof and origin.csv when a replay origin exists.
 Public Sub FEMIoExportStage(ByVal stageNo As Long, ByVal kindText As String, ByVal okFlag As Boolean)
+  Dim exportError As Long
   Dim folderPath As String, destFolder As String, tmpFolder As String, modeText As String
   Dim fullState As Boolean
   If P3ReplayQuiet Then Exit Sub
@@ -2476,14 +2477,19 @@ Public Sub FEMIoExportStage(ByVal stageNo As Long, ByVal kindText As String, ByV
   On Error GoTo 0
   Exit Sub
 ExportFail:
+  exportError = Err.number
   On Error Resume Next
   FEMIoDeleteFolder tmpFolder
   Err.Clear
   On Error GoTo 0
+  If exportError = 18 Then
+    P3UserCancel = True: P3SearchFatal = True
+    Err.Raise 18
+  End If
 End Sub
 
 Public Function FEMIoExportTime(ByVal folder As String, ByVal stageId As Long, ByVal kind As String, ByVal branch As Boolean) As Boolean
-  Dim tmp As String, f As Integer
+  Dim tmp As String, f As Integer, failedNumber As Long
   On Error GoTo Failed
   tmp = folder & ".tmp"
   If Dir$(folder, vbDirectory) <> "" Or Dir$(tmp, vbDirectory) <> "" Then Err.Raise vbObjectError + 8130, , "時刻別保存先が既に存在します。"
@@ -2505,8 +2511,14 @@ Public Function FEMIoExportTime(ByVal folder As String, ByVal stageId As Long, B
   FEMIoExportTime = True
   Exit Function
 Failed:
+  failedNumber = Err.number
   On Error Resume Next: Close #f
   FEMIoDeleteFolder tmp
+  On Error GoTo 0
+  If failedNumber = 18 Then
+    P3UserCancel = True: P3SearchFatal = True
+    Err.Raise 18
+  End If
 End Function
 
 Public Function FEMIoTimeRoot() As String
@@ -3312,6 +3324,9 @@ NextDofLine:
     NodeCond(intDof) = loadCond(origDof)
     P3CommittedNodeCond(intDof) = loadCond(origDof)
   Next origDof
+  ' Accepted state is also the next HOLD/WAIT target. A partially completed
+  ' LINEAR stage restores its distinct end target from fixed_stress.csv.
+  P3AppliedForce = P3LockedApplied
   P3CommittedBoundaryReady = True
   FEMIoLoadDofLock = True
 End Function

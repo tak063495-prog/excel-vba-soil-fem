@@ -16,15 +16,24 @@ https://github.com/tak063495-prog/excel-vba-soil-fem/blob/main/docs/manuals/2DSo
 
 コンパイル・保存再読込のソース一致、入力操作、数値回帰と実画面を確認しています。検証環境は64bit Excel 16.0 build 20430です。工程別の飽和fixed-stress時間連成に対応します。未知の自由水面・不飽和解析は対象外です。Double、材料則、収束条件、SRM探索条件は従来どおりです。
 
-Q8/T6混在対応（計算識別 20261024_MIXED_01）：
+Q8/T6混在対応（初回導入時の計算識別 20261024_MIXED_01）：
 「モデル」→「メッシュ生成・支持条件」→「不適合Q8をT6へ置換」で0=OFF／1=ONを指定します。初期値0です。品質修正後も目標未達のQ8だけをT6へ置換します。T6の輪郭は解析前メッシュで緑色、要素形式は詳細表K列です。辺の水理指定はT6の1・2・4を使います。再メッシュ後は支持・荷重・接合・水理境界を確認してください。
-https://github.com/tak063495-prog/excel-vba-soil-fem/blob/feat/mixed-t6/docs/MESH_MIXED_T6.md
+https://github.com/tak063495-prog/excel-vba-soil-fem/blob/main/docs/MESH_MIXED_T6.md
 
-時間圧密・水位変動（計算識別 20261024_FIXED_STRESS_06）：
+時間圧密・水位変動（計算識別 20261024_FIXED_STRESS_07）：
 施工工程の「時間・連成設定」「時間の詳細設定」、材料・接合の「圧密材料特性」を設定します。結果は「時間履歴」「水量収支」「時刻別の図」で確認します。途中SRMは親の水圧を保持し、照査後は施工本線へ戻ります。入力手順・制限と検証記録：
-https://github.com/tak063495-prog/excel-vba-soil-fem/blob/feat/fixed-stress-stages/docs/FIXED_STRESS_STAGES.md
-https://github.com/tak063495-prog/excel-vba-soil-fem/blob/feat/fixed-stress-stages/docs/FIXED_STRESS_VALIDATION.md
+https://github.com/tak063495-prog/excel-vba-soil-fem/blob/main/docs/FIXED_STRESS_STAGES.md
+https://github.com/tak063495-prog/excel-vba-soil-fem/blob/main/docs/FIXED_STRESS_VALIDATION.md
 
 水条件・SRM保存復元・RESET後の図表示・塑性結果更新の修正と検証記録：
-https://github.com/tak063495-prog/excel-vba-soil-fem/blob/feat/fixed-stress-stages/docs/XLSM_ISSUE_VALIDATION.md
-計算識別05の保存途中データは元ブックで継続するか、06で入力から再解析してください。
+https://github.com/tak063495-prog/excel-vba-soil-fem/blob/main/docs/XLSM_ISSUE_VALIDATION.md
+計算識別06以前の保存途中データは元ブックで継続するか、07で入力から再解析してください。
+
+07では保存再開の荷重・水位、時刻別の節点力・反力、頂点の材料点計算と塑性乗数、入力検査を修正しました。
+https://github.com/tak063495-prog/excel-vba-soil-fem/blob/main/docs/ISSUE49_57_VALIDATION.md
+
+中断の伝播とQ8内部の折返し検査を修正しました。受理済み状態を保持して中断し、全域のJacobian正値を確認できないQ8は要素番号付きで停止します。入力欄・保存形式・DLLは共通です。
+https://github.com/tak063495-prog/excel-vba-soil-fem/blob/main/docs/ISSUE3_59_VALIDATION.md
+
+内側の塑性履歴・連成・水量台帳・水圧CSVでも中断を伝播し、保存障害とユーザー中断を区別します。
+https://github.com/tak063495-prog/excel-vba-soil-fem/blob/main/docs/ISSUE3_INNER_WRITERS.md

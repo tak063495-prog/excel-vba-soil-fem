@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "native_apex": {
+    "max_u_m": 0.0,
+    "max_stress_kPa": 0.0,
+    "max_multiplier": 0.0,
+    "native_diagnostic": "NATIVE(soilfem_native_x64.dll;precision=AVX2_FMA;factor=0;solve=0;nonsym=1;statecopy=0;gmres_simd=0;fallback=0)|NATIVE(soilfem_native_x64.dll;eval_calls=8;eval_elements=1;declined=7[joint=0,material=0,substep=0,point=7,fp=0,dof=0];tangent_calls=2;tangent_elements=2;fallback=0)"
+  },
+  "mixed_reset": {
+    "preserved_coordinate_max_m": 0.0,
+    "preserved_u_vs_self_weight_solution_max_m": 1.0263816706268525e-14,
+    "preserved_stress_vs_self_weight_solution_max_kPa": 2.1263035776541983e-10
+  },
+  "mixed_coupled": {
+    "resume_u_max_m": 4.567479207351344e-13,
+    "fresh_metrics": [
+      36.0,
+      2.357909332194319e-15,
+      45.99999999673358,
+      8.16062576500023e-11,
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "resume_metrics": [
+      36.0,
+      -7.218075963322246e-17,
+      45.999999996733564,
+      8.222151708059083e-11,
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  }
+}

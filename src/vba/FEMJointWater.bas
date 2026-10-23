@@ -145,7 +145,7 @@ Public Sub GJExpandHeads(ByRef heads() As Double)
   For n = 0 To NumberOfFreeNode - 1: heads(n) = heads(flow(n)): Next n
 End Sub
 
-Public Sub GJSetPressures(ByRef target() As Double, ByVal gamma As Double, ByVal steady As Boolean)
+Public Sub GJSetPressures(ByRef target() As Double, ByVal gamma As Double, ByVal steady As Boolean, Optional ByVal validateState As Boolean = True)
   Dim e As Long, gp As Long, b As Long, q As Long, a As Long, count As Long
   Dim xi As Double, value As Double, p As Double, px As Double, py As Double, profile As String
   Dim shape(0 To 2) As Double
@@ -162,7 +162,7 @@ Public Sub GJSetPressures(ByRef target() As Double, ByVal gamma As Double, ByVal
           q = jOwner(b, e)
           If Material(Elem(q).MatNo).kind = "SOIL" Then
             value = GWFacePressure(q, jSide(b, e), xi, Elem(e).node(0))
-            If count > 0 Or jMode(e) = "PRESCRIBED" Then
+            If validateState And (count > 0 Or jMode(e) = "PRESCRIBED") Then
               If Abs(value - p) > 0.0000001 * (1# + Abs(p)) Then GJFail "JOINT両面/指定水位の水圧が一致しません。単純平均は行いません。"
             End If
             p = value: count = count + 1

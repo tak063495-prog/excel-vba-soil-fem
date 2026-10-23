@@ -65,6 +65,10 @@ Public Sub FEMIncrementCapture(ByVal loadFactor As Double)
   incReady = True: FEMIncrementLastError = ""
   Exit Sub
 Failed:
+  If Err.number = 18 Then
+    P3UserCancel = True: P3SearchFatal = True
+    Err.Raise 18
+  End If
   FEMIncrementLastError = "増分保存の準備に失敗: " & CStr(Err.number) & " " & Err.description
   incReady = False
 End Sub
@@ -100,7 +104,7 @@ Public Sub FEMIncrementRestoreBranch(ByVal saved As Variant)
 End Sub
 
 Public Function FEMIncrementWriteFile(ByVal folder As String) As Boolean
-  Dim f As Integer, e As Long, g As Long, c As Long, line As String, mark As String
+  Dim f As Integer, e As Long, g As Long, c As Long, line As String, mark As String, failedNumber As Long
   On Error GoTo Failed
   f = FreeFile: mark = Application.International(xlDecimalSeparator)
   Open folder & Application.PathSeparator & "increment.csv" For Output As #f
@@ -117,7 +121,13 @@ Public Function FEMIncrementWriteFile(ByVal folder As String) As Boolean
   End If
   Close #f: FEMIncrementWriteFile = True: Exit Function
 Failed:
+  failedNumber = Err.number
   On Error Resume Next: Close #f
+  On Error GoTo 0
+  If failedNumber = 18 Then
+    P3UserCancel = True: P3SearchFatal = True
+    Err.Raise 18
+  End If
 End Function
 
 Public Sub FEMIncrementReadFile(ByVal folder As String)
@@ -196,6 +206,10 @@ Public Sub FEMIncrementSave()
   ws.range("F:T").NumberFormat = "0.00000E+00"
   Exit Sub
 Failed:
+  If Err.number = 18 Then
+    P3UserCancel = True: P3SearchFatal = True
+    Err.Raise 18
+  End If
   FEMIncrementLastError = "増分結果の出力に失敗: " & CStr(Err.number) & " " & Err.description
   If Not ws Is Nothing Then ws.range("V1").value2 = "INVALID": ws.range("V2").value2 = FEMIncrementLastError
 End Sub
@@ -308,6 +322,10 @@ Public Sub FEMPlasticStateSave()
   ws.range("D:K").NumberFormat = "0.00000E+00"
   Exit Sub
 Failed:
+  If Err.number = 18 Then
+    P3UserCancel = True: P3SearchFatal = True
+    Err.Raise 18
+  End If
   FEMIncrementLastError = "塑性状態の出力に失敗: " & CStr(Err.number) & " " & Err.description
 End Sub
 

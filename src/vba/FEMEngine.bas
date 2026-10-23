@@ -141,7 +141,24 @@ End Sub
 
 Private Sub P3ResetKinematicState(ByVal moveGeom As Boolean)
   Dim i As Long, j As Long, k As Long, nd As Long
+  Dim moved As Element_Data, reason As String
   If moveGeom Then
+    ' Validate the proposed straight-T6 reference map before changing any
+    ' accepted coordinate or history. Never project midpoint displacements.
+    For k = 0 To NumberOfElement - 1
+      If FEMElementIsT6(k) Then
+        For j = 0 To 7
+          nd = Elem(k).node(j)
+          moved.x(j) = XXX(2 * nd) + TDisp(2 * nd)
+          moved.y(j) = XXX(2 * nd + 1) + TDisp(2 * nd + 1)
+        Next j
+        If Not FEMT6GeometryValid(moved) Then
+          reason = "RESET_STRESS後のT6が直線辺・辺中点条件を満たしません。曲線T6への座標更新は未対応です。受理済み座標と履歴は保持します。要素=" & CStr(k + 1)
+          SetAnalysisFailure RESULT_INPUT_ERROR, reason, vbObjectError + 3981, k, -1, CurrentIncrement, CurrentIteration
+          Err.Raise vbObjectError + 3981, "FEM.P3ResetKinematicState", reason
+        End If
+      End If
+    Next k
     For k = 0 To NumberOfElement - 1
       For j = 0 To 7
         nd = Elem(k).node(j)
@@ -4675,13 +4692,9 @@ Private Sub P3ApplySkippedStage(ByVal stageIndex As Long)
   Select Case kindText
     Case "GRAVITY"
       P3PlanHasGravity = True
-    Case "APPLY", "LOAD"
-      P3OverlayLoadingSheet FSLoadingSet(P3StageId(stageIndex))
-      P3HoldOrphanDofs
-      P3PlanHasApply = True
-    Case "UNLOAD"
-      P3OverlayLoadingSheet FSLoadingSet(P3StageId(stageIndex))
-      P3HoldOrphanDofs
+    Case "APPLY", "LOAD", "UNLOAD"
+      ' The checkpoint owns accepted loads/supports. Replaying a named
+      ' overlay here uses an uninitialized or unrelated committed state.
       P3PlanHasApply = True
     Case "BIRTH"
       ' Checkpoint already has the born material's Gauss history; only restore the active flag.
@@ -4789,7 +4802,7 @@ End Function
 
 ' Load a selected accepted frame for display; never execute a construction step.
 Public Sub P3LoadTimeFrame(ByVal folder As String)
-  Dim stage As Long, i As Long
+  Dim Stage As Long, i As Long
   FSReset
   ResetAnalysisState
   FEMInvalidateInputCache
@@ -4805,17 +4818,18 @@ Public Sub P3LoadTimeFrame(ByVal folder As String)
   If Not P3SetMaterialForStrengthFactor(1#) Then FSCoupledInputError AnalysisMessage
   P3InitializeTrialState
   FSPrime
-  stage = FEMIoTryResume(folder, True)
-  If stage <= 0 Or ResultStatus = RESULT_INPUT_ERROR Then FSCoupledInputError "時刻別結果を読み込めません。" & AnalysisMessage
+  Stage = FEMIoTryResume(folder, True)
+  If Stage <= 0 Or ResultStatus = RESULT_INPUT_ERROR Then FSCoupledInputError "時刻別結果を読み込めません。" & AnalysisMessage
   For i = 1 To femIoResumeIndex
     P3ApplySkippedStage i
     If ResultStatus = RESULT_INPUT_ERROR Or ResultStatus = RESULT_MATERIAL_ERROR Then FSCoupledInputError AnalysisMessage
   Next i
   If Not FEMIoFinishResume() Then FSCoupledInputError AnalysisMessage
-  P3LastCompletedStage = stage: P3RunLogStageNo = stage: P3RunLogKind = femIoResumeKind
+  P3LastCompletedStage = Stage: P3RunLogStageNo = Stage: P3RunLogKind = femIoResumeKind
   FSSrmBranch = (Dir$(folder & Application.PathSeparator & "branch_only.txt") <> "")
   AnalysisOK = True: ResultStatus = RESULT_PASS
   ResultRevision = ModelRevision
+  P3PrepareOutputResidual
   BuildP1Results
   With ThisWorkbook.Worksheets("結果節点")
     .range("A2").Resize(.UsedRange.rows.count, .UsedRange.columns.count).ClearContents
@@ -4828,10 +4842,10 @@ Public Sub P3LoadTimeFrame(ByVal folder As String)
   SaveStress
   SaveDisp
   FEMIncrementSave
-  GWWriteResults stage
+  GWWriteResults Stage
   AnalysisMessage = "受理済みの時刻別保存状態を読込: " & folder
   SaveAnalysisReport
-  FSStoreViewContext femIoResumeIndex, stage
+  FSStoreViewContext femIoResumeIndex, Stage
 End Sub
 
 Function PlaCalc() As Boolean
@@ -5337,104 +5351,34 @@ Private Sub P2ComplianceFromStressDelta(ByVal youngModulus As Double, ByVal pois
   End If
 End Sub
 
-Private Function P2PlasticStrainInVertexCone(ByVal trialSx As Double, ByVal trialSy As Double, ByVal trialSz As Double, ByVal trialTxy As Double, ByVal sinPsi As Double, ByVal plasticEx As Double, ByVal plasticEy As Double, ByVal plasticGamma As Double, ByVal plasticEz As Double) As Boolean
-  Dim ang As Double, cAngle As Double, sAngle As Double, c2 As Double, s2 As Double, cs As Double
-  Dim m1 As Double, m3 As Double, mPlane1 As Double, mPlane2 As Double, mZValue As Double
-  Dim flowM(0 To 3, 0 To 5) As Double
-  Dim pairMax(0 To 5) As Long, pairMin(0 To 5) As Long
-  Dim a(0 To 3, 0 To 5) As Double, ata() As Double, rhs() As Double, lam() As Double
-  Dim target(0 To 3) As Double, pred(0 To 3) As Double
-  Dim mask As Long, bitValue As Long, columnCount As Long, pairId As Long, rowId As Long, colId As Long, otherId As Long
-  Dim residualValue As Double, bestResidual As Double, plasticNorm As Double, projValue As Double
-  Dim lambdaOK As Boolean
-  P2PlasticStrainInVertexCone = False
-  target(0) = plasticEx: target(1) = plasticEy: target(2) = plasticGamma: target(3) = plasticEz
+Private Function P2PlasticStrainInVertexCone(ByVal sinPsi As Double, ByVal plasticEx As Double, ByVal plasticEy As Double, ByVal plasticGamma As Double, ByVal plasticEz As Double, ByRef multiplierSum As Double) As Boolean
+  Dim centerValue As Double, radiusValue As Double, maximumValue As Double, minimumValue As Double
+  Dim plasticNorm As Double, traceValue As Double, roundoff As Double
+  multiplierSum = 0#
   plasticNorm = Abs(plasticEx) + Abs(plasticEy) + Abs(plasticGamma) + Abs(plasticEz)
-  If plasticNorm <= 1E-30 Then
+  If plasticNorm <= 1E-30 Then P2PlasticStrainInVertexCone = True: Exit Function
+  centerValue = 0.5 * (plasticEx + plasticEy)
+  radiusValue = 0.5 * Sqr((plasticEx - plasticEy) ^ 2 + plasticGamma ^ 2)
+  maximumValue = centerValue + radiusValue: minimumValue = centerValue - radiusValue
+  If plasticEz > maximumValue Then maximumValue = plasticEz
+  If plasticEz < minimumValue Then minimumValue = plasticEz
+  traceValue = plasticEx + plasticEy + plasticEz
+  If sinPsi = 0# Then
+    ' At zero dilation the cone is the traceless plane. The multiplier sum
+    ' is not unique; use its nonnegative minimum, not a strain norm.
+    If Abs(traceValue) > 0.00000001 * (plasticNorm + 0.000000000001) Then Exit Function
+    multiplierSum = maximumValue
+    If -minimumValue > multiplierSum Then multiplierSum = -minimumValue
+    If multiplierSum < 0# Then multiplierSum = 0#
     P2PlasticStrainInVertexCone = True
-    Exit Function
-  End If
-  ang = 0.5 * P2Atan2(2# * trialTxy, trialSx - trialSy)
-  cAngle = Cos(ang): sAngle = Sin(ang)
-  c2 = cAngle * cAngle: s2 = sAngle * sAngle: cs = cAngle * sAngle
-  m1 = 1# - sinPsi
-  m3 = -1# - sinPsi
-  pairMax(0) = 1: pairMin(0) = 2
-  pairMax(1) = 1: pairMin(1) = 3
-  pairMax(2) = 2: pairMin(2) = 1
-  pairMax(3) = 2: pairMin(3) = 3
-  pairMax(4) = 3: pairMin(4) = 1
-  pairMax(5) = 3: pairMin(5) = 2
-  For pairId = 0 To 5
-    mPlane1 = 0#: mPlane2 = 0#: mZValue = 0#
-    If pairMax(pairId) = 1 Then mPlane1 = m1
-    If pairMax(pairId) = 2 Then mPlane2 = m1
-    If pairMax(pairId) = 3 Then mZValue = m1
-    If pairMin(pairId) = 1 Then mPlane1 = mPlane1 + m3
-    If pairMin(pairId) = 2 Then mPlane2 = mPlane2 + m3
-    If pairMin(pairId) = 3 Then mZValue = mZValue + m3
-    flowM(0, pairId) = mPlane1 * c2 + mPlane2 * s2
-    flowM(1, pairId) = mPlane1 * s2 + mPlane2 * c2
-    flowM(2, pairId) = 2# * cs * (mPlane1 - mPlane2)
-    flowM(3, pairId) = mZValue
-  Next pairId
-  bestResidual = 1E+300
-  For mask = 1 To 63
-    columnCount = 0
-    bitValue = 1
-    For pairId = 0 To 5
-      If (mask And bitValue) <> 0 Then
-        For rowId = 0 To 3
-          a(rowId, columnCount) = flowM(rowId, pairId)
-        Next rowId
-        columnCount = columnCount + 1
-      End If
-      bitValue = bitValue * 2
-    Next pairId
-    ReDim ata(0 To columnCount - 1, 0 To columnCount - 1)
-    ReDim rhs(0 To columnCount - 1)
-    For colId = 0 To columnCount - 1
-      projValue = 0#
-      For rowId = 0 To 3
-        projValue = projValue + a(rowId, colId) * target(rowId)
-      Next rowId
-      rhs(colId) = projValue
-      For otherId = 0 To columnCount - 1
-        projValue = 0#
-        For rowId = 0 To 3
-          projValue = projValue + a(rowId, colId) * a(rowId, otherId)
-        Next rowId
-        ata(colId, otherId) = projValue
-      Next otherId
-    Next colId
-    If Not P6InvertDense(ata, columnCount) Then GoTo NextMask
-    ReDim lam(0 To columnCount - 1)
-    lambdaOK = True
-    For colId = 0 To columnCount - 1
-      projValue = 0#
-      For otherId = 0 To columnCount - 1
-        projValue = projValue + ata(colId, otherId) * rhs(otherId)
-      Next otherId
-      If projValue < -0.000000001 Then
-        lambdaOK = False
-        Exit For
-      End If
-      If projValue < 0# Then projValue = 0#
-      lam(colId) = projValue
-    Next colId
-    If Not lambdaOK Then GoTo NextMask
-    pred(0) = 0#: pred(1) = 0#: pred(2) = 0#: pred(3) = 0#
-    For colId = 0 To columnCount - 1
-      For rowId = 0 To 3
-        pred(rowId) = pred(rowId) + a(rowId, colId) * lam(colId)
-      Next rowId
-    Next colId
-    residualValue = Abs(pred(0) - target(0)) + Abs(pred(1) - target(1)) + Abs(pred(2) - target(2)) + Abs(pred(3) - target(3))
-    If residualValue < bestResidual Then bestResidual = residualValue
-NextMask:
-  Next mask
-  If bestResidual <= 0.00000001 * (plasticNorm + 0.000000000001) Then
-    P2PlasticStrainInVertexCone = True
+  ElseIf sinPsi > 0# Then
+    multiplierSum = -traceValue / (2# * sinPsi)
+    If multiplierSum < 0# Or Not P2IsFinite(multiplierSum) Then Exit Function
+    ' Exact closed permutahedron section of the six normalized flow rays.
+    ' Avoid A^T A, whose condition number grows as 1/sin(psi)^2.
+    ' Only binary64 roundoff is allowed at its boundary, not a looser cone.
+    roundoff = 1.4210854715202E-14 * (plasticNorm + multiplierSum)
+    P2PlasticStrainInVertexCone = (maximumValue <= (1# - sinPsi) * multiplierSum + roundoff And minimumValue >= (-1# - sinPsi) * multiplierSum - roundoff)
   End If
 End Function
 
@@ -5458,7 +5402,7 @@ Private Function P2TryVertexReturn(ByRef inputState As P2_MaterialPointInput, By
   Dim vertexStress As Double, trialMean As Double, scaleValue As Double
   Dim deltaSx As Double, deltaSy As Double, deltaSz As Double, deltaTxy As Double
   Dim plasticEx As Double, plasticEy As Double, plasticEz As Double, plasticGamma As Double
-  Dim plasticVol As Double, plasticNorm As Double
+  Dim plasticVol As Double, plasticNorm As Double, multiplierSum As Double
   Dim checkSx As Double, checkSy As Double, checkSz As Double, checkTxy As Double
   Dim residualValue As Double
   P2TryVertexReturn = False
@@ -5480,7 +5424,7 @@ Private Function P2TryVertexReturn(ByRef inputState As P2_MaterialPointInput, By
   If Abs(sinPsi) <= 0.000000000001 Then
     If Abs(plasticVol) > 0.000000001 * plasticNorm And Abs(plasticVol) > inputState.tolerance Then Exit Function
   End If
-  If Not P2PlasticStrainInVertexCone(trialSx, trialSy, trialSz, trialTxy, sinPsi, plasticEx, plasticEy, plasticGamma, plasticEz) Then Exit Function
+  If Not P2PlasticStrainInVertexCone(sinPsi, plasticEx, plasticEy, plasticGamma, plasticEz, multiplierSum) Then Exit Function
   checkSx = inputState.PreviousStress(0) + d00 * (inputState.StrainIncrement(0) - plasticEx) + d01 * (inputState.StrainIncrement(1) - plasticEy) + d01 * (0# - plasticEz)
   checkSy = inputState.PreviousStress(1) + d01 * (inputState.StrainIncrement(0) - plasticEx) + d00 * (inputState.StrainIncrement(1) - plasticEy) + d01 * (0# - plasticEz)
   checkSz = inputState.PreviousStress(3) + d01 * (inputState.StrainIncrement(0) - plasticEx) + d01 * (inputState.StrainIncrement(1) - plasticEy) + d00 * (0# - plasticEz)
@@ -5495,7 +5439,7 @@ Private Function P2TryVertexReturn(ByRef inputState As P2_MaterialPointInput, By
   outputState.PlasticStrain(1) = plasticEy
   outputState.PlasticStrain(2) = plasticGamma
   outputState.PlasticStrain(3) = plasticEz
-  outputState.PlasticMultiplier = Sqr(plasticEx * plasticEx + plasticEy * plasticEy + 0.5 * plasticGamma * plasticGamma + plasticEz * plasticEz)
+  outputState.PlasticMultiplier = multiplierSum
   outputState.tangent(0, 0) = 0#: outputState.tangent(0, 1) = 0#: outputState.tangent(0, 2) = 0#
   outputState.tangent(1, 0) = 0#: outputState.tangent(1, 1) = 0#: outputState.tangent(1, 2) = 0#
   outputState.tangent(2, 0) = 0#: outputState.tangent(2, 1) = 0#: outputState.tangent(2, 2) = 0#

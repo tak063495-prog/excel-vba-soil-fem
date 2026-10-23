@@ -1,0 +1,1213 @@
+{
+  "schema": "MATERIAL_ISSUE54_55_V1",
+  "cases": [
+    {
+      "id": "ray_1_r0",
+      "mode": "cone",
+      "psi": 30.0,
+      "plastic": [
+        -1.5,
+        0.0,
+        -0.0,
+        0.5
+      ],
+      "expected_accept": true,
+      "expected_min_sum": 1.0,
+      "expected_strict_interior": false
+    },
+    {
+      "id": "ray_1_r30",
+      "mode": "cone",
+      "psi": 30.0,
+      "plastic": [
+        -1.125,
+        -0.3749999999999999,
+        -1.299038105676658,
+        0.5
+      ],
+      "expected_accept": true,
+      "expected_min_sum": 1.0,
+      "expected_strict_interior": false
+    },
+    {
+      "id": "ray_2_r0",
+      "mode": "cone",
+      "psi": 30.0,
+      "plastic": [
+        -1.5,
+        0.5,
+        -0.0,
+        0.0
+      ],
+      "expected_accept": true,
+      "expected_min_sum": 1.0,
+      "expected_strict_interior": false
+    },
+    {
+      "id": "ray_2_r30",
+      "mode": "cone",
+      "psi": 30.0,
+      "plastic": [
+        -1.0,
+        1.6653345369377348e-16,
+        -1.7320508075688772,
+        0.0
+      ],
+      "expected_accept": true,
+      "expected_min_sum": 1.0,
+      "expected_strict_interior": false
+    },
+    {
+      "id": "ray_3_r0",
+      "mode": "cone",
+      "psi": 30.0,
+      "plastic": [
+        0.0,
+        -1.5,
+        0.0,
+        0.5
+      ],
+      "expected_accept": true,
+      "expected_min_sum": 1.0,
+      "expected_strict_interior": false
+    },
+    {
+      "id": "ray_3_r30",
+      "mode": "cone",
+      "psi": 30.0,
+      "plastic": [
+        -0.3749999999999999,
+        -1.125,
+        1.299038105676658,
+        0.5
+      ],
+      "expected_accept": true,
+      "expected_min_sum": 1.0,
+      "expected_strict_interior": false
+    },
+    {
+      "id": "ray_4_r0",
+      "mode": "cone",
+      "psi": 30.0,
+      "plastic": [
+        0.0,
+        0.5,
+        -0.0,
+        -1.5
+      ],
+      "expected_accept": true,
+      "expected_min_sum": 1.0,
+      "expected_strict_interior": false
+    },
+    {
+      "id": "ray_4_r30",
+      "mode": "cone",
+      "psi": 30.0,
+      "plastic": [
+        0.12499999999999997,
+        0.37500000000000006,
+        -0.4330127018922193,
+        -1.5
+      ],
+      "expected_accept": true,
+      "expected_min_sum": 1.0,
+      "expected_strict_interior": false
+    },
+    {
+      "id": "ray_5_r0",
+      "mode": "cone",
+      "psi": 30.0,
+      "plastic": [
+        0.5,
+        -1.5,
+        0.0,
+        0.0
+      ],
+      "expected_accept": true,
+      "expected_min_sum": 1.0,
+      "expected_strict_interior": false
+    },
+    {
+      "id": "ray_5_r30",
+      "mode": "cone",
+      "psi": 30.0,
+      "plastic": [
+        1.6653345369377348e-16,
+        -1.0,
+        1.7320508075688772,
+        0.0
+      ],
+      "expected_accept": true,
+      "expected_min_sum": 1.0,
+      "expected_strict_interior": false
+    },
+    {
+      "id": "ray_6_r0",
+      "mode": "cone",
+      "psi": 30.0,
+      "plastic": [
+        0.5,
+        0.0,
+        0.0,
+        -1.5
+      ],
+      "expected_accept": true,
+      "expected_min_sum": 1.0,
+      "expected_strict_interior": false
+    },
+    {
+      "id": "ray_6_r30",
+      "mode": "cone",
+      "psi": 30.0,
+      "plastic": [
+        0.37500000000000006,
+        0.12499999999999997,
+        0.4330127018922193,
+        -1.5
+      ],
+      "expected_accept": true,
+      "expected_min_sum": 1.0,
+      "expected_strict_interior": false
+    },
+    {
+      "id": "all_six_positive_interior_r0",
+      "mode": "cone",
+      "psi": 30.0,
+      "plastic": [
+        0.1250000000000001,
+        -1.4500000000000002,
+        0.0,
+        -2.2750000000000004
+      ],
+      "expected_accept": true,
+      "expected_min_sum": 3.6,
+      "expected_strict_interior": true
+    },
+    {
+      "id": "all_six_positive_interior_r27",
+      "mode": "cone",
+      "psi": 30.0,
+      "plastic": [
+        -0.1996191138196773,
+        -1.125380886180323,
+        1.2742017661405423,
+        -2.2750000000000004
+      ],
+      "expected_accept": true,
+      "expected_min_sum": 3.6,
+      "expected_strict_interior": true
+    },
+    {
+      "id": "outside_closed_cone",
+      "mode": "cone",
+      "psi": 30.0,
+      "plastic": [
+        0.51,
+        0.0,
+        0.0,
+        -1.51
+      ],
+      "expected_accept": false
+    },
+    {
+      "id": "psi0_ray",
+      "mode": "cone",
+      "psi": 0.0,
+      "plastic": [
+        1.0,
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "expected_accept": true,
+      "expected_min_sum": 1.0,
+      "expected_strict_interior": false
+    },
+    {
+      "id": "psi0_rotated",
+      "mode": "cone",
+      "psi": 0.0,
+      "plastic": [
+        0.6378186779084996,
+        0.3621813220915004,
+        0.9612616959383188,
+        -1.0
+      ],
+      "expected_accept": true,
+      "expected_min_sum": 1.0,
+      "expected_strict_interior": false
+    },
+    {
+      "id": "psi0_two_faces",
+      "mode": "cone",
+      "psi": 0.0,
+      "plastic": [
+        2.0,
+        -1.0,
+        0.0,
+        -1.0
+      ],
+      "expected_accept": true,
+      "expected_min_sum": 2.0,
+      "expected_strict_interior": false
+    },
+    {
+      "id": "psi0_other",
+      "mode": "cone",
+      "psi": 0.0,
+      "plastic": [
+        1.0,
+        1.0,
+        0.0,
+        -2.0
+      ],
+      "expected_accept": true,
+      "expected_min_sum": 2.0,
+      "expected_strict_interior": false
+    },
+    {
+      "id": "psi0_nontraceless_reject",
+      "mode": "cone",
+      "psi": 0.0,
+      "plastic": [
+        1.0,
+        0.0,
+        0.0,
+        -0.9
+      ],
+      "expected_accept": false
+    },
+    {
+      "id": "physical_apex_psi0_steps1",
+      "mode": "material",
+      "psi": 0,
+      "c": 0,
+      "previous": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "strain": [
+        -0.01,
+        -0.01,
+        0
+      ],
+      "substeps": 1,
+      "expected_success": false
+    },
+    {
+      "id": "physical_apex_psi0_steps2",
+      "mode": "material",
+      "psi": 0,
+      "c": 0,
+      "previous": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "strain": [
+        -0.01,
+        -0.01,
+        0
+      ],
+      "substeps": 2,
+      "expected_success": false
+    },
+    {
+      "id": "physical_apex_psi0_steps4",
+      "mode": "material",
+      "psi": 0,
+      "c": 0,
+      "previous": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "strain": [
+        -0.01,
+        -0.01,
+        0
+      ],
+      "substeps": 4,
+      "expected_success": false
+    },
+    {
+      "id": "physical_apex_psi0_steps8",
+      "mode": "material",
+      "psi": 0,
+      "c": 0,
+      "previous": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "strain": [
+        -0.01,
+        -0.01,
+        0
+      ],
+      "substeps": 8,
+      "expected_success": false
+    },
+    {
+      "id": "physical_apex_psi1e-05_steps1",
+      "mode": "material",
+      "psi": 1e-05,
+      "c": 0,
+      "previous": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "strain": [
+        -0.01,
+        -0.01,
+        0
+      ],
+      "substeps": 1,
+      "expected_success": true,
+      "expected_multiplier": 57295.779513082605,
+      "expected_stress": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_plastic": [
+        -0.01,
+        -0.01,
+        0,
+        0
+      ],
+      "expected_tangent_ready": true
+    },
+    {
+      "id": "physical_apex_psi1e-05_steps2",
+      "mode": "material",
+      "psi": 1e-05,
+      "c": 0,
+      "previous": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "strain": [
+        -0.01,
+        -0.01,
+        0
+      ],
+      "substeps": 2,
+      "expected_success": true,
+      "expected_multiplier": 57295.779513082605,
+      "expected_stress": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_plastic": [
+        -0.01,
+        -0.01,
+        0,
+        0
+      ],
+      "expected_tangent_ready": false
+    },
+    {
+      "id": "physical_apex_psi1e-05_steps4",
+      "mode": "material",
+      "psi": 1e-05,
+      "c": 0,
+      "previous": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "strain": [
+        -0.01,
+        -0.01,
+        0
+      ],
+      "substeps": 4,
+      "expected_success": true,
+      "expected_multiplier": 57295.779513082605,
+      "expected_stress": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_plastic": [
+        -0.01,
+        -0.01,
+        0,
+        0
+      ],
+      "expected_tangent_ready": false
+    },
+    {
+      "id": "physical_apex_psi1e-05_steps8",
+      "mode": "material",
+      "psi": 1e-05,
+      "c": 0,
+      "previous": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "strain": [
+        -0.01,
+        -0.01,
+        0
+      ],
+      "substeps": 8,
+      "expected_success": true,
+      "expected_multiplier": 57295.779513082605,
+      "expected_stress": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_plastic": [
+        -0.01,
+        -0.01,
+        0,
+        0
+      ],
+      "expected_tangent_ready": false
+    },
+    {
+      "id": "physical_apex_psi0.0001_steps1",
+      "mode": "material",
+      "psi": 0.0001,
+      "c": 0,
+      "previous": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "strain": [
+        -0.01,
+        -0.01,
+        0
+      ],
+      "substeps": 1,
+      "expected_success": true,
+      "expected_multiplier": 5729.577951311141,
+      "expected_stress": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_plastic": [
+        -0.01,
+        -0.01,
+        0,
+        0
+      ],
+      "expected_tangent_ready": true
+    },
+    {
+      "id": "physical_apex_psi0.0001_steps2",
+      "mode": "material",
+      "psi": 0.0001,
+      "c": 0,
+      "previous": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "strain": [
+        -0.01,
+        -0.01,
+        0
+      ],
+      "substeps": 2,
+      "expected_success": true,
+      "expected_multiplier": 5729.577951311141,
+      "expected_stress": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_plastic": [
+        -0.01,
+        -0.01,
+        0,
+        0
+      ],
+      "expected_tangent_ready": false
+    },
+    {
+      "id": "physical_apex_psi0.0001_steps4",
+      "mode": "material",
+      "psi": 0.0001,
+      "c": 0,
+      "previous": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "strain": [
+        -0.01,
+        -0.01,
+        0
+      ],
+      "substeps": 4,
+      "expected_success": true,
+      "expected_multiplier": 5729.577951311141,
+      "expected_stress": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_plastic": [
+        -0.01,
+        -0.01,
+        0,
+        0
+      ],
+      "expected_tangent_ready": false
+    },
+    {
+      "id": "physical_apex_psi0.0001_steps8",
+      "mode": "material",
+      "psi": 0.0001,
+      "c": 0,
+      "previous": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "strain": [
+        -0.01,
+        -0.01,
+        0
+      ],
+      "substeps": 8,
+      "expected_success": true,
+      "expected_multiplier": 5729.577951311141,
+      "expected_stress": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_plastic": [
+        -0.01,
+        -0.01,
+        0,
+        0
+      ],
+      "expected_tangent_ready": false
+    },
+    {
+      "id": "physical_apex_psi0.001_steps1",
+      "mode": "material",
+      "psi": 0.001,
+      "c": 0,
+      "previous": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "strain": [
+        -0.01,
+        -0.01,
+        0
+      ],
+      "substeps": 1,
+      "expected_success": true,
+      "expected_multiplier": 572.9577951599119,
+      "expected_stress": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_plastic": [
+        -0.01,
+        -0.01,
+        0,
+        0
+      ],
+      "expected_tangent_ready": true
+    },
+    {
+      "id": "physical_apex_psi0.001_steps2",
+      "mode": "material",
+      "psi": 0.001,
+      "c": 0,
+      "previous": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "strain": [
+        -0.01,
+        -0.01,
+        0
+      ],
+      "substeps": 2,
+      "expected_success": true,
+      "expected_multiplier": 572.9577951599119,
+      "expected_stress": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_plastic": [
+        -0.01,
+        -0.01,
+        0,
+        0
+      ],
+      "expected_tangent_ready": false
+    },
+    {
+      "id": "physical_apex_psi0.001_steps4",
+      "mode": "material",
+      "psi": 0.001,
+      "c": 0,
+      "previous": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "strain": [
+        -0.01,
+        -0.01,
+        0
+      ],
+      "substeps": 4,
+      "expected_success": true,
+      "expected_multiplier": 572.9577951599119,
+      "expected_stress": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_plastic": [
+        -0.01,
+        -0.01,
+        0,
+        0
+      ],
+      "expected_tangent_ready": false
+    },
+    {
+      "id": "physical_apex_psi0.001_steps8",
+      "mode": "material",
+      "psi": 0.001,
+      "c": 0,
+      "previous": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "strain": [
+        -0.01,
+        -0.01,
+        0
+      ],
+      "substeps": 8,
+      "expected_success": true,
+      "expected_multiplier": 572.9577951599119,
+      "expected_stress": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_plastic": [
+        -0.01,
+        -0.01,
+        0,
+        0
+      ],
+      "expected_tangent_ready": false
+    },
+    {
+      "id": "physical_apex_psi0.01_steps1",
+      "mode": "material",
+      "psi": 0.01,
+      "c": 0,
+      "previous": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "strain": [
+        -0.01,
+        -0.01,
+        0
+      ],
+      "substeps": 1,
+      "expected_success": true,
+      "expected_multiplier": 57.29577980397053,
+      "expected_stress": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_plastic": [
+        -0.01,
+        -0.01,
+        0,
+        0
+      ],
+      "expected_tangent_ready": true
+    },
+    {
+      "id": "physical_apex_psi0.01_steps2",
+      "mode": "material",
+      "psi": 0.01,
+      "c": 0,
+      "previous": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "strain": [
+        -0.01,
+        -0.01,
+        0
+      ],
+      "substeps": 2,
+      "expected_success": true,
+      "expected_multiplier": 57.29577980397053,
+      "expected_stress": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_plastic": [
+        -0.01,
+        -0.01,
+        0,
+        0
+      ],
+      "expected_tangent_ready": false
+    },
+    {
+      "id": "physical_apex_psi0.01_steps4",
+      "mode": "material",
+      "psi": 0.01,
+      "c": 0,
+      "previous": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "strain": [
+        -0.01,
+        -0.01,
+        0
+      ],
+      "substeps": 4,
+      "expected_success": true,
+      "expected_multiplier": 57.29577980397053,
+      "expected_stress": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_plastic": [
+        -0.01,
+        -0.01,
+        0,
+        0
+      ],
+      "expected_tangent_ready": false
+    },
+    {
+      "id": "physical_apex_psi0.01_steps8",
+      "mode": "material",
+      "psi": 0.01,
+      "c": 0,
+      "previous": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "strain": [
+        -0.01,
+        -0.01,
+        0
+      ],
+      "substeps": 8,
+      "expected_success": true,
+      "expected_multiplier": 57.29577980397053,
+      "expected_stress": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_plastic": [
+        -0.01,
+        -0.01,
+        0,
+        0
+      ],
+      "expected_tangent_ready": false
+    },
+    {
+      "id": "physical_apex_psi1_steps1",
+      "mode": "material",
+      "psi": 1,
+      "c": 0,
+      "previous": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "strain": [
+        -0.01,
+        -0.01,
+        0
+      ],
+      "substeps": 1,
+      "expected_success": true,
+      "expected_multiplier": 0.5729868849855019,
+      "expected_stress": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_plastic": [
+        -0.01,
+        -0.01,
+        0,
+        0
+      ],
+      "expected_tangent_ready": true
+    },
+    {
+      "id": "physical_apex_psi1_steps2",
+      "mode": "material",
+      "psi": 1,
+      "c": 0,
+      "previous": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "strain": [
+        -0.01,
+        -0.01,
+        0
+      ],
+      "substeps": 2,
+      "expected_success": true,
+      "expected_multiplier": 0.5729868849855019,
+      "expected_stress": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_plastic": [
+        -0.01,
+        -0.01,
+        0,
+        0
+      ],
+      "expected_tangent_ready": false
+    },
+    {
+      "id": "physical_apex_psi1_steps4",
+      "mode": "material",
+      "psi": 1,
+      "c": 0,
+      "previous": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "strain": [
+        -0.01,
+        -0.01,
+        0
+      ],
+      "substeps": 4,
+      "expected_success": true,
+      "expected_multiplier": 0.5729868849855019,
+      "expected_stress": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_plastic": [
+        -0.01,
+        -0.01,
+        0,
+        0
+      ],
+      "expected_tangent_ready": false
+    },
+    {
+      "id": "physical_apex_psi1_steps8",
+      "mode": "material",
+      "psi": 1,
+      "c": 0,
+      "previous": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "strain": [
+        -0.01,
+        -0.01,
+        0
+      ],
+      "substeps": 8,
+      "expected_success": true,
+      "expected_multiplier": 0.5729868849855019,
+      "expected_stress": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_plastic": [
+        -0.01,
+        -0.01,
+        0,
+        0
+      ],
+      "expected_tangent_ready": false
+    },
+    {
+      "id": "physical_apex_psi30_steps1",
+      "mode": "material",
+      "psi": 30,
+      "c": 0,
+      "previous": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "strain": [
+        -0.01,
+        -0.01,
+        0
+      ],
+      "substeps": 1,
+      "expected_success": true,
+      "expected_multiplier": 0.020000000000000004,
+      "expected_stress": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_plastic": [
+        -0.01,
+        -0.01,
+        0,
+        0
+      ],
+      "expected_tangent_ready": true
+    },
+    {
+      "id": "physical_apex_psi30_steps2",
+      "mode": "material",
+      "psi": 30,
+      "c": 0,
+      "previous": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "strain": [
+        -0.01,
+        -0.01,
+        0
+      ],
+      "substeps": 2,
+      "expected_success": true,
+      "expected_multiplier": 0.020000000000000004,
+      "expected_stress": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_plastic": [
+        -0.01,
+        -0.01,
+        0,
+        0
+      ],
+      "expected_tangent_ready": false
+    },
+    {
+      "id": "physical_apex_psi30_steps4",
+      "mode": "material",
+      "psi": 30,
+      "c": 0,
+      "previous": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "strain": [
+        -0.01,
+        -0.01,
+        0
+      ],
+      "substeps": 4,
+      "expected_success": true,
+      "expected_multiplier": 0.020000000000000004,
+      "expected_stress": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_plastic": [
+        -0.01,
+        -0.01,
+        0,
+        0
+      ],
+      "expected_tangent_ready": false
+    },
+    {
+      "id": "physical_apex_psi30_steps8",
+      "mode": "material",
+      "psi": 30,
+      "c": 0,
+      "previous": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "strain": [
+        -0.01,
+        -0.01,
+        0
+      ],
+      "substeps": 8,
+      "expected_success": true,
+      "expected_multiplier": 0.020000000000000004,
+      "expected_stress": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_plastic": [
+        -0.01,
+        -0.01,
+        0,
+        0
+      ],
+      "expected_tangent_ready": false
+    },
+    {
+      "id": "issue54_exact_multiplier",
+      "mode": "material",
+      "psi": 30,
+      "c": 10,
+      "previous": [
+        -17.320508075688775,
+        -17.320508075688775,
+        0,
+        -17.320508075688775
+      ],
+      "strain": [
+        -0.01,
+        -0.01,
+        0
+      ],
+      "expected_success": true,
+      "expected_multiplier": 0.02,
+      "expected_stress": [
+        -17.320508075688775,
+        -17.320508075688775,
+        0,
+        -17.320508075688775
+      ],
+      "expected_plastic": [
+        -0.01,
+        -0.01,
+        0,
+        0
+      ],
+      "expected_tangent_ready": true
+    },
+    {
+      "id": "zero_dilation_isochoric_apex",
+      "mode": "material",
+      "psi": 0,
+      "c": 10,
+      "previous": [
+        -17.320508075688775,
+        -17.320508075688775,
+        0,
+        -17.320508075688775
+      ],
+      "strain": [
+        -0.01,
+        0.01,
+        0
+      ],
+      "expected_success": true,
+      "expected_multiplier": 0.01,
+      "expected_stress": [
+        -17.320508075688775,
+        -17.320508075688775,
+        0,
+        -17.320508075688775
+      ],
+      "expected_plastic": [
+        -0.01,
+        0.01,
+        0,
+        0
+      ],
+      "expected_tangent_ready": false
+    }
+  ]
+}

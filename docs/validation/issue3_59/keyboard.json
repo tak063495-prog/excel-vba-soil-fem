@@ -1,0 +1,43 @@
+{
+  "pressure_count": 32,
+  "max_accepted_u_difference": 0.0,
+  "book_sha256": "98952DE07B4CF389EE4503704A2824A1CFC3A7210D3A04A4FE570DF168B2D251",
+  "native": "AUTO",
+  "application_after": [
+    true,
+    true,
+    -4105,
+    1
+  ],
+  "max_accepted_p_difference": 0.0,
+  "injection": "FS_UI",
+  "max_accepted_boundary_difference": 0.0,
+  "analysis": "NONCONVERGED|ユーザーが解析を中断しました。",
+  "fault_number": 18,
+  "boundary_count": 86,
+  "ledger_count": 48,
+  "max_accepted_ledger_difference": 0.0,
+  "application_before": [
+    true,
+    true,
+    -4105,
+    1
+  ],
+  "state": [
+    1,
+    true,
+    true,
+    18,
+    false,
+    false,
+    8640.0,
+    2,
+    8640.0,
+    2,
+    8,
+    8
+  ],
+  "displacement_count": 86,
+  "ledger_required": true,
+  "status": "PASS"
+}

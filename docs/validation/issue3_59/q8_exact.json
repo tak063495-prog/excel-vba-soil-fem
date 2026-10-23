@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "max_u_difference": 0,
+  "max_stress_difference": 0,
+  "max_metric_difference": 0,
+  "dof": 170,
+  "stress_values": 1360,
+  "fs_interval": [
+    1.5500000000000005,
+    1.5625000000000004,
+    0.012499999999999956
+  ],
+  "reference_seconds": 142.6189169,
+  "candidate_seconds": 141.1645592
+}

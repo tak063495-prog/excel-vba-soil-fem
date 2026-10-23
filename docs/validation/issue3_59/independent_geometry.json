@@ -1,0 +1,96 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "name": "internal_inversion",
+      "boundary_min": -0.4439843750000004,
+      "boundary_extrema_min": -0.44405283483574615,
+      "legacy_8point_min": 0.11999999999999958,
+      "dense_161_min": -0.4439843750000004,
+      "detJ_polynomial": "sympy-unavailable",
+      "center_detJ": 0.8674999999999998
+    },
+    {
+      "name": "square",
+      "boundary_min": 0.9999999999999996,
+      "boundary_extrema_min": 1.0,
+      "legacy_8point_min": 0.9999999999999997,
+      "dense_161_min": 0.9999999999999991,
+      "detJ_polynomial": "sympy-unavailable",
+      "center_detJ": 1.0
+    },
+    {
+      "name": "rotated_scaled",
+      "boundary_min": 4.9999999999999964,
+      "boundary_extrema_min": 4.999999999999998,
+      "legacy_8point_min": 4.9999999999999964,
+      "dense_161_min": 4.999999999999993,
+      "detJ_polynomial": "sympy-unavailable",
+      "center_detJ": 5.000000000000001
+    },
+    {
+      "name": "curved_valid",
+      "boundary_min": 0.8451999999999998,
+      "boundary_extrema_min": 0.8451999999999998,
+      "legacy_8point_min": 0.8451999999999998,
+      "dense_161_min": 0.8451999999999998,
+      "detJ_polynomial": "sympy-unavailable",
+      "center_detJ": 1.0339
+    },
+    {
+      "name": "degenerate",
+      "boundary_min": -2.9999999999999996,
+      "boundary_extrema_min": -2.9999999999999996,
+      "legacy_8point_min": -2.9999999999999996,
+      "dense_161_min": -2.9999999999999996,
+      "detJ_polynomial": "sympy-unavailable",
+      "center_detJ": 0.0
+    },
+    {
+      "name": "square_small",
+      "boundary_min": 2.499999999999993e-13,
+      "boundary_extrema_min": 2.500000000000002e-13,
+      "legacy_8point_min": 2.500000000000002e-13,
+      "dense_161_min": 2.499999999999993e-13,
+      "detJ_polynomial": "sympy-unavailable",
+      "center_detJ": 2.500000000000002e-13
+    },
+    {
+      "name": "near_degenerate",
+      "boundary_min": 2.4999999999999985e-11,
+      "boundary_extrema_min": 2.5000000000000075e-11,
+      "legacy_8point_min": 2.4999999999999985e-11,
+      "dense_161_min": 2.4999999999999898e-11,
+      "detJ_polynomial": "sympy-unavailable",
+      "center_detJ": 2.5000000000000075e-11
+    },
+    {
+      "name": "scaled_translated",
+      "boundary_min": 249999.99999999983,
+      "boundary_extrema_min": 249999.99999999983,
+      "legacy_8point_min": 249999.99999999983,
+      "dense_161_min": 249999.99999999983,
+      "detJ_polynomial": "sympy-unavailable",
+      "center_detJ": 249999.99999999983
+    },
+    {
+      "name": "random_internal",
+      "boundary_min": 0.03640085190135594,
+      "boundary_extrema_min": 0.036395163088077886,
+      "legacy_8point_min": 0.30970132669213163,
+      "dense_161_min": -0.08717585597752847,
+      "detJ_polynomial": "sympy-unavailable",
+      "center_detJ": 0.2082652194925662
+    },
+    {
+      "name": "curved_subdivision",
+      "boundary_min": 0.34196165777705195,
+      "boundary_extrema_min": 0.3419439613160393,
+      "legacy_8point_min": 0.3921208917053657,
+      "dense_161_min": 0.34196165777705195,
+      "detJ_polynomial": "sympy-unavailable",
+      "center_detJ": 0.7770360280812487,
+      "root_bernstein_min": -0.06065641781466425
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+PASS q8_gravity
+PASS mixed_gravity
+PASS t6_gravity
+PASS q8_traction
+PASS mixed_traction
+PASS t6_traction
+PASS q8_seepage
+PASS mixed_seepage
+PASS t6_seepage
+PASS mixed_gravity_off
+PASS mixed_plastic_auto
+PASS mixed_plastic_off
+PASS mixed_joint_water_wet
+PASS mixed_joint_water_stages
+PASS q8_reference_srm
+PASS q8_candidate_srm
+PASS mixed_slope_srm
+{
+  "cases": {
+    "q8_gravity": {
+      "seconds": 5.5067676,
+      "residual": 6.56303095370358e-16,
+      "reaction_y": 35.99999999999998,
+      "nodes": 13,
+      "max_displacement_error_m": 9.010370574658033e-15
+    },
+    "q8_traction": {
+      "seconds": 5.4143305,
+      "residual": 1.3134818511765774e-15,
+      "reaction_y": 199.9999999999999,
+      "nodes": 13,
+      "max_displacement_error_m": 1.1625162638084774e-13
+    },
+    "q8_seepage": {
+      "seconds": 5.5622742,
+      "residual": 3.939396307128768e-16,
+      "reaction_y": 36.0,
+      "nodes": 13,
+      "head_error_m": 0.0,
+      "pressure_error_kpa": 0.0,
+      "flux_error_m_s": 1.4230153513872246e-19
+    },
+    "mixed_gravity": {
+      "seconds": 5.3817127,
+      "residual": 8.428719080333385e-16,
+      "reaction_y": 35.999999999999986,
+      "nodes": 14,
+      "max_displacement_error_m": 1.0263708286051276e-14
+    },
+    "mixed_traction": {
+      "seconds": 5.4348725,
+      "residual": 8.455768599156362e-16,
+      "reaction_y": 199.99999999999994,
+      "nodes": 14,
+      "max_displacement_error_m": 1.0825541851833265e-13
+    },
+    "mixed_seepage": {
+      "seconds": 4.7663684,
+      "residual": 3.5657151809299396e-16,
+      "reaction_y": 36.000000000000014,
+      "nodes": 14,
+      "head_error_m": 0.0,
+      "pressure_error_kpa": 3.552713678800501e-15,
+      "flux_error_m_s": 8.881784197001253e-20
+    },
+    "t6_gravity": {
+      "seconds": 5.4723867,
+      "residual": 1.0559641230068928e-15,
+      "reaction_y": 35.999999999999986,
+      "nodes": 15,
+      "max_displacement_error_m": 1.000241556248227e-14
+    },
+    "t6_traction": {
+      "seconds": 5.382415,
+      "residual": 1.5197043621486944e-15,
+      "reaction_y": 200.0,
+      "nodes": 15,
+      "max_displacement_error_m": 4.336808689942018e-18
+    },
+    "t6_seepage": {
+      "seconds": 4.8085283,
+      "residual": 9.646981796565852e-16,
+      "reaction_y": 36.000000000000014,
+      "nodes": 15,
+      "head_error_m": 4.440892098500626e-16,
+      "pressure_error_kpa": 7.105427357601002e-15,
+      "flux_error_m_s": 1.5612511283791266e-19
+    }
+  },
+  "comparisons": {
+    "mixed_joint_water_wet_resume": {
+      "max_du_m": 3.441071348220595e-22,
+      "residual": 2.180096006111594e-15,
+      "seconds": 5.7250262,
+      "reaction_y": 87.99999999999997
+    },
+    "mixed_joint_water_stages_resume": {
+      "max_du_m": 4.499862532288471e-22,
+      "residual": 3.413903814694518e-15,
+      "seconds": 6.5454818,
+      "reaction_y": 87.99999999999997
+    },
+    "native_off_auto": {
+      "max_du_m": 0.0,
+      "max_stress_delta": 0.0
+    },
+    "dry_plastic_native_off_auto": {
+      "max_du_m": 0.0,
+      "max_stress_delta": 0.0,
+      "max_plastic_multiplier": 0.0018133667774762512,
+      "auto_seconds": 5.512489,
+      "off_seconds": 5.3712994
+    },
+    "mixed_srm_resume": {
+      "fs_pass": 1.5500000000000005,
+      "fs_fail": 1.5625000000000004,
+      "max_du_m": 4.993783164763954e-13,
+      "seconds": 148.4987907
+    },
+    "q8_original_candidate_srm": {
+      "max_du_m": 0.0,
+      "max_stress_delta": 0.0,
+      "max_metric_delta": 0.0,
+      "fs_pass": 1.5500000000000005,
+      "fs_fail": 1.5625000000000004,
+      "original_seconds": 142.6189169,
+      "candidate_seconds": 141.1645592
+    },
+    "q8_mixed_srm_common_nodes": {
+      "common_nodes": 85,
+      "max_displacement_vector_difference_m": 0.0056492465588421316,
+      "q8_max_displacement_m": 1.4381894334249203,
+      "mixed_max_displacement_m": 1.4377382829585128,
+      "note": "Different meshes; this is a model comparison, not an equality test."
+    }
+  },
+  "scope": "full",
+  "status": "PASS"
+}
+ALL PASS

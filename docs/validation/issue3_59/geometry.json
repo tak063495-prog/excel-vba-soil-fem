@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "book_sha256": "98952de07b4cf389ee4503704a2824a1cfc3a7210d3a04a4fe570df168b2d251",
+  "cases": [
+    {
+      "case": "internal_inversion",
+      "status": "REJECTED_BEFORE_COMMIT"
+    },
+    {
+      "case": "square",
+      "status": "ACCEPTED_WITH_FORCE_BALANCE"
+    },
+    {
+      "case": "rotated_scaled",
+      "status": "ACCEPTED_WITH_FORCE_BALANCE"
+    },
+    {
+      "case": "curved_valid",
+      "status": "ACCEPTED_WITH_FORCE_BALANCE"
+    },
+    {
+      "case": "degenerate",
+      "status": "REJECTED_BEFORE_COMMIT"
+    },
+    {
+      "case": "square_small",
+      "status": "REJECTED_BEFORE_COMMIT"
+    },
+    {
+      "case": "near_degenerate",
+      "status": "REJECTED_BEFORE_COMMIT"
+    },
+    {
+      "case": "scaled_translated",
+      "status": "ACCEPTED_WITH_FORCE_BALANCE"
+    },
+    {
+      "case": "random_internal",
+      "status": "REJECTED_BEFORE_COMMIT"
+    }
+  ],
+  "scope": "nine certificate/runtime probes and nine fresh analysis inputs; positive tiny square passes relative certificate but is rejected by the pre-existing absolute runtime Jacobian threshold"
+}
