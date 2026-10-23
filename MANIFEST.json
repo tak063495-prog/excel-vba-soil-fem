@@ -16,8 +16,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 28437,
-    "sha256": "bd69783e6775d96f2a2c1db990e2f6e43b535266dbd668f78f5bd0ba895a0f19"
+    "bytes": 28594,
+    "sha256": "de2bdc8aea599502d8d17a6b87c1289d3a8783aeef96b6cc239832d2c72e0c41"
   },
   {
     "path": "docs/ACCELERATION_HISTORY.md",
@@ -111,8 +111,13 @@
   },
   {
     "path": "docs/MANUAL_20261024_VALIDATION.md",
-    "bytes": 5555,
-    "sha256": "46650f5e62ea801cb79933095b2520f80532d775804790fe5ed9ae7494ff1b52"
+    "bytes": 5830,
+    "sha256": "6d59c632528d2a5e6635b0afc060d9133455c99d3bbc3b657bf992cdd8f28a3d"
+  },
+  {
+    "path": "docs/MANUAL_FIXED_STRESS_VALIDATION.md",
+    "bytes": 5811,
+    "sha256": "b313c9e68dbf424cbc5045626a582c969d1dfeb191e7f6d3028cf68785311554"
   },
   {
     "path": "docs/MESH_DELAUNAY_MEMORY.md",
@@ -121,8 +126,8 @@
   },
   {
     "path": "docs/MESH_MIXED_T6.md",
-    "bytes": 5004,
-    "sha256": "d2205d025fd631f07b0901480ea6aabfd0254289bcbf9bc40e705493dcc5ca0e"
+    "bytes": 5064,
+    "sha256": "f6dd556f7604add2e8c58c18868450f7fa4316b42f9504cf6a9f1dfac5e697bc"
   },
   {
     "path": "docs/MESH_MIXED_T6_VALIDATION.md",
@@ -1230,6 +1235,76 @@
     "sha256": "a98c5f7cb13325baf83e553d2a47e6791f25f6aed2abab2b251936366f0b7446"
   },
   {
+    "path": "docs/manual-fs-evidence/20261024/README.md",
+    "bytes": 2663,
+    "sha256": "e368fcd6e77bab17507003c3d0daba20c1fbaee7fef165fe24a7c77b0f5f283a"
+  },
+  {
+    "path": "docs/manual-fs-evidence/20261024/actual_excel_captures.zip",
+    "bytes": 1495328,
+    "sha256": "aa9e9c2e97b747362f56c1aed46f75536bb4b3922c5f392caeca1573007540d1"
+  },
+  {
+    "path": "docs/manual-fs-evidence/20261024/all_page_review_sheets.zip",
+    "bytes": 11659878,
+    "sha256": "4c102253278b2ca5588f09a092950158bdee198112610d0de2e2dc8cb546dfe1"
+  },
+  {
+    "path": "docs/manual-fs-evidence/20261024/coverage.json",
+    "bytes": 291,
+    "sha256": "15da77a5b64fbbed3084a4377fb0a9046305954109c74ae330210ed7a606baea"
+  },
+  {
+    "path": "docs/manual-fs-evidence/20261024/frame_reopen_c12/frame_reopen.json",
+    "bytes": 723,
+    "sha256": "a27403b31dfa71c4a95786a7ce4c13c4e4ff84de3e00d7d494817281c138cbcc"
+  },
+  {
+    "path": "docs/manual-fs-evidence/20261024/frame_reopen_c12/screen.jpg",
+    "bytes": 157544,
+    "sha256": "173c37dc2cdaac3e746ba4d86bd62f74f1fa923a439030b25683a99787574a62"
+  },
+  {
+    "path": "docs/manual-fs-evidence/20261024/frame_reopen_c12/steps.log",
+    "bytes": 139,
+    "sha256": "4357e2adf8ab4ff129060ccb0fb5ac7aef0409b98d042d4ac1fb5036c87ecf87"
+  },
+  {
+    "path": "docs/manual-fs-evidence/20261024/frame_reopen_s11/frame_reopen.json",
+    "bytes": 727,
+    "sha256": "db28aa6025e9b6f490362476823aba29f31620b75c71f5b23457b7a48eaaee1b"
+  },
+  {
+    "path": "docs/manual-fs-evidence/20261024/frame_reopen_s11/steps.log",
+    "bytes": 141,
+    "sha256": "50a58d43b2d817b1518cc40e664f5c56b6d14951aa742cc807794740ae04d731"
+  },
+  {
+    "path": "docs/manual-fs-evidence/20261024/markdown_links.json",
+    "bytes": 45,
+    "sha256": "0c6e2b74c1defbacf6815f4c414343a3254cd46350b516179e90d652ff95f3a9"
+  },
+  {
+    "path": "docs/manual-fs-evidence/20261024/pdf_link_bounds_checks.json",
+    "bytes": 6634,
+    "sha256": "b56e9f0a30a74e3d86d0849e5aa935e2f490b523dc492b8bd3bec023e6abc8cd"
+  },
+  {
+    "path": "docs/manual-fs-evidence/20261024/printed_page_identity.json",
+    "bytes": 3627,
+    "sha256": "15caa94f17bffaf8c6ab581f9ac014603b346ddf53c0c981d157689fbc2408d5"
+  },
+  {
+    "path": "docs/manual-fs-evidence/20261024/printed_page_mapping.json",
+    "bytes": 3686,
+    "sha256": "40810ca62c9cb38b87b74d9725111a5814b5c5e4f9f8d937a5621b568e1c68a9"
+  },
+  {
+    "path": "docs/manual-fs-evidence/20261024/structure_checks.json",
+    "bytes": 4303,
+    "sha256": "2ade353bb9c6d057101851a7e5ea928be4f2ff84b066978327ac4e6d2a4bbd3f"
+  },
+  {
     "path": "docs/manual24-evidence/20261024/README.md",
     "bytes": 3231,
     "sha256": "89f14ec9b27c3e333d343ad4a75462027e9eb01d4ef7a33f0660321cb5a5c1c4"
@@ -1401,18 +1476,18 @@
   },
   {
     "path": "docs/manuals/2DSoilFEM_Manual_20261024.md",
-    "bytes": 339535,
-    "sha256": "d765dc8082aea294592342e10d84a9bf3fe47bb502f766a5105eb046d49dee22"
+    "bytes": 376169,
+    "sha256": "0edb1b113f6a972af6eafc4f5579d2415d11af885b55a3271061fc7af5152c8b"
   },
   {
     "path": "docs/manuals/2DSoilFEM_Manual_20261024.pdf",
-    "bytes": 39040287,
-    "sha256": "eb4787bdcbfb328579e0ed4b5d31d21d15c85436fd0093ed329866b1965b7457"
+    "bytes": 43021517,
+    "sha256": "8b6462df8be4691d3879661fd6dd7ee11647ab0336f6ee897130bb669d028165"
   },
   {
     "path": "docs/manuals/README.md",
-    "bytes": 16630,
-    "sha256": "e8dce1f354a405c58f62a168f9d448027390246044bbda7f18f90b545e1cb175"
+    "bytes": 16741,
+    "sha256": "87e6d887d32ad4ab5d911e8c3ec899536544f9033c948959a6dfdca71b171c22"
   },
   {
     "path": "docs/manuals/build_manual_pdf.py",
@@ -1421,8 +1496,8 @@
   },
   {
     "path": "docs/manuals/build_manual_pdf_v2.py",
-    "bytes": 6133,
-    "sha256": "09769ebfc50c81ade255a9bc685f8613b9fa4eb62411cb1184a670b9f245b5e0"
+    "bytes": 6403,
+    "sha256": "f547c7e5295e51ca6ac7a8902d98aadfdfc575821168a19443c39e6c605dafd8"
   },
   {
     "path": "docs/manuals/construction-evidence/20261020/anchor09/adaptive_v2a.csv.gz",
@@ -5488,6 +5563,116 @@
     "path": "docs/manuals/images/cover/old_cover_mesh_rgb.png",
     "bytes": 70586,
     "sha256": "6a1bd1e3479ca773725847536e6687bed029f0f6cda779e22b04d14aded564fe"
+  },
+  {
+    "path": "docs/manuals/images/fixed_stress/annotation_manifest.json",
+    "bytes": 36352,
+    "sha256": "876b5c098e0cb3e40ee38ce4d315aa9993f229875f9fbec99c9c6368fe58599a"
+  },
+  {
+    "path": "docs/manuals/images/fixed_stress/coupled_material_guided.png",
+    "bytes": 84222,
+    "sha256": "c8358c9560dd9522c0be70153239168797b05c2a034154e3e4ae615832216d32"
+  },
+  {
+    "path": "docs/manuals/images/fixed_stress/curve_detail_guided.png",
+    "bytes": 107694,
+    "sha256": "7f9141adea16a5f2d4df5998bcda50a6d02ef17fc3cfd31adaa6cd96bb944715"
+  },
+  {
+    "path": "docs/manuals/images/fixed_stress/drain_sets_guided.png",
+    "bytes": 67919,
+    "sha256": "45c1eba0a78bc3bd144a54393bc8305940d707cd61b8ce07ef17ab03658a88e1"
+  },
+  {
+    "path": "docs/manuals/images/fixed_stress/figure_data.json",
+    "bytes": 47891,
+    "sha256": "da1a72b767537e937705b23520dd01500863e66f6862d5bf2a4c22fd1a1bdfa6"
+  },
+  {
+    "path": "docs/manuals/images/fixed_stress/fill_detail_guided.png",
+    "bytes": 103491,
+    "sha256": "0857d57a8e764ee79905108d0a68c2b9b4d334ab1e708512aeb5eae624236354"
+  },
+  {
+    "path": "docs/manuals/images/fixed_stress/fill_stages_guided.png",
+    "bytes": 156581,
+    "sha256": "83b05a057b76cdf9b8d735dcaf3f5cfa80cd01a1da4bfa3865706de45ecf344e"
+  },
+  {
+    "path": "docs/manuals/images/fixed_stress/fill_time_guided.png",
+    "bytes": 131176,
+    "sha256": "46254f59555ebc75395ceb8f4b14b952a0691c649a7fecec61e0e98b29c9ad23"
+  },
+  {
+    "path": "docs/manuals/images/fixed_stress/mandel_central_pressure.png",
+    "bytes": 75849,
+    "sha256": "80b0344b1e5a6d1a75713a46217af8f3d11b020487de7eff731e090514545272"
+  },
+  {
+    "path": "docs/manuals/images/fixed_stress/mandel_pressure_error.png",
+    "bytes": 85159,
+    "sha256": "e54efad70f4bd94aadc9e7711cd8f7fa745ac80406ca693d6bbf2e12422ecc8c"
+  },
+  {
+    "path": "docs/manuals/images/fixed_stress/mesh_t6_guided.png",
+    "bytes": 252028,
+    "sha256": "173ced2fc5add28ab81961180463ca683430aafa6c5ec4dedefd88e729d0d719"
+  },
+  {
+    "path": "docs/manuals/images/fixed_stress/monolithic_reference_error.png",
+    "bytes": 92145,
+    "sha256": "0f05a18b0313cc319ac735fff9d5b2e41d989f351dae413d747171517ffdd1ea"
+  },
+  {
+    "path": "docs/manuals/images/fixed_stress/named_loads_guided.png",
+    "bytes": 125774,
+    "sha256": "6b7ff91e4d37bffaac08e1b5a0a6d1fe22db17938e8888dd7cae5fd0177a6733"
+  },
+  {
+    "path": "docs/manuals/images/fixed_stress/partial_birth_view.png",
+    "bytes": 420281,
+    "sha256": "eada16240acb20d1047e8d57a59df040e18801e211e632cd53e885e944fbaef4"
+  },
+  {
+    "path": "docs/manuals/images/fixed_stress/practical_mesh_schematic.png",
+    "bytes": 37070,
+    "sha256": "0d0602b1fee989994c3c46426a1c49c017b1f25630d503e39b1d7c651b88539a"
+  },
+  {
+    "path": "docs/manuals/images/fixed_stress/practical_stage_history.png",
+    "bytes": 179081,
+    "sha256": "ae5bd3c4001253094c926f52cf4565b0284c647d02da1384b1cc438ddfe7f555"
+  },
+  {
+    "path": "docs/manuals/images/fixed_stress/srm_branch_view.png",
+    "bytes": 489222,
+    "sha256": "e3d8809c1731640f2043f6bd8b8d304198bb1ce36a01730d8403833627dd29a4"
+  },
+  {
+    "path": "docs/manuals/images/fixed_stress/time_history_guided.png",
+    "bytes": 224541,
+    "sha256": "4d97ee455cca7ab8e093d657c7881c01208aa3b2d9cb5aa67b3161a9c6917fd5"
+  },
+  {
+    "path": "docs/manuals/images/fixed_stress/time_select_guided.png",
+    "bytes": 138649,
+    "sha256": "427715889049d565542738d9074d5181e9472b1a7b6d29e74fd7077b52a8350c"
+  },
+  {
+    "path": "docs/manuals/images/fixed_stress/water_balance_guided.png",
+    "bytes": 392533,
+    "sha256": "46f9bdcc81653622a4fe53aa028630a5e6568fb263344e8e46c962e66e18af56"
+  },
+  {
+    "path": "docs/manuals/images/fixed_stress/water_series_guided.png",
+    "bytes": 58934,
+    "sha256": "96511360406a0d0ecc6107e4c028031107dd83c6c5643e0195671d94497aff7d"
+  },
+  {
+    "path": "docs/manuals/images/fixed_stress/water_time_view.png",
+    "bytes": 477391,
+    "sha256": "304fea1d14f70061ce8702001b33b46c6a88565c44e58840a4aaa0b385a25083"
   },
   {
     "path": "docs/manuals/images/groundwater/boundary.png",
@@ -11005,6 +11190,11 @@
     "sha256": "3ceec7492a34b915ea66151cf9a1e6c120df4a8947a0fe4a949a23f127ba2a0d"
   },
   {
+    "path": "tests/annotate_fixed_stress_manual.py",
+    "bytes": 5082,
+    "sha256": "acb7a066328404c41deac056549f1bc158bd6afbf86dd1ba05e3d40a4007ab4b"
+  },
+  {
     "path": "tests/annotate_water_manual.py",
     "bytes": 1756,
     "sha256": "5c9190c0976d31ab0ef5083dd27aae685185e859501d7e4fc208ceda9f0d5184"
@@ -11013,6 +11203,11 @@
     "path": "tests/build_workbook_ui.ps1",
     "bytes": 4195,
     "sha256": "2f7584c5c2362c998861d565a4fc7fb88f7ea09010de26b6f1a2474a7ac2f297"
+  },
+  {
+    "path": "tests/capture_fixed_stress_manual.ps1",
+    "bytes": 5001,
+    "sha256": "2fd10321ebfd6b387aa855a8c04dbe01275ff5185e0c855a734c5e1b0339f508"
   },
   {
     "path": "tests/capture_manual24.ps1",
@@ -11121,13 +11316,13 @@
   },
   {
     "path": "tests/check_manual24_coverage.py",
-    "bytes": 1292,
-    "sha256": "3c6c71d8d8e5553397dd26b11aeaa313e00c78f4e1f12332c4b8aa923b5ce3e3"
+    "bytes": 1496,
+    "sha256": "5a5ee206d5296068eb5ec506323739e32b1e2fc6028016831f7c852a4b29fbde"
   },
   {
     "path": "tests/check_manual24_pdf.py",
-    "bytes": 2302,
-    "sha256": "ccd6d0fdf59aac1be9344b92f67ea73ee31b3f87aade2e23ab555d77a50b2784"
+    "bytes": 2482,
+    "sha256": "758505d3ea6f5b0632ac41e319c28cf5f07f27cfff795e56289bab4a34398d59"
   },
   {
     "path": "tests/check_manual_applied.py",
@@ -12520,6 +12715,11 @@
     "sha256": "ea93a06fbc7bb964ae1fd8ba18bc44efa0b0d394662607c69d605e2207764ca6"
   },
   {
+    "path": "tests/prepare_fixed_stress_manual_figures.py",
+    "bytes": 8598,
+    "sha256": "68dec4f6e9ea0cc09de3bf314f133038d06f3538a2a441491883e24e72435034"
+  },
+  {
     "path": "tests/prepare_manual24_images.py",
     "bytes": 5382,
     "sha256": "952904e7b1aeb5e9a494cec5ad0ea8c89f2a52da5b26e9f6d4fbdcfb18788ba1"
@@ -12531,8 +12731,8 @@
   },
   {
     "path": "tests/remap_manual_references.py",
-    "bytes": 2131,
-    "sha256": "09c97c950c4f445c027fd112421f6a3b89deba9610a7b48df9c34b16710258be"
+    "bytes": 2297,
+    "sha256": "f1269719ce4c24803afca15a35102b4bcbf5b38ded73cc7af31e82c568e4bdec"
   },
   {
     "path": "tests/render_manual_review.ps1",
@@ -12596,8 +12796,8 @@
   },
   {
     "path": "tests/review_water_manual.py",
-    "bytes": 3406,
-    "sha256": "d4da7caf4c21aa120f5fde5a99c0f145c9df2f56c85ce9335f43ef6a433e71d6"
+    "bytes": 3474,
+    "sha256": "34c0941352a4ac2526a0e189bfdf547007a924b0de0212acf4ee8d0acf6bcfee"
   },
   {
     "path": "tests/run.ps1",
@@ -12833,6 +13033,11 @@
     "path": "tests/test_workbook_ui_persistence.ps1",
     "bytes": 13023,
     "sha256": "ca9f049d8de5d55a178ea3a8ba81a3fcc1c2982808230179176ca8658f300dcc"
+  },
+  {
+    "path": "tests/verify_fixed_stress_frame_reopen.ps1",
+    "bytes": 8040,
+    "sha256": "7a2fa8bc4752252a75c8f07f2b7eeb5743ffdcb08fb787dfab3ff9982341c835"
   },
   {
     "path": "tests/verify_joint_water_ui.ps1",

@@ -1,0 +1,1480 @@
+{
+  "status": "PASS",
+  "method": "Actual Excel screenshots, crop and numbered red frames only. Full original captures and metadata are archived.",
+  "figures": {
+    "coupled_material_guided.png": {
+      "source": "tests/tmp/manual_fs/screens/coupled_material.jpg",
+      "source_sha256": "27ee48dcf1a8ba40e71ad9d435136717b38d29566024e1f561d7c3bfe4ca18ed",
+      "capture_metadata": {
+        "source_case": "tests/tmp/issues_xlsm/fixed6/fill_30day/fresh_results.xlsm",
+        "section": "圧密材料特性",
+        "book_sha256": "538D20BB2E071ADB4A0BA0E52B7BC5F361FF38D89847121E5BA75B66EB6C0E91",
+        "status": "PASS",
+        "cells": {
+          "A7:G10": [
+            "材料番号",
+            "Biot係数α",
+            "貯留1/M[1/kPa]",
+            "kx[m/s]",
+            "ky[m/s]",
+            "備考",
+            "間隙率n（施工の水量収支）",
+            1.0,
+            1.0,
+            1e-06,
+            1e-08,
+            1e-08,
+            null,
+            0.4,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "name": "coupled_material",
+        "page": "材料・接合",
+        "source_sha256": "BC003EBA0D025937AC36972C19B186F8A7C7588CF8DFB3A5BA86E48750D115D6"
+      },
+      "crop_box": [
+        20,
+        350,
+        685,
+        525
+      ],
+      "marks": [
+        {
+          "number": 1,
+          "box": [
+            27,
+            432,
+            207,
+            502
+          ],
+          "circle": [
+            40,
+            421
+          ],
+          "cellrefs": "A7:B8 material/alpha"
+        },
+        {
+          "number": 2,
+          "box": [
+            208,
+            432,
+            480,
+            502
+          ],
+          "circle": [
+            222,
+            421
+          ],
+          "cellrefs": "C7:E8 storage/kx/ky"
+        },
+        {
+          "number": 3,
+          "box": [
+            571,
+            432,
+            663,
+            502
+          ],
+          "circle": [
+            585,
+            421
+          ],
+          "cellrefs": "G7:G8 porosity"
+        }
+      ]
+    },
+    "fill_stages_guided.png": {
+      "source": "tests/tmp/manual_fs/screens/fill_stages.jpg",
+      "source_sha256": "7bc1c7271d003b697c4cc9a012abc3fab1c413586a8d3bd211971a133c6a4eec",
+      "capture_metadata": {
+        "source_case": "tests/tmp/issues_xlsm/fixed6/fill_30day/fresh_results.xlsm",
+        "section": "工程の編集",
+        "book_sha256": "538D20BB2E071ADB4A0BA0E52B7BC5F361FF38D89847121E5BA75B66EB6C0E91",
+        "status": "PASS",
+        "cells": {
+          "A7:I13": [
+            "工程ID",
+            "操作",
+            "対象材料",
+            "倍率・Fs・変更式",
+            "有効",
+            "工程名",
+            "連携方式",
+            "水位線指定",
+            "採用水位線",
+            1.0,
+            "自重",
+            null,
+            1.0,
+            1.0,
+            "initial",
+            null,
+            null,
+            "継承: W",
+            2.0,
+            "盛土・追加",
+            2.0,
+            1.0,
+            1.0,
+            "fill",
+            "FIXED_STRESS",
+            null,
+            "継承: W",
+            3.0,
+            "SRM照査",
+            null,
+            1.0,
+            1.0,
+            "immediate",
+            null,
+            null,
+            "継承: W",
+            4.0,
+            "時間経過",
+            null,
+            1.0,
+            1.0,
+            "30day",
+            "INHERIT",
+            null,
+            "継承: W",
+            5.0,
+            "SRM照査",
+            null,
+            1.0,
+            1.0,
+            "after",
+            null,
+            null,
+            "継承: W",
+            6.0,
+            "時間経過",
+            null,
+            1.0,
+            1.0,
+            "following",
+            "INHERIT",
+            null,
+            "継承: W"
+          ]
+        },
+        "name": "fill_stages",
+        "page": "施工工程",
+        "source_sha256": "BC003EBA0D025937AC36972C19B186F8A7C7588CF8DFB3A5BA86E48750D115D6"
+      },
+      "crop_box": [
+        20,
+        350,
+        1060,
+        685
+      ],
+      "marks": [
+        {
+          "number": 1,
+          "box": [
+            235,
+            432,
+            340,
+            549
+          ],
+          "circle": [
+            248,
+            421
+          ],
+          "cellrefs": "C7:C9 BIRTH material"
+        },
+        {
+          "number": 2,
+          "box": [
+            130,
+            539,
+            235,
+            638
+          ],
+          "circle": [
+            144,
+            421
+          ],
+          "cellrefs": "B10:B12 SRM/WAIT"
+        },
+        {
+          "number": 3,
+          "box": [
+            720,
+            432,
+            825,
+            678
+          ],
+          "circle": [
+            733,
+            421
+          ],
+          "cellrefs": "G7:G13 coupling"
+        }
+      ]
+    },
+    "fill_time_guided.png": {
+      "source": "tests/tmp/manual_fs/screens/fill_time.jpg",
+      "source_sha256": "cc0e305023aa65048998a9079191b5310f96a5c5427bdce8fc81f4f5c7c23da9",
+      "capture_metadata": {
+        "source_case": "tests/tmp/issues_xlsm/fixed6/fill_30day/fresh_results.xlsm",
+        "section": "時間・連成設定",
+        "book_sha256": "538D20BB2E071ADB4A0BA0E52B7BC5F361FF38D89847121E5BA75B66EB6C0E91",
+        "status": "PASS",
+        "cells": {
+          "A7:J11": [
+            "工程番号",
+            "連携方式",
+            "WATER水位線ID",
+            "工程時間（詳細の単位）",
+            "初期刻み（詳細の単位）",
+            "排水条件ID",
+            "反復上限",
+            "連成許容値",
+            "説明",
+            "時間単位（詳細設定）",
+            2.0,
+            "FIXED_STRESS",
+            null,
+            0.0,
+            0.0,
+            null,
+            300.0,
+            1e-08,
+            null,
+            "秒",
+            4.0,
+            "INHERIT",
+            null,
+            30.0,
+            3.0,
+            null,
+            300.0,
+            1e-08,
+            null,
+            "D",
+            6.0,
+            "INHERIT",
+            null,
+            1.0,
+            1.0,
+            null,
+            300.0,
+            1e-08,
+            null,
+            "D",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "name": "fill_time",
+        "page": "施工工程",
+        "source_sha256": "BC003EBA0D025937AC36972C19B186F8A7C7588CF8DFB3A5BA86E48750D115D6"
+      },
+      "crop_box": [
+        20,
+        350,
+        950,
+        565
+      ],
+      "marks": [
+        {
+          "number": 1,
+          "box": [
+            27,
+            432,
+            208,
+            550
+          ],
+          "circle": [
+            40,
+            421
+          ],
+          "cellrefs": "A7:B10 stage/coupling"
+        },
+        {
+          "number": 2,
+          "box": [
+            298,
+            432,
+            481,
+            550
+          ],
+          "circle": [
+            312,
+            421
+          ],
+          "cellrefs": "D7:E10 duration/initial dt"
+        },
+        {
+          "number": 3,
+          "box": [
+            845,
+            432,
+            936,
+            550
+          ],
+          "circle": [
+            858,
+            421
+          ],
+          "cellrefs": "J7:J10 time unit"
+        }
+      ]
+    },
+    "fill_detail_guided.png": {
+      "source": "tests/tmp/manual_fs/screens/fill_detail.jpg",
+      "source_sha256": "fb90489844e26122a86210413c5a106557afb0aa1494163e40a33060cfbfe84d",
+      "capture_metadata": {
+        "source_case": "tests/tmp/issues_xlsm/fixed6/fill_30day/fresh_results.xlsm",
+        "section": "時間の詳細設定",
+        "book_sha256": "538D20BB2E071ADB4A0BA0E52B7BC5F361FF38D89847121E5BA75B66EB6C0E91",
+        "status": "PASS",
+        "cells": {
+          "A7:J10": [
+            "工程ID",
+            "時間単位",
+            "水位変化",
+            "載荷方法",
+            "最小刻み",
+            "最大刻み",
+            "保存間隔",
+            "水位時系列ID",
+            "載荷セットID",
+            "備考",
+            4.0,
+            "D",
+            "HOLD",
+            "INSTANT",
+            0.001,
+            3.0,
+            3.0,
+            null,
+            null,
+            null,
+            6.0,
+            "D",
+            "HOLD",
+            "INSTANT",
+            0.001,
+            1.0,
+            1.0,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "name": "fill_detail",
+        "page": "施工工程",
+        "source_sha256": "BC003EBA0D025937AC36972C19B186F8A7C7588CF8DFB3A5BA86E48750D115D6"
+      },
+      "crop_box": [
+        20,
+        350,
+        950,
+        540
+      ],
+      "marks": [
+        {
+          "number": 1,
+          "box": [
+            27,
+            432,
+            207,
+            525
+          ],
+          "circle": [
+            40,
+            421
+          ],
+          "cellrefs": "A7:B9 stage/unit"
+        },
+        {
+          "number": 2,
+          "box": [
+            208,
+            432,
+            390,
+            525
+          ],
+          "circle": [
+            222,
+            421
+          ],
+          "cellrefs": "C7:D9 HOLD/INSTANT"
+        },
+        {
+          "number": 3,
+          "box": [
+            390,
+            432,
+            663,
+            525
+          ],
+          "circle": [
+            405,
+            421
+          ],
+          "cellrefs": "E7:G9 dt range/save"
+        }
+      ]
+    },
+    "drain_sets_guided.png": {
+      "source": "tests/tmp/manual_fs/screens3/drain_sets.jpg",
+      "source_sha256": "ac66d0ab7b4f33042cdbfa76ea98faea9c37eebcc3d8f033e9cac7798ea60ef2",
+      "capture_metadata": {
+        "name": "drain_sets",
+        "status": "PASS",
+        "section": "排水条件セット",
+        "book_sha256": "538D20BB2E071ADB4A0BA0E52B7BC5F361FF38D89847121E5BA75B66EB6C0E91",
+        "cells": {
+          "A7:G12": [
+            "排水セットID",
+            "要素番号",
+            "辺番号",
+            "種別",
+            "水位線ID",
+            "指定値",
+            "備考",
+            "D8",
+            8.0,
+            3.0,
+            "HEAD",
+            "W",
+            null,
+            null,
+            "D6",
+            6.0,
+            3.0,
+            "HEAD",
+            "W",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "source_sha256": "9C418E7B3AAD03044B747F736ECE85081EB808024BC47ED242B0FBB38F5CE84D",
+        "page": "施工工程",
+        "source_case": "tests/tmp/issues_xlsm/fixed6/wet_birth_ramp/fresh_results.xlsm"
+      },
+      "crop_box": [
+        20,
+        350,
+        590,
+        550
+      ],
+      "marks": [
+        {
+          "number": 1,
+          "box": [
+            27,
+            432,
+            298,
+            525
+          ],
+          "circle": [
+            40,
+            421
+          ],
+          "cellrefs": "A7:C9 set/element/side"
+        },
+        {
+          "number": 2,
+          "box": [
+            298,
+            432,
+            480,
+            525
+          ],
+          "circle": [
+            312,
+            421
+          ],
+          "cellrefs": "D7:E9 HEAD/profile"
+        }
+      ]
+    },
+    "water_series_guided.png": {
+      "source": "tests/tmp/manual_fs/screens3/water_series.jpg",
+      "source_sha256": "17998377310e3ea08907d9e18450840567aa81e10864d1a7ca60c3846fde1ec5",
+      "capture_metadata": {
+        "name": "water_series",
+        "status": "PASS",
+        "section": "水位の時系列",
+        "book_sha256": "538D20BB2E071ADB4A0BA0E52B7BC5F361FF38D89847121E5BA75B66EB6C0E91",
+        "cells": {
+          "A7:C11": [
+            "時系列ID",
+            "工程内時刻",
+            "水位線ID",
+            "CURVE",
+            0.0,
+            "W",
+            "CURVE",
+            0.4,
+            "W2",
+            "CURVE",
+            1.0,
+            "W2",
+            null,
+            null,
+            null
+          ]
+        },
+        "source_sha256": "1FED88F8CF43979F60FEDCD487F2024D1358AAFE4F0A92F74BDD4CE30A090E2F",
+        "page": "施工工程",
+        "source_case": "tests/tmp/issues_xlsm/fixed6/watercurve/fresh_results.xlsm"
+      },
+      "crop_box": [
+        20,
+        350,
+        590,
+        560
+      ],
+      "marks": [
+        {
+          "number": 1,
+          "box": [
+            27,
+            432,
+            117,
+            550
+          ],
+          "circle": [
+            40,
+            421
+          ],
+          "cellrefs": "A7:A10 series ID"
+        },
+        {
+          "number": 2,
+          "box": [
+            117,
+            432,
+            208,
+            550
+          ],
+          "circle": [
+            131,
+            421
+          ],
+          "cellrefs": "B7:B10 stage time"
+        },
+        {
+          "number": 3,
+          "box": [
+            208,
+            432,
+            298,
+            550
+          ],
+          "circle": [
+            222,
+            421
+          ],
+          "cellrefs": "C7:C10 water profile"
+        }
+      ]
+    },
+    "curve_detail_guided.png": {
+      "source": "tests/tmp/manual_fs/screens3/curve_detail.jpg",
+      "source_sha256": "490517d8d152f2afe44679154490159ccbfd08b34ad9a1a74cf6d262b66b5dc8",
+      "capture_metadata": {
+        "name": "curve_detail",
+        "status": "PASS",
+        "section": "時間の詳細設定",
+        "book_sha256": "538D20BB2E071ADB4A0BA0E52B7BC5F361FF38D89847121E5BA75B66EB6C0E91",
+        "cells": {
+          "A7:J13": [
+            "工程ID",
+            "時間単位",
+            "水位変化",
+            "載荷方法",
+            "最小刻み",
+            "最大刻み",
+            "保存間隔",
+            "水位時系列ID",
+            "載荷セットID",
+            "備考",
+            4.0,
+            "D",
+            "LINEAR",
+            "INSTANT",
+            0.0001,
+            0.1,
+            0.2,
+            "CURVE",
+            null,
+            null,
+            5.0,
+            "D",
+            "HOLD",
+            "INSTANT",
+            0.0001,
+            0.1,
+            0.2,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "source_sha256": "1FED88F8CF43979F60FEDCD487F2024D1358AAFE4F0A92F74BDD4CE30A090E2F",
+        "page": "施工工程",
+        "source_case": "tests/tmp/issues_xlsm/fixed6/watercurve/fresh_results.xlsm"
+      },
+      "crop_box": [
+        20,
+        350,
+        950,
+        540
+      ],
+      "marks": [
+        {
+          "number": 1,
+          "box": [
+            571,
+            432,
+            753,
+            525
+          ],
+          "circle": [
+            585,
+            421
+          ],
+          "cellrefs": "G7:H9 save interval/series ID"
+        }
+      ]
+    },
+    "named_loads_guided.png": {
+      "source": "tests/tmp/manual_fs/screens3/named_loads.jpg",
+      "source_sha256": "3e04b5fe85c1312b9be9ff4f80b5b5f20052a96d7349ba2612d77211015ebb28",
+      "capture_metadata": {
+        "name": "named_loads",
+        "status": "PASS",
+        "section": "載荷条件",
+        "book_sha256": "538D20BB2E071ADB4A0BA0E52B7BC5F361FF38D89847121E5BA75B66EB6C0E91",
+        "cells": {
+          "A7:K13": [
+            "材料番号",
+            "選択",
+            "方向",
+            "種別",
+            "値",
+            "X1",
+            "Y1",
+            "X2",
+            "Y2",
+            "説明",
+            "載荷セットID（空欄は従来）",
+            1.0,
+            40.0,
+            "Y",
+            "FORCE",
+            -1.6666666666666667,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "L",
+            1.0,
+            40.0,
+            "Y",
+            "FORCE",
+            0.0,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "U",
+            1.0,
+            39.0,
+            "Y",
+            "FORCE",
+            -1.6666666666666667,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "L",
+            1.0,
+            39.0,
+            "Y",
+            "FORCE",
+            0.0,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "U",
+            1.0,
+            42.0,
+            "Y",
+            "FORCE",
+            -6.666666666666667,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "L",
+            1.0,
+            42.0,
+            "Y",
+            "FORCE",
+            0.0,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "U"
+          ]
+        },
+        "source_sha256": "8256E1A065537BC0991D529B019C7D0E0DDCD6277D908BD6548783B0451D8494",
+        "page": "境界・水条件",
+        "source_case": "tests/tmp/issues_xlsm/fixed6/named_unload/fresh_results.xlsm"
+      },
+      "crop_box": [
+        20,
+        350,
+        1040,
+        645
+      ],
+      "marks": [
+        {
+          "number": 1,
+          "box": [
+            208,
+            432,
+            480,
+            626
+          ],
+          "circle": [
+            222,
+            421
+          ],
+          "cellrefs": "C7:E13 direction/type/value"
+        },
+        {
+          "number": 2,
+          "box": [
+            936,
+            432,
+            1027,
+            626
+          ],
+          "circle": [
+            949,
+            421
+          ],
+          "cellrefs": "K7:K13 named load set"
+        }
+      ]
+    },
+    "mesh_t6_guided.png": {
+      "source": "tests/tmp/manual_fs/screens3/mesh_t6.jpg",
+      "source_sha256": "fadd95ec706f932f790ccfc5f44419160749a028c6145311e9cd3a98b5e7ff37",
+      "capture_metadata": {
+        "name": "mesh_t6",
+        "status": "PASS",
+        "section": "メッシュ生成・支持条件",
+        "book_sha256": "538D20BB2E071ADB4A0BA0E52B7BC5F361FF38D89847121E5BA75B66EB6C0E91",
+        "cells": {
+          "A7:J18": [
+            "項目",
+            null,
+            null,
+            "現在の設定値（入力）",
+            null,
+            "意味・注意",
+            null,
+            null,
+            null,
+            null,
+            "生成要素の材料番号",
+            null,
+            null,
+            1.0,
+            null,
+            "外側境界1つの材料番号。複数領域は入力順に材料1,2,…",
+            null,
+            null,
+            null,
+            null,
+            "底面拘束",
+            null,
+            null,
+            "PINNED",
+            null,
+            "Ymin面。NONE=自由 / ROLLER=Y固定 / PINNED=XY固定",
+            null,
+            null,
+            null,
+            null,
+            "左面拘束",
+            null,
+            null,
+            "ROLLER",
+            null,
+            "Xmin面。NONE=自由 / ROLLER=X固定 / PINNED=XY固定",
+            null,
+            null,
+            null,
+            null,
+            "右面拘束",
+            null,
+            null,
+            "ROLLER",
+            null,
+            "Xmax面。NONE=自由 / ROLLER=X固定 / PINNED=XY固定",
+            null,
+            null,
+            null,
+            null,
+            "上面拘束",
+            null,
+            null,
+            "NONE",
+            null,
+            "Ymax面。NONE=自由 / ROLLER=Y固定 / PINNED=XY固定",
+            null,
+            null,
+            null,
+            null,
+            "剛体モード止め",
+            null,
+            null,
+            "AUTO",
+            null,
+            "AUTO=底面の最小X節点をXY固定 / NONE=しない",
+            null,
+            null,
+            null,
+            null,
+            "形状メッシュの生成方式",
+            null,
+            null,
+            2.0,
+            null,
+            "0=品質比較。1=デローニ優先。2=地形格子を直接生成（適用不可は停止）。",
+            null,
+            null,
+            null,
+            null,
+            "不適合Q8をT6へ置換",
+            null,
+            null,
+            0.0,
+            null,
+            "0=OFF / 1=ON。品質修正後の不合格Q8だけをT6へ分割。不正形状は停止",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "source_sha256": "8256E1A065537BC0991D529B019C7D0E0DDCD6277D908BD6548783B0451D8494",
+        "page": "モデル",
+        "source_case": "tests/tmp/issues_xlsm/fixed6/named_unload/fresh_results.xlsm"
+      },
+      "crop_box": [
+        20,
+        350,
+        1140,
+        845
+      ],
+      "marks": [
+        {
+          "number": 1,
+          "box": [
+            297,
+            788,
+            481,
+            835
+          ],
+          "circle": [
+            311,
+            777
+          ],
+          "cellrefs": "D15:E15 T6 option; mesh settings C30"
+        }
+      ]
+    },
+    "time_history_guided.png": {
+      "source": "tests/tmp/manual_fs/screens2/time_history.jpg",
+      "source_sha256": "d338997e3a3a1f31745f11b0df37a2276430eb7963cfa8455159c8c4bbfb09ee",
+      "capture_metadata": {
+        "page": "結果",
+        "section": "時間履歴",
+        "book_sha256": "538D20BB2E071ADB4A0BA0E52B7BC5F361FF38D89847121E5BA75B66EB6C0E91",
+        "source_case": "tests/tmp/issues_xlsm/fixed6/fill_30day/fresh_results.xlsm",
+        "cells": {
+          "A7:M13": [
+            "状態ID",
+            "工程ID",
+            "累積時刻[s]",
+            "刻み[s]",
+            "連成反復",
+            "流体残差",
+            "水量誤差",
+            "力学残差",
+            "最大変位[m]",
+            "施工本線/照査枝",
+            "保存先",
+            "親状態ID",
+            "Fs",
+            "C000001",
+            2.0,
+            0.0,
+            0.0,
+            23.0,
+            4.971423048236711e-10,
+            1.871200939257105e-09,
+            2.7679248337697554e-15,
+            0.001282170006512485,
+            "MAINLINE",
+            "fill_30day_out\\time_20261023_182957\\C000001",
+            null,
+            1.0,
+            "S000001_3",
+            3.0,
+            0.0,
+            0.0,
+            23.0,
+            4.971423048236711e-10,
+            1.871200939257105e-09,
+            2.7679248337697554e-15,
+            0.001282170006512485,
+            "SRM_BRANCH",
+            "fill_30day_out\\time_20261023_182957\\S000001_3",
+            "C000001",
+            1.2,
+            "C000002",
+            4.0,
+            259200.0,
+            259200.0,
+            11.0,
+            2.5261682805348207e-12,
+            9.385774392583153e-12,
+            4.1049996754451734e-15,
+            0.0022101881457421892,
+            "MAINLINE",
+            "fill_30day_out\\time_20261023_182957\\C000002",
+            null,
+            1.0,
+            "C000003",
+            4.0,
+            518400.0,
+            259200.0,
+            11.0,
+            9.31902537142518e-13,
+            3.0831277182318595e-12,
+            2.52242585852513e-15,
+            0.002447361924252252,
+            "MAINLINE",
+            "fill_30day_out\\time_20261023_182957\\C000003",
+            null,
+            1.0,
+            "C000004",
+            4.0,
+            777600.0,
+            259200.0,
+            11.0,
+            4.2375655708054475e-13,
+            1.146544579589441e-12,
+            5.747880060138147e-15,
+            0.0025204163872843575,
+            "MAINLINE",
+            "fill_30day_out\\time_20261023_182957\\C000004",
+            null,
+            1.0,
+            "C000005",
+            4.0,
+            1036800.0,
+            259200.0,
+            11.0,
+            5.714243452978543e-13,
+            6.618263160265302e-13,
+            6.031702147764037e-11,
+            0.002543376290667431,
+            "MAINLINE",
+            "fill_30day_out\\time_20261023_182957\\C000005",
+            null,
+            1.0
+          ]
+        },
+        "source_sha256": "BC003EBA0D025937AC36972C19B186F8A7C7588CF8DFB3A5BA86E48750D115D6",
+        "name": "time_history",
+        "status": "PASS"
+      },
+      "crop_box": [
+        20,
+        350,
+        1210,
+        600
+      ],
+      "marks": [
+        {
+          "number": 1,
+          "box": [
+            27,
+            432,
+            390,
+            599
+          ],
+          "circle": [
+            40,
+            421
+          ],
+          "cellrefs": "A7:D12 stage/time/dt"
+        },
+        {
+          "number": 2,
+          "box": [
+            390,
+            432,
+            754,
+            599
+          ],
+          "circle": [
+            405,
+            421
+          ],
+          "cellrefs": "E7:H12 iterations/residuals"
+        },
+        {
+          "number": 3,
+          "box": [
+            844,
+            432,
+            936,
+            599
+          ],
+          "circle": [
+            858,
+            421
+          ],
+          "cellrefs": "J7:J12 MAINLINE/SRM_BRANCH"
+        }
+      ]
+    },
+    "water_balance_guided.png": {
+      "source": "tests/tmp/manual_fs/screens3/water_balance.jpg",
+      "source_sha256": "34fc69c14e93e9cf69afd3c98837e4b4ff3670f7299fecb5ffedc42909e0d11e",
+      "capture_metadata": {
+        "name": "water_balance",
+        "status": "PASS",
+        "section": "水量収支",
+        "book_sha256": "538D20BB2E071ADB4A0BA0E52B7BC5F361FF38D89847121E5BA75B66EB6C0E91",
+        "cells": {
+          "A7:K13": [
+            "状態ID",
+            "工程ID",
+            "累積時刻[s]",
+            "貯留変化[m3]",
+            "骨格体積変化[m3]",
+            "指定圧流入量[m3]",
+            "指定流束流入量[m3]",
+            "閉合誤差[m3]",
+            "施工持込水量[m3]",
+            "掘削持出水量[m3]",
+            "全水量の基準",
+            "C000001",
+            2.0,
+            86400.0,
+            0.0,
+            0.0,
+            4.336808689942018e-19,
+            0.0,
+            -4.336808689942018e-19,
+            0.0,
+            0.0,
+            "間隙率指定",
+            "C000002",
+            3.0,
+            86400.0,
+            -5.769305185541051e-06,
+            2.7723043359821307e-05,
+            2.1953737993438046e-05,
+            0.0,
+            1.8084220932405208e-13,
+            0.0,
+            0.20000000000000007,
+            "間隙率指定",
+            "C000003",
+            4.0,
+            95040.0,
+            1.1204826775770715e-06,
+            8.323585604858228e-05,
+            8.435633901850201e-05,
+            0.0,
+            -2.9234265807364453e-13,
+            0.0,
+            0.0,
+            "間隙率指定",
+            "C000004",
+            4.0,
+            103680.0,
+            6.74273247445104e-07,
+            5.008886981020652e-05,
+            5.076314336454317e-05,
+            0.0,
+            -3.0689155008556857e-13,
+            0.0,
+            0.0,
+            "間隙率指定",
+            "C000005",
+            4.0,
+            112320.0,
+            5.090592665745483e-07,
+            3.781583123125399e-05,
+            3.83248907403433e-05,
+            0.0,
+            -2.4251476312869065e-13,
+            0.0,
+            0.0,
+            "間隙率指定",
+            "C000006",
+            4.0,
+            120960.0,
+            4.190929606201426e-07,
+            3.113261960501113e-05,
+            3.1551713095536555e-05,
+            0.0,
+            -5.299052819338494e-13,
+            0.0,
+            0.0,
+            "間隙率指定"
+          ]
+        },
+        "source_sha256": "9C418E7B3AAD03044B747F736ECE85081EB808024BC47ED242B0FBB38F5CE84D",
+        "page": "結果",
+        "source_case": "tests/tmp/issues_xlsm/fixed6/wet_birth_ramp/fresh_results.xlsm"
+      },
+      "crop_box": [
+        20,
+        350,
+        1040,
+        805
+      ],
+      "marks": [
+        {
+          "number": 1,
+          "box": [
+            27,
+            432,
+            298,
+            800
+          ],
+          "circle": [
+            40,
+            421
+          ],
+          "cellrefs": "A7:C20 stage/time"
+        },
+        {
+          "number": 2,
+          "box": [
+            298,
+            432,
+            754,
+            800
+          ],
+          "circle": [
+            312,
+            421
+          ],
+          "cellrefs": "D7:H20 storage/skeleton/flow/closure"
+        },
+        {
+          "number": 3,
+          "box": [
+            754,
+            432,
+            936,
+            800
+          ],
+          "circle": [
+            767,
+            421
+          ],
+          "cellrefs": "I7:J20 birth/death water"
+        }
+      ]
+    },
+    "time_select_guided.png": {
+      "source": "tests/tmp/manual_fs/screens2/time_select.jpg",
+      "source_sha256": "92bd6c5aeeb66e534037fc426b21b57acc95b1470a74c3d7b97b0263c8623761",
+      "capture_metadata": {
+        "page": "結果",
+        "section": "時刻別の図",
+        "book_sha256": "538D20BB2E071ADB4A0BA0E52B7BC5F361FF38D89847121E5BA75B66EB6C0E91",
+        "source_case": "tests/tmp/issues_xlsm/fixed6/fill_30day/fresh_results.xlsm",
+        "cells": {
+          "A8:F18": [
+            null,
+            "C000012",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "保存状態ID",
+            "工程ID",
+            "累積時刻[s]",
+            "累積時刻[日]",
+            "施工本線/照査枝",
+            "Fs",
+            "C000001",
+            2.0,
+            0.0,
+            0.0,
+            "MAINLINE",
+            1.0,
+            "S000001_3",
+            3.0,
+            0.0,
+            0.0,
+            "SRM_BRANCH",
+            1.2,
+            "C000002",
+            4.0,
+            259200.0,
+            3.0,
+            "MAINLINE",
+            1.0,
+            "C000003",
+            4.0,
+            518400.0,
+            6.0,
+            "MAINLINE",
+            1.0,
+            "C000004",
+            4.0,
+            777600.0,
+            9.0,
+            "MAINLINE",
+            1.0,
+            "C000005",
+            4.0,
+            1036800.0,
+            12.0,
+            "MAINLINE",
+            1.0,
+            "C000006",
+            4.0,
+            1296000.0,
+            15.0,
+            "MAINLINE",
+            1.0,
+            "C000007",
+            4.0,
+            1555200.0,
+            18.0,
+            "MAINLINE",
+            1.0
+          ]
+        },
+        "source_sha256": "BC003EBA0D025937AC36972C19B186F8A7C7588CF8DFB3A5BA86E48750D115D6",
+        "name": "time_select",
+        "status": "PASS"
+      },
+      "crop_box": [
+        20,
+        350,
+        730,
+        705
+      ],
+      "marks": [
+        {
+          "number": 1,
+          "box": [
+            116,
+            473,
+            208,
+            501
+          ],
+          "circle": [
+            130,
+            512
+          ],
+          "cellrefs": "B8 saved state ID"
+        },
+        {
+          "number": 2,
+          "box": [
+            27,
+            525,
+            571,
+            700
+          ],
+          "circle": [
+            585,
+            544
+          ],
+          "cellrefs": "A10:F16 stage/time/branch/Fs"
+        },
+        {
+          "number": 3,
+          "box": [
+            298,
+            456,
+            480,
+            489
+          ],
+          "circle": [
+            312,
+            445
+          ],
+          "cellrefs": "this time display button"
+        }
+      ]
+    },
+    "partial_birth_view.png": {
+      "source": "docs/fixed-stress-evidence/20261024/partial_birth_view.jpg",
+      "source_sha256": "c4cb3535be511878036620d335cb827d5cf5c72508fd44e04f2b28ad426dae70",
+      "conversion": "PNG encoding only; accepted actual result"
+    },
+    "water_time_view.png": {
+      "source": "docs/fixed-stress-evidence/20261024/water_time_view.jpg",
+      "source_sha256": "002096cd651e3efc56977561975f7f6cc38a1014ec144361592b6a3998dfd700",
+      "conversion": "PNG encoding only; accepted actual result"
+    },
+    "srm_branch_view.png": {
+      "source": "docs/fixed-stress-evidence/20261024/srm_branch_view.jpg",
+      "source_sha256": "6e19e836a7c9fb026784ec034e80970f5a0d7ae77a33bba3b6a203eec2c73d3e",
+      "conversion": "PNG encoding only; accepted actual result"
+    }
+  }
+}
