@@ -16,8 +16,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 29421,
-    "sha256": "eaaa665588e0798af2ad7094311694c8dc988487004579d5f30960b168f1e643"
+    "bytes": 29430,
+    "sha256": "5355a6b861248aa218f3e6a25226453aa89f0c9e8cb4782a17c346f6f0c62432"
   },
   {
     "path": "docs/ACCELERATION_HISTORY.md",
@@ -125,14 +125,19 @@
     "sha256": "6d59c632528d2a5e6635b0afc060d9133455c99d3bbc3b657bf992cdd8f28a3d"
   },
   {
+    "path": "docs/MANUAL_FIELD_EXAMPLES.md",
+    "bytes": 3588,
+    "sha256": "716535ef204d656f2b289d7039e90a2a8b4d8d49be8a28dc36a5fe9a979a7dba"
+  },
+  {
     "path": "docs/MANUAL_FIXED_STRESS_VALIDATION.md",
     "bytes": 6478,
     "sha256": "65e15583d91f97c0d5ecd9b76691ed7ad3aeb8b270b9fa69791be71e445eebd0"
   },
   {
     "path": "docs/MANUAL_PRACTICE_REVISION.md",
-    "bytes": 6083,
-    "sha256": "82a479f2bc7f36602904e993bddec9b7feebac9b7bb7c2d565413be349374cf0"
+    "bytes": 6484,
+    "sha256": "0927c7c9e53153e85c2dbaa6dbedb6d81e1c0e90b784f13235535eee211a961c"
   },
   {
     "path": "docs/MESH_DELAUNAY_MEMORY.md",
@@ -1250,6 +1255,51 @@
     "sha256": "a98c5f7cb13325baf83e553d2a47e6791f25f6aed2abab2b251936366f0b7446"
   },
   {
+    "path": "docs/manual-field-evidence/20261024/README.md",
+    "bytes": 941,
+    "sha256": "4ba8e4c7f690493bce8e5f22ad3a805ce989db8edc4707dbb609e2046d709306"
+  },
+  {
+    "path": "docs/manual-field-evidence/20261024/checks.json",
+    "bytes": 5293,
+    "sha256": "11a8b2b2af7a53a7f56898719720b752ceea39cd2cc30dee3b1b5f14a39e9f1d"
+  },
+  {
+    "path": "docs/manual-field-evidence/20261024/coverage.json",
+    "bytes": 371,
+    "sha256": "f7f2a7ad9cbff714e5a28fb8f2f93ab429787827f25bedf3ca1a836771760350"
+  },
+  {
+    "path": "docs/manual-field-evidence/20261024/field_examples.json",
+    "bytes": 5329,
+    "sha256": "c758794805ccee5546e0abef47e4f7b7a71dc10964d28a68178a0cfa6d90e7be"
+  },
+  {
+    "path": "docs/manual-field-evidence/20261024/input_routes.json",
+    "bytes": 1932,
+    "sha256": "fe260bcd8fe3917d035ffb33a2e9e1ae99b27a6f6675747f85d563b1a775ac79"
+  },
+  {
+    "path": "docs/manual-field-evidence/20261024/package.json",
+    "bytes": 671,
+    "sha256": "c3168ec61881e5bfd7cd9c84506ebd4870eb8594ce12ffaeb39164628004e360"
+  },
+  {
+    "path": "docs/manual-field-evidence/20261024/pdf_checks.json",
+    "bytes": 8954,
+    "sha256": "4382786554a4de6befa87cf456887e455d77ffcba71d4c7470ac46943f1ac943"
+  },
+  {
+    "path": "docs/manual-field-evidence/20261024/visual_checks.json",
+    "bytes": 24488,
+    "sha256": "968aad20964dff8c5f40fac4a471c57b69d6deae8c036d13042fc3338f23526a"
+  },
+  {
+    "path": "docs/manual-field-evidence/20261024/visual_review.zip",
+    "bytes": 7028868,
+    "sha256": "59496bb96687275dd6aa5618f28fe9b7f68fc40bc77a1c44515852c44d384c1a"
+  },
+  {
     "path": "docs/manual-fs-evidence/20261024/README.md",
     "bytes": 2663,
     "sha256": "e368fcd6e77bab17507003c3d0daba20c1fbaee7fef165fe24a7c77b0f5f283a"
@@ -1531,13 +1581,13 @@
   },
   {
     "path": "docs/manuals/2DSoilFEM_Manual_20261024.md",
-    "bytes": 390267,
-    "sha256": "17adad04db9de8dc4a20e03e28fc44cc40b66b31de253ebe0801f0048d6dc53b"
+    "bytes": 400516,
+    "sha256": "008daa73cda9eaf830f1e7d100e77d6caf1e573a22b8246c7cc3b3e18cdd0edc"
   },
   {
     "path": "docs/manuals/2DSoilFEM_Manual_20261024.pdf",
-    "bytes": 43171248,
-    "sha256": "bdd2fd1889e65bb5f2729890dd6520c91e2486571eef2ad9a8bc683bb03f0051"
+    "bytes": 43475027,
+    "sha256": "41e0121ca2d4894f2298fcb91defc3c47c7576361199abbead87353dc0623c58"
   },
   {
     "path": "docs/manuals/README.md",
@@ -1551,8 +1601,8 @@
   },
   {
     "path": "docs/manuals/build_manual_pdf_v2.py",
-    "bytes": 6403,
-    "sha256": "f547c7e5295e51ca6ac7a8902d98aadfdfc575821168a19443c39e6c605dafd8"
+    "bytes": 6857,
+    "sha256": "9f755f69be3772cbd2d3bf1426aea095f20307952eeaee9d63b3cf08468db672"
   },
   {
     "path": "docs/manuals/construction-evidence/20261020/anchor09/adaptive_v2a.csv.gz",
@@ -5785,9 +5835,24 @@
     "sha256": "2e28c5167aa6954545cee61a5130f62fa70caf2dbafc61bd0b6288dd99575db3"
   },
   {
+    "path": "docs/manuals/images/practice/box_water_balance.png",
+    "bytes": 46049,
+    "sha256": "c70977209a28517bb0e943b935e58faa0e19a9bad238d3ffdb46751d7ff9c107"
+  },
+  {
     "path": "docs/manuals/images/practice/road_comparison.png",
     "bytes": 43810,
     "sha256": "c5a6dcadcb8f8a66fb2762969b286e531b4bad8f8c2404c24552f998a398bd75"
+  },
+  {
+    "path": "docs/manuals/images/practice/road_stage_monitoring.png",
+    "bytes": 106108,
+    "sha256": "085d8e4b82eefce11ecfd2cf78b44a71a4ace9150fa05a6ca3250bd1868793aa"
+  },
+  {
+    "path": "docs/manuals/images/practice/tunnel_stage_monitoring.png",
+    "bytes": 76635,
+    "sha256": "b70b646bb719afabfd443095be4ff2cbf244c23f861707586e5cc56d1a3a9ff2"
   },
   {
     "path": "docs/manuals/images/target/ex02_mesh_ng_ok.png",
@@ -11530,6 +11595,11 @@
     "sha256": "5c9190c0976d31ab0ef5083dd27aae685185e859501d7e4fc208ceda9f0d5184"
   },
   {
+    "path": "tests/build_manual_field_examples.py",
+    "bytes": 6996,
+    "sha256": "68e9e7050004200fac660651de3548dc1c825a860655086daa9914b5d44478ad"
+  },
+  {
     "path": "tests/build_manual_practice_figures.py",
     "bytes": 1569,
     "sha256": "20dc70f79ab0694fb06b3bf0d668547d71e0076cf6b62e549f24731439f02c7c"
@@ -13776,8 +13846,8 @@
   },
   {
     "path": "workbook/SoilFEM_UI_20261024.zip",
-    "bytes": 4094091,
-    "sha256": "b9b667a42a14372e958bead792544abe30cda82615b89c9fac05e2e0fa1f64bf"
+    "bytes": 4094118,
+    "sha256": "c163a51f8d1c0f2e541891a3e637160e0c8651774cc06368706dfc72b29f91cd"
   },
   {
     "path": "workbook/inco_assembly_20261020/2DSoilFEM_inco_assembly_20261020.xlsm",
@@ -14056,8 +14126,8 @@
   },
   {
     "path": "workbook/ui_20261024/BUILD_RECORD.json",
-    "bytes": 8380,
-    "sha256": "5640092a748cfb860ab539606d2662216c58d479155b34d7151465b284283072"
+    "bytes": 8411,
+    "sha256": "35a8886b6669dd693dc25d3a900ce520dee0c576bcb069fa18a4edaa56386673"
   },
   {
     "path": "workbook/ui_20261024/README.md",

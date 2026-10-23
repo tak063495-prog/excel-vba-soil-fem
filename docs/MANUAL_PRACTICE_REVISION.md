@@ -58,3 +58,8 @@ python -X utf8 tests/review_manual_practice.py
 全ページをPopplerで画像化し、一覧と主要ページの拡大画像を目視する。目次・しおりの章開始ページ、図番号、外部リンク、ページ外文字、白紙、孤立見出しも確認する。PDF内のリポジトリへのリンクはmainに統一している。
 
 最終確認：241ページ・37章・図キャプション218件・mainファイルリンク32件。白紙、ページ外文字、孤立見出し、ローカルファイルリンクは0。旧確認値表131行と従来の解析例画像を保持した。全ページを13枚の一覧で確認し、主要12ページを拡大確認。最終の表記調整3ページを再確認し、残る238ページは確認済み画像と画素一致した。[入力参照](manual-practice-evidence/20261024/input_routes.json)、[従来値保持](manual-practice-evidence/20261024/coverage.json)、[組版・リンク](manual-practice-evidence/20261024/pdf_link_bounds_checks.json)、[画像記録](manual-practice-evidence/20261024/visual_review.zip)、[配布同一性](manual-practice-evidence/20261024/package.json)。
+
+
+## 実務例の追補（242ページ版）
+
+上記241ページ版の構成・訂正を保持し、道路の工程別反力/追加沈下、トンネル内空変位、遮水体の流量、ボックス内外水位、圧密後の施工確認を増強した。新図3点、巻末用語4項目を追加し、編集上の前置きを整理。[追補内容と最終確認](MANUAL_FIELD_EXAMPLES.md)。

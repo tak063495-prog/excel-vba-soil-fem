@@ -142,8 +142,8 @@
     "src/vba/ThisWorkbook.cls": "d864498c2074bcf0443546ef5c5249b55749aa79b6f673757e7332e3fe756b3c"
   },
   "validation_record": "docs/validation/issue3_59/validation.json",
-  "pdf_sha256": "bdd2fd1889e65bb5f2729890dd6520c91e2486571eef2ad9a8bc683bb03f0051",
-  "manual_revision": "practical examples grouped, PDF issues35/36 corrected; 241 pages / 37 chapters",
+  "pdf_sha256": "41e0121ca2d4894f2298fcb91defc3c47c7576361199abbead87353dc0623c58",
+  "manual_revision": "field-stage monitoring, cutoff flow, box water balance, output selection and glossary; 242 pages /37 chapters",
   "previous_validation_record": "docs/validation/issue49_57/validation.json",
   "issue3_59_patch": "Err18 propagation/accepted rollback; Q8 full-domain Bernstein geometry validation. Calculation/checkpoint schema07 unchanged."
 }

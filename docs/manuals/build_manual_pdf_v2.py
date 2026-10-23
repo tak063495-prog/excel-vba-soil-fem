@@ -20,7 +20,8 @@ css="""@page{size:A4;margin:14mm 14mm 18mm}body{font-family:'Noto Sans CJK JP','
 h1{font-size:21pt;border-bottom:3px solid #2f5d50}h2{font-size:15pt;background:#2f5d50;color:#fff;padding:4px 8px;break-before:page}
 h3{break-after:avoid-page;page-break-after:avoid;font-size:12.5pt;border-left:6px solid #c00;padding-left:8px;margin-top:18px}table{border-collapse:collapse;width:100%;font-size:9pt;margin:6px 0}th,td{border:1px solid #aaa;padding:3px 5px;vertical-align:top}th{background:#e6efe9}
 p:has(>img){break-inside:avoid;margin:10px 0 0}.figure{break-inside:avoid}img{max-width:100%;max-height:150mm;border:1px solid #888;display:block;margin:0 auto}code{background:#f3f3f3;padding:0 3px}
-blockquote{margin:8px 0;padding:6px 10px;background:#f1f6f3;border-left:6px solid #2f5d50;font-size:10pt;break-inside:avoid}blockquote p{margin:3px 0}.toc td{border:none;border-bottom:1px dotted #999;font-size:11pt}"""
+blockquote{margin:8px 0;padding:6px 10px;background:#f1f6f3;border-left:6px solid #2f5d50;font-size:10pt;break-inside:avoid}blockquote p{margin:3px 0}.toc td{border:none;border-bottom:1px dotted #999;font-size:11pt}
+.glossary table{font-size:8.8pt;line-height:1.45}.glossary th,.glossary td{padding:2px 5px}.glossary tr{break-inside:avoid;page-break-inside:avoid}"""
 tmp=os.path.join(here,'_manual_v2.html')
 def public_document_links(body):
     """Publish document links; keep image sources local for rendering."""
@@ -48,6 +49,11 @@ def public_document_links(body):
 
 def render(toc):
     body=markdown.markdown(md.replace('{{TOC}}',toc),extensions=['tables'])
+    # Keep each definition and its chapter reference on the same page.
+    # The glossary is the last part of the manual; other tables retain their layout.
+    glossary = '<h3>用語集</h3>'
+    if glossary in body:
+        body = body.replace(glossary, '<div class="glossary">' + glossary, 1) + '</div>'
     body=re.sub(r'(<p>\s*<img\b[^>]*>\s*</p>)\s*(<p>図[^<]*(?:<(?!/?p\b)[^>]*>[^<]*)*</p>)',r'<div class="figure">\1\2</div>',body)
     body=public_document_links(body)
     open(tmp,'w',encoding='utf8').write(f"<html><head><meta charset=utf-8><style>{css}</style></head><body>{body}</body></html>")

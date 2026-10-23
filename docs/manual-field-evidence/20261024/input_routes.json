@@ -1,0 +1,59 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "fixture": "column_smoke",
+      "load_set_ids": 0,
+      "time_set_references": 0,
+      "book": "accepted/column_smoke/fresh_results.xlsm",
+      "saved_frames": 11,
+      "first_relative_path": "column_smoke_out\\time_20261023_155006\\C000001"
+    },
+    {
+      "fixture": "mandel_hybrid_refine",
+      "load_set_ids": 176,
+      "time_set_references": 176,
+      "entry_point": "JSON driver; archived Mandel ZIP contains CSV/logs"
+    },
+    {
+      "fixture": "fill_30day",
+      "load_set_ids": 0,
+      "time_set_references": 0,
+      "book": "accepted/fill_30day/fresh_results.xlsm",
+      "saved_frames": 14,
+      "first_relative_path": "fill_30day_out\\time_20261023_155206\\C000001"
+    },
+    {
+      "fixture": "wet_birth_ramp",
+      "load_set_ids": 0,
+      "time_set_references": 0,
+      "book": "accepted/wet_birth_ramp/fresh_results.xlsm",
+      "saved_frames": 26,
+      "first_relative_path": "wet_birth_ramp_out\\time_20261023_155504\\C000001"
+    },
+    {
+      "fixture": "watercurve",
+      "load_set_ids": 0,
+      "time_set_references": 0,
+      "book": "accepted/watercurve/fresh_results.xlsm",
+      "saved_frames": 21,
+      "first_relative_path": "column_water_curve_out\\time_20261023_155237\\C000001"
+    },
+    {
+      "fixture": "water_external_linear",
+      "load_set_ids": 0,
+      "time_set_references": 0,
+      "book": "accepted/water_external_linear/fresh_results.xlsm",
+      "saved_frames": 5,
+      "first_relative_path": "water_external_linear_out\\time_20261023_155310\\C000001"
+    },
+    {
+      "fixture": "saturated_slope_srm",
+      "load_set_ids": 0,
+      "time_set_references": 0,
+      "book": "accepted/saturated_slope_srm/fresh_results.xlsm",
+      "saved_frames": 2,
+      "first_relative_path": "saturated_slope_srm_out\\time_20261023_155722\\C000001"
+    }
+  ]
+}

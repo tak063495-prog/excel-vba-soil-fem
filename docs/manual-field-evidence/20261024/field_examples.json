@@ -1,0 +1,171 @@
+{
+  "status": "PASS",
+  "scope": "Independent reaggregation of published accepted results; figures retain original model/stage/point definitions",
+  "sources_sha256": {
+    "docs/manuals/examples/ex08_road_result_20261021.json.gz": "aedb61abac761c92945b4844f40e4106a950c8987c59ce969fc273014c619a17",
+    "docs/manuals/examples/ex10_tunnel_result_20261021.json.gz": "27503033f4536c4edb3535d0ba0ce5214871a0455ad459ba30dbdab20ab6fb66",
+    "docs/manuals/construction-evidence/20261020/tunnel10/construction_displacements.json": "36c640b376edb4c881e7622124d5430bd847eb281a8d23f620e70a6d0295ec3e",
+    "docs/groundwater-evidence/20261022/records.zip": "674f26c4a5486ce8bee4f3e5f13c83feb592799e6627ac1e2aafc36c1fe32ac4",
+    "docs/groundwater-evidence/20261022/independent.json": "1652365c21a617bebe97184e75a62d3b443dc939e5c6cfc8532758a21d7c2d0e"
+  },
+  "road": [
+    {
+      "stage": 1,
+      "kind": "GRAVITY",
+      "reaction_y_kN": 1439.9999999999916,
+      "point20_additional_settlement_mm": -0.0
+    },
+    {
+      "stage": 2,
+      "kind": "BIRTH",
+      "reaction_y_kN": 1512.0000000000764,
+      "point20_additional_settlement_mm": 0.47164907084638885
+    },
+    {
+      "stage": 3,
+      "kind": "BIRTH",
+      "reaction_y_kN": 1656.0000000000014,
+      "point20_additional_settlement_mm": 4.369913226353021
+    },
+    {
+      "stage": 4,
+      "kind": "BIRTH",
+      "reaction_y_kN": 1727.9999999999993,
+      "point20_additional_settlement_mm": 4.981276997858124
+    },
+    {
+      "stage": 5,
+      "kind": "DEATH",
+      "reaction_y_kN": 1583.9999999999993,
+      "point20_additional_settlement_mm": 0.9467398092296991
+    },
+    {
+      "stage": 6,
+      "kind": "DEATH",
+      "reaction_y_kN": 1423.9999999999995,
+      "point20_additional_settlement_mm": 0.9467398092296991
+    },
+    {
+      "stage": 7,
+      "kind": "MATSET",
+      "reaction_y_kN": 1423.9999999999995,
+      "point20_additional_settlement_mm": 0.9467398092296991
+    },
+    {
+      "stage": 8,
+      "kind": "MATSET",
+      "reaction_y_kN": 1423.9999999999995,
+      "point20_additional_settlement_mm": 0.9467398092296991
+    },
+    {
+      "stage": 9,
+      "kind": "BIRTH",
+      "reaction_y_kN": 1575.9999999999995,
+      "point20_additional_settlement_mm": 5.183435811926208
+    },
+    {
+      "stage": 10,
+      "kind": "BIRTH",
+      "reaction_y_kN": 1728.0000000000002,
+      "point20_additional_settlement_mm": 9.81616285097231
+    },
+    {
+      "stage": 11,
+      "kind": "BIRTH",
+      "reaction_y_kN": 1842,
+      "point20_additional_settlement_mm": 13.072839183368432
+    }
+  ],
+  "tunnel": [
+    {
+      "stage": 1,
+      "vertical_closure_mm": -0.0,
+      "horizontal_closure_mm": -0.0,
+      "surface_settlement_mm": -0.0
+    },
+    {
+      "stage": 2,
+      "vertical_closure_mm": 18.183679087550523,
+      "horizontal_closure_mm": -4.737596745522596,
+      "surface_settlement_mm": 4.454156470655307
+    },
+    {
+      "stage": 3,
+      "vertical_closure_mm": 18.880822789477566,
+      "horizontal_closure_mm": -5.79911585451531,
+      "surface_settlement_mm": 5.033823575812127
+    },
+    {
+      "stage": 4,
+      "vertical_closure_mm": 18.880822789477566,
+      "horizontal_closure_mm": -5.79911585451531,
+      "surface_settlement_mm": 5.033823575812127
+    },
+    {
+      "stage": 5,
+      "vertical_closure_mm": 19.075098959369825,
+      "horizontal_closure_mm": -5.8986578615306415,
+      "surface_settlement_mm": 5.2358222305083215
+    },
+    {
+      "stage": 6,
+      "vertical_closure_mm": 23.4401171338439,
+      "horizontal_closure_mm": -3.942869170023409,
+      "surface_settlement_mm": 5.238374307439009
+    },
+    {
+      "stage": 7,
+      "vertical_closure_mm": 23.86914724099614,
+      "horizontal_closure_mm": -1.7792071602368074,
+      "surface_settlement_mm": 5.5617322371304265
+    },
+    {
+      "stage": 8,
+      "vertical_closure_mm": 23.86914724099614,
+      "horizontal_closure_mm": -1.7792071602368074,
+      "surface_settlement_mm": 5.5617322371304265
+    },
+    {
+      "stage": 9,
+      "vertical_closure_mm": 23.787078637422404,
+      "horizontal_closure_mm": -1.691764343816306,
+      "surface_settlement_mm": 5.689765260166471
+    }
+  ],
+  "tunnel_points": {
+    "crown": 330,
+    "invert": 114,
+    "left": 438,
+    "right": 222,
+    "surface": 351
+  },
+  "box": [
+    {
+      "case": "box",
+      "weight_kN": 192,
+      "external_uplift_kN": 90,
+      "internal_downward_water_kN": 0,
+      "theory_reaction_kN": 102,
+      "calculated_reaction_kN": 102.00000000000034,
+      "absolute_error_kN": 3.410605131648481e-13
+    },
+    {
+      "case": "box_inside",
+      "weight_kN": 192,
+      "external_uplift_kN": 90,
+      "internal_downward_water_kN": 5,
+      "theory_reaction_kN": 107,
+      "calculated_reaction_kN": 107.00000000000038,
+      "absolute_error_kN": 3.836930773104541e-13
+    }
+  ],
+  "cutoff": {
+    "case": "cutoff",
+    "max_pressure_error_kPa": 6.256684059735562e-10,
+    "max_flux_error_m_s": 2.5336902680897413e-15,
+    "max_head_error_m": 1.4061107833640563e-10,
+    "local_balance": 9.736189507628007e-15,
+    "inflow_m3_s": 2.448829190658377e-06,
+    "outflow_m3_s": 2.4488291906585465e-06
+  }
+}
