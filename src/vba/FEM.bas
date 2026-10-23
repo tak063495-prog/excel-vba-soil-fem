@@ -17,7 +17,7 @@ Sub Cleardata()
 End Sub
 Sub ClearEle()
   ClearDataRows "節点データ", 1, 14
-  ClearDataRows "要素データ", 1, 10
+  ClearDataRows "要素データ", 1, 11
   FEMInvalidateInputCache
 End Sub
 Sub DrawElement(Eno, XX1, YY1, XX2, YY2, XX3, YY3, XX4, YY4, XX5, YY5, XX6, YY6, XX7, YY7, XX8, YY8)
@@ -359,13 +359,13 @@ Private Sub P6LoadInputCache()
   P6InputElementCount = lastRow - 1
   If P6InputElementCount > FEM_FIXED_DATA_CAPACITY Then Err.Raise vbObjectError + 3012, "FEM.P6LoadInputCache", "要素数が固定配列容量を超えています。"
   topologyFingerprint = P6FingerprintStep(CDbl(P6InputNodeCount), CDbl(P6InputElementCount))
-  elementValues = wsElement.range(wsElement.cells(2, 1), wsElement.cells(lastRow, 10)).value2
+  elementValues = wsElement.range(wsElement.cells(2, 1), wsElement.cells(lastRow, 11)).value2
   ReDim P6InputElementId(1 To P6InputElementCount)
   ReDim P6InputElementNode(1 To P6InputElementCount, 1 To 8)
   ReDim P6InputElementMaterial(1 To P6InputElementCount)
   Erase seen
   ReDim seen(1 To P6InputElementCount)
-  Dim kindById() As String, isJointElem As Boolean, nodeUse As Long
+  Dim kindById() As String, isJointElem As Boolean, nodeUse As Long, isT6 As Boolean, elementKind As String
   ReDim kindById(1 To P6InputMaterialCount)
   For rowIndex = 1 To P6InputMaterialCount
     kindById(P6InputMaterialId(rowIndex)) = P6InputMaterialKind(rowIndex)
@@ -380,6 +380,11 @@ Private Sub P6LoadInputCache()
     P6InputElementMaterial(rowIndex) = P6BulkReadInteger(elementValues, rowIndex, 10, "要素材料番号", False)
     If P6InputElementMaterial(rowIndex) < 1 Or P6InputElementMaterial(rowIndex) > P6InputMaterialCount Then Err.Raise vbObjectError + 3021, "FEM.P6LoadInputCache", "未定義の材料番号です。要素=" & CStr(dataId)
     isJointElem = (kindById(P6InputElementMaterial(rowIndex)) = "JOINT")
+    elementKind = UCase$(Trim$(CStr(elementValues(rowIndex, 11))))
+    If elementKind <> "" And elementKind <> "Q8" And elementKind <> "T6" Then Err.Raise vbObjectError + 3970, , "要素種別はQ8/T6です。要素=" & CStr(dataId)
+    isT6 = (elementKind = "T6")
+    If isJointElem And isT6 Then Err.Raise vbObjectError + 3970, , "JOINTをT6にできません。"
+    If isT6 Then topologyFingerprint = P6FingerprintStep(topologyFingerprint, 6#)
     If isJointElem Then nodeUse = 6 Else nodeUse = 8
     For j = 1 To 8
       If isJointElem And j > 6 Then
@@ -391,10 +396,14 @@ Private Sub P6LoadInputCache()
       If j <= nodeUse Then
         If P6InputElementNode(rowIndex, j) < 1 Or P6InputElementNode(rowIndex, j) > P6InputNodeCount Then Err.Raise vbObjectError + 3019, "FEM.P6LoadInputCache", "未定義の節点番号です。要素=" & CStr(dataId)
         For k = 1 To j - 1
-          If P6InputElementNode(rowIndex, j) = P6InputElementNode(rowIndex, k) Then Err.Raise vbObjectError + 3020, "FEM.P6LoadInputCache", "要素内で節点番号が重複しています。要素=" & CStr(dataId)
+          If Not isT6 And P6InputElementNode(rowIndex, j) = P6InputElementNode(rowIndex, k) Then Err.Raise vbObjectError + 3020, "FEM.P6LoadInputCache", "要素内で節点番号が重複しています。要素=" & CStr(dataId)
         Next k
       End If
     Next j
+    If isT6 Then
+      If P6InputElementNode(rowIndex, 4) <> P6InputElementNode(rowIndex, 3) Or P6InputElementNode(rowIndex, 7) <> P6InputElementNode(rowIndex, 3) Then Err.Raise vbObjectError + 3971, , "T6接続順が不正です。"
+      FEMValidateT6Input rowIndex
+    End If
     topologyFingerprint = P6FingerprintStep(topologyFingerprint, CDbl(P6InputElementMaterial(rowIndex)))
   Next rowIndex
   For dataId = 1 To P6InputElementCount
@@ -560,7 +569,13 @@ Public Sub P5ValidateAnalysisMesh()
         If (Not isJointElem) Or j <= 6 Then Err.Raise vbObjectError + 3465, "FEM.P5ValidateAnalysisMesh", "要素接続番号が範囲外です。要素=" & CStr(elementId)
       End If
     Next j
-    If Not isJointElem Then P5EvaluateQuadQuality elementId, connectivity, P6InputNodeX, P6InputNodeY
+    If Not isJointElem Then
+      If connectivity(elementId, 3) = connectivity(elementId, 4) And connectivity(elementId, 3) = connectivity(elementId, 7) Then
+        FEMValidateT6Input rowNo
+      Else
+        P5EvaluateQuadQuality elementId, connectivity, P6InputNodeX, P6InputNodeY
+      End If
+    End If
   Next rowNo
   For i = 1 To NumberOfNode
     If Not usedNode(i) Then
@@ -669,20 +684,23 @@ Private Sub P5ValidateElementTopology(ByRef connectivity() As Long, ByRef materi
     End If
     For j = 1 To 4
       a = connectivity(i, j): b = connectivity(i, (j Mod 4) + 1)
+      If a = b Then GoTo NextMixedTopologyEdge
       If a < b Then key = CStr(a) & ":" & CStr(b) Else key = CStr(b) & ":" & CStr(a)
       P5Union parent, a, b
       If edgeMap.Exists(key) Then
         info = Split(CStr(edgeMap.item(key)), "|")
+        If CLng(info(3)) <> connectivity(i, j + 4) Then Err.Raise vbObjectError + 3976, , "共有辺の中間節点が不一致です。辺=" & key
         edgeCount = CLng(info(0))
         firstMaterial = CLng(info(2))
         If edgeCount >= 2 Then Err.Raise vbObjectError + 3473, "FEM.P5ValidateAnalysisMesh", "辺を3要素以上で共有しています。辺=" & key
         P5SharedEdgeCount = P5SharedEdgeCount + 1
         If firstMaterial <> materialNo(i) Then P5MaterialInterfaceCount = P5MaterialInterfaceCount + 1
-        edgeMap.item(key) = CStr(edgeCount + 1) & "|" & CStr(CLng(info(1))) & "|" & CStr(firstMaterial)
+        edgeMap.item(key) = CStr(edgeCount + 1) & "|" & CStr(CLng(info(1))) & "|" & CStr(firstMaterial) & "|" & CStr(connectivity(i, j + 4))
       Else
-        edgeMap.Add key, "1|" & CStr(i) & "|" & CStr(materialNo(i))
+        edgeMap.Add key, "1|" & CStr(i) & "|" & CStr(materialNo(i)) & "|" & CStr(connectivity(i, j + 4))
         P5BoundaryEdgeCount = P5BoundaryEdgeCount + 1
       End If
+NextMixedTopologyEdge:
     Next j
     For j = 5 To 8
       a = connectivity(i, j)
@@ -1029,7 +1047,23 @@ Dim i As Long, j As Long, k As Long
   Dim minX As Double, maxX As Double, minY As Double, maxY As Double
   Dim repLen As Double, jTol As Double, detJ As Double
 
+  Dim localRN(0 To 3, 0 To 15) As Double, localN(0 To 3, 0 To 7) As Double
+  Dim gx As Double, gy As Double, ns(0 To 7) As Double, dx(0 To 7) As Double, dy(0 To 7) As Double
   P6EnsureGaussCache
+  For i = 0 To 3
+    If FEMIsT6Data(elementData) Then
+      FEMGaussNatural i, gx, gy
+      FEMT6Shape gx, gy, ns, dx, dy
+      For j = 0 To 7
+        localN(i, j) = ns(j): localRN(i, j) = dx(j): localRN(i, j + 8) = dy(j)
+      Next j
+    Else
+      For j = 0 To 7
+        localN(i, j) = P6GaussN(i, j): localRN(i, j) = P6GaussRN(i, j): localRN(i, j + 8) = P6GaussRN(i, j + 8)
+      Next j
+    End If
+    For j = 0 To 7: elementData.n(i, j) = localN(i, j): Next j
+  Next i
   minX = elementData.x(0): maxX = elementData.x(0)
   minY = elementData.y(0): maxY = elementData.y(0)
   For i = 0 To 7
@@ -1055,10 +1089,10 @@ Dim i As Long, j As Long, k As Long
             jm = im + 8 'jm Y
             'N/∂ξ 0 to 7
             'N/∂η 8 to 15
-          Jmat(0, 0, i) = Jmat(0, 0, i) + P6GaussRN(i, im) * coordX(im) ' ∂x/∂ξ=Σ∂N/∂ξ X
-          Jmat(0, 1, i) = Jmat(0, 1, i) + P6GaussRN(i, im) * coordY(im) ' ∂y/∂ξ= Σ∂N/∂ξ Y
-          Jmat(1, 0, i) = Jmat(1, 0, i) + P6GaussRN(i, jm) * coordX(im) ' ∂x/∂η= Σ∂N/∂η X
-          Jmat(1, 1, i) = Jmat(1, 1, i) + P6GaussRN(i, jm) * coordY(im) ' ∂y/∂η= Σ∂N/∂η Y
+          Jmat(0, 0, i) = Jmat(0, 0, i) + localRN(i, im) * coordX(im) ' ∂x/∂ξ=Σ∂N/∂ξ X
+          Jmat(0, 1, i) = Jmat(0, 1, i) + localRN(i, im) * coordY(im) ' ∂y/∂ξ= Σ∂N/∂ξ Y
+          Jmat(1, 0, i) = Jmat(1, 0, i) + localRN(i, jm) * coordX(im) ' ∂x/∂η= Σ∂N/∂η X
+          Jmat(1, 1, i) = Jmat(1, 1, i) + localRN(i, jm) * coordY(im) ' ∂y/∂η= Σ∂N/∂η Y
         Next im
         detJ = Jmat(0, 0, i) * Jmat(1, 1, i) - Jmat(0, 1, i) * Jmat(1, 0, i)
         elementData.dj(i) = detJ
@@ -1072,8 +1106,8 @@ Dim i As Long, j As Long, k As Long
         JmatT(1, 1, i) = Jmat(0, 0, i) / detJ '∂η/∂y
         For im = 0 To 7
            jm = im + 8
-             JTF(im, i) = JmatT(0, 0, i) * P6GaussRN(i, im) + JmatT(0, 1, i) * P6GaussRN(i, jm) '∂N/∂x
-             JTF(jm, i) = JmatT(1, 0, i) * P6GaussRN(i, im) + JmatT(1, 1, i) * P6GaussRN(i, jm) '∂N/∂y
+             JTF(im, i) = JmatT(0, 0, i) * localRN(i, im) + JmatT(0, 1, i) * localRN(i, jm) '∂N/∂x
+             JTF(jm, i) = JmatT(1, 0, i) * localRN(i, im) + JmatT(1, 1, i) * localRN(i, jm) '∂N/∂y
        Next im
        For j = 0 To 7
           im = 2 * j
@@ -1127,8 +1161,8 @@ Public Sub FEMGaussPhysicalXY(ByVal elementId As Long, ByVal gaussId As Long, By
   If gaussId < 0 Or gaussId > 3 Then Exit Sub
   P6EnsureGaussCache
   For nodeNo = 0 To 7
-    xValue = xValue + P6GaussN(gaussId, nodeNo) * Elem(elementId).x(nodeNo)
-    yValue = yValue + P6GaussN(gaussId, nodeNo) * Elem(elementId).y(nodeNo)
+    xValue = xValue + FEMGaussShapeValue(elementId, gaussId, nodeNo) * Elem(elementId).x(nodeNo)
+    yValue = yValue + FEMGaussShapeValue(elementId, gaussId, nodeNo) * Elem(elementId).y(nodeNo)
   Next nodeNo
 End Sub
 
@@ -1322,6 +1356,10 @@ Public Sub P6AddQ8HourglassStabilization(ByRef elementData As Element_Data, ByVa
   Dim t0 As Double
   t0 = Timer
 
+  If FEMIsT6Data(elementData) Then
+    elementData.HourglassModeCount = 0
+    Exit Sub
+  End If
   If elementData.IsJoint Then
     elementData.HourglassModeCount = 0
     elementData.HourglassScale = 0#
@@ -1578,6 +1616,20 @@ Private Function CheckElementJacobian(ByRef elementData As Element_Data, ByVal e
   Dim cornerXi(0 To 3) As Double, cornerEta(0 To 3) As Double
   Dim cornerId As Long, gaussId As Long
   Dim determinant As Double
+  If FEMIsT6Data(elementData) Then
+    CheckElementJacobian = FEMT6GeometryValid(elementData)
+    determinant = (elementData.x(1) - elementData.x(0)) * (elementData.y(2) - elementData.y(0)) - (elementData.x(2) - elementData.x(0)) * (elementData.y(1) - elementData.y(0))
+    If determinant < MinDetJCorner Then MinDetJCorner = determinant
+    If determinant > MaxDetJCorner Then MaxDetJCorner = determinant
+    If checkGauss Then
+      For gaussId = 0 To 3
+        If elementData.dj(gaussId) < MinDetJGauss Then MinDetJGauss = elementData.dj(gaussId)
+        If elementData.dj(gaussId) > MaxDetJGauss Then MaxDetJGauss = elementData.dj(gaussId)
+      Next gaussId
+    End If
+    If Not CheckElementJacobian Then SetAnalysisFailure RESULT_INPUT_ERROR, "T6のJacobian・辺中点が不正です。要素=" & CStr(elementId + 1), vbObjectError + 3972, elementId + 1, -1, CurrentIncrement, CurrentIteration
+    Exit Function
+  End If
   cornerXi(0) = -1#: cornerXi(1) = 1#: cornerXi(2) = 1#: cornerXi(3) = -1#
   cornerEta(0) = -1#: cornerEta(1) = -1#: cornerEta(2) = 1#: cornerEta(3) = 1#
   CheckElementJacobian = False
@@ -1689,7 +1741,7 @@ Function SetElmMat() As Boolean
         Call SetBmat(Elem(i), i)
         P6AddQ8HourglassStabilization Elem(i), Material(materialIndex).thickness, False
       Else
-        SetElmStiffness Material(materialIndex).thickness, Material(materialIndex).weight, .bMat, .Smat, .kmat, .ElmWeight, .dj, P6GaussN
+        SetElmStiffness Material(materialIndex).thickness, Material(materialIndex).weight, .bMat, .Smat, .kmat, .ElmWeight, .dj, .n
         P6AddQ8HourglassStabilization Elem(i), Material(materialIndex).thickness, True
       End If
       .TangentDirty = False
@@ -2027,6 +2079,7 @@ Dim shapeN(0 To 7) As Double, dNxi(0 To 7) As Double, dNeta(0 To 7) As Double
   End If
   P6WeightMode = "TOTAL"
   P6WeightNote = "全応力γ。Q8 2×2（剛性・内力と同じ積分）。水位・浮力なし"
+  If FEMMeshSheetHasT6() Then P6WeightNote = "全重量γ。Q8 2×2／T6 Duffy4点。水圧荷重は水条件に従う"
   gaussXi(0) = -0.5773502692: gaussXi(1) = 0.5773502692
   gaussW(0) = 1#: gaussW(1) = 1#
   TotalSelfWeight = 0#
@@ -2046,7 +2099,7 @@ Dim shapeN(0 To 7) As Double, dNxi(0 To 7) As Double, dNeta(0 To 7) As Double
       For b = 0 To 1
         xiValue = gaussXi(a)
         etaValue = gaussXi(b)
-        P6Q8Shape xiValue, etaValue, shapeN, dNxi, dNeta
+        FEMShapeForElement i, xiValue, etaValue, shapeN, dNxi, dNeta
         dXdxi = 0#: dYdxi = 0#: dXdeta = 0#: dYdeta = 0#
         For j = 0 To 7
           dXdxi = dXdxi + dNxi(j) * Elem(i).x(j)
@@ -2617,6 +2670,11 @@ Dim j As Long
 Dim s As Double
 
 
+  If FEMElementIsT6(ElMNo) Then
+    p(0) = (x(0) + x(1) + x(2)) / 3#
+    p(1) = (y(0) + y(1) + y(2)) / 3#
+    Exit Sub
+  End If
   For im = 0 To 3  'imガウス点　4個
      s = 0#
      b = 0#
@@ -3204,13 +3262,20 @@ Public Sub RecoverGaussResult(ByVal elementId As Long)
   Next resultId
 End Sub
 Public Sub RecoverElementAverage(ByVal elementId As Long)
-  Dim resultId As Long, gaussNo As Long
+  Dim resultId As Long, gaussNo As Long, totalWeight As Double
   For resultId = 0 To P1_RESULT_COUNT - 1
     ElementAverageResult(elementId, resultId) = 0#
+    totalWeight = 0#
     For gaussNo = 0 To P1_GAUSS_COUNT - 1
-      ElementAverageResult(elementId, resultId) = ElementAverageResult(elementId, resultId) + GaussResult(elementId, gaussNo, resultId)
+      If FEMElementIsT6(elementId) Then
+        ElementAverageResult(elementId, resultId) = ElementAverageResult(elementId, resultId) + GaussResult(elementId, gaussNo, resultId) * GaussWeight(elementId, gaussNo)
+        totalWeight = totalWeight + GaussWeight(elementId, gaussNo)
+      Else
+        ElementAverageResult(elementId, resultId) = ElementAverageResult(elementId, resultId) + GaussResult(elementId, gaussNo, resultId)
+        totalWeight = totalWeight + 1#
+      End If
     Next gaussNo
-    ElementAverageResult(elementId, resultId) = ElementAverageResult(elementId, resultId) / P1_GAUSS_COUNT
+    ElementAverageResult(elementId, resultId) = ElementAverageResult(elementId, resultId) / totalWeight
   Next resultId
 End Sub
 
@@ -3290,7 +3355,7 @@ Public Sub BuildP1Results()
         For gaussNo = 0 To P1_GAUSS_COUNT - 1
           gaussValues(gaussNo) = GaussResult(elementId, gaussNo, resultId)
         Next gaussNo
-        ExtrapolateElementResult gaussValues, cornerValues, extrapolation
+        FEMExtrapolateMixed elementId, gaussValues, cornerValues, extrapolation
         For localNode = 0 To 3
           ElementNodeResult(elementId, localNode, resultId) = cornerValues(localNode)
         Next localNode
@@ -3299,11 +3364,13 @@ Public Sub BuildP1Results()
         ElementNodeResult(elementId, 6, resultId) = 0.5 * (cornerValues(2) + cornerValues(3))
         ElementNodeResult(elementId, 7, resultId) = 0.5 * (cornerValues(3) + cornerValues(0))
         For localNode = 0 To 7
+          If Not FEMT6Dummy(elementId, localNode) Then
           nodeId = Elem(elementId).node(localNode)
           AccumulateNodalResult nodeId, resultId, ElementNodeResult(elementId, localNode, resultId), elementWeight
           If resultId = 0 Then
             NodalX(nodeId) = NodalX(nodeId) + elementWeight * Elem(elementId).x(localNode)
             NodalY(nodeId) = NodalY(nodeId) + elementWeight * Elem(elementId).y(localNode)
+          End If
           End If
         Next localNode
       End If
@@ -3312,10 +3379,10 @@ Public Sub BuildP1Results()
       For gaussNo = 0 To P1_GAUSS_COUNT - 1
         gaussValues(gaussNo) = GaussGlobalResult(elementId, gaussNo, globalId)
       Next gaussNo
-      ExtrapolateElementResult gaussValues, cornerValues, extrapolation
+      FEMExtrapolateMixed elementId, gaussValues, cornerValues, extrapolation
       For localNode = 0 To 3
         nodeId = Elem(elementId).node(localNode)
-        NodalGlobalResult(nodeId, globalId) = NodalGlobalResult(nodeId, globalId) + elementWeight * cornerValues(localNode)
+        If Not FEMT6Dummy(elementId, localNode) Then NodalGlobalResult(nodeId, globalId) = NodalGlobalResult(nodeId, globalId) + elementWeight * cornerValues(localNode)
       Next localNode
       For localNode = 4 To 7
         If localNode = 4 Then midValue = 0.5 * (cornerValues(0) + cornerValues(1))
@@ -3323,7 +3390,7 @@ Public Sub BuildP1Results()
         If localNode = 6 Then midValue = 0.5 * (cornerValues(2) + cornerValues(3))
         If localNode = 7 Then midValue = 0.5 * (cornerValues(3) + cornerValues(0))
         nodeId = Elem(elementId).node(localNode)
-        NodalGlobalResult(nodeId, globalId) = NodalGlobalResult(nodeId, globalId) + elementWeight * midValue
+        If Not FEMT6Dummy(elementId, localNode) Then NodalGlobalResult(nodeId, globalId) = NodalGlobalResult(nodeId, globalId) + elementWeight * midValue
       Next localNode
     Next globalId
 NextRecoveryElement:

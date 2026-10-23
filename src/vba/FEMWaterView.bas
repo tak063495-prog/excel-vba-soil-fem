@@ -216,6 +216,11 @@ Private Sub GWDrawHydraulicSolution(ByVal ws As Worksheet, ByVal stride As Long,
     For j = 0 To 7
       Call GWViewHead(e, j, h(j), locked)
       value = 0.5: If j < 4 Then value = -0.25
+      If FEMElementIsT6(e) Then
+        value = -1# / 9#
+        If j = 4 Or j = 5 Or j = 7 Then value = 4# / 9#
+        If j = 3 Or j = 6 Then value = 0#
+      End If
       cx = cx + value * Elem(e).x(j): cy = cy + value * Elem(e).y(j): ch = ch + value * h(j)
       n = Elem(e).node(j): key = CStr(n)
       If locked And Not seen.Exists(key) Then
@@ -235,12 +240,14 @@ Private Sub GWDrawHydraulicSolution(ByVal ws As Worksheet, ByVal stride As Long,
         level = low + (high - low) * CDbl(k) / 6#
         For j = 0 To 7
           a = CLng(order(j)): b = CLng(order((j + 1) Mod 8))
+          If Elem(e).node(a) <> Elem(e).node(b) Then
           GWHeadTriangle ws, cx, cy, ch, Elem(e).x(a), Elem(e).y(a), h(a), Elem(e).x(b), Elem(e).y(b), h(b), level, counter, levels, x0, y0, sx, sy, minX, minY
+          End If
         Next j
       Next k
     End If
     For g = 0 To 3
-      If GWViewFlux(e, g, qx, qy) Then fx = fx + qx / 4#: fy = fy + qy / 4#
+      If GWViewFlux(e, g, qx, qy) Then fx = fx + qx * FEMGaussFraction(e, g): fy = fy + qy * FEMGaussFraction(e, g)
     Next g
     If high - low > 0.000000001 And maxQ > 1E-24 And Abs(fx) + Abs(fy) > maxQ * 0.000001 Then
       GWLine ws, "GW_VIEW_FLUX_" & CStr(e), x0 + (cx - minX) * sx, y0 + (minY - cy) * sy, x0 + (cx - minX) * sx + 30# * fx / maxQ, y0 + (minY - cy) * sy - 30# * fy / maxQ, RGB(0, 135, 70)

@@ -265,12 +265,14 @@ Private Sub GWLoadDefinition()
   For e = 0 To NumberOfElement - 1
     If P3IsElementActive(e) And Not Elem(e).IsJoint Then
       For side = 0 To 3
+        If FEMElementSideValid(e, side) Then
         k = GWEdgeKey(e, side)
         If mEdges.Exists(k) Then
           mEdges(k) = CLng(mEdges(k)) + 1
           If CLng(mEdges(k)) > 2 Then GWFail "境界辺の接続が非多様体です。"
         Else
           mEdges.Add k, 1: mOwners.Add k, Array(e, side)
+        End If
         End If
       Next side
     End If
@@ -281,6 +283,7 @@ Private Sub GWLoadDefinition()
       e = GWId(mWs.cells(r, 1).value2, "境界要素") - 1
       side = GWId(mWs.cells(r, 2).value2, "辺番号") - 1
       If e < 0 Or e >= NumberOfElement Or side < 0 Or side > 3 Then GWFail "境界の要素/辺番号が範囲外です。"
+      If Not FEMElementSideValid(e, side) Then GWFail "T6の縮退辺には水境界を指定できません。"
       If Elem(e).IsJoint Then GWFail "水境界はJOINTではなく隣接Q8要素に指定してください。"
       spec = CStr(e) & ":" & CStr(side)
       If mBoundary.Exists(spec) Then GWFail "同一面に水条件が重複しています。"
@@ -408,7 +411,7 @@ Public Sub GWRebuild()
         If mMode = "STEADY" Then
           head = 0#
           For j = 0 To 7
-            head = head + P6GaussN(gp, j) * mHeads(Elem(e).node(j))
+            head = head + FEMGaussShapeValue(e, gp, j) * mHeads(Elem(e).node(j))
           Next j
           p = mGamma * (head - py)
           If p < -0.0000001 Then GWFail "積分点の負圧は初期の飽和浸透経路では未対応です。"
@@ -828,8 +831,10 @@ Private Sub GWWriteHydraulicTables(ByVal ws As Worksheet, ByVal stageNo As Long)
   For e = 0 To NumberOfElement - 1
     If mK(e) > 0# Then
       For side = 0 To 3
+        If FEMElementSideValid(e, side) Then
         ws.cells(row, 41).Resize(1, 5).value2 = Array(stageNo, e + 1, side + 1, mFaceFlows(side, e), "EQUILIBRATED")
         row = row + 1
+        End If
       Next side
     End If
   Next e

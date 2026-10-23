@@ -5,7 +5,7 @@
 #>
 param([string]$Src,[string]$Dst,[string]$ModDir,[string]$Modules='')
 $ErrorActionPreference='Stop'
-$Required=@('CONTROL','FEMCore','FEMSolver','FEMIo','FEMEngine','FEMNative','FEMNativeMat','FEMNativeKern','FEMUiInputs','FEMUiValidation','FEMUiLayout','FEMUi','FEMViewer','FEMNativeFigure','ThisWorkbook','FEMUiMeshWorkflow','FEMUiGeometry','FEMPractical','MeshAdapt','Mesh','FEMTerrainBlocks','FEMResultOptions','FEMStrainMath','FEMViewIncrement','FEMIncrementSvg')
+$Required=@('FEMWaterView','FEM','FEMWater','FEMSeepage','FEMSeepageFlux','FEMJointWater','FEMStageUi','MeshAngle','CONTROL','FEMMixedElement','FEMCore','FEMSolver','FEMIo','FEMEngine','FEMNative','FEMNativeMat','FEMNativeKern','FEMUiInputs','FEMUiValidation','FEMUiLayout','FEMUi','FEMViewer','FEMNativeFigure','ThisWorkbook','FEMUiMeshWorkflow','FEMUiGeometry','FEMPractical','MeshAdapt','Mesh','FEMTerrainBlocks','FEMResultOptions','FEMStrainMath','FEMViewIncrement','FEMIncrementSvg')
 $list=[Collections.Generic.List[string]]::new(); foreach($m in $Required){$list.Add($m)}
 foreach($m in ($Modules -split ',')){ $m=$m.Trim(); if($m -and -not $list.Contains($m)){$list.Add($m)} }
 if(-not (Test-Path -LiteralPath $Src -PathType Leaf)){throw "Src not found: $Src"}
@@ -64,7 +64,16 @@ try{
  if($ctl.Enabled){$ctl.Execute()}
  $compEnabled=$xl.VBE.CommandBars.FindControl(1,578).Enabled
  "compile_enabled_after=$compEnabled"
- if($compEnabled){throw "compile failed (Compile command still enabled)"}
+ if($compEnabled){
+   $pane=$xl.VBE.ActiveCodePane
+   [int]$sl=0;[int]$sc=0;[int]$el=0;[int]$ec=0
+   if($null -ne $pane){
+    $pane.GetSelection([ref]$sl,[ref]$sc,[ref]$el,[ref]$ec)
+    "compile_location=$($pane.CodeModule.Parent.Name):$sl column=$sc"
+    if($sl -gt 0){$pane.CodeModule.Lines($sl,[Math]::Min(5,$pane.CodeModule.CountOfLines-$sl+1))}
+   }
+   throw "compile failed (Compile command still enabled)"
+  }
  $wb.Save(); $wb.Close($false)
  $wb=$xl.Workbooks.Open($Dst,0,$true)
  Verify $wb 'reopen'

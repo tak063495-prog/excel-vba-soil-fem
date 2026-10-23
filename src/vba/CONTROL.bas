@@ -282,6 +282,8 @@ Private Sub CreateMeshFromGeometryDefinition()
     Dim stateWasSaved As Boolean
     Dim currentStage As String
     Dim terrainX() As Double, terrainY() As Double, terrainElements() As Variant
+    Dim terrainConn() As Long, t6Failed() As Boolean, t6Count As Long, t6Rows As Long, t6Detail As String, t6Converted As Variant
+    Dim te As Long, tj As Long
 
     On Error GoTo ErrorHandler
     currentStage = "開始"
@@ -303,12 +305,24 @@ Private Sub CreateMeshFromGeometryDefinition()
     If FEMReadSetting("MESH_GEN_COMPARE", 1#) >= 1.5 Then
         currentStage = "地形格子の適用確認・直接生成"
         MeshPrepareTerrainDirect terrainX, terrainY, terrainElements
+        If FEMReadSetting("MESH_T6_FALLBACK", 0#) <> 0# Then
+            MeshRepairBeforeT6 terrainX, terrainY, terrainElements
+            ReDim terrainConn(1 To UBound(terrainElements, 1), 1 To 8)
+            For te = 1 To UBound(terrainElements, 1): For tj = 1 To 8: terrainConn(te, tj) = CLng(terrainElements(te, tj + 1)): Next tj: Next te
+            P5BuildT6FallbackMask UBound(terrainX), UBound(terrainElements, 1), terrainConn, terrainX, terrainY, t6Failed, t6Count
+            If t6Count > 0 Then
+                t6Converted = MeshAdaptConvertBadQ8ToT6(terrainX, terrainY, terrainElements, t6Failed, t6Count, t6Rows, t6Detail)
+                terrainElements = t6Converted
+                MeshAdaptLastSummary = MeshAdaptLastSummary & vbCrLf & t6Detail
+            End If
+        End If
+        If UBound(terrainElements, 2) < 11 Then terrainElements = MeshAdaptEnsureElementTypeColumn(terrainElements)
         ' All geometric/quality checks passed before invalidating or replacing existing data.
         Call ControlInvalidateP1Output
         Call ControlInvalidateP2Output
         Call FEMInvalidateRemeshedModel
         Call FEMInvalidateSettingCache
-        MeshCommitGeneratedMesh UBound(terrainX), UBound(terrainElements, 1), terrainX, terrainY, terrainElements
+        MeshCommitGeneratedMesh UBound(terrainX), IIf(t6Rows > 0, t6Rows, UBound(terrainElements, 1)), terrainX, terrainY, terrainElements
         P5EvaluateCurrentSheet "地形格子・直接生成"
         FEMWriteTextSetting "MESH_GEN_LAST_METHOD", "地形追従格子（直接生成）"
         FEMWriteTextSetting "MESH_GEN_LAST_COMPARE", MeshAdaptLastSummary
@@ -352,6 +366,9 @@ Private Sub CreateMeshFromGeometryDefinition()
     P5EvaluateCurrentSheet "要素作成②-図形定義-デローニ"
     currentStage = "デローニと地形格子の比較"
     P5SelectBestGeneratedMesh
+    currentStage = "品質修正後の不適合Q8のT6置換"
+    P5ApplyT6FallbackCurrentSheet
+    P5EvaluateCurrentSheet "生成・品質修正・T6置換後"
     If Not P5QualityMeetsSettings() And Not SuppressUserMessages Then
         MsgBox "要素作成②はメッシュ品質の目標値を下回っています。" & vbCrLf & P5QualitySummary() & vbCrLf & MeshAdaptLastSummary & vbCrLf & "図を確認し、格子間隔を小さくするか図形定義の点配置を見直してください。", vbExclamation
     End If
@@ -509,7 +526,7 @@ Private Sub MeshCommitGeneratedMesh(ByVal nodeCount As Long, ByVal elementCount 
     oldNodeCount = wsNode.cells(wsNode.rows.count, 1).End(xlUp).row - 1
     oldElementCount = wsElement.cells(wsElement.rows.count, 1).End(xlUp).row - 1
     If oldNodeCount > 0 Then wsNode.range(wsNode.cells(2, 1), wsNode.cells(oldNodeCount + 1, 14)).ClearContents
-    If oldElementCount > 0 Then wsElement.range(wsElement.cells(2, 1), wsElement.cells(oldElementCount + 1, 10)).ClearContents
+    If oldElementCount > 0 Then wsElement.range(wsElement.cells(2, 1), wsElement.cells(oldElementCount + 1, 11)).ClearContents
 
     ReDim nodeOutput(1 To nodeCount, 1 To 9)
     For i = 1 To nodeCount
@@ -524,7 +541,8 @@ Private Sub MeshCommitGeneratedMesh(ByVal nodeCount As Long, ByVal elementCount 
         nodeOutput(i, 9) = 0
     Next i
     wsNode.range(wsNode.cells(2, 1), wsNode.cells(nodeCount + 1, 9)).value2 = nodeOutput
-    wsElement.range(wsElement.cells(2, 1), wsElement.cells(elementCount + 1, 10)).value2 = elementRows
+    wsElement.range(wsElement.cells(2, 1), wsElement.cells(elementCount + 1, 11)).value2 = elementRows
+    wsElement.cells(1, 11).value2 = "要素形式（Q8/T6）"
     FEMInvalidateInputCache
 End Sub
 

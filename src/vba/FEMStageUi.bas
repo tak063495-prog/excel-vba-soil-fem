@@ -350,7 +350,7 @@ Private Sub Settings(ByVal ws As Worksheet, ByVal source As String, Optional ByV
     key = CStr(src.cells(r, 6).value2): include = (Len(key) > 0)
     If mode = "VIEW" Then include = (left$(key, 5) = "VIEW_")
     If mode = "SAVE" Then include = (Len(key) > 0 And left$(key, 5) <> "VIEW_")
-    If mode = "MESH" Then include = (left$(key, 8) = "MESH_BC_" Or key = "MESH_MATERIAL" Or key = "MESH_GEN_COMPARE")
+    If mode = "MESH" Then include = (left$(key, 8) = "MESH_BC_" Or key = "MESH_MATERIAL" Or key = "MESH_GEN_COMPARE" Or key = "MESH_T6_FALLBACK")
     If include Then
       ws.range(ws.cells(d, 1), ws.cells(d, 3)).Merge: ws.cells(d, 1).value2 = src.cells(r, 2).value2
       ws.range(ws.cells(d, 4), ws.cells(d, 5)).Merge: ws.cells(d, 4).value2 = src.cells(r, 3).value2

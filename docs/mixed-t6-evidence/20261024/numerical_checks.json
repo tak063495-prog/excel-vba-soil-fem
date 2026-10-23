@@ -1,0 +1,122 @@
+{
+  "cases": {
+    "q8_gravity": {
+      "seconds": 5.2231288,
+      "residual": 6.56303095370358e-16,
+      "reaction_y": 35.99999999999998,
+      "nodes": 13,
+      "max_displacement_error_m": 9.010370574658033e-15
+    },
+    "q8_traction": {
+      "seconds": 5.207528,
+      "residual": 1.3134818511765774e-15,
+      "reaction_y": 199.9999999999999,
+      "nodes": 13,
+      "max_displacement_error_m": 1.1625162638084774e-13
+    },
+    "q8_seepage": {
+      "seconds": 5.4666497,
+      "residual": 3.939396307128768e-16,
+      "reaction_y": 36.0,
+      "nodes": 13,
+      "head_error_m": 0.0,
+      "pressure_error_kpa": 0.0,
+      "flux_error_m_s": 1.4230153513872246e-19
+    },
+    "mixed_gravity": {
+      "seconds": 5.2051666,
+      "residual": 8.428719080333385e-16,
+      "reaction_y": 35.999999999999986,
+      "nodes": 14,
+      "max_displacement_error_m": 1.0263708286051276e-14
+    },
+    "mixed_traction": {
+      "seconds": 5.3024829,
+      "residual": 8.455768599156362e-16,
+      "reaction_y": 199.99999999999994,
+      "nodes": 14,
+      "max_displacement_error_m": 1.0825541851833265e-13
+    },
+    "mixed_seepage": {
+      "seconds": 5.4464404,
+      "residual": 3.5657151809299396e-16,
+      "reaction_y": 36.000000000000014,
+      "nodes": 14,
+      "head_error_m": 0.0,
+      "pressure_error_kpa": 3.552713678800501e-15,
+      "flux_error_m_s": 8.881784197001253e-20
+    },
+    "t6_gravity": {
+      "seconds": 5.2669766,
+      "residual": 1.0559641230068928e-15,
+      "reaction_y": 35.999999999999986,
+      "nodes": 15,
+      "max_displacement_error_m": 1.000241556248227e-14
+    },
+    "t6_traction": {
+      "seconds": 5.2088522,
+      "residual": 1.5197043621486944e-15,
+      "reaction_y": 200.0,
+      "nodes": 15,
+      "max_displacement_error_m": 4.336808689942018e-18
+    },
+    "t6_seepage": {
+      "seconds": 4.6229466,
+      "residual": 9.646981796565852e-16,
+      "reaction_y": 36.000000000000014,
+      "nodes": 15,
+      "head_error_m": 4.440892098500626e-16,
+      "pressure_error_kpa": 7.105427357601002e-15,
+      "flux_error_m_s": 1.5612511283791266e-19
+    }
+  },
+  "comparisons": {
+    "mixed_joint_water_wet_resume": {
+      "max_du_m": 3.441071348220595e-22,
+      "residual": 2.180096006111594e-15,
+      "seconds": 4.685536,
+      "reaction_y": 87.99999999999997
+    },
+    "mixed_joint_water_stages_resume": {
+      "max_du_m": 4.499862532288471e-22,
+      "residual": 3.413903814694518e-15,
+      "seconds": 5.1494933,
+      "reaction_y": 87.99999999999997
+    },
+    "native_off_auto": {
+      "max_du_m": 0.0,
+      "max_stress_delta": 0.0
+    },
+    "dry_plastic_native_off_auto": {
+      "max_du_m": 0.0,
+      "max_stress_delta": 0.0,
+      "max_plastic_multiplier": 0.0018133667774762512,
+      "auto_seconds": 4.5093018,
+      "off_seconds": 5.2101068
+    },
+    "mixed_srm_resume": {
+      "fs_pass": 1.5500000000000005,
+      "fs_fail": 1.5625000000000004,
+      "max_du_m": 4.971856260027607e-13,
+      "seconds": 208.3415996
+    },
+    "q8_original_candidate_srm": {
+      "max_du_m": 0.0,
+      "max_stress_delta": 0.0,
+      "max_metric_delta": 0.0,
+      "fs_pass": 1.5500000000000005,
+      "fs_fail": 1.5625000000000004,
+      "original_seconds": 142.535796,
+      "candidate_seconds": 142.8817072
+    },
+    "q8_mixed_srm_common_nodes": {
+      "common_nodes": 85,
+      "max_displacement_vector_difference_m": 0.005649255425991866,
+      "q8_max_displacement_m": 1.4381894332529443,
+      "mixed_max_displacement_m": 1.437738258199739,
+      "note": "Different meshes; this is a model comparison, not an equality test."
+    }
+  },
+  "scope": "full",
+  "status": "PASS"
+}

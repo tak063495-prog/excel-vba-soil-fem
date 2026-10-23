@@ -74,7 +74,7 @@ End Function
  foreach($name in '節点データ','要素データ','材料データ','ステージ','載荷'){$wb.Worksheets.Item($name).Range('A2:N10000').ClearContents()}
  $wb.Worksheets.Item('接合').Range('A2:G10000').ClearContents()
  Rows $wb.Worksheets.Item('節点データ') 2 1 $data.nodes 9
- Rows $wb.Worksheets.Item('要素データ') 2 1 $data.elements 10
+ Rows $wb.Worksheets.Item('要素データ') 2 1 $data.elements $(if($data.elements[0].Count -ge 11){11}else{10})
  Rows $wb.Worksheets.Item('材料データ') 2 1 $data.materials 13
  Rows $wb.Worksheets.Item('ステージ') 2 1 $data.stages 6
  if($data.loads){Rows $wb.Worksheets.Item('載荷') 2 1 $data.loads 10}
@@ -133,7 +133,7 @@ End Function
  $record|ConvertTo-Json -Depth 8|Set-Content (Join-Path $Out 'result.json') -Encoding UTF8
  Write-Output ($record|ConvertTo-Json -Depth 2 -Compress)
  if($status -notlike 'PASS|*'){throw "Analysis: $status"}
- foreach($name in '水圧結果','結果節点','ステージ結果','水圧確認','接合結果'){
+ foreach($name in '水圧結果','結果節点','結果要素','結果増分','結果塑性','ステージ結果','水圧確認','接合結果'){
   try{$ws=$wb.Worksheets.Item($name)}catch{if($data.water.mode -eq 'NONE' -and $name -in '水圧結果','水圧確認'){continue};throw}
   $array=$ws.UsedRange.Value2;$values=[Collections.Generic.List[object]]::new()
   for($r=1;$r -le $array.GetLength(0);$r++){$row=[Collections.Generic.List[object]]::new();for($c=1;$c -le $array.GetLength(1);$c++){$row.Add($array[$r,$c])};$values.Add(@($row))}
@@ -141,6 +141,7 @@ End Function
  }
  $wb.Save()
  if($Resume){
+  $wb.SaveCopyAs((Join-Path $Out 'fresh_results.xlsm'))
   # Analysis startup rewrites run/performance logs. Retain the initial solve
   # separately before checkpoint-resume verification starts.
   $initialLogs=Join-Path $Out 'initial_run_logs'

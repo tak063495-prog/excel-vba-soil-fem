@@ -1,0 +1,51 @@
+{
+  "srm_sha256": "4A18C032E3024B386C2CF875BAD48F81786B98E64149EE57A6694DC8AE38C05E",
+  "seepage_sha256": "660D3A624A1C54DD552AB45D13839E6D8231A63BCCA646DA6AB689656C11B19F",
+  "status": "PASS",
+  "checks": [
+    {
+      "label": "saved mixed SRM result 3 with shear/cross A",
+      "status": "PASS"
+    },
+    {
+      "label": "saved mixed SRM result 69 with shear/cross A",
+      "status": "PASS"
+    },
+    {
+      "label": "saved mixed SRM result 70 with shear/cross A",
+      "status": "PASS"
+    },
+    {
+      "label": "saved mixed SRM result 71 with shear/cross A",
+      "status": "PASS"
+    },
+    {
+      "label": "saved mixed SRM result 72 with shear/cross A",
+      "status": "PASS"
+    },
+    {
+      "label": "saved mixed SRM increment color B with independent overlays",
+      "status": "PASS"
+    },
+    {
+      "label": "mixed SRM native shapes rendered",
+      "status": "PASS"
+    },
+    {
+      "label": "increment overlays render after normal reopen",
+      "status": "PASS"
+    },
+    {
+      "label": "saved mixed seepage has Darcy arrow",
+      "status": "PASS"
+    },
+    {
+      "label": "saved mixed seepage has computed head contour",
+      "status": "PASS"
+    },
+    {
+      "label": "water caption distinguishes computed hydraulic field",
+      "status": "PASS"
+    }
+  ]
+}

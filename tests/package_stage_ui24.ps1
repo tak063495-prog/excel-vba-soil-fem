@@ -5,7 +5,7 @@ $Candidate=(Resolve-Path -LiteralPath $Candidate).Path
 $Destination=[IO.Path]::GetFullPath($Destination)
 if($Candidate -eq $Destination){throw 'Candidate must be preserved.'}
 if(Test-Path -LiteralPath $Destination){throw 'Destination already exists.'}
-$names=@('CONTROL','FEM','FEMCore','FEMSolver','FEMIo','FEMEngine','FEMNative','FEMNativeMat','FEMNativeKern','FEMUiInputs','FEMUiValidation','FEMUiLayout','FEMUi','FEMViewer','FEMNativeFigure','ThisWorkbook','FEMUiMeshWorkflow','FEMUiGeometry','FEMPractical','MeshAdapt','Mesh','FEMTerrainBlocks','FEMResultOptions','FEMStrainMath','FEMViewIncrement','FEMIncrementSvg','FEMWater','FEMSeepage','FEMWaterUi','FEMWaterGeometry','FEMWaterView','FEMSeepageFlux','FEMJointWater','FEMStageUi','FEMStageEditor')
+$names=@('FEMMixedElement','MeshAngle','CONTROL','FEM','FEMCore','FEMSolver','FEMIo','FEMEngine','FEMNative','FEMNativeMat','FEMNativeKern','FEMUiInputs','FEMUiValidation','FEMUiLayout','FEMUi','FEMViewer','FEMNativeFigure','ThisWorkbook','FEMUiMeshWorkflow','FEMUiGeometry','FEMPractical','MeshAdapt','Mesh','FEMTerrainBlocks','FEMResultOptions','FEMStrainMath','FEMViewIncrement','FEMIncrementSvg','FEMWater','FEMSeepage','FEMWaterUi','FEMWaterGeometry','FEMWaterView','FEMSeepageFlux','FEMJointWater','FEMStageUi','FEMStageEditor')
 function Norm([string]$s){(($s -replace "`r`n","`n" -replace "`r","`n") -split "`n" | Where-Object {$_ -notmatch '^Attribute VB_'} | ForEach-Object {$_.TrimEnd()}) -join "`n" -replace "`n+$",""}
 function Verify($book){
  foreach($name in $names){
@@ -22,10 +22,15 @@ try{
  Copy-Item -LiteralPath $Candidate -Destination $Destination
  $wb=$xl.Workbooks.Open($Destination,0,$false)
  foreach($sheet in '節点データ','要素データ','材料データ','ステージ','載荷','形状入力'){
-  $snapshots[$sheet]=ConvertTo-Json -InputObject $wb.Worksheets.Item($sheet).UsedRange.Value2 -Depth 5 -Compress
+  $range=$wb.Worksheets.Item($sheet).UsedRange
+  if($sheet -eq '要素データ'){$range=$wb.Worksheets.Item($sheet).Range('A1:J'+$wb.Worksheets.Item($sheet).Cells($wb.Worksheets.Item($sheet).Rows.Count,1).End(-4162).Row)}
+  $snapshots[$sheet]=ConvertTo-Json -InputObject $range.Value2 -Depth 5 -Compress
  }
+ $elementTypes=ConvertTo-Json -InputObject $wb.Worksheets.Item("要素データ").Range("K2:K"+[Math]::Max(2,$wb.Worksheets.Item("要素データ").Cells($wb.Worksheets.Item("要素データ").Rows.Count,1).End(-4162).Row)).Value2 -Depth 5 -Compress
  $null=$xl.Run("'"+$wb.Name+"'!FEMWaterInstallUi")
- $null=$xl.Run("'"+$wb.Name+"'!FEMWriteBuildStamp",$false)
+ $refresh=[string]$xl.Run("'"+$wb.Name+"'!FEMUiRefreshInputs")
+ if($refresh -ne "PASS"){throw "Input migration failed: $refresh"}
+ if($wb.Worksheets.Item("メッシュ設定").Range("F30").Value2 -ne "MESH_T6_FALLBACK" -or $wb.Worksheets.Item("メッシュ設定").Range("C30").Value2 -ne 0){throw "Release mesh fallback option/default missing."}
  $null=$xl.Run("'"+$wb.Name+"'!FEMViewerMarkDirty")
  $water=$wb.Worksheets.Item('水条件')
  if($water.Range('B3').Value2 -ne 'NONE'){throw 'Release default must be NONE.'}
@@ -39,11 +44,15 @@ try{
  $water=$wb.Worksheets.Item('水条件')
  Verify $wb
  foreach($sheet in $snapshots.Keys){
-  $actual=ConvertTo-Json -InputObject $wb.Worksheets.Item($sheet).UsedRange.Value2 -Depth 5 -Compress
+  $range=$wb.Worksheets.Item($sheet).UsedRange
+  if($sheet -eq '要素データ'){$range=$wb.Worksheets.Item($sheet).Range('A1:J'+$wb.Worksheets.Item($sheet).Cells($wb.Worksheets.Item($sheet).Rows.Count,1).End(-4162).Row)}
+  $actual=ConvertTo-Json -InputObject $range.Value2 -Depth 5 -Compress
   if($actual -ne $snapshots[$sheet]){throw "Canonical input changed: $sheet"}
  }
+ $actualTypes=ConvertTo-Json -InputObject $wb.Worksheets.Item("要素データ").Range("K2:K"+[Math]::Max(2,$wb.Worksheets.Item("要素データ").Cells($wb.Worksheets.Item("要素データ").Rows.Count,1).End(-4162).Row)).Value2 -Depth 5 -Compress
+ if($actualTypes -ne $elementTypes){throw "Element types changed during packaging."}
  if($wb.Names.Item('_FEMViewerResultsDirty').RefersTo -ne '=TRUE'){throw 'Old results must be marked dirty.'}
- $record=@{status='PASS';compile='PASS';source_verification='before-save and reopen';modules=$names;canonical_inputs_unchanged=@($snapshots.Keys);defaults=@($water.Range('B3:B6').Value2);excel_version=$xl.Version;excel_build=$xl.Build;candidate_sha256=(Get-FileHash $Candidate).Hash}
+ $record=@{status='PASS';compile='PASS';source_verification='before-save and reopen';modules=$names;canonical_inputs_unchanged=@($snapshots.Keys);element_types_unchanged=$true;mesh_t6_fallback_default=0;defaults=@($water.Range('B3:B6').Value2);excel_version=$xl.Version;excel_build=$xl.Build;candidate_sha256=(Get-FileHash $Candidate).Hash}
  $wb.Close($false)
 }catch{
  $_.ScriptStackTrace | Write-Output

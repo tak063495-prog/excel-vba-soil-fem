@@ -1,0 +1,86 @@
+{
+  "source_sha256": "34C9E4B8ED7AD1A7149139FD70BE557EA58EFEA85B7391AAE934A4663C21AC2D",
+  "status": "PASS",
+  "solver": "PASS|weight=45|reaction=45|residual=1.31885670937086E-15",
+  "checks": [
+    {
+      "status": "PASS",
+      "label": "release contains fallback option with OFF default before refresh"
+    },
+    {
+      "status": "PASS",
+      "label": "mesh fallback option visible in seven-screen model page"
+    },
+    {
+      "status": "PASS",
+      "label": "front ON writes canonical setting"
+    },
+    {
+      "status": "PASS",
+      "label": "front OFF writes canonical setting"
+    },
+    {
+      "status": "PASS",
+      "label": "OFF leaves mesh unchanged"
+    },
+    {
+      "status": "PASS",
+      "label": "fallback mask uses current model size after a different model"
+    },
+    {
+      "status": "PASS",
+      "label": "ON preserves good Q8 connectivity and material"
+    },
+    {
+      "status": "PASS",
+      "label": "original nodal conditions preserved"
+    },
+    {
+      "status": "PASS",
+      "label": "mixed mesh native figure with T6 legend"
+    },
+    {
+      "status": "PASS",
+      "label": "mixed tapered patch solve, weight/reaction 45kN"
+    },
+    {
+      "status": "PASS",
+      "label": "saved mixed topology reopens and renders"
+    },
+    {
+      "status": "PASS",
+      "label": "shuffled rows preserve saved type lookup and reject invalid input ordering"
+    },
+    {
+      "status": "PASS",
+      "label": "nonconforming midpoint ID rejected"
+    },
+    {
+      "status": "PASS",
+      "label": "invalid geometry rejected"
+    },
+    {
+      "status": "PASS",
+      "label": "failed fallback leaves input tables unchanged"
+    },
+    {
+      "status": "PASS",
+      "label": "real shape-generation path repairs then converts quality failures"
+    },
+    {
+      "status": "PASS",
+      "label": "Delaunay path converts quality failures after repair"
+    },
+    {
+      "status": "PASS",
+      "label": "self-intersecting shape rejected"
+    },
+    {
+      "status": "PASS",
+      "label": "invalid shape does not replace previous mesh"
+    }
+  ],
+  "book": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\mixed_t6\\mesh_ui10b\\mixed_t6.xlsm",
+  "excel_build": 20430.0,
+  "excel_version": "16.0"
+}
