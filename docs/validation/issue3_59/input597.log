@@ -1,0 +1,9 @@
+PASS issue59_curved_valid
+PASS issue59_degenerate
+PASS issue59_internal_inversion
+PASS issue59_near_degenerate
+PASS issue59_random_internal
+PASS issue59_rotated_scaled
+PASS issue59_scaled_translated
+PASS issue59_square_small
+PASS issue59_square

@@ -3,7 +3,7 @@
   "ui_stamp": "20261024_STAGE_01",
   "calculation_stamp": "20261024_FIXED_STRESS_07",
   "base_commit": "7451200a93ace785632f19396e051f8be456b90d",
-  "book_sha256": "c0e75c6c9fad2b47d6b37680fa6e591126031989860e03c9bf55ee81a356840f",
+  "book_sha256": "98952de07b4cf389ee4503704a2824a1cfc3a7210d3a04a4fe570df168b2d251",
   "dll_sha256": "ad5c2ae81512ba8e977002415a6a5339b621c00a1bbabe5092559f8a7f9e0797",
   "compile": "PASS",
   "source_verification": "before-save and reopen",
@@ -89,12 +89,12 @@
   "old_checkpoint_note": "Build05 checkpoints cannot be resumed in06; retain original book or reanalyse inputs.",
   "source_sha256": {
     "src/vba/CONTROL.bas": "27f430e965d010f71278b9f8cf794da82be560fe90657672a3bdd9945ef6073c",
-    "src/vba/FEM.bas": "557b9def9a794dfefd28ccbb169c558d943773fc75edbe7641cd1db8c97a1bbc",
+    "src/vba/FEM.bas": "3886daffd4fee1f15ad923144c8baf1a0ab3d4b7172cb209a7bd48e57fd4fc48",
     "src/vba/FEMAccel.bas": "775e56e664ad40217afb4ddd1370dd651f89f14a0d319c0998e6608ca394a0fc",
     "src/vba/FEMAdaptive.bas": "3561df14eb010ed34f917bbc7739076691ab8e18667334979a8b04070333ad11",
     "src/vba/FEMCore.bas": "a251fff7053162544b05e3573d41b9f1ea6772c09d7d63f1a75c706bdbe5d8fe",
     "src/vba/FEMEngine.bas": "f715fdfa4970d8d2dc960b71c4c81abddc2eef4a9433e072f4a9c2be0b81e0bf",
-    "src/vba/FEMFixedStress.bas": "4c14eaec72e885a0023214f34e3f6fcce55d6d9d3f2606a75377ada0c0bbd379",
+    "src/vba/FEMFixedStress.bas": "e9d7088245746fa55443f129404ae8b8e29f8a7552dd920902f8febae2c176d4",
     "src/vba/FEMFixedStressGauge.bas": "357946f4db7ff28ced2d500aee5abf836f009151f73dbc2df1eebe1e25796712",
     "src/vba/FEMFixedStressInput.bas": "230e6d8c50bfc66837d521c95bfcc1441da786c2191dffcb3a23114ec77fd4b9",
     "src/vba/FEMFixedStressLedger.bas": "078df8e15c325230ee0fcf791f4f6a5cf5e6472aa1275b42e21c9e4e084744fb",
@@ -103,7 +103,7 @@
     "src/vba/FEMFixedStressSrm.bas": "4b191c52d24b4a6225e073e4011fcd2660511b6fa5fe2b5a66f6dbce63368936",
     "src/vba/FEMIncrementLog.bas": "6ea6536097fbc78550f795cf3dc093cbbe62b8e567337af45f7ca16ad2aaf6c7",
     "src/vba/FEMIncrementSvg.bas": "028987deafd8b8e2b51a7287f5fd09de2db214b93e90c47a64abd9b933062356",
-    "src/vba/FEMIo.bas": "59cac4fb749ea85063ee630b3be540069c5804f68f05e42d16040dfcd3bea17b",
+    "src/vba/FEMIo.bas": "bcf5621df7fed6daf52c1d1714d7e7081d4658d03f155c72fabebb189de9001d",
     "src/vba/FEMJointWater.bas": "3c6a98389a28d9420c639206020eaf3edd52bd18077d17a0d4f9d6d69b6118e6",
     "src/vba/FEMMixedElement.bas": "82359e76addf635bb51089cb99480eec27c7c9c30c1680d96d82266f0c3bfdd5",
     "src/vba/FEMNative.bas": "8e5d7b1eb0154210a03fb8a74c34f02e30ac91a73a21f7d1d9c656b6bcca4620",
@@ -130,7 +130,7 @@
     "src/vba/FEMUiMeshWorkflow.bas": "2ec02c145188f13b992794a0114b095b9fbf46217a807ecdc25de441a1795b03",
     "src/vba/FEMUiValidation.bas": "ef98a27bd8e6d8d4d4f7608a664c3684d12de96f3f3c8924b85a83f50164cb84",
     "src/vba/FEMViewer.bas": "a08368fb27343c5ab009c1b4e1688c83db8b11cc1487de4e42c45e4b38f459b1",
-    "src/vba/FEMViewIncrement.bas": "f7459dac9cff6c33416f02307fc8658cd4da76d36d7dbb8a9dcc5dc22886b179",
+    "src/vba/FEMViewIncrement.bas": "0590cb0c3f8d69cae493acb8346972ee44ec6611e8ab4a972e31474d512a152a",
     "src/vba/FEMWater.bas": "3fdb491a9caca9a451e619dfe50d1c58b825bb61b65756c8b980f363920d44be",
     "src/vba/FEMWaterGeometry.bas": "3297b5a54128ac87c093603523030ae095fa4af90bad3b42fcd0cf08bc87857a",
     "src/vba/FEMWaterUi.bas": "f008aff4d7c27ed012001662fc2bf3924f88c94df6ceb152c82828e536a8fb77",
@@ -141,7 +141,9 @@
     "src/vba/MeshPerf.bas": "9dc06d77de5c612efc6db4037b038adeada3dd6f584375d145f0b2414933b301",
     "src/vba/ThisWorkbook.cls": "d864498c2074bcf0443546ef5c5249b55749aa79b6f673757e7332e3fe756b3c"
   },
-  "validation_record": "docs/validation/issue49_57/validation.json",
+  "validation_record": "docs/validation/issue3_59/validation.json",
   "pdf_sha256": "bdd2fd1889e65bb5f2729890dd6520c91e2486571eef2ad9a8bc683bb03f0051",
-  "manual_revision": "practical examples grouped, PDF issues35/36 corrected; 241 pages / 37 chapters"
+  "manual_revision": "practical examples grouped, PDF issues35/36 corrected; 241 pages / 37 chapters",
+  "previous_validation_record": "docs/validation/issue49_57/validation.json",
+  "issue3_59_patch": "Err18 propagation/accepted rollback; Q8 full-domain Bernstein geometry validation. Calculation/checkpoint schema07 unchanged."
 }

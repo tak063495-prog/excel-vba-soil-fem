@@ -516,6 +516,7 @@ Private Function FSTryStep(ByVal dt As Double, ByRef target() As Double, ByRef l
     GWTransientForce waterTrial
     For i = 0 To lastDof: workingTarget(i) = target(i) + waterTrial(i) - waterBase(i): Next i
     If Not P3FixedStressTrial(workingTarget, previousU, trialU, internal, tolerance * 0.01) Then
+      If P3UserCancel Then Err.Raise 18
       P6SolverEvent "FIXED_STRESS_REJECT", "reason=MECHANICS;outer=" & CStr(FSOuterIteration) & ";message=" & AnalysisMessage
       Exit Function
     End If
@@ -623,6 +624,10 @@ Private Function FSTryStep(ByVal dt As Double, ByRef target() As Double, ByRef l
   Next FSOuterIteration
   Exit Function
 Rejected:
+  If Err.number = 18 Then
+    P3UserCancel = True: P3SearchFatal = True
+    Err.Raise 18
+  End If
   P6SolverEvent "FIXED_STRESS_REJECT", "reason=" & Err.description
 End Function
 
@@ -634,8 +639,10 @@ Public Function FSRunStage(ByVal stageId As Long, ByVal kind As String) As Boole
   Dim unit As Double, waterMode As String, loadMode As String, maximum As Double, saveEvery As Double, series As String
   Dim firstProfile As String, lastProfile As String, p1 As String, p2 As String, fraction As Double, nextKnot As Double, saveTarget As Double
   Dim instantPending As Boolean, isInstant As Boolean, endTime As Double, continuing As Boolean
-  Dim acceptedWater As Variant, gaugeChecked As Boolean, failureReason As String
+  Dim acceptedWater As Variant, acceptedLedger As Variant, gaugeChecked As Boolean, failureReason As String
   Dim currentWater() As Double
+  Dim failedNumber As Long, failedSource As String, failedDescription As String
+  On Error GoTo RunFailed
   Set ws = ThisWorkbook.Worksheets("水条件"): r = FSPlanRow(stageId)
   If r = 0 And (kind = "WAIT" Or kind = "WATER") Then FSCoupledInputError "時間経過・水理変動には時間設定が必要です。工程=" & CStr(stageId)
   FSGetOptions stageId, unit, waterMode, loadMode, minimum, maximum, saveEvery, series
@@ -699,6 +706,7 @@ Public Function FSRunStage(ByVal stageId As Long, ByVal kind As String) As Boole
   If saveEvery > 0# Then saveTarget = saveEvery Else saveTarget = duration
   If continuing And saveEvery > 0# Then saveTarget = (Int(elapsed / saveEvery) + 1#) * saveEvery
   acceptedWater = GWTransientState()
+  acceptedLedger = FSLedgerMemory()
   Do
     take = dt: isInstant = instantPending
     If isInstant Then
@@ -745,6 +753,7 @@ Public Function FSRunStage(ByVal stageId As Long, ByVal kind As String) As Boole
     If FSTryStep(take, target, locked, prescribed, limit, tolerance) Then
       elapsed = endTime: instantPending = False: acceptedBoundary = P3BoundaryDisp
       acceptedWater = GWTransientState()
+      acceptedLedger = FSLedgerMemory()
       FSStageElapsed = elapsed: FSResumePending = (elapsed < duration): mStageDt = dt
       For i = 0 To lastDof
         P3LockedApplied(i) = baseApplied(i) + factor * (finalApplied(i) - baseApplied(i))
@@ -752,12 +761,15 @@ Public Function FSRunStage(ByVal stageId As Long, ByVal kind As String) As Boole
         P3CommittedBoundaryDisp(i) = P3BoundaryDisp(i)
       Next i
       FSWriteAccepted stageId, take, (isInstant Or saveEvery = 0# Or elapsed >= saveTarget - 0.000000001 Or elapsed >= duration - 0.000000001)
+      acceptedLedger = FSLedgerMemory()
       If saveEvery > 0# And elapsed >= saveTarget - 0.000000001 Then saveTarget = saveTarget + saveEvery
       If duration = 0# Or elapsed >= duration - 0.000000001 Then Exit Do
     Else
+      If P3UserCancel Then Err.Raise 18
       failureReason = AnalysisMessage
       P3FixedStressRollback
       GWRestoreTransientState acceptedWater
+      FSLedgerRestore acceptedLedger
       GWTransientConductivity mKx
       mP = mOldP: FSUpdateField mP, False: GWRestore: P3BoundaryDisp = acceptedBoundary
       If take <= minimum Or isInstant Or P3UserCancel Then
@@ -773,6 +785,22 @@ Public Function FSRunStage(ByVal stageId As Long, ByVal kind As String) As Boole
   P3AppliedForce = finalApplied
   P3AssembleSelfWeightOnly
   FSRunStage = True
+  Exit Function
+RunFailed:
+  failedNumber = Err.number: failedSource = Err.source: failedDescription = Err.description
+  If failedNumber = 18 Then
+    P3UserCancel = True: P3SearchFatal = True
+    ' Restore the last accepted state; cancellation is never a cutback retry.
+    On Error Resume Next
+    P3FixedStressRollback
+    GWRestoreTransientState acceptedWater
+    FSLedgerRestore acceptedLedger
+    GWTransientConductivity mKx
+    mP = mOldP: FSUpdateField mP, False: GWRestore
+    P3BoundaryDisp = acceptedBoundary
+    On Error GoTo 0
+  End If
+  Err.Raise failedNumber, failedSource, failedDescription
 End Function
 
 Private Sub FSWriteAccepted(ByVal stageId As Long, ByVal dt As Double, ByVal saveField As Boolean)

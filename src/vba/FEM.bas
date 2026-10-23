@@ -587,6 +587,7 @@ Public Sub P5ValidateAnalysisMesh()
 End Sub
 
 Private Sub P5EvaluateQuadQuality(ByVal elementId As Long, ByRef connectivity() As Long, ByRef x() As Double, ByRef y() As Double)
+  Dim certifyX(0 To 7) As Double, certifyY(0 To 7) As Double, certifyReason As String
   Dim nodeNo(1 To 8) As Long, edgeLength(1 To 4) As Double
   Dim i As Long, previousIndex As Long, nextIndex As Long
   Dim area As Double, minJacobian As Double, jacobianValue As Double
@@ -643,7 +644,93 @@ Private Sub P5EvaluateQuadQuality(ByVal elementId As Long, ByRef connectivity() 
   Next i
   If minJacobian < P5MinJacobian Then P5MinJacobian = minJacobian
   If minJacobian <= P5AreaTolerance Then Err.Raise vbObjectError + 3472, "FEM.P5ValidateAnalysisMesh", "要素Jacobianが正でないか小さすぎます。要素=" & CStr(elementId)
+  For i = 0 To 7: certifyX(i) = x(nodeNo(i + 1)): certifyY(i) = y(nodeNo(i + 1)): Next i
+  If Not FEMQ8GeometryCertified(certifyX, certifyY, P5AreaTolerance, certifyReason) Then Err.Raise vbObjectError + 3472, "FEM.P5ValidateAnalysisMesh", certifyReason & "。要素=" & CStr(elementId)
 End Sub
+
+' detJ of a serendipity Q8 is bicubic (or lower degree). Tensor Bernstein
+' coefficients bound its value on the ENTIRE reference square. Sampling here
+' constructs that polynomial; sample signs alone never authorize acceptance.
+Public Function FEMQ8GeometryCertified(ByRef px() As Double, ByRef py() As Double, ByVal tolerance As Double, ByRef reason As String) As Boolean
+  Dim x(1 To 8) As Double, y(1 To 8) As Double, nodes(1 To 8) As Long
+  Dim b(0 To 3, 0 To 3) As Double, work(0 To 3) As Double
+  Dim i As Long, j As Long, span As Double, value As Double, tol As Double, budget As Long, roundGuard As Double
+  reason = "": span = 0#
+  For i = 0 To 7
+    value = Abs(px(i) - px(0)): If value > span Then span = value
+    value = Abs(py(i) - py(0)): If value > span Then span = value
+  Next i
+  If span = 0# Then reason = "Q8のJacobianが退化しています": Exit Function
+  For i = 1 To 8
+    nodes(i) = i: x(i) = (px(i - 1) - px(0)) / span: y(i) = (py(i - 1) - py(0)) / span
+  Next i
+  tol = (tolerance / span) / span
+  For j = 0 To 3
+    For i = 0 To 3: work(i) = P5Q8Jacobian(x, y, nodes, -1# + 2# * i / 3#, -1# + 2# * j / 3#): Next i
+    Q8ValuesToBernstein work
+    For i = 0 To 3: b(i, j) = work(i): Next i
+  Next j
+  For i = 0 To 3
+    For j = 0 To 3: work(j) = b(i, j): Next j
+    Q8ValuesToBernstein work
+    For j = 0 To 3: b(i, j) = work(j): Next j
+  Next i
+  For i = 0 To 3
+    For j = 0 To 3: If Abs(b(i, j)) > roundGuard Then roundGuard = Abs(b(i, j))
+    Next j
+  Next i
+  roundGuard = 0.0000000001 * (1# + roundGuard)
+  budget = 4096
+  FEMQ8GeometryCertified = Q8PositiveBox(b, tol, 0, budget, roundGuard, reason)
+End Function
+
+Private Sub Q8ValuesToBernstein(ByRef v() As Double)
+  Dim a As Double, b As Double
+  a = 27# * v(1) - 8# * v(0) - v(3)
+  b = 27# * v(2) - v(0) - 8# * v(3)
+  v(1) = (2# * a - b) / 18#: v(2) = (2# * b - a) / 18#
+End Sub
+
+Private Function Q8PositiveBox(ByRef b() As Double, ByVal tol As Double, ByVal depth As Long, ByRef budget As Long, ByVal roundGuard As Double, ByRef reason As String) As Boolean
+  Dim low As Double, high As Double, pad As Double, i As Long, j As Long
+  Dim left(0 To 3, 0 To 3) As Double, right(0 To 3, 0 To 3) As Double
+  Dim v(0 To 3) As Double, a As Double, c As Double, d As Double, e As Double, f As Double, mid As Double
+  low = b(0, 0): high = low: budget = budget - 1
+  For i = 0 To 3
+    For j = 0 To 3
+      If b(i, j) < low Then low = b(i, j)
+      If b(i, j) > high Then high = b(i, j)
+    Next j
+  Next i
+  ' Coordinates are translated and scaled to |x|,|y| <= 1. The guard is
+  ' deliberately conservative for Double evaluation/conversion/subdivision;
+  ' uncertain near-zero elements are rejected, never accepted by a grid test.
+  pad = roundGuard + depth * 0.0000000000001 * (1# + Abs(low) + Abs(high))
+  If low > tol + pad Then Q8PositiveBox = True: Exit Function
+  For i = 0 To 3 Step 3
+    For j = 0 To 3 Step 3
+      If b(i, j) < -pad Then reason = "Q8のJacobianが参照領域内で負です": Exit Function
+      If b(i, j) <= tol + pad Then reason = "Q8のJacobianが退化または許容値近傍です": Exit Function
+    Next j
+  Next i
+  If depth >= 24 Or budget <= 0 Then reason = "Q8のJacobianの全域正値性を確認できません（強い歪み）": Exit Function
+  For j = 0 To 3
+    For i = 0 To 3
+      If depth Mod 2 = 0 Then v(i) = b(i, j) Else v(i) = b(j, i)
+    Next i
+    a = (v(0) + v(1)) / 2#: c = (v(1) + v(2)) / 2#: d = (v(2) + v(3)) / 2#
+    e = (a + c) / 2#: f = (c + d) / 2#: mid = (e + f) / 2#
+    If depth Mod 2 = 0 Then
+      left(0, j) = v(0): left(1, j) = a: left(2, j) = e: left(3, j) = mid
+      right(0, j) = mid: right(1, j) = f: right(2, j) = d: right(3, j) = v(3)
+    Else
+      left(j, 0) = v(0): left(j, 1) = a: left(j, 2) = e: left(j, 3) = mid
+      right(j, 0) = mid: right(j, 1) = f: right(j, 2) = d: right(j, 3) = v(3)
+    End If
+  Next j
+  If Not Q8PositiveBox(left, tol, depth + 1, budget, roundGuard, reason) Then Exit Function
+  Q8PositiveBox = Q8PositiveBox(right, tol, depth + 1, budget, roundGuard, reason)
+End Function
 
 Private Function P5Q8Jacobian(ByRef x() As Double, ByRef y() As Double, ByRef nodeNo() As Long, ByVal xi As Double, ByVal eta As Double) As Double
   Dim dNxi(1 To 8) As Double, dNeta(1 To 8) As Double
@@ -1686,6 +1773,7 @@ Private Function CornerJacobian(ByRef elementData As Element_Data, ByVal xi As D
 End Function
 
 Private Function CheckElementJacobian(ByRef elementData As Element_Data, ByVal elementId As Long, Optional ByVal checkGauss As Boolean = True) As Boolean
+  Dim certifyReason As String
   Dim cornerXi(0 To 3) As Double, cornerEta(0 To 3) As Double
   Dim cornerId As Long, gaussId As Long
   Dim determinant As Double
@@ -1716,6 +1804,10 @@ Private Function CheckElementJacobian(ByRef elementData As Element_Data, ByVal e
     End If
   Next cornerId
   If Not checkGauss Then
+    If Not FEMQ8GeometryCertified(elementData.x, elementData.y, 0.000000000001, certifyReason) Then
+      SetAnalysisFailure RESULT_INPUT_ERROR, certifyReason & "。要素=" & CStr(elementId + 1), vbObjectError + 3023, elementId + 1, -1, CurrentIncrement, CurrentIteration
+      Exit Function
+    End If
     CheckElementJacobian = True
     Exit Function
   End If

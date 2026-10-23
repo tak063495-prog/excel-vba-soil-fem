@@ -1,0 +1,167 @@
+{
+  "status": "PASS",
+  "book_sha256": "98952de07b4cf389ee4503704a2824a1cfc3a7210d3a04a4fe570df168b2d251",
+  "cases": [
+    {
+      "case": "AUTO_CAPTURE",
+      "status": "PASS",
+      "fault_number": 18,
+      "accepted_time": 8640.0,
+      "accepted_steps": 2,
+      "successful_increments": 8
+    },
+    {
+      "case": "AUTO_FLAG",
+      "status": "PASS",
+      "fault_number": 18,
+      "accepted_time": 8640.0,
+      "accepted_steps": 2,
+      "successful_increments": 8
+    },
+    {
+      "case": "AUTO_FS",
+      "status": "PASS",
+      "fault_number": 18,
+      "accepted_time": 8640.0,
+      "accepted_steps": 2,
+      "successful_increments": 8
+    },
+    {
+      "case": "AUTO_PLASTIC",
+      "status": "PASS",
+      "fault_number": 18,
+      "accepted_time": 86400.0,
+      "accepted_steps": 11,
+      "successful_increments": 17
+    },
+    {
+      "case": "AUTO_SAVE",
+      "status": "PASS",
+      "fault_number": 18,
+      "accepted_time": 86400.0,
+      "accepted_steps": 11,
+      "successful_increments": 17
+    },
+    {
+      "case": "AUTO_WRITE_STAGE",
+      "status": "PASS",
+      "fault_number": 18,
+      "accepted_time": 86400.0,
+      "accepted_steps": 11,
+      "successful_increments": 17
+    },
+    {
+      "case": "AUTO_WRITE_TIME",
+      "status": "PASS",
+      "fault_number": 18,
+      "accepted_time": 8640.0,
+      "accepted_steps": 2,
+      "successful_increments": 8
+    },
+    {
+      "case": "AUTO_first_FS",
+      "status": "PASS",
+      "fault_number": 18,
+      "accepted_time": 0.0,
+      "accepted_steps": 0,
+      "successful_increments": 6
+    },
+    {
+      "case": "OFF_CAPTURE",
+      "status": "PASS",
+      "fault_number": 18,
+      "accepted_time": 8640.0,
+      "accepted_steps": 2,
+      "successful_increments": 8
+    },
+    {
+      "case": "OFF_FLAG",
+      "status": "PASS",
+      "fault_number": 18,
+      "accepted_time": 8640.0,
+      "accepted_steps": 2,
+      "successful_increments": 8
+    },
+    {
+      "case": "OFF_FS",
+      "status": "PASS",
+      "fault_number": 18,
+      "accepted_time": 8640.0,
+      "accepted_steps": 2,
+      "successful_increments": 8
+    },
+    {
+      "case": "OFF_PLASTIC",
+      "status": "PASS",
+      "fault_number": 18,
+      "accepted_time": 86400.0,
+      "accepted_steps": 11,
+      "successful_increments": 17
+    },
+    {
+      "case": "OFF_SAVE",
+      "status": "PASS",
+      "fault_number": 18,
+      "accepted_time": 86400.0,
+      "accepted_steps": 11,
+      "successful_increments": 17
+    },
+    {
+      "case": "OFF_WRITE_STAGE",
+      "status": "PASS",
+      "fault_number": 18,
+      "accepted_time": 86400.0,
+      "accepted_steps": 11,
+      "successful_increments": 17
+    },
+    {
+      "case": "OFF_WRITE_TIME",
+      "status": "PASS",
+      "fault_number": 18,
+      "accepted_time": 8640.0,
+      "accepted_steps": 2,
+      "successful_increments": 8
+    },
+    {
+      "case": "OFF_first_FS",
+      "status": "PASS",
+      "fault_number": 18,
+      "accepted_time": 0.0,
+      "accepted_steps": 0,
+      "successful_increments": 6
+    },
+    {
+      "case": "ordinary_CAPTURE",
+      "status": "PASS",
+      "fault_number": 5,
+      "accepted_time": 86400.0,
+      "accepted_steps": 11,
+      "successful_increments": 17
+    },
+    {
+      "case": "ordinary_FS",
+      "status": "PASS",
+      "fault_number": 5,
+      "accepted_time": 86400.0,
+      "accepted_steps": 20,
+      "successful_increments": 26
+    },
+    {
+      "case": "ordinary_PLASTIC",
+      "status": "PASS",
+      "fault_number": 5,
+      "accepted_time": 86400.0,
+      "accepted_steps": 11,
+      "successful_increments": 17
+    },
+    {
+      "case": "ordinary_SAVE",
+      "status": "PASS",
+      "fault_number": 5,
+      "accepted_time": 86400.0,
+      "accepted_steps": 11,
+      "successful_increments": 17
+    }
+  ],
+  "scope": "16 cancellation cases and four ordinary-error controls; accepted displacement, GP pressure, boundary displacement and 48 ledger values; temporary I/O cleanup; Excel application state"
+}

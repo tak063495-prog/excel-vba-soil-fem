@@ -31,3 +31,6 @@ https://github.com/tak063495-prog/excel-vba-soil-fem/blob/main/docs/XLSM_ISSUE_V
 
 07では保存再開の荷重・水位、時刻別の節点力・反力、頂点の材料点計算と塑性乗数、入力検査を修正しました。
 https://github.com/tak063495-prog/excel-vba-soil-fem/blob/main/docs/ISSUE49_57_VALIDATION.md
+
+中断の伝播とQ8内部の折返し検査を修正しました。受理済み状態を保持して中断し、全域のJacobian正値を確認できないQ8は要素番号付きで停止します。入力欄・保存形式・DLLは共通です。
+https://github.com/tak063495-prog/excel-vba-soil-fem/blob/main/docs/ISSUE3_59_VALIDATION.md

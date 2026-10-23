@@ -1,0 +1,5 @@
+PASS: 20 Excel fault/control cases
+PASS: nine geometry probes and nine Excel inputs
+{"status": "PASS", "cases": 17}
+PASS: 1853 accepted-state CSV files
+PASS: complete canonical input cells 10115

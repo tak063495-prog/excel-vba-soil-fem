@@ -1,4 +1,4 @@
-﻿param([Parameter(Mandatory=$true)][string]$Book,[Parameter(Mandatory=$true)][string]$Fixture,[Parameter(Mandatory=$true)][string]$Out,[switch]$Resume,[string]$Flow="INCONSISTENT",[string]$Native="AUTO",[switch]$FrontUi,[string]$ResumeState='',[switch]$ReopenResume)
+param([Parameter(Mandatory=$true)][string]$Book,[Parameter(Mandatory=$true)][string]$Fixture,[Parameter(Mandatory=$true)][string]$Out,[switch]$Resume,[string]$Flow="INCONSISTENT",[string]$Native="AUTO",[switch]$FrontUi,[string]$ResumeState='',[switch]$ReopenResume,[ValidateSet('','FS','FS_UI','FLAG','CAPTURE','SAVE','PLASTIC','WRITE_TIME','WRITE_STAGE')][string]$CancelAt='',[ValidateSet(5,18)][int]$FaultNumber=18,[ValidateRange(0,100)][int]$CancelAfterAccepted=2,[switch]$CheckLedger)
 $ErrorActionPreference='Stop'
 if(Get-Process EXCEL -ErrorAction SilentlyContinue){throw 'Another Excel is running; do not dispatch.'}
 if(Test-Path -LiteralPath $Out){throw 'Preserve previous evidence.'}
@@ -44,6 +44,9 @@ Public Function WFNative() As String
 End Function
 Public Function WFBuild() As String
  WFBuild = FEM_BUILD_STAMP
+End Function
+Public Function WFSuccessfulIncrements() As Long
+ WFSuccessfulIncrements = P3SuccessfulIncrementCount
 End Function
 Public Function WFStress() As Variant
  Dim v() As Double, e As Long, g As Long, j As Long, n As Long
@@ -165,6 +168,94 @@ End Function
   $xl.EnableEvents=$false
   @{status='PASS';material_young=$young;water_level=$level;flow=$Flow;events='real Workbook_SheetChange'}|ConvertTo-Json|Set-Content (Join-Path $Out 'front_inputs.json') -Encoding UTF8
  }
+ if($CancelAt){
+  $mod.CodeModule.AddFromString(@'
+Public IssueCancelPoint As String, IssueFaultNumber As Long, IssueCancelHit As Long, IssueMinimumAccepted As Long
+Public IssueCancelTime As Double, IssueCancelCount As Long, IssueCancelCommits As Long
+Public IssueCancelBeforeU As Variant, IssueCancelBeforeP As Variant, IssueCancelBeforeB As Variant
+Public IssueCancelBeforeL As Variant, IssueLedgerBase As Variant
+Public Function IssueCancelNow(ByVal point As String) As Boolean
+ If point <> IssueCancelPoint Or IssueCancelHit > 0 Or Not FSActive Or FSAccepted < IssueMinimumAccepted Then Exit Function
+ IssueCancelHit = IssueCancelHit + 1
+ IssueCancelTime = FSTime: IssueCancelCount = FSAccepted: IssueCancelCommits = P3SuccessfulIncrementCount
+ IssueCancelBeforeU = P3CommittedDisp
+ IssueCancelBeforeP = IssueAcceptedPressure()
+ IssueCancelBeforeB = P3CommittedBoundaryDisp
+ If point = "CAPTURE" Then IssueCancelBeforeL = IssueLedgerBase Else IssueCancelBeforeL = IssueLedgerState()
+ IssueCancelNow = True
+End Function
+Public Function IssueCancelState() As Variant
+ IssueCancelState = Array(IssueCancelHit,P3UserCancel,P3SearchFatal,AnalysisErrorNumber,AnalysisOK,AnalysisRunning,FSTime,FSAccepted,IssueCancelTime,IssueCancelCount,P3SuccessfulIncrementCount,IssueCancelCommits)
+End Function
+Public Function IssueCancelU() As Variant
+ IssueCancelU = IssueCancelBeforeU
+End Function
+Public Function IssueCancelP() As Variant
+ IssueCancelP = IssueCancelBeforeP
+End Function
+Public Function IssueCancelB() As Variant
+ IssueCancelB = IssueCancelBeforeB
+End Function
+Public Function IssueBoundary() As Variant
+ IssueBoundary = P3BoundaryDisp
+End Function
+Public Function IssueCancelL() As Variant
+ IssueCancelL = IssueCancelBeforeL
+End Function
+Public Function IssueLedgerState() As Variant
+ Dim saved As Variant, part As Variant, values() As Double, e As Long, j As Long, k As Long
+ saved = FSLedgerMemory(): ReDim values(NumberOfElement * 5 + 7)
+ For j = 0 To 4
+  part = saved(j)
+  For e = 0 To NumberOfElement - 1: values(k) = CDbl(part(e)): k = k + 1: Next e
+ Next j
+ For j = 5 To 12: values(k) = CDbl(saved(j)): k = k + 1: Next j
+ IssueLedgerState = values
+End Function
+'@)
+  $wb.VBProject.VBComponents.Item('FEMFixedStress').CodeModule.AddFromString(@'
+Public Function IssueAcceptedPressure() As Variant
+ Dim v() As Double, e As Long, g As Long, a As Long, n As Long, xi As Double, eta As Double
+ Dim pn(0 To 3) As Double, dx(0 To 3) As Double, dy(0 To 3) As Double
+ ReDim v(NumberOfElement * 4 - 1)
+ For e = 0 To NumberOfElement - 1
+  If P3IsElementActive(e) And Material(Elem(e).MatNo).kind = "SOIL" Then
+   For g = 0 To 3
+    FEMGaussNatural g, xi, eta: FSPressureShape FEMElementIsT6(e), xi, eta, pn, dx, dy
+    For a = 0 To 3
+     n = mMap(a, e)
+     If n >= 0 Then v(e * 4 + g) = v(e * 4 + g) + pn(a) * mOldP(n)
+    Next a
+   Next g
+  End If
+ Next e
+ IssueAcceptedPressure = v
+End Function
+'@)
+  $mod.CodeModule.AddFromString("Public Sub IssueCancelConfigure()`r`n IssueCancelPoint = `"$CancelAt`": IssueFaultNumber = $FaultNumber`: IssueMinimumAccepted = $CancelAfterAccepted`r`nEnd Sub")
+  function InjectCode([string]$module,[string]$find,[string]$insert){
+   $cmFault=$wb.VBProject.VBComponents.Item($module).CodeModule
+   $textFault=$cmFault.Lines(1,$cmFault.CountOfLines) -replace "`r`n","`n"
+   if(($textFault.Split(@($find),[StringSplitOptions]::None).Count-1) -ne 1){[IO.File]::WriteAllText((Join-Path $Out ($module+'_hook_source.txt')),$textFault);throw "Nonunique fault hook: $module $find"}
+   $textFault=$textFault.Replace($find,$insert+$find)
+   $cmFault.DeleteLines(1,$cmFault.CountOfLines);$cmFault.AddFromString($textFault)
+  }
+  InjectCode 'FEMFixedStress' '  GWTransientForce waterBase' "  IssueLedgerBase = IssueLedgerState()`n"
+  if($CancelAt -eq 'FS_UI'){
+   $marker=(Join-Path $Out 'keyboard_ready.txt').Replace('"','""')
+   $mod.CodeModule.AddFromString("Public Sub IssueWaitForKeyboard()`r`n Dim f As Integer`r`n f = FreeFile: Open `"$marker`" For Output As #f`r`n Print #f, `"READY`": Close #f`r`n Do: DoEvents: Loop`r`nEnd Sub")
+   InjectCode 'FEMFixedStress' '    If FSOuterIteration Mod 10 = 0 Then DoEvents' "    If IssueCancelNow(`"FS_UI`") Then`n      IssueWaitForKeyboard`n    End If`n"
+  }
+  InjectCode 'FEMFixedStress' '    If FSOuterIteration Mod 10 = 0 Then DoEvents' "    If IssueCancelNow(`"FLAG`") Then`n      P3UserCancel = True: P3SearchFatal = True`n      Exit Function`n    End If`n    If IssueCancelNow(`"FS`") Then`n      Err.Raise IssueFaultNumber`n    End If`n"
+  InjectCode 'FEMViewIncrement' ('  incReady = False'+"`n"+'  If NumberOfElement < 1 Or lastDof < 0 Then Exit Sub') "  If IssueCancelNow(`"CAPTURE`") Then Err.Raise IssueFaultNumber`n"
+  InjectCode 'FEMViewIncrement' '  If n > 0 Then ws.range(ws.cells(r, 1), ws.cells(r + n - 1, 20)).value2 = rows' "  If IssueCancelNow(`"SAVE`") Then Err.Raise IssueFaultNumber`n"
+  InjectCode 'FEMViewIncrement' '  If n > 0 Then ws.range(ws.cells(r, 1), ws.cells(r + n - 1, 13)).value2 = rows' "  If IssueCancelNow(`"PLASTIC`") Then Err.Raise IssueFaultNumber`n"
+  InjectCode 'FEMViewIncrement' '  Print #f, "INCREMENT_V1," & CStr(NumberOfElement) & "," & IIf(incReady, "1", "0")' "  If InStr(folder, `"\time_`") > 0 Then`n    If IssueCancelNow(`"WRITE_TIME`") Then Err.Raise IssueFaultNumber`n  Else`n    If IssueCancelNow(`"WRITE_STAGE`") Then Err.Raise IssueFaultNumber`n  End If`n"
+  $null=Call 'IssueCancelConfigure'
+  SetSetting 'EXPORT_MODE' 'STAGE';SetSetting 'OUTPUT_STAGE_MODE' 'ALL'
+  $ctlFault=$xl.VBE.CommandBars.FindControl(1,578);if($ctlFault.Enabled){$ctlFault.Execute()}
+  if($xl.VBE.CommandBars.FindControl(1,578).Enabled){throw 'Fault harness compile failed'}
+ }
  $preview=Call 'WFPreview'
  if($data.expectedPreviewError){
   $expected=[string]$data.expectedPreviewError
@@ -174,7 +265,31 @@ End Function
   return
  }
  if($preview -ne 'PASS'){throw "Preview: $preview"}
+ if($CancelAt -eq 'FS_UI'){$xl.Caption='Issue3CtrlBreakVerification';$xl.Visible=$true;$xl.EnableEvents=$true;$xl.Calculation=-4105;$xl.ScreenUpdating=$true}
+ $appBefore=@($xl.ScreenUpdating,$xl.EnableEvents,$xl.Calculation,$xl.EnableCancelKey)
  $timer=[Diagnostics.Stopwatch]::StartNew();$status=Call 'WFRun';$timer.Stop()
+ if($CancelAt){
+  $v=Call 'IssueCancelState';$appAfter=@($xl.ScreenUpdating,$xl.EnableEvents,$xl.Calculation,$xl.EnableCancelKey)
+  $actualU=@(Call 'WFDisplacements');$beforeU=@(Call 'IssueCancelU');$maxU=0.0
+  if($actualU.Count -eq $beforeU.Count){for($j=0;$j -lt $actualU.Count;$j++){$maxU=[Math]::Max($maxU,[Math]::Abs([double]$actualU[$j]-[double]$beforeU[$j]))}}
+  $maxP=0.0
+  $actualP=@(Call 'WFPressure');$beforeP=@(Call 'IssueCancelP')
+  if($actualP.Count -eq $beforeP.Count){for($j=0;$j -lt $actualP.Count;$j++){$maxP=[Math]::Max($maxP,[Math]::Abs([double]$actualP[$j]-[double]$beforeP[$j]))}}
+  $actualB=@(Call 'IssueBoundary');$beforeB=@(Call 'IssueCancelB');$maxB=0.0
+  if($actualB.Count -eq $beforeB.Count){for($j=0;$j -lt $actualB.Count;$j++){$maxB=[Math]::Max($maxB,[Math]::Abs([double]$actualB[$j]-[double]$beforeB[$j]))}}
+  $actualL=@(Call 'IssueLedgerState');$beforeL=@(Call 'IssueCancelL');$maxL=0.0
+  if($actualL.Count -eq $beforeL.Count){for($j=0;$j -lt $actualL.Count;$j++){$maxL=[Math]::Max($maxL,[Math]::Abs([double]$actualL[$j]-[double]$beforeL[$j]))}}
+  $pass=[int]$v[0] -eq 1 -and (($appBefore|ConvertTo-Json -Compress) -ceq ($appAfter|ConvertTo-Json -Compress))
+  if($FaultNumber -eq 18){$pass=$pass -and [bool]$v[1] -and [bool]$v[2] -and [int]$v[3] -eq 18 -and -not [bool]$v[4] -and -not [bool]$v[5] -and [double]$v[6] -eq [double]$v[8] -and [int]$v[7] -eq [int]$v[9] -and [int]$v[10] -eq [int]$v[11] -and $status.Contains('ユーザーが解析を中断しました。') -and $maxU -eq 0 -and $maxP -eq 0}
+  else{$pass=$pass -and $status -like 'PASS|*' -and -not [bool]$v[1] -and [int]$v[3] -ne 18}
+  if($FaultNumber -eq 18){$pass=$pass -and $actualU.Count -eq $beforeU.Count -and $actualP.Count -eq $beforeP.Count -and $actualB.Count -eq $beforeB.Count -and $maxB -eq 0}
+  if($CheckLedger -and $FaultNumber -eq 18){$pass=$pass -and $actualL.Count -eq $beforeL.Count -and $maxL -eq 0}
+  $record=@{status=$(if($pass){'PASS'}else{'FAIL'});injection=$CancelAt;fault_number=$FaultNumber;analysis=$status;state=@($v);application_before=$appBefore;application_after=$appAfter;max_accepted_u_difference=$maxU;max_accepted_p_difference=$maxP;max_accepted_boundary_difference=$maxB;max_accepted_ledger_difference=$maxL;ledger_count=$actualL.Count;ledger_required=[bool]$CheckLedger;displacement_count=$actualU.Count;pressure_count=$actualP.Count;boundary_count=$actualB.Count;native=$Native;book_sha256=(Get-FileHash $Book).Hash}
+  $record|ConvertTo-Json -Depth 8|Set-Content (Join-Path $Out 'cancel.json') -Encoding UTF8
+  $wb.Save();$wb.Close($false)
+  if(-not $pass){throw "Cancellation check failed: $CancelAt ($FaultNumber)"}
+  return
+ }
  # Failed input/setup may leave no elements allocated. Do not mask its message
  # with a second error while collecting an unallocated stress/DOF array.
  if($data.expectedAnalysisError){
@@ -182,6 +297,7 @@ End Function
   $v=$xl.Run("'"+$wb.Name+"'!WFOriginalNodes");$nodes=[Collections.Generic.List[object]]::new()
   if($null -ne $v){for($n=0;$n -lt $v.GetLength(0);$n++){$nodes.Add(@($v[$n,0],$v[$n,1],$v[$n,2]))}}
   $failure=@{case=$data.name;status=$status;expected=[string]$data.expectedAnalysisError;nodes=@($nodes);book_sha256=(Get-FileHash $Book).Hash;fixture_sha256=(Get-FileHash $Fixture).Hash}
+  if($data.checkNoCommit){$failure.successful_increments=Call 'WFSuccessfulIncrements';if($failure.successful_increments -ne 0){throw 'Invalid geometry committed an increment'}}
   if($data.name -eq 'reset_t6_nonaffine' -or $data.checkResetPreservation){
    $v=$xl.Run("'"+$wb.Name+"'!WFReferenceCoordinates");$coords=[Collections.Generic.List[object]]::new()
    for($n=0;$n -lt $v.GetLength(0);$n++){$coords.Add(@($v[$n,0],$v[$n,1],$v[$n,2]))}

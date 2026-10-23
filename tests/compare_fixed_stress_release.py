@@ -1,4 +1,4 @@
-"""Check that the caption-only release preserves all recorded numerical fields."""
+"""Check that a release preserves all recorded numerical fields."""
 import argparse
 import json
 from pathlib import Path
@@ -35,7 +35,7 @@ def compare(reference, candidate):
                 assert a[key] == b[key], (folder.name, key)
             results.append({'case': folder.name, 'status': 'EXPECTED_REJECTION_UNCHANGED'})
     assert len(results) == 17, len(results)
-    return {'status': 'PASS', 'scope': 'caption-only final release versus numerical candidate: all recorded displacement/stress slots/metrics, fresh and resume; rejected-state fields unchanged', 'cases': results}
+    return {'status': 'PASS', 'scope': 'release regression: all recorded displacement/stress slots/metrics, fresh and resume; rejected-state fields unchanged', 'cases': results}
 
 
 if __name__ == '__main__':
