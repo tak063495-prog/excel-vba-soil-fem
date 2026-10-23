@@ -142,5 +142,6 @@
     "src/vba/ThisWorkbook.cls": "d864498c2074bcf0443546ef5c5249b55749aa79b6f673757e7332e3fe756b3c"
   },
   "validation_record": "docs/validation/issue49_57/validation.json",
-  "pdf_sha256": "bcf30fcd3f92e75faacdcc18c54435fbc976bf7e8ed5d3e311c7b1fe2a22e907"
+  "pdf_sha256": "bdd2fd1889e65bb5f2729890dd6520c91e2486571eef2ad9a8bc683bb03f0051",
+  "manual_revision": "practical examples grouped, PDF issues35/36 corrected; 241 pages / 37 chapters"
 }

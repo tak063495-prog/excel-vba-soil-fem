@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "pdf_sha256": "bdd2fd1889e65bb5f2729890dd6520c91e2486571eef2ad9a8bc683bb03f0051",
+  "book_sha256_unchanged": "c0e75c6c9fad2b47d6b37680fa6e591126031989860e03c9bf55ee81a356840f",
+  "dll_sha256_unchanged": "ad5c2ae81512ba8e977002415a6a5339b621c00a1bbabe5092559f8a7f9e0797",
+  "zip_sha256": "a153777c7093bfbe7e42424e4ccd44694d6cefdb37f1d8b022cfa1b24391f16c",
+  "updated_zip_member": "BUILD_RECORD.json"
+}

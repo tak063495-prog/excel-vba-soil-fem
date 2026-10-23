@@ -16,8 +16,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 29171,
-    "sha256": "1fcc81b07a46deb2362091eaf538c25cdec1b674f857e3cd34fecdf0df1a92f4"
+    "bytes": 29289,
+    "sha256": "637fe22656c7ed669dbb80bc191c5fef52edc998c60f84edeed862bec890e3c7"
   },
   {
     "path": "docs/ACCELERATION_HISTORY.md",
@@ -121,8 +121,13 @@
   },
   {
     "path": "docs/MANUAL_FIXED_STRESS_VALIDATION.md",
-    "bytes": 6180,
-    "sha256": "f57c48dbf6f1cafb187d590f7d0bf39eb135a6faf6a31365a9b58947fb509902"
+    "bytes": 6478,
+    "sha256": "65e15583d91f97c0d5ecd9b76691ed7ad3aeb8b270b9fa69791be71e445eebd0"
+  },
+  {
+    "path": "docs/MANUAL_PRACTICE_REVISION.md",
+    "bytes": 6083,
+    "sha256": "82a479f2bc7f36602904e993bddec9b7feebac9b7bb7c2d565413be349374cf0"
   },
   {
     "path": "docs/MESH_DELAUNAY_MEMORY.md",
@@ -1310,6 +1315,46 @@
     "sha256": "2ade353bb9c6d057101851a7e5ea928be4f2ff84b066978327ac4e6d2a4bbd3f"
   },
   {
+    "path": "docs/manual-practice-evidence/20261024/baseline_images.json",
+    "bytes": 7795,
+    "sha256": "946c64c58bff29616acb1492affa72435ddd514c557650917425d0cd85a414a4"
+  },
+  {
+    "path": "docs/manual-practice-evidence/20261024/chapter_mapping.json",
+    "bytes": 466,
+    "sha256": "995adeeba298f6448f5f09bf1db9282542b7350455152df5c7a8678c3ff44429"
+  },
+  {
+    "path": "docs/manual-practice-evidence/20261024/checks.json",
+    "bytes": 5789,
+    "sha256": "cfcf01276af06ff9239d63667d8cf9ca5bfc091b0917fc567c461b211d1e237d"
+  },
+  {
+    "path": "docs/manual-practice-evidence/20261024/coverage.json",
+    "bytes": 371,
+    "sha256": "f7f2a7ad9cbff714e5a28fb8f2f93ab429787827f25bedf3ca1a836771760350"
+  },
+  {
+    "path": "docs/manual-practice-evidence/20261024/input_routes.json",
+    "bytes": 1932,
+    "sha256": "fe260bcd8fe3917d035ffb33a2e9e1ae99b27a6f6675747f85d563b1a775ac79"
+  },
+  {
+    "path": "docs/manual-practice-evidence/20261024/package.json",
+    "bytes": 433,
+    "sha256": "34cb4b94e2ddfc77b1a4ec48055cd812ad63daa759d8eb7be7e6ee848e56df75"
+  },
+  {
+    "path": "docs/manual-practice-evidence/20261024/pdf_link_bounds_checks.json",
+    "bytes": 8688,
+    "sha256": "3bf05dd59892374f67a5a502b2da555f801b6398a78fa2d47890bc02abcc07b6"
+  },
+  {
+    "path": "docs/manual-practice-evidence/20261024/visual_review.zip",
+    "bytes": 6412539,
+    "sha256": "14c10d049c75f07d17f050b224ee43a765ad62595089d690b67bc3b8c464acf0"
+  },
+  {
     "path": "docs/manual24-evidence/20261024/README.md",
     "bytes": 3231,
     "sha256": "89f14ec9b27c3e333d343ad4a75462027e9eb01d4ef7a33f0660321cb5a5c1c4"
@@ -1481,18 +1526,18 @@
   },
   {
     "path": "docs/manuals/2DSoilFEM_Manual_20261024.md",
-    "bytes": 376838,
-    "sha256": "99cda5e0556477e54e66aec4cca12af079b3f228c29c8e72e063cce8be6ea6bd"
+    "bytes": 390267,
+    "sha256": "17adad04db9de8dc4a20e03e28fc44cc40b66b31de253ebe0801f0048d6dc53b"
   },
   {
     "path": "docs/manuals/2DSoilFEM_Manual_20261024.pdf",
-    "bytes": 43023359,
-    "sha256": "bcf30fcd3f92e75faacdcc18c54435fbc976bf7e8ed5d3e311c7b1fe2a22e907"
+    "bytes": 43171248,
+    "sha256": "bdd2fd1889e65bb5f2729890dd6520c91e2486571eef2ad9a8bc683bb03f0051"
   },
   {
     "path": "docs/manuals/README.md",
-    "bytes": 16741,
-    "sha256": "87e6d887d32ad4ab5d911e8c3ec899536544f9033c948959a6dfdca71b171c22"
+    "bytes": 16974,
+    "sha256": "05a5e6a24b5072b6ac78151dee7a8615bfcf45e3dd1392eee9e7d9b505bd03f3"
   },
   {
     "path": "docs/manuals/build_manual_pdf.py",
@@ -5733,6 +5778,11 @@
     "path": "docs/manuals/images/groundwater/result.png",
     "bytes": 455171,
     "sha256": "2e28c5167aa6954545cee61a5130f62fa70caf2dbafc61bd0b6288dd99575db3"
+  },
+  {
+    "path": "docs/manuals/images/practice/road_comparison.png",
+    "bytes": 43810,
+    "sha256": "c5a6dcadcb8f8a66fb2762969b286e531b4bad8f8c2404c24552f998a398bd75"
   },
   {
     "path": "docs/manuals/images/target/ex02_mesh_ng_ok.png",
@@ -11360,6 +11410,11 @@
     "sha256": "5c9190c0976d31ab0ef5083dd27aae685185e859501d7e4fc208ceda9f0d5184"
   },
   {
+    "path": "tests/build_manual_practice_figures.py",
+    "bytes": 1569,
+    "sha256": "20dc70f79ab0694fb06b3bf0d668547d71e0076cf6b62e549f24731439f02c7c"
+  },
+  {
     "path": "tests/build_workbook_ui.ps1",
     "bytes": 4195,
     "sha256": "2f7584c5c2362c998861d565a4fc7fb88f7ea09010de26b6f1a2474a7ac2f297"
@@ -11501,8 +11556,8 @@
   },
   {
     "path": "tests/check_manual24_coverage.py",
-    "bytes": 1496,
-    "sha256": "5a5ee206d5296068eb5ec506323739e32b1e2fc6028016831f7c852a4b29fbde"
+    "bytes": 2666,
+    "sha256": "a16f3a3ca2223c4dd6a1167f869314cbb88f3411ecbf1262d79a7b9d89319c43"
   },
   {
     "path": "tests/check_manual24_pdf.py",
@@ -11528,6 +11583,11 @@
     "path": "tests/check_manual_consistency.py",
     "bytes": 3661,
     "sha256": "0a9b18bffcfb820b37af2730ead20d4bcae9245588b61a77afe034063e335c76"
+  },
+  {
+    "path": "tests/check_manual_practice_inputs.py",
+    "bytes": 4085,
+    "sha256": "2f3f59c23864e5a3750ee752b66db43d7c460deafe48080145ad9249400a58ac"
   },
   {
     "path": "tests/check_manual_rereview.py",
@@ -13105,6 +13165,11 @@
     "sha256": "01b0d9ceda89d87bcfd59bc4d40967c3d95d2e1f3fd8b90cc32deedf38e71668"
   },
   {
+    "path": "tests/review_manual_practice.py",
+    "bytes": 4542,
+    "sha256": "934481c81572fac9f33a1dc9c047905c51e794bc22f60f6b755d4c9eab0eb3a8"
+  },
+  {
     "path": "tests/review_water_manual.py",
     "bytes": 3474,
     "sha256": "34c0941352a4ac2526a0e189bfdf547007a924b0de0212acf4ee8d0acf6bcfee"
@@ -13491,8 +13556,8 @@
   },
   {
     "path": "workbook/SoilFEM_UI_20261024.zip",
-    "bytes": 4057120,
-    "sha256": "f3153629fee6c4173cf19572fbc3374fe84f5802c195ee26f4c42579692d1786"
+    "bytes": 4069530,
+    "sha256": "a153777c7093bfbe7e42424e4ccd44694d6cefdb37f1d8b022cfa1b24391f16c"
   },
   {
     "path": "workbook/inco_assembly_20261020/2DSoilFEM_inco_assembly_20261020.xlsm",
@@ -13771,8 +13836,8 @@
   },
   {
     "path": "workbook/ui_20261024/BUILD_RECORD.json",
-    "bytes": 8047,
-    "sha256": "7c238be61175b0104198ae4739453491a4e76de86e0a3be1084c855ce9c5ed95"
+    "bytes": 8151,
+    "sha256": "90c806d7f7d153f4bd9f8aaaaf1cbed5fae054bb672000d0649d824276ad5392"
   },
   {
     "path": "workbook/ui_20261024/README.md",
