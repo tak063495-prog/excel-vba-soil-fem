@@ -60,7 +60,11 @@ def find_pages():
     else:
         with pymupdf.open(out) as d: txt=[p.get_text(sort=True) for p in d]
     compact=lambda s:re.sub(r'\s+','',s)
-    return [next((i+1 for i,t in enumerate(txt) if i>0 and compact(t).startswith(compact(h))),'?') for h in heads],txt
+    # A continued TOC page can begin with a chapter title; choose its body occurrence.
+    pages=[max((i+1 for i,t in enumerate(txt) if i>0 and compact(t).startswith(compact(h))),default=0) for h in heads]
+    if not all(pages[i]>pages[i-1] for i in range(1,len(pages))) or not all(pages):
+        raise RuntimeError('Chapter body page detection failed: '+str(pages))
+    return pages,txt
 render(toc_of(['00']*len(heads)))
 for _ in range(2):
     pages,txt=find_pages(); render(toc_of(pages))

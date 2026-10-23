@@ -21,6 +21,9 @@ Public Sub FEMIncrementReset()
   Dim ws As Worksheet
   On Error Resume Next: Set ws = ThisWorkbook.Worksheets("結果増分"): On Error GoTo 0
   If Not ws Is Nothing Then ws.cells.ClearContents
+  Set ws = Nothing
+  On Error Resume Next: Set ws = ThisWorkbook.Worksheets("結果塑性"): On Error GoTo 0
+  If Not ws Is Nothing Then ws.cells.ClearContents
 End Sub
 
 Public Sub FEMIncrementCapture(ByVal loadFactor As Double)
@@ -80,6 +83,72 @@ Public Sub FEMIncrementRestore()
     incData = snapData: incActive = snapActive
     incFs = snapFs: incLambda = snapLambda: incNo = snapNo
   End If
+End Sub
+
+Public Function FEMIncrementBranchState() As Variant
+  If incReady Then
+    FEMIncrementBranchState = Array(True, incData, incActive, incFs, incLambda, incNo)
+  Else
+    FEMIncrementBranchState = Array(False)
+  End If
+End Function
+
+Public Sub FEMIncrementRestoreBranch(ByVal saved As Variant)
+  FEMIncrementClear
+  If Not CBool(saved(0)) Then Exit Sub
+  incData = saved(1): incActive = saved(2): incFs = saved(3): incLambda = saved(4): incNo = saved(5): incReady = True
+End Sub
+
+Public Function FEMIncrementWriteFile(ByVal folder As String) As Boolean
+  Dim f As Integer, e As Long, g As Long, c As Long, line As String, mark As String
+  On Error GoTo Failed
+  f = FreeFile: mark = Application.International(xlDecimalSeparator)
+  Open folder & Application.PathSeparator & "increment.csv" For Output As #f
+  Print #f, "INCREMENT_V1," & CStr(NumberOfElement) & "," & IIf(incReady, "1", "0")
+  If incReady Then
+    Print #f, Replace$(CStr(incFs), mark, ".") & "," & Replace$(CStr(incLambda), mark, ".") & "," & CStr(incNo)
+    For e = 0 To NumberOfElement - 1
+      For g = 0 To 3
+        line = CStr(e) & "," & CStr(g) & "," & IIf(incActive(e), "1", "0")
+        For c = 0 To 6: line = line & "," & Replace$(Format$(incData(c, g, e), "0.0000000000000000E+00"), mark, "."): Next c
+        Print #f, line
+      Next g
+    Next e
+  End If
+  Close #f: FEMIncrementWriteFile = True: Exit Function
+Failed:
+  On Error Resume Next: Close #f
+End Function
+
+Public Sub FEMIncrementReadFile(ByVal folder As String)
+  Dim f As Integer, e As Long, g As Long, c As Long, line As String, parts() As String
+  FEMIncrementClear
+  If Dir$(folder & Application.PathSeparator & "increment.csv") = "" Then Exit Sub
+  f = FreeFile: Open folder & Application.PathSeparator & "increment.csv" For Input As #f
+  Line Input #f, line
+  If line = "INCREMENT_V1," & CStr(NumberOfElement) & ",0" Then Close #f: Exit Sub
+  If line <> "INCREMENT_V1," & CStr(NumberOfElement) & ",1" Then Close #f: FSCoupledInputError "保存された増分表の版・要素数が一致しません。"
+  Line Input #f, line: parts = Split(line, ",")
+  If UBound(parts) <> 2 Then Close #f: FSCoupledInputError "保存された増分の識別子が不完全です。"
+  incFs = Val(parts(0)): incLambda = Val(parts(1)): incNo = CLng(Val(parts(2)))
+  ReDim incData(0 To 6, 0 To 3, 0 To NumberOfElement - 1): ReDim incActive(NumberOfElement - 1)
+  For e = 0 To NumberOfElement - 1
+    For g = 0 To 3
+      If EOF(f) Then Close #f: FSCoupledInputError "保存された増分表が不足しています。"
+      Line Input #f, line: parts = Split(line, ",")
+      If UBound(parts) <> 9 Then Close #f: FSCoupledInputError "保存された増分表が不完全です。"
+      If parts(0) <> CStr(e) Or parts(1) <> CStr(g) Then Close #f: FSCoupledInputError "保存された増分のIDが不正です。"
+      If parts(2) <> "0" And parts(2) <> "1" Then Close #f: FSCoupledInputError "保存された増分の有効フラグが不正です。"
+      incActive(e) = (parts(2) = "1")
+      For c = 0 To 6
+        If Not IsNumeric(parts(c + 3)) Then Close #f: FSCoupledInputError "保存された増分表に非数値があります。"
+        incData(c, g, e) = Val(parts(c + 3))
+        If Not P2IsFinite(incData(c, g, e)) Then Close #f: FSCoupledInputError "保存された増分表に非有限値があります。"
+      Next c
+    Next g
+  Next e
+  If Not EOF(f) Then Close #f: FSCoupledInputError "保存された増分表に余分な行があります。"
+  Close #f: incReady = True
 End Sub
 
 Public Sub FEMIncrementSave()

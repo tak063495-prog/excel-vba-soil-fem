@@ -1,0 +1,117 @@
+{
+  "status": "PASS",
+  "scope": "Pressure maxima are analytical checker errors at only exact common accepted times; there is no time interpolation. The third run establishes temporal refinement over the reported common-time range only. Cryer uses the complete coarse and fine histories.",
+  "precision": {
+    "time_absolute_tolerance_s": 1e-07,
+    "time_relative_tolerance": 1e-09
+  },
+  "policy": {
+    "max_pressure_error_kPa": 0.2,
+    "max_early_to_coarse_ratio": 0.7,
+    "max_imposed_uy_error_m": 1e-09,
+    "max_all_node_displacement_error_m": 1e-05,
+    "min_cryer_rise_kPa": 0.02
+  },
+  "common_times": {
+    "count": 50,
+    "first_s": 147.710571428571,
+    "last_s": 7385.52857142858
+  },
+  "common_time_pressure_error_kPa": {
+    "coarse_max": 0.2724108654539865,
+    "fine_max": 0.2588089424168043,
+    "early_max": 0.02605792700612697,
+    "fine_to_coarse_ratio": 0.9500683534978903,
+    "early_to_coarse_ratio": 0.0956567094440235,
+    "early_to_fine_ratio": 0.10068402877734198
+  },
+  "imposed_top_uy": {
+    "max_error_m": 4.969089376083424e-13,
+    "passes": true
+  },
+  "computed_all_node_displacement": {
+    "all_time": [
+      {
+        "source": "coarse",
+        "available_frames": 101,
+        "total_frames": 101,
+        "max_ux_error_m": 6.637565523809406e-06,
+        "max_uy_error_m": 4.981607032265856e-13,
+        "max_component_error_m": 6.637565523809406e-06
+      },
+      {
+        "source": "fine",
+        "available_frames": 101,
+        "total_frames": 101,
+        "max_ux_error_m": 3.3187835238094026e-06,
+        "max_uy_error_m": 4.996839259637648e-13,
+        "max_component_error_m": 3.3187835238094026e-06
+      },
+      {
+        "source": "early",
+        "available_frames": 176,
+        "total_frames": 176,
+        "max_ux_error_m": 3.3187835238094026e-06,
+        "max_uy_error_m": 4.996838988587105e-13,
+        "max_component_error_m": 3.3187835238094026e-06
+      }
+    ],
+    "matched_transient_common_times": [
+      {
+        "available_frames": 50,
+        "total_frames": 50,
+        "max_ux_error_m": 8.325134105521175e-07,
+        "max_uy_error_m": 4.95734258764563e-13,
+        "max_component_error_m": 8.325134105521175e-07,
+        "source": "coarse",
+        "common_frames": 50
+      },
+      {
+        "available_frames": 50,
+        "total_frames": 50,
+        "max_ux_error_m": 8.517530345656483e-07,
+        "max_uy_error_m": 4.95734258764563e-13,
+        "max_component_error_m": 8.517530345656483e-07,
+        "source": "fine",
+        "common_frames": 50
+      },
+      {
+        "available_frames": 50,
+        "total_frames": 50,
+        "max_ux_error_m": 9.351825324267586e-08,
+        "max_uy_error_m": 4.95734258764563e-13,
+        "max_component_error_m": 9.351825324267586e-08,
+        "source": "early",
+        "common_frames": 50
+      }
+    ],
+    "early_limit_m": 1e-05
+  },
+  "cryer_center_excess_pressure": [
+    {
+      "source": "coarse full history",
+      "initial_kPa": 4.952380932385769,
+      "peak_kPa": 5.32011166670088,
+      "peak_time_s": 4726.73828571428,
+      "peak_rise_kPa": 0.36773073431511083,
+      "subsequent_decline": true,
+      "passes": true
+    },
+    {
+      "source": "fine full history",
+      "initial_kPa": 4.95238093491053,
+      "peak_kPa": 5.322563462884919,
+      "peak_time_s": 4652.883,
+      "peak_rise_kPa": 0.37018252797438933,
+      "subsequent_decline": true,
+      "passes": true
+    }
+  ],
+  "checks": {
+    "third_run_pressure_limit": true,
+    "third_run_to_coarse_ratio": true,
+    "imposed_uy": true,
+    "early_matched_all_node_displacement": true,
+    "coarse_and_fine_cryer": true
+  }
+}

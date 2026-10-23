@@ -1,6 +1,7 @@
 ﻿Option Explicit
 
 Private mAccelAttemptFailure As String
+Private mSrmWaterState As Object
 Private mLineSearchFailure As String, mLineSearchTries As Long, mLineSearchMaterialRejects As Long
 Private mLineSearchBestQ As Double
 
@@ -17,7 +18,7 @@ Private V3TrialStartedAt As Double
 Public Sub FEMValidateAnalysisScope()
   Dim messageText As String
   If P6ReadSetting("CONSOL_ENABLE", 0#) = 0# Then Exit Sub
-  messageText = "本版は間隙水圧を考慮しない全応力解析です。圧密解析は未対応です。CONSOL_ENABLE=0にしてください。"
+  messageText = "旧CONSOL_ENABLE経路は未対応です。CONSOL_ENABLE=0とし、飽和時間圧密は工程別FIXED_STRESSを設定してください。"
   SetAnalysisFailure RESULT_INPUT_ERROR, messageText, vbObjectError + 3098, -1, -1, 0, 0
   Err.Raise vbObjectError + 3098, "FEMValidateAnalysisScope", messageText
 End Sub
@@ -126,6 +127,9 @@ Private Sub P3ZeroTrialKinematics()
     Next i
     ReDim P3LockedSelfWeight(lastDof)
     ReDim P3LockedApplied(lastDof)
+    ' Stress history was cleared; accepted internal force must match it.
+    ReDim P3FinalInternalForce(lastDof)
+    ReDim iNForce(lastDof)
   End If
   P3GravityCommitted = False
   For k = 0 To NumberOfElement - 1
@@ -2258,6 +2262,7 @@ NextEvalElement:
   Next k
   P3CurrentElementZeroIncrement = False
   If P6MixedUP Then P6AddPressureToInternalForce
+  FSForceCorrection iNForce
   For i = 0 To lastDof
     internalForce(i) = iNForce(i)
   Next i
@@ -3194,6 +3199,87 @@ P3NextStage:
   P3RunLoadStages = True
 End Function
 
+Public Function P3FixedStressTrial(ByRef target() As Double, ByRef incrementBase() As Double, ByRef guess() As Double, ByRef internal() As Double, Optional ByVal coupledTolerance As Double = 0.0000000001) As Boolean
+  Dim i As Long, iteration As Long, nextIteration As Long, ratio As Double
+  P3RestoreCommittedMaterialState
+  P3ClearTransientFailure
+  P3ResetFailureDiagnostics
+  mAccelAttemptFailure = "": mLineSearchFailure = "": mLineSearchTries = 0: mLineSearchMaterialRejects = 0: mLineSearchBestQ = -1#
+  TDisp = guess: UDisp = guess
+  ReDim internal(lastDof)
+  P3IncoElasticCorrection = False
+  P3ApplyNewtonPolicy "FIXED_STRESS"
+  P3ForceRef = 0#
+  For i = 0 To lastDof: P3ForceRef = P3ForceRef + target(i) * target(i): Next i
+  P3ForceRef = Sqr(P3ForceRef)
+  If P3ForceRef < 0.000000000001 Then P3ForceRef = GWCharacteristicForce()
+  If P3ForceRef < 0.000000000001 Then P3ForceRef = 0.000000000001
+  P3DispRef = P5ModelScale * 0.000001
+  If P3DispRef < 0.000000000001 Then P3DispRef = 0.000000000001
+  For iteration = 0 To P3GlobalIterationLimit()
+    CurrentIteration = iteration: CurrentIncrement = P3SuccessfulIncrementCount + 1
+    If Not P3EvaluateTrialState(incrementBase, internal) Then
+      mAccelAttemptFailure = "TRIAL_STATE_FAILURE": GoTo Rejected
+    End If
+    P3UpdateResidualMetrics target, internal
+    P3UpdateBoundaryDispError 1#
+    If RelativeResidualFree <= P3_ENGINEERING_RESIDUAL And RelativeResidualFree <= coupledTolerance And P3BoundaryDispSatisfied() Then
+      If iteration = 0 Or ratio <= P3_ENGINEERING_CORRECTION Or RelativeResidualFree <= P3_RESIDUAL_TOLERANCE Then
+        P3FixedStressTrial = True: Exit Function
+      End If
+    End If
+    If iteration = P3GlobalIterationLimit() Then
+      mAccelAttemptFailure = "GLOBAL_ITERATION_LIMIT"
+      P3SetGlobalBudgetFailure
+      GoTo Rejected
+    End If
+    For i = 0 To lastDof
+      Disp(i) = 0#: force(i) = target(i) - internal(i)
+      If NodeCond(i) <> 0 Then Disp(i) = P3BoundaryDisp(i) - TDisp(i)
+    Next i
+    If Not P3RebuildTangentFromSpmat() Then
+      mAccelAttemptFailure = "TANGENT_BUILD_FAILURE": GoTo Rejected
+    End If
+    SetBoundaryCondition
+    If Not BandSolver() Then
+      mAccelAttemptFailure = "BAND_SOLVE_FAILURE": GoTo Rejected
+    End If
+    P3GlobalIterationCount = P3GlobalIterationCount + 1: P6PerfNewtonCount = P6PerfNewtonCount + 1
+    nextIteration = iteration + 1
+    If Not P3AccelApplyCorrection(incrementBase, target, internal, ratio, ResidualNormFree, nextIteration) Then
+      CurrentIteration = nextIteration
+      If P3UserCancel Then Exit Function
+      If Len(mLineSearchFailure) > 0 Then mAccelAttemptFailure = mLineSearchFailure
+      GoTo Rejected
+    End If
+    If P3UserCancel Then Exit Function
+    iteration = nextIteration - 1
+  Next iteration
+  Exit Function
+Rejected:
+  P3RecordRejectedAttempt 1#, ratio
+End Function
+
+Public Sub P3FixedStressRollback()
+  P3RestoreCommittedMaterialState
+  P3CopyCommittedDispToTrial
+End Sub
+
+Public Sub P3FixedStressAccept(ByRef internal() As Double)
+  Dim i As Long
+  FEMIncrementCapture 1#
+  P3FinalInternalForce = internal: P3CommittedDisp = TDisp
+  P3CommitMaterialState
+  PlasticLogAccepted
+  P3SuccessfulIncrementCount = P3SuccessfulIncrementCount + 1
+  P6PerfIncrementCount = P6PerfIncrementCount + 1
+  P3LastConvergedIncrement = P3SuccessfulIncrementCount
+  P3MaxTrialDisp = 0#
+  For i = 0 To lastDof
+    If Abs(TDisp(i)) > P3MaxTrialDisp Then P3MaxTrialDisp = Abs(TDisp(i))
+  Next i
+End Sub
+
 Private Function P3RunConsolidationSteps(ByRef targetForce() As Double, ByRef incrementBase() As Double, ByRef internalForce() As Double) As Boolean
   Dim i As Long, stepId As Long, stepCount As Long, localIteration As Long
   Dim correctionRatio As Double, converged As Boolean
@@ -3339,7 +3425,7 @@ Private Sub P3LoadStagePlan()
     P3StageParam(P3StageN) = Trim$(CStr(ws.cells(rowNo, 4).value2))
     P3StageOn(P3StageN) = (enabledValue <> 0#)
     If P3StageOn(P3StageN) Then
-      If kindText <> "GRAVITY" And kindText <> "APPLY" And kindText <> "LOAD" And kindText <> "UNLOAD" And kindText <> "SRM" And kindText <> "BIRTH" And kindText <> "DEATH" And kindText <> "RESET_U" And kindText <> "RESET_STRESS" And kindText <> "MATSET" And kindText <> "WATER" Then
+      If kindText <> "GRAVITY" And kindText <> "APPLY" And kindText <> "LOAD" And kindText <> "UNLOAD" And kindText <> "SRM" And kindText <> "BIRTH" And kindText <> "DEATH" And kindText <> "RESET_U" And kindText <> "RESET_STRESS" And kindText <> "MATSET" And kindText <> "WATER" And kindText <> "WAIT" Then
         SetAnalysisFailure RESULT_INPUT_ERROR, "未対応のステージ種別です。行=" & CStr(rowNo) & " 種別=" & kindText, vbObjectError + 3233, -1, -1, CurrentIncrement, CurrentIteration
         Exit Sub
       End If
@@ -3517,22 +3603,22 @@ Private Function P3LoadingSheetHasAction() As Boolean
   Next rowNo
 End Function
 
-Private Function P3NodeMatchesSelector(ByVal originalNode As Long, ByVal selectorText As String, ByVal xmin As Double, ByVal xmax As Double, ByVal yMin As Double, ByVal yMax As Double) As Boolean
+Private Function P3NodeMatchesSelector(ByVal originalNode As Long, ByVal selectorText As String, ByVal xmin As Double, ByVal xmax As Double, ByVal ymin As Double, ByVal ymax As Double) As Boolean
   Dim token As String, boxParts() As String, bx1 As Double, by1 As Double, bx2 As Double, by2 As Double
   Dim nodeX As Double, nodeY As Double, tol As Double
   P3NodeMatchesSelector = False
   token = UCase$(Trim$(selectorText))
   If originalNode < LBound(x) Or originalNode > UBound(x) Then Exit Function
   nodeX = x(originalNode): nodeY = y(originalNode)
-  tol = 0.000000001 * (Abs(xmax - xmin) + Abs(yMax - yMin) + 1#)
+  tol = 0.000000001 * (Abs(xmax - xmin) + Abs(ymax - ymin) + 1#)
   If IsNumeric(token) Then
     If CLng(val(token)) = originalNode + 1 Then P3NodeMatchesSelector = True
     Exit Function
   End If
   If token = "TOP" Then
-    P3NodeMatchesSelector = (Abs(nodeY - yMax) <= tol)
+    P3NodeMatchesSelector = (Abs(nodeY - ymax) <= tol)
   ElseIf token = "BOTTOM" Then
-    P3NodeMatchesSelector = (Abs(nodeY - yMin) <= tol)
+    P3NodeMatchesSelector = (Abs(nodeY - ymin) <= tol)
   ElseIf token = "LEFT" Then
     P3NodeMatchesSelector = (Abs(nodeX - xmin) <= tol)
   ElseIf token = "RIGHT" Then
@@ -3666,27 +3752,34 @@ Private Function P3NodeOnMaterialUncached(ByVal originalNode As Long, ByVal mate
   Next elementId
 End Function
 
-Private Sub P3OverlayLoadingSheet()
+Private Sub P3OverlayLoadingSheet(Optional ByVal loadingSet As String = "")
   Dim ws As Worksheet, lastRow As Long, rowNo As Long, orig As Long, freeNode As Long, dofId As Long
   Dim kindText As String, dirText As String, selectorText As String, groupText As String
-  Dim xmin As Double, xmax As Double, yMin As Double, yMax As Double, loadValue As Double
+  Dim selectedDofs As Object, matched As Long
+  Dim xmin As Double, xmax As Double, ymin As Double, ymax As Double, loadValue As Double
   Dim materialId As Long, hasBound As Boolean, i As Long
-  Dim t0 As Double
+  Dim t0 As Double, checkedValue As Double
   Dim errNum As Long, errSrc As String, errDesc As String
   t0 = Timer
   On Error Resume Next
   Set ws = ThisWorkbook.Worksheets("載荷")
   Err.Clear
   On Error GoTo LoadFail
+  Set selectedDofs = CreateObject("Scripting.Dictionary")
   If lastDof >= 0 Then
-    P3RestoreSupportBoundary
-    ReDim P3AppliedForce(lastDof)
+    If Len(loadingSet) > 0 Then
+      NodeCond = P3CommittedNodeCond: P3BoundaryDisp = P3CommittedBoundaryDisp: P3AppliedForce = P3LockedApplied
+    Else
+      P3RestoreSupportBoundary
+      ReDim P3AppliedForce(lastDof)
+    End If
   End If
   If ws Is Nothing Then GoTo LoadDone
   If Not P3LoadingSheetHasAction() Then GoTo LoadDone
   If Not P3LoadIndexReady Or P3LoadIndexActiveGen <> P3ActiveSetGen Then P3BuildLoadIndex
   lastRow = ws.cells(ws.rows.count, 1).End(xlUp).row
   For rowNo = 2 To lastRow
+    If Trim$(CStr(ws.cells(rowNo, 11).value2)) <> loadingSet Then GoTo NextLoadRow
     groupText = Trim$(CStr(ws.cells(rowNo, 1).value2))
     If left$(groupText, 1) = "(" Then GoTo NextLoadRow
     selectorText = CStr(ws.cells(rowNo, 2).value2)
@@ -3694,24 +3787,39 @@ Private Sub P3OverlayLoadingSheet()
     kindText = UCase$(Trim$(CStr(ws.cells(rowNo, 4).value2)))
     loadValue = 0#
     If IsNumeric(ws.cells(rowNo, 5).value2) Then loadValue = CDbl(ws.cells(rowNo, 5).value2)
-    If kindText <> "DISP" And kindText <> "FORCE" And kindText <> "FIX" Then GoTo NextLoadRow
+    If kindText <> "DISP" And kindText <> "FORCE" And kindText <> "FIX" Then
+      If Len(loadingSet) > 0 Then FSCoupledInputError "載荷セットの種別はDISP/FORCE/FIXです。行=" & CStr(rowNo)
+      GoTo NextLoadRow
+    End If
+    If Len(loadingSet) > 0 Then
+      If kindText <> "FIX" Then loadValue = FSNumber(ws.cells(rowNo, 5).value2, "載荷セットの指定値")
+      checkedValue = FSNumber(groupText, "載荷セットの材料番号")
+      If checkedValue < 1 Or checkedValue > NumberOfMaterial Or checkedValue <> Fix(checkedValue) Then FSCoupledInputError "載荷セットの材料番号が範囲外です。"
+      If UCase$(Trim$(selectorText)) = "BOX" Then
+        For i = 6 To 9
+          checkedValue = FSNumber(ws.cells(rowNo, i).value2, "BOXの座標")
+        Next i
+      End If
+    End If
     If dirText <> "X" And dirText <> "Y" Then
       Err.Raise vbObjectError + 3232, "FEM.P3OverlayLoadingSheet", "載荷の方向はXまたはYです。行=" & CStr(rowNo) & " 値=" & dirText
     End If
     materialId = 0
     If IsNumeric(groupText) Then materialId = CLng(val(groupText))
-    If Not P3MaterialNetLoaded(materialId) Then GoTo NextLoadRow
+    If Len(loadingSet) = 0 Then
+      If Not P3MaterialNetLoaded(materialId) Then GoTo NextLoadRow
+    End If
     hasBound = False
     For orig = 0 To NumberOfNode - 1
       If P3NodeOnMaterial(orig, materialId) Then
         If Not hasBound Then
-          xmin = x(orig): xmax = x(orig): yMin = y(orig): yMax = y(orig)
+          xmin = x(orig): xmax = x(orig): ymin = y(orig): ymax = y(orig)
           hasBound = True
         Else
           If x(orig) < xmin Then xmin = x(orig)
           If x(orig) > xmax Then xmax = x(orig)
-          If y(orig) < yMin Then yMin = y(orig)
-          If y(orig) > yMax Then yMax = y(orig)
+          If y(orig) < ymin Then ymin = y(orig)
+          If y(orig) > ymax Then ymax = y(orig)
         End If
       End If
     Next orig
@@ -3723,11 +3831,19 @@ Private Sub P3OverlayLoadingSheet()
     If UCase$(Trim$(selectorText)) = "BOX" Then
       If Not P3NodeInBox(orig, CDbl(val(CStr(ws.cells(rowNo, 6).value2))), CDbl(val(CStr(ws.cells(rowNo, 7).value2))), CDbl(val(CStr(ws.cells(rowNo, 8).value2))), CDbl(val(CStr(ws.cells(rowNo, 9).value2)))) Then GoTo NextOrig
     Else
-      If Not P3NodeMatchesSelector(orig, selectorText, xmin, xmax, yMin, yMax) Then GoTo NextOrig
+      If Not P3NodeMatchesSelector(orig, selectorText, xmin, xmax, ymin, ymax) Then GoTo NextOrig
     End If
       dofId = P6GetInternalFreeNode(freeNode) * 2
       If dirText = "Y" Then dofId = dofId + 1
       If dofId < 0 Or dofId > lastDof Then GoTo NextOrig
+      If Len(loadingSet) > 0 Then
+        If Not selectedDofs.Exists(CStr(dofId)) Then
+          selectedDofs.Add CStr(dofId), True
+          P3AppliedForce(dofId) = 0#
+          NodeCond(dofId) = P3SupportNodeCond(dofId): P3BoundaryDisp(dofId) = P3SupportBoundaryDisp(dofId)
+        End If
+        matched = matched + 1
+      End If
       If kindText = "FORCE" Then
         P3AppliedForce(dofId) = P3AppliedForce(dofId) + loadValue
       Else
@@ -3742,6 +3858,7 @@ NextOrig:
     Next orig
 NextLoadRow:
   Next rowNo
+  If Len(loadingSet) > 0 And matched = 0 Then Err.Raise vbObjectError + 8120, , "載荷セットに有効な対象節点がありません。セット=" & loadingSet
   GoTo LoadDone
 LoadFail:
   errNum = Err.number
@@ -3843,6 +3960,7 @@ Private Sub P3CaptureSrmSuccessSnapshot(ByVal strengthFactor As Double)
     On Error GoTo 0
   Next i
   FEMIncrementSnapshot
+  Set mSrmWaterState = GWCaptureSrmState()
   P3SrmSnapReady = True
 End Sub
 
@@ -3921,8 +4039,8 @@ Private Function P3RestoreSrmSuccessSnapshot() As Boolean
       Elem(k).JointContact(gp) = P3SrmSnapJointContact(gp, k)
     Next gp
   Next k
+  GWRestoreSrmState mSrmWaterState
   P3RestoreCommittedMaterialState False
-  GWUseFinalPressure
   P3MarkAllTangentDirty
   P3TrialStateValid = False
   If Not P3RebuildTangentFromSpmat() Then Exit Function
@@ -3933,9 +4051,25 @@ End Function
 
 Public Sub P3PrepareOutputResidual()
   Dim i As Long
-  Dim appliedOk As Boolean
+  Dim appliedOk As Boolean, lockedOk As Boolean
   If lastDof < 0 Then Exit Sub
   P3UseNonlinearResidual = True
+  On Error Resume Next
+  lockedOk = (UBound(P3LockedSelfWeight) >= lastDof And UBound(P3LockedApplied) >= lastDof)
+  If Err.number <> 0 Then lockedOk = False
+  Err.Clear
+  On Error GoTo 0
+  If lockedOk Then
+    ' Accepted loads may differ from potential body/applied vectors after a
+    ' RESET or a partial loading history. Diagnostics must use the committed
+    ' target, including when the checkpoint was loaded without another solve.
+    ReDim OriginalForce(lastDof)
+    For i = 0 To lastDof
+      OriginalForce(i) = P3LockedSelfWeight(i) + P3LockedApplied(i)
+    Next i
+    ComputeResidual
+    Exit Sub
+  End If
   On Error Resume Next
   appliedOk = (UBound(P3AppliedForce) >= lastDof)
   If Err.number <> 0 Then appliedOk = False
@@ -3973,11 +4107,13 @@ Private Function P3CanReuseGravityForFs1() As Boolean
 End Function
 
 Private Function P3TryStrengthFactor(ByVal strengthFactor As Double) As Boolean
+  Dim coupledSuccess As Boolean
   P3TryStrengthFactor = False
   If V3CostSearchEnabled Then V3BeginTrialCost
   P3ClearTransientFailure
   P3SrmTrialFailNote = vbNullString
   P3SrmTrialClassification = "NONE"
+  If FSActive And FSSrmBranch Then FSRestoreSrmParent
   If Not P3SetMaterialForStrengthFactor(strengthFactor) Then
     FEMAppendRunLog "SRM試行", "INVALID_INPUT", "Fs=" & Format$(strengthFactor, "0.000000000000") & ";" & AnalysisMessage
     Exit Function
@@ -3992,7 +4128,12 @@ Private Function P3TryStrengthFactor(ByVal strengthFactor As Double) As Boolean
     P3RunLogKind = P3SrmLogKind
   End If
   FEMAppendRunLog "SRM試行", "TRY", "Fs=" & Format$(strengthFactor, "0.000")
-  If P3ReplayStages(P3SrmReplayLimit) Then
+  If FSActive And FSSrmBranch Then
+    coupledSuccess = FSRunSrmTrial()
+  Else
+    coupledSuccess = P3ReplayStages(P3SrmReplayLimit)
+  End If
+  If coupledSuccess Then
     P3TryStrengthFactor = True
     P3SrmTrialClassification = "CONVERGED"
     P3SrmLower = strengthFactor
@@ -4267,6 +4408,8 @@ End Function
 
 Private Function P3ExecuteStage(ByVal stageIndex As Long) As Boolean
   Dim kindText As String, materialId As Long, logNo As Long, requiredFs As Double
+  Dim stageError As Long, stageDescription As String, stageSource As String
+  On Error GoTo StageFailed
   P3ExecuteStage = False
   p3StageResultLogged = False
   If stageIndex < 1 Or stageIndex > P3StageN Then Exit Function
@@ -4288,6 +4431,45 @@ Private Function P3ExecuteStage(ByVal stageIndex As Long) As Boolean
   End If
   If Not P3ReplayQuiet Then FEMProgressStage logNo, kindText
   If Not P3ReplayQuiet Then FEMAppendRunLog "ステージ開始", "RUN", kindText
+  FSValidateStageEntry logNo, kindText
+  If Len(FSLoadingSet(logNo)) > 0 And Not FSRequested(logNo) Then FSCoupledInputError "載荷セットは時間連成のLOAD/APPLY/UNLOADへ指定してください。"
+  If kindText <> "SRM" And FSRequested(logNo) Then
+    If Not P3GravityCommitted Then FSCoupledInputError "初回の時間連成前に初期水圧を伴う片方向GRAVITYで初期平衡を求めてください。"
+    If Not FSActive Then FSPrepare
+    FSBeginStageGuard
+    If FSResumingStage(logNo) Then
+      ' Construction and loading selectors already belong to the accepted state.
+    ElseIf kindText = "APPLY" Or kindText = "LOAD" Or kindText = "UNLOAD" Then
+      P3OverlayLoadingSheet FSLoadingSet(logNo)
+      P3HoldOrphanDofs
+    ElseIf kindText = "BIRTH" Or kindText = "DEATH" Then
+      If materialId <= 0 Then FSCoupledInputError "施工対象の材料番号が必要です。"
+      P3SetMaterialElementsActive materialId, (kindText = "BIRTH")
+      P3ActiveSetGen = P3ActiveSetGen + 1
+      P6InvalidateActiveDependentCaches
+      GWTransientTopology
+      FSPrepare
+      If kindText = "BIRTH" Then FSInitializeBirth materialId
+      P3HoldOrphanDofs
+      P3AssembleSelfWeightOnly
+      P3RefreshActiveStiffness
+    ElseIf kindText = "WATER" Then
+      P3AssembleSelfWeightOnly
+    ElseIf kindText <> "WAIT" And kindText <> "GRAVITY" Then
+      FSCoupledInputError "時間連成の操作はGRAVITY/LOAD/UNLOAD/BIRTH/DEATH/WATER/WAITです。"
+    End If
+    If Not FSRunStage(logNo, kindText) Then
+      FSEndStageGuard False
+      Exit Function
+    End If
+    FSEndStageGuard True
+    P3CommitLoadLock True, True
+    P3LogStageResult logNo, kindText, P3StageGroup(stageIndex), True, 1#, "FIXED_STRESS t[s]=" & CStr(FSTime)
+    P3WriteStageSnapshot
+    P3ExecuteStage = True
+    Exit Function
+  End If
+  If FSActive And kindText <> "SRM" Then FSCoupledInputError "時間連成開始後は片方向への切替を行えません。過剰水圧を保持するためFIXED_STRESS/継承を選んでください。"
   If kindText = "WATER" Then
     GWStage GWResolveStageProfile(logNo, P3StageGroup(stageIndex))
     P3AssembleSelfWeightOnly
@@ -4404,11 +4586,39 @@ Private Function P3ExecuteStage(ByVal stageIndex As Long) As Boolean
       Exit Function
     End If
     P3SrmReplayStart = P3LastOriginIndex(stageIndex - 1)
+    If FSActive Then FSCaptureSrmParent
     P3FlagsFromPrefix stageIndex - 1
     P3SrmReplayLimit = stageIndex - 1
     If P3SrmReplayLimit < 0 Then P3SrmReplayLimit = 0
     P3ActivePrefix = P3SrmReplayLimit
-    If Not P3RunStrengthReduction() Then Exit Function
+    If Not P3RunStrengthReduction() Then
+      If FSActive Then
+        P3SetMaterialForStrengthFactor 1#
+        FSRestoreSrmParent
+        FSSrmBranch = False
+      End If
+      Exit Function
+    End If
+    If FSActive Then
+      FSRecordState logNo, 0#, True
+      requiredFs = 1#
+      If IsNumeric(P3StageParam(stageIndex)) Then requiredFs = CDbl(P3StageParam(stageIndex))
+      If requiredFs <= 0# Then requiredFs = 1#
+      If Not P3SetMaterialForStrengthFactor(1#) Then Exit Function
+      FSRestoreSrmParent
+      FSSrmBranch = False
+      If P3HasStageAfter(stageIndex) And FSS + 0.000000001 < requiredFs Then
+        SetAnalysisFailure RESULT_NONCONVERGED, "途中SRMの必要Fsに達しないため次工程へ進めません。施工本線の状態は保持しています。", vbObjectError + 3222, FailureElement, FailureGaussPoint, CurrentIncrement, CurrentIteration
+        P3LogStageResult logNo, "SRM", P3StageGroup(stageIndex), False, FSS, "ゲート未達・親状態保持", True
+        Exit Function
+      End If
+      P3LogStageResult logNo, "SRM", P3StageGroup(stageIndex), True, P3FosDisplayFs(), "親水圧保持の照査枝を時刻別結果へ保存・施工本線へ復帰", True
+      FSFrameCaption = "施工本線（SRM照査前の状態） / 工程=" & CStr(logNo) & " / t=" & CStr(FSTime) & " s"
+      FSStoreCaption
+      P3WriteStageSnapshot
+      P3ExecuteStage = True
+      Exit Function
+    End If
     If P3HasStageAfter(stageIndex) Then
       requiredFs = 1#
       If IsNumeric(P3StageParam(stageIndex)) Then requiredFs = CDbl(P3StageParam(stageIndex))
@@ -4426,7 +4636,10 @@ Private Function P3ExecuteStage(ByVal stageIndex As Long) As Boolean
         P3LogStageResult logNo, "SRM", P3StageGroup(stageIndex), False, FSS, "ゲート通過後のFs=1復帰に失敗", True
         Exit Function
       End If
-      If Not P3ReplayStages(stageIndex - 1) Then
+      If FSActive Then
+        FSRestoreSrmParent
+        FSSrmBranch = False
+      ElseIf Not P3ReplayStages(stageIndex - 1) Then
         P3LogStageResult logNo, "SRM", P3StageGroup(stageIndex), False, FSS, "ゲート通過後の履歴再生に失敗", True
         Exit Function
       End If
@@ -4441,6 +4654,14 @@ Private Function P3ExecuteStage(ByVal stageIndex As Long) As Boolean
     Exit Function
   End If
   P3ExecuteStage = True
+  Exit Function
+StageFailed:
+  stageError = Err.number: stageDescription = Err.description: stageSource = Err.source
+  On Error Resume Next
+  FSEndStageGuard False
+  On Error GoTo 0
+  If ResultStatus = RESULT_INPUT_ERROR Or ResultStatus = RESULT_MATERIAL_ERROR Then Exit Function
+  Err.Raise stageError, stageSource, stageDescription
 End Function
 
 ' Replay bookkeeping for stages already covered by the checkpoint. RESET/SRM are not re-executed; origin comes from origin.csv.
@@ -4455,11 +4676,11 @@ Private Sub P3ApplySkippedStage(ByVal stageIndex As Long)
     Case "GRAVITY"
       P3PlanHasGravity = True
     Case "APPLY", "LOAD"
-      P3OverlayLoadingSheet
+      P3OverlayLoadingSheet FSLoadingSet(P3StageId(stageIndex))
       P3HoldOrphanDofs
       P3PlanHasApply = True
     Case "UNLOAD"
-      P3OverlayLoadingSheet
+      P3OverlayLoadingSheet FSLoadingSet(P3StageId(stageIndex))
       P3HoldOrphanDofs
       P3PlanHasApply = True
     Case "BIRTH"
@@ -4482,6 +4703,8 @@ Private Function P3RunAnalysis() As Boolean
   Dim okFlag As Boolean, resumeIndex As Long
   On Error GoTo P3RunFailed
   FEMLastProc = "P3RunAnalysis"
+  FSReset
+  FSResultsReset
   FEMIncrementReset
   AccelResetRun
   P3RunAnalysis = False
@@ -4510,6 +4733,7 @@ Private Function P3RunAnalysis() As Boolean
   FSS = 1#
   If Not P3SetMaterialForStrengthFactor(strengthFactor) Then Exit Function
   P3InitializeTrialState
+  FSPrime
   If P3StageN <= 0 Then
     P3FlagsFromPrefix 0
     If P3RunLoadStages() Then
@@ -4535,6 +4759,9 @@ Private Function P3RunAnalysis() As Boolean
     End If
     If resumeIndex > 0 And stageIndex = resumeIndex + 1 Then
       If Not FEMIoFinishResume() Then Exit Function
+      If FSResumingStage(P3StageId(resumeIndex)) Then
+        If Not P3ExecuteStage(resumeIndex) Then Exit Function
+      End If
     End If
     If Not P3ExecuteStage(stageIndex) Then
       If Not p3StageResultLogged Then P3LogStageResult P3StageId(stageIndex), P3StageKind(stageIndex), P3StageGroup(stageIndex), False, P3CurrentStrengthFactor, AnalysisMessage
@@ -4544,6 +4771,9 @@ P3NextPlanStage:
   Next stageIndex
   If resumeIndex > 0 And resumeIndex >= P3StageN Then
     If Not FEMIoFinishResume() Then Exit Function
+    If FSResumingStage(P3StageId(resumeIndex)) Then
+      If Not P3ExecuteStage(resumeIndex) Then Exit Function
+    End If
   End If
   P3RunAnalysis = True
   Exit Function
@@ -4556,6 +4786,53 @@ P3RunFailed:
   End If
   P3RunAnalysis = False
 End Function
+
+' Load a selected accepted frame for display; never execute a construction step.
+Public Sub P3LoadTimeFrame(ByVal folder As String)
+  Dim stage As Long, i As Long
+  FSReset
+  ResetAnalysisState
+  FEMInvalidateInputCache
+  FEMInvalidateSettingCache
+  SetNodeData
+  SetMaterialData
+  SetElementData
+  P3ElementActiveReady = False
+  If Not SetElmMat() Then FSCoupledInputError AnalysisMessage
+  SetTotalMat
+  P3LoadStagePlan
+  P3CaptureOriginalMaterial
+  If Not P3SetMaterialForStrengthFactor(1#) Then FSCoupledInputError AnalysisMessage
+  P3InitializeTrialState
+  FSPrime
+  stage = FEMIoTryResume(folder, True)
+  If stage <= 0 Or ResultStatus = RESULT_INPUT_ERROR Then FSCoupledInputError "時刻別結果を読み込めません。" & AnalysisMessage
+  For i = 1 To femIoResumeIndex
+    P3ApplySkippedStage i
+    If ResultStatus = RESULT_INPUT_ERROR Or ResultStatus = RESULT_MATERIAL_ERROR Then FSCoupledInputError AnalysisMessage
+  Next i
+  If Not FEMIoFinishResume() Then FSCoupledInputError AnalysisMessage
+  P3LastCompletedStage = stage: P3RunLogStageNo = stage: P3RunLogKind = femIoResumeKind
+  FSSrmBranch = (Dir$(folder & Application.PathSeparator & "branch_only.txt") <> "")
+  AnalysisOK = True: ResultStatus = RESULT_PASS
+  ResultRevision = ModelRevision
+  BuildP1Results
+  With ThisWorkbook.Worksheets("結果節点")
+    .range("A2").Resize(.UsedRange.rows.count, .UsedRange.columns.count).ClearContents
+  End With
+  With ThisWorkbook.Worksheets("結果要素")
+    .range("A2").Resize(.UsedRange.rows.count, .UsedRange.columns.count).ClearContents
+  End With
+  ThisWorkbook.Worksheets("結果増分").cells.ClearContents
+  ThisWorkbook.Worksheets("結果塑性").cells.ClearContents
+  SaveStress
+  SaveDisp
+  FEMIncrementSave
+  GWWriteResults stage
+  AnalysisMessage = "受理済みの時刻別保存状態を読込: " & folder
+  SaveAnalysisReport
+  FSStoreViewContext femIoResumeIndex, stage
+End Sub
 
 Function PlaCalc() As Boolean
   PlaCalc = P3RunAnalysis()

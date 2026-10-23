@@ -1,0 +1,262 @@
+[
+  {
+    "path": "src/vba/CONTROL.bas",
+    "bytes": 103784,
+    "sha256": "27f430e965d010f71278b9f8cf794da82be560fe90657672a3bdd9945ef6073c"
+  },
+  {
+    "path": "src/vba/FEM.bas",
+    "bytes": 173340,
+    "sha256": "538736069227385a5bd0aeac2748e1d72dddc9e85d6a3092e07da38be20721c3"
+  },
+  {
+    "path": "src/vba/FEMAccel.bas",
+    "bytes": 12684,
+    "sha256": "775e56e664ad40217afb4ddd1370dd651f89f14a0d319c0998e6608ca394a0fc"
+  },
+  {
+    "path": "src/vba/FEMAdaptive.bas",
+    "bytes": 20324,
+    "sha256": "3561df14eb010ed34f917bbc7739076691ab8e18667334979a8b04070333ad11"
+  },
+  {
+    "path": "src/vba/FEMCore.bas",
+    "bytes": 54181,
+    "sha256": "98a699592aa31bf7a79395d9d049aade1ab3cebd4d8c1bf235dad2240e9bc8bb"
+  },
+  {
+    "path": "src/vba/FEMEngine.bas",
+    "bytes": 303826,
+    "sha256": "a5369f896ecfac6c175fcc61c344233dc995a3a98ae45af0f59864d9e2cc9440"
+  },
+  {
+    "path": "src/vba/FEMFixedStress.bas",
+    "bytes": 44759,
+    "sha256": "2bcb5caa8ebcc5231649875f50dd1511da9817eb16b0c70b714893d0f23495ff"
+  },
+  {
+    "path": "src/vba/FEMFixedStressGauge.bas",
+    "bytes": 2772,
+    "sha256": "357946f4db7ff28ced2d500aee5abf836f009151f73dbc2df1eebe1e25796712"
+  },
+  {
+    "path": "src/vba/FEMFixedStressInput.bas",
+    "bytes": 12980,
+    "sha256": "772e98fcfe2c0fe3bd1ac894ab7c3869d59b28e88c65061dd1cacbb92cbd3c30"
+  },
+  {
+    "path": "src/vba/FEMFixedStressLedger.bas",
+    "bytes": 5358,
+    "sha256": "078df8e15c325230ee0fcf791f4f6a5cf5e6472aa1275b42e21c9e4e084744fb"
+  },
+  {
+    "path": "src/vba/FEMFixedStressMatrix.bas",
+    "bytes": 7944,
+    "sha256": "07d41a418b2a21da9340688e5e354bb996e6e37d861700ed957a388c4137215e"
+  },
+  {
+    "path": "src/vba/FEMFixedStressResults.bas",
+    "bytes": 9679,
+    "sha256": "7c61c329881b40aef905f1edb3a34b273890cfaf86d6c1f0d9b045701a349692"
+  },
+  {
+    "path": "src/vba/FEMFixedStressSrm.bas",
+    "bytes": 5258,
+    "sha256": "4b191c52d24b4a6225e073e4011fcd2660511b6fa5fe2b5a66f6dbce63368936"
+  },
+  {
+    "path": "src/vba/FEMIncrementLog.bas",
+    "bytes": 10322,
+    "sha256": "6ea6536097fbc78550f795cf3dc093cbbe62b8e567337af45f7ca16ad2aaf6c7"
+  },
+  {
+    "path": "src/vba/FEMIncrementSvg.bas",
+    "bytes": 9363,
+    "sha256": "028987deafd8b8e2b51a7287f5fd09de2db214b93e90c47a64abd9b933062356"
+  },
+  {
+    "path": "src/vba/FEMIo.bas",
+    "bytes": 181730,
+    "sha256": "e494b11051c15d29ba38afca0b5661d6fb76d5b3808e12ddc34b8c70ba53f542"
+  },
+  {
+    "path": "src/vba/FEMJointWater.bas",
+    "bytes": 10691,
+    "sha256": "964a317d142f86b288a653e620a0802ba91e1cc384f2c86ce68762130d7ef5d9"
+  },
+  {
+    "path": "src/vba/FEMMixedElement.bas",
+    "bytes": 9180,
+    "sha256": "82359e76addf635bb51089cb99480eec27c7c9c30c1680d96d82266f0c3bfdd5"
+  },
+  {
+    "path": "src/vba/FEMNative.bas",
+    "bytes": 24389,
+    "sha256": "8e5d7b1eb0154210a03fb8a74c34f02e30ac91a73a21f7d1d9c656b6bcca4620"
+  },
+  {
+    "path": "src/vba/FEMNativeFigure.bas",
+    "bytes": 13855,
+    "sha256": "22c292ee119fc075172f6dc545b0ffc01b5bb1d20e55c615dcad147e82d6f04d"
+  },
+  {
+    "path": "src/vba/FEMNativeKern.bas",
+    "bytes": 16022,
+    "sha256": "93184c1086b67748700b0c522ce7fd367983403c9193c07b5d9908fc1c7bb340"
+  },
+  {
+    "path": "src/vba/FEMNativeMat.bas",
+    "bytes": 14116,
+    "sha256": "e6500276c465d6877b7548f81f4a9810c8804edecec9a09865a2d1036664b3b9"
+  },
+  {
+    "path": "src/vba/FEMPlasticLog.bas",
+    "bytes": 6716,
+    "sha256": "5832e49290cc01345402abc17251d9bebfe727920da896321c92987bf017d002"
+  },
+  {
+    "path": "src/vba/FEMPolicyLog.bas",
+    "bytes": 8319,
+    "sha256": "dea89015f58273c438fa0b590b1eb4a0e07158d3ebb6ae500ad069a917407a2f"
+  },
+  {
+    "path": "src/vba/FEMPractical.bas",
+    "bytes": 7255,
+    "sha256": "0f39d154d02a7e487cc3094e7e48a0cadffdf6378b74126906da701d2de79ca2"
+  },
+  {
+    "path": "src/vba/FEMProgress.bas",
+    "bytes": 3330,
+    "sha256": "622552672d1a0d1a7f22a4d9c7af5583cfed1591fffd2b903319a8afaf087d96"
+  },
+  {
+    "path": "src/vba/FEMResultOptions.bas",
+    "bytes": 8867,
+    "sha256": "42f674605c8000b62c3450e4b5a06986856f8618c9afa1fac517764f49c0986f"
+  },
+  {
+    "path": "src/vba/FEMSeepage.bas",
+    "bytes": 10805,
+    "sha256": "3e600dc9ad280136659bdd71c905f3595729c088f2dae49973d82d100a889283"
+  },
+  {
+    "path": "src/vba/FEMSeepageFlux.bas",
+    "bytes": 6708,
+    "sha256": "c8c2df164f377b1d8a4ab139ae2ad4e2cec73126532759b671ca5adf1f756681"
+  },
+  {
+    "path": "src/vba/FEMSolver.bas",
+    "bytes": 193443,
+    "sha256": "bd8daa3cf81aa90f6e3497e0aef6a2382a5379287b00be75f30b9036c16e3148"
+  },
+  {
+    "path": "src/vba/FEMStageEditor.bas",
+    "bytes": 16590,
+    "sha256": "8a96fbeeb4f9e9bf1310fcf544251d907a37617894a8a1ea15ca3cf4fb33071c"
+  },
+  {
+    "path": "src/vba/FEMStageUi.bas",
+    "bytes": 46549,
+    "sha256": "909d4d8468685db2d832ee9c7432124cd068475192e93cb6716c276643806abd"
+  },
+  {
+    "path": "src/vba/FEMStepRecovery.bas",
+    "bytes": 19183,
+    "sha256": "2337e00ee3a4fbcf371083849170fe987f38b5d653fae22944ab0431d32962a1"
+  },
+  {
+    "path": "src/vba/FEMStrainMath.bas",
+    "bytes": 2784,
+    "sha256": "e000500ea75139a191cd0de8493e6d89fd635c327bcbd7bc3daf199de4c55bd7"
+  },
+  {
+    "path": "src/vba/FEMTerrainBlocks.bas",
+    "bytes": 32348,
+    "sha256": "25b28850dab19ecb002eade1de7e83b782eefc1bf4d10e6ef903deda1e63f2cc"
+  },
+  {
+    "path": "src/vba/FEMUi.bas",
+    "bytes": 7054,
+    "sha256": "8085b9ee4a6730d7c45eec94ae4e9033486ab5a79cf28de2b9b48c3cb14d3a18"
+  },
+  {
+    "path": "src/vba/FEMUiGeometry.bas",
+    "bytes": 9973,
+    "sha256": "ea085d2d4bc982b6871410b7904bdc0cf02670a491ffa4e183a088cf18dac689"
+  },
+  {
+    "path": "src/vba/FEMUiInputs.bas",
+    "bytes": 23846,
+    "sha256": "17ecac3b6dc3279e944948fd5e0a6475571f6436be1293410ad64ececfd44256"
+  },
+  {
+    "path": "src/vba/FEMUiLayout.bas",
+    "bytes": 20724,
+    "sha256": "d2f7d989bbfb0d746c7ad7d6197034a5a645afd3818b8270b6c23d3f81e29b9a"
+  },
+  {
+    "path": "src/vba/FEMUiMeshWorkflow.bas",
+    "bytes": 7370,
+    "sha256": "2ec02c145188f13b992794a0114b095b9fbf46217a807ecdc25de441a1795b03"
+  },
+  {
+    "path": "src/vba/FEMUiValidation.bas",
+    "bytes": 13447,
+    "sha256": "ef98a27bd8e6d8d4d4f7608a664c3684d12de96f3f3c8924b85a83f50164cb84"
+  },
+  {
+    "path": "src/vba/FEMViewer.bas",
+    "bytes": 36314,
+    "sha256": "a08368fb27343c5ab009c1b4e1688c83db8b11cc1487de4e42c45e4b38f459b1"
+  },
+  {
+    "path": "src/vba/FEMViewIncrement.bas",
+    "bytes": 18311,
+    "sha256": "f7459dac9cff6c33416f02307fc8658cd4da76d36d7dbb8a9dcc5dc22886b179"
+  },
+  {
+    "path": "src/vba/FEMWater.bas",
+    "bytes": 58873,
+    "sha256": "b77a26cf6a2314d3e5a804cb3c7ae53ac2a2fe18483290470987ea15f0548e12"
+  },
+  {
+    "path": "src/vba/FEMWaterGeometry.bas",
+    "bytes": 9131,
+    "sha256": "3297b5a54128ac87c093603523030ae095fa4af90bad3b42fcd0cf08bc87857a"
+  },
+  {
+    "path": "src/vba/FEMWaterUi.bas",
+    "bytes": 11683,
+    "sha256": "f008aff4d7c27ed012001662fc2bf3924f88c94df6ceb152c82828e536a8fb77"
+  },
+  {
+    "path": "src/vba/FEMWaterView.bas",
+    "bytes": 19127,
+    "sha256": "3901093d67f465bc2cc863365d080f30cbdd3f9a2e0c26eaef6bc4570cf9d5da"
+  },
+  {
+    "path": "src/vba/Mesh.bas",
+    "bytes": 143533,
+    "sha256": "10b392446bdcf6557a71661093ba2be0ee37856582fa568cba420f6dff29c501"
+  },
+  {
+    "path": "src/vba/MeshAdapt.bas",
+    "bytes": 112109,
+    "sha256": "334a309f65908b238b72ae8bc8c920f68e0a583786ae0dd4e5cbaabaca67f0e3"
+  },
+  {
+    "path": "src/vba/MeshAngle.bas",
+    "bytes": 8848,
+    "sha256": "29b68020567f83d2c3470083f68d597f42d975549bec2328455ee7281e051fc7"
+  },
+  {
+    "path": "src/vba/MeshPerf.bas",
+    "bytes": 1259,
+    "sha256": "9dc06d77de5c612efc6db4037b038adeada3dd6f584375d145f0b2414933b301"
+  },
+  {
+    "path": "src/vba/ThisWorkbook.cls",
+    "bytes": 3097,
+    "sha256": "d864498c2074bcf0443546ef5c5249b55749aa79b6f673757e7332e3fe756b3c"
+  }
+]

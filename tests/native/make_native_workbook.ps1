@@ -5,7 +5,7 @@
 #>
 param([string]$Src,[string]$Dst,[string]$ModDir,[string]$Modules='')
 $ErrorActionPreference='Stop'
-$Required=@('FEMWaterView','FEM','FEMWater','FEMSeepage','FEMSeepageFlux','FEMJointWater','FEMStageUi','MeshAngle','CONTROL','FEMMixedElement','FEMCore','FEMSolver','FEMIo','FEMEngine','FEMNative','FEMNativeMat','FEMNativeKern','FEMUiInputs','FEMUiValidation','FEMUiLayout','FEMUi','FEMViewer','FEMNativeFigure','ThisWorkbook','FEMUiMeshWorkflow','FEMUiGeometry','FEMPractical','MeshAdapt','Mesh','FEMTerrainBlocks','FEMResultOptions','FEMStrainMath','FEMViewIncrement','FEMIncrementSvg')
+$Required=@('FEMFixedStressGauge','FEMFixedStressLedger','FEMFixedStressResults','FEMFixedStressInput','FEMWaterUi','FEMPlasticLog','FEMFixedStressSrm','FEMFixedStressMatrix','FEMFixedStress','FEMStageEditor','FEMWaterView','FEM','FEMWater','FEMSeepage','FEMSeepageFlux','FEMJointWater','FEMStageUi','MeshAngle','CONTROL','FEMMixedElement','FEMCore','FEMSolver','FEMIo','FEMEngine','FEMNative','FEMNativeMat','FEMNativeKern','FEMUiInputs','FEMUiValidation','FEMUiLayout','FEMUi','FEMViewer','FEMNativeFigure','ThisWorkbook','FEMUiMeshWorkflow','FEMUiGeometry','FEMPractical','MeshAdapt','Mesh','FEMTerrainBlocks','FEMResultOptions','FEMStrainMath','FEMViewIncrement','FEMIncrementSvg')
 $list=[Collections.Generic.List[string]]::new(); foreach($m in $Required){$list.Add($m)}
 foreach($m in ($Modules -split ',')){ $m=$m.Trim(); if($m -and -not $list.Contains($m)){$list.Add($m)} }
 if(-not (Test-Path -LiteralPath $Src -PathType Leaf)){throw "Src not found: $Src"}

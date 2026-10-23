@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "kind": "q8",
+      "max_abs": 1.1102230246251565e-15,
+      "mass_volume": 4.998
+    },
+    {
+      "kind": "t6",
+      "max_abs": 2.220446049250313e-16,
+      "mass_volume": 2.498999999999999
+    },
+    {
+      "case": "closed",
+      "max_abs": 1.1102230246251565e-16
+    },
+    {
+      "case": "dirichlet",
+      "max_abs": 1.1102230246251565e-16
+    }
+  ]
+}

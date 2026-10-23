@@ -1,0 +1,76 @@
+{
+  "status": "PASS",
+  "cases": {
+    "issue44_joint_soil": {
+      "status": "PASS",
+      "gp_count": 4,
+      "hydraulic_nodes": 8,
+      "exported_nodes": 16,
+      "faces": 4,
+      "pressure_error": 3.552713678800501e-15,
+      "flux_error": 5.929230630780102e-21,
+      "head_error": 0.0,
+      "reaction_error": 1.8634724839594607e-20,
+      "face_error": 3.3881317890172014e-21,
+      "resume_displacement_error": 4.764560328305439e-22,
+      "metrics": [
+        120.00000000000003,
+        6.661338147750939e-15,
+        119.99999999999997,
+        2.743785156708241e-15,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "issue44_joint_prescribed": {
+      "status": "PASS",
+      "gp_count": 8,
+      "hydraulic_nodes": 16,
+      "exported_nodes": 16,
+      "faces": 8,
+      "pressure_error": 7.105427357601002e-15,
+      "flux_error": 1.5246593050577406e-20,
+      "head_error": 4.440892098500626e-16,
+      "reaction_error": 4.531626267810507e-20,
+      "face_error": 8.470329472543003e-21,
+      "resume_displacement_error": 3.705769144237564e-22,
+      "metrics": [
+        120.00000000000003,
+        0.0,
+        119.99999999999996,
+        1.0232034759968641e-15,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "joint_water_continuous": {
+      "status": "PASS",
+      "gp_count": 8,
+      "hydraulic_nodes": 13,
+      "faces": 8,
+      "pressure_error": 3.552713678800501e-15,
+      "flux_error": 1.665334536937735e-20,
+      "head_error": 8.881784197001252e-16,
+      "reaction_error": 5.844527336054672e-20,
+      "face_error": 3.8116482626443515e-21
+    },
+    "issue44_joint_continuous": {
+      "status": "PASS",
+      "book_sha256": "538D20BB2E071ADB4A0BA0E52B7BC5F361FF38D89847121E5BA75B66EB6C0E91",
+      "actual_error": "ERROR|共有する内部透水面へHEADを指定できません。内部の注排水源は未対応です。外周の水頭境界を指定してください。|FEMWater",
+      "expected_error": "内部透水面へHEAD",
+      "fixture_sha256": "D973F6B819AEB86E3C64BDF37C73BEE5D17EDC76C73A667FE2DCEE4D188C0648"
+    },
+    "issue44_joint_conflict": {
+      "expected_error": "固定水頭が競合",
+      "actual_error": "ERROR|JOINT指定水位と固定水頭が競合しています。|FEMJointWater",
+      "status": "PASS",
+      "fixture_sha256": "EA5A1AB3956C1F943AE77FF5A095F6CB1D9CEBAA37B125B5F158687A21AB66A4",
+      "book_sha256": "538D20BB2E071ADB4A0BA0E52B7BC5F361FF38D89847121E5BA75B66EB6C0E91"
+    }
+  }
+}

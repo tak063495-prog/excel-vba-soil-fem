@@ -1,0 +1,19 @@
+{
+  "max_displacement_difference": 0.0,
+  "errors": "|",
+  "excel_build": 20430.0,
+  "native_group": {
+    "type": 6.0,
+    "height": 540.0,
+    "width": 860.0,
+    "items": 96.0
+  },
+  "max_stress_difference": 0.0,
+  "book_sha256": "F5D08C59413E99D18039372054E6AAA1C1DE965DCCB6438AF4A10CEC681711A1",
+  "frame_sha256": "262CCF45D89CEE2CC292AEC2774E8D14AFCE7DC2C1010042E8505BB807426734",
+  "status": "PASS",
+  "max_pressure_difference": 7.638334409421077E-14,
+  "frame": "C:\\Users\\link_\\Downloads\\VBASoilFEM\\work2\\groundwater-steady\\tests\\tmp\\issues_xlsm\\display7\\transient\\column_nonlinear_srm_out\\time_20261023_190551\\C000012",
+  "frame_id": "C000012",
+  "FEMLastProc": "BuildP1Results"
+}

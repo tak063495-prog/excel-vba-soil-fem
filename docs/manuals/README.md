@@ -1,6 +1,6 @@
 # 操作説明書
 
-**最新：[1024版 PDF・212ページ](2DSoilFEM_Manual_20261024.pdf)**／[原稿](2DSoilFEM_Manual_20261024.md)／[確認結果](../MANUAL_20261024_VALIDATION.md)。全31章、解析例1～18と11-B、理論・結果整理・巻末用語集を継承し、入力手順・セル番地・画面を7画面UIへ更新しました。PDFのブック・資料リンクはmainを参照します。
+**最新：[1024版 PDF・234ページ](2DSoilFEM_Manual_20261024.pdf)**／[原稿](2DSoilFEM_Manual_20261024.md)／[確認結果](../MANUAL_FIXED_STRESS_VALIDATION.md)。全37章、解析例1～23と11-B。既存例の確認値表131行を保持し、混合T6、工程別fixed-stress時間連成の赤枠付き操作、理論解・独立連立解との比較、盛土・掘削・埋戻し・水位変動とSRM、巻末用語集を追加しました。PDF内の配布・資料リンクはmainです。
 
 作成：`MANUAL_PUBLIC_REF=main MANUAL_PDF_TITLE="2DSoilFEM 操作説明書 20261024" python build_manual_pdf_v2.py 2DSoilFEM_Manual_20261024.md 2DSoilFEM_Manual_20261024.pdf`。Windows PowerShellでは各環境変数を`$env:変数名`で指定します。
 

@@ -5,7 +5,7 @@ import pymupdf
 from PIL import Image,ImageDraw
 
 def main():
- ap=argparse.ArgumentParser();ap.add_argument('pdf',type=Path);ap.add_argument('out',type=Path);ap.add_argument('--source',type=Path,default=Path('docs/manuals/2DSoilFEM_Manual.md'));ap.add_argument('--public-ref');ap.add_argument('--book-version',default='20261023');a=ap.parse_args()
+ ap=argparse.ArgumentParser();ap.add_argument('pdf',type=Path);ap.add_argument('out',type=Path);ap.add_argument('--source',type=Path,default=Path('docs/manuals/2DSoilFEM_Manual.md'));ap.add_argument('--public-ref');ap.add_argument('--book-version',default='20261023');ap.add_argument('--last-example',type=int,default=18);a=ap.parse_args()
  a.out.mkdir(parents=True,exist_ok=True);md=a.source.read_text(encoding='utf-8');d=pymupdf.open(a.pdf)
  chapters=re.findall(r'^## (\d+)\. (.+)$',md,re.M)
  assert [int(n) for n,t in chapters]==list(range(1,len(chapters)+1))
@@ -22,7 +22,7 @@ def main():
  for prefix,count in ((8,4),(14,4),(15,4),(16,1),(17,5),(18,4)):
   assert [int(n) for n in re.findall(r'^図'+str(prefix)+r'-(\d+)[　 ]',md,re.M)]==list(range(1,count+1)),prefix
  examples=[int(re.match(r'解析例(\d+)',t)[1]) for n,t in chapters if t.startswith('解析例')]
- assert examples==list(range(1,12))+[11]+list(range(12,19)),examples
+ assert examples==list(range(1,12))+[11]+list(range(12,a.last_example+1)),examples
  captions=re.findall(r'^図([0-9]+(?:-[0-9A-Za-z]+)*)[　 ]',md,re.M)
  assert len(captions)==len(set(captions))
  assert not set(re.findall(r'図([0-9]+(?:-[0-9A-Za-z]+)*)',md))-set(captions)

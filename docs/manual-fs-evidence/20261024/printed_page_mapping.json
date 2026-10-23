@@ -1,0 +1,193 @@
+{
+  "status": "PASS",
+  "source_before_sha256": "2e9a0ee14f041fdbc36669eff52a88f7ea3c6bba327da4d4470d69091a5c4aa2",
+  "source_after_sha256": "0edb1b113f6a972af6eafc4f5579d2415d11af885b55a3271061fc7af5152c8b",
+  "mapping": [
+    {
+      "old": 3,
+      "new": 4,
+      "chapter": 1,
+      "matching_text_fraction": 0.9215017064846417
+    },
+    {
+      "old": 4,
+      "new": 5,
+      "chapter": 1,
+      "matching_text_fraction": 0.9699499165275459
+    },
+    {
+      "old": 5,
+      "new": 6,
+      "chapter": 2,
+      "matching_text_fraction": 0.9718076285240465
+    },
+    {
+      "old": 9,
+      "new": 10,
+      "chapter": 4,
+      "matching_text_fraction": 1.0
+    },
+    {
+      "old": 10,
+      "new": 11,
+      "chapter": 4,
+      "matching_text_fraction": 1.0
+    },
+    {
+      "old": 12,
+      "new": 13,
+      "chapter": 4,
+      "matching_text_fraction": 1.0
+    },
+    {
+      "old": 18,
+      "new": 19,
+      "chapter": 4,
+      "matching_text_fraction": 1.0
+    },
+    {
+      "old": 19,
+      "new": 20,
+      "chapter": 4,
+      "matching_text_fraction": 1.0
+    },
+    {
+      "old": 25,
+      "new": 26,
+      "chapter": 4,
+      "matching_text_fraction": 1.0
+    },
+    {
+      "old": 30,
+      "new": 31,
+      "chapter": 4,
+      "matching_text_fraction": 1.0
+    },
+    {
+      "old": 32,
+      "new": 33,
+      "chapter": 4,
+      "matching_text_fraction": 1.0
+    },
+    {
+      "old": 33,
+      "new": 34,
+      "chapter": 4,
+      "matching_text_fraction": 1.0
+    },
+    {
+      "old": 35,
+      "new": 36,
+      "chapter": 4,
+      "matching_text_fraction": 1.0
+    },
+    {
+      "old": 38,
+      "new": 39,
+      "chapter": 4,
+      "matching_text_fraction": 1.0
+    },
+    {
+      "old": 47,
+      "new": 49,
+      "chapter": 7,
+      "matching_text_fraction": 1.0
+    },
+    {
+      "old": 48,
+      "new": 50,
+      "chapter": 7,
+      "matching_text_fraction": 1.0
+    },
+    {
+      "old": 50,
+      "new": 52,
+      "chapter": 7,
+      "matching_text_fraction": 1.0
+    },
+    {
+      "old": 51,
+      "new": 53,
+      "chapter": 7,
+      "matching_text_fraction": 1.0
+    },
+    {
+      "old": 52,
+      "new": 54,
+      "chapter": 7,
+      "matching_text_fraction": 0.9883805374001452
+    },
+    {
+      "old": 54,
+      "new": 56,
+      "chapter": 7,
+      "matching_text_fraction": 1.0
+    },
+    {
+      "old": 55,
+      "new": 57,
+      "chapter": 7,
+      "matching_text_fraction": 1.0
+    },
+    {
+      "old": 56,
+      "new": 58,
+      "chapter": 7,
+      "matching_text_fraction": 1.0
+    },
+    {
+      "old": 57,
+      "new": 59,
+      "chapter": 7,
+      "matching_text_fraction": 1.0
+    },
+    {
+      "old": 58,
+      "new": 60,
+      "chapter": 7,
+      "matching_text_fraction": 1.0
+    },
+    {
+      "old": 59,
+      "new": 61,
+      "chapter": 7,
+      "matching_text_fraction": 1.0
+    },
+    {
+      "old": 108,
+      "new": 110,
+      "chapter": 14,
+      "matching_text_fraction": 1.0
+    },
+    {
+      "old": 135,
+      "new": 137,
+      "chapter": 17,
+      "matching_text_fraction": 1.0
+    },
+    {
+      "old": 136,
+      "new": 138,
+      "chapter": 17,
+      "matching_text_fraction": 1.0
+    },
+    {
+      "old": 169,
+      "new": 171,
+      "chapter": 22,
+      "matching_text_fraction": 1.0
+    },
+    {
+      "old": 199,
+      "new": 201,
+      "chapter": 29,
+      "matching_text_fraction": 1.0
+    },
+    {
+      "old": 200,
+      "new": 202,
+      "chapter": 29,
+      "matching_text_fraction": 1.0
+    }
+  ]
+}

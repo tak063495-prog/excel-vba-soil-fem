@@ -1,0 +1,351 @@
+{
+  "status": "PASS",
+  "calculation_stamp": "20261024_FIXED_STRESS_05",
+  "release_sha256": "bfb0231915c900d324d322eb63f67f592530253ea98ac4b936bd43bf3b8a65ed",
+  "cases": [
+    {
+      "case": "closed",
+      "status": "PASS",
+      "seconds": 8.106801,
+      "resume_seconds": 2.4923383,
+      "metrics": [
+        36.0,
+        4.884981308350689e-15,
+        46.00000000000001,
+        3.011751360822276e-15,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "fixture_sha256": "DA4BCCA43D58D8CBD2AFE7536F7AFFFDC0C08036D899C4C9C78EDDD08539C787"
+    },
+    {
+      "case": "column_biot_anisotropic",
+      "status": "PASS",
+      "seconds": 9.2796126,
+      "resume_seconds": 2.6028282,
+      "metrics": [
+        36.0,
+        -8.881784197001252e-16,
+        45.99999999795469,
+        5.222296335756642e-11,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "fixture_sha256": "0EF30396EF24245C2FBDBE9D66A699A4E196718A687CBA587A34A97E76CB4047"
+    },
+    {
+      "case": "column_nonlinear_srm",
+      "status": "PASS",
+      "seconds": 11.1700991,
+      "resume_seconds": 2.5555407,
+      "metrics": [
+        36.0,
+        -4.440892098500626e-16,
+        45.999999996738424,
+        8.178878100252796e-11,
+        1.05,
+        1.05,
+        0.0,
+        0.0
+      ],
+      "fixture_sha256": "66016960EFBA149B9272B279569A79E0D5230EFCDB736B309363659E889A8F4E"
+    },
+    {
+      "case": "column_smoke",
+      "status": "PASS",
+      "seconds": 9.4378582,
+      "resume_seconds": 2.5851813,
+      "metrics": [
+        36.0,
+        2.220446049250313e-15,
+        45.99999999648966,
+        9.360153206810002e-11,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "fixture_sha256": "55CAF696E5E7755943CD1A5732FC4E072C5D7253784E6F54088AF98AD8A9A4F6"
+    },
+    {
+      "case": "fill_30day",
+      "status": "PASS",
+      "seconds": 10.6658681,
+      "resume_seconds": 2.5833323,
+      "metrics": [
+        45.0,
+        1.5543122344752192e-15,
+        44.999999997673974,
+        7.234011086163993e-11,
+        1.2,
+        1.2,
+        0.0,
+        0.0
+      ],
+      "fixture_sha256": "9AE4E3119EDC6D3AF87EC301FCB7EB903348DF1D340829F3CA4B7E69B15809FA"
+    },
+    {
+      "case": "joint_transient",
+      "status": "PASS",
+      "seconds": 7.1764715,
+      "resume_seconds": 2.3670424,
+      "metrics": [
+        88.00000000000001,
+        -4.9960036108132044e-15,
+        88.00000000000001,
+        9.206207303935225e-16,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "fixture_sha256": "6994FAE19041E4ADDE777039C2DF3A4DB720757802C5CE88C4B000446FE947FE"
+    },
+    {
+      "case": "mandel_hybrid_refine",
+      "status": "PASS",
+      "seconds": 375.3423492,
+      "resume_seconds": 8.946842,
+      "metrics": [
+        2.4524999999999926,
+        0.3065624999999999,
+        2.4525000000000015,
+        1.4717310266592803e-13,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "fixture_sha256": "06B620FC0AB3C0B0C6253134D14003FB335030E6623557702745A0423A36AE0F"
+    },
+    {
+      "case": "named_unload",
+      "status": "PASS",
+      "seconds": 17.0830821,
+      "resume_seconds": 2.5717614,
+      "metrics": [
+        36.0,
+        -1.3322676295501878e-15,
+        55.62000000000002,
+        2.131785343621891e-15,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "fixture_sha256": "A1F352803151D7AD261F7FE8A04AF66FEB979631491DA2BE5CD5E0243DF12E85"
+    },
+    {
+      "case": "nonlinear_control",
+      "status": "PASS",
+      "seconds": 10.1002973,
+      "resume_seconds": 2.5608378,
+      "metrics": [
+        36.0,
+        2.4424906541753444e-15,
+        46.000000000000014,
+        3.5085281264778617e-15,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "fixture_sha256": "DBC97DCFF90B84A9AAFEAE30A0552105F73C5D02FA998C584B9122A4FF512BB1"
+    },
+    {
+      "case": "pressure_gauge",
+      "status": "EXPECTED_REJECTION",
+      "reason": "INPUT_ERROR|非排水・貯留0で体積変形も拘束され、水圧の基準が定まりません。有限の貯留または水圧境界が必要です。"
+    },
+    {
+      "case": "rollback_instant",
+      "status": "EXPECTED_REJECTION",
+      "reason": "NONCONVERGED|時間連成が収束しません。最後の受理時刻=0 / "
+    },
+    {
+      "case": "saturated_slope_srm",
+      "status": "PASS",
+      "seconds": 15.6455001,
+      "resume_seconds": 2.9411884,
+      "metrics": [
+        3159.9999999999995,
+        294.1995000052648,
+        3964.1452999953585,
+        1.4727667379482662e-11,
+        2.1625000000000014,
+        2.1625000000000014,
+        2.175000000000001,
+        0.012499999999999734
+      ],
+      "fixture_sha256": "0992772D115569D5A834D0A7260FF82B3258C90C7D9BC1ECE3BEE32F8BDE8C79"
+    },
+    {
+      "case": "saturation_rejection",
+      "status": "EXPECTED_REJECTION",
+      "reason": "NONCONVERGED|時間連成が収束しません。最後の受理時刻=0 / 受理候補に負の水圧があります。自由水面・不飽和は適用外です。節点=4 p[kPa]=-4.905"
+    },
+    {
+      "case": "srm_time_rejection",
+      "status": "EXPECTED_REJECTION",
+      "reason": "INPUT_ERROR|時間・排水・連成反復の指定はFIXED_STRESS施工工程で使用します。SRMは親水圧・時刻を保持します。工程=3"
+    },
+    {
+      "case": "t6",
+      "status": "PASS",
+      "seconds": 11.7539951,
+      "resume_seconds": 2.7196207,
+      "metrics": [
+        35.999999999999986,
+        8.881784197001252e-16,
+        45.99999999669531,
+        7.511388329797796e-11,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "fixture_sha256": "843C00F895D735FF625A68B063DBE4B8400C1B354868379F8AC3FB071F3E5F3B"
+    },
+    {
+      "case": "water_external_linear",
+      "status": "PASS",
+      "seconds": 8.073548,
+      "resume_seconds": 2.6139178,
+      "metrics": [
+        40.0,
+        2.6645352591003757e-15,
+        69.43000000000004,
+        1.2742883009730366e-15,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "fixture_sha256": "789951B89BA9ABDD1EB2F83EA6C5F70265187BDDB75BEDCC50CC8CF20E8C0F91"
+    },
+    {
+      "case": "watercurve",
+      "status": "PASS",
+      "seconds": 14.1406135,
+      "resume_seconds": 2.5633803,
+      "metrics": [
+        36.0,
+        -3.774758283725532e-15,
+        46.00000000000001,
+        2.5357919080542728e-15,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "fixture_sha256": "0A572D16DAFD32F433E8FB9D2D082D1E0D2CB8305B4685CBF879192534B266F6"
+    },
+    {
+      "case": "wet_birth_ramp",
+      "status": "PASS",
+      "seconds": 15.4724907,
+      "resume_seconds": 2.7047152,
+      "metrics": [
+        36.0,
+        2.220446049250313e-15,
+        55.62000000000002,
+        2.728086867156935e-15,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "fixture_sha256": "F6AD69924DFE379AE355FAD78E1DFFEBBB735ACB76EA2A8A8013E1FC16AE637F"
+    }
+  ],
+  "archives": [
+    {
+      "path": "accepted_records.zip",
+      "bytes": 49527372,
+      "sha256": "e560201ce816b36344a775ef2a2e73be49906c10cb96ea40103f1517755b86fb",
+      "entries": 5759
+    },
+    {
+      "path": "legacy_records.zip",
+      "bytes": 963512,
+      "sha256": "4370377372490f7f585b9edca4385b58ae7b20b81d7c793be371bf683e814272",
+      "entries": 359
+    },
+    {
+      "path": "mandel_refinement_records.zip",
+      "bytes": 19288757,
+      "sha256": "941a1c280070bf44a5ea8d2d5991d467b1c3017185a6d2ddabf1dad35bdd87bc",
+      "entries": 2781
+    },
+    {
+      "path": "continuation_records.zip",
+      "bytes": 278980,
+      "sha256": "4ecee4e26146352314bda7e5c2600aaab01bbb11197fb355f6927daabf439d08",
+      "entries": 347
+    },
+    {
+      "path": "final_release_records.zip",
+      "bytes": 29307574,
+      "sha256": "6b73e9155544a5b2ea1f8a090ca76d0b8c866def9ee2df87e0bded3882f6a283",
+      "entries": 2711
+    },
+    {
+      "path": "mixed_records.zip",
+      "bytes": 3459740,
+      "sha256": "27e354d4e146ef1b95c7a8ab139e22ab958f48c1e1d958b6ec90d3846a896575",
+      "entries": 154
+    }
+  ],
+  "regression_scope": "full legacy suite on build04; build05 changes only fixed-stress recovery iteration accounting, with the complete coupled suite rerun",
+  "reports": {
+    "package": "package.json",
+    "matrix": "matrix.json",
+    "monolithic": "monolithic.json",
+    "biot_anisotropic": "biot_anisotropic.json",
+    "srm_parent": "srm_parent.json",
+    "rollback": "rollback.json",
+    "water_ramp": "water_ramp.json",
+    "water_profiles": "water_profiles.json",
+    "history": "history.json",
+    "water_history": "water_history.json",
+    "guards": "guards.json",
+    "ui": "ui.json",
+    "mandel": "mandel.json",
+    "final_package": "final_package.json",
+    "regression_package": "regression_package.json",
+    "final_regression": "final_comparison.json",
+    "final_monolithic": "final_monolithic.json",
+    "final_biot_anisotropic": "final_biot_anisotropic.json",
+    "final_srm_parent": "final_srm_parent.json",
+    "final_water_ramp": "final_water_ramp.json",
+    "mixed": "mixed.json",
+    "display_correction": "display_correction.json"
+  },
+  "numerical_reference_sha256": "de80928dcb1e0c24677a114fbf642d89a5b003d9c3c4b75d5cf7c89f87b04e27",
+  "regression_reference_sha256": "a8fa260b210d66e9e70fbfc6c491b7319acd00f8fa191096de70223195c5a5f8",
+  "release_scope": "package31 corrects 3 water-view captions: all17cases rerun with exact numerical agreement to30, independent column/SRM/water-force checks repeated. Final package32 additionally removes reserved labels and gray styling from implemented time inputs; strict compile/all-source reopen, column fresh/resume exact agreement and actual input UI verified. Numerical algorithm unchanged from30.",
+  "final_smoke_checks": [
+    {
+      "record": "result.json",
+      "fields": [
+        "disp",
+        "stress",
+        "metrics"
+      ],
+      "max_difference": 0
+    },
+    {
+      "record": "resume.json",
+      "fields": [
+        "disp",
+        "stress",
+        "metrics"
+      ],
+      "max_difference": 0
+    }
+  ]
+}

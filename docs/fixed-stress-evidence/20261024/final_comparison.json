@@ -1,0 +1,568 @@
+{
+  "status": "PASS",
+  "scope": "caption-only final release versus numerical candidate: all recorded displacement/stress slots/metrics, fresh and resume; rejected-state fields unchanged",
+  "cases": [
+    {
+      "case": "closed",
+      "status": "PASS",
+      "checks": [
+        {
+          "record": "result.json",
+          "field": "disp",
+          "values": 86,
+          "max_difference": 0.0
+        },
+        {
+          "record": "result.json",
+          "field": "stress",
+          "values": 544,
+          "max_difference": 0.0
+        },
+        {
+          "record": "result.json",
+          "field": "metrics",
+          "values": 8,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "disp",
+          "values": 86,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "stress",
+          "values": 544,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "metrics",
+          "values": 8,
+          "max_difference": 0.0
+        }
+      ]
+    },
+    {
+      "case": "column_biot_anisotropic",
+      "status": "PASS",
+      "checks": [
+        {
+          "record": "result.json",
+          "field": "disp",
+          "values": 86,
+          "max_difference": 0.0
+        },
+        {
+          "record": "result.json",
+          "field": "stress",
+          "values": 544,
+          "max_difference": 0.0
+        },
+        {
+          "record": "result.json",
+          "field": "metrics",
+          "values": 8,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "disp",
+          "values": 86,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "stress",
+          "values": 544,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "metrics",
+          "values": 8,
+          "max_difference": 0.0
+        }
+      ]
+    },
+    {
+      "case": "column_nonlinear_srm",
+      "status": "PASS",
+      "checks": [
+        {
+          "record": "result.json",
+          "field": "disp",
+          "values": 86,
+          "max_difference": 0.0
+        },
+        {
+          "record": "result.json",
+          "field": "stress",
+          "values": 544,
+          "max_difference": 0.0
+        },
+        {
+          "record": "result.json",
+          "field": "metrics",
+          "values": 8,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "disp",
+          "values": 86,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "stress",
+          "values": 544,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "metrics",
+          "values": 8,
+          "max_difference": 0.0
+        }
+      ]
+    },
+    {
+      "case": "column_smoke",
+      "status": "PASS",
+      "checks": [
+        {
+          "record": "result.json",
+          "field": "disp",
+          "values": 86,
+          "max_difference": 0.0
+        },
+        {
+          "record": "result.json",
+          "field": "stress",
+          "values": 544,
+          "max_difference": 0.0
+        },
+        {
+          "record": "result.json",
+          "field": "metrics",
+          "values": 8,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "disp",
+          "values": 86,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "stress",
+          "values": 544,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "metrics",
+          "values": 8,
+          "max_difference": 0.0
+        }
+      ]
+    },
+    {
+      "case": "fill_30day",
+      "status": "PASS",
+      "checks": [
+        {
+          "record": "result.json",
+          "field": "disp",
+          "values": 96,
+          "max_difference": 0.0
+        },
+        {
+          "record": "result.json",
+          "field": "stress",
+          "values": 612,
+          "max_difference": 0.0
+        },
+        {
+          "record": "result.json",
+          "field": "metrics",
+          "values": 8,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "disp",
+          "values": 96,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "stress",
+          "values": 612,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "metrics",
+          "values": 8,
+          "max_difference": 0.0
+        }
+      ]
+    },
+    {
+      "case": "joint_transient",
+      "status": "PASS",
+      "checks": [
+        {
+          "record": "result.json",
+          "field": "disp",
+          "values": 32,
+          "max_difference": 0.0
+        },
+        {
+          "record": "result.json",
+          "field": "stress",
+          "values": 204,
+          "max_difference": 0.0
+        },
+        {
+          "record": "result.json",
+          "field": "metrics",
+          "values": 8,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "disp",
+          "values": 32,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "stress",
+          "values": 204,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "metrics",
+          "values": 8,
+          "max_difference": 0.0
+        }
+      ]
+    },
+    {
+      "case": "named_unload",
+      "status": "PASS",
+      "checks": [
+        {
+          "record": "result.json",
+          "field": "disp",
+          "values": 86,
+          "max_difference": 0.0
+        },
+        {
+          "record": "result.json",
+          "field": "stress",
+          "values": 544,
+          "max_difference": 0.0
+        },
+        {
+          "record": "result.json",
+          "field": "metrics",
+          "values": 8,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "disp",
+          "values": 86,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "stress",
+          "values": 544,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "metrics",
+          "values": 8,
+          "max_difference": 0.0
+        }
+      ]
+    },
+    {
+      "case": "nonlinear_control",
+      "status": "PASS",
+      "checks": [
+        {
+          "record": "result.json",
+          "field": "disp",
+          "values": 86,
+          "max_difference": 0.0
+        },
+        {
+          "record": "result.json",
+          "field": "stress",
+          "values": 544,
+          "max_difference": 0.0
+        },
+        {
+          "record": "result.json",
+          "field": "metrics",
+          "values": 8,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "disp",
+          "values": 86,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "stress",
+          "values": 544,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "metrics",
+          "values": 8,
+          "max_difference": 0.0
+        }
+      ]
+    },
+    {
+      "case": "pressure_gauge",
+      "status": "EXPECTED_REJECTION_UNCHANGED"
+    },
+    {
+      "case": "rollback_instant",
+      "status": "EXPECTED_REJECTION_UNCHANGED"
+    },
+    {
+      "case": "saturated_slope_srm",
+      "status": "PASS",
+      "checks": [
+        {
+          "record": "result.json",
+          "field": "disp",
+          "values": 170,
+          "max_difference": 0.0
+        },
+        {
+          "record": "result.json",
+          "field": "stress",
+          "values": 1360,
+          "max_difference": 0.0
+        },
+        {
+          "record": "result.json",
+          "field": "metrics",
+          "values": 8,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "disp",
+          "values": 170,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "stress",
+          "values": 1360,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "metrics",
+          "values": 8,
+          "max_difference": 0.0
+        }
+      ]
+    },
+    {
+      "case": "saturation_rejection",
+      "status": "EXPECTED_REJECTION_UNCHANGED"
+    },
+    {
+      "case": "srm_time_rejection",
+      "status": "EXPECTED_REJECTION_UNCHANGED"
+    },
+    {
+      "case": "t6",
+      "status": "PASS",
+      "checks": [
+        {
+          "record": "result.json",
+          "field": "disp",
+          "values": 102,
+          "max_difference": 0.0
+        },
+        {
+          "record": "result.json",
+          "field": "stress",
+          "values": 1088,
+          "max_difference": 0.0
+        },
+        {
+          "record": "result.json",
+          "field": "metrics",
+          "values": 8,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "disp",
+          "values": 102,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "stress",
+          "values": 1088,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "metrics",
+          "values": 8,
+          "max_difference": 0.0
+        }
+      ]
+    },
+    {
+      "case": "water_external_linear",
+      "status": "PASS",
+      "checks": [
+        {
+          "record": "result.json",
+          "field": "disp",
+          "values": 86,
+          "max_difference": 0.0
+        },
+        {
+          "record": "result.json",
+          "field": "stress",
+          "values": 544,
+          "max_difference": 0.0
+        },
+        {
+          "record": "result.json",
+          "field": "metrics",
+          "values": 8,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "disp",
+          "values": 86,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "stress",
+          "values": 544,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "metrics",
+          "values": 8,
+          "max_difference": 0.0
+        }
+      ]
+    },
+    {
+      "case": "watercurve",
+      "status": "PASS",
+      "checks": [
+        {
+          "record": "result.json",
+          "field": "disp",
+          "values": 86,
+          "max_difference": 0.0
+        },
+        {
+          "record": "result.json",
+          "field": "stress",
+          "values": 544,
+          "max_difference": 0.0
+        },
+        {
+          "record": "result.json",
+          "field": "metrics",
+          "values": 8,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "disp",
+          "values": 86,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "stress",
+          "values": 544,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "metrics",
+          "values": 8,
+          "max_difference": 0.0
+        }
+      ]
+    },
+    {
+      "case": "wet_birth_ramp",
+      "status": "PASS",
+      "checks": [
+        {
+          "record": "result.json",
+          "field": "disp",
+          "values": 86,
+          "max_difference": 0.0
+        },
+        {
+          "record": "result.json",
+          "field": "stress",
+          "values": 544,
+          "max_difference": 0.0
+        },
+        {
+          "record": "result.json",
+          "field": "metrics",
+          "values": 8,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "disp",
+          "values": 86,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "stress",
+          "values": 544,
+          "max_difference": 0.0
+        },
+        {
+          "record": "resume.json",
+          "field": "metrics",
+          "values": 8,
+          "max_difference": 0.0
+        }
+      ]
+    }
+  ]
+}

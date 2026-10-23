@@ -1,0 +1,17 @@
+{
+  "excel_version": "16.0",
+  "checks": [
+    "material-event",
+    "time-unit-event",
+    "copy-time-and-loadset",
+    "undo-copy",
+    "move-stable-ID",
+    "undo-move",
+    "delete-time",
+    "undo-delete",
+    "display-unit"
+  ],
+  "excel_build": 20430.0,
+  "book_sha256": "701FCF60DAB60C0394958470970EABB5E8C84724106E9FABF3F1AAF97FC79E61",
+  "status": "PASS"
+}

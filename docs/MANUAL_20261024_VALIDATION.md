@@ -1,4 +1,6 @@
-# 1024版説明書の確認
+# 1024版説明書の初回改訂確認（212ページ版）
+
+時間連成を追加した現在の234ページ版は[追加機能・理論比較・全ページ確認](MANUAL_FIXED_STRESS_VALIDATION.md)を参照。この記録は7画面UIへの初回差替えと基本斜面の計算を記録する。
 
 対象は [操作説明書PDF](manuals/2DSoilFEM_Manual_20261024.pdf) と [原稿](manuals/2DSoilFEM_Manual_20261024.md)。対応ブックはmainの [2DSoilFEM_ui_20261024.xlsm](../workbook/ui_20261024/2DSoilFEM_ui_20261024.xlsm)（PR #41、merge `5581c061af2983a38eacd69fce3cf3d260a8e352`）です。
 

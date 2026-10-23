@@ -3,6 +3,7 @@ Option Explicit
 Public FEM24StageError As String
 Private mStageUndo As Variant
 Private mWaterUndo As Variant
+Private mTimeUndo As Variant
 Private mStageUndoValid As Boolean
 
 Private Function FEM24Canon(ByVal s As String) As String
@@ -13,6 +14,7 @@ Private Function FEM24Canon(ByVal s As String) As String
     Case "盛土", "盛土・追加", "追加", "BIRTH": FEM24Canon = "BIRTH"
     Case "掘削", "掘削・撤去", "撤去", "DEATH": FEM24Canon = "DEATH"
     Case "水位変更", "WATER": FEM24Canon = "WATER"
+    Case "時間経過", "WAIT": FEM24Canon = "WAIT"
     Case "SRM照査", "SRM": FEM24Canon = "SRM"
     Case "変位リセット", "RESET_U": FEM24Canon = "RESET_U"
     Case "応力リセット", "RESET_STRESS": FEM24Canon = "RESET_STRESS"
@@ -29,6 +31,7 @@ Private Function FEM24Label(ByVal s As String) As String
     Case "BIRTH": FEM24Label = "盛土・追加"
     Case "DEATH": FEM24Label = "掘削・撤去"
     Case "WATER": FEM24Label = "水位変更"
+    Case "WAIT": FEM24Label = "時間経過"
     Case "SRM": FEM24Label = "SRM照査"
     Case "RESET_U": FEM24Label = "変位リセット"
     Case "RESET_STRESS": FEM24Label = "応力リセット"
@@ -56,12 +59,14 @@ End Function
 Private Sub Snapshot()
   mStageUndo = FEM24CaptureCells(ThisWorkbook.Worksheets("ステージ").range("A2:F2000"))
   mWaterUndo = FEM24CaptureCells(ThisWorkbook.Worksheets("水条件").range("L12:T211"))
+  mTimeUndo = FEM24CaptureCells(ThisWorkbook.Worksheets("水条件").range("AC12:AL211"))
   mStageUndoValid = True
 End Sub
 Private Sub Restore()
   If Not mStageUndoValid Then Exit Sub
   Call FEM24RestoreCells(ThisWorkbook.Worksheets("ステージ").range("A2:F2000"), mStageUndo)
   Call FEM24RestoreCells(ThisWorkbook.Worksheets("水条件").range("L12:T211"), mWaterUndo)
+  Call FEM24RestoreCells(ThisWorkbook.Worksheets("水条件").range("AC12:AL211"), mTimeUndo)
 End Sub
 
 Private Function MaxId() As Long
@@ -209,7 +214,7 @@ Public Sub FEM24StagesChanged(ByVal ws As Worksheet, ByVal target As range)
       If kind = "" Then Err.Raise vbObjectError + 2411, , "先に操作を選択してください。"
       id = CLng(src.cells(rr, 1).value2): text = Trim$(CStr(c.value2)): pr = PlanRow(id)
       If c.column = 7 Then
-        If text <> "" And UCase$(text) <> "ONE_WAY" Then Err.Raise vbObjectError + 2412, , "現版はONE_WAYだけ実行できます。"
+        If text <> "" And UCase$(text) <> "ONE_WAY" And UCase$(text) <> "FIXED_STRESS" And UCase$(text) <> "INHERIT" Then Err.Raise vbObjectError + 2412, , "継承/ONE_WAY/FIXED_STRESSを選択してください。"
         If pr = 0 And text <> "" Then pr = PlanRow(id, True)
         If pr > 0 Then water.cells(pr, 13).value2 = UCase$(text)
       Else
@@ -219,7 +224,7 @@ Public Sub FEM24StagesChanged(ByVal ws As Worksheet, ByVal target As range)
           If pr = 0 And text <> "" Then pr = PlanRow(id, True)
           If pr > 0 Then
             water.cells(pr, 14).value2 = text
-            If text <> "" Then water.cells(pr, 13).value2 = "ONE_WAY"
+            If text <> "" And Len(CStr(water.cells(pr, 13).value2)) = 0 Then water.cells(pr, 13).value2 = "INHERIT"
           End If
         End If
       End If
@@ -276,6 +281,11 @@ Public Sub FEM24StageDown(): Mutate "DOWN": End Sub
 Private Sub Mutate(ByVal action As String)
   Dim src As Worksheet, water As Worksheet, r As Long, last As Long, id As Long, k As Long, pr As Long, nr As Long, tmp As Variant, e As Boolean, text As String
   If AnalysisRunning Or ActiveSheet.name <> "施工工程" Then Exit Sub
+  If CStr(ActiveSheet.range("C4").value2) <> "工程の編集" Then
+    FEM24StageError = "工程の追加・複製・削除・移動は「工程の編集」で対象行を選択してください。"
+    If Not SuppressUserMessages Then MsgBox FEM24StageError, vbInformation
+    Exit Sub
+  End If
   If Not (ActiveSheet.parent Is ThisWorkbook) Then Exit Sub
   If Not FEM24PageCurrent("施工工程") Then
     FEM24StageError = "元の工程が更新されています。工程画面を開き直して確認してください。"
@@ -298,6 +308,7 @@ Private Sub Mutate(ByVal action As String)
       If last >= 2000 Then Err.Raise vbObjectError + 2415, , "施工工程は1999行までです。"
       id = MaxId() + 1: nr = last + 1
       If action = "COPY" Then
+        FSCopyTimeOptions CLng(src.cells(r, 1).value2), id
         Call FEM24RestoreCells(src.cells(nr, 1).Resize(1, 6), FEM24CaptureCells(src.cells(r, 1).Resize(1, 6)))
         pr = PlanRow(CLng(src.cells(r, 1).value2))
         If pr > 0 Then
@@ -312,6 +323,7 @@ Private Sub Mutate(ByVal action As String)
     Case "DELETE"
       If Application.CountA(src.range("B2:B2000")) <= 1 Then Err.Raise vbObjectError + 2416, , "最後の工程は削除できません。"
       id = CLng(src.cells(r, 1).value2): pr = PlanRow(id)
+      FSDeleteTimeOptions id
       If pr > 0 Then water.cells(pr, 12).Resize(1, 9).ClearContents
       If r < last Then Call FEM24RestoreCells(src.cells(r, 1).Resize(last - r, 6), FEM24CaptureCells(src.cells(r + 1, 1).Resize(last - r, 6)))
       src.cells(last, 1).Resize(1, 6).ClearContents
