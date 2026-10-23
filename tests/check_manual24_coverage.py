@@ -10,7 +10,12 @@ def result(t):
  return [r for r in m[1].splitlines() if r.startswith('|')] if m else []
 a,b=examples(old),examples(new);count=sections=0
 for key,(_,body) in a.items():
- expected,actual=result(body),result(b[key][1]);assert expected==actual,(key,list(difflib.unified_diff(expected,actual)))
+ expected,actual=result(body),result(b[key][1])
+ # R58-02: preserve the value while correcting its physical interpretation.
+ if key=='10':
+  expected=[r.replace('|内空高さの減少（天端と下端、半径4.0 mの対向節点間）|23.7871 mm|',
+                      '|天端330／下端114のモデル自由度差（工程9−工程1）|23.7871 mm（無効期間をまたぐ参考差分）|') for r in expected]
+ assert expected==actual,(key,list(difflib.unified_diff(expected,actual)))
  count+=len(expected);sections+=bool(expected)
 chapters=re.findall(r'^## (\d+)\. (.+)$',new,re.M)
 assert [int(n) for n,_ in chapters]==list(range(1,38))
@@ -27,5 +32,5 @@ assert '|②|D12|Fs探索の上限' in new and '|④|D8|境界1の格子間隔' 
 assert '水条件 AC12（AC:AL列）' in new and '水条件 V420（V:X列）' in new
 assert '第31・' not in new,'Stale time-operation chapter in compound reference'
 assert 'Kは載荷セットID' in new and 'accepted/column_smoke/fresh_results.xlsm' in new
-report=dict(status='PASS',chapters=37,contiguous_example_chapters=[13,36],numbered_examples=23,additional_example='11-B',unchanged_confirmation_sections=sections,unchanged_confirmation_table_rows=count,old_source=str(old_path),new_source=str(new_path))
+report=dict(status='PASS',chapters=37,contiguous_example_chapters=[13,36],numbered_examples=23,additional_example='11-B',confirmation_sections=sections,preserved_numeric_confirmation_rows=count,corrected_definition_rows=1,old_source=str(old_path),new_source=str(new_path))
 out=Path('tests/tmp/manual24/coverage.json');out.parent.mkdir(parents=True,exist_ok=True);out.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf8');print('PASS',report)

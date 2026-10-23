@@ -131,8 +131,8 @@
   },
   {
     "path": "docs/MANUAL_FIELD_EXAMPLES.md",
-    "bytes": 3588,
-    "sha256": "716535ef204d656f2b289d7039e90a2a8b4d8d49be8a28dc36a5fe9a979a7dba"
+    "bytes": 3630,
+    "sha256": "40dcd910a445c8611b667101921300b7977665d644b8fe0d042497df21fad1e4"
   },
   {
     "path": "docs/MANUAL_FIXED_STRESS_VALIDATION.md",
@@ -141,8 +141,8 @@
   },
   {
     "path": "docs/MANUAL_PRACTICE_REVISION.md",
-    "bytes": 6484,
-    "sha256": "0927c7c9e53153e85c2dbaa6dbedb6d81e1c0e90b784f13235535eee211a961c"
+    "bytes": 6836,
+    "sha256": "06d4168d16d04462e7a26811d8045b84925ec7bbdafdcd24fab47ed9a30336e4"
   },
   {
     "path": "docs/MESH_DELAUNAY_MEMORY.md",
@@ -1261,23 +1261,23 @@
   },
   {
     "path": "docs/manual-field-evidence/20261024/README.md",
-    "bytes": 941,
-    "sha256": "4ba8e4c7f690493bce8e5f22ad3a805ce989db8edc4707dbb609e2046d709306"
+    "bytes": 1174,
+    "sha256": "4b2310682f3ebbc999d576cd0906f45081beda0bcac13c67f1bb5f097dee01b2"
   },
   {
     "path": "docs/manual-field-evidence/20261024/checks.json",
     "bytes": 5293,
-    "sha256": "11a8b2b2af7a53a7f56898719720b752ceea39cd2cc30dee3b1b5f14a39e9f1d"
+    "sha256": "3129bccc6506eba6330a74a499eea742a88963cb9279a42e918980f212954cee"
   },
   {
     "path": "docs/manual-field-evidence/20261024/coverage.json",
-    "bytes": 371,
-    "sha256": "f7f2a7ad9cbff714e5a28fb8f2f93ab429787827f25bedf3ca1a836771760350"
+    "bytes": 398,
+    "sha256": "0a49b16dcc4342167f392b65c716d02c32f2f52a14e64dca9751a29fe5918c44"
   },
   {
     "path": "docs/manual-field-evidence/20261024/field_examples.json",
-    "bytes": 5329,
-    "sha256": "c758794805ccee5546e0abef47e4f7b7a71dc10964d28a68178a0cfa6d90e7be"
+    "bytes": 32902,
+    "sha256": "77ae4f0216ca73957fa22ce519d80fe89b361fe4e7e5417fbcc8d159e7460490"
   },
   {
     "path": "docs/manual-field-evidence/20261024/input_routes.json",
@@ -1286,23 +1286,23 @@
   },
   {
     "path": "docs/manual-field-evidence/20261024/package.json",
-    "bytes": 671,
-    "sha256": "c3168ec61881e5bfd7cd9c84506ebd4870eb8594ce12ffaeb39164628004e360"
+    "bytes": 655,
+    "sha256": "2ce82707316b51ef7bf6ed9d3a6fac39d13d3f6b1c37125050c140451d5fb704"
   },
   {
     "path": "docs/manual-field-evidence/20261024/pdf_checks.json",
     "bytes": 8954,
-    "sha256": "4382786554a4de6befa87cf456887e455d77ffcba71d4c7470ac46943f1ac943"
+    "sha256": "c23fa1f9b0ced34248ede7d185cfe1fdc2df5e813b15fef8726c782d2c24e233"
   },
   {
     "path": "docs/manual-field-evidence/20261024/visual_checks.json",
-    "bytes": 24488,
-    "sha256": "968aad20964dff8c5f40fac4a471c57b69d6deae8c036d13042fc3338f23526a"
+    "bytes": 2873,
+    "sha256": "df18595498dec9673cd3bb81a26e639b7491bf0c0d784f8d1b79a136a2f0b3d2"
   },
   {
     "path": "docs/manual-field-evidence/20261024/visual_review.zip",
-    "bytes": 7028868,
-    "sha256": "59496bb96687275dd6aa5618f28fe9b7f68fc40bc77a1c44515852c44d384c1a"
+    "bytes": 4667249,
+    "sha256": "9ffdc829ec65ce4ea5a0f3fd5783b3d9c6f05ab2f8466aebe6da3e43142ef18f"
   },
   {
     "path": "docs/manual-fs-evidence/20261024/README.md",
@@ -1586,13 +1586,13 @@
   },
   {
     "path": "docs/manuals/2DSoilFEM_Manual_20261024.md",
-    "bytes": 400516,
-    "sha256": "008daa73cda9eaf830f1e7d100e77d6caf1e573a22b8246c7cc3b3e18cdd0edc"
+    "bytes": 401437,
+    "sha256": "d9b9600f90acac868b26b5cfb81c9f310e634f6cbfea03fe706db5c4555400ac"
   },
   {
     "path": "docs/manuals/2DSoilFEM_Manual_20261024.pdf",
-    "bytes": 43475027,
-    "sha256": "41e0121ca2d4894f2298fcb91defc3c47c7576361199abbead87353dc0623c58"
+    "bytes": 43479553,
+    "sha256": "a79a362c11deb66d36f2215b0d3f8d7ba4b5e30fa0cec0a2120602cfb048ed3c"
   },
   {
     "path": "docs/manuals/README.md",
@@ -5851,13 +5851,13 @@
   },
   {
     "path": "docs/manuals/images/practice/road_stage_monitoring.png",
-    "bytes": 106108,
-    "sha256": "085d8e4b82eefce11ecfd2cf78b44a71a4ace9150fa05a6ca3250bd1868793aa"
+    "bytes": 107181,
+    "sha256": "774e1a2ab0d1ed2709b577a54d4f03c281aed73a74a62ff9bd79457f4638777c"
   },
   {
     "path": "docs/manuals/images/practice/tunnel_stage_monitoring.png",
-    "bytes": 76635,
-    "sha256": "b70b646bb719afabfd443095be4ff2cbf244c23f861707586e5cc56d1a3a9ff2"
+    "bytes": 87823,
+    "sha256": "f58a78cba93d6fadeafe966c30d9ce94bf0830a83e1ae0f4edee056b4a1d7049"
   },
   {
     "path": "docs/manuals/images/target/ex02_mesh_ng_ok.png",
@@ -10080,6 +10080,21 @@
     "sha256": "1c3c49305de92b3c126c032bad1799dfcd4202ec002a5304affe953e76740059"
   },
   {
+    "path": "docs/validation/issue35_stage_routes/README.md",
+    "bytes": 2336,
+    "sha256": "2a5833d9be2dad79f4a1541b853ecddd14ae74a8d9d414d48b125f25db3422cc"
+  },
+  {
+    "path": "docs/validation/issue35_stage_routes/checks.json",
+    "bytes": 3497,
+    "sha256": "1ead471cf30c97bc726cbc85c154dce40189c1bcc4a7045ef229cdef46b0212b"
+  },
+  {
+    "path": "docs/validation/issue35_stage_routes/records.zip",
+    "bytes": 1680269,
+    "sha256": "e870c0ba57e34b68444b17c7c47035e4fff04a587917366d49ee6b3658b7f7a3"
+  },
+  {
     "path": "docs/validation/issue3_59/README.md",
     "bytes": 2150,
     "sha256": "03b3a359bc48d978cc5c6abfee2aeba207ca72f215a95a3c0c97dbff2352bbda"
@@ -11681,8 +11696,8 @@
   },
   {
     "path": "tests/build_manual_field_examples.py",
-    "bytes": 6996,
-    "sha256": "68e9e7050004200fac660651de3548dc1c825a860655086daa9914b5d44478ad"
+    "bytes": 13945,
+    "sha256": "04708757c9a4262ea0b8c15d2df0c4fca369545efbd040b629913bf798a36e3c"
   },
   {
     "path": "tests/build_manual_practice_figures.py",
@@ -11856,8 +11871,8 @@
   },
   {
     "path": "tests/check_manual24_coverage.py",
-    "bytes": 2666,
-    "sha256": "a16f3a3ca2223c4dd6a1167f869314cbb88f3411ecbf1262d79a7b9d89319c43"
+    "bytes": 3064,
+    "sha256": "f35825c446a16d065fce6c52979a5dbb2d62497d21cf34de664f0cf3015feeeb"
   },
   {
     "path": "tests/check_manual24_pdf.py",
@@ -11898,6 +11913,11 @@
     "path": "tests/check_manual_review.py",
     "bytes": 2974,
     "sha256": "c6e240b5ef256cd12dcfe5b892f713a37827aaf20809f8521b60c48647d63c6e"
+  },
+  {
+    "path": "tests/check_manual_stage_routes.py",
+    "bytes": 4094,
+    "sha256": "56c2f1c28463095cb07aa1609a3b9722da14dab0c0ba91715cf7248c7e47ae75"
   },
   {
     "path": "tests/check_mesh_benchmark.py",
@@ -13690,6 +13710,11 @@
     "sha256": "fa778ec7eedab2e292880b503557c1f32b0aa7cc0718dc8506bd8702606a7035"
   },
   {
+    "path": "tests/run_manual_stage_routes.ps1",
+    "bytes": 7002,
+    "sha256": "e81766f99966843239078402dbbfede05b08bdcd8a15168805a90adcef468152"
+  },
+  {
     "path": "tests/run_mesh_benchmark.ps1",
     "bytes": 8026,
     "sha256": "0e07537e9404b19e378f50e6a08e4abc4d60075cecafbd94416673015b743b3e"
@@ -13951,8 +13976,8 @@
   },
   {
     "path": "workbook/SoilFEM_UI_20261024.zip",
-    "bytes": 4097842,
-    "sha256": "9fb768b207917c7da8d0c87d73b3d753d7c0a17322f761753ff4934ff7ea8eab"
+    "bytes": 4097882,
+    "sha256": "6732f8c3f848d995fa22fa67326d32e65a2d85077919bd1965550ed67ef31610"
   },
   {
     "path": "workbook/inco_assembly_20261020/2DSoilFEM_inco_assembly_20261020.xlsm",
@@ -14231,8 +14256,8 @@
   },
   {
     "path": "workbook/ui_20261024/BUILD_RECORD.json",
-    "bytes": 8608,
-    "sha256": "fd61bdec40030bf49ea46c996e84af59459f7754b9ae6fa6f6f82f9d07560437"
+    "bytes": 8706,
+    "sha256": "bff91a95569a6d49da960f55dd7e28de38225b383129cab0837a46469f99ed1f"
   },
   {
     "path": "workbook/ui_20261024/README.md",

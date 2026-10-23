@@ -142,9 +142,10 @@
     "src/vba/ThisWorkbook.cls": "d864498c2074bcf0443546ef5c5249b55749aa79b6f673757e7332e3fe756b3c"
   },
   "validation_record": "docs/validation/issue3_inner/validation.json",
-  "pdf_sha256": "41e0121ca2d4894f2298fcb91defc3c47c7576361199abbead87353dc0623c58",
-  "manual_revision": "field-stage monitoring, cutoff flow, box water balance, output selection and glossary; 242 pages /37 chapters",
+  "pdf_sha256": "a79a362c11deb66d36f2215b0d3f8d7ba4b5e30fa0cec0a2120602cfb048ed3c",
+  "manual_revision": "Issue35 R58-01/R58-02: ALL result extraction, permanent road point19, inactive tunnel gaps/reference stages; 242 pages /37 chapters",
   "previous_validation_record": "docs/validation/issue3_59/validation.json",
   "issue3_59_patch": "Err18 propagation/accepted rollback; Q8 full-domain Bernstein geometry validation. Calculation/checkpoint schema07 unchanged.",
-  "issue3_inner_patch": "Preserve Err18 before closing PlasticLogWrite/FSWriteCheckpoint/FSLedgerWrite/GWWriteCheckpoint. Ordinary stage/time error behavior and checkpoint schema07 unchanged."
+  "issue3_inner_patch": "Preserve Err18 before closing PlasticLogWrite/FSWriteCheckpoint/FSLedgerWrite/GWWriteCheckpoint. Ordinary stage/time error behavior and checkpoint schema07 unchanged.",
+  "manual_validation": "docs/validation/issue35_stage_routes/checks.json"
 }
