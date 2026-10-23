@@ -89,3 +89,7 @@ python tests/check_fixed_stress_matrix.py <行列検証フォルダー>/actual.j
 Mandelの粗・細・時間細分化入力と判定手順は[入力一覧](../tests/fixtures/fixed_stress/README.md)を参照。既にExcelが起動している場合は試験を開始しない。検証中の計算を時間だけで停止する仕組みは入れていない。
 
 [受入集計](fixed-stress-evidence/20261024/validation.json)、[最終配布候補の17入力・全数値比較](fixed-stress-evidence/20261024/final_comparison.json)、[最終候補のログと結果ブック](fixed-stress-evidence/20261024/final_release_records.zip)、[実計算・ログ・選定した結果ブック](fixed-stress-evidence/20261024/accepted_records.zip)、[従来機能の比較記録](fixed-stress-evidence/20261024/legacy_records.zip)、[Mandelの粗・細分化記録](fixed-stress-evidence/20261024/mandel_refinement_records.zip)、[別プロセス再開・表示・入力操作の記録](fixed-stress-evidence/20261024/continuation_records.zip)。ZIP内のarchive_manifest.jsonで各ファイルのSHA256を確認できる。結果ブックと対応する外部の出力フォルダーは、ZIP全体を展開して同じ相対位置に保つ。
+
+## XLSMの後続issue対応
+
+計算ビルド06では、水圧・SRM成功状態の復元、工程IDとRESET後の表示、静水圧の水位差検査、内部HEADの入力拒否、新規解析の塑性結果消去を修正しました。[修正内容・実Excel照合・最新配布候補の回帰記録](XLSM_ISSUE_VALIDATION.md)を参照してください。上記候補30～32の記録は、その時点の検証履歴として保持します。

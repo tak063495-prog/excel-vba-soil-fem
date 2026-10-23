@@ -1,0 +1,28 @@
+START issue44_joint_soil 2026-10-23T18:59:27.4231661+09:00
+START issue44_joint_prescribed 2026-10-23T18:59:51.2580649+09:00
+START issue44_joint_continuous 2026-10-23T19:00:15.1268701+09:00
+START issue44_joint_conflict 2026-10-23T19:00:24.4591707+09:00
+START issue44_internal_head 2026-10-23T19:00:33.9670400+09:00
+START issue44_external_linear 2026-10-23T19:00:43.2990619+09:00
+START issue44_external_layers 2026-10-23T19:01:07.1106500+09:00
+START issue45_start_only 2026-10-23T19:01:30.7183048+09:00
+START issue45_hidden_knot 2026-10-23T19:01:39.9064424+09:00
+START issue45_numeric_head 2026-10-23T19:01:49.2920854+09:00
+START issue45_equivalent 2026-10-23T19:01:58.6359760+09:00
+START joint_water_continuous 2026-10-23T19:02:22.0670669+09:00
+START joint_water_soil_steady 2026-10-23T19:02:46.1355142+09:00
+START joint_water_prescribed_steady 2026-10-23T19:03:09.2653265+09:00
+START joint_water_conflicting_heads 2026-10-23T19:03:32.4109640+09:00
+Traceback (most recent call last):
+  File "C:\Users\link_\Downloads\VBASoilFEM\work2\groundwater-steady\tests/check_issue44_joint.py", line 50, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "C:\Users\link_\Downloads\VBASoilFEM\work2\groundwater-steady\tests/check_issue44_joint.py", line 39, in main
+    assert len(gp)==8 and len(nodes)==13 and len(faces)==8,(name,len(gp),len(nodes),len(faces))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('joint_water_continuous', 8, 16, 8)
+Exception: C:\Users\link_\Downloads\VBASoilFEM\work2\groundwater-steady\tests\run_issue44_joint_regression.ps1:6
+Line |
+   6 |  … d([string]$step){if($LASTEXITCODE -ne 0){throw "Failed $step"};for($i …
+     |                                             ~~~~~~~~~~~~~~~~~~~~
+     | Failed analytic

@@ -9,7 +9,7 @@ Private mWs As Worksheet, mReady As Boolean, mFlowSolved As Boolean
 Private mBasis() As Boolean, mK() As Double, mMatProfile() As String
 Private mTarget() As Double, mCurrent() As Double, mCommitted() As Double, mStart() As Double
 Private mWaterForce() As Double, mHeads() As Double, mFx() As Double, mFy() As Double, mFlowReaction() As Double
-Private mBoundary As Object, mEdges As Object, mOwners As Object, mHoles As Object
+Private mBoundary As Object, mEdges As Object, mOwners As Object, mSecondOwners As Object, mHoles As Object
 Private mFaceFlows() As Double, mLocalError As Double, mFluxCorrection As Double
 Private mRel As Double, mBalance As Double, mSeconds As Double, mSource As String
 Private mInflow As Double, mOutflow As Double, mSig As String
@@ -273,6 +273,7 @@ Private Sub GWLoadDefinition()
   End If
   Set mBoundary = CreateObject("Scripting.Dictionary")
   Set mEdges = CreateObject("Scripting.Dictionary"): Set mOwners = CreateObject("Scripting.Dictionary")
+  Set mSecondOwners = CreateObject("Scripting.Dictionary")
   For e = 0 To NumberOfElement - 1
     If P3IsElementActive(e) And Not Elem(e).IsJoint Then
       For side = 0 To 3
@@ -281,6 +282,7 @@ Private Sub GWLoadDefinition()
         If mEdges.Exists(k) Then
           mEdges(k) = CLng(mEdges(k)) + 1
           If CLng(mEdges(k)) > 2 Then GWFail "境界辺の接続が非多様体です。"
+          mSecondOwners.Add k, Array(e, side)
         Else
           mEdges.Add k, 1: mOwners.Add k, Array(e, side)
         End If
@@ -305,12 +307,13 @@ Private Sub GWLoadDefinition()
       If kind = "NOFLOW" And mMode = "STEADY" Then
         If CLng(mEdges(GWEdgeKey(e, side))) = 2 Then GWFail "共有透水節点を持つ内部辺へ遮水を指定できません。遮水体を領域として定義してください。"
       End If
+      If kind = "HEAD" And mMode = "STEADY" And Not FSActive Then
+        If GWInternalPermeableFace(e, side) Then GWFail "共有する内部透水面へHEADを指定できません。内部の注排水源は未対応です。外周の水頭境界を指定してください。"
+      End If
       If mMode = "HYDROSTATIC" And Not FSActive And Material(Elem(e).MatNo).kind = "SOIL" Then
         If kind = "HEAD" Or kind = "EXPOSED" Then
           spec = Trim$(CStr(mWs.cells(r, 4).value2))
-          If Len(spec) > 0 Then
-            If Abs(GWLevel(spec, Elem(e).x(side)) - GWLevel(mMatProfile(Elem(e).MatNo), Elem(e).x(side))) > 0.00000001 Then GWFail "外水位と地盤水圧場に水頭差があります。定常浸透へ切り替え、透水係数と境界条件を入力してください。"
-          End If
+          GWCheckFaceHead e, side, spec, mWs.cells(r, 5).value2
         End If
       End If
       If kind = "EXPOSED" Or kind = "DRY" Then
@@ -319,6 +322,52 @@ Private Sub GWLoadDefinition()
 NextWaterBoundary:
     End If
   Next r
+End Sub
+
+Private Function GWInternalPermeableFace(ByVal e As Long, ByVal side As Long) As Boolean
+  Dim key As String, other As Variant
+  If mK(e) <= 0# Then Exit Function
+  key = GWEdgeKey(e, side)
+  If CLng(mEdges(key)) <> 2 Then Exit Function
+  other = mOwners(key)
+  If CLng(other(0)) = e Then other = mSecondOwners(key)
+  If mK(CLng(other(0))) <= 0# Then Exit Function
+  ' SOIL/PRESCRIBED JOINT faces are physical neighbours but retain separate
+  ' hydraulic DOFs. Only an actually shared flow edge is an internal source.
+  GWInternalPermeableFace = (GWFlowEdgeKey(e, side) = GWFlowEdgeKey(CLng(other(0)), CLng(other(1))))
+End Function
+
+Private Function GWFlowEdgeKey(ByVal e As Long, ByVal side As Long) As String
+  Dim a As Long, b As Long, c As Long, swap As Long
+  a = GWFlowNode(e, side): b = GWFlowNode(e, (side + 1) Mod 4)
+  c = GWFlowNode(e, side + 4)
+  If a > b Then swap = a: a = b: b = swap
+  GWFlowEdgeKey = CStr(a) & ":" & CStr(b) & ":" & CStr(c)
+End Function
+
+' The difference of two piecewise-linear profiles is linear between their
+' combined knots. Endpoints plus both knot sets therefore cover the full face.
+Private Sub GWCheckFaceHead(ByVal e As Long, ByVal side As Long, ByVal profile As String, ByVal constantHead As Variant)
+  Dim a As Double, b As Double, x As Double, r As Long, key As String, soil As String, water As String
+  a = Elem(e).x(side): b = Elem(e).x((side + 1) Mod 4)
+  If a > b Then x = a: a = b: b = x
+  soil = mMatProfile(Elem(e).MatNo): If soil = "*" Or soil = "" Then soil = mProfile
+  water = profile: If water = "*" Then water = mProfile
+  GWCheckHeadAt e, profile, constantHead, a
+  GWCheckHeadAt e, profile, constantHead, b
+  For r = 12 To 211
+    key = Trim$(CStr(mWs.cells(r, 1).value2))
+    If Len(key) > 0 And (key = soil Or key = water) Then
+      x = GWNum(mWs.cells(r, 2).value2, "水位X")
+      If x > a And x < b Then GWCheckHeadAt e, profile, constantHead, x
+    End If
+  Next r
+End Sub
+
+Private Sub GWCheckHeadAt(ByVal e As Long, ByVal profile As String, ByVal constantHead As Variant, ByVal x As Double)
+  Dim h As Double
+  If Len(profile) = 0 Then h = GWNum(constantHead, "固定全水頭") Else h = GWLevel(profile, x)
+  If Abs(h - GWLevel(mMatProfile(Elem(e).MatNo), x)) > 0.00000001 Then GWFail "外水位と地盤水圧場に水頭差があります。定常浸透へ切り替え、透水係数と境界条件を入力してください。"
 End Sub
 
 Private Sub GWApplyHeads(ByRef fixed() As Boolean, ByRef heads() As Double)
@@ -546,6 +595,9 @@ Public Sub GWTrialFactor(ByVal factor As Double)
   If Not GWActive Then Exit Sub
   For e = 0 To NumberOfElement - 1
     For g = 0 To 3
+      ' A changed pore pressure invalidates material/force evaluation even
+      ' when displacement and total external loads are unchanged.
+      If mCurrent(g, e) <> mStart(g, e) + factor * (mTarget(g, e) - mStart(g, e)) Then P3TrialStateValid = False
       mCurrent(g, e) = mStart(g, e) + factor * (mTarget(g, e) - mStart(g, e))
     Next g
   Next e
@@ -592,6 +644,66 @@ End Function
 Public Sub GWUseFinalPressure()
   If Not GWActive Or Not mReady Then Exit Sub
   mCurrent = mTarget: mCommitted = mTarget
+End Sub
+
+' Capture accepted physical water together with the mechanical SRM snapshot.
+' Never use the last failed trial's target as the accepted pore pressure.
+Public Function GWCaptureSrmState() As Object
+  Dim saved As Object, rows As Collection, item As Variant
+  Set saved = CreateObject("Scripting.Dictionary")
+  saved.Add "active", GWActive: saved.Add "ready", mReady
+  If GWActive And mReady Then
+    saved.Add "selector", GWTransientState()
+    saved.Add "target", mTarget: saved.Add "current", mCurrent
+    saved.Add "committed", mCommitted: saved.Add "start", mStart
+    saved.Add "force", mWaterForce
+    saved.Add "conductivity", mK
+    saved.Add "solved", mFlowSolved
+    If mFlowSolved Then
+      saved.Add "heads", mHeads: saved.Add "fx", mFx: saved.Add "fy", mFy
+      saved.Add "reaction", mFlowReaction: saved.Add "fixed", mHeadFixed
+      If Not FSActive Then saved.Add "faces", mFaceFlows
+    End If
+    saved.Add "metrics", Array(mRel, mBalance, mSeconds, mLocalError, mFluxCorrection, mInflow, mOutflow)
+    saved.Add "signature", mSig: saved.Add "source", mSource
+    Set rows = New Collection
+    For Each item In mSurfaceRows: rows.Add item: Next item
+    saved.Add "surfaces", rows
+  End If
+  Set GWCaptureSrmState = saved
+End Function
+
+Public Sub GWRestoreSrmState(ByVal saved As Object)
+  Dim selector As Variant, metrics As Variant, item As Variant, rows As Collection
+  If saved Is Nothing Then GWFail "SRM成功状態の水圧スナップショットがありません。"
+  GWActive = CBool(saved("active")): mReady = False: GJReady = False
+  If Not GWActive Then Exit Sub
+  If Not CBool(saved("ready")) Then GWFail "SRM成功状態の水圧場が未準備です。"
+  selector = saved("selector")
+  mTemporal = selector(0): mTimeFirst = selector(1): mTimeLast = selector(2): mTimeFraction = selector(3)
+  mOverrideProfile = selector(4)
+  ' Active elements and node conditions have already been restored by SRM.
+  ' Rebuild definitions and JOINT topology/flow aliases for that same active set.
+  GWLoadDefinition
+  ' Transient conductivity can differ from the one-way input table.
+  mK = saved("conductivity")
+  mTarget = saved("target"): mCurrent = saved("current")
+  mCommitted = saved("committed"): mStart = saved("start")
+  mWaterForce = saved("force"): mHeadFixed = selector(6)
+  mFlowSolved = CBool(saved("solved"))
+  Erase mHeads: Erase mFx: Erase mFy: Erase mFlowReaction: Erase mFaceFlows
+  If mFlowSolved Then
+    mHeads = saved("heads"): mFx = saved("fx"): mFy = saved("fy")
+    mFlowReaction = saved("reaction"): mHeadFixed = saved("fixed")
+    If saved.Exists("faces") Then mFaceFlows = saved("faces")
+  End If
+  metrics = saved("metrics")
+  mRel = metrics(0): mBalance = metrics(1): mSeconds = metrics(2)
+  mLocalError = metrics(3): mFluxCorrection = metrics(4): mInflow = metrics(5): mOutflow = metrics(6)
+  mSig = saved("signature"): mSource = saved("source")
+  Set rows = saved("surfaces"): Set mSurfaceRows = New Collection
+  For Each item In rows: mSurfaceRows.Add item: Next item
+  mReady = True
 End Sub
 
 Public Sub GWStage(ByVal profile As String)

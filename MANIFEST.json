@@ -16,8 +16,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 28344,
-    "sha256": "f63f9791b0e64a799c236d4aeaabcca33ce3e4f00598a0c0708d664c0e9b2339"
+    "bytes": 28437,
+    "sha256": "bd69783e6775d96f2a2c1db990e2f6e43b535266dbd668f78f5bd0ba895a0f19"
   },
   {
     "path": "docs/ACCELERATION_HISTORY.md",
@@ -36,13 +36,13 @@
   },
   {
     "path": "docs/FIXED_STRESS_VALIDATION.md",
-    "bytes": 10410,
-    "sha256": "81feef19b5895771b721601611af79c64187a5cd53018a94f37a7f2b0ef5036a"
+    "bytes": 10860,
+    "sha256": "88d5ecc197f4f645c9932a0476b8ac0bdf485fc753d86467416e7767c70b8969"
   },
   {
     "path": "docs/GROUNDWATER.md",
-    "bytes": 18231,
-    "sha256": "564a16cfac4013d6f36dd9b9df86a7567ac74e4060e04381e609e653780d7db5"
+    "bytes": 19077,
+    "sha256": "c8e92363ca5e276cfa73756ca0e7c5c90586fb5f4f533e9b2392d554e4ef1c06"
   },
   {
     "path": "docs/GROUNDWATER_VALIDATION.md",
@@ -233,6 +233,11 @@
     "path": "docs/WORKBOOK_UI_20261020.md",
     "bytes": 10680,
     "sha256": "2b2d02c42c94e717cbbb2b8f0352cf7e12eb4b9d0a145975817eb7059d1f1234"
+  },
+  {
+    "path": "docs/XLSM_ISSUE_VALIDATION.md",
+    "bytes": 9473,
+    "sha256": "472e7a73529fb6b58a7a3081a2d286e71c9869e38ef14cfb5c62a7539d2b982f"
   },
   {
     "path": "docs/benchmark-summary.csv",
@@ -10465,6 +10470,201 @@
     "sha256": "c4de383a293a5d43a3ba55d64fb1625c7f0f787fdb53d1faee154b7993a2c9d5"
   },
   {
+    "path": "docs/xlsm-issue-evidence/20261024/README.md",
+    "bytes": 1663,
+    "sha256": "f22887be4ecf85f45f5902cc45b6a8b7341d8570eefe805476d781f04fc3baa3"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/build6.log",
+    "bytes": 10942,
+    "sha256": "5a107a41157091c5159154c65c1eb973d7da7a5d927902d3185d324f0225e867"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/build7.log",
+    "bytes": 10942,
+    "sha256": "b73330d3ebf56a01a2da3e9e6c186af4de62c6bd57c5b986e744ee08e53abab0"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/display7_reset.log",
+    "bytes": 2371,
+    "sha256": "d293e95a0315cd3d289793bfe49135ae69c8818dab0048553d1f8dcba90704a1"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/display7_snapshot.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/display7_transient.log",
+    "bytes": 12093,
+    "sha256": "f45e2b36cb195484e4d542838c7a1ff27adb0e5a02d727925da5338dcd9f052f"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/display7_view.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/final_analytic_check.log",
+    "bytes": 45,
+    "sha256": "8ac34492816f53f168df9c0559f93d340349d19f4d1e41c5bd7fe1b22b78957c"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/final_boundary_records.zip",
+    "bytes": 25968157,
+    "sha256": "44071862e8e1a5e75fdddb1bdabe9739ebede53db8d3647bda2d88b6eed78939"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/final_display_records.zip",
+    "bytes": 6899678,
+    "sha256": "69f77b7138b8f3a9950574d491c972da0f4c65451402e5ff3379099c34cb9e39"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/final_water_analytic.json",
+    "bytes": 3795,
+    "sha256": "89876a6574e7e35100164a327e0c740950b9efb15b1b427740276119835d1074"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/fixed6.log",
+    "bytes": 1909,
+    "sha256": "b2c3cc2bd2c993956f4756c7d6fc9d971a3dcdb33ff5d92102c71c7bf38b562b"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/fixed_stress_comparison.json",
+    "bytes": 9869,
+    "sha256": "1a25ba1e3a439d263d316e56cba3355e29c4087aa31ea2a51b5871601a29cc1d"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/fixed_stress_records.zip",
+    "bytes": 45651732,
+    "sha256": "cfc62f74c3ae940d520896cf217cbe52b120109973f468a367aaca356ba920bb"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/focus7.log",
+    "bytes": 1828,
+    "sha256": "368ecfb496ff4a95bb944b7c8a636e6faa3cb6b74afc77fa7a752c8eaf9b35e6"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/full_regression_package.json",
+    "bytes": 1729,
+    "sha256": "6b73df61bb17268545cc7e0dfba35dc445e7300df23223b5cc09c4f327928681"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/full_regression_source.zip",
+    "bytes": 445097,
+    "sha256": "46f568761ad02126a30c7c11f1d14cf162e2b6cf0dad8baae40a81a58814be67"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/full_regression_source_snapshot.json",
+    "bytes": 4782,
+    "sha256": "c51def1571870b78b15835492956d5fdb1f119c6f9f4939c27b6ccaf4b87de9b"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/issue_records.zip",
+    "bytes": 42852609,
+    "sha256": "be321434c748751f228fc88b9e2bbbcab3fdc7a152305ab37ed44d60c25ec155"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/issues6.log",
+    "bytes": 2117,
+    "sha256": "fe08f47145152e2739903832c1f2b132346496dc94e093380cb7fa60e971d044"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/joint_analytic.json",
+    "bytes": 2518,
+    "sha256": "4708ae44c479f450354bc5cfa1847d7a92ced398ef536238c1e9008454cd4e70"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/legacy_comparison.json",
+    "bytes": 5686,
+    "sha256": "19c821d76e4d952188063e28e88c8cb9a352702d9b80a8a88a4619672ff35091"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/legacy_independent.json",
+    "bytes": 1367,
+    "sha256": "26d8d272a962b8833459d872bf390c20caf62656976171b104a6f7735092439e"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/legacy_records.zip",
+    "bytes": 33670608,
+    "sha256": "4236c88a035dd6ff0888234402ea11d1fe4fcddc2f0653ee5d1f99e9b1069914"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/package.json",
+    "bytes": 1729,
+    "sha256": "457152d76ab708b4bbbae99eb6c460f3495d91aa0ea9fe599713baab678f1870"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/package6.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/package7.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/queue6.log",
+    "bytes": 123,
+    "sha256": "d01bab2e8a14e79769d055d6ed59ae92dd55a312f81c6b7f0907f781f0751b06"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/screen_reset.jpg",
+    "bytes": 144196,
+    "sha256": "d9b2437b76e4220387a695585ce6859b21da729397b819b76bfce4797051dae6"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/screen_reset.json",
+    "bytes": 374,
+    "sha256": "df299c9d611d7a463acbda05ffac8462f1fc6f0b86590ec86c061693222e36c2"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/screen_transient.jpg",
+    "bytes": 201494,
+    "sha256": "6f00dfdf3cde796870bec9b691867f7e6b39ff7261f686a3b664a14c35b2bfde"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/screen_transient.json",
+    "bytes": 387,
+    "sha256": "548bdbcab56417b83aaf31dd15f57452742b7ac06c6199f0efcb6009bb7af9a7"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/separated_independent.json",
+    "bytes": 323,
+    "sha256": "e1fb27e8df6766a7c9fcea19b405f4f0f070d14136f2cba97d0655dbda0476ca"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/source_snapshot.json",
+    "bytes": 7802,
+    "sha256": "42ee53b4dba8f704c5831cc7140e940febc2529f00b5e6bb1b86e94e1e366cb6"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/srm_hydraulic_output.json",
+    "bytes": 161,
+    "sha256": "e3c2ab1197db89fb36c4b0debc46f2382ebd66b1c0e540e1f4b0819a73118f69"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/states.json",
+    "bytes": 7274,
+    "sha256": "2f6d6963cff2f792412176898d08037398c74cc2689b5ee93f4f692ed703c60a"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/validation.json",
+    "bytes": 6296,
+    "sha256": "4cc82a957b0fd2847fdd2632da9597807536179adc1c82b6a2c44b1b32eab5d4"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/water6.log",
+    "bytes": 7382,
+    "sha256": "cd9a97cdc3ff21461f86e5d83f3c7049cb07800985a84874f86b534c984eb08c"
+  },
+  {
+    "path": "docs/xlsm-issue-evidence/20261024/water_analytic.json",
+    "bytes": 3795,
+    "sha256": "89876a6574e7e35100164a327e0c740950b9efb15b1b427740276119835d1074"
+  },
+  {
     "path": "native/build.cmd",
     "bytes": 1192,
     "sha256": "6500ad3dba257cdc6660126bb4cf1cf4ae10634039af0b9c450681eb5863d893"
@@ -10562,12 +10762,12 @@
   {
     "path": "src/vba/FEMCore.bas",
     "bytes": 54181,
-    "sha256": "68144249103261704bf0f99ba934aadad167a43c63ed602fd890fb0607693a32"
+    "sha256": "98a699592aa31bf7a79395d9d049aade1ab3cebd4d8c1bf235dad2240e9bc8bb"
   },
   {
     "path": "src/vba/FEMEngine.bas",
-    "bytes": 302933,
-    "sha256": "bb36fe5a85d8856f514c272d49c70ea0097bad0cce71681250eebab86bddf3b7"
+    "bytes": 303826,
+    "sha256": "a5369f896ecfac6c175fcc61c344233dc995a3a98ae45af0f59864d9e2cc9440"
   },
   {
     "path": "src/vba/FEMFixedStress.bas",
@@ -10616,8 +10816,8 @@
   },
   {
     "path": "src/vba/FEMIo.bas",
-    "bytes": 181583,
-    "sha256": "5a9eb6e265146a30348678a0fe5aaa6b674a2b7fb633cf0f327a619cd267ed8a"
+    "bytes": 181730,
+    "sha256": "e494b11051c15d29ba38afca0b5661d6fb76d5b3808e12ddc34b8c70ba53f542"
   },
   {
     "path": "src/vba/FEMJointWater.bas",
@@ -10746,18 +10946,18 @@
   },
   {
     "path": "src/vba/FEMViewIncrement.bas",
-    "bytes": 18148,
-    "sha256": "db01f58d2046d209d62eeb6a7284bc4aafd65ae26dba1f825b54b7860041cf45"
+    "bytes": 18311,
+    "sha256": "f7459dac9cff6c33416f02307fc8658cd4da76d36d7dbb8a9dcc5dc22886b179"
   },
   {
     "path": "src/vba/FEMViewer.bas",
-    "bytes": 35813,
-    "sha256": "bcf5787b4b68307cdbdac285601d7f5b490a143cc7df23d6d74be0af8278e4b5"
+    "bytes": 36314,
+    "sha256": "a08368fb27343c5ab009c1b4e1688c83db8b11cc1487de4e42c45e4b38f459b1"
   },
   {
     "path": "src/vba/FEMWater.bas",
-    "bytes": 53001,
-    "sha256": "449c9f79d51b0d843baaa53c15c3ebcea45d5aabc734aaac0893c9e14315b115"
+    "bytes": 58873,
+    "sha256": "b77a26cf6a2314d3e5a804cb3c7ae53ac2a2fe18483290470987ea15f0548e12"
   },
   {
     "path": "src/vba/FEMWaterGeometry.bas",
@@ -10895,6 +11095,16 @@
     "sha256": "b1bad9ffc9d8b0b2f9a48697a18b00958436072eb87cb8a2310213727ac9e419"
   },
   {
+    "path": "tests/check_issue44_joint.py",
+    "bytes": 4193,
+    "sha256": "7231e8a93fb8ece620c437c691a9b442ebe5591032aee400b1be9c838f8e3a2a"
+  },
+  {
+    "path": "tests/check_issue_water_profiles.py",
+    "bytes": 4700,
+    "sha256": "d6c506e1cdbf03aacaa48b53945d52a915907ecb29bb1270d53ff85fbfa9904f"
+  },
+  {
     "path": "tests/check_joint_water.py",
     "bytes": 6978,
     "sha256": "91f218302f6a9bb0117e8e53a141cf2239ce592a98522aee34b25c8e7cc86915"
@@ -10975,6 +11185,11 @@
     "sha256": "858efa4b94350cc4772c5d162f2f4f8b787e6ad440adc1e406ade5ca70818274"
   },
   {
+    "path": "tests/check_srm_hydraulic_output.py",
+    "bytes": 1194,
+    "sha256": "e1aea7ba83adce8565886b72398a96e063948a8c88eac76edaaa3045da4b8baa"
+  },
+  {
     "path": "tests/check_stage_ui24.py",
     "bytes": 5394,
     "sha256": "8e1c0791a0d3bfc164f5c71b659b9fc76ad8368b86f8165f93b40996a64900bb"
@@ -10983,6 +11198,11 @@
     "path": "tests/check_water_display.py",
     "bytes": 8922,
     "sha256": "4b9d7498826f678b0440086bf4a10b3b31701158d45731dccc704fad85243efd"
+  },
+  {
+    "path": "tests/check_xlsm_issue_states.py",
+    "bytes": 5567,
+    "sha256": "2fd35c0cad465ad1f723682527a041f91e1e14b775f35bdf748907733dcd59b5"
   },
   {
     "path": "tests/compare_fixed_stress_mandel.py",
@@ -11013,6 +11233,11 @@
     "path": "tests/compare_manual_flows.py",
     "bytes": 5993,
     "sha256": "dd630c7b3cd753f9a708b6733830745f80fa4f28d1e3a4416d543c7f7c28f8f8"
+  },
+  {
+    "path": "tests/compare_xlsm_issue_fixed_stress.py",
+    "bytes": 2746,
+    "sha256": "b58cb9e7e2707daf26de23347ca20b6c2995f80e8f0e3113a2cf3815aa78e830"
   },
   {
     "path": "tests/experiment_complex_terrain.py",
@@ -11213,6 +11438,116 @@
     "path": "tests/fixtures/groundwater_stages.json",
     "bytes": 4543,
     "sha256": "1480130dcd281276eac9830a81cbd909c27f4de689aa2993f5452929f6e588d5"
+  },
+  {
+    "path": "tests/fixtures/issues_xlsm/README.md",
+    "bytes": 2604,
+    "sha256": "00b74fc5ae3baf800135936236cb1965125f34566d1c48cf22b297798d1841bd"
+  },
+  {
+    "path": "tests/fixtures/issues_xlsm/issue26_hold.json",
+    "bytes": 6328,
+    "sha256": "1d77306b9b71289c612da0d2b814fb2a78dfae928c1ad24cef9df83b80090551"
+  },
+  {
+    "path": "tests/fixtures/issues_xlsm/issue38_elastic_control.json",
+    "bytes": 6347,
+    "sha256": "c18ef28c5c39645cce03f67f326e689810555ef4d7773194ec59357b3e1ffa63"
+  },
+  {
+    "path": "tests/fixtures/issues_xlsm/issue43_steady_stages.json",
+    "bytes": 4119,
+    "sha256": "663b59de8ec7a38554165feebb7cbd23883a7c5918236951584514365ad964e7"
+  },
+  {
+    "path": "tests/fixtures/issues_xlsm/issue43_water_ramp_cache.json",
+    "bytes": 2042,
+    "sha256": "9cd01bdbab59e2cacaf37742353d15c5fc31be6e5c957fbe04c05fb025a19ffa"
+  },
+  {
+    "path": "tests/fixtures/issues_xlsm/issue43_water_srm.json",
+    "bytes": 14050,
+    "sha256": "53cf9c35bfcf5a5a5861c501b71fac5f688b1fee8ec5757267c757f38ec0e5b4"
+  },
+  {
+    "path": "tests/fixtures/issues_xlsm/issue44_external_layers.json",
+    "bytes": 2589,
+    "sha256": "9065306ef5b3d81e1c2c1458ca2907ba6e1fd695c1b85206ba300157dacc2447"
+  },
+  {
+    "path": "tests/fixtures/issues_xlsm/issue44_external_linear.json",
+    "bytes": 2352,
+    "sha256": "d77348d3e888bb5cd213151c253af59b58eb701d29a2c2bd3795ff0753d16b88"
+  },
+  {
+    "path": "tests/fixtures/issues_xlsm/issue44_internal_head.json",
+    "bytes": 2491,
+    "sha256": "f4d5634f0e44bb942fde36598ef603e974744ea3d13099695ac613c9be09e4f3"
+  },
+  {
+    "path": "tests/fixtures/issues_xlsm/issue44_joint_conflict.json",
+    "bytes": 4273,
+    "sha256": "ea5a1ab3956c1f943ae77ff5a095f6cb1d9cebaa37b125b5f158687a21ab66a4"
+  },
+  {
+    "path": "tests/fixtures/issues_xlsm/issue44_joint_continuous.json",
+    "bytes": 4275,
+    "sha256": "d973f6b819aeb86e3c64bdf37c73bee5d17edc76c73a667fe2dcee4d188c0648"
+  },
+  {
+    "path": "tests/fixtures/issues_xlsm/issue44_joint_prescribed.json",
+    "bytes": 4224,
+    "sha256": "637802215976e858533b3b005925184b41b7c6e5bc33c4c39d30af27a5519e0e"
+  },
+  {
+    "path": "tests/fixtures/issues_xlsm/issue44_joint_soil.json",
+    "bytes": 3815,
+    "sha256": "1341c2441bbaaa0dcb09fbab1e465b5afb29cf3b4970c7a5ec46c30db37fc9cd"
+  },
+  {
+    "path": "tests/fixtures/issues_xlsm/issue45_equivalent.json",
+    "bytes": 1881,
+    "sha256": "21b582cc5aee88cf2378769afdac549b61d94a405aa4cb626709998493194cb0"
+  },
+  {
+    "path": "tests/fixtures/issues_xlsm/issue45_hidden_knot.json",
+    "bytes": 2016,
+    "sha256": "bc5e46ce3e19c5db68305569dca8e00ad851919cf93ba0ea5a55a3549ce74886"
+  },
+  {
+    "path": "tests/fixtures/issues_xlsm/issue45_numeric_head.json",
+    "bytes": 1753,
+    "sha256": "bad50fa5afa296414c59f2aceb5d0ff7bfbcbd124c97ebd3b2d6b076f6a49e7b"
+  },
+  {
+    "path": "tests/fixtures/issues_xlsm/issue45_start_only.json",
+    "bytes": 1884,
+    "sha256": "1eed603709c1907f51281d705091aaae9913fee61bf83467573bce5dddbbf7d7"
+  },
+  {
+    "path": "tests/fixtures/issues_xlsm/issue46_final_output.json",
+    "bytes": 2124,
+    "sha256": "4a63b9f07feb6a385cd9200d2605ac021dbc7b98acaa72e757a725b5764dec4e"
+  },
+  {
+    "path": "tests/fixtures/issues_xlsm/issue46_final_reset.json",
+    "bytes": 1658,
+    "sha256": "530d68047f3e9b30b93e076b1f43608f2aa8c3cd19c98c39e834fcb3d19abd1b"
+  },
+  {
+    "path": "tests/fixtures/issues_xlsm/issue46_multiple.json",
+    "bytes": 2026,
+    "sha256": "6aacdf4a3dae95196eb9d38f89364fc0d00b2510b57d6217f666869d4450fb3e"
+  },
+  {
+    "path": "tests/fixtures/issues_xlsm/issue46_no_reset.json",
+    "bytes": 1580,
+    "sha256": "4845b407048529bb113f45ebc62a8239c13c3101bafeed7bd67e273b568431c4"
+  },
+  {
+    "path": "tests/fixtures/issues_xlsm/issue46_reordered.json",
+    "bytes": 1872,
+    "sha256": "d1199219fbf950012ee6f542dab6cda660e1285a1b772e2d76fd41de1e6350d3"
   },
   {
     "path": "tests/fixtures/joint_water_conflicting_heads.json",
@@ -12321,13 +12656,38 @@
   },
   {
     "path": "tests/run_groundwater_fixture.ps1",
-    "bytes": 14806,
-    "sha256": "d68d0bee46107a028f2db7c3ae2d737d7564a0f31bd58b95b05dcf335dfe33e0"
+    "bytes": 15873,
+    "sha256": "92e1b34e6dd149e5fa04895a42729282d581c582e496ca83d0a5129a7167433f"
   },
   {
     "path": "tests/run_groundwater_regression.ps1",
     "bytes": 3064,
     "sha256": "7ca3c6fd443d14066dcabae1b3bcd5444e0c857b1124ea4656c868fc184107e9"
+  },
+  {
+    "path": "tests/run_issue27_guard.ps1",
+    "bytes": 2384,
+    "sha256": "9976cfaa1ef705077f481db278b78380f448d7a669cf77096350d4a7466bcd51"
+  },
+  {
+    "path": "tests/run_issue38_rerun.ps1",
+    "bytes": 2351,
+    "sha256": "ee87ef5acbf4b8cbd9111b7772999f7c490adb5c9de2e860a769169feefc58c7"
+  },
+  {
+    "path": "tests/run_issue43_snapshot.ps1",
+    "bytes": 6188,
+    "sha256": "33ec571f273a420c6584cecfd0fb80b917f73c04b085fb379b4d941bf8c7056d"
+  },
+  {
+    "path": "tests/run_issue44_joint_regression.ps1",
+    "bytes": 1863,
+    "sha256": "720b3e05a7ff24cb27ace533788d3d1945f9e932e974426a8dd0583ea0f266a5"
+  },
+  {
+    "path": "tests/run_issue46_viewer.ps1",
+    "bytes": 3801,
+    "sha256": "3b41430aedfeafa72542e8e42c260470907493e646da3b6ce640ba42b2677cdc"
   },
   {
     "path": "tests/run_joint_water_regression.ps1",
@@ -12373,6 +12733,11 @@
     "path": "tests/run_water_display_ui.ps1",
     "bytes": 4432,
     "sha256": "68acd2f90a8fbdf979ff40e9162361b995cffa8843bdf0d908dd7670303f5a60"
+  },
+  {
+    "path": "tests/run_xlsm_issue_regression.ps1",
+    "bytes": 3127,
+    "sha256": "500c14d58b1c170132c026bc99d3bc3177d489c155f1ffd75b4d0f2263db533f"
   },
   {
     "path": "tests/test_best03_defaults.ps1",
@@ -12591,8 +12956,8 @@
   },
   {
     "path": "workbook/SoilFEM_UI_20261024.zip",
-    "bytes": 4022311,
-    "sha256": "6ae63747f696f375a783f4f25a2e7f91448c0316236ad2d8e0e5b193e66a73a5"
+    "bytes": 4040351,
+    "sha256": "1801f9bc37b52a668859baee8c36d14a3f8256cfbbc0184b13f4928631a02f32"
   },
   {
     "path": "workbook/inco_assembly_20261020/2DSoilFEM_inco_assembly_20261020.xlsm",
@@ -12866,18 +13231,18 @@
   },
   {
     "path": "workbook/ui_20261024/2DSoilFEM_ui_20261024.xlsm",
-    "bytes": 4526814,
-    "sha256": "bfb0231915c900d324d322eb63f67f592530253ea98ac4b936bd43bf3b8a65ed"
+    "bytes": 4544681,
+    "sha256": "538d20bb2e071adb4a0ba0e52b7bc5f361ff38d89847121e5ba75b66eb6c0e91"
   },
   {
     "path": "workbook/ui_20261024/BUILD_RECORD.json",
-    "bytes": 2247,
-    "sha256": "26479735fdae2c2f36006f958e8c1f066ac30b27a517cc3dfe0a978e41332b93"
+    "bytes": 2584,
+    "sha256": "4d356e96fd33970e90fdad305a533aa0e3601334ab37d154df8fbdb59f729ddc"
   },
   {
     "path": "workbook/ui_20261024/README.md",
-    "bytes": 2938,
-    "sha256": "128a6b5c6830b7554f3d92aa68bf74999c7f832542eda52f523d7bfc6aca4bd5"
+    "bytes": 3273,
+    "sha256": "b2927d69b1bd2ce1dfacf60d95d77a9febf7b446d1c3177bf598b506931e7b33"
   },
   {
     "path": "workbook/ui_20261024/soilfem_native_x64.dll",

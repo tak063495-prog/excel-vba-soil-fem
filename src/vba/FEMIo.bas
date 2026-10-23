@@ -3343,9 +3343,11 @@ Public Function FEMIoFinishResume() As Boolean
   P3AssembleSelfWeightOnly
   FEMIoRefreshDerivedStressState
   P3CommitMaterialState
+  ' Restore accepted internal force for dry checkpoints as well as wet ones.
+  ' A fully resumed run may execute no further constitutive evaluation.
+  GWRebuildAcceptedInternalForce
+  P3CommitMaterialState
   If GWActive Then
-    GWRebuildAcceptedInternalForce
-    P3CommitMaterialState
     If P3HasJointElements Then FEMPracticalSaveJointResults femIoResumeStage
     If UCase$(Trim$(FEMReadTextSetting("OUTPUT_STAGE_MODE", "FINAL"))) = "ALL" Then GWWriteResults femIoResumeStage
   End If

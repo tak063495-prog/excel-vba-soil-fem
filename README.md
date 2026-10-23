@@ -10,7 +10,7 @@
 
 「モデル」→「メッシュ生成・支持条件」に **不適合Q8をT6へ置換**（0=OFF／1=ON、初期値0）を追加しました。品質修正後も目標未達のQ8だけを2個のT6へ分割し、正常なQ8と混在して計算します。[入力・対応範囲](docs/MESH_MIXED_T6.md)／[コンパイル・独立検算・実計算・画面確認](docs/MESH_MIXED_T6_VALIDATION.md)。DLLは同じ1個です。
 
-工程ごとの**飽和fixed-stress時間連成**に対応しました。盛土・載荷→途中SRM→圧密→SRM→水位変動→次施工を同じ工程表で設定し、工程・時刻から結果を確認できます。[材料・排水・時間・載荷の入力と結果](docs/FIXED_STRESS_STAGES.md)／[受入検証と再現記録](docs/FIXED_STRESS_VALIDATION.md)。片方向の既存解析とDLL1個を保持します。
+工程ごとの**飽和fixed-stress時間連成**に対応しました。盛土・載荷→途中SRM→圧密→SRM→水位変動→次施工を同じ工程表で設定し、工程・時刻から結果を確認できます。[材料・排水・時間・載荷の入力と結果](docs/FIXED_STRESS_STAGES.md)／[受入検証と再現記録](docs/FIXED_STRESS_VALIDATION.md)。片方向の既存解析とDLL1個を保持します。 [水条件・工程・結果出力のissue修正と検証](docs/XLSM_ISSUE_VALIDATION.md)。
 
 ## 1023版（従来画面・説明書対応）
 

@@ -36,6 +36,9 @@ End Function
 Public Function WFMetrics() As Variant
  WFMetrics = Array(TotalSelfWeight,P6ReactionSumX,P6ReactionSumY,RelativeResidualFree,FSS,P3FosPass,P3FosFail,P3FosWidth)
 End Function
+Public Function WFConvergenceLimit() As Double
+ WFConvergenceLimit=P3_ENGINEERING_RESIDUAL
+End Function
 Public Function WFNative() As String
  WFNative = FEMNativeStatusText() & "|" & FEMMatStatusText()
 End Function
@@ -215,7 +218,16 @@ End Function
   }
   if($maxStress -gt 1e-6){throw "Resume stress mismatch max=$maxStress"}
   $maxDu=0.;for($i=0;$i -lt $oldDisp.Count;$i++){$maxDu=[Math]::Max($maxDu,[Math]::Abs($oldDisp[$i]-$resumed.disp[$i]))}
-  if($maxDu -gt 1e-9 -or [double]$resumed.metrics[3] -gt 1e-7 -or [Math]::Abs($oldMetrics[2]-$resumed.metrics[2]) -gt 1e-6){throw "Resume mismatch du=$maxDu metrics=$($resumed.metrics)"}
+  $resumeResidualLimit=1e-7
+  if($data.checkResumeAgainstSolverTolerance){
+   # Near an SRM numerical boundary, verify the solver's unchanged acceptance
+   # contract and equality of the accepted residual, rather than a toy-case gate.
+   $resumeResidualLimit=[double](Call 'WFConvergenceLimit')
+   if([double]::IsNaN($resumeResidualLimit) -or [double]::IsInfinity($resumeResidualLimit) -or $resumeResidualLimit -le 0){throw 'Invalid solver convergence limit'}
+   if([double]$oldMetrics[3] -gt $resumeResidualLimit -or [Math]::Abs($oldMetrics[3]-$resumed.metrics[3]) -gt 1e-9){throw 'Accepted residual changed on resume'}
+   @{status='PASS';source='P3_ENGINEERING_RESIDUAL';limit=$resumeResidualLimit;fresh=$oldMetrics[3];resumed=$resumed.metrics[3];delta=[Math]::Abs($oldMetrics[3]-$resumed.metrics[3]);production_tolerance_changed=$false}|ConvertTo-Json|Set-Content (Join-Path $Out 'resume_residual_contract.json') -Encoding UTF8
+  }
+  if($maxDu -gt 1e-9 -or [double]$resumed.metrics[3] -gt $resumeResidualLimit -or [Math]::Abs($oldMetrics[2]-$resumed.metrics[2]) -gt 1e-6){throw "Resume mismatch du=$maxDu metrics=$($resumed.metrics)"}
  }
  if($data.checkTangent){
   $tangent=@(Call 'JTCheck')

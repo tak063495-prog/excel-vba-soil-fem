@@ -1,9 +1,9 @@
 {
   "status": "PASS",
   "ui_stamp": "20261024_STAGE_01",
-  "calculation_stamp": "20261024_FIXED_STRESS_05",
+  "calculation_stamp": "20261024_FIXED_STRESS_06",
   "base_commit": "8cf3a2cfd3e813301f4ed409e73228a6782f2972",
-  "book_sha256": "bfb0231915c900d324d322eb63f67f592530253ea98ac4b936bd43bf3b8a65ed",
+  "book_sha256": "538d20bb2e071adb4a0ba0e52b7bc5f361ff38d89847121e5ba75b66eb6c0e91",
   "dll_sha256": "ad5c2ae81512ba8e977002415a6a5339b621c00a1bbabe5092559f8a7f9e0797",
   "compile": "PASS",
   "source_verification": "before-save and reopen",
@@ -73,6 +73,18 @@
     "MeshPerf",
     "ThisWorkbook"
   ],
-  "validation": "docs/FIXED_STRESS_VALIDATION.md",
-  "legacy_scope": "Full legacy suite on build04; fixed-stress recovery counting fixed in05, complete coupled suite and analytical checks on package30; package31 corrects water captions with all17cases exact agreement and repeated independent checks; final package32 additionally corrects implemented-input labels/colors, strict compile/reopen + column fresh/resume + actual UI PASS"
+  "validation": "docs/XLSM_ISSUE_VALIDATION.md",
+  "legacy_scope": "Only the internal steady HEAD guard checks shared hydraulic DOFs instead of physical JOINT topology; line endings normalized. Full regressions on candidate6, focused15 boundary/JOINT cases plus reset display and coupled SRM/resume/snapshot on final candidate7.",
+  "calculation_settings_unchanged": true,
+  "parent_feature_commit": "1e88299d2bbf9212d7d650f5b851d03f38c2e918",
+  "full_regression_book_sha256": "726f625b04782c88c89e09fef399962cd894291410471ec47dde1cf0fc4b0342",
+  "final_focused_boundary_cases": 15,
+  "issue_fixes": [
+    38,
+    43,
+    44,
+    45,
+    46
+  ],
+  "old_checkpoint_note": "Build05 checkpoints cannot be resumed in06; retain original book or reanalyse inputs."
 }

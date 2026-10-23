@@ -1,6 +1,7 @@
 ﻿Option Explicit
 
 Private mAccelAttemptFailure As String
+Private mSrmWaterState As Object
 Private mLineSearchFailure As String, mLineSearchTries As Long, mLineSearchMaterialRejects As Long
 Private mLineSearchBestQ As Double
 
@@ -17,7 +18,7 @@ Private V3TrialStartedAt As Double
 Public Sub FEMValidateAnalysisScope()
   Dim messageText As String
   If P6ReadSetting("CONSOL_ENABLE", 0#) = 0# Then Exit Sub
-  messageText = "本版は間隙水圧を考慮しない全応力解析です。圧密解析は未対応です。CONSOL_ENABLE=0にしてください。"
+  messageText = "旧CONSOL_ENABLE経路は未対応です。CONSOL_ENABLE=0とし、飽和時間圧密は工程別FIXED_STRESSを設定してください。"
   SetAnalysisFailure RESULT_INPUT_ERROR, messageText, vbObjectError + 3098, -1, -1, 0, 0
   Err.Raise vbObjectError + 3098, "FEMValidateAnalysisScope", messageText
 End Sub
@@ -126,6 +127,9 @@ Private Sub P3ZeroTrialKinematics()
     Next i
     ReDim P3LockedSelfWeight(lastDof)
     ReDim P3LockedApplied(lastDof)
+    ' Stress history was cleared; accepted internal force must match it.
+    ReDim P3FinalInternalForce(lastDof)
+    ReDim iNForce(lastDof)
   End If
   P3GravityCommitted = False
   For k = 0 To NumberOfElement - 1
@@ -3956,6 +3960,7 @@ Private Sub P3CaptureSrmSuccessSnapshot(ByVal strengthFactor As Double)
     On Error GoTo 0
   Next i
   FEMIncrementSnapshot
+  Set mSrmWaterState = GWCaptureSrmState()
   P3SrmSnapReady = True
 End Sub
 
@@ -4034,8 +4039,8 @@ Private Function P3RestoreSrmSuccessSnapshot() As Boolean
       Elem(k).JointContact(gp) = P3SrmSnapJointContact(gp, k)
     Next gp
   Next k
+  GWRestoreSrmState mSrmWaterState
   P3RestoreCommittedMaterialState False
-  GWUseFinalPressure
   P3MarkAllTangentDirty
   P3TrialStateValid = False
   If Not P3RebuildTangentFromSpmat() Then Exit Function
@@ -4046,9 +4051,25 @@ End Function
 
 Public Sub P3PrepareOutputResidual()
   Dim i As Long
-  Dim appliedOk As Boolean
+  Dim appliedOk As Boolean, lockedOk As Boolean
   If lastDof < 0 Then Exit Sub
   P3UseNonlinearResidual = True
+  On Error Resume Next
+  lockedOk = (UBound(P3LockedSelfWeight) >= lastDof And UBound(P3LockedApplied) >= lastDof)
+  If Err.number <> 0 Then lockedOk = False
+  Err.Clear
+  On Error GoTo 0
+  If lockedOk Then
+    ' Accepted loads may differ from potential body/applied vectors after a
+    ' RESET or a partial loading history. Diagnostics must use the committed
+    ' target, including when the checkpoint was loaded without another solve.
+    ReDim OriginalForce(lastDof)
+    For i = 0 To lastDof
+      OriginalForce(i) = P3LockedSelfWeight(i) + P3LockedApplied(i)
+    Next i
+    ComputeResidual
+    Exit Sub
+  End If
   On Error Resume Next
   appliedOk = (UBound(P3AppliedForce) >= lastDof)
   If Err.number <> 0 Then appliedOk = False

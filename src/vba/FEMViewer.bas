@@ -279,13 +279,23 @@ NextPlan:
         ' RESET_STRESS changes the reference geometry without editing the input mesh.
         ' Use saved stage coordinates only after a recorded successful reset.
         stageResults = ReadTable("ステージ結果", 4)
+        ' Stage IDs are user-editable and need not follow execution order.
+        ' Locate the saved final result in the successful history first, then
+        ' use row order to determine whether RESET_STRESS preceded it.
+        Dim finalHistoryRow As Long
+        finalHistoryRow = 0
         For r = 2 To UBound(stageResults, 1)
-            If UCase$(Trim$(CStr(stageResults(r, 2)))) = "RESET_STRESS" And CStr(stageResults(r, 4)) = "PASS" Then
-                If IsNumeric(stageResults(r, 1)) Then
-                    If CLng(stageResults(r, 1)) <= Stage Then geometryMoved = True
+            If IsNumeric(stageResults(r, 1)) Then
+                If CLng(stageResults(r, 1)) = Stage Then
+                    If UCase$(Trim$(CStr(stageResults(r, 4)))) = "PASS" Then finalHistoryRow = r
                 End If
             End If
         Next r
+        If finalHistoryRow > 0 Then
+            For r = 2 To finalHistoryRow
+                If UCase$(Trim$(CStr(stageResults(r, 2)))) = "RESET_STRESS" And CStr(stageResults(r, 4)) = "PASS" Then geometryMoved = True
+            Next r
+        End If
         Set active = CreateObject("Scripting.Dictionary")
         Set displacements = CreateObject("Scripting.Dictionary")
         For r = 2 To UBound(elementResults, 1)

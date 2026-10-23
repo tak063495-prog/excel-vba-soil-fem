@@ -21,6 +21,9 @@ Public Sub FEMIncrementReset()
   Dim ws As Worksheet
   On Error Resume Next: Set ws = ThisWorkbook.Worksheets("結果増分"): On Error GoTo 0
   If Not ws Is Nothing Then ws.cells.ClearContents
+  Set ws = Nothing
+  On Error Resume Next: Set ws = ThisWorkbook.Worksheets("結果塑性"): On Error GoTo 0
+  If Not ws Is Nothing Then ws.cells.ClearContents
 End Sub
 
 Public Sub FEMIncrementCapture(ByVal loadFactor As Double)
