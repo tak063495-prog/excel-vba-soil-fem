@@ -87,6 +87,7 @@ Private Function PLNum(ByVal v As Double) As String
 End Function
 Public Function PlasticLogWrite(ByVal folder As String) As Boolean
   Dim fileNo As Integer, elementId As Long, gp As Long, comp As Long, line As String, coverage As String
+  Dim failedNumber As Long
   On Error GoTo Failed
   If Not mReady Then Exit Function
   If mComplete Then coverage = "FROM_ZERO_STATE" Else coverage = "PARTIAL_FROM_RESUME"
@@ -104,9 +105,14 @@ Public Function PlasticLogWrite(ByVal folder As String) As Boolean
   PlasticLogWrite = True
   Exit Function
 Failed:
+  failedNumber = Err.number
   On Error Resume Next
   If fileNo > 0 Then Close #fileNo
-  Err.Clear
+  On Error GoTo 0
+  If failedNumber = 18 Then
+    P3UserCancel = True: P3SearchFatal = True
+    Err.Raise 18
+  End If
 End Function
 
 Public Function PlasticLogRead(ByVal folder As String) As Boolean

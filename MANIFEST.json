@@ -16,8 +16,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 29430,
-    "sha256": "5355a6b861248aa218f3e6a25226453aa89f0c9e8cb4782a17c346f6f0c62432"
+    "bytes": 29504,
+    "sha256": "d23eb43daf9a8f1617e8812301ee62724c8cf4ab128ab184b12629fd003186de"
   },
   {
     "path": "docs/ACCELERATION_HISTORY.md",
@@ -98,6 +98,11 @@
     "path": "docs/ISSUE3_59_VALIDATION.md",
     "bytes": 6758,
     "sha256": "63aa7ecd870a07b64e5ce28a9cdf38eb716ec6f8c9522fc1f386a79fb3f47fda"
+  },
+  {
+    "path": "docs/ISSUE3_INNER_WRITERS.md",
+    "bytes": 3426,
+    "sha256": "b37df20cc290bc2647f9e8de58576d30176427399d285efe2c987fb1643b3951"
   },
   {
     "path": "docs/ISSUE49_57_VALIDATION.md",
@@ -10190,6 +10195,86 @@
     "sha256": "c1465d11e6b8af0f86bb2b2b6a926e768bc5fbf59fdd46457cc919e67737844f"
   },
   {
+    "path": "docs/validation/issue3_inner/README.md",
+    "bytes": 1049,
+    "sha256": "cbcb7214edf5b6305aab5ecc725b22d900bae4c9f31212b79bdc85473f29d228"
+  },
+  {
+    "path": "docs/validation/issue3_inner/build.log",
+    "bytes": 10942,
+    "sha256": "cc27e1d6910c0dc1412396439f21cd13c1876558c16f7ba6963c8d4faa61415c"
+  },
+  {
+    "path": "docs/validation/issue3_inner/cancellation.json",
+    "bytes": 6346,
+    "sha256": "cf78970802f603611453b9acf57e320852ac99a96f16b8229550bf2763e026e3"
+  },
+  {
+    "path": "docs/validation/issue3_inner/coupled.json",
+    "bytes": 13321,
+    "sha256": "e698e5331eab81760e4ca5f8a5c27d550270f11fd47b198334eb6f30fc2a4d8b"
+  },
+  {
+    "path": "docs/validation/issue3_inner/faults.log",
+    "bytes": 724,
+    "sha256": "cc5f3ddf4dab3a4ce3761713985d70bd2eb75eaae10c8124df7be0163d3705a5"
+  },
+  {
+    "path": "docs/validation/issue3_inner/full.log",
+    "bytes": 1909,
+    "sha256": "a318c7bb119e409ce021728126ac9c08c0c89e977e9c1eb40c91d15f8c3e7d5b"
+  },
+  {
+    "path": "docs/validation/issue3_inner/inputs.json",
+    "bytes": 823,
+    "sha256": "0182d2a1b176a67319bf5a28b40fc0de27193fb024e8a251fa3109a5c127806e"
+  },
+  {
+    "path": "docs/validation/issue3_inner/keyboard.json",
+    "bytes": 882,
+    "sha256": "69f9b5e2cef61aec03ba9617292dc4054e428f0cba7f9ddb9c95653d927ea543"
+  },
+  {
+    "path": "docs/validation/issue3_inner/keyboard.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "docs/validation/issue3_inner/package.json",
+    "bytes": 1729,
+    "sha256": "4c62f73611a77c389c65dbaff1cbfd56e647f1e2e36f3093638bd48630adc71f"
+  },
+  {
+    "path": "docs/validation/issue3_inner/package.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "docs/validation/issue3_inner/queue.log",
+    "bytes": 114,
+    "sha256": "6bcd69851b2abc625fa2f7d32ea368e4249777cffba601942d85c3a9562de491"
+  },
+  {
+    "path": "docs/validation/issue3_inner/records.zip",
+    "bytes": 4403260,
+    "sha256": "ab964db54afff08f26e036134e74e2b94961e08f18bde06a44a8511518b2d741"
+  },
+  {
+    "path": "docs/validation/issue3_inner/saved_states.json",
+    "bytes": 262149,
+    "sha256": "955b2c4e7529c094330c84274aac6625d1749d98ca787bbf71732a822f676dfc"
+  },
+  {
+    "path": "docs/validation/issue3_inner/source_snapshot.zip",
+    "bytes": 455757,
+    "sha256": "d7cc4e8aab8c94f2e0644cfd7a34f60df479eef4030980a43c9fea1c816421f4"
+  },
+  {
+    "path": "docs/validation/issue3_inner/validation.json",
+    "bytes": 5961,
+    "sha256": "b3b84a075cfbfdf515632e300597161180bf58c16cf25fb099ddd4b41bee2f42"
+  },
+  {
     "path": "docs/validation/issue49_57/README.md",
     "bytes": 3220,
     "sha256": "ca1ad2207c8d77251af79bd8eae777edb8fcb2ebf7674cee23bfddced6546d68"
@@ -11351,8 +11436,8 @@
   },
   {
     "path": "src/vba/FEMFixedStress.bas",
-    "bytes": 46068,
-    "sha256": "e9d7088245746fa55443f129404ae8b8e29f8a7552dd920902f8febae2c176d4"
+    "bytes": 46264,
+    "sha256": "a71fca27f8aa674b4532dff7f328857f4200cf5535fe172c171999160f5f3408"
   },
   {
     "path": "src/vba/FEMFixedStressGauge.bas",
@@ -11366,8 +11451,8 @@
   },
   {
     "path": "src/vba/FEMFixedStressLedger.bas",
-    "bytes": 5358,
-    "sha256": "078df8e15c325230ee0fcf791f4f6a5cf5e6472aa1275b42e21c9e4e084744fb"
+    "bytes": 5554,
+    "sha256": "94ad2bdb55205e778b3d95a1c9764587024916e2891497551dc6d7c1506de15f"
   },
   {
     "path": "src/vba/FEMFixedStressMatrix.bas",
@@ -11431,8 +11516,8 @@
   },
   {
     "path": "src/vba/FEMPlasticLog.bas",
-    "bytes": 6716,
-    "sha256": "5832e49290cc01345402abc17251d9bebfe727920da896321c92987bf017d002"
+    "bytes": 6883,
+    "sha256": "1d67525ea86d74739ff832d953b9eeb92979758b82cc1fb3b407ababf051273f"
   },
   {
     "path": "src/vba/FEMPolicyLog.bas",
@@ -11536,8 +11621,8 @@
   },
   {
     "path": "src/vba/FEMWater.bas",
-    "bytes": 59029,
-    "sha256": "3fdb491a9caca9a451e619dfe50d1c58b825bb61b65756c8b980f363920d44be"
+    "bytes": 59216,
+    "sha256": "6936b31d52d75d06e496daea225c458c9e0ea2c15bf062e542845e69a739692f"
   },
   {
     "path": "src/vba/FEMWaterGeometry.bas",
@@ -11698,6 +11783,11 @@
     "path": "tests/check_issue3_cancel.py",
     "bytes": 2984,
     "sha256": "5a6d20f121d133cdac07dafc341b61b1f65b43d677883204477f5e0459aec7cd"
+  },
+  {
+    "path": "tests/check_issue3_inner.py",
+    "bytes": 3479,
+    "sha256": "8cfc0651457c6855e92c33dee0f09f5a60a7de43805f4d13f32bb6791da1b99f"
   },
   {
     "path": "tests/check_issue3_saved_states.py",
@@ -11933,6 +12023,11 @@
     "path": "tests/fixtures/fixed_stress/column_biot_anisotropic.json",
     "bytes": 7664,
     "sha256": "0ef30396ef24245c2fbdbe9d66a699a4e196718a687cba587a34a97e76cb4047"
+  },
+  {
+    "path": "tests/fixtures/fixed_stress/column_inner_io.json",
+    "bytes": 7931,
+    "sha256": "e613b4ea4d21df02569814606d3d447883e974047573be1d37a8ca4968030bbc"
   },
   {
     "path": "tests/fixtures/fixed_stress/column_nonlinear_srm.json",
@@ -13320,6 +13415,11 @@
     "sha256": "942cae1cbaaaa22688e3502371d81adcc7723bcc593ca6ef258472f22376eb49"
   },
   {
+    "path": "tests/package_issue3_inner_evidence.py",
+    "bytes": 4260,
+    "sha256": "bc815091e9ed0662be7c48296680170cddb83a2ed75190c78d96c914fb549f66"
+  },
+  {
     "path": "tests/package_issue49_57_evidence.py",
     "bytes": 5393,
     "sha256": "a6f479cf392d621746e9ee06c0d575e429ac016b0c86dec6b706bb1c978aae13"
@@ -13506,8 +13606,8 @@
   },
   {
     "path": "tests/run_groundwater_fixture.ps1",
-    "bytes": 26593,
-    "sha256": "0cf8657220fe20e824ca980b6ecc313334f364ab347cc042f77d652dd28521ee"
+    "bytes": 28372,
+    "sha256": "4e14ac8932bea31d51d45e640be4986d94d25c97cb94d61f403643bc1166b1aa"
   },
   {
     "path": "tests/run_groundwater_regression.ps1",
@@ -13528,6 +13628,11 @@
     "path": "tests/run_issue3_cancel_regression.ps1",
     "bytes": 1886,
     "sha256": "43ecc6c2ccdf0480800ce84064f733b4e2b09529c0747e4b90c4e3db80eeb23c"
+  },
+  {
+    "path": "tests/run_issue3_inner_regression.ps1",
+    "bytes": 1637,
+    "sha256": "d3b3c3411b24c35f2a4702b5db4b4572d832fd900b635ee3bb4a3343052539db"
   },
   {
     "path": "tests/run_issue43_snapshot.ps1",
@@ -13846,8 +13951,8 @@
   },
   {
     "path": "workbook/SoilFEM_UI_20261024.zip",
-    "bytes": 4094118,
-    "sha256": "c163a51f8d1c0f2e541891a3e637160e0c8651774cc06368706dfc72b29f91cd"
+    "bytes": 4097842,
+    "sha256": "9fb768b207917c7da8d0c87d73b3d753d7c0a17322f761753ff4934ff7ea8eab"
   },
   {
     "path": "workbook/inco_assembly_20261020/2DSoilFEM_inco_assembly_20261020.xlsm",
@@ -14121,18 +14226,18 @@
   },
   {
     "path": "workbook/ui_20261024/2DSoilFEM_ui_20261024.xlsm",
-    "bytes": 4583626,
-    "sha256": "98952de07b4cf389ee4503704a2824a1cfc3a7210d3a04a4fe570df168b2d251"
+    "bytes": 4586992,
+    "sha256": "508c99ef084129a0b70e01c28dd1d1e75de23a0ef78e212919f044998e0223bd"
   },
   {
     "path": "workbook/ui_20261024/BUILD_RECORD.json",
-    "bytes": 8411,
-    "sha256": "35a8886b6669dd693dc25d3a900ce520dee0c576bcb069fa18a4edaa56386673"
+    "bytes": 8608,
+    "sha256": "fd61bdec40030bf49ea46c996e84af59459f7754b9ae6fa6f6f82f9d07560437"
   },
   {
     "path": "workbook/ui_20261024/README.md",
-    "bytes": 3821,
-    "sha256": "26fb8fc052e25dfb019712921dcaaa78b7a766fc38297549990bdbf9d1116cec"
+    "bytes": 4053,
+    "sha256": "5d46d1d465b80b18b5533aefd2635122fc3a6c8b961159f3ba91b5c618cc9d36"
   },
   {
     "path": "workbook/ui_20261024/soilfem_native_x64.dll",

@@ -34,3 +34,6 @@ https://github.com/tak063495-prog/excel-vba-soil-fem/blob/main/docs/ISSUE49_57_V
 
 中断の伝播とQ8内部の折返し検査を修正しました。受理済み状態を保持して中断し、全域のJacobian正値を確認できないQ8は要素番号付きで停止します。入力欄・保存形式・DLLは共通です。
 https://github.com/tak063495-prog/excel-vba-soil-fem/blob/main/docs/ISSUE3_59_VALIDATION.md
+
+内側の塑性履歴・連成・水量台帳・水圧CSVでも中断を伝播し、保存障害とユーザー中断を区別します。
+https://github.com/tak063495-prog/excel-vba-soil-fem/blob/main/docs/ISSUE3_INNER_WRITERS.md

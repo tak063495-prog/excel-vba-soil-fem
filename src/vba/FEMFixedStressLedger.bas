@@ -55,6 +55,7 @@ End Sub
 
 Public Function FSLedgerWrite(ByVal folder As String) As Boolean
   Dim f As Integer, e As Long
+  Dim failedNumber As Long
   On Error GoTo Failed
   f = FreeFile: Open folder & Application.PathSeparator & "fixed_stress_volume.csv" For Output As #f
   Print #f, "element,active,content_m3,known,reference_volume_m3"
@@ -63,7 +64,14 @@ Public Function FSLedgerWrite(ByVal folder As String) As Boolean
   Next e
   Close #f: FSLedgerWrite = True: Exit Function
 Failed:
-  On Error Resume Next: Close #f
+  failedNumber = Err.number
+  On Error Resume Next
+  If f > 0 Then Close #f
+  On Error GoTo 0
+  If failedNumber = 18 Then
+    P3UserCancel = True: P3SearchFatal = True
+    Err.Raise 18
+  End If
 End Function
 
 Public Sub FSLedgerRead(ByVal folder As String)

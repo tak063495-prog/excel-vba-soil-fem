@@ -84,6 +84,7 @@ Public Function FSWriteCheckpoint(ByVal folder As String) As Boolean
   Dim f As Integer, i As Long, e As Long, g As Long
   FSWriteCheckpoint = False
   If Not FSActive Then FSWriteCheckpoint = True: Exit Function
+  Dim failedNumber As Long
   On Error GoTo Failed
   f = FreeFile
   Open folder & Application.PathSeparator & "fixed_stress.csv" For Output As #f
@@ -110,7 +111,14 @@ Public Function FSWriteCheckpoint(ByVal folder As String) As Boolean
   If Not FSLedgerWrite(folder) Then Exit Function
   FSWriteCheckpoint = True: Exit Function
 Failed:
-  On Error Resume Next: Close #f
+  failedNumber = Err.number
+  On Error Resume Next
+  If f > 0 Then Close #f
+  On Error GoTo 0
+  If failedNumber = 18 Then
+    P3UserCancel = True: P3SearchFatal = True
+    Err.Raise 18
+  End If
 End Function
 
 Public Sub FSReadCheckpoint(ByVal folder As String)

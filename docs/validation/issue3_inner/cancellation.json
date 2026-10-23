@@ -1,0 +1,199 @@
+{
+  "status": "PASS",
+  "book_sha256": "508c99ef084129a0b70e01c28dd1d1e75de23a0ef78e212919f044998e0223bd",
+  "cases": [
+    {
+      "case": "AUTO_FSCSV_STAGE",
+      "status": "PASS",
+      "error": 18,
+      "accepted_time": 86400.0,
+      "accepted_steps": 11,
+      "classification": "NONCONVERGED|ユーザーが解析を中断しました。"
+    },
+    {
+      "case": "AUTO_FSCSV_TIME",
+      "status": "PASS",
+      "error": 18,
+      "accepted_time": 8640.0,
+      "accepted_steps": 2,
+      "classification": "NONCONVERGED|ユーザーが解析を中断しました。"
+    },
+    {
+      "case": "AUTO_GWCSV_STAGE",
+      "status": "PASS",
+      "error": 18,
+      "accepted_time": 86400.0,
+      "accepted_steps": 11,
+      "classification": "NONCONVERGED|ユーザーが解析を中断しました。"
+    },
+    {
+      "case": "AUTO_GWCSV_TIME",
+      "status": "PASS",
+      "error": 18,
+      "accepted_time": 8640.0,
+      "accepted_steps": 2,
+      "classification": "NONCONVERGED|ユーザーが解析を中断しました。"
+    },
+    {
+      "case": "AUTO_LEDGERCSV_STAGE",
+      "status": "PASS",
+      "error": 18,
+      "accepted_time": 86400.0,
+      "accepted_steps": 11,
+      "classification": "NONCONVERGED|ユーザーが解析を中断しました。"
+    },
+    {
+      "case": "AUTO_LEDGERCSV_TIME",
+      "status": "PASS",
+      "error": 18,
+      "accepted_time": 8640.0,
+      "accepted_steps": 2,
+      "classification": "NONCONVERGED|ユーザーが解析を中断しました。"
+    },
+    {
+      "case": "AUTO_PLCSV_STAGE",
+      "status": "PASS",
+      "error": 18,
+      "accepted_time": 86400.0,
+      "accepted_steps": 11,
+      "classification": "NONCONVERGED|ユーザーが解析を中断しました。"
+    },
+    {
+      "case": "AUTO_PLCSV_TIME",
+      "status": "PASS",
+      "error": 18,
+      "accepted_time": 8640.0,
+      "accepted_steps": 2,
+      "classification": "NONCONVERGED|ユーザーが解析を中断しました。"
+    },
+    {
+      "case": "OFF_FSCSV_STAGE",
+      "status": "PASS",
+      "error": 18,
+      "accepted_time": 86400.0,
+      "accepted_steps": 11,
+      "classification": "NONCONVERGED|ユーザーが解析を中断しました。"
+    },
+    {
+      "case": "OFF_FSCSV_TIME",
+      "status": "PASS",
+      "error": 18,
+      "accepted_time": 8640.0,
+      "accepted_steps": 2,
+      "classification": "NONCONVERGED|ユーザーが解析を中断しました。"
+    },
+    {
+      "case": "OFF_GWCSV_STAGE",
+      "status": "PASS",
+      "error": 18,
+      "accepted_time": 86400.0,
+      "accepted_steps": 11,
+      "classification": "NONCONVERGED|ユーザーが解析を中断しました。"
+    },
+    {
+      "case": "OFF_GWCSV_TIME",
+      "status": "PASS",
+      "error": 18,
+      "accepted_time": 8640.0,
+      "accepted_steps": 2,
+      "classification": "NONCONVERGED|ユーザーが解析を中断しました。"
+    },
+    {
+      "case": "OFF_LEDGERCSV_STAGE",
+      "status": "PASS",
+      "error": 18,
+      "accepted_time": 86400.0,
+      "accepted_steps": 11,
+      "classification": "NONCONVERGED|ユーザーが解析を中断しました。"
+    },
+    {
+      "case": "OFF_LEDGERCSV_TIME",
+      "status": "PASS",
+      "error": 18,
+      "accepted_time": 8640.0,
+      "accepted_steps": 2,
+      "classification": "NONCONVERGED|ユーザーが解析を中断しました。"
+    },
+    {
+      "case": "OFF_PLCSV_STAGE",
+      "status": "PASS",
+      "error": 18,
+      "accepted_time": 86400.0,
+      "accepted_steps": 11,
+      "classification": "NONCONVERGED|ユーザーが解析を中断しました。"
+    },
+    {
+      "case": "OFF_PLCSV_TIME",
+      "status": "PASS",
+      "error": 18,
+      "accepted_time": 8640.0,
+      "accepted_steps": 2,
+      "classification": "NONCONVERGED|ユーザーが解析を中断しました。"
+    },
+    {
+      "case": "ordinary_FSCSV_STAGE",
+      "status": "PASS",
+      "error": 5,
+      "accepted_time": 95040.0,
+      "accepted_steps": 12,
+      "classification": "PASS|"
+    },
+    {
+      "case": "ordinary_FSCSV_TIME",
+      "status": "PASS",
+      "error": 5,
+      "accepted_time": 8640.0,
+      "accepted_steps": 2,
+      "classification": "RUNTIME_ERROR|時刻別状態の保存に失敗しました。受理時刻=8640 場所=P3RebuildTangentFromSpmat err=-2147213374 Ver=20261024_FIXED_STRESS_07"
+    },
+    {
+      "case": "ordinary_GWCSV_STAGE",
+      "status": "PASS",
+      "error": 5,
+      "accepted_time": 95040.0,
+      "accepted_steps": 12,
+      "classification": "PASS|"
+    },
+    {
+      "case": "ordinary_GWCSV_TIME",
+      "status": "PASS",
+      "error": 5,
+      "accepted_time": 8640.0,
+      "accepted_steps": 2,
+      "classification": "RUNTIME_ERROR|時刻別状態の保存に失敗しました。受理時刻=8640 場所=P3RebuildTangentFromSpmat err=-2147213374 Ver=20261024_FIXED_STRESS_07"
+    },
+    {
+      "case": "ordinary_LEDGERCSV_STAGE",
+      "status": "PASS",
+      "error": 5,
+      "accepted_time": 95040.0,
+      "accepted_steps": 12,
+      "classification": "PASS|"
+    },
+    {
+      "case": "ordinary_LEDGERCSV_TIME",
+      "status": "PASS",
+      "error": 5,
+      "accepted_time": 8640.0,
+      "accepted_steps": 2,
+      "classification": "RUNTIME_ERROR|時刻別状態の保存に失敗しました。受理時刻=8640 場所=P3RebuildTangentFromSpmat err=-2147213374 Ver=20261024_FIXED_STRESS_07"
+    },
+    {
+      "case": "ordinary_PLCSV_STAGE",
+      "status": "PASS",
+      "error": 5,
+      "accepted_time": 95040.0,
+      "accepted_steps": 12,
+      "classification": "PASS|"
+    },
+    {
+      "case": "ordinary_PLCSV_TIME",
+      "status": "PASS",
+      "error": 5,
+      "accepted_time": 8640.0,
+      "accepted_steps": 2,
+      "classification": "RUNTIME_ERROR|時刻別状態の保存に失敗しました。受理時刻=8640 場所=P3RebuildTangentFromSpmat err=-2147213374 Ver=20261024_FIXED_STRESS_07"
+    }
+  ],
+  "scope": "four inner CSV writers x stage/time x VBA/native =16 cancellations; eight Err5 controls; all U/P/boundary/ledger values, no later WAIT, temporary-folder cleanup and Excel settings"
+}
