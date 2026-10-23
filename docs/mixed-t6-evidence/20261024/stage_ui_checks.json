@@ -1,0 +1,416 @@
+{
+  "checks": [
+    {
+      "label": "exactly seven normal tabs in workflow order",
+      "status": "PASS"
+    },
+    {
+      "label": "section 材料・接合 / 材料特性 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "section 材料・接合 / 接合条件 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "section 材料・接合 / 材料の水理特性 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "section モデル / 形状の座標 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "section モデル / 形状の領域 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "section モデル / メッシュ生成・支持条件 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "section 結果 / 図と概要 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "section 結果 / 表示設定 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "section 結果 / 工程別数値 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "section 結果 / 節点結果 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "section 結果 / 要素結果 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "section 結果 / 水圧結果 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "section 結果 / 接合結果 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "section 結果 / 診断 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "section ホーム / 作業の流れ error=",
+      "status": "PASS"
+    },
+    {
+      "label": "section 境界・水条件 / 水条件の基本 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "section 境界・水条件 / 水位線 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "section 境界・水条件 / 水理境界 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "section 境界・水条件 / 載荷条件 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "section 境界・水条件 / 節点の支持・変位 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "section 解析・保存 / 解析・SRM error=",
+      "status": "PASS"
+    },
+    {
+      "label": "section 解析・保存 / 保存・再開 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "section 解析・保存 / 高速化 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "section 解析・保存 / 詳細設定 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "section 施工工程 / 工程の編集 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "section 材料・接合 / 材料特性 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "navigation preserves user copy data",
+      "status": "PASS"
+    },
+    {
+      "label": "section モデル / メッシュ生成・支持条件 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "detail navigation preserves canonical sheet protection",
+      "status": "PASS"
+    },
+    {
+      "label": "return from detail restores seven tabs",
+      "status": "PASS"
+    },
+    {
+      "label": "section 材料・接合 / 材料特性 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "material write through",
+      "status": "PASS"
+    },
+    {
+      "label": "stale canonical input rejected before overwrite",
+      "status": "PASS"
+    },
+    {
+      "label": "external edit retained after stale frontend rejection",
+      "status": "PASS"
+    },
+    {
+      "label": "section 材料・接合 / 材料特性 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "rollback retains all digits of Double constants",
+      "status": "PASS"
+    },
+    {
+      "label": "rollback retains adjacent formulas",
+      "status": "PASS"
+    },
+    {
+      "label": "physical input invalidates saved results",
+      "status": "PASS"
+    },
+    {
+      "label": "section モデル / 形状の座標 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "geometry write through",
+      "status": "PASS"
+    },
+    {
+      "label": "section モデル / 形状の座標 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "frontend formula input rejected",
+      "status": "PASS"
+    },
+    {
+      "label": "rejected input preserves canonical geometry formula",
+      "status": "PASS"
+    },
+    {
+      "label": "section 境界・水条件 / 水条件の基本 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "water mode write through",
+      "status": "PASS"
+    },
+    {
+      "label": "water basic rules are copied per row",
+      "status": "PASS"
+    },
+    {
+      "label": "external pressure option write through",
+      "status": "PASS"
+    },
+    {
+      "label": "section 境界・水条件 / 水位線 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "polyline table paste write through",
+      "status": "PASS"
+    },
+    {
+      "label": "section 施工工程 / 工程の編集 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "stage add error=",
+      "status": "PASS"
+    },
+    {
+      "label": "new stable stage ID",
+      "status": "PASS"
+    },
+    {
+      "label": "Japanese operation error=",
+      "status": "PASS"
+    },
+    {
+      "label": "water stage profile error=",
+      "status": "PASS"
+    },
+    {
+      "label": "new water plan and profile",
+      "status": "PASS"
+    },
+    {
+      "label": "water profile has one writable frontend owner",
+      "status": "PASS"
+    },
+    {
+      "label": "section 施工工程 / 工程の編集 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "move stage up error=",
+      "status": "PASS"
+    },
+    {
+      "label": "reorder preserves ID and water plan",
+      "status": "PASS"
+    },
+    {
+      "label": "reorder preserves stage formula",
+      "status": "PASS"
+    },
+    {
+      "label": "copy water stage error=",
+      "status": "PASS"
+    },
+    {
+      "label": "copy gives new ID with copied water plan",
+      "status": "PASS"
+    },
+    {
+      "label": "copy preserves stage formula",
+      "status": "PASS"
+    },
+    {
+      "label": "delete water stage error=",
+      "status": "PASS"
+    },
+    {
+      "label": "delete removes only matching water plan",
+      "status": "PASS"
+    },
+    {
+      "label": "delete does not shift water/material tables",
+      "status": "PASS"
+    },
+    {
+      "label": "undo delete error=",
+      "status": "PASS"
+    },
+    {
+      "label": "undo restores stages and water plans",
+      "status": "PASS"
+    },
+    {
+      "label": "undo preserves stage formula",
+      "status": "PASS"
+    },
+    {
+      "label": "stage undo retains all Double digits",
+      "status": "PASS"
+    },
+    {
+      "label": "disable water stage with retained plan error=",
+      "status": "PASS"
+    },
+    {
+      "label": "disabled stage retains water plan",
+      "status": "PASS"
+    },
+    {
+      "label": "reenable water stage error=",
+      "status": "PASS"
+    },
+    {
+      "label": "reenabled stage restores same profile",
+      "status": "PASS"
+    },
+    {
+      "label": "unknown profile rejected",
+      "status": "PASS"
+    },
+    {
+      "label": "unknown profile rolls back both tables",
+      "status": "PASS"
+    },
+    {
+      "label": "rejected stage edit preserves formula",
+      "status": "PASS"
+    },
+    {
+      "label": "unsupported coupling rejected",
+      "status": "PASS"
+    },
+    {
+      "label": "nonnumeric enabled flag rejected",
+      "status": "PASS"
+    },
+    {
+      "label": "invalid enabled flag rolled back",
+      "status": "PASS"
+    },
+    {
+      "label": "events restored after failed edits",
+      "status": "PASS"
+    },
+    {
+      "label": "section 結果 / 表示設定 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "display scale row mapped",
+      "status": "PASS"
+    },
+    {
+      "label": "display setting write through",
+      "status": "PASS"
+    },
+    {
+      "label": "display change preserves mechanical result validity",
+      "status": "PASS"
+    },
+    {
+      "label": "section 結果 / 表示設定 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "frontend setting formula rejected",
+      "status": "PASS"
+    },
+    {
+      "label": "rejected setting preserves canonical formula",
+      "status": "PASS"
+    },
+    {
+      "label": "section 結果 / 表示設定 error=",
+      "status": "PASS"
+    },
+    {
+      "label": "setting rollback retains all Double digits",
+      "status": "PASS"
+    },
+    {
+      "label": "overlay controls immediately follow display settings",
+      "status": "PASS"
+    },
+    {
+      "label": "overlay A/B write through",
+      "status": "PASS"
+    },
+    {
+      "label": "actual viewer accepts frontend overlay mode",
+      "status": "PASS"
+    },
+    {
+      "label": "independent overlay checkboxes write through",
+      "status": "PASS"
+    },
+    {
+      "label": "overlay changes preserve result validity",
+      "status": "PASS"
+    },
+    {
+      "label": "section 解析・保存 / 解析・SRM error=",
+      "status": "PASS"
+    },
+    {
+      "label": "solver policy write through",
+      "status": "PASS"
+    },
+    {
+      "label": "solver change invalidates results",
+      "status": "PASS"
+    },
+    {
+      "label": "stable stage ID survives normal reopen",
+      "status": "PASS"
+    },
+    {
+      "label": "water plan survives normal reopen",
+      "status": "PASS"
+    },
+    {
+      "label": "normal reopen restores seven tabs",
+      "status": "PASS"
+    }
+  ],
+  "book_sha256": "34C9E4B8ED7AD1A7149139FD70BE557EA58EFEA85B7391AAE934A4663C21AC2D",
+  "excel_build": 20430.0,
+  "status": "PASS",
+  "excel_version": "16.0"
+}

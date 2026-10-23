@@ -166,6 +166,7 @@ Private Sub FEMRebuildSettingsLayout(ByVal ws As Worksheet)
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "MESH_REPAIR_IMPROVEMENT_TOLERANCE", "修正", "改善判定", 0.0001, "相対", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "MESH_REPAIR_ANGLE_ITERATIONS", "修正", "角度最適化反復", 2000#, "1～5000", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "MESH_REPAIR_TERRAIN_COMPARE", "修正", "地形追従比較", 1#, "1=地形追従と角度最適化を比較 / 0=しない", False
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "MESH_T6_FALLBACK", "修正", "不適合Q8をT6へ置換", 0#, "0=OFF / 1=ON。品質修正後の不合格Q8だけをT6へ分割。不正形状は停止", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "MESH_GEN_COMPARE", "修正", "生成方式", 1#, "0=品質比較 / 1=デローニ優先 / 2=地形格子を直接生成（適用不可は停止）", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "MESH_TERRAIN_COUNT_MIN", "修正", "格子要素数下限比", 0.55, "デローニ要素数に対する比", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "MESH_TERRAIN_COUNT_MAX", "修正", "格子要素数上限比", 1.8, "デローニ要素数に対する比", False
@@ -3649,6 +3650,8 @@ Private Function FEMSettingChoiceList(ByVal keyName As String) As String
       FEMSettingChoiceList = "SIMPLE,DETAIL"
     Case "VIEW_RESULT_SOURCE"
       FEMSettingChoiceList = "SMOOTHED,ELEMENT,RAW_GAUSS"
+    Case "MESH_T6_FALLBACK"
+      FEMSettingChoiceList = "0,1"
     Case "MESH_GEN_COMPARE"
       FEMSettingChoiceList = "0,1,2"
     Case Else

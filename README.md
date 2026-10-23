@@ -8,6 +8,8 @@
 
 [1024版 操作説明書（PDF・212ページ）](docs/manuals/2DSoilFEM_Manual_20261024.pdf)／[原稿](docs/manuals/2DSoilFEM_Manual_20261024.md)／[画面・数値・全ページ確認](docs/MANUAL_20261024_VALIDATION.md)。全31章、解析例1～18と11-B、理論、出力整理、巻末用語集を収録しています。1023版の説明書とブックは下に保持しています。
 
+「モデル」→「メッシュ生成・支持条件」に **不適合Q8をT6へ置換**（0=OFF／1=ON、初期値0）を追加しました。品質修正後も目標未達のQ8だけを2個のT6へ分割し、正常なQ8と混在して計算します。[入力・対応範囲](docs/MESH_MIXED_T6.md)／[コンパイル・独立検算・実計算・画面確認](docs/MESH_MIXED_T6_VALIDATION.md)。DLLは同じ1個です。
+
 ## 1023版（従来画面・説明書対応）
 
 [1023版 操作説明書（PDF）](docs/manuals/2DSoilFEM_Manual_20261023_WATER_02.pdf)／[原稿](docs/manuals/2DSoilFEM_Manual.md)

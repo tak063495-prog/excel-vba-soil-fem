@@ -163,5 +163,10 @@
         "name":  "FEMIncrementSvg",
         "file":  "FEMIncrementSvg.bas",
         "type":  1
+    },
+    {
+        "name":  "FEMMixedElement",
+        "file":  "FEMMixedElement.bas",
+        "type":  1
     }
 ]

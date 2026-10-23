@@ -1,0 +1,209 @@
+{
+  "status": "PASS",
+  "book": "tests/tmp/mixed_t6/mesh_ui10b/mixed_t6.xlsm",
+  "sha256": "31c5f96b1aa8138f469e884d2eedee045172b44f8d24fc298ccc2a5d3028db79",
+  "areas_m2": [
+    1.5,
+    0.5,
+    0.5
+  ],
+  "weight_kn": 45.0,
+  "q8_min_jacobian": 0.25,
+  "checks": [
+    {
+      "name": "element counts",
+      "ok": true,
+      "detail": "Q8=1 T6=2"
+    },
+    {
+      "name": "T6 positive 2",
+      "ok": true,
+      "detail": "0.5"
+    },
+    {
+      "name": "T6 angle",
+      "ok": true,
+      "detail": "45"
+    },
+    {
+      "name": "T6 positive 9",
+      "ok": true,
+      "detail": "0.5"
+    },
+    {
+      "name": "T6 angle",
+      "ok": true,
+      "detail": "46.3936"
+    },
+    {
+      "name": "total area",
+      "ok": true,
+      "detail": "2.5"
+    },
+    {
+      "name": "node count",
+      "ok": true,
+      "detail": "14"
+    },
+    {
+      "name": "no unused nodes",
+      "ok": true,
+      "detail": "used=14"
+    },
+    {
+      "name": "known element type",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Q8 unique nodes 1",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "midpoint coordinates 1/1-2",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "midpoint coordinates 1/2-3",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "midpoint coordinates 1/3-4",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "midpoint coordinates 1/4-1",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "known element type",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "T6 slots 2",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "midpoint coordinates 2/2-9",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "midpoint coordinates 2/9-3",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "midpoint coordinates 2/3-2",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "shared midpoint ID 3-2",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "known element type",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "T6 slots 3",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "midpoint coordinates 3/9-10",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "midpoint coordinates 3/10-3",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "midpoint coordinates 3/3-9",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "shared midpoint ID 3-9",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "node IDs",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "element IDs",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "all real nodes used",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "conforming corner edges",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "outer boundary",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "outer contour coordinates",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "two correct interior edges",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "original good Q8 preserved",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Q8 positive Jacobian on 25 points",
+      "ok": true,
+      "detail": "0.25"
+    },
+    {
+      "name": "Q8 angle repaired",
+      "ok": true,
+      "detail": "max=135 deg"
+    },
+    {
+      "name": "material gamma",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "material thickness",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "weight",
+      "ok": true,
+      "detail": "45"
+    }
+  ]
+}

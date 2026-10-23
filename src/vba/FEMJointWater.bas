@@ -61,15 +61,17 @@ Public Sub GJPrepare()
       For q = 0 To NumberOfElement - 1
         If Not Elem(q).IsJoint Then
           For side = 0 To 3
+            If FEMElementSideValid(q, side) Then
             ids = Array(Elem(q).node(side), Elem(q).node((side + 1) Mod 4), Elem(q).node(side + 4))
             If ((ids(0) = Elem(e).node(3 * b) And ids(1) = Elem(e).node(3 * b + 1)) Or (ids(1) = Elem(e).node(3 * b) And ids(0) = Elem(e).node(3 * b + 1))) And ids(2) = Elem(e).node(3 * b + 2) Then
               If jOwner(b, e) >= 0 Then GJFail "JOINT面の隣接要素が一意ではありません。要素=" & CStr(e + 1)
               jOwner(b, e) = q: jSide(b, e) = side
             End If
+            End If
           Next side
         End If
       Next q
-      If jOwner(b, e) < 0 Then GJFail "JOINTの各面にQ8要素が必要です。要素=" & CStr(e + 1)
+      If jOwner(b, e) < 0 Then GJFail "JOINTの各面にQ8またはT6要素が必要です。要素=" & CStr(e + 1)
     Next b
     If jOwner(0, e) = jOwner(1, e) Then GJFail "JOINT両面が同じ要素です。"
     scaleValue = 1# + Abs(Elem(e).x(1) - Elem(e).x(0)) + Abs(Elem(e).y(1) - Elem(e).y(0))

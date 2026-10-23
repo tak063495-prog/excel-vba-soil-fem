@@ -9,9 +9,13 @@
 形状や材料・水・工程等を変更した後は、解析前メッシュを確認してから解析します。既存メッシュを使う場合、メッシュを作り直す必要はありません。「結果」では最終保存状態の図と工程別の数値を確認できます。
 
 詳細な操作・画面例：
-https://github.com/tak063495-prog/excel-vba-soil-fem/blob/feat/stage-ui-1024/docs/STAGE_UI_20261024.md
+https://github.com/tak063495-prog/excel-vba-soil-fem/blob/main/docs/STAGE_UI_20261024.md
 
-理論・解析例：1023版PDF説明書（内容を保持）。
-https://github.com/tak063495-prog/excel-vba-soil-fem/blob/main/docs/manuals/2DSoilFEM_Manual_20261023_WATER_02.pdf
+操作・理論・解析例：1024版PDF説明書。
+https://github.com/tak063495-prog/excel-vba-soil-fem/blob/main/docs/manuals/2DSoilFEM_Manual_20261024.pdf
 
 コンパイル・保存再読込のソース一致、入力操作、数値回帰と実画面を確認しています。検証環境は64bit Excel 16.0 build 20430です。時間圧密・fixed-stress、未知の自由水面・不飽和解析は対象外です。Double、材料則、収束条件、SRM探索条件は従来どおりです。
+
+Q8/T6混在対応（計算識別 20261024_MIXED_01）：
+「モデル」→「メッシュ生成・支持条件」→「不適合Q8をT6へ置換」で0=OFF／1=ONを指定します。初期値0です。品質修正後も目標未達のQ8だけをT6へ置換します。T6の輪郭は解析前メッシュで緑色、要素形式は詳細表K列です。辺の水理指定はT6の1・2・4を使います。再メッシュ後は支持・荷重・接合・水理境界を確認してください。
+https://github.com/tak063495-prog/excel-vba-soil-fem/blob/feat/mixed-t6/docs/MESH_MIXED_T6.md

@@ -16,8 +16,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 27377,
-    "sha256": "32ca8792ad971c73897a86bdabccc85f8057054e22f7a5e880c18963d12fe4d6"
+    "bytes": 27806,
+    "sha256": "9ffe51b5db119845c6477de10bd781b6724dd63ccc3dd36d19f3860505ef8d94"
   },
   {
     "path": "docs/ACCELERATION_HISTORY.md",
@@ -103,6 +103,16 @@
     "path": "docs/MESH_DELAUNAY_MEMORY.md",
     "bytes": 4872,
     "sha256": "070a5f5031a907eb7ee998c8c4a7a87c1e5e0428d4c70f6bc941d93d28485633"
+  },
+  {
+    "path": "docs/MESH_MIXED_T6.md",
+    "bytes": 5004,
+    "sha256": "d2205d025fd631f07b0901480ea6aabfd0254289bcbf9bc40e705493dcc5ca0e"
+  },
+  {
+    "path": "docs/MESH_MIXED_T6_VALIDATION.md",
+    "bytes": 7506,
+    "sha256": "348edfa1a39b2ecea4dd760cd745c22e9c84bb5c6ca0c482cb0b53f44f94d7b3"
   },
   {
     "path": "docs/MESH_TERRAIN_COMPLEX.md",
@@ -6870,6 +6880,81 @@
     "sha256": "2e3e0615426212dab1c93ca00b33b978ddafae00bc7b8f728c0b250261d408ca"
   },
   {
+    "path": "docs/mixed-t6-evidence/20261024/accepted_records.zip",
+    "bytes": 1376494,
+    "sha256": "31802813f49d7bfb8aea5263094792352139174557b6d12a895d7eea34a0bfdd"
+  },
+  {
+    "path": "docs/mixed-t6-evidence/20261024/compile_package.json",
+    "bytes": 1455,
+    "sha256": "7510f1c794053bd3465a93ec0f43bfff1dbc6c4159a2514b4a8ad7e90731050c"
+  },
+  {
+    "path": "docs/mixed-t6-evidence/20261024/mesh_independent.json",
+    "bytes": 3915,
+    "sha256": "4674c3440089c2a5d654719ab062f36d83f9385b73be80a342e52b27a7af9310"
+  },
+  {
+    "path": "docs/mixed-t6-evidence/20261024/mesh_option.jpg",
+    "bytes": 161938,
+    "sha256": "750962e15ff504be41b460176ad9d8800e915c136567f9da0f1e99f4f8af9c54"
+  },
+  {
+    "path": "docs/mixed-t6-evidence/20261024/mesh_ui_checks.json",
+    "bytes": 2363,
+    "sha256": "725178a6f1ab5dcc58a341d0c443615cf27836bac4589c0a45c6ba0edc42f552"
+  },
+  {
+    "path": "docs/mixed-t6-evidence/20261024/mixed_mesh.jpg",
+    "bytes": 136458,
+    "sha256": "806a2da91cb02ae717a2b7816a5c4f8ea4739892c67020b76e554df39b15e7c4"
+  },
+  {
+    "path": "docs/mixed-t6-evidence/20261024/mixed_result.jpg",
+    "bytes": 130711,
+    "sha256": "dfdbbef44f9eb2220aa26093a46f93e10c79ce15183a6b4b6299f6b609279cf0"
+  },
+  {
+    "path": "docs/mixed-t6-evidence/20261024/mixed_seepage.jpg",
+    "bytes": 174297,
+    "sha256": "4de3cca00ebec2ccfc901fa4b9348d2ebcb14edad25be09897fed3adffd7a9e6"
+  },
+  {
+    "path": "docs/mixed-t6-evidence/20261024/mixed_srm_A.jpg",
+    "bytes": 150253,
+    "sha256": "636f1351d7679d27c2b68259fe0792483d9e105185e95437925f1dfa54f0c0bf"
+  },
+  {
+    "path": "docs/mixed-t6-evidence/20261024/mixed_srm_B.jpg",
+    "bytes": 147563,
+    "sha256": "3fda0d07e85a7a084a5f42e27e2228368d409e2a8c0ab6ac87a71c641fa3f48f"
+  },
+  {
+    "path": "docs/mixed-t6-evidence/20261024/numerical_checks.json",
+    "bytes": 3766,
+    "sha256": "b7bb98fc93c1a9f286b054e453eea4853308abf204316570d404a065c359629c"
+  },
+  {
+    "path": "docs/mixed-t6-evidence/20261024/output_checks.json",
+    "bytes": 1356,
+    "sha256": "054bbea0a67d2b55877b38d1d3c11919d2a344cc5e34fad472e3c6a56fae6354"
+  },
+  {
+    "path": "docs/mixed-t6-evidence/20261024/stage_ui_checks.json",
+    "bytes": 10088,
+    "sha256": "e233f75ef302c8cc2ad49baa2b1c7e3dfa333cca6d1fa541563cd75ffbc3b716"
+  },
+  {
+    "path": "docs/mixed-t6-evidence/20261024/terrain_checks.json",
+    "bytes": 6385,
+    "sha256": "2cee5ce1dce2431cb80dad2348bcf5ab4dc3345e8e3e65fc4a74c209f66d2b87"
+  },
+  {
+    "path": "docs/mixed-t6-evidence/20261024/validation.json",
+    "bytes": 5454,
+    "sha256": "1f2be50cd48a9152dff3d0048a53e84b53af9147b6a621f2fa98ba7716e6f649"
+  },
+  {
     "path": "docs/native-evidence/assembly_20261020/DAVIS_0.json",
     "bytes": 51733,
     "sha256": "f6dde4d41d2c4c0d2fe9a03db43fc12858c06d4ef40bc224af6bc0820edb24ac"
@@ -10201,13 +10286,13 @@
   },
   {
     "path": "src/vba/CONTROL.bas",
-    "bytes": 102444,
-    "sha256": "4576cc3dc57c94ea8b450611d117e3f59a0fbb986fd449f71e1cd31204c70ec9"
+    "bytes": 103784,
+    "sha256": "27f430e965d010f71278b9f8cf794da82be560fe90657672a3bdd9945ef6073c"
   },
   {
     "path": "src/vba/FEM.bas",
-    "bytes": 169483,
-    "sha256": "a55755312c2946e6d8b609aa11d05dacbaac748f96ab7c8d86fbc1ecb2a4f537"
+    "bytes": 173340,
+    "sha256": "538736069227385a5bd0aeac2748e1d72dddc9e85d6a3092e07da38be20721c3"
   },
   {
     "path": "src/vba/FEMAccel.bas",
@@ -10222,12 +10307,12 @@
   {
     "path": "src/vba/FEMCore.bas",
     "bytes": 54174,
-    "sha256": "8e929d573cd74ef082a12dcadc43c28fecd6db321122f634f201a8c46aaecb32"
+    "sha256": "97c6c5234ab48c1d4bf84ed535bd22495037e21eec4146368d233b8e00215369"
   },
   {
     "path": "src/vba/FEMEngine.bas",
-    "bytes": 290962,
-    "sha256": "b68c8a45fab39ec4b33b0a691ede8f11d5db46c198bf183a629643c80d567175"
+    "bytes": 290985,
+    "sha256": "b7cdd3e2ecb498a4af6343f2a3f56f6f41707a814f0b1391f61625c18a52eabf"
   },
   {
     "path": "src/vba/FEMIncrementLog.bas",
@@ -10241,13 +10326,18 @@
   },
   {
     "path": "src/vba/FEMIo.bas",
-    "bytes": 178568,
-    "sha256": "636e9023da47859b12652aee7d4d89ef4256d9d77b1f23fcde6db7b32f6fefee"
+    "bytes": 178852,
+    "sha256": "66edfb3646c78cd10878325aed2fa01776164413d5f647e23cfdb24edd44f857"
   },
   {
     "path": "src/vba/FEMJointWater.bas",
-    "bytes": 10612,
-    "sha256": "221bea581a7f2fed46aa24169fdc210339f5f4bd097893f3b1b9f08ef095db56"
+    "bytes": 10691,
+    "sha256": "964a317d142f86b288a653e620a0802ba91e1cc384f2c86ce68762130d7ef5d9"
+  },
+  {
+    "path": "src/vba/FEMMixedElement.bas",
+    "bytes": 9180,
+    "sha256": "82359e76addf635bb51089cb99480eec27c7c9c30c1680d96d82266f0c3bfdd5"
   },
   {
     "path": "src/vba/FEMNative.bas",
@@ -10296,13 +10386,13 @@
   },
   {
     "path": "src/vba/FEMSeepage.bas",
-    "bytes": 10781,
-    "sha256": "af9c1c61e53fc5f6f692f72809a9c12e94cd82bea01586290fabff19bf51fd00"
+    "bytes": 10805,
+    "sha256": "3e600dc9ad280136659bdd71c905f3595729c088f2dae49973d82d100a889283"
   },
   {
     "path": "src/vba/FEMSeepageFlux.bas",
-    "bytes": 6636,
-    "sha256": "e1d2bebf1bdda0562959befbbebbbd6e78e688749cae7ffc92190364c3a69f25"
+    "bytes": 6708,
+    "sha256": "c8c2df164f377b1d8a4ab139ae2ad4e2cec73126532759b671ca5adf1f756681"
   },
   {
     "path": "src/vba/FEMSolver.bas",
@@ -10316,8 +10406,8 @@
   },
   {
     "path": "src/vba/FEMStageUi.bas",
-    "bytes": 40397,
-    "sha256": "31e6ee8c5821d01ecaeaa48cf448c3532941a86a01cca9d3f52f8e418beb9868"
+    "bytes": 40425,
+    "sha256": "17136dbf9ea590aea398879227c34dc0737719841252e4460ac7ca53f871c2ae"
   },
   {
     "path": "src/vba/FEMStepRecovery.bas",
@@ -10331,8 +10421,8 @@
   },
   {
     "path": "src/vba/FEMTerrainBlocks.bas",
-    "bytes": 32300,
-    "sha256": "2385d13f223907a3f4354646c6e285e2f295f4494341846909f27496baa09468"
+    "bytes": 32348,
+    "sha256": "25b28850dab19ecb002eade1de7e83b782eefc1bf4d10e6ef903deda1e63f2cc"
   },
   {
     "path": "src/vba/FEMUi.bas",
@@ -10346,8 +10436,8 @@
   },
   {
     "path": "src/vba/FEMUiInputs.bas",
-    "bytes": 22921,
-    "sha256": "697aad2726fa85fe6003962b2aa3de8e7f696ad61f812003114c1b5145983b32"
+    "bytes": 23846,
+    "sha256": "17ecac3b6dc3279e944948fd5e0a6475571f6436be1293410ad64ececfd44256"
   },
   {
     "path": "src/vba/FEMUiLayout.bas",
@@ -10357,27 +10447,27 @@
   {
     "path": "src/vba/FEMUiMeshWorkflow.bas",
     "bytes": 7370,
-    "sha256": "ebe602bc14dc6ef24baa86fb0d72a4d71b443454feba0655bdb51a6982a84ff2"
+    "sha256": "2ec02c145188f13b992794a0114b095b9fbf46217a807ecdc25de441a1795b03"
   },
   {
     "path": "src/vba/FEMUiValidation.bas",
-    "bytes": 13389,
-    "sha256": "53b14ade53e891bc56ddd28f24fe6f487922cb63f040da7e2b496308492fb036"
+    "bytes": 13447,
+    "sha256": "ef98a27bd8e6d8d4d4f7608a664c3684d12de96f3f3c8924b85a83f50164cb84"
   },
   {
     "path": "src/vba/FEMViewIncrement.bas",
-    "bytes": 14361,
-    "sha256": "e57c288a9db3b410b20044b3dfbb551e5bb52f76f7b9d6f93ea7d8a99a3d448c"
+    "bytes": 14541,
+    "sha256": "521c2b2673621dc9aa16db1e8251582c592ab35291484a76241cc29328767f09"
   },
   {
     "path": "src/vba/FEMViewer.bas",
-    "bytes": 34763,
-    "sha256": "5b4891c6d112119002046cf769f2c60e9f66794b8744ba53bbbc7620bc487d88"
+    "bytes": 35536,
+    "sha256": "ebe0210099a7e218081f48c236b039323803c523d20a6000f7f4784e0e63c613"
   },
   {
     "path": "src/vba/FEMWater.bas",
-    "bytes": 45593,
-    "sha256": "9c8fe8f7162d286904721e1fd85bbd38546a5264362fe44a861c403b06c02848"
+    "bytes": 45839,
+    "sha256": "a068967c3c7bbd077f98237b664c60774351e4a401819112c33b2efab1df745d"
   },
   {
     "path": "src/vba/FEMWaterGeometry.bas",
@@ -10391,18 +10481,18 @@
   },
   {
     "path": "src/vba/FEMWaterView.bas",
-    "bytes": 18529,
-    "sha256": "2f993fae23da7e54daa5e29cff6c626ef3d7651a55d037059617dec82ce258be"
+    "bytes": 18807,
+    "sha256": "92c5edcf44d68e9220e6e5130e72d048c2fe9c622351800d875c309814756e7e"
   },
   {
     "path": "src/vba/Mesh.bas",
-    "bytes": 136409,
-    "sha256": "c621083aed6fc85cf376625fdeadfd52e80319b201dc79915c08531dc786649a"
+    "bytes": 143533,
+    "sha256": "10b392446bdcf6557a71661093ba2be0ee37856582fa568cba420f6dff29c501"
   },
   {
     "path": "src/vba/MeshAdapt.bas",
-    "bytes": 100395,
-    "sha256": "dc03d02bd7eb449fcc267bd0975bf32ec18602aca79b91b0a24704760b144a13"
+    "bytes": 112109,
+    "sha256": "334a309f65908b238b72ae8bc8c920f68e0a583786ae0dd4e5cbaabaca67f0e3"
   },
   {
     "path": "src/vba/MeshAngle.bas",
@@ -10421,8 +10511,8 @@
   },
   {
     "path": "src/vba/modules.json",
-    "bytes": 3454,
-    "sha256": "ee8fc0948d63d6e7467fd66268dee0d328b879863019828c17342943fcb5c567"
+    "bytes": 3567,
+    "sha256": "4d8f7526805105bdfb646a772736a48130aeadffb0d50c92d4231fdd46ebebf6"
   },
   {
     "path": "tests/annotate_water_manual.py",
@@ -10533,6 +10623,16 @@
     "path": "tests/check_mesh_benchmark.py",
     "bytes": 4425,
     "sha256": "3767a6a623e94ded9d204279e5a57faa7aeecff97940656baf5b99a7ec2e94b9"
+  },
+  {
+    "path": "tests/check_mixed_t6.py",
+    "bytes": 9670,
+    "sha256": "514dc6eb7d79fa48a2f4a767df8206eb69580c718a84542ab73d18b6f921c0c8"
+  },
+  {
+    "path": "tests/check_mixed_t6_mesh.py",
+    "bytes": 7977,
+    "sha256": "ce5dbf1a075d6ef3a6eeab9d8542a80ba50f930e3c89f635eaabb43d833232fc"
   },
   {
     "path": "tests/check_polyline_water.py",
@@ -10723,6 +10823,71 @@
     "path": "tests/fixtures/manual24_basic.json",
     "bytes": 45738,
     "sha256": "e4f117fedafa72e86059c4025c6c30e3e582a16ccad26f2a6129240fdbd48040"
+  },
+  {
+    "path": "tests/fixtures/mixed_t6/mixed_gravity.json",
+    "bytes": 2790,
+    "sha256": "9c956ebfe8fc3a5f5bb95093d7ca9a5e8eb949ff398d1d17497354f283f18e56"
+  },
+  {
+    "path": "tests/fixtures/mixed_t6/mixed_joint_water_stages.json",
+    "bytes": 4390,
+    "sha256": "20c75adcba518d6412bc125b9c1672a1ed26990222c30fadfea61becef718252"
+  },
+  {
+    "path": "tests/fixtures/mixed_t6/mixed_joint_water_wet.json",
+    "bytes": 4023,
+    "sha256": "f39cd61df968738b933f917cb3da89e25845eec0b3048a92cf1229d726cd672f"
+  },
+  {
+    "path": "tests/fixtures/mixed_t6/mixed_plastic.json",
+    "bytes": 3784,
+    "sha256": "1d53724bb258f34ccc9d0447a6514867a3d7bd2803575982ffadbd62824cf918"
+  },
+  {
+    "path": "tests/fixtures/mixed_t6/mixed_seepage.json",
+    "bytes": 3505,
+    "sha256": "aefa4725e7445746873245d8b59f549a0632ec55beacc560ad6833ef89c7bb8a"
+  },
+  {
+    "path": "tests/fixtures/mixed_t6/mixed_slope_srm.json",
+    "bytes": 14279,
+    "sha256": "d1c61eaf3a855ed068738726a3a982ff57631b59fe905ff570b808b59af0d18d"
+  },
+  {
+    "path": "tests/fixtures/mixed_t6/mixed_traction.json",
+    "bytes": 3791,
+    "sha256": "594f70b2f295ed2e758f575c0c5b9861eac7cf751b7e368fabc92e5b56634c66"
+  },
+  {
+    "path": "tests/fixtures/mixed_t6/q8_gravity.json",
+    "bytes": 2546,
+    "sha256": "a9c5e646684c0595668541da586b663797342af180e309149173b587ec89e4d3"
+  },
+  {
+    "path": "tests/fixtures/mixed_t6/q8_seepage.json",
+    "bytes": 3261,
+    "sha256": "d44536ad8c3db86b3489d802e8954dea1ac37359bfdd4c96b2249e54b0f080ae"
+  },
+  {
+    "path": "tests/fixtures/mixed_t6/q8_traction.json",
+    "bytes": 3547,
+    "sha256": "e49f10f378336493bd6cf9206e46237b82831e7a463418d39388b6253ab150df"
+  },
+  {
+    "path": "tests/fixtures/mixed_t6/t6_gravity.json",
+    "bytes": 3025,
+    "sha256": "98f4d93ab02d6a0853a58e080048af78faa6bf867add41377da95708897c38e5"
+  },
+  {
+    "path": "tests/fixtures/mixed_t6/t6_seepage.json",
+    "bytes": 3740,
+    "sha256": "8b901a74bca5a63eb117dcb7342871ffd518d253089de1356f12b003b28457f6"
+  },
+  {
+    "path": "tests/fixtures/mixed_t6/t6_traction.json",
+    "bytes": 4026,
+    "sha256": "88ea2725fa76e9f3e708e1f6eb5b8678f4bf8f21c0d003482fd67d6510da6473"
   },
   {
     "path": "tests/fixtures/smoke_expected.json",
@@ -11105,6 +11270,11 @@
     "sha256": "b10da259b5a3e73a1e695c778ce41656373bd6dcbae56fb2f196714483e40c1c"
   },
   {
+    "path": "tests/mixed_t6_mesh_driver.bas",
+    "bytes": 6481,
+    "sha256": "8a57aa81075964f85a0ac7d165c1c51f973813685b973294d1d36705605ea4dc"
+  },
+  {
     "path": "tests/native/FEMIncoProfile.bas",
     "bytes": 2901,
     "sha256": "30eac2e95785a268665a5fc051274786772046373d92f8b807dc543f250a7009"
@@ -11306,8 +11476,8 @@
   },
   {
     "path": "tests/native/make_native_workbook.ps1",
-    "bytes": 4743,
-    "sha256": "9e1361be4391ae89c904955af03f234d30e04468321d58b3f61a22b3bb13ab29"
+    "bytes": 5207,
+    "sha256": "69399e7fc8910c09b4e675714b48a112c73f0ae6e4d45cf199a2d4981d0442ea"
   },
   {
     "path": "tests/native/measure_event_buffer.ps1",
@@ -11496,8 +11666,8 @@
   },
   {
     "path": "tests/package_stage_ui24.ps1",
-    "bytes": 4040,
-    "sha256": "4c631fd864944b2574415a51097b1c4436def933a7bbf0c32b651922a38c1756"
+    "bytes": 5383,
+    "sha256": "db6742bbc8cbf9623e9879daea3180efd623267f02619c35096543c26f533b93"
   },
   {
     "path": "tests/package_terrain_release.py",
@@ -11626,8 +11796,8 @@
   },
   {
     "path": "tests/run_groundwater_fixture.ps1",
-    "bytes": 12383,
-    "sha256": "cf5f63b57870d6c267d7e604ca2237bc5244ca960abefc2a0641b343692674f1"
+    "bytes": 12532,
+    "sha256": "e6196e5fb568524ca2e25edc7ba1aed3cb473486d8cc96f088c8d8c7eebf9a3c"
   },
   {
     "path": "tests/run_groundwater_regression.ps1",
@@ -11648,6 +11818,21 @@
     "path": "tests/run_mesh_benchmark.ps1",
     "bytes": 8026,
     "sha256": "0e07537e9404b19e378f50e6a08e4abc4d60075cecafbd94416673015b743b3e"
+  },
+  {
+    "path": "tests/run_mixed_t6_mesh.ps1",
+    "bytes": 10191,
+    "sha256": "f92fe40a88d7014142f91621994e17ea3ea7422c1028bf8568125d2dbd68f0cb"
+  },
+  {
+    "path": "tests/run_mixed_t6_output.ps1",
+    "bytes": 4500,
+    "sha256": "f848257b9c049b84521cf4f5a445e8fd02014cae3e22b89001ea57f59b7dfb47"
+  },
+  {
+    "path": "tests/run_mixed_t6_regression.ps1",
+    "bytes": 2497,
+    "sha256": "9ace8e56ee2103194be6f5f89347034352102b5e1b80e225c5cbfdfdb92c439a"
   },
   {
     "path": "tests/run_stage_ui24.ps1",
@@ -11698,6 +11883,11 @@
     "path": "tests/test_issue2_3_regression.ps1",
     "bytes": 18668,
     "sha256": "30b9b96738b462861ffe3d9545aa0c730aa1eab9810cab7ce97f21c714861ce3"
+  },
+  {
+    "path": "tests/test_mixed_t6_reference.py",
+    "bytes": 5362,
+    "sha256": "b9466dcbb08ca4d98bfed8666e54a565b231365c246fa86f8964fd7eae6b8acc"
   },
   {
     "path": "tests/test_native_figure.ps1",
@@ -11871,8 +12061,8 @@
   },
   {
     "path": "workbook/SoilFEM_UI_20261024.zip",
-    "bytes": 3766147,
-    "sha256": "415aee631e813635cbe40a0c60dcc0df3bb9751df8d64b7b68d85ceffeb67b6c"
+    "bytes": 3839962,
+    "sha256": "a5ac075a4824f28e6980bb92f145393d5f6de17f0678574b5c4504ce3b26f449"
   },
   {
     "path": "workbook/inco_assembly_20261020/2DSoilFEM_inco_assembly_20261020.xlsm",
@@ -12146,18 +12336,18 @@
   },
   {
     "path": "workbook/ui_20261024/2DSoilFEM_ui_20261024.xlsm",
-    "bytes": 4284314,
-    "sha256": "16161736280992174173430f9a163fca72cc4f3d408683cdce1990461910b560"
+    "bytes": 4354169,
+    "sha256": "34c9e4b8ed7ad1a7149139fd70be557ea58efea85b7391aae934a4663c21ac2d"
   },
   {
     "path": "workbook/ui_20261024/BUILD_RECORD.json",
-    "bytes": 4698,
-    "sha256": "ba29498595d1eaf82a5b22cc94ebbd66718aa60dfe631492e51abc698e7d3849"
+    "bytes": 1550,
+    "sha256": "855d7fcef8314612cb2a2e41aa67269060a758c37d27de71775e2145933250db"
   },
   {
     "path": "workbook/ui_20261024/README.md",
-    "bytes": 1703,
-    "sha256": "3a8b592b4fcea460c69e67d742b6bb47efe9ef6dbe0a1288231947125d27fe1d"
+    "bytes": 2261,
+    "sha256": "4b69c6298fbb5a3d96c322116d9fae56ac21ea885f137d08ece1b619a11606be"
   },
   {
     "path": "workbook/ui_20261024/soilfem_native_x64.dll",

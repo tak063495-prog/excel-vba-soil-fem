@@ -26,6 +26,7 @@ Private Function FEMUiValidationList(ByVal keyName As String) As String
     Case "VIEW_SCALE_MODE": FEMUiValidationList = "AUTO,SYMMETRIC,USER"
     Case "VIEW_DETAIL_MODE": FEMUiValidationList = "SIMPLE,DETAIL"
     Case "VIEW_RESULT_SOURCE": FEMUiValidationList = "SMOOTHED,ELEMENT,RAW_GAUSS"
+    Case "MESH_T6_FALLBACK": FEMUiValidationList = "0,1"
     Case "MESH_GEN_COMPARE": FEMUiValidationList = "0,1,2"
     Case "NATIVE_DLL": FEMUiValidationList = "AUTO,BAND,OFF"
     Case "NATIVE_PRECISION": FEMUiValidationList = "STRICT,SSE2,AUTO,AVX2"

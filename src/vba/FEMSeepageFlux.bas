@@ -15,7 +15,7 @@ Public Sub GWRecoverFaceFlows(ByRef conductivity() As Double, ByRef heads() As D
   For e = 0 To n - 1
     For s = 0 To 3
       neighbor(s, e) = -1
-      If conductivity(e) > 0# Then
+      If conductivity(e) > 0# And FEMElementSideValid(e, s) Then
         a = GWFlowNode(e, s): b = GWFlowNode(e, (s + 1) Mod 4)
         If a < b Then k = a & ":" & b Else k = b & ":" & a
         k = k & ":" & GWFlowNode(e, s + 4)
@@ -36,7 +36,7 @@ Public Sub GWRecoverFaceFlows(ByRef conductivity() As Double, ByRef heads() As D
   For e = 0 To n - 1
     If conductivity(e) > 0# Then
       For s = 0 To 3
-        If neighbor(s, e) < 0 Then
+        If FEMElementSideValid(e, s) And neighbor(s, e) < 0 Then
           adjustable(s, e) = fixedHead(GWFlowNode(e, s)) And fixedHead(GWFlowNode(e, (s + 1) Mod 4)) And fixedHead(GWFlowNode(e, s + 4))
           If Not adjustable(s, e) Then faceFlow(s, e) = 0#
         End If
@@ -112,7 +112,7 @@ Private Function GWRawFaceFlow(ByVal e As Long, ByVal side As Long, ByVal conduc
       Case 2: xi = -t: eta = 1#
       Case 3: xi = -1#: eta = -t
     End Select
-    P6Q8Shape xi, eta, ns, dxi, deta
+    FEMShapeForElement e, xi, eta, ns, dxi, deta
     j11 = 0#: j12 = 0#: j21 = 0#: j22 = 0#: hx = 0#: hy = 0#
     For j = 0 To 7
       j11 = j11 + dxi(j) * Elem(e).x(j): j12 = j12 + deta(j) * Elem(e).x(j)

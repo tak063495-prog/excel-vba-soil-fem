@@ -579,5 +579,5 @@ Private Sub TBValidate()
     Next e
     If components <> 1 Then TBFail "要素が辺全体で連結していません。点だけの接続・離れた領域を見直してください。"
     P5ValidateMeshQuality tn, te, cn, tx, ty
-    If Not P5QualityMeetsSettings() Then TBFail "品質目標を満たしません。細い領域・近接した境界点・放射方向の分割を見直してください。" & P5QualitySummary()
+    If Not P5QualityMeetsSettings() And FEMReadSetting("MESH_T6_FALLBACK", 0#) = 0# Then TBFail "品質目標を満たしません。細い領域・近接した境界点・放射方向の分割を見直してください。" & P5QualitySummary()
 End Sub

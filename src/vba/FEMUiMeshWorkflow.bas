@@ -61,7 +61,7 @@ Private Function MeshFingerprint() As String
   Dim spec As Variant, ws As Worksheet, data As Variant, v As Variant, r As Long, c As Long, last As Long
   Dim a As Double, b As Double, s As String
   a = 17#: b = 31#
-  For Each spec In Array(Array("節点データ", 9), Array("要素データ", 10), Array("材料データ", 13), Array("ステージ", 6), Array("接合", 4))
+  For Each spec In Array(Array("節点データ", 9), Array("要素データ", 11), Array("材料データ", 13), Array("ステージ", 6), Array("接合", 4))
     Set ws = ThisWorkbook.Worksheets(CStr(spec(0)))
     last = ws.cells(ws.rows.count, 1).End(xlUp).row
     data = ws.range(ws.cells(1, 1), ws.cells(Application.Max(2, last), CLng(spec(1)))).value2

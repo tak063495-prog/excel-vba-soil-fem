@@ -32,7 +32,25 @@ Public Sub FEMUiPrepareInputs()
       ws.cells(targetRow, 6).value2 = CStr(item)
     End If
   Next item
+  ThisWorkbook.Worksheets("要素データ").cells(1, 11).value2 = "要素形式（Q8/T6）"
   FEMUiOrderRuntimePage ws, keys
+  Set ws = ThisWorkbook.Worksheets("メッシュ設定")
+  found = False
+  For r = 1 To ws.cells(ws.rows.count, 6).End(xlUp).row
+    If CStr(ws.cells(r, 6).value2) = "MESH_T6_FALLBACK" Then found = True: Exit For
+  Next r
+  If Not found Then
+    targetRow = ws.cells(ws.rows.count, 6).End(xlUp).row + 1
+    For r = 5 To legacy.cells(legacy.rows.count, 5).End(xlUp).row
+      If CStr(legacy.cells(r, 5).value2) = "MESH_T6_FALLBACK" Then
+        ws.cells(targetRow, 2).value2 = legacy.cells(r, 2).value2
+        ws.cells(targetRow, 3).value2 = legacy.cells(r, 3).value2
+        ws.cells(targetRow, 5).value2 = legacy.cells(r, 4).value2
+        ws.cells(targetRow, 6).value2 = "MESH_T6_FALLBACK"
+        Exit For
+      End If
+    Next r
+  End If
   For Each p In Array("メッシュ設定", "解析設定", "高速化設定", "出力・表示", "詳細設定")
     Set ws = ThisWorkbook.Worksheets(CStr(p))
     ws.columns("G").Hidden = False: ws.columns("G").ColumnWidth = 20
@@ -199,6 +217,7 @@ Private Function FEMUiRecommendation(ByVal keyName As String) As Variant
     Case "ACCEL_PREDICT_BETA": FEMUiRecommendation = 1
     Case "ACCEL_PREDICT_MAX_RATIO": FEMUiRecommendation = 1.5
     Case "ACCEL_TANGENT_CHANGE": FEMUiRecommendation = 0.05
+    Case "MESH_T6_FALLBACK": FEMUiRecommendation = "0（既定OFF）"
     Case "MESH_QUALITY_MIN_AREA_RATIO": FEMUiRecommendation = 0.000001
     Case "MESH_QUALITY_MIN_JACOBIAN_RATIO": FEMUiRecommendation = 0.000001
     Case "MESH_QUALITY_MAX_ASPECT_RATIO": FEMUiRecommendation = 5#

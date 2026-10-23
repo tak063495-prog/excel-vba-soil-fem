@@ -65,7 +65,7 @@ Public Sub GWSeepSolve(ByRef conductivity() As Double, ByRef fixedHead() As Bool
     For g = 0 To 8
       q = g Mod 3
       Root = g \ 3
-      P6Q8Shape gp(q), gp(Root), Nshape, dxi, deta
+      FEMShapeForElement e, gp(q), gp(Root), Nshape, dxi, deta
       j11 = 0#: j12 = 0#: j21 = 0#: j22 = 0#
       For i = 0 To 7
         j11 = j11 + dxi(i) * Elem(e).x(i)
@@ -274,7 +274,7 @@ Private Sub GWComputeFlux(ByRef conductivity() As Double, ByRef h() As Double, B
   For e = 0 To ne - 1
     If conductivity(e) > 0# Then
       For g = 0 To 3
-        P6Q8Shape xis(g), etas(g), Nshape, dxi, deta
+        FEMShapeForElement e, xis(g), etas(g), Nshape, dxi, deta
         j11 = 0#: j12 = 0#: j21 = 0#: j22 = 0#
         For i = 0 To 7
           j11 = j11 + dxi(i) * Elem(e).x(i): j12 = j12 + deta(i) * Elem(e).x(i)

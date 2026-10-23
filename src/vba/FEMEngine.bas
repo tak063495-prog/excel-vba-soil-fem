@@ -1036,7 +1036,7 @@ Private Sub P3ResetElementElasticTangent(ByVal elementId As Long)
     Elem(elementId).SpmatValid(im) = True
   Next im
   P6EnsureGaussCache
-  SetElmStiffness Material(materialIndex).thickness, Material(materialIndex).weight, Elem(elementId).bMat, Elem(elementId).Smat, Elem(elementId).kmat, Elem(elementId).ElmWeight, Elem(elementId).dj, P6GaussN
+  SetElmStiffness Material(materialIndex).thickness, Material(materialIndex).weight, Elem(elementId).bMat, Elem(elementId).Smat, Elem(elementId).kmat, Elem(elementId).ElmWeight, Elem(elementId).dj, Elem(elementId).n
   P6AddQ8HourglassStabilization Elem(elementId), Material(materialIndex).thickness, True
   Elem(elementId).TangentDirty = False
 End Sub
@@ -1087,7 +1087,7 @@ Public Sub P3AssembleSelfWeightOnly()
       For b = 0 To 1
         xiValue = gaussXi(a)
         etaValue = gaussXi(b)
-        P6Q8Shape xiValue, etaValue, shapeN, dNxi, dNeta
+        FEMShapeForElement i, xiValue, etaValue, shapeN, dNxi, dNeta
         dXdxi = 0#: dYdxi = 0#: dXdeta = 0#: dYdeta = 0#
         For j = 0 To 7
           dXdxi = dXdxi + dNxi(j) * Elem(i).x(j)
@@ -1741,9 +1741,9 @@ Private Function P3RebuildTangentFromSpmat() As Boolean
         If P3IncoElasticCorrection Then
           ' Only the correction operator changes. Trial stress/flow/yield and
           ' the actual internal force continue to use the same material law.
-          SetElmStiffness Material(materialIndex).thickness, Material(materialIndex).weight, Elem(k).bMat, Elem(k).Smat, Elem(k).kmat, Elem(k).ElmWeight, Elem(k).dj, P6GaussN
+          SetElmStiffness Material(materialIndex).thickness, Material(materialIndex).weight, Elem(k).bMat, Elem(k).Smat, Elem(k).kmat, Elem(k).ElmWeight, Elem(k).dj, Elem(k).n
         Else
-        SetElmStiffness Material(materialIndex).thickness, Material(materialIndex).weight, Elem(k).bMat, Elem(k).Spmat, Elem(k).kmat, Elem(k).ElmWeight, Elem(k).dj, P6GaussN
+        SetElmStiffness Material(materialIndex).thickness, Material(materialIndex).weight, Elem(k).bMat, Elem(k).Spmat, Elem(k).kmat, Elem(k).ElmWeight, Elem(k).dj, Elem(k).n
         End If
         End If
         ' Full Newton uses the material force's derivative. Retain numerical

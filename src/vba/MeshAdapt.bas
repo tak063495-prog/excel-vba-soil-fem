@@ -722,6 +722,7 @@ Public Function MeshPrepareCandidate(ByVal kind As String) As Boolean
     candidateOptions = CandidateOptionSignature()
     candidateSignature = MeshInputSignature(): candidateKind = UCase$(kind)
     operationStep = "入力読込"
+    If FEMMeshSheetHasT6() Then Err.Raise vbObjectError + 3974, , "混合メッシュの適応再分割・平滑化は未対応です。形状入力から再生成してください。"
     LoadMesh
     If candidateKind <> "PLASTIC" And candidateKind <> "SMOOTH" Then Err.Raise vbObjectError + 3808, , "不明なメッシュ操作です。"
     If Not GenerateAndCompare() Then Err.Raise vbObjectError + 3808, , "有効な候補がありません。"
@@ -1443,7 +1444,10 @@ Private Sub MeshPrepareTerrainSimple(ByRef outX() As Double, ByRef outY() As Dou
     Call CheckCandidate
     Call GetQuality(q)
     P5ValidateMeshQuality nn, ne, conn, xx, yy
-    If Not QualityPasses(q) Or Not P5QualityMeetsSettings() Then Err.Raise vbObjectError + 3860, , "地形格子を適用できません：品質目標を満たしません。" & P5QualitySummary()
+    If Not QualityPasses(q) Or Not P5QualityMeetsSettings() Then
+        If FEMReadSetting("MESH_T6_FALLBACK", 0#) = 0# Then _
+            Err.Raise vbObjectError + 3860, , "地形格子を適用できません：品質目標を満たしません。" & P5QualitySummary()
+    End If
     ReDim outX(1 To nn): ReDim outY(1 To nn): ReDim outElements(1 To ne, 1 To 10)
     For i = 1 To nn: outX(i) = xx(i): outY(i) = yy(i): Next i
     For i = 1 To ne
@@ -1890,4 +1894,178 @@ Private Function HasInteriorBoundary() As Boolean
             If twiceArea < -meshScale * meshScale * 0.000000000001 Then HasInteriorBoundary = True: Exit Function
         End If
     Next start
+End Function
+
+' Convert only explicitly bad Q8 records to two six-node triangles.  The
+' caller supplies the quality mask, so a topology error is never hidden by
+' this fallback.  The returned table has the original ten columns plus K:
+' K="T6" for converted records and "Q8" for records that were retained.
+Public Function MeshAdaptConvertBadQ8ToT6(ByRef x() As Double, ByRef y() As Double, _
+                                           ByRef source() As Variant, ByRef failedMask() As Boolean, ByRef converted As Long, _
+                                           ByRef outputCount As Long, ByRef detail As String) As Variant
+    Dim n As Long, c As Long, e As Long, j As Long, a As Long, b As Long, d0 As Long
+    Dim v(1 To 4) As Long, m(1 To 4) As Long, area As Double, a1 As Double, a2 As Double
+    Dim out() As Variant, nodeCount As Long, rowCount As Long, mat As Variant
+    Dim diag As Long, mid As Long, q As String, trimmed() As Variant
+    Dim areaFloor As Double, minX As Double, maxX As Double, minY As Double, maxY As Double, span As Double
+    On Error GoTo Fail
+    converted = 0: outputCount = 0: detail = ""
+    n = UBound(source, 1): c = UBound(source, 2)
+    If c < 10 Then Err.Raise vbObjectError + 3881, , "T6変換元の要素表は10列必要です。"
+    rowCount = n: nodeCount = UBound(x)
+    minX = x(1): maxX = x(1): minY = y(1): maxY = y(1)
+    For j = 2 To nodeCount
+        If x(j) < minX Then minX = x(j)
+        If x(j) > maxX Then maxX = x(j)
+        If y(j) < minY Then minY = y(j)
+        If y(j) > maxY Then maxY = y(j)
+    Next j
+    span = maxX - minX: If maxY - minY > span Then span = maxY - minY
+    areaFloor = span * span * FEMReadSetting("MESH_QUALITY_MIN_AREA_RATIO", 0.000001)
+    ReDim out(1 To n * 2, 1 To 11)
+    For e = 1 To n
+        For j = 1 To 10: out(e, j) = source(e, j): Next j
+        out(e, 11) = "Q8"
+        If e > UBound(failedMask) Then Err.Raise vbObjectError + 3880, , "T6品質マスクの要素数が一致しません。"
+        If Not failedMask(e) Then GoTo NextElement
+        For j = 1 To 4: v(j) = CLng(source(e, j + 1)): m(j) = CLng(source(e, j + 5)): Next j
+        For j = 1 To 4
+            If v(j) < 1 Or v(j) > nodeCount Or m(j) < 1 Or m(j) > nodeCount Then _
+                Err.Raise vbObjectError + 3882, , "T6変換対象の節点番号が範囲外です。要素=" & CStr(e)
+        Next j
+        area = T6PolygonArea(x, y, v(1), v(2), v(3), v(4))
+        If area <= 0# Then Err.Raise vbObjectError + 3883, , "Q8の向きまたは形状が不正なためT6へ変換できません。要素=" & CStr(e)
+        a1 = T6TriangleArea(x, y, v(1), v(2), v(3)): a2 = T6TriangleArea(x, y, v(1), v(3), v(4)): diag = 1
+        If a1 <= 0# Or a2 <= 0# Or Not T6TriangleAcceptable(x, y, v(1), v(2), v(3), areaFloor) Or Not T6TriangleAcceptable(x, y, v(1), v(3), v(4), areaFloor) Then
+            a1 = T6TriangleArea(x, y, v(1), v(2), v(4)): a2 = T6TriangleArea(x, y, v(2), v(3), v(4)): diag = 2
+        End If
+        If a1 <= 0# Or a2 <= 0# Then Err.Raise vbObjectError + 3884, , "Q8を有効な二三角形へ分割できません。要素=" & CStr(e)
+        If diag = 1 Then
+            mid = T6AppendMidpoint(x, y, v(1), v(3)): mat = source(e, 10)
+            rowCount = rowCount + 1: out(rowCount, 1) = rowCount: out(rowCount, 2) = v(1): out(rowCount, 3) = v(2): out(rowCount, 4) = v(3): out(rowCount, 5) = v(3)
+            out(rowCount, 6) = m(1): out(rowCount, 7) = m(2): out(rowCount, 8) = v(3): out(rowCount, 9) = mid: out(rowCount, 10) = mat: out(rowCount, 11) = "T6"
+            out(e, 2) = v(1): out(e, 3) = v(3): out(e, 4) = v(4): out(e, 5) = v(4): out(e, 6) = mid: out(e, 7) = m(3): out(e, 8) = v(4): out(e, 9) = m(4): out(e, 11) = "T6"
+        Else
+            mid = T6AppendMidpoint(x, y, v(2), v(4)): mat = source(e, 10)
+            rowCount = rowCount + 1: out(rowCount, 1) = rowCount: out(rowCount, 2) = v(2): out(rowCount, 3) = v(3): out(rowCount, 4) = v(4): out(rowCount, 5) = v(4)
+            out(rowCount, 6) = m(2): out(rowCount, 7) = m(3): out(rowCount, 8) = v(4): out(rowCount, 9) = mid: out(rowCount, 10) = mat: out(rowCount, 11) = "T6"
+            out(e, 2) = v(1): out(e, 3) = v(2): out(e, 4) = v(4): out(e, 5) = v(4): out(e, 6) = m(1): out(e, 7) = mid: out(e, 8) = v(4): out(e, 9) = m(4): out(e, 11) = "T6"
+        End If
+        If Not T6TriangleAcceptable(x, y, out(e, 2), out(e, 3), out(e, 4), areaFloor) Or _
+           Not T6TriangleAcceptable(x, y, out(rowCount, 2), out(rowCount, 3), out(rowCount, 4), areaFloor) Then _
+            Err.Raise vbObjectError + 3885, , "T6分割後の三角形品質が不足します。要素=" & CStr(e)
+        converted = converted + 1: q = q & IIf(Len(q) = 0, "", ",") & CStr(e)
+NextElement:
+    Next e
+    If rowCount > FEM_FIXED_DATA_CAPACITY Then Err.Raise vbObjectError + 3975, , "T6要素数が容量を超えます。"
+    outputCount = rowCount
+    detail = "Q8=" & CStr(n - converted) & " / T6=" & CStr(2 * converted) & " / 置換元Q8=" & CStr(converted) & IIf(Len(q) > 0, "（" & q & "）", "")
+    ReDim trimmed(1 To rowCount, 1 To 11)
+    For e = 1 To rowCount: For j = 1 To 11: trimmed(e, j) = out(e, j): Next j: Next e
+    MeshAdaptConvertBadQ8ToT6 = trimmed
+    Exit Function
+Fail:
+    Err.Raise Err.Number, "MeshAdaptConvertBadQ8ToT6", Err.Description
+End Function
+
+Public Function MeshAdaptEnsureElementTypeColumn(ByRef source() As Variant) As Variant
+    Dim n As Long, c As Long, i As Long, j As Long, out() As Variant
+    n = UBound(source, 1): c = UBound(source, 2): ReDim out(1 To n, 1 To 11)
+    For i = 1 To n
+        For j = 1 To c: out(i, j) = source(i, j): Next j
+        If c < 11 Or Len(Trim$(CStr(out(i, 11)))) = 0 Then out(i, 11) = "Q8"
+    Next i
+    MeshAdaptEnsureElementTypeColumn = out
+End Function
+
+' Local repair before the opt-in fallback. Preserve all boundary/interface
+' vertices and every vertex touching an already acceptable Q8.
+Public Sub MeshRepairBeforeT6(ByRef xxLocal() As Double, ByRef yyLocal() As Double, ByRef source() As Variant)
+    Dim cn() As Long, bad() As Boolean, locks() As Boolean, ox() As Double, oy() As Double
+    Dim edges As Object, info As Variant, key As Variant, edgeKeyText As String
+    Dim e As Long, j As Long, a As Long, b As Long, mid As Long, n As Long, neLocal As Long
+    Dim badCount As Long, iterations As Long, moved As Long, limit As Long
+    n = UBound(xxLocal): neLocal = UBound(source, 1)
+    ReDim cn(1 To neLocal, 1 To 8): ReDim locks(1 To n)
+    For e = 1 To neLocal: For j = 1 To 8: cn(e, j) = CLng(source(e, j + 1)): Next j: Next e
+    P5BuildT6FallbackMask n, neLocal, cn, xxLocal, yyLocal, bad, badCount
+    If badCount = 0 Then Exit Sub
+    Set edges = CreateObject("Scripting.Dictionary")
+    For e = 1 To neLocal
+        If Not bad(e) Then
+            For j = 1 To 4: locks(cn(e, j)) = True: Next j
+        End If
+        For j = 1 To 4
+            a = cn(e, j): b = cn(e, j Mod 4 + 1)
+            If a < b Then edgeKeyText = CStr(a) & ":" & CStr(b) Else edgeKeyText = CStr(b) & ":" & CStr(a)
+            If edges.Exists(edgeKeyText) Then
+                info = edges(edgeKeyText)
+                If CLng(info(0)) <> 1 Then Err.Raise vbObjectError + 3976, , "辺を3要素以上で共有しています。"
+                If CLng(info(3)) <> CLng(source(e, 10)) Then locks(a) = True: locks(b) = True
+                info(0) = 2: edges(edgeKeyText) = info
+            Else
+                edges.Add edgeKeyText, Array(1, a, b, CLng(source(e, 10)))
+            End If
+        Next j
+    Next e
+    For Each key In edges.keys
+        info = edges(key)
+        If CLng(info(0)) = 1 Then locks(CLng(info(1))) = True: locks(CLng(info(2))) = True
+    Next key
+    ox = xxLocal: oy = yyLocal
+    limit = CLng(FEMReadSetting("MESH_REPAIR_MAX_ITERATIONS", 10#))
+    If limit < 1 Then limit = 1
+    If limit > 50 Then limit = 50
+    On Error GoTo Reject
+    MeshAngleOptimize xxLocal, yyLocal, cn, n, neLocal, locks, limit, iterations
+    For e = 1 To neLocal
+        For j = 1 To 4
+            a = cn(e, j): b = cn(e, j Mod 4 + 1): mid = cn(e, j + 4)
+            If xxLocal(a) <> ox(a) Or yyLocal(a) <> oy(a) Or xxLocal(b) <> ox(b) Or yyLocal(b) <> oy(b) Then
+                xxLocal(mid) = (xxLocal(a) + xxLocal(b)) / 2#: yyLocal(mid) = (yyLocal(a) + yyLocal(b)) / 2#
+            End If
+        Next j
+    Next e
+    P5ValidateMeshQuality n, neLocal, cn, xxLocal, yyLocal
+    For j = 1 To n
+        If xxLocal(j) <> ox(j) Or yyLocal(j) <> oy(j) Then moved = moved + 1
+    Next j
+    MeshAdaptLastSummary = MeshAdaptLastSummary & vbCrLf & "T6置換前の局所修正：移動節点 " & CStr(moved)
+    Exit Sub
+Reject:
+    xxLocal = ox: yyLocal = oy
+    Err.Clear
+End Sub
+
+Private Function T6TriangleArea(ByRef x() As Double, ByRef y() As Double, ByVal a As Long, ByVal b As Long, ByVal c As Long) As Double
+    T6TriangleArea = ((x(b) - x(a)) * (y(c) - y(a)) - (y(b) - y(a)) * (x(c) - x(a))) / 2#
+End Function
+Private Function T6PolygonArea(ByRef x() As Double, ByRef y() As Double, ByVal a As Long, ByVal b As Long, ByVal c As Long, ByVal d As Long) As Double
+    T6PolygonArea = T6TriangleArea(x, y, a, b, c) + T6TriangleArea(x, y, a, c, d)
+End Function
+Private Function T6AppendMidpoint(ByRef x() As Double, ByRef y() As Double, ByVal a As Long, ByVal b As Long) As Long
+    Dim n As Long: n = UBound(x) + 1:
+    If n > FEM_FIXED_DATA_CAPACITY Then Err.Raise vbObjectError + 3975, , "T6追加節点が容量を超えます。"
+    ReDim Preserve x(1 To n): ReDim Preserve y(1 To n)
+    x(n) = (x(a) + x(b)) / 2#: y(n) = (y(a) + y(b)) / 2#: T6AppendMidpoint = n
+End Function
+
+Private Function T6TriangleAcceptable(ByRef x() As Double, ByRef y() As Double, ByVal a As Long, ByVal b As Long, ByVal c As Long, Optional ByVal areaFloor As Double = 0#) As Boolean
+    Dim abx As Double, aby As Double, bcx As Double, bcy As Double, cax As Double, cay As Double
+    Dim den As Double, cs As Double, ang As Double, minAng As Double, maxAng As Double, k As Long
+    Dim l1 As Double, l2 As Double, l3 As Double, shortest As Double, longest As Double
+    If T6TriangleArea(x, y, a, b, c) <= areaFloor Then Exit Function
+    abx = x(b) - x(a): aby = y(b) - y(a): bcx = x(c) - x(b): bcy = y(c) - y(b): cax = x(a) - x(c): cay = y(a) - y(c)
+    minAng = 180#
+    For k = 1 To 3
+        If k = 1 Then cs = -(cax * abx + cay * aby) / (Sqr(cax * cax + cay * cay) * Sqr(abx * abx + aby * aby))
+        If k = 2 Then cs = -(abx * bcx + aby * bcy) / (Sqr(abx * abx + aby * aby) * Sqr(bcx * bcx + bcy * bcy))
+        If k = 3 Then cs = -(bcx * cax + bcy * cay) / (Sqr(bcx * bcx + bcy * bcy) * Sqr(cax * cax + cay * cay))
+        cs = Application.Max(-1#, Application.Min(1#, cs)): ang = Application.Acos(cs) * 180# / 3.14159265358979
+        If ang < minAng Then minAng = ang
+        If ang > maxAng Then maxAng = ang
+    Next k
+    l1 = Sqr(abx * abx + aby * aby): l2 = Sqr(bcx * bcx + bcy * bcy): l3 = Sqr(cax * cax + cay * cay)
+    shortest = Application.Min(l1, l2, l3): longest = Application.Max(l1, l2, l3)
+    T6TriangleAcceptable = minAng >= FEMReadSetting("MESH_QUALITY_MIN_ANGLE_DEG", 10#) And maxAng <= FEMReadSetting("MESH_QUALITY_MAX_ANGLE_DEG", 170#) And longest / shortest <= FEMReadSetting("MESH_QUALITY_MAX_ASPECT_RATIO", 5#)
 End Function

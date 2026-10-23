@@ -102,7 +102,11 @@ Public Sub FEMIncrementSave()
   For e = 0 To NumberOfElement - 1
     If incActive(e) Then
       x = 0#: y = 0#
-      For c = 0 To 3: x = x + Elem(e).x(c) * 0.25: y = y + Elem(e).y(c) * 0.25: Next c
+      If FEMElementIsT6(e) Then
+        For c = 0 To 2: x = x + Elem(e).x(c) / 3#: y = y + Elem(e).y(c) / 3#: Next c
+      Else
+        For c = 0 To 3: x = x + Elem(e).x(c) * 0.25: y = y + Elem(e).y(c) * 0.25: Next c
+      End If
       For gp = 0 To 3
         n = n + 1
         rows(n, 1) = stageNo: rows(n, 2) = e + 1: rows(n, 3) = gp + 1
@@ -163,7 +167,7 @@ Public Function FEMIncrementRead(ByVal stageNo As Long) As Object
       v = result(e)
       If CDbl(data(r, 13)) > v(0) Then v(0) = CDbl(data(r, 13))
       If CDbl(data(r, 14)) > v(1) Then v(1) = CDbl(data(r, 14))
-      For j = 2 To 4: v(j) = v(j) + CDbl(data(r, j + 7)) * 0.25: Next j
+      For j = 2 To 4: v(j) = v(j) + CDbl(data(r, j + 7)) * FEMGaussFraction(e - 1, gp - 1, True): Next j
       If v(5) <> CDbl(data(r, 18)) Or v(6) <> CLng(data(r, 19)) Or v(7) <> CDbl(data(r, 20)) Then GoTo Missing
       result(e) = v: counts(e) = counts(e) + 1
     End If

@@ -364,6 +364,7 @@ NextPlan:
         If config.Exists("VIEW_DISP_SCALE") Then dscale = number(config("VIEW_DISP_SCALE"), "変位倍率")
         If dscale < 0# Then Err.Raise vbObjectError + 3711, "FEMViewer", "変位倍率は0以上で指定してください。"
     End If
+    Dim mixedT6Count As Long
     ReDim selected(2 To UBound(elements, 1))
     ReDim px(2 To UBound(elements, 1), 0 To 7)
     ReDim py(2 To UBound(elements, 1), 0 To 7)
@@ -383,6 +384,7 @@ NextPlan:
         End If
         If Not selected(r) Then GoTo NextElement
         count = count + 1
+        If Not jointRow(r) And ViewerT6Row(elements, r) Then mixedT6Count = mixedT6Count + 1
         nodeLimit = 7
         If jointRow(r) Then nodeLimit = 5 Else continuumCount = continuumCount + 1
         For j = 0 To nodeLimit
@@ -429,6 +431,7 @@ NextElement:
         sy = 370# / (maxY - minY + 0.000000000001)
         drawScale = sx: If sy < drawScale Then drawScale = sy
         originX = 40# - minX * drawScale: originY = 95# + maxY * drawScale
+        If mode <> "RESULT" And mixedT6Count > 0 Then originY = originY + 25#
     End If
     If config.Exists("VIEW_SCALE_MODE") Then
         If UCase$(CStr(config("VIEW_SCALE_MODE"))) = "USER" Then
@@ -480,6 +483,9 @@ NextElement:
         If Len(overlayLegend) > 0 Then parts(partCount) = SvgText(30, 87, overlayLegend, 9): partCount = partCount + 1
     End If
     order = Array(0, 4, 1, 5, 2, 6, 3, 7)
+    If mode <> "RESULT" And mixedT6Count > 0 Then
+        parts(partCount) = SvgText(30, 101, "緑の輪郭：T6 " & CStr(mixedT6Count) & "要素 / Q8 " & CStr(continuumCount - mixedT6Count) & "要素", 10): partCount = partCount + 1
+    End If
     For r = 2 To UBound(elements, 1)
         If selected(r) Then
             e = id(elements(r, 1)): points = ""
@@ -510,7 +516,8 @@ NextElement:
                     Case 3: fill = "#e1bee7": stroke = "#7b1fa2"
                 End Select
             End If
-            parts(partCount) = "<polygon points=""" & points & """ fill=""" & fill & """ stroke=""" & stroke & """ stroke-width=""0.45""><title>要素 " & CStr(e) & "</title></polygon>"
+            If mode <> "RESULT" And ViewerT6Row(elements, r) Then stroke = "#008b6d"
+            parts(partCount) = "<polygon points=""" & points & """ fill=""" & fill & """ stroke=""" & stroke & """ stroke-width=""0.45""><title>要素 " & CStr(e) & IIf(ViewerT6Row(elements, r), " T6", " Q8") & "</title></polygon>"
             partCount = partCount + 1
         End If
 NextDrawElement:
@@ -620,4 +627,8 @@ Private Function FEMIncrementFill(ByVal value As Double, ByVal high As Double) A
     If t > 1# Then t = 1#
     g = CLng(255# - 220# * t): b = CLng(229# - 209# * t)
     FEMIncrementFill = "#FF" & right$("0" & Hex$(g), 2) & right$("0" & Hex$(b), 2)
+End Function
+
+Private Function ViewerT6Row(ByRef elements As Variant, ByVal r As Long) As Boolean
+    ViewerT6Row = (elements(r, 4) = elements(r, 5) And elements(r, 4) = elements(r, 8))
 End Function

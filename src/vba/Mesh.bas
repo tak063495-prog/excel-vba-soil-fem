@@ -561,6 +561,15 @@ Private Sub P5EvaluateMeshQuadQuality(ByVal elementId As Long, ByRef connectivit
     Dim i As Long, nextIndex As Long, previousIndex As Long
     Dim dx1 As Double, dy1 As Double, dx2 As Double, dy2 As Double, dotValue As Double, crossValue As Double
     Dim xiValues(1 To 8) As Double, etaValues(1 To 8) As Double
+    If connectivity(elementId, 3) = connectivity(elementId, 4) And connectivity(elementId, 3) = connectivity(elementId, 7) Then
+        FEMT6MeshMetrics elementId, connectivity, x, y, area, minJacobian, minEdge, maxEdge, dx1, dy1
+        If area < P5MinElementArea Then P5MinElementArea = area
+        If minJacobian < P5MinJacobian Then P5MinJacobian = minJacobian
+        If maxEdge / minEdge > P5MaxAspectRatio Then P5MaxAspectRatio = maxEdge / minEdge
+        If dx1 < P5MinAngleDeg Then P5MinAngleDeg = dx1
+        If dy1 > P5MaxAngleDeg Then P5MaxAngleDeg = dy1
+        Exit Sub
+    End If
     For i = 1 To 8
         nodeNo(i) = connectivity(elementId, i)
         If nodeNo(i) < 1 Or nodeNo(i) > UBound(x) Then Err.Raise vbObjectError + 3463, "Mesh.P5ValidateMeshQuality", "要素接続番号が範囲外です。要素=" & CStr(elementId)
@@ -685,6 +694,93 @@ Public Sub P5EvaluateCurrentSheet(ByVal routeName As String)
     P5ReleaseQ8RepairWorkspace
 End Sub
 
+' Build the opt-in fallback mask after repair/smoothing.  A positive but
+' poorly shaped Q8 is eligible for T6; an inverted/degenerate polygon is an
+' input error and must remain an error instead of being hidden by splitting.
+Public Sub P5BuildT6FallbackMask(ByVal nodeCount As Long, ByVal elementCount As Long, _
+                                 ByRef connectivity() As Long, ByRef x() As Double, ByRef y() As Double, _
+                                 ByRef failed() As Boolean, ByRef failedCount As Long)
+    Dim e As Long, i As Long, j As Long, a As Long, b As Long, c As Long, d As Long
+    Dim area As Double, det As Double, minDet As Double, scale2 As Double, nodeNo(1 To 8) As Long
+    Dim qa As Double, qj As Double, qAspect As Double, qMinAngle As Double, qMaxAngle As Double
+    Dim xmin As Double, xmax As Double, ymin As Double, ymax As Double
+    ReDim failed(1 To elementCount): failedCount = 0
+    If FEMReadSetting("MESH_T6_FALLBACK", 0#) = 0# Then Exit Sub
+    If elementCount < 1 Or nodeCount < 4 Then Err.Raise vbObjectError + 3480, "Mesh.P5BuildT6FallbackMask", "T6フォールバックの要素数または節点数が不正です。"
+    xmin = x(1): xmax = xmin: ymin = y(1): ymax = ymin
+    For i = 2 To nodeCount
+        If x(i) < xmin Then xmin = x(i)
+        If x(i) > xmax Then xmax = x(i)
+        If y(i) < ymin Then ymin = y(i)
+        If y(i) > ymax Then ymax = y(i)
+    Next i
+    scale2 = Application.Max(xmax - xmin, ymax - ymin)
+    If scale2 <= 0# Then Err.Raise vbObjectError + 3480, , "T6フォールバックのモデル寸法が0です。"
+    P5ModelScale = scale2
+    P5GeometryTolerance = Application.Max(scale2 * 0.0000000001, 0.000000000001)
+    scale2 = scale2 * scale2
+    P5AreaTolerance = Application.Max(scale2 * 0.000000000001, 1E-24)
+    For e = 1 To elementCount
+        a = connectivity(e, 1): b = connectivity(e, 2): c = connectivity(e, 3): d = connectivity(e, 4)
+        If a < 1 Or b < 1 Or c < 1 Or d < 1 Or a > nodeCount Or b > nodeCount Or c > nodeCount Or d > nodeCount Then _
+            Err.Raise vbObjectError + 3481, "Mesh.P5BuildT6FallbackMask", "要素の頂点番号が範囲外です。要素=" & CStr(e)
+        area = ((x(b) - x(a)) * (y(c) - y(a)) - (y(b) - y(a)) * (x(c) - x(a))) / 2# + _
+               ((x(c) - x(a)) * (y(d) - y(a)) - (y(c) - y(a)) * (x(d) - x(a))) / 2#
+        If area <= scale2 * 0.00000000000001 Then Err.Raise vbObjectError + 3482, "Mesh.P5BuildT6FallbackMask", "反転または退化した要素はT6へ置換できません。要素=" & CStr(e)
+        For i = 1 To 8: nodeNo(i) = connectivity(e, i): Next i
+        minDet = 1E+308
+        For i = 0 To 4
+            For j = 0 To 4
+                det = P5MeshQuadJacobian(x, y, nodeNo, -1# + CDbl(i) / 2#, -1# + CDbl(j) / 2#)
+                If det < minDet Then minDet = det
+            Next j
+        Next i
+        If Not P5MeshQuadMetrics(e, connectivity, x, y, qa, qj, qAspect, qMinAngle, qMaxAngle) Then _
+            Err.Raise vbObjectError + 3483, "Mesh.P5BuildT6FallbackMask", "要素品質を評価できません。要素=" & CStr(e)
+        If minDet < scale2 * FEMReadSetting("MESH_QUALITY_MIN_JACOBIAN_RATIO", 0.000001) Or _
+           qa < scale2 * FEMReadSetting("MESH_QUALITY_MIN_AREA_RATIO", 0.000001) Or _
+           qMinAngle < FEMReadSetting("MESH_QUALITY_MIN_ANGLE_DEG", 10#) Or _
+           qMaxAngle > FEMReadSetting("MESH_QUALITY_MAX_ANGLE_DEG", 170#) Or _
+           qAspect > FEMReadSetting("MESH_QUALITY_MAX_ASPECT_RATIO", 5#) Then failed(e) = True: failedCount = failedCount + 1
+    Next e
+End Sub
+
+Public Sub P5ApplyT6FallbackCurrentSheet()
+    Dim ns As Variant, es As Variant, x() As Double, y() As Double, conn() As Variant
+    Dim mask() As Boolean, failedCount As Long, converted As Long, outCount As Long, detail As String, result As Variant
+    Dim i As Long, n As Long, e As Long, wsN As Worksheet, wsE As Worksheet, j As Long
+    Dim ci() As Long, nr() As Variant, lastN As Long, lastE As Long
+    If FEMReadSetting("MESH_T6_FALLBACK", 0#) = 0# Then Exit Sub
+    Set wsN = ThisWorkbook.Worksheets("節点データ"): Set wsE = ThisWorkbook.Worksheets("要素データ")
+    lastN = wsN.Cells(wsN.Rows.Count, 1).End(xlUp).Row: lastE = wsE.Cells(wsE.Rows.Count, 1).End(xlUp).Row
+    If lastN < 2 Or lastE < 2 Then Exit Sub
+    ns = wsN.Range(wsN.Cells(2, 1), wsN.Cells(lastN, 14)).Value2
+    es = wsE.Range(wsE.Cells(2, 1), wsE.Cells(lastE, 10)).Value2
+    n = UBound(ns, 1): e = UBound(es, 1): If n < 1 Or e < 1 Then Exit Sub
+    ReDim x(1 To n): ReDim y(1 To n): ReDim conn(1 To e, 1 To 10)
+    For i = 1 To n: x(i) = CDbl(ns(i, 2)): y(i) = CDbl(ns(i, 3)): Next i
+    For i = 1 To e
+        For j = 1 To 10: conn(i, j) = es(i, j): Next j
+    Next i
+    ReDim ci(1 To e, 1 To 8)
+    For i = 1 To e: For j = 1 To 8: ci(i, j) = CLng(es(i, j + 1)): Next j: Next i
+    P5BuildT6FallbackMask n, e, ci, x, y, mask, failedCount: If failedCount = 0 Then Exit Sub
+    result = MeshAdaptConvertBadQ8ToT6(x, y, conn, mask, converted, outCount, detail)
+    wsN.Range(wsN.Cells(2, 1), wsN.Cells(wsN.Rows.Count, 14)).ClearContents
+    ReDim nr(1 To UBound(x), 1 To 9)
+    For i = 1 To UBound(x)
+        nr(i, 1) = i: nr(i, 2) = x(i): nr(i, 3) = y(i)
+        If i <= n Then
+            For j = 4 To 9: nr(i, j) = ns(i, j): Next j
+        End If
+    Next i
+    wsN.Range(wsN.Cells(2, 1), wsN.Cells(UBound(x) + 1, 9)).Value2 = nr
+    wsE.Range(wsE.Cells(2, 1), wsE.Cells(wsE.Rows.Count, 11)).ClearContents
+    wsE.Range(wsE.Cells(2, 1), wsE.Cells(outCount + 1, 11)).Value2 = result
+    FEMInvalidateRemeshedModel
+    FEMWriteTextSetting "MESH_GEN_LAST_T6_DETAIL", detail
+End Sub
+
 Private Function P5Atan2(ByVal yValue As Double, ByVal xValue As Double) As Double
     If Abs(xValue) <= 1E-30 Then
         If yValue > 0# Then
@@ -708,36 +804,41 @@ End Function
 
 Public Sub P5ValidateMeshTopology(ByVal nodeCount As Long, ByVal elementCount As Long, ByRef connectivity() As Long)
     Dim edgeMap As Object, parent() As Long, usedNode() As Boolean
-    Dim i As Long, j As Long, a As Long, b As Long, edgeCount As Long, key As String
+    Dim i As Long, j As Long, a As Long, b As Long, edgeCount As Long, key As String, isT6 As Boolean
     Dim info As Variant
     Set edgeMap = CreateObject("Scripting.Dictionary"): edgeMap.CompareMode = 0
     ReDim parent(1 To nodeCount): ReDim usedNode(1 To nodeCount)
     For i = 1 To nodeCount: parent(i) = i: Next i
     For i = 1 To elementCount
-        For j = 1 To 4
+        isT6 = (connectivity(i, 3) = connectivity(i, 4) And connectivity(i, 3) = connectivity(i, 7))
+        For j = 1 To IIf(isT6, 3, 4)
             a = connectivity(i, j): b = connectivity(i, (j Mod 4) + 1)
+            If isT6 And j = 3 Then b = connectivity(i, 1)
             If a < 1 Or a > nodeCount Or b < 1 Or b > nodeCount Then Err.Raise vbObjectError + 3469, "Mesh.P5ValidateMeshTopology", "要素接続番号が範囲外です。要素=" & CStr(i)
             usedNode(a) = True: usedNode(b) = True: P5MeshUnion parent, a, b
             If a < b Then key = CStr(a) & ":" & CStr(b) Else key = CStr(b) & ":" & CStr(a)
             If edgeMap.Exists(key) Then
                 info = Split(CStr(edgeMap.item(key)), "|"): edgeCount = CLng(info(0))
+                If CLng(info(1)) <> connectivity(i, IIf(isT6 And j = 3, 8, j + 4)) Then Err.Raise vbObjectError + 3976, , "共有辺の中間節点が不一致です。辺=" & key
                 If edgeCount >= 2 Then Err.Raise vbObjectError + 3470, "Mesh.P5ValidateMeshTopology", "辺を3要素以上で共有しています。辺=" & key
                 P5SharedEdgeCount = P5SharedEdgeCount + 1
                 P5BoundaryEdgeCount = P5BoundaryEdgeCount - 1
-                edgeMap.item(key) = CStr(edgeCount + 1)
+                edgeMap.item(key) = CStr(edgeCount + 1) & "|" & CStr(CLng(info(1)))
             Else
-                edgeMap.Add key, "1": P5BoundaryEdgeCount = P5BoundaryEdgeCount + 1
+                edgeMap.Add key, "1|" & CStr(connectivity(i, IIf(isT6 And j = 3, 8, j + 4))): P5BoundaryEdgeCount = P5BoundaryEdgeCount + 1
             End If
         Next j
         For j = 5 To 8
+            If isT6 And j = 7 Then GoTo NextMidNode
             a = connectivity(i, j)
             If j = 5 Then b = connectivity(i, 1)
             If j = 6 Then b = connectivity(i, 2)
-            If j = 7 Then b = connectivity(i, 3)
-            If j = 8 Then b = connectivity(i, 4)
+            If j = 7 Then b = IIf(isT6, connectivity(i, 1), connectivity(i, 3))
+            If j = 8 Then b = IIf(isT6, connectivity(i, 1), connectivity(i, 4))
             If a < 1 Or a > nodeCount Then Err.Raise vbObjectError + 3470, "Mesh.P5ValidateMeshTopology", "Q8中間節点番号が範囲外です。要素=" & CStr(i)
             usedNode(a) = True
             P5MeshUnion parent, a, b
+NextMidNode:
         Next j
     Next i
     For i = 1 To nodeCount
@@ -2822,7 +2923,7 @@ Sub QUDATA(node As Long, NELM As Long, mmtj() As Long, px() As Double, py() As D
     clearNodeRows = oldNodeCount: If node > clearNodeRows Then clearNodeRows = node
     clearElementRows = oldElementCount: If NELM > clearElementRows Then clearElementRows = NELM
     If clearNodeRows > 0 Then ws1.range(ws1.Cells(2, 1), ws1.Cells(clearNodeRows + 1, 11)).ClearContents
-    If clearElementRows > 0 Then ws2.range(ws2.Cells(2, 1), ws2.Cells(clearElementRows + 1, 10)).ClearContents
+    If clearElementRows > 0 Then ws2.range(ws2.Cells(2, 1), ws2.Cells(clearElementRows + 1, 11)).ClearContents
 
     ReDim nodeOutput(1 To node, 1 To 5)
     For i = 1 To node
@@ -2831,13 +2932,13 @@ Sub QUDATA(node As Long, NELM As Long, mmtj() As Long, px() As Double, py() As D
     Next i
     ws1.range(ws1.Cells(2, 1), ws1.Cells(node + 1, 5)).value2 = nodeOutput
 
-    ReDim elementOutput(1 To NELM, 1 To 10)
+    ReDim elementOutput(1 To NELM, 1 To 11)
     For i = 1 To NELM
-        elementOutput(i, 1) = i
+        elementOutput(i, 1) = i: elementOutput(i, 11) = "Q8"
         For j = 1 To 8: elementOutput(i, j + 1) = mtj(i, j): Next j
         elementOutput(i, 10) = EleCalc(mtj(i, 1), mtj(i, 2), mtj(i, 3), mtj(i, 4))
     Next i
-    ws2.range(ws2.Cells(2, 1), ws2.Cells(NELM + 1, 10)).value2 = elementOutput
+    ws2.range(ws2.Cells(2, 1), ws2.Cells(NELM + 1, 11)).value2 = elementOutput
 End Sub
 
 Function EleCalc(p1 As Long, p2 As Long, p3 As Long, p4 As Long) As Long
@@ -3198,7 +3299,7 @@ NextJointPair:
                 For k = 1 To 4
                     c1 = origConn(e, k)
                     c2 = origConn(e, (k Mod 4) + 1)
-                    If c1 > 0 And c2 > 0 Then
+                    If c1 > 0 And c2 > 0 And c1 <> c2 Then
                         If c1 < c2 Then key = CStr(c1) & ":" & CStr(c2) Else key = CStr(c2) & ":" & CStr(c1)
                         If Not masterEdges.Exists(key) Then masterEdges.Add key, CStr(e) & "|" & CStr(k)
                     End If
@@ -3210,7 +3311,7 @@ NextJointPair:
                 For k = 1 To 4
                     c1 = origConn(e, k)
                     c2 = origConn(e, (k Mod 4) + 1)
-                    If c1 < 1 Or c2 < 1 Then GoTo NextSlaveEdge
+                    If c1 < 1 Or c2 < 1 Or c1 = c2 Then GoTo NextSlaveEdge
                     If c1 < c2 Then key = CStr(c1) & ":" & CStr(c2) Else key = CStr(c2) & ":" & CStr(c1)
                     If Not masterEdges.Exists(key) Then GoTo NextSlaveEdge
                     info = CStr(masterEdges.item(key))
@@ -3251,7 +3352,7 @@ NextSlaveEdge:
     If elemCount > 60000 Then Err.Raise vbObjectError + 3491, "Mesh.MeshInsertJoints", "接合挿入後の要素数が上限を超えます。"
 
     If lastN - 1 > 0 Then wsN.range(wsN.Cells(2, 1), wsN.Cells(lastN, 9)).ClearContents
-    If lastE - 1 > 0 Then wsE.range(wsE.Cells(2, 1), wsE.Cells(lastE, 10)).ClearContents
+    If lastE - 1 > 0 Then wsE.range(wsE.Cells(2, 1), wsE.Cells(lastE, 11)).ClearContents
     ReDim nodeOut(1 To nodeCount, 1 To 9)
     For rowNo = 1 To nodeCount
         nodeOut(rowNo, 1) = rowNo
@@ -3265,13 +3366,14 @@ NextSlaveEdge:
         nodeOut(rowNo, 9) = 0
     Next rowNo
     wsN.range(wsN.Cells(2, 1), wsN.Cells(nodeCount + 1, 9)).value2 = nodeOut
-    ReDim elemOut(1 To elemCount, 1 To 10)
+    ReDim elemOut(1 To elemCount, 1 To 11)
     For rowNo = 1 To origCount
         elemOut(rowNo, 1) = rowNo
         For k = 1 To 8
             If conn(rowNo, k) > 0 Then elemOut(rowNo, k + 1) = conn(rowNo, k)
         Next k
         elemOut(rowNo, 10) = MatNo(rowNo)
+        If conn(rowNo, 3) = conn(rowNo, 4) And conn(rowNo, 3) = conn(rowNo, 7) Then elemOut(rowNo, 11) = "T6" Else elemOut(rowNo, 11) = "Q8"
     Next rowNo
     For rowNo = 1 To added
         elemOut(origCount + rowNo, 1) = origCount + rowNo
@@ -3280,7 +3382,7 @@ NextSlaveEdge:
         Next k
         elemOut(origCount + rowNo, 10) = jointMat(rowNo)
     Next rowNo
-    wsE.range(wsE.Cells(2, 1), wsE.Cells(elemCount + 1, 10)).value2 = elemOut
+    wsE.range(wsE.Cells(2, 1), wsE.Cells(elemCount + 1, 11)).value2 = elemOut
     FEMInvalidateInputCache
 End Sub
 
