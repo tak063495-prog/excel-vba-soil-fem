@@ -37,3 +37,7 @@ https://github.com/tak063495-prog/excel-vba-soil-fem/blob/main/docs/ISSUE3_59_VA
 
 内側の塑性履歴・連成・水量台帳・水圧CSVでも中断を伝播し、保存障害とユーザー中断を区別します。
 https://github.com/tak063495-prog/excel-vba-soil-fem/blob/main/docs/ISSUE3_INNER_WRITERS.md
+
+
+時間詳細行を省略したWATER工程の再開でも、通常実行と同じSTARTの水位境界・外水圧を復元します。明示HOLD／空欄モードのHOLD、LINEAR、時系列は保持します。計算識別・保存形式07、倍精度、収束条件は共通です。
+https://github.com/tak063495-prog/excel-vba-soil-fem/blob/main/docs/ISSUE50_DEFAULT_RESUME.md

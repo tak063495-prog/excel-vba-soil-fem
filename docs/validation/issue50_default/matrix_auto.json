@@ -1,0 +1,774 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "case": "default_start_no_detail",
+      "checkpoint": "mid",
+      "native": "AUTO",
+      "book_sha256": "597A168818CCC73EE46278A430F261A3D8D173DE83264ADCD2DC1C25935DDAF8",
+      "status": "PASS",
+      "dofs": 86,
+      "max_u_m": 4.912817114927082e-13,
+      "max_metrics_delta": 1.4210854715202004e-14,
+      "restored_elapsed_s": 20.0,
+      "restored_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 4.440892098500626e-15,
+        "flow": 2.3540236744279083e-19,
+        "flow_reaction": 3.970466940254533e-23,
+        "gp_pressure": 3.552713678800501e-14
+      },
+      "final_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 4.440892098500626e-14,
+        "flow": 5.649577409288175e-19,
+        "flow_reaction": 2.4756523116977055e-19,
+        "gp_pressure": 4.334310688136611e-13
+      },
+      "following_WAIT": [
+        {
+          "elapsed": 10.0,
+          "delta": {
+            "profile": 0.0,
+            "external_load": 0.0,
+            "boundary_locked": 0.0,
+            "boundary_pressure": 0.0,
+            "heads": 1.9539925233402755e-14,
+            "flow": 3.8025989067430214e-19,
+            "flow_reaction": 3.372249921256183e-20,
+            "gp_pressure": 1.8474111129762605e-13
+          }
+        },
+        {
+          "elapsed": 20.0,
+          "delta": {
+            "profile": 0.0,
+            "external_load": 0.0,
+            "boundary_locked": 0.0,
+            "boundary_pressure": 0.0,
+            "heads": 4.440892098500626e-14,
+            "flow": 5.649577409288175e-19,
+            "flow_reaction": 2.4756523116977055e-19,
+            "gp_pressure": 4.334310688136611e-13
+          }
+        }
+      ],
+      "final_profile": "W2",
+      "final_surface_force_y_kN": -29.43,
+      "fresh_seconds": 8.6931699,
+      "resume_seconds": 7.0712487
+    },
+    {
+      "case": "default_start_no_detail",
+      "checkpoint": "completed",
+      "native": "AUTO",
+      "book_sha256": "597A168818CCC73EE46278A430F261A3D8D173DE83264ADCD2DC1C25935DDAF8",
+      "status": "PASS",
+      "dofs": 86,
+      "max_u_m": 4.757095325297334e-13,
+      "max_metrics_delta": 1.3766765505351941e-14,
+      "restored_elapsed_s": 40.0,
+      "restored_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 4.440892098500626e-15,
+        "flow": 2.2815543809621375e-19,
+        "flow_reaction": 1.9852334701272664e-23,
+        "gp_pressure": 3.552713678800501e-14
+      },
+      "final_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 2.4868995751603507e-14,
+        "flow": 3.186961464044305e-19,
+        "flow_reaction": 1.367428814223661e-19,
+        "gp_pressure": 2.3447910280083306e-13
+      },
+      "following_WAIT": [
+        {
+          "elapsed": 10.0,
+          "delta": {
+            "profile": 0.0,
+            "external_load": 0.0,
+            "boundary_locked": 0.0,
+            "boundary_pressure": 0.0,
+            "heads": 1.7763568394002505e-14,
+            "flow": 3.1506978659899803e-19,
+            "flow_reaction": 7.587562322826412e-20,
+            "gp_pressure": 1.7053025658242404e-13
+          }
+        },
+        {
+          "elapsed": 20.0,
+          "delta": {
+            "profile": 0.0,
+            "external_load": 0.0,
+            "boundary_locked": 0.0,
+            "boundary_pressure": 0.0,
+            "heads": 2.4868995751603507e-14,
+            "flow": 3.186961464044305e-19,
+            "flow_reaction": 1.367428814223661e-19,
+            "gp_pressure": 2.3447910280083306e-13
+          }
+        }
+      ],
+      "final_profile": "W2",
+      "final_surface_force_y_kN": -29.43,
+      "fresh_seconds": 8.5111448,
+      "resume_seconds": 5.7585554
+    },
+    {
+      "case": "explicit_hold",
+      "checkpoint": "mid",
+      "native": "AUTO",
+      "book_sha256": "597A168818CCC73EE46278A430F261A3D8D173DE83264ADCD2DC1C25935DDAF8",
+      "status": "PASS",
+      "dofs": 86,
+      "max_u_m": 4.341264760870933e-13,
+      "max_metrics_delta": 5.878524285836776e-13,
+      "restored_elapsed_s": 20.0,
+      "restored_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 4.440892098500626e-16,
+        "flow": 2.89725925542439e-20,
+        "flow_reaction": 1.128474576789396e-36,
+        "gp_pressure": 3.552713678800501e-15
+      },
+      "final_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 4.440892098500626e-16,
+        "flow": 2.89725925542439e-20,
+        "flow_reaction": 0.0,
+        "gp_pressure": 3.552713678800501e-15
+      },
+      "following_WAIT": [
+        {
+          "elapsed": 10.0,
+          "delta": {
+            "profile": 0.0,
+            "external_load": 0.0,
+            "boundary_locked": 0.0,
+            "boundary_pressure": 0.0,
+            "heads": 4.440892098500626e-16,
+            "flow": 2.89725925542439e-20,
+            "flow_reaction": 0.0,
+            "gp_pressure": 3.552713678800501e-15
+          }
+        },
+        {
+          "elapsed": 20.0,
+          "delta": {
+            "profile": 0.0,
+            "external_load": 0.0,
+            "boundary_locked": 0.0,
+            "boundary_pressure": 0.0,
+            "heads": 4.440892098500626e-16,
+            "flow": 2.89725925542439e-20,
+            "flow_reaction": 0.0,
+            "gp_pressure": 3.552713678800501e-15
+          }
+        }
+      ],
+      "final_profile": "W",
+      "final_surface_force_y_kN": -19.62,
+      "fresh_seconds": 7.4295644,
+      "resume_seconds": 6.1665837
+    },
+    {
+      "case": "explicit_hold",
+      "checkpoint": "completed",
+      "native": "AUTO",
+      "book_sha256": "597A168818CCC73EE46278A430F261A3D8D173DE83264ADCD2DC1C25935DDAF8",
+      "status": "PASS",
+      "dofs": 86,
+      "max_u_m": 4.341264760870933e-13,
+      "max_metrics_delta": 5.878524285836776e-13,
+      "restored_elapsed_s": 40.0,
+      "restored_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 4.440892098500626e-16,
+        "flow": 2.89725925542439e-20,
+        "flow_reaction": 1.128474576789396e-36,
+        "gp_pressure": 3.552713678800501e-15
+      },
+      "final_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 4.440892098500626e-16,
+        "flow": 2.89725925542439e-20,
+        "flow_reaction": 0.0,
+        "gp_pressure": 3.552713678800501e-15
+      },
+      "following_WAIT": [
+        {
+          "elapsed": 10.0,
+          "delta": {
+            "profile": 0.0,
+            "external_load": 0.0,
+            "boundary_locked": 0.0,
+            "boundary_pressure": 0.0,
+            "heads": 4.440892098500626e-16,
+            "flow": 2.89725925542439e-20,
+            "flow_reaction": 0.0,
+            "gp_pressure": 3.552713678800501e-15
+          }
+        },
+        {
+          "elapsed": 20.0,
+          "delta": {
+            "profile": 0.0,
+            "external_load": 0.0,
+            "boundary_locked": 0.0,
+            "boundary_pressure": 0.0,
+            "heads": 4.440892098500626e-16,
+            "flow": 2.89725925542439e-20,
+            "flow_reaction": 0.0,
+            "gp_pressure": 3.552713678800501e-15
+          }
+        }
+      ],
+      "final_profile": "W",
+      "final_surface_force_y_kN": -19.62,
+      "fresh_seconds": 7.4177989,
+      "resume_seconds": 5.4261713
+    },
+    {
+      "case": "explicit_start",
+      "checkpoint": "mid",
+      "native": "AUTO",
+      "book_sha256": "597A168818CCC73EE46278A430F261A3D8D173DE83264ADCD2DC1C25935DDAF8",
+      "status": "PASS",
+      "dofs": 86,
+      "max_u_m": 4.912817114927082e-13,
+      "max_metrics_delta": 1.4210854715202004e-14,
+      "restored_elapsed_s": 20.0,
+      "restored_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 4.440892098500626e-15,
+        "flow": 2.3540236744279083e-19,
+        "flow_reaction": 3.970466940254533e-23,
+        "gp_pressure": 3.552713678800501e-14
+      },
+      "final_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 4.440892098500626e-14,
+        "flow": 5.649577409288175e-19,
+        "flow_reaction": 2.4756523116977055e-19,
+        "gp_pressure": 4.334310688136611e-13
+      },
+      "following_WAIT": [
+        {
+          "elapsed": 10.0,
+          "delta": {
+            "profile": 0.0,
+            "external_load": 0.0,
+            "boundary_locked": 0.0,
+            "boundary_pressure": 0.0,
+            "heads": 1.9539925233402755e-14,
+            "flow": 3.8025989067430214e-19,
+            "flow_reaction": 3.372249921256183e-20,
+            "gp_pressure": 1.8474111129762605e-13
+          }
+        },
+        {
+          "elapsed": 20.0,
+          "delta": {
+            "profile": 0.0,
+            "external_load": 0.0,
+            "boundary_locked": 0.0,
+            "boundary_pressure": 0.0,
+            "heads": 4.440892098500626e-14,
+            "flow": 5.649577409288175e-19,
+            "flow_reaction": 2.4756523116977055e-19,
+            "gp_pressure": 4.334310688136611e-13
+          }
+        }
+      ],
+      "final_profile": "W2",
+      "final_surface_force_y_kN": -29.43,
+      "fresh_seconds": 8.672784,
+      "resume_seconds": 6.7449237
+    },
+    {
+      "case": "explicit_start",
+      "checkpoint": "completed",
+      "native": "AUTO",
+      "book_sha256": "597A168818CCC73EE46278A430F261A3D8D173DE83264ADCD2DC1C25935DDAF8",
+      "status": "PASS",
+      "dofs": 86,
+      "max_u_m": 4.757095325297334e-13,
+      "max_metrics_delta": 1.3766765505351941e-14,
+      "restored_elapsed_s": 40.0,
+      "restored_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 4.440892098500626e-15,
+        "flow": 2.2815543809621375e-19,
+        "flow_reaction": 1.9852334701272664e-23,
+        "gp_pressure": 3.552713678800501e-14
+      },
+      "final_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 2.4868995751603507e-14,
+        "flow": 3.186961464044305e-19,
+        "flow_reaction": 1.367428814223661e-19,
+        "gp_pressure": 2.3447910280083306e-13
+      },
+      "following_WAIT": [
+        {
+          "elapsed": 10.0,
+          "delta": {
+            "profile": 0.0,
+            "external_load": 0.0,
+            "boundary_locked": 0.0,
+            "boundary_pressure": 0.0,
+            "heads": 1.7763568394002505e-14,
+            "flow": 3.1506978659899803e-19,
+            "flow_reaction": 7.587562322826412e-20,
+            "gp_pressure": 1.7053025658242404e-13
+          }
+        },
+        {
+          "elapsed": 20.0,
+          "delta": {
+            "profile": 0.0,
+            "external_load": 0.0,
+            "boundary_locked": 0.0,
+            "boundary_pressure": 0.0,
+            "heads": 2.4868995751603507e-14,
+            "flow": 3.186961464044305e-19,
+            "flow_reaction": 1.367428814223661e-19,
+            "gp_pressure": 2.3447910280083306e-13
+          }
+        }
+      ],
+      "final_profile": "W2",
+      "final_surface_force_y_kN": -29.43,
+      "fresh_seconds": 8.2295346,
+      "resume_seconds": 5.6549753
+    },
+    {
+      "case": "explicit_linear",
+      "checkpoint": "mid",
+      "native": "AUTO",
+      "book_sha256": "597A168818CCC73EE46278A430F261A3D8D173DE83264ADCD2DC1C25935DDAF8",
+      "status": "PASS",
+      "dofs": 86,
+      "max_u_m": 4.750989098661895e-13,
+      "max_metrics_delta": 2.842170943040401e-14,
+      "restored_elapsed_s": 20.0,
+      "restored_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 5.329070518200751e-15,
+        "flow": 2.9696445735143736e-19,
+        "flow_reaction": 3.970466940254533e-23,
+        "gp_pressure": 4.263256414560601e-14
+      },
+      "final_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 3.552713678800501e-15,
+        "flow": 1.3218594342781148e-19,
+        "flow_reaction": 2.5874209560658706e-20,
+        "gp_pressure": 2.842170943040401e-14
+      },
+      "following_WAIT": [
+        {
+          "elapsed": 10.0,
+          "delta": {
+            "profile": 0.0,
+            "external_load": 0.0,
+            "boundary_locked": 0.0,
+            "boundary_pressure": 0.0,
+            "heads": 8.881784197001252e-15,
+            "flow": 3.748277955916664e-19,
+            "flow_reaction": 6.604210010623373e-21,
+            "gp_pressure": 7.105427357601002e-14
+          }
+        },
+        {
+          "elapsed": 20.0,
+          "delta": {
+            "profile": 0.0,
+            "external_load": 0.0,
+            "boundary_locked": 0.0,
+            "boundary_pressure": 0.0,
+            "heads": 3.552713678800501e-15,
+            "flow": 1.3218594342781148e-19,
+            "flow_reaction": 2.5874209560658706e-20,
+            "gp_pressure": 2.842170943040401e-14
+          }
+        }
+      ],
+      "final_profile": "W2",
+      "final_surface_force_y_kN": -29.43,
+      "fresh_seconds": 8.56155,
+      "resume_seconds": 6.9103952
+    },
+    {
+      "case": "explicit_linear",
+      "checkpoint": "completed",
+      "native": "AUTO",
+      "book_sha256": "597A168818CCC73EE46278A430F261A3D8D173DE83264ADCD2DC1C25935DDAF8",
+      "status": "PASS",
+      "dofs": 86,
+      "max_u_m": 4.93053081002115e-13,
+      "max_metrics_delta": 1.4210854715202004e-14,
+      "restored_elapsed_s": 40.0,
+      "restored_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 5.329070518200751e-15,
+        "flow": 3.150830214887989e-19,
+        "flow_reaction": 3.970466940254533e-23,
+        "gp_pressure": 4.263256414560601e-14
+      },
+      "final_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 5.329070518200751e-15,
+        "flow": 1.5210362539747583e-19,
+        "flow_reaction": 1.3221654911047594e-20,
+        "gp_pressure": 3.552713678800501e-14
+      },
+      "following_WAIT": [
+        {
+          "elapsed": 10.0,
+          "delta": {
+            "profile": 0.0,
+            "external_load": 0.0,
+            "boundary_locked": 0.0,
+            "boundary_pressure": 0.0,
+            "heads": 9.769962616701378e-15,
+            "flow": 2.4626159452438698e-19,
+            "flow_reaction": 7.95019830336966e-20,
+            "gp_pressure": 6.394884621840902e-14
+          }
+        },
+        {
+          "elapsed": 20.0,
+          "delta": {
+            "profile": 0.0,
+            "external_load": 0.0,
+            "boundary_locked": 0.0,
+            "boundary_pressure": 0.0,
+            "heads": 5.329070518200751e-15,
+            "flow": 1.5210362539747583e-19,
+            "flow_reaction": 1.3221654911047594e-20,
+            "gp_pressure": 3.552713678800501e-14
+          }
+        }
+      ],
+      "final_profile": "W2",
+      "final_surface_force_y_kN": -29.43,
+      "fresh_seconds": 8.3565505,
+      "resume_seconds": 5.6817272
+    },
+    {
+      "case": "explicit_blank_mode_hold",
+      "checkpoint": "mid",
+      "native": "AUTO",
+      "book_sha256": "597A168818CCC73EE46278A430F261A3D8D173DE83264ADCD2DC1C25935DDAF8",
+      "status": "PASS",
+      "dofs": 86,
+      "max_u_m": 4.341264760870933e-13,
+      "max_metrics_delta": 5.878524285836776e-13,
+      "restored_elapsed_s": 20.0,
+      "restored_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 4.440892098500626e-16,
+        "flow": 2.89725925542439e-20,
+        "flow_reaction": 1.128474576789396e-36,
+        "gp_pressure": 3.552713678800501e-15
+      },
+      "final_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 4.440892098500626e-16,
+        "flow": 2.89725925542439e-20,
+        "flow_reaction": 0.0,
+        "gp_pressure": 3.552713678800501e-15
+      },
+      "following_WAIT": [
+        {
+          "elapsed": 10.0,
+          "delta": {
+            "profile": 0.0,
+            "external_load": 0.0,
+            "boundary_locked": 0.0,
+            "boundary_pressure": 0.0,
+            "heads": 4.440892098500626e-16,
+            "flow": 2.89725925542439e-20,
+            "flow_reaction": 0.0,
+            "gp_pressure": 3.552713678800501e-15
+          }
+        },
+        {
+          "elapsed": 20.0,
+          "delta": {
+            "profile": 0.0,
+            "external_load": 0.0,
+            "boundary_locked": 0.0,
+            "boundary_pressure": 0.0,
+            "heads": 4.440892098500626e-16,
+            "flow": 2.89725925542439e-20,
+            "flow_reaction": 0.0,
+            "gp_pressure": 3.552713678800501e-15
+          }
+        }
+      ],
+      "final_profile": "W",
+      "final_surface_force_y_kN": -19.62,
+      "fresh_seconds": 7.2058289,
+      "resume_seconds": 5.9592498
+    },
+    {
+      "case": "explicit_blank_mode_hold",
+      "checkpoint": "completed",
+      "native": "AUTO",
+      "book_sha256": "597A168818CCC73EE46278A430F261A3D8D173DE83264ADCD2DC1C25935DDAF8",
+      "status": "PASS",
+      "dofs": 86,
+      "max_u_m": 4.341264760870933e-13,
+      "max_metrics_delta": 5.878524285836776e-13,
+      "restored_elapsed_s": 40.0,
+      "restored_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 4.440892098500626e-16,
+        "flow": 2.89725925542439e-20,
+        "flow_reaction": 1.128474576789396e-36,
+        "gp_pressure": 3.552713678800501e-15
+      },
+      "final_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 4.440892098500626e-16,
+        "flow": 2.89725925542439e-20,
+        "flow_reaction": 0.0,
+        "gp_pressure": 3.552713678800501e-15
+      },
+      "following_WAIT": [
+        {
+          "elapsed": 10.0,
+          "delta": {
+            "profile": 0.0,
+            "external_load": 0.0,
+            "boundary_locked": 0.0,
+            "boundary_pressure": 0.0,
+            "heads": 4.440892098500626e-16,
+            "flow": 2.89725925542439e-20,
+            "flow_reaction": 0.0,
+            "gp_pressure": 3.552713678800501e-15
+          }
+        },
+        {
+          "elapsed": 20.0,
+          "delta": {
+            "profile": 0.0,
+            "external_load": 0.0,
+            "boundary_locked": 0.0,
+            "boundary_pressure": 0.0,
+            "heads": 4.440892098500626e-16,
+            "flow": 2.89725925542439e-20,
+            "flow_reaction": 0.0,
+            "gp_pressure": 3.552713678800501e-15
+          }
+        }
+      ],
+      "final_profile": "W",
+      "final_surface_force_y_kN": -19.62,
+      "fresh_seconds": 7.2253368,
+      "resume_seconds": 5.2331808
+    },
+    {
+      "case": "water_series",
+      "checkpoint": "mid",
+      "native": "AUTO",
+      "book_sha256": "597A168818CCC73EE46278A430F261A3D8D173DE83264ADCD2DC1C25935DDAF8",
+      "status": "PASS",
+      "dofs": 86,
+      "max_u_m": 4.832822510236756e-13,
+      "max_metrics_delta": 4.263256414560601e-14,
+      "restored_elapsed_s": 20.0,
+      "restored_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 4.440892098500626e-15,
+        "flow": 1.8650772143478136e-19,
+        "flow_reaction": 2.117582368135751e-22,
+        "gp_pressure": 2.842170943040401e-14
+      },
+      "final_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 7.993605777301127e-15,
+        "flow": 3.060204306976679e-19,
+        "flow_reaction": 4.577286637623434e-20,
+        "gp_pressure": 7.105427357601002e-14
+      },
+      "following_WAIT": [
+        {
+          "elapsed": 10.0,
+          "delta": {
+            "profile": 0.0,
+            "external_load": 0.0,
+            "boundary_locked": 0.0,
+            "boundary_pressure": 0.0,
+            "heads": 7.993605777301127e-15,
+            "flow": 1.1227157018059734e-19,
+            "flow_reaction": 4.810882442608409e-21,
+            "gp_pressure": 7.105427357601002e-14
+          }
+        },
+        {
+          "elapsed": 20.0,
+          "delta": {
+            "profile": 0.0,
+            "external_load": 0.0,
+            "boundary_locked": 0.0,
+            "boundary_pressure": 0.0,
+            "heads": 7.993605777301127e-15,
+            "flow": 3.060204306976679e-19,
+            "flow_reaction": 4.577286637623434e-20,
+            "gp_pressure": 7.105427357601002e-14
+          }
+        }
+      ],
+      "final_profile": "W2",
+      "final_surface_force_y_kN": -29.43,
+      "fresh_seconds": 8.3979303,
+      "resume_seconds": 6.7542008
+    },
+    {
+      "case": "water_series",
+      "checkpoint": "completed",
+      "native": "AUTO",
+      "book_sha256": "597A168818CCC73EE46278A430F261A3D8D173DE83264ADCD2DC1C25935DDAF8",
+      "status": "PASS",
+      "dofs": 86,
+      "max_u_m": 4.2590475417270124e-13,
+      "max_metrics_delta": 1.4210854715202004e-14,
+      "restored_elapsed_s": 40.0,
+      "restored_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 5.329070518200751e-15,
+        "flow": 3.331751158465587e-19,
+        "flow_reaction": 3.970466940254533e-23,
+        "gp_pressure": 4.263256414560601e-14
+      },
+      "final_delta": {
+        "profile": 0.0,
+        "external_load": 0.0,
+        "boundary_locked": 0.0,
+        "boundary_pressure": 0.0,
+        "heads": 1.0658141036401503e-14,
+        "flow": 2.6074056396651517e-19,
+        "flow_reaction": 1.6848014716480068e-20,
+        "gp_pressure": 9.947598300641403e-14
+      },
+      "following_WAIT": [
+        {
+          "elapsed": 10.0,
+          "delta": {
+            "profile": 0.0,
+            "external_load": 0.0,
+            "boundary_locked": 0.0,
+            "boundary_pressure": 0.0,
+            "heads": 1.0658141036401503e-14,
+            "flow": 1.6297443300764772e-19,
+            "flow_reaction": 1.3971411418265659e-19,
+            "gp_pressure": 9.947598300641403e-14
+          }
+        },
+        {
+          "elapsed": 20.0,
+          "delta": {
+            "profile": 0.0,
+            "external_load": 0.0,
+            "boundary_locked": 0.0,
+            "boundary_pressure": 0.0,
+            "heads": 1.0658141036401503e-14,
+            "flow": 2.6074056396651517e-19,
+            "flow_reaction": 1.6848014716480068e-20,
+            "gp_pressure": 9.947598300641403e-14
+          }
+        }
+      ],
+      "final_profile": "W2",
+      "final_surface_force_y_kN": -29.43,
+      "fresh_seconds": 8.284762,
+      "resume_seconds": 6.1031756
+    }
+  ],
+  "default_vs_explicit_start": {
+    "max_u_m": 0.0,
+    "state": {
+      "profile": 0.0,
+      "external_load": 0.0,
+      "boundary_locked": 0.0,
+      "boundary_pressure": 0.0,
+      "heads": 0.0,
+      "flow": 0.0,
+      "flow_reaction": 0.0,
+      "gp_pressure": 0.0
+    }
+  }
+}

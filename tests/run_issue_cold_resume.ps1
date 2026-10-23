@@ -1,4 +1,4 @@
-param([Parameter(Mandatory=$true)][string]$Book,[Parameter(Mandatory=$true)][string]$Frame,[Parameter(Mandatory=$true)][string]$Out)
+param([Parameter(Mandatory=$true)][string]$Book,[Parameter(Mandatory=$true)][string]$Frame,[Parameter(Mandatory=$true)][string]$Out,[switch]$WaterObservables,[switch]$ViewOnly)
 $ErrorActionPreference='Stop'
 if(Get-Process EXCEL -ErrorAction SilentlyContinue){throw 'Another Excel is running; no dispatch'}
 if(Test-Path $Out){throw 'Preserve evidence'}
@@ -13,7 +13,13 @@ try{
  # The prepared fixture book contains WaterFixtureDriver. Do not load a view
  # or any checkpoint first: WFRun is the first analysis call in this process.
  $null=$xl.Run($prefix+'FEMWriteTextSetting','EXPORT_LOAD',$Frame)
- $timer=[Diagnostics.Stopwatch]::StartNew();$status=$xl.Run($prefix+'WFRun');$timer.Stop()
+ $timer=[Diagnostics.Stopwatch]::StartNew()
+ if($ViewOnly){$null=$xl.Run($prefix+'SetP0SilentMode',$true);$null=$xl.Run($prefix+'P3LoadTimeFrame',$Frame);$status='PASS|VIEW'}else{$status=$xl.Run($prefix+'WFRun')}
+ $timer.Stop()
+ if($WaterObservables){
+  @($xl.Run($prefix+'WF50State'))|ConvertTo-Json -Depth 12|Set-Content (Join-Path $Out 'water_state.json') -Encoding utf8
+  @($xl.Run($prefix+'WF50Loaded'))|ConvertTo-Json -Depth 12|Set-Content (Join-Path $Out 'water_loaded.json') -Encoding utf8
+ }
  $a=$xl.Run($prefix+'WFOriginalNodes');$nodes=[Collections.Generic.List[object]]::new()
  for($n=0;$n -lt $a.GetLength(0);$n++){$nodes.Add(@($a[$n,0],$a[$n,1],$a[$n,2]))}
  @{status=$status;nodes=@($nodes);pressure=@($xl.Run($prefix+'WFPressure'));stress=@($xl.Run($prefix+'WFStress'));metrics=@($xl.Run($prefix+'WFMetrics'));

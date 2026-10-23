@@ -207,7 +207,7 @@ Private Sub FSRestoreTimeBoundary()
   For i = 1 To P3StageN
     If P3StageId(i) = FSRunningStage Then
       If P3StageKind(i) = "WATER" Then
-        FSGetOptions FSRunningStage, unit, waterMode, loadMode, minimum, maximum, interval, series
+        FSGetOptions FSRunningStage, P3StageKind(i), unit, waterMode, loadMode, minimum, maximum, interval, series
         p1 = mStageStartProfile: p2 = p1
         If Len(series) > 0 Then
           FSCurveAt series, FSStageElapsed, unit, FSStageDuration, p1, p2, fraction, knot
@@ -653,7 +653,7 @@ Public Function FSRunStage(ByVal stageId As Long, ByVal kind As String) As Boole
   On Error GoTo RunFailed
   Set ws = ThisWorkbook.Worksheets("水条件"): r = FSPlanRow(stageId)
   If r = 0 And (kind = "WAIT" Or kind = "WATER") Then FSCoupledInputError "時間経過・水理変動には時間設定が必要です。工程=" & CStr(stageId)
-  FSGetOptions stageId, unit, waterMode, loadMode, minimum, maximum, saveEvery, series
+  FSGetOptions stageId, kind, unit, waterMode, loadMode, minimum, maximum, saveEvery, series
   If r > 0 Then
     duration = FSNumber(ws.cells(r, 15).value2, "工程時間", 0#) * unit
     dt = FSNumber(ws.cells(r, 16).value2, "初期刻み", duration / unit) * unit
@@ -670,7 +670,6 @@ Public Function FSRunStage(ByVal stageId As Long, ByVal kind As String) As Boole
   If waterMode = "LINEAR" And duration <= 0# Then FSCoupledInputError "線形水位変化には正の工程時間が必要です。"
   If kind <> "LOAD" And kind <> "APPLY" And kind <> "UNLOAD" And Len(FSLoadingSet(stageId)) > 0 Then FSCoupledInputError "載荷セットはLOAD/APPLY/UNLOADへ指定してください。"
   If kind <> "WATER" And (waterMode <> "HOLD" Or Len(series) > 0) Then FSCoupledInputError "境界水位の変更はWATER（水理変動）工程へ指定してください。"
-  If kind = "WATER" And FSDetailRow(stageId) = 0 Then waterMode = "START"
   If Not mReady Or mGeneration <> P3ActiveSetGen Then FSPrepare
   If r > 0 Then
     If Len(Trim$(CStr(ws.cells(r, 17).value2))) > 0 Then mDrainSet = Trim$(CStr(ws.cells(r, 17).value2))

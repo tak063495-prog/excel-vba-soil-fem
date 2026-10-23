@@ -1,0 +1,12 @@
+{
+  "status": "REPRODUCED_EXPECTED_FAILURE",
+  "main_book_sha256": "508C99EF084129A0B70E01C28DD1D1E75DE23A0EF78E212919F044998E0223BD",
+  "fresh_profile": "W2",
+  "loaded_profile": "W",
+  "following_WAIT_profile": "W",
+  "fresh_external_y_kN": -29.43,
+  "resumed_external_y_kN": -19.62,
+  "fresh_reaction_y_kN": 69.43000000000004,
+  "resumed_reaction_y_kN": 59.62,
+  "max_displacement_delta_m": 1.3982917609087512e-05
+}
