@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "all_dofs": 86,
+  "all_stress_slots": 544,
+  "max_u_difference_m": 2.5103140052773476e-13,
+  "max_stress_difference_kPa": 3.2307667652275995e-09,
+  "saved_branch_checks": [
+    {
+      "state": "S000001_3",
+      "parent": "C000001",
+      "time_s": 0.0,
+      "Fs": 1.05,
+      "max_pressure_difference_kPa": 0.0
+    },
+    {
+      "state": "S000011_5",
+      "parent": "C000011",
+      "time_s": 86400.0,
+      "Fs": 1.05,
+      "max_pressure_difference_kPa": 0.0
+    }
+  ],
+  "scope": "accepted saved branches and construction after interim SRM; failed trial fields are not independently exported"
+}

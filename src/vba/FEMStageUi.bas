@@ -135,11 +135,11 @@ Private Function Sections(ByVal page As String) As String
   Select Case page
     Case "ホーム": Sections = "作業の流れ"
     Case "モデル": Sections = "形状の座標,形状の領域,メッシュ生成・支持条件"
-    Case "材料・接合": Sections = "材料特性,接合条件,材料の水理特性"
+    Case "材料・接合": Sections = "材料特性,接合条件,材料の水理特性,圧密材料特性"
     Case "境界・水条件": Sections = "水条件の基本,水位線,水理境界,載荷条件,節点の支持・変位"
-    Case "施工工程": Sections = "工程の編集"
+    Case "施工工程": Sections = "工程の編集,時間・連成設定,時間の詳細設定,排水条件セット,水位の時系列"
     Case "解析・保存": Sections = "解析・SRM,保存・再開,高速化,詳細設定"
-    Case "結果": Sections = "図と概要,表示設定,工程別数値,節点結果,要素結果,水圧結果,接合結果,診断"
+    Case "結果": Sections = "図と概要,表示設定,工程別数値,時間履歴,水量収支,時刻別の図,節点結果,要素結果,水圧結果,接合結果,診断"
   End Select
 End Function
 
@@ -188,6 +188,7 @@ End Sub
 Private Sub Frame(ByVal ws As Worksheet)
   Dim i As Long, s As shape, p As Variant, actions As Variant
   ws.Unprotect
+  On Error Resume Next: ws.Shapes("UI24_TimeLoad").Delete: On Error GoTo 0
   For i = ws.Shapes.count To 1 Step -1
     If left$(ws.Shapes(i).name, 5) = "UI24_" Then ws.Shapes(i).Delete
   Next i
@@ -373,6 +374,7 @@ End Sub
 Private Sub Render(ByVal ws As Worksheet)
   Dim section As String, src As Worksheet, a As range, row0 As Long, name As String, i As Long
   ws.Unprotect
+  On Error Resume Next: ws.Shapes("UI24_TimeLoad").Delete: On Error GoTo 0
   CacheReset ws.name
   ws.columns("A:M").ColumnWidth = 12
   For i = ws.CheckBoxes.count To 1 Step -1
@@ -396,7 +398,7 @@ Private Sub Render(ByVal ws As Worksheet)
       ws.range("A8:M9").Merge: ws.range("A8").value2 = "1 モデル → 2 材料・接合 → 3 境界・水条件 → 4 施工工程 → 5 解析・保存 → 6 結果"
       ws.range("A11:M12").Merge: ws.range("A11").value2 = "工程は上から実行。追加・複製・削除・上下移動が可能です。途中のSRMは必要Fsの照査、最後の有効行のSRMはFs探索です。"
       ws.range("A14:M15").Merge: ws.range("A14").value2 = "入力変更後は結果を無効化し、メッシュ確認をやり直します。詳細表を開いた後は上部の「7画面へ戻る」で戻れます。"
-      ws.range("A17:M18").Merge: ws.range("A17").value2 = "水条件：指定水位の静水圧／定常浸透→力学の片方向連携。時間圧密・FIXED_STRESSは現版では実行できません。"
+      ws.range("A17:M18").Merge: ws.range("A17").value2 = "水条件：指定水位／定常浸透→力学。初期平衡後は施工工程でFIXED_STRESSを選び、飽和地盤の時間圧密・水位変動を連成解析できます。"
       ws.range("A20:M21").Merge: ws.range("A20").value2 = "節点 " & CStr(ThisWorkbook.Worksheets("節点データ").cells(rows.count, 1).End(xlUp).row - 1) & " / 要素 " & CStr(ThisWorkbook.Worksheets("要素データ").cells(rows.count, 1).End(xlUp).row - 1) & " / " & ResultState()
       ws.range("A8:M21").WrapText = True
       CacheMeta ws.name, "HOME"
@@ -410,6 +412,7 @@ Private Sub Render(ByVal ws As Worksheet)
       Select Case section
         Case "材料特性": Table ws, "材料データ", "A2:M2000", 1, "SOIL/STRUCT/JOINTを材料ごとに指定。BIRTH待ちは初期状態OFF。SRM対象は強度低減=1。物性・重量は解析条件に合わせます。"
         Case "接合条件": Table ws, "接合", "A2:G2000", 1, "材料A/Bの共有辺へ接合を生成。水圧方式SOIL/CONTINUOUS/PRESCRIBED。接合を含む場合はメッシュ生成方式の適用範囲を確認。"
+        Case "圧密材料特性": Table ws, "水条件", "V12:AB211", 11, "材料番号ごとにBiot係数α、貯留1/M[1/kPa]、kx・ky[m/s]を指定。EFFECTIVEの排水骨格E・νを使用します。物性は空欄のまま計算できません。"
         Case Else: Table ws, "水条件", "F12:J211", 11, "材料番号に対応させ、TOTAL/EFFECTIVE・透水係数K[m/s]・水位線IDを指定。水頭0は非透水節点では未計算値です。"
       End Select
     Case "境界・水条件"
@@ -420,18 +423,25 @@ Private Sub Render(ByVal ws As Worksheet)
           ws.range("A8:A11").locked = True: ws.columns("A").ColumnWidth = 36
         Case "水位線": Table ws, "水条件", "A12:D211", 11, "同じIDで左→右へXと水位標高を複数行登録。折れ点の間は直線補間。地表より高い指定は外水圧の判定にも使います。"
         Case "水理境界": Table ws, "水条件", "A216:F415", 215, "STEADYの水頭・流量・不透水境界等を指定。節点/辺の番号は再メッシュで変わるため再設定が必要です。"
-        Case "載荷条件": Table ws, "載荷", "A2:J2000", 1, "工程のLOAD/UNLOAD対象材料に対応。DISP=強制変位、FORCE=節点力、FIX=固定。値0も有効な入力です。"
+        Case "載荷条件": Table ws, "載荷", "A2:K2000", 1, "A=材料、K=載荷セットID（空欄は従来）。時間詳細の載荷セットで工程別に選択。指定DOFは値を上書き、未指定は継承。DISP[m]/FORCE[kN]/FIX、0も有効。"
         Case Else: Table ws, "節点データ", "A2:I2001", 1, "生成済みメッシュの実際の拘束。D/E:0自由・1固定。座標/番号を変える場合は要素との整合が必要です。2000行を超えるモデルは詳細表で編集してください。"
       End Select
     Case "施工工程"
+      Select Case section
+        Case "時間・連成設定": Table ws, "水条件", "L12:T211", 11, "工程IDに対応。時間・刻みはJ列の単位（詳細設定、未指定は秒）。INHERIT/ONE_WAY/FIXED_STRESS、排水セット・反復上限・許容値を指定。0時間は瞬時載荷。": FEM24TimeUnits ws: GoTo RenderFinished
+        Case "時間の詳細設定": Table ws, "水条件", "AC12:AL211", 11, "工程IDに対応。時間単位、保持/開始時変更/線形水位、瞬時/線形載荷、最小・最大刻み、保存間隔・水位時系列ID・載荷セットIDを指定。": GoTo RenderFinished
+        Case "排水条件セット": Table ws, "水条件", "V216:AB415", 215, "空欄は継承。セットIDは通常の排水・流束境界を全置換し、未記載面は遮水。JOINT指定水位は保持。HEAD[m]/PRESSURE[kPa]/FLUX[内向m/s]/NOFLOW。": GoTo RenderFinished
+        Case "水位の時系列": Table ws, "水条件", "V420:X619", 419, "時系列IDごとに工程内時刻と登録済み水位線IDを昇順で指定。折点時刻で計算を保存します。": GoTo RenderFinished
+      End Select
       ws.columns("A:I").ColumnWidth = 14: ws.columns("F").ColumnWidth = 23
       FEM24StagesRender ws
       CacheBlock ws.name, "ステージ", "A2:F2000"
       CacheBlock ws.name, "水条件", "L12:T211"
+      CacheBlock ws.name, "水条件", "AC12:AL211"
       CacheBlock ws.name, "水条件", "B3:B6"
       ws.range("B8:H2006").locked = False: ws.range("B8:H2006").Interior.Color = RGB(235, 245, 255)
       With ws.range("B8:B2006").Validation
-        .Delete: .Add xlValidateList, xlValidAlertStop, xlBetween, "自重,載荷,除荷,盛土・追加,掘削・撤去,水位変更,SRM照査,変位リセット,応力リセット,材料変更"
+        .Delete: .Add xlValidateList, xlValidAlertStop, xlBetween, "自重,載荷,除荷,盛土・追加,掘削・撤去,水位変更,時間経過,SRM照査,変位リセット,応力リセット,材料変更"
         .ShowError = True
       End With
       ws.range("A5").value2 = "上から順に施工。有効1=実行/0=スキップ。D列:倍率・途中SRMの必要Fs・材料変更式。水位線はWATER行のH列で選択（N→従来C→既定）。IDは移動しても維持。"
@@ -444,6 +454,55 @@ Private Sub Render(ByVal ws As Worksheet)
       End Select
     Case "結果"
       Select Case section
+        Case "時刻別の図"
+          ws.range("A5").value2 = "時間履歴の保存状態IDを選択し「この時刻を表示」。施工本線Cと水圧保持SRM枝Sを区別します。表示する量・倍率は表示設定で選びます。"
+          ws.range("A7:F7").value2 = Array("状態ID", "選択値", "", "", "", "")
+          ws.range("B8").locked = False: ws.range("B8").NumberFormat = "@": ws.range("B8").Interior.Color = RGB(235, 245, 255)
+          Set src = Nothing
+          On Error Resume Next: Set src = ThisWorkbook.Worksheets("時間履歴"): On Error GoTo 0
+          If Not src Is Nothing Then
+            row0 = src.cells(src.rows.count, 1).End(xlUp).row
+            If row0 > 1 Then
+              src.columns("W").ClearContents
+              name = "2"
+              For i = 2 To row0
+                If Len(CStr(src.cells(i, 11).value2)) > 0 Then
+                  src.cells(CLng(name), 23).value2 = src.cells(i, 1).value2
+                  name = CStr(CLng(name) + 1)
+                End If
+              Next i
+              If CLng(name) > 2 Then
+                ws.range("B8").value2 = src.cells(CLng(name) - 1, 23).value2
+                On Error Resume Next: ThisWorkbook.names("_FSTimeStates").Delete: On Error GoTo 0
+                ThisWorkbook.names.Add name:="_FSTimeStates", RefersTo:="='時間履歴'!$W$2:$W$" & CStr(CLng(name) - 1), Visible:=False
+                ws.range("B8").Validation.Add xlValidateList, xlValidAlertStop, xlBetween, "=_FSTimeStates"
+              End If
+            End If
+          End If
+          Button ws, "TimeLoad", "この時刻を表示", "FSShowTimeFrame", ws.range("D8").left, ws.range("D8").Top, 150
+          ws.range("A10:F10").value2 = Array("保存状態ID", "工程ID", "累積時刻[s]", "累積時刻[日]", "施工本線/照査枝", "Fs")
+          If Not src Is Nothing Then
+            row0 = 2 + (PageNumber(ws) - 1) * 200
+            For i = row0 To row0 + 199
+              If i > src.cells(src.rows.count, 1).End(xlUp).row Then Exit For
+              If Len(CStr(src.cells(i, 11).value2)) > 0 Then ws.cells(i - row0 + 11, 1).Resize(1, 6).value2 = Array(src.cells(i, 1).value2, src.cells(i, 2).value2, src.cells(i, 3).value2, CDbl(src.cells(i, 3).value2) / 86400#, src.cells(i, 10).value2, src.cells(i, 13).value2)
+            Next i
+          End If
+        Case "水量収支"
+          On Error Resume Next: Set src = ThisWorkbook.Worksheets("時間履歴"): On Error GoTo 0
+          If src Is Nothing Then
+            ws.range("A8").value2 = "時間連成の結果がありません。"
+          Else
+            row0 = 2 + (PageNumber(ws) - 1) * 200
+            ws.range("A5").value2 = "工程・時刻ごとの水量[m3]。貯留＋骨格体積変化＝指定圧流入＋指定流束流入。施工の持込・持出は境界流量と別集計。"
+            ws.range("A7:C7").value2 = Array("状態ID", "工程ID", "累積時刻[s]")
+            ws.range("D7:K7").value2 = src.range("N1:U1").value2
+            For i = row0 To row0 + 199
+              If i > src.cells(src.rows.count, 1).End(xlUp).row Then Exit For
+              ws.cells(i - row0 + 8, 1).Resize(1, 3).value2 = src.cells(i, 1).Resize(1, 3).value2
+              ws.cells(i - row0 + 8, 4).Resize(1, 8).value2 = src.cells(i, 14).Resize(1, 8).value2
+            Next i
+          End If
         Case "表示設定": Settings ws, "出力・表示", "VIEW": AddOverlay ws
         Case "図と概要"
           ws.range("A5").value2 = "変形・応力図は最終保存状態です。途中工程の値は「工程別数値」などで確認。ALL保存を指定すると各工程の節点・要素値を残せます。水理図は入力水位と計算水頭を区別します。"
@@ -451,6 +510,7 @@ Private Sub Render(ByVal ws As Worksheet)
         Case Else
           Select Case section
             Case "工程別数値": name = "ステージ結果"
+            Case "時間履歴": name = "時間履歴"
             Case "節点結果": name = "結果節点"
             Case "要素結果": name = "結果要素"
             Case "水圧結果": name = "水圧結果"
@@ -470,6 +530,7 @@ Private Sub Render(ByVal ws As Worksheet)
           End If
       End Select
   End Select
+RenderFinished:
   If ws.name = "結果" Then
     CacheMeta ws.name, "DIRTY"
     If ThisWorkbook.names("_FEMViewerResultsDirty").RefersTo = "=TRUE" Then ws.range("A5").value2 = "【再解析が必要】保存された数値表は現在の入力に対応していません。 " & CStr(ws.range("A5").value2)
@@ -575,7 +636,7 @@ Public Sub FEM24Changed(ByVal sh As Object, ByVal target As range)
     Render sh: GoTo Finish
   End If
   If Not FEM24PageCurrent(sh.name) Then Err.Raise vbObjectError + 2447, , "元の入力が更新されたため、画面を更新しました。内容を確認して入力し直してください。"
-  If sh.name = "施工工程" Then
+  If sh.name = "施工工程" And CStr(sh.range("C4").value2) = "工程の編集" Then
     FEM24StagesChanged sh, target
     FEM24Error = FEM24StageError: GoTo Finish
   End If
@@ -722,6 +783,7 @@ Private Sub PlotFront(ByVal preview As Boolean)
   If s.width > 905 Then s.width = 905
   s.left = 5: s.Top = ws.rows(9).Top + 2
   ws.range("A8").value2 = IIf(preview, "解析前メッシュ（確認済み）", "最終保存状態の変形・応力図")
+  If Not preview And Len(FSStoredCaption()) > 0 Then ws.range("A8").value2 = FSStoredCaption()
   ws.Protect UserInterfaceOnly:=True, DrawingObjects:=False
   ActiveWindow.Zoom = 70
   Application.EnableEvents = e: Application.ScreenUpdating = screen
@@ -746,6 +808,7 @@ Failed:
 End Sub
 Public Sub FEM24Plot()
   If AnalysisRunning Then Exit Sub
+  FEM24Error = ""
   On Error GoTo Failed
   FEMViewResult
   PlotFront False
@@ -833,4 +896,18 @@ Public Sub FEM24Detail()
 Failed:
   FEM24Error = Err.description
   If Not SuppressUserMessages Then MsgBox "該当する表はまだありません。" & vbCrLf & FEM24Error, vbInformation
+End Sub
+
+Private Sub FEM24TimeUnits(ByVal ws As Worksheet)
+  Dim row As Long, detail As Long, id As Double, unit As String
+  ws.range("J7").value2 = "時間単位（詳細設定）"
+  For row = 8 To 207
+    If IsNumeric(ws.cells(row, 1).value2) And Len(CStr(ws.cells(row, 1).value2)) > 0 Then
+      id = CDbl(ws.cells(row, 1).value2): detail = FSDetailRow(CLng(id)): unit = "秒"
+      If detail > 0 Then
+        If Len(Trim$(CStr(ThisWorkbook.Worksheets("水条件").cells(detail, 30).value2))) > 0 Then unit = CStr(ThisWorkbook.Worksheets("水条件").cells(detail, 30).value2)
+      End If
+      ws.cells(row, 10).value2 = unit
+    End If
+  Next row
 End Sub

@@ -1,0 +1,8 @@
+{
+  "before_refined_run": true,
+  "comparison": "common coarse times through tau=0.1",
+  "fine_max_pressure_error_kPa": 0.2,
+  "fine_error_ratio_to_coarse_max": 0.7,
+  "prescribed_displacement_error_m": 1e-09,
+  "cryer_peak_min_kPa": 0.02
+}

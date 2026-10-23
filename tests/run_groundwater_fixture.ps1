@@ -44,6 +44,7 @@ Public Function WFBuild() As String
 End Function
 Public Function WFStress() As Variant
  Dim v() As Double, e As Long, g As Long, j As Long, n As Long
+ If NumberOfElement < 1 Then WFStress = Array(): Exit Function
  ReDim v(NumberOfElement * 4 * 17 - 1)
  For e = 0 To NumberOfElement - 1
   For g = 0 To 3
@@ -58,6 +59,34 @@ Public Function WFDisplacements() As Variant
  WFDisplacements = TDisp
 End Function
 '@)
+ if($data.water.coupledMaterials){
+  $mod.CodeModule.AddFromString(@'
+Public Function WFCoupledState() As Variant
+ WFCoupledState = Array(FSActive,FSTime,FSAccepted,FSRunningStage,FSStageElapsed,FSResumePending)
+End Function
+Public Function WFPressure() As Variant
+ Dim result() As Double,e As Long,g As Long
+ If NumberOfElement < 1 Then WFPressure = Array(): Exit Function
+ ReDim result(0 To NumberOfElement*4-1)
+ For e=0 To NumberOfElement-1
+  For g=0 To 3: result(e*4+g)=GWNewPressure(e,g): Next g
+ Next e
+ WFPressure=result
+End Function
+Public Function WFOriginalNodes() As Variant
+ Dim result() As Double,n As Long,k As Long
+ On Error GoTo Unavailable
+ If NumberOfFreeNode < 1 Then Exit Function
+ ReDim result(0 To NumberOfFreeNode-1,0 To 2)
+ For n=0 To NumberOfFreeNode-1
+  k=P6GetInternalFreeNode(n)
+  result(n,0)=n+1: result(n,1)=TDisp(2*k): result(n,2)=TDisp(2*k+1)
+ Next n
+ WFOriginalNodes=result
+Unavailable:
+End Function
+'@)
+ }
  if($data.checkTangent){
   $testModule=$wb.VBProject.VBComponents.Add(1);$testModule.Name='JointTangentDriver'
   $testModule.CodeModule.AddFromString([IO.File]::ReadAllText("$PSScriptRoot/joint_tangent_driver.bas"))
@@ -77,7 +106,7 @@ End Function
  Rows $wb.Worksheets.Item('要素データ') 2 1 $data.elements $(if($data.elements[0].Count -ge 11){11}else{10})
  Rows $wb.Worksheets.Item('材料データ') 2 1 $data.materials 13
  Rows $wb.Worksheets.Item('ステージ') 2 1 $data.stages 6
- if($data.loads){Rows $wb.Worksheets.Item('載荷') 2 1 $data.loads 10}
+ if($data.loads){Rows $wb.Worksheets.Item('載荷') 2 1 $data.loads $(if($data.loads[0].Count -ge 11){11}else{10})}
  if($data.jointPairs){Rows $wb.Worksheets.Item('接合') 2 1 $data.jointPairs 7}
  if($data.shape){
   $shapePage=$wb.Worksheets.Item('形状入力')
@@ -93,6 +122,10 @@ End Function
  Rows $water 12 6 $data.water.materials 5
  Rows $water 216 1 $data.water.boundaries 6
  if($data.water.stagePlans){Rows $water 12 12 $data.water.stagePlans 9}
+ if($data.water.coupledMaterials){Rows $water 12 22 $data.water.coupledMaterials $(if($data.water.coupledMaterials[0].Count -ge 7){7}else{6})}
+ if($data.water.timeOptions){Rows $water 12 29 $data.water.timeOptions 10}
+ if($data.water.drainSets){Rows $water 216 22 $data.water.drainSets 7}
+ if($data.water.timeCurves){Rows $water 420 22 $data.water.timeCurves 3}
  SetSetting 'EXPORT_MODE' $(if($Resume){'STAGE'}else{'OFF'});SetSetting 'EXPORT_LOAD' '';SetSetting 'FLOW_POLICY' $Flow;SetSetting 'NATIVE_DLL' $Native;SetSetting 'OUTPUT_STAGE_MODE' 'ALL'
  if($data.settings){foreach($property in $data.settings.PSObject.Properties){SetSetting $property.Name $property.Value}}
  if($Resume){SetSetting 'EXPORT_MODE' 'STAGE'}
@@ -125,6 +158,14 @@ End Function
  $timer=[Diagnostics.Stopwatch]::StartNew();$status=Call 'WFRun';$timer.Stop()
  # Failed input/setup may leave no elements allocated. Do not mask its message
  # with a second error while collecting an unallocated stress/DOF array.
+ if($data.expectedAnalysisError){
+  if($status -like 'PASS|*' -or -not $status.Contains([string]$data.expectedAnalysisError)){throw "Expected rejection was not observed: $status"}
+  $v=$xl.Run("'"+$wb.Name+"'!WFOriginalNodes");$nodes=[Collections.Generic.List[object]]::new()
+  if($null -ne $v){for($n=0;$n -lt $v.GetLength(0);$n++){$nodes.Add(@($v[$n,0],$v[$n,1],$v[$n,2]))}}
+  @{case=$data.name;status=$status;expected=[string]$data.expectedAnalysisError;coupled=@(Call 'WFCoupledState');nodes=@($nodes);pressure=@(Call 'WFPressure');stress=@(Call 'WFStress');profile=(Call 'GWViewDefaultProfile')}|ConvertTo-Json -Depth 7|Set-Content (Join-Path $Out 'expected_failure.json') -Encoding UTF8
+  $wb.Close($false)
+  return
+ }
  if($status -notlike 'PASS|*'){
   @{case=$data.name;status=$status;seconds=$timer.Elapsed.TotalSeconds}|ConvertTo-Json|Set-Content (Join-Path $Out 'failure.json') -Encoding UTF8
   throw "Analysis: $status"
@@ -133,7 +174,9 @@ End Function
  $record|ConvertTo-Json -Depth 8|Set-Content (Join-Path $Out 'result.json') -Encoding UTF8
  Write-Output ($record|ConvertTo-Json -Depth 2 -Compress)
  if($status -notlike 'PASS|*'){throw "Analysis: $status"}
- foreach($name in '水圧結果','結果節点','結果要素','結果増分','結果塑性','ステージ結果','水圧確認','接合結果'){
+ $outputSheets=@('水圧結果','結果節点','結果要素','結果増分','結果塑性','ステージ結果','水圧確認','接合結果')
+ if($data.water.coupledMaterials){$outputSheets+='時間履歴'}
+ foreach($name in $outputSheets){
   try{$ws=$wb.Worksheets.Item($name)}catch{if($data.water.mode -eq 'NONE' -and $name -in '水圧結果','水圧確認'){continue};throw}
   $array=$ws.UsedRange.Value2;$values=[Collections.Generic.List[object]]::new()
   for($r=1;$r -le $array.GetLength(0);$r++){$row=[Collections.Generic.List[object]]::new();for($c=1;$c -le $array.GetLength(1);$c++){$row.Add($array[$r,$c])};$values.Add(@($row))}

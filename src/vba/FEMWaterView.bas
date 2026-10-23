@@ -8,7 +8,9 @@ Public Sub GWDrawWaterView(ByVal ws As Worksheet, ByRef pressures() As Double, B
   Dim drawStride As Long, sampleNote As String, canvasTop As Double, canvasHeight As Double, plotHeight As Double
   Dim mode As String, originText As String
   mode = GWViewMode()
-  If mode = "STEADY" Then
+  If mode = "FIXED_STRESS" Then
+    originText = "時間連成：受理時刻t=" & Format$(FSTime, "0.###") & " sの計算水圧・全水頭・流束。入力水位は境界条件で、内部過剰水圧は固定していません。"
+  ElseIf mode = "STEADY" Then
     originText = "浸透計算済：h・qから水圧を算出。破線は入力境界用水位で、自由水面の計算結果ではありません。"
   Else
     originText = "指定場：入力水位から静水圧を換算。浸透計算・水位の再計算は行いません。"
@@ -57,7 +59,7 @@ Public Sub GWDrawWaterView(ByVal ws As Worksheet, ByRef pressures() As Double, B
   For n = 0 To NumberOfFreeNode - 1
     If haveNode(n) Then forceNodes = forceNodes + 1
   Next n
-  If mode = "STEADY" Then shapeCount = shapeCount * 10
+  If mode = "STEADY" Or mode = "FIXED_STRESS" Then shapeCount = shapeCount * 10
   shapeCount = shapeCount + forceNodes + profilePoints + 12
   drawStride = 1
   If shapeCount > 3500 Then
@@ -78,7 +80,7 @@ Public Sub GWDrawWaterView(ByVal ws As Worksheet, ByRef pressures() As Double, B
   sh.name = "GW_VIEW_TITLE": sh.TextFrame2.TextRange.text = titleText & sampleNote
   ws.range("A4").value2 = originText
   ws.range("A5").value2 = "入力線：橙破線 / GP水圧：青点 / 水圧外力：橙矢印。数値は35行目以降。"
-  ws.range("A6").value2 = "HYDROSTATIC=指定水位から換算 / STEADY=境界水頭を固定して内部水頭を計算。未知自由水面は対象外。"
+  ws.range("A6").value2 = "HYDROSTATIC=指定水位から換算 / STEADY=定常浸透 / FIXED_STRESS=飽和時間連成。未知自由水面は対象外。"
   ws.rows("4:6").RowHeight = 18
   For e = 0 To NumberOfElement - 1
     If P3IsElementActive(e) And Not Elem(e).IsJoint And e Mod drawStride = 0 Then GWDrawElement ws, e, x0, y0, sx, sy, minX, minY
@@ -93,7 +95,7 @@ Public Sub GWDrawWaterView(ByVal ws As Worksheet, ByRef pressures() As Double, B
       Next g
     End If
   Next e
-  If mode = "STEADY" Then GWDrawHydraulicSolution ws, drawStride, x0, y0, sx, sy, minX, minY
+  If mode = "STEADY" Or mode = "FIXED_STRESS" Then GWDrawHydraulicSolution ws, drawStride, x0, y0, sx, sy, minX, minY
   GWDrawForces ws, nodeX, nodeY, haveNode, surfaceForce, maxF, x0, y0, sx, sy, minX, minY
   GWDrawLegend ws, x0, y0, maxP, maxF
 End Sub
@@ -178,7 +180,7 @@ Private Sub GWDrawLegend(ByVal ws As Worksheet, ByVal x0 As Double, ByVal y0 As 
   sh.TextFrame2.TextRange.Font.Size = 9
   sh.TextFrame2.TextRange.text = "橙破線＝登録した入力水位線（境界用。計算結果の水面ではない）" & vbLf & _
     "青点＝GP水圧 max=" & Format$(maxP, "0.000") & " kPa / 橙矢印＝水圧の等価節点荷重 max=" & Format$(maxF, "0.000") & " kN"
-  If GWViewMode() = "STEADY" Then
+  If GWViewMode() = "STEADY" Or GWViewMode() = "FIXED_STRESS" Then
     sh.TextFrame2.TextRange.text = sh.TextFrame2.TextRange.text & vbLf & "紫実線＝計算全水頭h [m] の等値線（表示用補間） / 紫菱形＝固定水頭境界" & vbLf & _
       "緑矢印＝計算Darcy流束q [m/s]（外力矢印とは別）。飽和領域は入力メッシュで固定。"
   Else

@@ -1,4 +1,5 @@
 ﻿Option Explicit
+Private femIoViewingCheckpoint As Boolean
 Private mEvBuf As String, mEvPath As String, mEvHeader As String, mEvCount As Long
 Private mIoFast As Boolean, mIoBookIdentity As String, mIoCachedDir As String, mIoSep As String
 Private mEventFast As Boolean, mEvUsed As Long
@@ -2350,7 +2351,7 @@ Private Function FEMIoLoadingHash() As String
   lastRow = ws.cells(ws.rows.count, 1).End(xlUp).row
   h = FEMIoMix(h, CDbl(lastRow))
   For rowNo = 2 To lastRow
-    For colNo = 1 To 9
+    For colNo = 1 To 11
       h = FEMIoMixText(h, Trim$(CStr(ws.cells(rowNo, colNo).value2)))
     Next colNo
   Next rowNo
@@ -2461,6 +2462,10 @@ Public Sub FEMIoExportStage(ByVal stageNo As Long, ByVal kindText As String, ByV
     If Not FEMIoWriteNode(tmpFolder) Then GoTo ExportFail
     If Not FEMIoWriteGauss(tmpFolder) Then GoTo ExportFail
     If Not GWWriteCheckpoint(tmpFolder) Then GoTo ExportFail
+    If Not FSWriteCheckpoint(tmpFolder) Then GoTo ExportFail
+    If FSActive Then
+      If Not FEMIncrementWriteFile(tmpFolder) Then GoTo ExportFail
+    End If
     If Not PlasticLogWrite(tmpFolder) Then FEMIoLog "累積塑性診断", "WARN", "plastic_cumulative.csvを保存できませんでした。"
     If Not FEMIoWriteDofLock(tmpFolder) Then GoTo ExportFail
     If Not FEMIoWriteOrigin(tmpFolder) Then GoTo ExportFail
@@ -2476,6 +2481,37 @@ ExportFail:
   Err.Clear
   On Error GoTo 0
 End Sub
+
+Public Function FEMIoExportTime(ByVal folder As String, ByVal stageId As Long, ByVal kind As String, ByVal branch As Boolean) As Boolean
+  Dim tmp As String, f As Integer
+  On Error GoTo Failed
+  tmp = folder & ".tmp"
+  If Dir$(folder, vbDirectory) <> "" Or Dir$(tmp, vbDirectory) <> "" Then Err.Raise vbObjectError + 8130, , "時刻別保存先が既に存在します。"
+  MkDir tmp
+  FEMIoWriteMeta tmp, stageId, kind, True
+  If Not FEMIoWriteNode(tmp) Then GoTo Failed
+  If Not FEMIoWriteGauss(tmp) Then GoTo Failed
+  If Not FEMIoWriteDofLock(tmp) Then GoTo Failed
+  If Not FEMIoWriteOrigin(tmp) Then GoTo Failed
+  If Not GWWriteCheckpoint(tmp) Then GoTo Failed
+  If Not FSWriteCheckpoint(tmp) Then GoTo Failed
+  If Not FEMIncrementWriteFile(tmp) Then GoTo Failed
+  If Not PlasticLogWrite(tmp) Then GoTo Failed
+  If branch Then
+    f = FreeFile: Open tmp & Application.PathSeparator & "branch_only.txt" For Output As #f
+    Print #f, "SRM verification branch; resume from its parent construction state.": Close #f
+  End If
+  Name tmp As folder
+  FEMIoExportTime = True
+  Exit Function
+Failed:
+  On Error Resume Next: Close #f
+  FEMIoDeleteFolder tmp
+End Function
+
+Public Function FEMIoTimeRoot() As String
+  FEMIoTimeRoot = FEMIoOutDir(True)
+End Function
 
 Private Sub FEMIoWriteMeta(ByVal stageFolder As String, ByVal stageNo As Long, ByVal kindText As String, ByVal okFlag As Boolean)
   Dim fileNumber As Integer
@@ -2827,13 +2863,14 @@ Private Function FEMIoSafeName(ByVal textValue As String) As String
 End Function
 
 ' Load EXPORT_LOAD checkpoint. Returns resumed stage number, or 0 to start from the beginning.
-Public Function FEMIoTryResume() As Long
+Public Function FEMIoTryResume(Optional ByVal explicitFolder As String = "", Optional ByVal viewing As Boolean = False) As Long
   Dim want As String, folderPath As String, stageFolder As String, fileNumber As Integer
   Dim lineText As String, parts() As String, lastOk As String
   Dim metaStamp As String, metaSig As String, metaPlan As String, metaStatus As String
   Dim metaStage As Long, metaKind As String, metaNodes As Long, metaElems As Long, metaDof As Long
   Dim rhs As String, matchCount As Long, stageIndex As Long, i As Long
   FEMIoTryResume = 0
+  femIoViewingCheckpoint = viewing
   femIoResumeIndex = 0
   femIoResumeFs = 1#
   femIoResumeFss = 1#
@@ -2841,6 +2878,10 @@ Public Function FEMIoTryResume() As Long
   femIoResumeHasLock = False
   femIoResumePrefix = 0
   femIoResumeKind = vbNullString
+  If Len(explicitFolder) > 0 Then
+    stageFolder = explicitFolder
+    GoTo ReadSelectedCheckpoint
+  End If
   want = UCase$(Trim$(FEMReadTextSetting("EXPORT_LOAD", "")))
   If Len(want) = 0 Then Exit Function
   folderPath = FEMIoOutDir()
@@ -2865,7 +2906,16 @@ Public Function FEMIoTryResume() As Long
     If Len(lastOk) = 0 Then Exit Function
     stageFolder = folderPath & Application.PathSeparator & lastOk
   Else
-    stageFolder = folderPath & Application.PathSeparator & want
+    If InStr(want, ":") > 0 Or Left$(want, 2) = "\\" Then
+      stageFolder = want
+    Else
+      stageFolder = folderPath & Application.PathSeparator & want
+    End If
+  End If
+ReadSelectedCheckpoint:
+  If Not viewing And Dir$(stageFolder & Application.PathSeparator & "branch_only.txt") <> "" Then
+    SetAnalysisFailure RESULT_INPUT_ERROR, "SRM照査枝は施工本線へ再開できません。親の時刻別状態を選択してください。", vbObjectError + 3091, -1, -1, 0, 0
+    Exit Function
   End If
   If Dir$(stageFolder & Application.PathSeparator & "meta.txt") = vbNullString Then
     SetAnalysisFailure RESULT_INPUT_ERROR, "再開フォルダが見つかりません: " & stageFolder, vbObjectError + 3091, -1, -1, 0, 0
@@ -2999,7 +3049,7 @@ Public Function FEMIoTryResume() As Long
   femIoResumeStage = metaStage
   femIoResumeKind = metaKind
   FEMIoTryResume = metaStage
-  FEMIoLog "再開", "LOAD", stageFolder & " stage=" & CStr(metaStage) & " " & metaKind & " fs=" & Format$(femIoResumeFs, "0.000") & " gravity=" & IIf(femIoResumeGravity, "1", "0")
+  If Not viewing Then FEMIoLog "再開", "LOAD", stageFolder & " stage=" & CStr(metaStage) & " " & metaKind & " fs=" & Format$(femIoResumeFs, "0.000") & " gravity=" & IIf(femIoResumeGravity, "1", "0")
 End Function
 
 ' Restore analysis coordinates XXX and displacements TDisp. x,y are required after RESET_STRESS.
@@ -3299,8 +3349,16 @@ Public Function FEMIoFinishResume() As Boolean
     If P3HasJointElements Then FEMPracticalSaveJointResults femIoResumeStage
     If UCase$(Trim$(FEMReadTextSetting("OUTPUT_STAGE_MODE", "FINAL"))) = "ALL" Then GWWriteResults femIoResumeStage
   End If
-  PlasticLogResumeUnknown
+  If FSActive Then
+    If Not PlasticLogRead(femIoResumeFolder) Then
+      SetAnalysisFailure RESULT_INPUT_ERROR, "累積塑性履歴が不完全なため時間連成を再開できません。", vbObjectError + 3099, -1, -1, 0, 0
+      Exit Function
+    End If
+  Else
+    PlasticLogResumeUnknown
+  End If
   P3RecountActivePlasticPoints
+  If FSActive And Not femIoViewingCheckpoint Then FSResultsResume femIoResumeFolder, femIoResumeStage
   P3TrialStateValid = False
   FEMIoFinishResume = True
 End Function
@@ -3979,4 +4037,8 @@ Private Function FEMIoKinematicText(ByVal value As Double, ByVal coordinate As B
   Else
     FEMIoKinematicText = Format$(value, "0.000000000000")
   End If
+End Function
+
+Public Function FEMIoFrameSignature() As String
+  FEMIoFrameSignature = FEMIoContentHash() & ":" & GWInputSignature()
 End Function

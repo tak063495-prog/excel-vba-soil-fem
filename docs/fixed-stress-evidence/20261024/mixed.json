@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "elements": {
+    "Q8": 7,
+    "T6": 2
+  },
+  "nodes": 44,
+  "seconds": 10.3743947,
+  "resume_seconds": 2.6173687,
+  "metrics": [
+    36.0,
+    2.357909332194319e-15,
+    45.99999999673358,
+    8.16062576500023e-11,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "resume_metrics": [
+    36.0,
+    -7.218075963322246e-17,
+    45.999999996733514,
+    8.221837307893646e-11,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "max_resume_u_difference_m": 4.567479207351344e-13,
+  "scope": "mixed interface integration and full/resume reaction/residual; not an independent analytical global solution"
+}

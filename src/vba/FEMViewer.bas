@@ -238,7 +238,12 @@ Private Sub DrawView(ByVal mode As String)
     For Each key In materialMap.keys
         finalMaterials(key) = materialMap(key)
     Next key
+    Dim framePrefix As Long, planIndex As Long
+    framePrefix = -1
+    If mode = "RESULT" Then framePrefix = FSViewPrefix()
     For r = 2 To UBound(stages, 1)
+        If Len(Trim$(CStr(stages(r, 2)))) > 0 Then planIndex = planIndex + 1
+        If framePrefix >= 0 And planIndex > framePrefix Then Exit For
         If Not IsNumeric(stages(r, 5)) Then GoTo NextPlan
         If CDbl(stages(r, 5)) <> 0# Then
             flag = 0

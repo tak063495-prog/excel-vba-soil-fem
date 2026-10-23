@@ -168,5 +168,40 @@
         "name":  "FEMMixedElement",
         "file":  "FEMMixedElement.bas",
         "type":  1
+    },
+    {
+        "name":  "FEMFixedStressMatrix",
+        "file":  "FEMFixedStressMatrix.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMFixedStress",
+        "file":  "FEMFixedStress.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMFixedStressSrm",
+        "file":  "FEMFixedStressSrm.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMFixedStressInput",
+        "file":  "FEMFixedStressInput.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMFixedStressResults",
+        "file":  "FEMFixedStressResults.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMFixedStressLedger",
+        "file":  "FEMFixedStressLedger.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMFixedStressGauge",
+        "file":  "FEMFixedStressGauge.bas",
+        "type":  1
     }
 ]

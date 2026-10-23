@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "checkpoint": "tests\\tmp\\fixed_stress\\acceptance30\\saturation_rejection\\water_reject_saturation_out\\stg02_APPLY\\fixed_stress.csv",
+  "case": "water_reject_saturation",
+  "time": 0.0,
+  "accepted": 1,
+  "profile": "W",
+  "checked": [
+    "STATE time/accepted count",
+    "START_PROFILE",
+    "all node ux/uy",
+    "all water.csv pressures",
+    "gauss sx/sy/txy/sz"
+  ],
+  "coverage_gap": "Stmat slots beyond sx/sy/txy/sz and boundary head internals are not persisted in FIXED_STRESS_V3 CSV; no assertion made."
+}

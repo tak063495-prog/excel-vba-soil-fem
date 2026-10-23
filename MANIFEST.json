@@ -16,8 +16,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 27806,
-    "sha256": "9ffe51b5db119845c6477de10bd781b6724dd63ccc3dd36d19f3860505ef8d94"
+    "bytes": 28344,
+    "sha256": "f63f9791b0e64a799c236d4aeaabcca33ce3e4f00598a0c0708d664c0e9b2339"
   },
   {
     "path": "docs/ACCELERATION_HISTORY.md",
@@ -25,9 +25,24 @@
     "sha256": "eb8c86649f78ed822b7608fbd1c16d9f1b024c5b562565a4c9d7bc9cdf00f7ba"
   },
   {
+    "path": "docs/FIXED_STRESS_STAGES.md",
+    "bytes": 10342,
+    "sha256": "477633bc5b0ebfe8ad5ae947ede8d1d4ef0329c547924588d296101618906208"
+  },
+  {
+    "path": "docs/FIXED_STRESS_STAGE_PLAN.md",
+    "bytes": 19202,
+    "sha256": "adb7d57e8a2a7274e75765658cd024409cdffd51853598b8832e04d8662a0860"
+  },
+  {
+    "path": "docs/FIXED_STRESS_VALIDATION.md",
+    "bytes": 10410,
+    "sha256": "81feef19b5895771b721601611af79c64187a5cd53018a94f37a7f2b0ef5036a"
+  },
+  {
     "path": "docs/GROUNDWATER.md",
-    "bytes": 18147,
-    "sha256": "022108443227f24be4cdca9d358359af13636511e04f8b5897207a761948c373"
+    "bytes": 18231,
+    "sha256": "564a16cfac4013d6f36dd9b9df86a7567ac74e4060e04381e609e653780d7db5"
   },
   {
     "path": "docs/GROUNDWATER_VALIDATION.md",
@@ -161,8 +176,8 @@
   },
   {
     "path": "docs/STAGE_UI_20261024.md",
-    "bytes": 13651,
-    "sha256": "7bd880f69cca975478b84d5c7a4247eea154041e9615b4fd34b277504835572b"
+    "bytes": 13805,
+    "sha256": "a7af29313a16e1b3933903fe0c5f70bb11001ba72849cae2329de77e06fb18ab"
   },
   {
     "path": "docs/STAGE_UI_20261024_VALIDATION.md",
@@ -348,6 +363,246 @@
     "path": "docs/evidence/combination_trial_comparison_20261006.csv",
     "bytes": 5887,
     "sha256": "fbc168f487ec65481147e7285d4d845ed2b805fd50220cf65da808b5492385dd"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/acceptance30.log",
+    "bytes": 1909,
+    "sha256": "787a1f9e883d68789fa6739a35571b34ce2795d3a7e42d480ac238f5fe8cec13"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/acceptance31.log",
+    "bytes": 1909,
+    "sha256": "8b5aad5003daf19048b2bdf4ae2f1846d24db63a68ee347e885af64dea5d60f1"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/accepted_records.zip",
+    "bytes": 49527372,
+    "sha256": "e560201ce816b36344a775ef2a2e73be49906c10cb96ea40103f1517755b86fb"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/biot_anisotropic.json",
+    "bytes": 2948,
+    "sha256": "4bdb4c8271fc7c144686588fa4cbc7b6313fad9897ba7947c1e8f8e4a819771b"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/build30.log",
+    "bytes": 10944,
+    "sha256": "4bbb0cb5665425f968906f9ec9fccd9c2fc554ef116053685be8fd975b93176e"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/build31.log",
+    "bytes": 10944,
+    "sha256": "8385828cb9ec0df8cc33e10f80d87ab2b8b863149434f182a94de3a56b2ac2e9"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/build32.log",
+    "bytes": 10944,
+    "sha256": "c0e39cc1ea8b769763d4cbbd08a7dc529ba439f3da27137a89cc04ddd169662f"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/cold_queue30.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/continuation_records.zip",
+    "bytes": 278980,
+    "sha256": "4ecee4e26146352314bda7e5c2600aaab01bbb11197fb355f6927daabf439d08"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/display_correction.json",
+    "bytes": 4980,
+    "sha256": "ecadbebc62eb220e9bab0231d074568abaea08327577111a54154fa25cd7b52b"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/final29.log",
+    "bytes": 1255,
+    "sha256": "6e0d849469c78008cea4af3fa0e3780782f8382dd8f29923c6ab46b13f9da7a0"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/final_biot_anisotropic.json",
+    "bytes": 2948,
+    "sha256": "4bdb4c8271fc7c144686588fa4cbc7b6313fad9897ba7947c1e8f8e4a819771b"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/final_comparison.json",
+    "bytes": 13354,
+    "sha256": "fa40955c7ad291a04f0eda73e698c11c9f86e2291c75927e1704d952a6d36f20"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/final_monolithic.json",
+    "bytes": 2947,
+    "sha256": "8a96c12e8e5104752f1ae82160b1dfbb0dc2d2419eb0ef16291bb625846239bf"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/final_package.json",
+    "bytes": 1729,
+    "sha256": "bf2205691a8e55f97b2f8718c86527ff57c5eaa6b59edce280563c9b2e3cd0cd"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/final_release_records.zip",
+    "bytes": 29307574,
+    "sha256": "6b73e9155544a5b2ea1f8a090ca76d0b8c866def9ee2df87e0bded3882f6a283"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/final_srm_parent.json",
+    "bytes": 649,
+    "sha256": "e3b2fdd3e8929a2f7be08663d9f06a7dfc23ee7cd047da77873bb7425f5c332b"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/final_water_ramp.json",
+    "bytes": 997,
+    "sha256": "345af7fd9b6d5b49748346c6f05ee986ce025a23e0f16172c6587cbc21a8ba5e"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/guards.json",
+    "bytes": 556,
+    "sha256": "621aa47c0f9788e1988a0df5168e3d1a4b5b988c6db415fbf039cdaaf521a1ab"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/history.json",
+    "bytes": 358,
+    "sha256": "54caa7881fe2ffd5da65018372792e2b01f4e83d0145e4c91cd940c6c88bb7a5"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/legacy_comparison.json",
+    "bytes": 5689,
+    "sha256": "af6f2eefee7a357cb3e595c7d7faeb1e407f17faae75b80357c85d981f2f1acc"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/legacy_independent.json",
+    "bytes": 1367,
+    "sha256": "1652365c21a617bebe97184e75a62d3b443dc939e5c6cfc8532758a21d7c2d0e"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/legacy_records.zip",
+    "bytes": 963512,
+    "sha256": "4370377372490f7f585b9edca4385b58ae7b20b81d7c793be371bf683e814272"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/legacy_separated_independent.json",
+    "bytes": 323,
+    "sha256": "e1fb27e8df6766a7c9fcea19b405f4f0f070d14136f2cba97d0655dbda0476ca"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/mandel.json",
+    "bytes": 3749,
+    "sha256": "4cbccbd8694b709dc533a0fa07f118dd37a0a5fe5a02a9b4793dbf16f698420c"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/mandel23_final.json",
+    "bytes": 62642,
+    "sha256": "e6b1dd72a50810b652a4eafca292ff1827f6d3c49c834ac0f4437e3708c677fc"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/mandel25_final.json",
+    "bytes": 61421,
+    "sha256": "da1d54a457324a7eaaa83d67b0afb5e0de8e261670345fc6a6f75389f258438a"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/mandel30_final.json",
+    "bytes": 110985,
+    "sha256": "b64636b64ac155b200c582635182e2155530c0f0d651c8bcdfe2cc0126318f5e"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/mandel_pressure.png",
+    "bytes": 43288,
+    "sha256": "90d66099a9a58dfbbfa05c1dfc2693a2d97de1cf9e5f930a7fe810065d46d017"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/mandel_refinement_records.zip",
+    "bytes": 19288757,
+    "sha256": "941a1c280070bf44a5ea8d2d5991d467b1c3017185a6d2ddabf1dad35bdd87bc"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/matrix.json",
+    "bytes": 434,
+    "sha256": "de60b4c415c5dd248dcf47fd5ddd3a54556e6325a847c330e4631316bd356e59"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/mixed.json",
+    "bytes": 608,
+    "sha256": "0199b10577fb0cb3c626b66fc54f2f16e8b32ca83bb4297c05d7beb4b4a7b3d4"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/mixed_records.zip",
+    "bytes": 3459740,
+    "sha256": "27e354d4e146ef1b95c7a8ab139e22ab958f48c1e1d958b6ec90d3846a896575"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/monolithic.json",
+    "bytes": 2947,
+    "sha256": "8a96c12e8e5104752f1ae82160b1dfbb0dc2d2419eb0ef16291bb625846239bf"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/package.json",
+    "bytes": 1729,
+    "sha256": "1a3796d1bade5cf30246b7d710d795bcd599f2edb9940d2c491af549f0108e1b"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/package30.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/partial_birth_view.jpg",
+    "bytes": 134298,
+    "sha256": "c4cb3535be511878036620d335cb827d5cf5c72508fd44e04f2b28ad426dae70"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/regression_package.json",
+    "bytes": 1729,
+    "sha256": "31d9a5aca1c45a2f4e189c1de4422f77a0e88874d975441cabd4b373dbcd03a4"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/rollback.json",
+    "bytes": 558,
+    "sha256": "5bd3d34458a5e3e742a74d752f57f1833e987e4bc87be918b6096502b30fa3df"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/srm_branch_view.jpg",
+    "bytes": 145031,
+    "sha256": "6e19e836a7c9fb026784ec034e80970f5a0d7ae77a33bba3b6a203eec2c73d3e"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/srm_parent.json",
+    "bytes": 649,
+    "sha256": "e3b2fdd3e8929a2f7be08663d9f06a7dfc23ee7cd047da77873bb7425f5c332b"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/time_coupling.jpg",
+    "bytes": 163656,
+    "sha256": "617f35c2171de68b6ea669f4f46cda4a97901ce618aa2f84a94d50284aca7057"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/ui.json",
+    "bytes": 384,
+    "sha256": "c77a2907a4b7f41c5c915c244c17d70b81b4df521941e1d11b4f9c64f265ba83"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/validation.json",
+    "bytes": 10097,
+    "sha256": "73bef003501c6c529a35d8f32b5e342da9e9b4fa70801f2e52c7ab862ddcafdd"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/water_history.json",
+    "bytes": 357,
+    "sha256": "225d2461cb62c8301a275df7077d0ef48177b7e9fe6660a2c53a95024d6e1da8"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/water_profiles.json",
+    "bytes": 6447,
+    "sha256": "8d93931a4a74d498a039da660677bbda943eddcf0fb6f76133b710fddc3acf73"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/water_ramp.json",
+    "bytes": 997,
+    "sha256": "345af7fd9b6d5b49748346c6f05ee986ce025a23e0f16172c6587cbc21a8ba5e"
+  },
+  {
+    "path": "docs/fixed-stress-evidence/20261024/water_time_view.jpg",
+    "bytes": 164778,
+    "sha256": "002096cd651e3efc56977561975f7f6cc38a1014ec144361592b6a3998dfd700"
   },
   {
     "path": "docs/groundwater-evidence/20261022/README.md",
@@ -10306,13 +10561,48 @@
   },
   {
     "path": "src/vba/FEMCore.bas",
-    "bytes": 54174,
-    "sha256": "97c6c5234ab48c1d4bf84ed535bd22495037e21eec4146368d233b8e00215369"
+    "bytes": 54181,
+    "sha256": "68144249103261704bf0f99ba934aadad167a43c63ed602fd890fb0607693a32"
   },
   {
     "path": "src/vba/FEMEngine.bas",
-    "bytes": 290985,
-    "sha256": "b7cdd3e2ecb498a4af6343f2a3f56f6f41707a814f0b1391f61625c18a52eabf"
+    "bytes": 302933,
+    "sha256": "bb36fe5a85d8856f514c272d49c70ea0097bad0cce71681250eebab86bddf3b7"
+  },
+  {
+    "path": "src/vba/FEMFixedStress.bas",
+    "bytes": 44759,
+    "sha256": "2bcb5caa8ebcc5231649875f50dd1511da9817eb16b0c70b714893d0f23495ff"
+  },
+  {
+    "path": "src/vba/FEMFixedStressGauge.bas",
+    "bytes": 2772,
+    "sha256": "357946f4db7ff28ced2d500aee5abf836f009151f73dbc2df1eebe1e25796712"
+  },
+  {
+    "path": "src/vba/FEMFixedStressInput.bas",
+    "bytes": 12980,
+    "sha256": "772e98fcfe2c0fe3bd1ac894ab7c3869d59b28e88c65061dd1cacbb92cbd3c30"
+  },
+  {
+    "path": "src/vba/FEMFixedStressLedger.bas",
+    "bytes": 5358,
+    "sha256": "078df8e15c325230ee0fcf791f4f6a5cf5e6472aa1275b42e21c9e4e084744fb"
+  },
+  {
+    "path": "src/vba/FEMFixedStressMatrix.bas",
+    "bytes": 7944,
+    "sha256": "07d41a418b2a21da9340688e5e354bb996e6e37d861700ed957a388c4137215e"
+  },
+  {
+    "path": "src/vba/FEMFixedStressResults.bas",
+    "bytes": 9679,
+    "sha256": "7c61c329881b40aef905f1edb3a34b273890cfaf86d6c1f0d9b045701a349692"
+  },
+  {
+    "path": "src/vba/FEMFixedStressSrm.bas",
+    "bytes": 5258,
+    "sha256": "4b191c52d24b4a6225e073e4011fcd2660511b6fa5fe2b5a66f6dbce63368936"
   },
   {
     "path": "src/vba/FEMIncrementLog.bas",
@@ -10326,8 +10616,8 @@
   },
   {
     "path": "src/vba/FEMIo.bas",
-    "bytes": 178852,
-    "sha256": "66edfb3646c78cd10878325aed2fa01776164413d5f647e23cfdb24edd44f857"
+    "bytes": 181583,
+    "sha256": "5a9eb6e265146a30348678a0fe5aaa6b674a2b7fb633cf0f327a619cd267ed8a"
   },
   {
     "path": "src/vba/FEMJointWater.bas",
@@ -10361,8 +10651,8 @@
   },
   {
     "path": "src/vba/FEMPlasticLog.bas",
-    "bytes": 4416,
-    "sha256": "86494b31ce77e3cba47519436697b3ab30a053f30033d9ccdc4497611056076e"
+    "bytes": 6716,
+    "sha256": "5832e49290cc01345402abc17251d9bebfe727920da896321c92987bf017d002"
   },
   {
     "path": "src/vba/FEMPolicyLog.bas",
@@ -10401,13 +10691,13 @@
   },
   {
     "path": "src/vba/FEMStageEditor.bas",
-    "bytes": 15768,
-    "sha256": "31ad0a3085d19c244cb279a101d5e4a472a84ea0f2b26edf4503ea728d722ae4"
+    "bytes": 16590,
+    "sha256": "8a96fbeeb4f9e9bf1310fcf544251d907a37617894a8a1ea15ca3cf4fb33071c"
   },
   {
     "path": "src/vba/FEMStageUi.bas",
-    "bytes": 40425,
-    "sha256": "17136dbf9ea590aea398879227c34dc0737719841252e4460ac7ca53f871c2ae"
+    "bytes": 46549,
+    "sha256": "909d4d8468685db2d832ee9c7432124cd068475192e93cb6716c276643806abd"
   },
   {
     "path": "src/vba/FEMStepRecovery.bas",
@@ -10456,18 +10746,18 @@
   },
   {
     "path": "src/vba/FEMViewIncrement.bas",
-    "bytes": 14541,
-    "sha256": "521c2b2673621dc9aa16db1e8251582c592ab35291484a76241cc29328767f09"
+    "bytes": 18148,
+    "sha256": "db01f58d2046d209d62eeb6a7284bc4aafd65ae26dba1f825b54b7860041cf45"
   },
   {
     "path": "src/vba/FEMViewer.bas",
-    "bytes": 35536,
-    "sha256": "ebe0210099a7e218081f48c236b039323803c523d20a6000f7f4784e0e63c613"
+    "bytes": 35813,
+    "sha256": "bcf5787b4b68307cdbdac285601d7f5b490a143cc7df23d6d74be0af8278e4b5"
   },
   {
     "path": "src/vba/FEMWater.bas",
-    "bytes": 45839,
-    "sha256": "a068967c3c7bbd077f98237b664c60774351e4a401819112c33b2efab1df745d"
+    "bytes": 53001,
+    "sha256": "449c9f79d51b0d843baaa53c15c3ebcea45d5aabc734aaac0893c9e14315b115"
   },
   {
     "path": "src/vba/FEMWaterGeometry.bas",
@@ -10476,13 +10766,13 @@
   },
   {
     "path": "src/vba/FEMWaterUi.bas",
-    "bytes": 11723,
-    "sha256": "70bd0e1cd0be4131b44c04ed81064af8eee05927105961819e7afc13116c0291"
+    "bytes": 11683,
+    "sha256": "f008aff4d7c27ed012001662fc2bf3924f88c94df6ceb152c82828e536a8fb77"
   },
   {
     "path": "src/vba/FEMWaterView.bas",
-    "bytes": 18807,
-    "sha256": "92c5edcf44d68e9220e6e5130e72d048c2fe9c622351800d875c309814756e7e"
+    "bytes": 19127,
+    "sha256": "3901093d67f465bc2cc863365d080f30cbdd3f9a2e0c26eaef6bc4570cf9d5da"
   },
   {
     "path": "src/vba/Mesh.bas",
@@ -10511,8 +10801,8 @@
   },
   {
     "path": "src/vba/modules.json",
-    "bytes": 3567,
-    "sha256": "4d8f7526805105bdfb646a772736a48130aeadffb0d50c92d4231fdd46ebebf6"
+    "bytes": 4408,
+    "sha256": "3ceec7492a34b915ea66151cf9a1e6c120df4a8947a0fe4a949a23f127ba2a0d"
   },
   {
     "path": "tests/annotate_water_manual.py",
@@ -10553,6 +10843,46 @@
     "path": "tests/check_embedded_sources.py",
     "bytes": 1775,
     "sha256": "0450d14c07ecb94e8a7cc803bdd974dd6f920027a677710ce686e697f334fc93"
+  },
+  {
+    "path": "tests/check_fixed_stress_column.py",
+    "bytes": 2410,
+    "sha256": "919820c2acc3ac567b349c33fb0d6674aeb0c0db731600ed677712acd72d952f"
+  },
+  {
+    "path": "tests/check_fixed_stress_history.py",
+    "bytes": 2657,
+    "sha256": "0c6a61357d86c9a10a0acdb4bf55856a3e3ae969fa6472c4c7aa06eca5f1be5a"
+  },
+  {
+    "path": "tests/check_fixed_stress_linear.py",
+    "bytes": 5850,
+    "sha256": "009f198a629165f53a8c236684d80a8dffb87dd27bff12242425d7ca8a170c01"
+  },
+  {
+    "path": "tests/check_fixed_stress_mandel.py",
+    "bytes": 9544,
+    "sha256": "7d27df9a6d6f5e32cbd954824c3068b3d05f432107277b15424b6099f97dffae"
+  },
+  {
+    "path": "tests/check_fixed_stress_matrix.py",
+    "bytes": 2013,
+    "sha256": "c254e642897a0ed969e58161593ad5617a01b27dfabab46727b85e6f52e7b3d6"
+  },
+  {
+    "path": "tests/check_fixed_stress_monolithic.py",
+    "bytes": 4503,
+    "sha256": "b26b5663fc9dbcc1a0ab5dd50a6f2e46bcd67e055123ef7b75a737ed31e10634"
+  },
+  {
+    "path": "tests/check_fixed_stress_rollback.py",
+    "bytes": 3498,
+    "sha256": "8fc3d96c8e9a0d016dfb98b5c01070eb4afd74a8084fb298b328902af3507c67"
+  },
+  {
+    "path": "tests/check_fixed_stress_water_ramp.py",
+    "bytes": 2081,
+    "sha256": "4d2ed69f5d95252094349513955f78eee4b0f0b16796e8dcfc388ece7fa570d7"
   },
   {
     "path": "tests/check_groundwater.py",
@@ -10655,6 +10985,21 @@
     "sha256": "4b9d7498826f678b0440086bf4a10b3b31701158d45731dccc704fad85243efd"
   },
   {
+    "path": "tests/compare_fixed_stress_mandel.py",
+    "bytes": 12757,
+    "sha256": "dd11d6bccbbfa6a50e575f46c48c3f34b61e89dc24dd2c7f8965f605e83a21d8"
+  },
+  {
+    "path": "tests/compare_fixed_stress_release.py",
+    "bytes": 2481,
+    "sha256": "4c3343b9a2b96568a9cf173d5ff05c9dd137e402525e4fea0ac4dcb33457011d"
+  },
+  {
+    "path": "tests/compare_fixed_stress_srm.py",
+    "bytes": 2725,
+    "sha256": "6049f0bd83b198790f46204f419ed48d0ded12059a54aaa097a1e08ba651b576"
+  },
+  {
     "path": "tests/compare_groundwater_regression.py",
     "bytes": 3053,
     "sha256": "58f02cbbd8ccc4dc896aa893ffcf5ca5eb146cef1bd2857f9483b1896c3b17d2"
@@ -10685,9 +11030,139 @@
     "sha256": "e97cdb929ff63416ef54c593cc76388d8554a72d3fb57063eaa8a5e30052e80f"
   },
   {
+    "path": "tests/finalize_fixed_stress_evidence.py",
+    "bytes": 4724,
+    "sha256": "9cc45f191a2b4d9380d7566a0800b946b4913544be3f35fc4134e8875b5d4522"
+  },
+  {
+    "path": "tests/fixed_stress_matrix_driver.bas",
+    "bytes": 2546,
+    "sha256": "864b624a3869392078b49bf6a056ce0c31a1877ed2522cf6a10d7039938b150e"
+  },
+  {
     "path": "tests/fixtures/complex_terrain.json",
     "bytes": 37570,
     "sha256": "3e24a5570afcb35cbddbc23dad4f8c249a68ebf4993f00d153ace3e50cd092c5"
+  },
+  {
+    "path": "tests/fixtures/fixed_stress/README.md",
+    "bytes": 3354,
+    "sha256": "d7a47239d42d0a6c6b1f350ad12683a506a779824144ff64821f019c32c5505c"
+  },
+  {
+    "path": "tests/fixtures/fixed_stress/closed.json",
+    "bytes": 7545,
+    "sha256": "da4bcca43d58d8cbd2afe7536f7afffdc0c08036d899c4c9c78eddd08539c787"
+  },
+  {
+    "path": "tests/fixtures/fixed_stress/column_biot_anisotropic.json",
+    "bytes": 7664,
+    "sha256": "0ef30396ef24245c2fbdbe9d66a699a4e196718a687cba587a34a97e76cb4047"
+  },
+  {
+    "path": "tests/fixtures/fixed_stress/column_nonlinear_srm.json",
+    "bytes": 8120,
+    "sha256": "66016960efba149b9272b279569a79e0d5230efcdb736b309363659e889a8f4e"
+  },
+  {
+    "path": "tests/fixtures/fixed_stress/column_refined.json",
+    "bytes": 24070,
+    "sha256": "d8f49bf148f83a83c9e885ff8295fd77ff5ea0b3d46b26e91c4bf3035efb77f3"
+  },
+  {
+    "path": "tests/fixtures/fixed_stress/column_smoke.json",
+    "bytes": 7650,
+    "sha256": "55caf696e5e7755943cd1a5732fc4e072c5d7253784e6f54088af98ad8a9a4f6"
+  },
+  {
+    "path": "tests/fixtures/fixed_stress/fill_30day.json",
+    "bytes": 8890,
+    "sha256": "9ae4e3119edc6d3af87ec301fcb7eb903348df1d340829f3ca4b7e69b15809fa"
+  },
+  {
+    "path": "tests/fixtures/fixed_stress/joint_transient.json",
+    "bytes": 4742,
+    "sha256": "6994fae19041e4adde777039c2df3a4db720757802c5ce88c4b000446fe947fe"
+  },
+  {
+    "path": "tests/fixtures/fixed_stress/mandel_acceptance_policy.json",
+    "bytes": 247,
+    "sha256": "07471151bd11c5c3b5393c092e9b11939946d70dacc8958e190de07b00398801"
+  },
+  {
+    "path": "tests/fixtures/fixed_stress/mandel_coarse.json",
+    "bytes": 115745,
+    "sha256": "a6d118d9b440920578d909ef345a4145bdd21984b1155716f71e53216f8b302b"
+  },
+  {
+    "path": "tests/fixtures/fixed_stress/mandel_fine.json",
+    "bytes": 134525,
+    "sha256": "8c4eca5a1192ebf3eae90f3979d50b3e95cdaa9798759afafd91fa96da0b2817"
+  },
+  {
+    "path": "tests/fixtures/fixed_stress/mandel_hybrid_refine.json",
+    "bytes": 188899,
+    "sha256": "06b620fc0ab3c0b0c6253134d14003fb335030e6623557702745a0423a36ae0f"
+  },
+  {
+    "path": "tests/fixtures/fixed_stress/mixed_q8_t6.json",
+    "bytes": 7239,
+    "sha256": "b53f12a7e853a68988ea49e78174ff256c7049ece46b8b20b81c8160373e9e29"
+  },
+  {
+    "path": "tests/fixtures/fixed_stress/named_unload.json",
+    "bytes": 8972,
+    "sha256": "a1f352803151d7ad261f7fe8a04af66feb979631491da2be5cd5e0243df12e85"
+  },
+  {
+    "path": "tests/fixtures/fixed_stress/nonlinear_control.json",
+    "bytes": 7935,
+    "sha256": "dbc97dcff90b84a9aafeae30a0552105f73c5d02fa998c584b9122a4ff512bb1"
+  },
+  {
+    "path": "tests/fixtures/fixed_stress/pressure_gauge.json",
+    "bytes": 7610,
+    "sha256": "69fe52a9de7ecb8823b2a929bd2f3f9116eef86cfb8d695dc0632cde98b4fa7a"
+  },
+  {
+    "path": "tests/fixtures/fixed_stress/rollback_instant.json",
+    "bytes": 7717,
+    "sha256": "bbe74f1074698f2d127fe7ae236a1df347857547b43a0ed124755386112324e8"
+  },
+  {
+    "path": "tests/fixtures/fixed_stress/saturated_slope_srm.json",
+    "bytes": 14225,
+    "sha256": "0992772d115569d5a834d0a7260ff82b3258c90c7d9bc1ece3bee32f8bde8c79"
+  },
+  {
+    "path": "tests/fixtures/fixed_stress/saturation_rejection.json",
+    "bytes": 8147,
+    "sha256": "2c8890a5fa5744cc1a014f340f9cd8033ce76c3e49bb2b27c8f80cd73c48a697"
+  },
+  {
+    "path": "tests/fixtures/fixed_stress/srm_time_rejection.json",
+    "bytes": 7747,
+    "sha256": "792ab262463d8838ea07c079ea8f9e7a96b305c0bbef667ddd9e1bba278f73cc"
+  },
+  {
+    "path": "tests/fixtures/fixed_stress/t6.json",
+    "bytes": 9717,
+    "sha256": "843c00f895d735ff625a68b063dbe4b8400c1b354868379f8ac3fb071f3e5f3b"
+  },
+  {
+    "path": "tests/fixtures/fixed_stress/water_external_linear.json",
+    "bytes": 7538,
+    "sha256": "789951b89ba9abdd1eb2f83ea6c5f70265187bddb75bedcc50cc8cf20e8c0f91"
+  },
+  {
+    "path": "tests/fixtures/fixed_stress/watercurve.json",
+    "bytes": 8863,
+    "sha256": "0a572d16dafd32f433e8fb9d2d082d1e0d2cb8305b4685cbf879192534b266f6"
+  },
+  {
+    "path": "tests/fixtures/fixed_stress/wet_birth_ramp.json",
+    "bytes": 8734,
+    "sha256": "f6ad69924dfe379ae355fad78e1dffebbb735acb76ea2a8a8013e1fc16ae637f"
   },
   {
     "path": "tests/fixtures/groundwater_all_birth.json",
@@ -10988,6 +11463,11 @@
     "path": "tests/fixtures/water_stage_one_way.json",
     "bytes": 4302,
     "sha256": "0d35b3229a0a00c8860a5472a4417ac809ee205abff6621b23c1adaf7dd71374"
+  },
+  {
+    "path": "tests/generate_fixed_stress_mandel.py",
+    "bytes": 5310,
+    "sha256": "a6b84ecb675bf3ce95f6b7620d53597639c0cea411e34b8a3ba53fbc4e616253"
   },
   {
     "path": "tests/inconsistent/README.md",
@@ -11476,8 +11956,8 @@
   },
   {
     "path": "tests/native/make_native_workbook.ps1",
-    "bytes": 5207,
-    "sha256": "69399e7fc8910c09b4e675714b48a112c73f0ae6e4d45cf199a2d4981d0442ea"
+    "bytes": 5404,
+    "sha256": "0a3d39866515f9f29b3e93ca2d8d96a4f2d75a34a689e6b7a02997b1ed9f7689"
   },
   {
     "path": "tests/native/measure_event_buffer.ps1",
@@ -11655,6 +12135,16 @@
     "sha256": "69bddafdd497efe456ac4ebecedc9855fbe9621254c57a6cb4b27b8d083accd9"
   },
   {
+    "path": "tests/package_fixed_stress.ps1",
+    "bytes": 3532,
+    "sha256": "4ece6e28926054b8d9a914b8e7cb409f07bd7596196ae29198e4143215a605d6"
+  },
+  {
+    "path": "tests/package_fixed_stress_evidence.py",
+    "bytes": 6740,
+    "sha256": "618837b0cb2ccdc9a93fe27331f7ed4bae185625f204e36c352e3e09152f1902"
+  },
+  {
     "path": "tests/package_groundwater.ps1",
     "bytes": 3854,
     "sha256": "f27c02669d027df083188de97d47cb067cb58b20cfacaccb19385f04d4c508bd"
@@ -11713,6 +12203,11 @@
     "path": "tests/render_manual_review.ps1",
     "bytes": 3830,
     "sha256": "3592ff72f6c6dd846e1031124d6e77197fe04ca28156a3fb99de74bafafccc68"
+  },
+  {
+    "path": "tests/requirements-fixed-stress.txt",
+    "bytes": 64,
+    "sha256": "f27af326d6cbf5c1b485d04d7a380ad33bc3bb7650981306096d97329f7d9f66"
   },
   {
     "path": "tests/results/native_figure/display_regression.json",
@@ -11790,14 +12285,44 @@
     "sha256": "ace6175aa4f9c4dd030631b2fc66bd6c51ba6d12da5f74b82c4049198f9b00e1"
   },
   {
+    "path": "tests/run_fixed_stress_guards.ps1",
+    "bytes": 4411,
+    "sha256": "ac44fdfc42a032ae7672e317acd13b3617d09ade4ab07977c3bf81e66360211f"
+  },
+  {
+    "path": "tests/run_fixed_stress_history.ps1",
+    "bytes": 7860,
+    "sha256": "b8d154c2406748727320fcec60fa88e02b7f33d2f882efa743e03eafa1f81270"
+  },
+  {
+    "path": "tests/run_fixed_stress_matrix.ps1",
+    "bytes": 1338,
+    "sha256": "11aed98204a982e49e58c1e0b2b234eb8c90e231cf7066bd9ab1bf9dc23b9496"
+  },
+  {
+    "path": "tests/run_fixed_stress_regression.ps1",
+    "bytes": 1997,
+    "sha256": "e5a3fbb878575bde125881fe111408eff37d8c096058de8496a82cb3edea3e2d"
+  },
+  {
+    "path": "tests/run_fixed_stress_ui.ps1",
+    "bytes": 4789,
+    "sha256": "0acf88a3a128f8fae582f1c553a2bb42520473df016f3adde5c6684df3d8b94b"
+  },
+  {
+    "path": "tests/run_fixed_stress_water_profiles.ps1",
+    "bytes": 4005,
+    "sha256": "eda31cebf2b61a17b2561286d10ded11884413640b2f4f102e5d28da60e6d3a6"
+  },
+  {
     "path": "tests/run_groundwater.ps1",
     "bytes": 7096,
     "sha256": "e79585a7dcb4be7543b329558fe4d55c7044b1f8d70a522b452dd5ba8c054371"
   },
   {
     "path": "tests/run_groundwater_fixture.ps1",
-    "bytes": 12532,
-    "sha256": "e6196e5fb568524ca2e25edc7ba1aed3cb473486d8cc96f088c8d8c7eebf9a3c"
+    "bytes": 14806,
+    "sha256": "d68d0bee46107a028f2db7c3ae2d737d7564a0f31bd58b95b05dcf335dfe33e0"
   },
   {
     "path": "tests/run_groundwater_regression.ps1",
@@ -11863,6 +12388,11 @@
     "path": "tests/test_best03_unit.ps1",
     "bytes": 2045,
     "sha256": "e7ab3de1743a16fa3110e035ca9bcf472121c02f0c7e70f81b67d23b1a1d9eaf"
+  },
+  {
+    "path": "tests/test_fixed_stress_reference.py",
+    "bytes": 5283,
+    "sha256": "3e0855b3f906bb298e457f9bcb004dc19b704f878e7bc7778b75c5c45bcc14ed"
   },
   {
     "path": "tests/test_increment_display.ps1",
@@ -12061,8 +12591,8 @@
   },
   {
     "path": "workbook/SoilFEM_UI_20261024.zip",
-    "bytes": 3839962,
-    "sha256": "a5ac075a4824f28e6980bb92f145393d5f6de17f0678574b5c4504ce3b26f449"
+    "bytes": 4022311,
+    "sha256": "6ae63747f696f375a783f4f25a2e7f91448c0316236ad2d8e0e5b193e66a73a5"
   },
   {
     "path": "workbook/inco_assembly_20261020/2DSoilFEM_inco_assembly_20261020.xlsm",
@@ -12336,18 +12866,18 @@
   },
   {
     "path": "workbook/ui_20261024/2DSoilFEM_ui_20261024.xlsm",
-    "bytes": 4354169,
-    "sha256": "34c9e4b8ed7ad1a7149139fd70be557ea58efea85b7391aae934a4663c21ac2d"
+    "bytes": 4526814,
+    "sha256": "bfb0231915c900d324d322eb63f67f592530253ea98ac4b936bd43bf3b8a65ed"
   },
   {
     "path": "workbook/ui_20261024/BUILD_RECORD.json",
-    "bytes": 1550,
-    "sha256": "855d7fcef8314612cb2a2e41aa67269060a758c37d27de71775e2145933250db"
+    "bytes": 2247,
+    "sha256": "26479735fdae2c2f36006f958e8c1f066ac30b27a517cc3dfe0a978e41332b93"
   },
   {
     "path": "workbook/ui_20261024/README.md",
-    "bytes": 2261,
-    "sha256": "4b69c6298fbb5a3d96c322116d9fae56ac21ea885f137d08ece1b619a11606be"
+    "bytes": 2938,
+    "sha256": "128a6b5c6830b7554f3d92aa68bf74999c7f832542eda52f523d7bfc6aca4bd5"
   },
   {
     "path": "workbook/ui_20261024/soilfem_native_x64.dll",

@@ -14,8 +14,13 @@ https://github.com/tak063495-prog/excel-vba-soil-fem/blob/main/docs/STAGE_UI_202
 操作・理論・解析例：1024版PDF説明書。
 https://github.com/tak063495-prog/excel-vba-soil-fem/blob/main/docs/manuals/2DSoilFEM_Manual_20261024.pdf
 
-コンパイル・保存再読込のソース一致、入力操作、数値回帰と実画面を確認しています。検証環境は64bit Excel 16.0 build 20430です。時間圧密・fixed-stress、未知の自由水面・不飽和解析は対象外です。Double、材料則、収束条件、SRM探索条件は従来どおりです。
+コンパイル・保存再読込のソース一致、入力操作、数値回帰と実画面を確認しています。検証環境は64bit Excel 16.0 build 20430です。工程別の飽和fixed-stress時間連成に対応します。未知の自由水面・不飽和解析は対象外です。Double、材料則、収束条件、SRM探索条件は従来どおりです。
 
 Q8/T6混在対応（計算識別 20261024_MIXED_01）：
 「モデル」→「メッシュ生成・支持条件」→「不適合Q8をT6へ置換」で0=OFF／1=ONを指定します。初期値0です。品質修正後も目標未達のQ8だけをT6へ置換します。T6の輪郭は解析前メッシュで緑色、要素形式は詳細表K列です。辺の水理指定はT6の1・2・4を使います。再メッシュ後は支持・荷重・接合・水理境界を確認してください。
 https://github.com/tak063495-prog/excel-vba-soil-fem/blob/feat/mixed-t6/docs/MESH_MIXED_T6.md
+
+時間圧密・水位変動（計算識別 20261024_FIXED_STRESS_05）：
+施工工程の「時間・連成設定」「時間の詳細設定」、材料・接合の「圧密材料特性」を設定します。結果は「時間履歴」「水量収支」「時刻別の図」で確認します。途中SRMは親の水圧を保持し、照査後は施工本線へ戻ります。入力手順・制限と検証記録：
+https://github.com/tak063495-prog/excel-vba-soil-fem/blob/feat/fixed-stress-stages/docs/FIXED_STRESS_STAGES.md
+https://github.com/tak063495-prog/excel-vba-soil-fem/blob/feat/fixed-stress-stages/docs/FIXED_STRESS_VALIDATION.md

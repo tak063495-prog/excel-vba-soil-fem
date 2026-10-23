@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "frames": [
+    {
+      "frame": "C000002",
+      "time_s": 20.0,
+      "fraction": 0.25,
+      "load_y_kN": -62.072500000007,
+      "expected_y_kN": -62.072500000000005,
+      "error_kN": 6.991740519879386e-12
+    },
+    {
+      "frame": "C000003",
+      "time_s": 30.0,
+      "fraction": 0.5,
+      "load_y_kN": -64.525000000007,
+      "expected_y_kN": -64.525,
+      "error_kN": 6.991740519879386e-12
+    },
+    {
+      "frame": "C000004",
+      "time_s": 40.0,
+      "fraction": 0.75,
+      "load_y_kN": -66.977500000007,
+      "expected_y_kN": -66.9775,
+      "error_kN": 6.991740519879386e-12
+    },
+    {
+      "frame": "C000005",
+      "time_s": 50.0,
+      "fraction": 1.0,
+      "load_y_kN": -69.430000000007,
+      "expected_y_kN": -69.43,
+      "error_kN": 6.991740519879386e-12
+    }
+  ],
+  "final_reaction_error_kN": 2.842170943040401e-14,
+  "basis": "soil volume 2m3 * 20kN/m3 + top water pressure 9.81*(level-2m)*1m2"
+}

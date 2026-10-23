@@ -46,6 +46,15 @@ Public Sub PlasticLogCaptureSuccess()
   mSnapTotal = mTotal: mSnapMultiplier = mMultiplier
   mSnapSteps = mSteps: mSnapComplete = mComplete: mSnapReady = True
 End Sub
+
+Public Function PlasticLogCaptureBranch() As Variant
+  If Not mReady Then PlasticLogResetState
+  PlasticLogCaptureBranch = Array(mTotal, mMultiplier, mSteps, mComplete)
+End Function
+
+Public Sub PlasticLogRestoreBranch(ByVal saved As Variant)
+  mTotal = saved(0): mMultiplier = saved(1): mSteps = saved(2): mComplete = saved(3): mReady = True
+End Sub
 Public Sub PlasticLogRestoreSuccess()
   If Not mSnapReady Then Exit Sub
   mTotal = mSnapTotal: mMultiplier = mSnapMultiplier
@@ -98,4 +107,46 @@ Failed:
   On Error Resume Next
   If fileNo > 0 Then Close #fileNo
   Err.Clear
+End Function
+
+Public Function PlasticLogRead(ByVal folder As String) As Boolean
+  Dim f As Integer, line As String, fields() As String, e As Long, g As Long, j As Long
+  Dim steps As Long, complete As Boolean, totals() As Double, multipliers() As Double
+  On Error GoTo Failed
+  f = FreeFile
+  Open folder & Application.PathSeparator & "plastic_cumulative.csv" For Input As #f
+  Line Input #f, line
+  If line <> "elem,gp,ex_pl_cumulative,ey_pl_cumulative,gxy_pl_cumulative,ez_pl_cumulative,mult_cumulative,coverage,successful_increments" Then GoTo Failed
+  ReDim totals(0 To 3, 0 To 3, 0 To NumberOfElement - 1)
+  ReDim multipliers(0 To 3, 0 To NumberOfElement - 1)
+  For e = 0 To NumberOfElement - 1
+    For g = 0 To 3
+      If EOF(f) Then GoTo Failed
+      Line Input #f, line: fields = Split(line, ",")
+      If UBound(fields) <> 8 Then GoTo Failed
+      If fields(0) <> CStr(e + 1) Or fields(1) <> CStr(g) Then GoTo Failed
+      For j = 2 To 6
+        If Not IsNumeric(fields(j)) Then GoTo Failed
+        If Not P2IsFinite(Val(fields(j))) Then GoTo Failed
+      Next j
+      If fields(7) <> "FROM_ZERO_STATE" And fields(7) <> "PARTIAL_FROM_RESUME" Then GoTo Failed
+      If Not IsNumeric(fields(8)) Then GoTo Failed
+      If Val(fields(8)) < 0# Or Val(fields(8)) <> Fix(Val(fields(8))) Then GoTo Failed
+      If e = 0 And g = 0 Then
+        steps = CLng(Val(fields(8))): complete = (fields(7) = "FROM_ZERO_STATE")
+      ElseIf steps <> CLng(Val(fields(8))) Or complete <> (fields(7) = "FROM_ZERO_STATE") Then
+        GoTo Failed
+      End If
+      For j = 0 To 3: totals(j, g, e) = Val(fields(j + 2)): Next j
+      multipliers(g, e) = Val(fields(6))
+    Next g
+  Next e
+  If Not EOF(f) Then GoTo Failed
+  Close #f
+  mTotal = totals: mMultiplier = multipliers: mSteps = steps: mComplete = complete: mReady = True
+  PlasticLogRead = True
+  Exit Function
+Failed:
+  On Error Resume Next
+  Close #f
 End Function

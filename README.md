@@ -10,6 +10,8 @@
 
 「モデル」→「メッシュ生成・支持条件」に **不適合Q8をT6へ置換**（0=OFF／1=ON、初期値0）を追加しました。品質修正後も目標未達のQ8だけを2個のT6へ分割し、正常なQ8と混在して計算します。[入力・対応範囲](docs/MESH_MIXED_T6.md)／[コンパイル・独立検算・実計算・画面確認](docs/MESH_MIXED_T6_VALIDATION.md)。DLLは同じ1個です。
 
+工程ごとの**飽和fixed-stress時間連成**に対応しました。盛土・載荷→途中SRM→圧密→SRM→水位変動→次施工を同じ工程表で設定し、工程・時刻から結果を確認できます。[材料・排水・時間・載荷の入力と結果](docs/FIXED_STRESS_STAGES.md)／[受入検証と再現記録](docs/FIXED_STRESS_VALIDATION.md)。片方向の既存解析とDLL1個を保持します。
+
 ## 1023版（従来画面・説明書対応）
 
 [1023版 操作説明書（PDF）](docs/manuals/2DSoilFEM_Manual_20261023_WATER_02.pdf)／[原稿](docs/manuals/2DSoilFEM_Manual.md)
@@ -19,7 +21,7 @@
 
 UI_06の塑性状態・累積塑性せん断ひずみの色図と「結果塑性」シートも継承しています。Excel 2016での画像エラーに対応するため、メッシュ・結果図はExcel標準図形で描画します。[修正・検証記録](docs/reviews/figure_excel2016_fix_20261021.md)。
 
-水理表示・入力を更新しました（表示更新識別 `20261022_WATER_VIEW_03`）。入力水位は橙破線、計算全水頭は紫等値線、Darcy流束は緑矢印で区別します。「水条件」右側に工程IDで対応する水位線と連携方式を追加し、将来のfixed-stress時間圧密用欄を分けました。現在はONE_WAYのみで、未実装の連成や予約欄への入力は停止します。[入力仕様](docs/WATER_STAGE_INPUT_PLAN.md)／[数値・画面・回帰結果とログ](docs/WATER_DISPLAY_VALIDATION.md)。説明書は第8章に水理の共通入力・出力を置き、赤枠付き操作画面と、既存例1～13に続く水理の解析例14～18を追加しています。[折れ線水位の計算済みブック・入力・ログ](docs/manuals/examples/water_polyline_example.zip)／[説明書の整合確認と検算](docs/reviews/manual_consistency_20261023.md)。
+水理表示・入力を更新しました（表示更新識別 `20261022_WATER_VIEW_03`）。入力水位は橙破線、計算全水頭は紫等値線、Darcy流束は緑矢印で区別します。「水条件」右側に工程IDで対応する水位線と連携方式を追加し、将来のfixed-stress時間圧密用欄を分けました。この1023版はONE_WAYのみで、未実装の連成や予約欄への入力は停止します。[入力仕様](docs/WATER_STAGE_INPUT_PLAN.md)／[数値・画面・回帰結果とログ](docs/WATER_DISPLAY_VALIDATION.md)。説明書は第8章に水理の共通入力・出力を置き、赤枠付き操作画面と、既存例1～13に続く水理の解析例14～18を追加しています。[折れ線水位の計算済みブック・入力・ログ](docs/manuals/examples/water_polyline_example.zip)／[説明書の整合確認と検算](docs/reviews/manual_consistency_20261023.md)。
 画面版 `20261021_UI_05` は結果を内容名から選択でき、最大せん断ひずみ増分・塑性主ひずみ増分クロスを独立チェックで追加できます。A（等値線追加）を初期値とし、B（増分カラー）に切替可能です。増分図は新しい版で最初から再解析してください。
 UI_05では節点番号の入力規則、DISP=0の凡例、ゼロ局所変位時の塑性増分表示とクロスの赤青・矢印を修正しました。数式を含む設定の危険な再配置は変更前に停止します。[レビュー対応・検証範囲](docs/reviews/2DSoilFEM_manual_response_20261021.md)。
 [増分図の操作・定義・実計算の図・検証](docs/STRAIN_INCREMENT_DISPLAY.md)。UI_04時点の検証ではExcel全体コンパイル、保存・再表示とSRMのFs・全変位・残差・全診断CSVの完全一致を確認しました。
@@ -199,7 +201,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tests/run.ps1
 
 `src/vba` にブックから取り出したソースと `modules.json` を収録しています。日本語を保持するためUTF-8で保存しています。`.bas` / `.cls` はCodeModuleの本文で、VBEのエクスポート形式のAttribute行やUserForm等を含みません。VBEの「ファイルのインポート」でブック全体を再構成する形式ではありません。実行用には同梱のXLSMを使用してください。
 
-計算結果の採用には、メッシュ・境界条件・材料の妥当性と、変位・応力・塑性状態の確認が必要です。数値上の収束と力学的な限界状態は別の診断です。物理圧密は未対応です。CSR補助混合UPやすべての施工履歴の組合せを今回の確認だけで検証したものではありません。
+計算結果の採用には、メッシュ・境界条件・材料の妥当性と、変位・応力・塑性状態の確認が必要です。数値上の収束と力学的な限界状態は別の診断です。飽和圧密は工程別FIXED_STRESSで扱います。自由水面・不飽和・大変形等は[適用範囲](docs/FIXED_STRESS_STAGES.md#対応範囲)を参照してください。旧CSR補助混合UPを有効にする設定とは独立しています。
 
 ## ライセンス
 
