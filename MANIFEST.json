@@ -14398,5 +14398,10 @@
     "path": "workbook/validation/literature_cases_20261009.zip",
     "bytes": 31895391,
     "sha256": "2401dfe3b61f215eb7981bd073125e9eeb87359e3f4b37732e40a20a20523b47"
+  },
+  {
+    "path": "docs/NODE_INPUT_ID_DESIGN.md",
+    "bytes": 17783,
+    "sha256": "ea333ef72bc83ee23bd6ff98ffa4ceda898ad464120f3b9e40188e146f3131c6"
   }
 ]
