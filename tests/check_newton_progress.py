@@ -45,13 +45,17 @@ Public Function RunTests() As String
   Next i
  Next base
  total=extensions:Check total>400,"Continuation was not exercised"
- For i=0 To 3
+ NewtonProgressReset 1000:v=1#
+ For i=0 To 5000
+  NewtonProgressRecord i,v:Check NewtonProgressLimit(1000,i)>i,"Tiny reduction was treated as stagnation"
+  v=v*(1#-0.00000000001)
+ Next i
+ For i=0 To 2
   NewtonProgressReset 2:NewtonProgressRecord 0,1#:NewtonProgressRecord 1,0.9
   Select Case i
    Case 0: v=0.9
    Case 1: v=0.95
-   Case 2: v=0.9*(1#-0.00000000001)
-   Case 3: v=-1#
+   Case 2: v=-1#
   End Select
   NewtonProgressRecord 2,v:Check NewtonProgressLimit(2,2)=2,"Invalid/no progress extended"
  Next i
@@ -65,7 +69,7 @@ Public Function RunTests() As String
  enabled=0:NewtonProgressReset 2:NewtonProgressRecord 0,1#:NewtonProgressRecord 2,0.8
  Check NewtonProgressLimit(2,2)=2,"Disabled setting ignored"
  Check Not NewtonProgressReduction(0.8,1#),"Disabled stagnation bypass"
- RunTests="PASS|extensions=" & CStr(total) & "|decreasing_iterations=10002|plateau,growth,roundoff,invalid,reset,duplicate,disabled"
+ RunTests="PASS|extensions=" & CStr(total) & "|decreasing_iterations=15003|tiny_relative_decrease=1e-11|plateau,growth,invalid,reset,duplicate,disabled"
 End Function
 ''')
     result = app.Run("'" + wb.Name + "'!RunTests")

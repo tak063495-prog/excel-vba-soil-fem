@@ -2,7 +2,6 @@
 Private mSampleValid As Boolean, mReady As Boolean, mEnabled As Boolean, mWindow As Long, mLimit As Long, mBase As Long
 Private mLast As Long, mPrevious As Double, mResidual As Double, mStoppedAt As Long
 Private mAt() As Long, mValue() As Double
-Private Const PROGRESS_RELATIVE_NOISE As Double = 0.0000000001
 
 ' Reset for every increment/retry and each coupled mechanical solve. Trial
 ' line-search/watchdog states must never enter this accepted-iterate history.
@@ -21,7 +20,9 @@ Public Function NewtonProgressReduction(ByVal current As Double, ByVal previous 
     If Not mReady Or Not mEnabled Then Exit Function
     If Not P2IsFinite(current) Or Not P2IsFinite(previous) Then Exit Function
     If previous <= 0# Or current < 0# Then Exit Function
-    NewtonProgressReduction = current < previous * (1# - PROGRESS_RELATIVE_NOISE)
+    ' Even a very slow representable reduction counts. Do not impose a
+    ' percentage-rate cutoff while the accepted residual is still falling.
+    NewtonProgressReduction = current < previous
 End Function
 
 Public Sub NewtonProgressRecord(ByVal iteration As Long, ByVal residual As Double)
