@@ -4140,6 +4140,7 @@ Private Function P6RebuildBandFromElements() As Boolean
   Dim i As Long, j As Long, k As Long, ii As Long, jj As Long
   P6RebuildBandFromElements = False
   If lastDof < 0 Or BandWidth < 0 Then Exit Function
+  BandWidth = FaceSupportBandWidth(BandWidth)
   ReDim OriginalMat(lastDof, BandWidth)
   For k = 0 To NumberOfElement - 1
     If Not P3IsElementActive(k) Then GoTo NextRebuildElement
@@ -4156,6 +4157,7 @@ NextRebuildI:
     Next i
 NextRebuildElement:
   Next k
+  FaceSupportAddBand
   P6RebuildBandFromElements = True
 End Function
 

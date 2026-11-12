@@ -43,6 +43,20 @@ Public Function FaceMatrixProbe() As Variant
  FaceMatrixProbe=Array(Sqr(err2/ref2),P6UseCSR,BandWidth)
 End Function
 ''')
+ cm=wb.VBProject.VBComponents('FEMSolver').CodeModule;cm.AddFromString('''
+Public Function FaceFallbackMatrixProbe() As Double
+ Dim before() As Double,i As Long,j As Long,matrixError As Double
+ If P6UseCSR Then Exit Function
+ before=OriginalMat
+ If Not P6RebuildBandFromElements() Then Err.Raise 1004,,"Band fallback rebuild failed"
+ For i=0 To lastDof
+  For j=0 To BandWidth
+   If Abs(before(i,j)-OriginalMat(i,j))>matrixError Then matrixError=Abs(before(i,j)-OriginalMat(i,j))
+  Next j
+ Next i
+ FaceFallbackMatrixProbe=matrixError
+End Function
+''')
  cm=wb.VBProject.VBComponents('FEMFaceSupport').CodeModule;cm.AddFromString('''
 Public Function FaceInvariantProbe() As Variant
  Dim saved() As Double,f() As Double,i As Long,j As Long,rigidMax As Double,openMax As Double,netX As Double,moment As Double,slaveForce As Double
@@ -77,9 +91,10 @@ Public Function FaceAuditRun() As Variant
 End Function
 ''')
  r=list(app.Run(prefix+'FaceAuditRun'));assert r[0]=='PASS' and abs(r[2]-36)<1e-8 and abs(r[3]-1)<1e-8 and abs(r[4]-36)<1e-8 and r[5]<=1e-5,r
- matrix=list(app.Run(prefix+'FaceMatrixProbe'));invariants=list(app.Run(prefix+'FaceInvariantProbe'))
+ matrix=list(app.Run(prefix+'FaceMatrixProbe'));fallback=float(app.Run(prefix+'FaceFallbackMatrixProbe'));invariants=list(app.Run(prefix+'FaceInvariantProbe'))
+ assert fallback<1e-8,fallback
  assert matrix[0]<1e-6 and max(abs(x) for x in invariants[:4])<1e-8 and invariants[4]<0,(matrix,invariants)
- record={'status':'PASS','analysis':r,'directional_jacobian_error':matrix[0],'csr':matrix[1],'bandwidth':matrix[2],'rigid_motion_force':invariants[0],'opening_force':invariants[1],'net_support_force':invariants[2],'net_support_moment':invariants[3],'compression_internal_force':invariants[4]}
+ record={'status':'PASS','analysis':r,'directional_jacobian_error':matrix[0],'csr':matrix[1],'bandwidth':matrix[2],'rigid_motion_force':invariants[0],'opening_force':invariants[1],'net_support_force':invariants[2],'net_support_moment':invariants[3],'compression_internal_force':invariants[4],'band_fallback_matrix_max_error':fallback}
  (a.out/'results.json').write_text(json.dumps(record,indent=2),encoding='utf-8');print(json.dumps(record),flush=True)
 finally:
  if wb is not None:wb.Close(False)
