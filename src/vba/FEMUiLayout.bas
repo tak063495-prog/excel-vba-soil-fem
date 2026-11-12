@@ -335,8 +335,9 @@ Private Sub FEMUiSetInputViews()
     .columns("A").ColumnWidth = 11
     .columns("B:H").ColumnWidth = 15
     .columns("I:M").ColumnWidth = 13
+    .columns("N").ColumnWidth = 20: .range("N1").WrapText = True
     .columns("O").ColumnWidth = 20: .columns("P").ColumnWidth = 68
-    .range("O1:P7").WrapText = True
+    .range("O1:P8").WrapText = True
   End With
   With ThisWorkbook.Worksheets("載荷")
     .rows("2:200").RowHeight = 29

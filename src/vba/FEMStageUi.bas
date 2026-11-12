@@ -410,7 +410,7 @@ Private Sub Render(ByVal ws As Worksheet)
       End Select
     Case "材料・接合"
       Select Case section
-        Case "材料特性": Table ws, "材料データ", "A2:M2000", 1, "SOIL/STRUCT/STRUCT_ELASTIC/JOINTを材料ごとに指定。BIRTH待ちは初期状態OFF。SRM対象は強度低減=1。物性・重量は解析条件に合わせます。"
+        Case "材料特性": Table ws, "材料データ", "A2:M2000", 1, "SOIL/STRUCT/STRUCT_ELASTIC/JOINTを材料ごとに指定。SRM対象は強度低減=1。任意の飽和全重量γsatは詳細表N列（静的HYDROSTATICのみ、空欄=E列）。"
         Case "接合条件": Table ws, "接合", "A2:G2000", 1, "材料A/Bの共有辺へ接合を生成。水圧方式SOIL/CONTINUOUS/PRESCRIBED。接合を含む場合はメッシュ生成方式の適用範囲を確認。"
         Case "圧密材料特性": Table ws, "水条件", "V12:AB211", 11, "材料番号ごとにBiot係数α、貯留1/M[1/kPa]、kx・ky[m/s]を指定。EFFECTIVEの排水骨格E・νを使用します。物性は空欄のまま計算できません。"
         Case Else: Table ws, "水条件", "F12:J211", 11, "材料番号に対応させ、TOTAL/EFFECTIVE・透水係数K[m/s]・水位線IDを指定。水頭0は非透水節点では未計算値です。"

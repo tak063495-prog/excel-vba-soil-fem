@@ -285,12 +285,13 @@ Private Sub P6LoadInputCache()
   P6InputMaterialCount = lastRow - 1
   If P6InputMaterialCount > 32767 Then Err.Raise vbObjectError + 3013, "FEM.P6LoadInputCache", "材料数が許容範囲を超えています。"
   materialFingerprint = P6FingerprintStep(CDbl(P6InputMaterialCount), 17#)
-  materialValues = wsMaterial.range(wsMaterial.cells(2, 1), wsMaterial.cells(lastRow, 13)).value2
+  materialValues = wsMaterial.range(wsMaterial.cells(2, 1), wsMaterial.cells(lastRow, 14)).value2
   ReDim P6InputMaterialId(1 To P6InputMaterialCount)
   ReDim P6InputMaterialYoung(1 To P6InputMaterialCount)
   ReDim P6InputMaterialPoisson(1 To P6InputMaterialCount)
   ReDim P6InputMaterialThickness(1 To P6InputMaterialCount)
   ReDim P6InputMaterialWeight(1 To P6InputMaterialCount)
+  ReDim P6InputMaterialWeightSat(1 To P6InputMaterialCount)
   ReDim P6InputMaterialFriction(1 To P6InputMaterialCount)
   ReDim P6InputMaterialCohesion(1 To P6InputMaterialCount)
   ReDim P6InputMaterialDilation(1 To P6InputMaterialCount)
@@ -311,6 +312,11 @@ Private Sub P6LoadInputCache()
     P6InputMaterialPoisson(rowIndex) = P6BulkReadNumeric(materialValues, rowIndex, 3, "ポアソン比", False)
     P6InputMaterialThickness(rowIndex) = P6BulkReadNumeric(materialValues, rowIndex, 4, "板厚", False)
     P6InputMaterialWeight(rowIndex) = P6BulkReadNumeric(materialValues, rowIndex, 5, "単位体積重量", False)
+    P6InputMaterialWeightSat(rowIndex) = P6InputMaterialWeight(rowIndex)
+    If Not P6BulkValueIsBlank(materialValues(rowIndex, 14)) Then
+      P6InputMaterialWeightSat(rowIndex) = P6BulkReadNumeric(materialValues, rowIndex, 14, "飽和単位体積重量", False)
+      If P6InputMaterialWeightSat(rowIndex) <= 0# Or P6InputMaterialWeightSat(rowIndex) < P6InputMaterialWeight(rowIndex) Then Err.Raise vbObjectError + 3484, "FEM.P6LoadInputCache", "飽和単位体積重量は正数かつ湿潤値以上です。材料=" & CStr(dataId)
+    End If
     P6InputMaterialFriction(rowIndex) = P6BulkReadNumeric(materialValues, rowIndex, 6, "内部摩擦角", False)
     P6InputMaterialCohesion(rowIndex) = P6BulkReadNumeric(materialValues, rowIndex, 7, "粘着力", False)
     P6InputMaterialDilation(rowIndex) = P6BulkReadNumeric(materialValues, rowIndex, 8, "ダイレタンシー角", False)
@@ -338,6 +344,7 @@ Private Sub P6LoadInputCache()
     materialFingerprint = P6FingerprintStep(materialFingerprint, P6QuantizeScaled(P6InputMaterialPoisson(rowIndex), 1000000000#))
     materialFingerprint = P6FingerprintStep(materialFingerprint, P6QuantizeScaled(P6InputMaterialThickness(rowIndex), 1000000#))
     materialFingerprint = P6FingerprintStep(materialFingerprint, P6QuantizeScaled(P6InputMaterialWeight(rowIndex), 1000000#))
+    If P6InputMaterialWeightSat(rowIndex) <> P6InputMaterialWeight(rowIndex) Then materialFingerprint = P6FingerprintStep(materialFingerprint, P6QuantizeScaled(P6InputMaterialWeightSat(rowIndex), 1000000#))
     materialFingerprint = P6FingerprintStep(materialFingerprint, P6QuantizeScaled(P6InputMaterialFriction(rowIndex), 1000000#))
     materialFingerprint = P6FingerprintStep(materialFingerprint, P6QuantizeScaled(P6InputMaterialCohesion(rowIndex), 1000000#))
     materialFingerprint = P6FingerprintStep(materialFingerprint, P6QuantizeScaled(P6InputMaterialDilation(rowIndex), 1000000#))
@@ -2250,6 +2257,7 @@ Dim shapeN(0 To 7) As Double, dNxi(0 To 7) As Double, dNeta(0 To 7) As Double
   P6WeightMode = "TOTAL"
   P6WeightNote = "全応力γ。Q8 2×2（剛性・内力と同じ積分）。水位・浮力なし"
   If FEMMeshSheetHasT6() Then P6WeightNote = "全重量γ。Q8 2×2／T6 Duffy4点。水圧荷重は水条件に従う"
+  FEMWeightPrepare
   gaussXi(0) = -0.5773502692: gaussXi(1) = 0.5773502692
   gaussW(0) = 1#: gaussW(1) = 1#
   TotalSelfWeight = 0#
@@ -2277,6 +2285,7 @@ Dim shapeN(0 To 7) As Double, dNxi(0 To 7) As Double, dNeta(0 To 7) As Double
           dXdeta = dXdeta + dNeta(j) * Elem(i).x(j)
           dYdeta = dYdeta + dNeta(j) * Elem(i).y(j)
         Next j
+        gammaValue = FEMWeightAt(i, shapeN)
         detJ = dXdxi * dYdeta - dYdxi * dXdeta
         dVolume = detJ * gaussW(a) * gaussW(b) * thickness
         TotalSelfWeight = TotalSelfWeight + gammaValue * dVolume

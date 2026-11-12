@@ -2,13 +2,14 @@ Option Explicit
 
 Public Sub FEMWaterInstallUi()
   Dim ws As Worksheet, r As Long
+  GWEnsureProfileSetting
   Set ws = FEMWaterSheet("水条件", True)
   If Len(CStr(ws.range("A1").value2)) = 0 Then ws.range("A1").value2 = "水条件・定常浸透"
   ws.range("A3").value2 = "水条件の方式": If Len(CStr(ws.range("B3").value2)) = 0 Then ws.range("B3").value2 = "NONE"
   ws.range("A4").value2 = "水の単位体積重量 γw [kN/m3]": If Len(CStr(ws.range("B4").value2)) = 0 Then ws.range("B4").value2 = 9.80665
   ws.range("A5").value2 = "既定の入力水位線ID": If Len(CStr(ws.range("B5").value2)) = 0 Then ws.range("B5").value2 = "外水"
   ws.range("A6").value2 = "外水圧の自動付与": If Len(CStr(ws.range("B6").value2)) = 0 Then ws.range("B6").value2 = "AUTO"
-  ws.range("A7").value2 = "入力確認署名": ws.range("A8").value2 = "単位：座標・水位・全水頭はm、Kはm/s。飽和水の流れと外水圧を確認します。既存の自重（全応力）は変更しません。"
+  ws.range("A7").value2 = "入力確認署名": ws.range("A8").value2 = "単位：座標・水位・全水頭はm、Kはm/s。材料N列のγsatは静的HYDROSTATICでのみ使用。部分水位線の範囲外を乾燥とする場合は解析設定のGW_PROFILE_OUTSIDE=DRYを明示（既定ERROR）。"
   ws.rows("3:7").RowHeight = 24
   FEMWaterHeaders ws
   FEMWaterValidation ws
@@ -48,6 +49,39 @@ Public Sub FEMWaterInstallUi()
   FEMWaterLink "解析設定", "水条件", "A3", "水条件"
   FEMWaterLink "出力・表示", "水条件", "A3", "水圧入力"
   FSInstallInput
+End Sub
+
+Public Sub GWEnsureProfileSetting()
+  Dim ws As Worksheet, page As Worksheet, r As Long, pr As Long, found As Boolean, note As String
+  Set ws = ThisWorkbook.Worksheets("設定"): Set page = ThisWorkbook.Worksheets("解析設定")
+  If ws.ProtectContents Then ws.Protect Password:="", DrawingObjects:=False, Contents:=True, Scenarios:=True, UserInterfaceOnly:=True
+  If page.ProtectContents Then page.Protect Password:="", DrawingObjects:=False, Contents:=True, Scenarios:=True, UserInterfaceOnly:=True
+  note = "ERROR=水位線に全対象Xの被覆を要求 / DRY=範囲外の水圧・外水圧を0。DRYは静的HYDROSTATIC・片方向のみ。"
+  For r = 5 To ws.cells(ws.rows.count, 5).End(xlUp).row
+    If CStr(ws.cells(r, 5).value2) = "GW_PROFILE_OUTSIDE" Then found = True: Exit For
+  Next r
+  If Not found Then
+    r = ws.cells(ws.rows.count, 5).End(xlUp).row + 1
+    ws.cells(r, 1).Resize(1, 5).value2 = Array("水条件", "水位線範囲外の扱い", "ERROR", note, "GW_PROFILE_OUTSIDE")
+  End If
+  found = False
+  For pr = 8 To page.cells(page.rows.count, 6).End(xlUp).row
+    If CStr(page.cells(pr, 6).value2) = "GW_PROFILE_OUTSIDE" Then found = True: Exit For
+  Next pr
+  If Not found Then
+    pr = page.cells(page.rows.count, 6).End(xlUp).row + 1: If pr < 50 Then pr = 50
+    page.range("B10:G10").Copy Destination:=page.cells(pr, 2)
+    page.cells(pr, 2).value2 = "水位線範囲外の扱い": page.cells(pr, 3).value2 = ws.cells(r, 3).value2
+    page.cells(pr, 4).ClearContents: page.cells(pr, 5).value2 = note: page.cells(pr, 6).value2 = "GW_PROFILE_OUTSIDE": page.cells(pr, 7).value2 = "ERROR（既定）"
+    With page.cells(pr, 3).Validation
+      .Delete: .Add Type:=xlValidateList, AlertStyle:=xlValidAlertStop, Formula1:="ERROR,DRY"
+      .ShowError = True
+    End With
+    page.rows(pr).RowHeight = 48
+  End If
+  ws.cells(r, 3).NumberFormat = "General"
+  ws.cells(r, 3).formula = "=IF('解析設定'!C" & CStr(pr) & "="""","""",'解析設定'!C" & CStr(pr) & ")"
+  Application.CutCopyMode = False: FEMInvalidateSettingCache
 End Sub
 
 Private Sub FEMWaterButton(ByVal ws As Worksheet, ByVal shapeName As String, ByVal caption As String, ByVal macroName As String, ByVal col As Long, ByVal row As Long)

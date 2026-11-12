@@ -1,6 +1,6 @@
 Option Explicit
 
-Public Sub GWWetEdgeLoad(ByVal e As Long, ByVal side As Long, ByRef profileX() As Double, ByRef profileY() As Double, ByVal gamma As Double, ByRef force() As Double)
+Public Sub GWWetEdgeLoad(ByVal e As Long, ByVal side As Long, ByRef profileX() As Double, ByRef profileY() As Double, ByVal gamma As Double, ByRef force() As Double, Optional ByVal outsideDry As Boolean = False)
   Dim a As Long, b As Long, m As Long, i As Long, q As Long, k As Long, nodeDof As Long, nBreak As Long
   Dim x1 As Double, y1 As Double, x2 As Double, y2 As Double, xm As Double, ym As Double, scaleValue As Double
   Dim t As Double, z As Double, t0 As Double, t1 As Double, h As Double, p As Double, w As Double, thickness As Double
@@ -24,8 +24,8 @@ Public Sub GWWetEdgeLoad(ByVal e As Long, ByVal side As Long, ByRef profileX() A
     If Not P2IsFinite(profileX(i)) Or Not P2IsFinite(profileY(i)) Then GWGeomFail "water profile is nonfinite"
     If profileX(i) <= profileX(i - 1) Then GWGeomFail "water profile X is not ascending"
   Next i
-  If profileX(LBound(profileX)) > IIf(x1 < x2, x1, x2) + 0.000000001 Then GWGeomFail "water profile does not cover edge"
-  If profileX(UBound(profileX)) < IIf(x1 > x2, x1, x2) - 0.000000001 Then GWGeomFail "water profile does not cover edge"
+  If Not outsideDry And profileX(LBound(profileX)) > IIf(x1 < x2, x1, x2) + 0.000000001 Then GWGeomFail "water profile does not cover edge"
+  If Not outsideDry And profileX(UBound(profileX)) < IIf(x1 > x2, x1, x2) - 0.000000001 Then GWGeomFail "water profile does not cover edge"
   ReDim breaks(0 To 1): breaks(0) = 0#: breaks(1) = 1#: nBreak = 2
   For i = LBound(profileX) To UBound(profileX)
     If Abs(x2 - x1) > 1E-30 Then
@@ -38,12 +38,15 @@ Public Sub GWWetEdgeLoad(ByVal e As Long, ByVal side As Long, ByRef profileX() A
   intervalCount = nBreak - 1
   For k = 0 To intervalCount - 1
     t0 = breaks(k): t1 = breaks(k + 1)
+    xx = x1 + 0.5 * (t0 + t1) * (x2 - x1)
+    If outsideDry And (xx < profileX(LBound(profileX)) Or xx > profileX(UBound(profileX))) Then GoTo NextRootInterval
     lo = GWDepthAt(t0, x1, y1, x2, y2, profileX, profileY)
     hi = GWDepthAt(t1, x1, y1, x2, y2, profileX, profileY)
     If lo * hi < 0# Then
       Root = t0 - lo * (t1 - t0) / (hi - lo)
       If Root > t0 + 0.000000000001 And Root < t1 - 0.000000000001 Then GWAddBreak breaks, nBreak, Root
     End If
+NextRootInterval:
   Next k
   Call GWSortBreaks(breaks, nBreak)
   Call GWDedupBreaks(breaks, nBreak)
@@ -54,6 +57,8 @@ Public Sub GWWetEdgeLoad(ByVal e As Long, ByVal side As Long, ByRef profileX() A
   If thickness <= 0# Then GWGeomFail "invalid element thickness"
   For k = 0 To nBreak - 2
     t0 = breaks(k): t1 = breaks(k + 1)
+    xx = x1 + 0.5 * (t0 + t1) * (x2 - x1)
+    If outsideDry And (xx < profileX(LBound(profileX)) Or xx > profileX(UBound(profileX))) Then GoTo NextWetInterval
     For q = 0 To 2
       t = 0.5 * (t0 + t1) + 0.5 * (t1 - t0) * gauss(q)
       h = GWDepthAt(t, x1, y1, x2, y2, profileX, profileY): If h <= 0# Then GoTo NextGauss
@@ -69,6 +74,7 @@ Public Sub GWWetEdgeLoad(ByVal e As Long, ByVal side As Long, ByRef profileX() A
       Next i
 NextGauss:
     Next q
+NextWetInterval:
   Next k
 End Sub
 

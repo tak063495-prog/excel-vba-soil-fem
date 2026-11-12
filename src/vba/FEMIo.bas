@@ -2296,6 +2296,7 @@ Private Function FEMIoContentHash() As String
       h = FEMIoMix(h, P6QuantizeScaled(P6InputMaterialPoisson(i), 1000000000#))
       h = FEMIoMix(h, P6QuantizeScaled(P6InputMaterialThickness(i), 1000000#))
       h = FEMIoMix(h, P6QuantizeScaled(P6InputMaterialWeight(i), 1000000#))
+      If P6InputMaterialWeightSat(i) <> P6InputMaterialWeight(i) Then h = FEMIoMix(h, P6QuantizeScaled(P6InputMaterialWeightSat(i), 1000000#))
       h = FEMIoMix(h, P6QuantizeScaled(P6InputMaterialFriction(i), 1000000#))
       h = FEMIoMix(h, P6QuantizeScaled(P6InputMaterialCohesion(i), 1000000#))
       h = FEMIoMix(h, P6QuantizeScaled(P6InputMaterialDilation(i), 1000000#))
@@ -3708,6 +3709,7 @@ Private Sub FEMEnsureMaterialSheetLayout()
   ws.cells(1, 11).value2 = "種別"
   ws.cells(1, 12).value2 = "せん断剛性"
   ws.cells(1, 13).value2 = "引張"
+  ws.cells(1, 14).value2 = "飽和単位体積重量（任意）"
   ws.cells(1, 15).value2 = "凡例（入力しない）"
   ws.cells(2, 15).value2 = "強度低減"
   ws.cells(2, 16).value2 = "1=SRMでc・φを下げる / 0=構造物・基盤は下げない"
@@ -3721,6 +3723,8 @@ Private Sub FEMEnsureMaterialSheetLayout()
   ws.cells(6, 16).value2 = "FLOW_POLICY=DAVISでもJOINTのc,φは変換しない"
   ws.cells(7, 15).value2 = "単位"
   ws.cells(7, 16).value2 = "角度は度。粘着力は応力と同じ単位"
+  ws.cells(8, 15).value2 = "飽和重量"
+  ws.cells(8, 16).value2 = "N列空欄=E列と同じ。静的HYDROSTATICのみ、水位以下はN列の全重量γsat。水圧を別途適用。"
   lastRow = ws.cells(ws.rows.count, 1).End(xlUp).row
   If lastRow < 2 Then lastRow = 2
   For rowNo = 2 To lastRow

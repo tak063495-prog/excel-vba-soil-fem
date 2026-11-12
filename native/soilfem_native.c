@@ -244,3 +244,81 @@ API sfn_nsband_back(int32_t n, int32_t b, int32_t ld, const double *a, const dou
     }
     return SF_OK;
 }
+
+/* Optional recovery factorization uses the selected SSE2/AVX2 precision.
+ * Material updates and STRICT arithmetic remain in the original x87 core.
+ * Acceptance checks the actual normal residual before returning any direction. */
+API sfn_regularized(const int64_t *R, double damping, double itTol) {
+  int32_t n = (int32_t)R[0]; const int32_t *rp = (const int32_t *)(intptr_t)R[1], *ci = (const int32_t *)(intptr_t)R[2];
+  const double *O = (const double *)(intptr_t)R[3]; const int32_t *nc = (const int32_t *)(intptr_t)R[4];
+  const double *F = (const double *)(intptr_t)R[5]; double *D = (double *)(intptr_t)R[6], *a = (double *)(intptr_t)R[7];
+  int32_t bw = (int32_t)R[8]; double *vw = (double *)(intptr_t)R[9], *o = (double *)(intptr_t)R[10];
+  double *rhs = vw, *sol = vw + n, *cs = vw + 2 * n;
+  int32_t row, col, p, q, c1, c2, i, j, fc, lr; double v, normB = 0.0, nres = 0.0, tmp;
+#define A_(r, c) a[(int64_t)(r) * ((int64_t)bw + 1) + (c)]
+  o[0] = 0; o[1] = 0;
+  if (precision_mode == 0) return -1; /* preserve the frozen x87 core in STRICT mode */
+  if (n < 1 || bw < 0) return -1;
+
+  for (i = 0; i < n; i++) { rhs[i] = 0.0; sol[i] = 0.0; cs[i] = 0.0; }
+  for (i = 0; i < n * (int64_t)(bw + 1); i++) a[i] = 0.0;
+  for (row = 0; row < n; row++) if (nc[row] == 0) {
+    if (!fin(F[row])) return 0;
+    for (p = rp[row]; p < rp[row + 1]; p++) { col = ci[p]; if (nc[col] == 0) { v = O[p]; if (!fin(v)) return 0; cs[col] = cs[col] + v * v; } }
+  }
+  for (col = 0; col < n; col++) { cs[col] = sqrt(cs[col]); if (cs[col] < 1E-30) cs[col] = 1.0; }
+  for (row = 0; row < n; row++) if (nc[row] == 0) {
+    for (p = rp[row]; p < rp[row + 1]; p++) {
+      c1 = ci[p];
+      if (nc[c1] == 0 && O[p] != 0.0) {
+        v = O[p] / cs[c1];
+        rhs[c1] = rhs[c1] + v * F[row];
+        for (q = p; q < rp[row + 1]; q++) {
+          c2 = ci[q];
+          if (nc[c2] == 0 && O[q] != 0.0) {
+            if (c2 < c1 || c2 - c1 > bw) return 0;
+            A_(c2, bw + c1 - c2) = A_(c2, bw + c1 - c2) + v * O[q] / cs[c2];
+          }
+        }
+      }
+    }
+  }
+  for (i = 0; i < n; i++) {
+    A_(i, bw) = A_(i, bw) + damping;
+    if (nc[i] != 0) A_(i, bw) = 1.0;
+    normB = normB + rhs[i] * rhs[i];
+  }
+  if (!fin(normB) || normB <= 1E-60) return 0;
+  for (i = 0; i < n; i++) {
+    fc = i - bw; if (fc < 0) fc = 0;
+    for (j = fc; j <= i; j++) {
+      tmp = A_(i, bw + j - i);
+      if (j > fc) fp_dot_sub(j - fc, &A_(i, bw + fc - i), D8, &A_(j, bw + fc - j), D8, &tmp);
+      if (i == j) { if (tmp <= 0.0 || !fin(tmp)) return 0; A_(i, bw) = sqrt(tmp); }
+      else A_(i, bw + j - i) = tmp / A_(j, bw);
+    }
+    tmp = rhs[i];
+    if (i > fc) fp_dot_sub(i - fc, &A_(i, bw + fc - i), D8, &sol[fc], D8, &tmp);
+    sol[i] = tmp / A_(i, bw);
+  }
+  o[1] = 1;
+  for (i = n - 1; i >= 0; i--) {
+    tmp = sol[i]; lr = i + bw; if (lr > n - 1) lr = n - 1;
+    if (lr > i) fp_dot_sub(lr - i, &A_(i + 1, bw - 1), (int64_t)bw * D8, &sol[i + 1], D8, &tmp);
+    sol[i] = tmp / A_(i, bw);
+    if (!fin(sol[i])) return 0;
+  }
+  for (row = 0; row < n; row++) if (nc[row] == 0) {
+    tmp = 0.0;
+    for (p = rp[row]; p < rp[row + 1]; p++) { col = ci[p]; if (nc[col] == 0) tmp = tmp + O[p] * sol[col] / cs[col]; }
+    for (p = rp[row]; p < rp[row + 1]; p++) { col = ci[p]; if (nc[col] == 0) rhs[col] = rhs[col] - O[p] * tmp / cs[col]; }
+  }
+  for (i = 0; i < n; i++) { tmp = rhs[i] - damping * sol[i]; nres = nres + tmp * tmp; }
+  if (!fin(nres)) return 0;
+  { double q2 = nres / normB; o[0] = sqrt(q2); }
+  if (o[0] > itTol) return 0;
+  for (i = 0; i < n; i++) { D[i] = sol[i] / cs[i]; if (nc[i] != 0) D[i] = 0.0; }
+
+  return 1;
+#undef A_
+}

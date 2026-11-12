@@ -3535,7 +3535,10 @@ Public Function P6SolveResidualRecovery(ByVal damping As Double) As Boolean
   Dim stride48 As Long, lowerI48 As Long, lowerJ48 As Long, diagonalI48 As Long
   Dim positionI48 As Long, positionJ48 As Long
   P6SolveResidualRecovery = False
-  If Not P6CSRReady Or damping <= 0# Or Not P2IsFinite(damping) Then GoTo Rejected
+  If damping <= 0# Or Not P2IsFinite(damping) Then GoTo Rejected
+  If Not P6CSRReady Then
+    If Not P6BuildCSRFromElements() Then GoTo Rejected
+  End If
   bw = 2 * BandWidth: If bw > lastDof Then bw = lastDof
   ' Flat storage has the same number of Doubles and work arrays as frozen32.
   ' Keep the original 2D implementation for dimensions beyond a Long flat index.

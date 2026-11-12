@@ -218,5 +218,10 @@
         "name":  "FEMIterationProgress",
         "file":  "FEMIterationProgress.bas",
         "type":  1
+    },
+    {
+        "name":  "FEMBodyWeight",
+        "file":  "FEMBodyWeight.bas",
+        "type":  1
     }
 ]

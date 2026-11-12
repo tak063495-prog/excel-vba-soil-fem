@@ -36,6 +36,7 @@ Public Sub FEMUiPrepareInputs()
   FEMUiOrderRuntimePage ws, keys
   MeshQualityEnsureSettings
   NewtonProgressEnsureSettings
+  GWEnsureProfileSetting
   Set ws = ThisWorkbook.Worksheets("メッシュ設定")
   found = False
   For r = 1 To ws.cells(ws.rows.count, 6).End(xlUp).row

@@ -994,6 +994,7 @@ Public P6InputMaterialYoung() As Double
 Public P6InputMaterialPoisson() As Double
 Public P6InputMaterialThickness() As Double
 Public P6InputMaterialWeight() As Double
+Public P6InputMaterialWeightSat() As Double
 Public P6InputMaterialFriction() As Double
 Public P6InputMaterialCohesion() As Double
 Public P6InputMaterialDilation() As Double

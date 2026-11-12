@@ -144,7 +144,7 @@ End Function
  $wb.Worksheets.Item('接合').Range('A2:G10000').ClearContents()
  Rows $wb.Worksheets.Item('節点データ') 2 1 $data.nodes 9
  Rows $wb.Worksheets.Item('要素データ') 2 1 $data.elements $(if($data.elements[0].Count -ge 11){11}else{10})
- Rows $wb.Worksheets.Item('材料データ') 2 1 $data.materials 13
+ Rows $wb.Worksheets.Item('材料データ') 2 1 $data.materials $(if($data.materials[0].Count -ge 14){14}else{13})
  Rows $wb.Worksheets.Item('ステージ') 2 1 $data.stages 6
  if($data.loads){Rows $wb.Worksheets.Item('載荷') 2 1 $data.loads $(if($data.loads[0].Count -ge 11){11}else{10})}
  if($data.jointPairs){Rows $wb.Worksheets.Item('接合') 2 1 $data.jointPairs 7}

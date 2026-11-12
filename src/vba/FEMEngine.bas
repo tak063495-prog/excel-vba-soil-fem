@@ -1096,6 +1096,7 @@ Public Sub P3AssembleSelfWeightOnly()
   gaussXi(0) = -0.5773502692: gaussXi(1) = 0.5773502692
   gaussW(0) = 1#: gaussW(1) = 1#
   If lastDof < 0 Then Exit Sub
+  FEMWeightPrepare
   ReDim P3SelfWeightForce(lastDof)
   TotalSelfWeight = 0#
   For i = 0 To NumberOfElement - 1
@@ -1116,6 +1117,7 @@ Public Sub P3AssembleSelfWeightOnly()
           dXdeta = dXdeta + dNeta(j) * Elem(i).x(j)
           dYdeta = dYdeta + dNeta(j) * Elem(i).y(j)
         Next j
+        gammaValue = FEMWeightAt(i, shapeN)
         detJ = dXdxi * dYdeta - dYdxi * dXdeta
         dVolume = detJ * gaussW(a) * gaussW(b) * thickness
         TotalSelfWeight = TotalSelfWeight + gammaValue * dVolume
@@ -6572,6 +6574,7 @@ Private Function P3AccelApplyCorrection(ByRef incrementBase() As Double, ByRef t
     If Not ok And Not P3IsFatalFailure() Then ok = P3TryResidualRecovery(incrementBase, targetForce, internalForce, correctionRatio, localIteration)
   Else
     ok = P3ApplyLineSearch(incrementBase, targetForce, internalForce, correctionRatio, residualBefore)
+    If Not ok And Not P3IsFatalFailure() Then ok = P3TryResidualRecovery(incrementBase, targetForce, internalForce, correctionRatio, localIteration)
   End If
   If Not ok Or P3LineSearchCuts <> cutsBefore Then mAAReady = False
   P3AccelApplyCorrection = ok
