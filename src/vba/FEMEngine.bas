@@ -2563,7 +2563,7 @@ Private Function P3ApplyLineSearch(ByRef incrementBase() As Double, ByRef target
     P3LineSearchSavedT(i) = TDisp(i)
   Next i
   Dim searchLimit As Long
-  searchLimit = P3_LINESEARCH_MAX
+  searchLimit = 32
   If P3FlowPolicyIsInconsistent() Then searchLimit = P3_INCO_LINESEARCH_MAX
   If requestedSearchLimit > 0 Then searchLimit = requestedSearchLimit
   alpha = 1#
@@ -2698,12 +2698,16 @@ Private Sub P3ApplyCorrectionRatioFromDir(ByVal alpha As Double, ByRef savedT() 
   End If
 End Sub
 
-Private Function P3GlobalIterationLimit() As Long
-  P3GlobalIterationLimit = P3_MAX_GLOBAL_ITERATIONS
+Private Function P3BaseGlobalIterationLimit() As Long
+  P3BaseGlobalIterationLimit = P3_MAX_GLOBAL_ITERATIONS
   If P3FlowPolicyIsInconsistent() Then
-    P3GlobalIterationLimit = P3_INCO_MAX_GLOBAL_ITERATIONS
-    If P3IncoElasticCorrection Then P3GlobalIterationLimit = P3_INCO_ELASTIC_MAX_ITERATIONS
+    P3BaseGlobalIterationLimit = P3_INCO_MAX_GLOBAL_ITERATIONS
+    If P3IncoElasticCorrection Then P3BaseGlobalIterationLimit = P3_INCO_ELASTIC_MAX_ITERATIONS
   End If
+End Function
+
+Private Function P3GlobalIterationLimit(ByVal iteration As Long) As Long
+  P3GlobalIterationLimit = NewtonProgressLimit(P3BaseGlobalIterationLimit(), iteration)
 End Function
 
 Private Function P3RunLoadStages() As Boolean
@@ -2858,6 +2862,7 @@ P3RetrySameIncrement:
       P3ClearTransientFailure
       mAccelAttemptFailure = "": mLineSearchFailure = "": mLineSearchTries = 0: mLineSearchMaterialRejects = 0: mLineSearchBestQ = -1#
       localIteration = 0: correctionRatio = 0#: converged = False: stagnationCount = 0
+      NewtonProgressReset P3BaseGlobalIterationLimit()
       elWinRes = 0#: elWinIter = 0
       P6LsWatch = False
       P3PrevResidualNorm = 0#
@@ -2876,6 +2881,7 @@ P3RetrySameIncrement:
           End If
         End If
         P3UpdateResidualMetrics targetForce, internalForce
+        NewtonProgressRecord localIteration, RelativeResidualFree
         P3UpdateBoundaryDispError prescribedFactor
         boundaryOk = P3BoundaryDispSatisfied()
         If RelativeResidualFree <= P3_ENGINEERING_RESIDUAL And boundaryOk Then
@@ -2891,7 +2897,7 @@ P3RetrySameIncrement:
             Exit Do
           End If
         End If
-        If localIteration >= P3GlobalIterationLimit() Then
+        If localIteration >= P3GlobalIterationLimit(localIteration) Then
           mAccelAttemptFailure = "GLOBAL_ITERATION_LIMIT"
           SetAnalysisFailure RESULT_NONCONVERGED, "P3全体反復が上限回数に達しました。Ver=" & FEM_BUILD_STAMP & " 相対残差=" & Format$(RelativeResidualFree, "0.000E+00") & " 補正比=" & Format$(correctionRatio, "0.000E+00") & " 拘束変位誤差=" & Format$(P3MaxBoundaryDispError, "0.000E+00") & "。状態は前増分へ戻します。", vbObjectError + 3202, FailureElement, FailureGaussPoint, CurrentIncrement, CurrentIteration
           Exit Do
@@ -2953,7 +2959,7 @@ P3RetrySameIncrement:
           If P3LineSearchRetryCorrection And Not lineSearchRebuildUsed Then
             lineSearchRebuildUsed = True
             P3RequestTangentRebuild "LINESEARCH_RETRY"
-            If localIteration >= P3GlobalIterationLimit() Then
+            If localIteration >= P3GlobalIterationLimit(localIteration) Then
               mAccelAttemptFailure = "GLOBAL_ITERATION_LIMIT_AFTER_LINESEARCH_RETRY"
               SetAnalysisFailure RESULT_NONCONVERGED, "P3全体反復が上限回数に達しました。Ver=" & FEM_BUILD_STAMP & " 相対残差=" & Format$(RelativeResidualFree, "0.000E+00") & " 補正比=" & Format$(correctionRatio, "0.000E+00") & " 拘束変位誤差=" & Format$(P3MaxBoundaryDispError, "0.000E+00") & "。状態は前増分へ戻します。", vbObjectError + 3202, FailureElement, FailureGaussPoint, CurrentIncrement, CurrentIteration
               Exit Do
@@ -2962,11 +2968,12 @@ P3RetrySameIncrement:
             Exit Do
           End If
         Else
+          NewtonProgressRecord localIteration, RelativeResidualFree
           AccelNoteCorrection P3PrevResidualNorm, ResidualNormFree, correctionBuilt
           lineSearchRebuildUsed = False
           If correctionRatio > P3MaxCorrection Then P3MaxCorrection = correctionRatio
           If P3FlowPolicyIsInconsistent() And Not P3IncoElasticCorrection And RelativeResidualFree > P3_ENGINEERING_RESIDUAL Then
-            If P3PrevResidualNorm > 0# And ResidualNormFree > 0.99 * P3PrevResidualNorm And correctionRatio < P3_ENGINEERING_CORRECTION Then
+            If P3PrevResidualNorm > 0# And ResidualNormFree > 0.99 * P3PrevResidualNorm And correctionRatio < P3_ENGINEERING_CORRECTION And Not NewtonProgressReduction(ResidualNormFree, P3PrevResidualNorm) Then
               stagnationCount = stagnationCount + 1
             Else
               stagnationCount = 0
@@ -2981,7 +2988,7 @@ P3RetrySameIncrement:
                 GoTo P3NextGlobalIteration
               End If
               If P3IsFatalFailure() Then Exit Do
-              If localIteration >= P3GlobalIterationLimit() Then
+              If localIteration >= P3GlobalIterationLimit(localIteration) Then
                 ' Preserve the shared Newton/recovery budget failure instead
                 ' of overwriting it with an early stagnation diagnosis.
                 mAccelAttemptFailure = "GLOBAL_ITERATION_LIMIT"
@@ -3008,7 +3015,7 @@ P3RetrySameIncrement:
                   elRate = Log(RelativeResidualFree / elWinRes) / CDbl(localIteration - elWinIter)
                   If elRate < 0# Then elNeed = Log(P3_ENGINEERING_RESIDUAL / RelativeResidualFree) / elRate
                 End If
-                If elNeed > CDbl(P3GlobalIterationLimit() - localIteration) Then
+                If elNeed > CDbl(P3GlobalIterationLimit(localIteration) - localIteration) And Not NewtonProgressReduction(RelativeResidualFree, elWinRes) Then
                   P6SolverEvent "ELASTIC_SLOW_CONTRACTION", "iterations=" & CStr(localIteration) & ";relres=" & Format$(RelativeResidualFree, "0.000E+00") & ";window_relres=" & Format$(elWinRes, "0.000E+00") & ";projected=" & Format$(elNeed, "0.000E+00")
                   mAccelAttemptFailure = "ELASTIC_STAGNATION"
                   SetAnalysisFailure RESULT_NONCONVERGED, "非関連流れの弾性補正反復の収束速度が不足しています（予測反復数が上限超過）。増分を縮小します。", vbObjectError + 3202, FailureElement, FailureGaussPoint, CurrentIncrement, CurrentIteration
@@ -3233,19 +3240,22 @@ Public Function P3FixedStressTrial(ByRef target() As Double, ByRef incrementBase
   If P3ForceRef < 0.000000000001 Then P3ForceRef = 0.000000000001
   P3DispRef = P5ModelScale * 0.000001
   If P3DispRef < 0.000000000001 Then P3DispRef = 0.000000000001
-  For iteration = 0 To P3GlobalIterationLimit()
+  NewtonProgressReset P3BaseGlobalIterationLimit()
+  iteration = 0
+  Do
     CurrentIteration = iteration: CurrentIncrement = P3SuccessfulIncrementCount + 1
     If Not P3EvaluateTrialState(incrementBase, internal) Then
       mAccelAttemptFailure = "TRIAL_STATE_FAILURE": GoTo Rejected
     End If
     P3UpdateResidualMetrics target, internal
+    NewtonProgressRecord iteration, RelativeResidualFree
     P3UpdateBoundaryDispError 1#
     If RelativeResidualFree <= P3_ENGINEERING_RESIDUAL And RelativeResidualFree <= coupledTolerance And P3BoundaryDispSatisfied() Then
       If iteration = 0 Or ratio <= P3_ENGINEERING_CORRECTION Or RelativeResidualFree <= P3_RESIDUAL_TOLERANCE Then
         P3FixedStressTrial = True: Exit Function
       End If
     End If
-    If iteration = P3GlobalIterationLimit() Then
+    If iteration >= P3GlobalIterationLimit(iteration) Then
       mAccelAttemptFailure = "GLOBAL_ITERATION_LIMIT"
       P3SetGlobalBudgetFailure
       GoTo Rejected
@@ -3270,8 +3280,8 @@ Public Function P3FixedStressTrial(ByRef target() As Double, ByRef incrementBase
       GoTo Rejected
     End If
     If P3UserCancel Then Exit Function
-    iteration = nextIteration - 1
-  Next iteration
+    iteration = nextIteration
+  Loop
   Exit Function
 Rejected:
   P3RecordRejectedAttempt 1#, ratio
@@ -3321,11 +3331,13 @@ Private Function P3RunConsolidationSteps(ByRef targetForce() As Double, ByRef in
     P6UpdateContinuityG
     P3ClearTransientFailure
     localIteration = 0: correctionRatio = 0#: converged = False
+    NewtonProgressReset P3BaseGlobalIterationLimit()
     Do
       CurrentIncrement = P3SuccessfulIncrementCount + 1
       CurrentIteration = localIteration
       If Not P3EvaluateTrialState(incrementBase, internalForce) Then Exit Do
       P3UpdateResidualMetrics targetForce, internalForce
+      NewtonProgressRecord localIteration, RelativeResidualFree
       If RelativeResidualFree <= P3_ENGINEERING_RESIDUAL Then
         If localIteration = 0 Or correctionRatio <= P3_ENGINEERING_CORRECTION Or RelativeResidualFree <= P3_RESIDUAL_TOLERANCE Then
           converged = True
@@ -3336,7 +3348,7 @@ Private Function P3RunConsolidationSteps(ByRef targetForce() As Double, ByRef in
           Exit Do
         End If
       End If
-      If localIteration >= P3_MAX_GLOBAL_ITERATIONS Then
+      If localIteration >= P3GlobalIterationLimit(localIteration) Then
         SetAnalysisFailure RESULT_NONCONVERGED, "圧密ステップが上限回数に達しました。Ver=" & FEM_BUILD_STAMP & " t=" & Format$(P6ConsolTime, "0.000E+00") & " 相対残差=" & Format$(RelativeResidualFree, "0.000E+00"), vbObjectError + 3202, FailureElement, FailureGaussPoint, CurrentIncrement, CurrentIteration
         Exit Do
       End If
@@ -5842,7 +5854,7 @@ Private Function P2FillFiniteDifferenceTangent(ByRef inputState As P2_MaterialPo
   If h0 > hLocal Then h0 = hLocal
   For col = 0 To 2
     h = h0: columnOK = False
-    For attempt = 0 To 3
+    For attempt = 0 To 31
       If h < 2# * hResolution Then Exit For
       If P2FiniteDifferenceColumn(inputState, outputState, stepCount, col, h, coarse, coarseStencil) Then
         If P2FiniteDifferenceColumn(inputState, outputState, stepCount, col, h * 0.5, fine, fineStencil) Then
@@ -5868,7 +5880,7 @@ Private Function P2FillFiniteDifferenceTangent(ByRef inputState As P2_MaterialPo
   P2FillFiniteDifferenceTangent = True
 End Function
 
-Public Function P2MaterialPointUpdate(ByRef inputState As P2_MaterialPointInput, ByRef outputState As P2_MaterialPointOutput)
+Public Function P2MaterialPointUpdate(ByRef inputState As P2_MaterialPointInput, ByRef outputState As P2_MaterialPointOutput, Optional ByVal linearElastic As Boolean = False)
   Dim stepInput As P2_MaterialPointInput, stepOutput As P2_MaterialPointOutput, failureOutput As P2_MaterialPointOutput
   Dim currentSx As Double, currentSy As Double, currentSz As Double, currentTxy As Double
   Dim totalPlastic(0 To 3) As Double, totalLambda As Double
@@ -5914,7 +5926,7 @@ Public Function P2MaterialPointUpdate(ByRef inputState As P2_MaterialPointInput,
   outputState.TrialYieldFunction = yieldValue
   yieldScale = Abs(sigmaMax) + Abs(sigmaMin) + 2# * inputState.cohesion * cosPhi
   If yieldScale < 1# Then yieldScale = 1#
-  If yieldValue <= inputState.tolerance * yieldScale Then
+  If linearElastic Or yieldValue <= inputState.tolerance * yieldScale Then
     outputState.Stress(0) = outputState.TrialStress(0)
     outputState.Stress(1) = outputState.TrialStress(1)
     outputState.Stress(2) = outputState.TrialStress(2)
@@ -5927,6 +5939,7 @@ Public Function P2MaterialPointUpdate(ByRef inputState As P2_MaterialPointInput,
     outputState.PrincipalStress(2) = sigmaMin
     outputState.principalAngle = angle * 180# / piValue
     outputState.YieldFunction = yieldValue
+    If linearElastic Then outputState.YieldFunction = 0#: outputState.TrialYieldFunction = 0#
     outputState.yielded = False
     outputState.PlasticOccurred = False
     outputState.Elastic = True
@@ -6448,6 +6461,7 @@ Private Function P3TryNewtonWatchdog(ByRef incrementBase() As Double, ByRef targ
         P6LsNoteAccept alpha, False: P6LsNoteQ originalNorm, ResidualNormFree
         IncrementLogLineSearchAlpha alpha
         P6SolverEvent "NEWTON_WATCHDOG_ACCEPT", "first_alpha=" & CStr(alpha) & ";steps=" & CStr(innerStep) & ";relative_residual=" & Format$(RelativeResidualFree, "0.000E+00")
+        NewtonProgressRecord localIteration, RelativeResidualFree
         P3TryNewtonWatchdog = True
         Exit Function
       End If
@@ -6456,7 +6470,7 @@ Private Function P3TryNewtonWatchdog(ByRef incrementBase() As Double, ByRef targ
         Disp(i) = 0#: force(i) = 0#
         If NodeCond(i) = 0 Then force(i) = targetForce(i) - internalForce(i)
       Next i
-      If localIteration >= P3GlobalIterationLimit() Then
+      If localIteration >= P3GlobalIterationLimit(localIteration) Then
         budgetExhausted = True: GoTo RestoreWatchdog
       End If
       If Not P3RebuildTangentFromSpmat() Then GoTo FatalTrial
@@ -6512,7 +6526,7 @@ Private Function P3TryResidualRecovery(ByRef incrementBase() As Double, ByRef ta
   If Not P3BoundaryDispSatisfied() Then Exit Function
   damping = 0.00000001
   For attempt = 1 To 6
-    If localIteration >= P3GlobalIterationLimit() Then
+    If localIteration >= P3GlobalIterationLimit(localIteration) Then
       Call P3SetGlobalBudgetFailure
       Exit Function
     End If
@@ -6527,6 +6541,7 @@ Private Function P3TryResidualRecovery(ByRef incrementBase() As Double, ByRef ta
     P3GlobalIterationCount = P3GlobalIterationCount + 1: P6PerfNewtonCount = P6PerfNewtonCount + 1
     If P6SolveResidualRecovery(damping) Then
       If P3ApplyLineSearch(incrementBase, targetForce, internalForce, correctionRatio, residualBefore, 12) Then
+        NewtonProgressRecord localIteration, RelativeResidualFree
         P6SolverEvent "REGULARIZED_CORRECTION_ACCEPT", "damping=" & Format$(damping, "0.000E+00") & ";relres=" & Format$(RelativeResidualFree, "0.000E+00") & ";correction=" & Format$(correctionRatio, "0.000E+00")
         P3TryResidualRecovery = True: Exit Function
       End If

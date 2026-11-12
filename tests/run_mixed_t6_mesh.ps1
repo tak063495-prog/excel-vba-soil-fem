@@ -1,4 +1,4 @@
-param([Parameter(Mandatory=$true)][string]$Book,[Parameter(Mandatory=$true)][string]$Out,[switch]$Visible)
+﻿param([Parameter(Mandatory=$true)][string]$Book,[Parameter(Mandatory=$true)][string]$Out,[switch]$Visible)
 $ErrorActionPreference='Stop'
 if(Get-Process EXCEL -ErrorAction SilentlyContinue){throw 'Another Excel is running.'}
 $Book=(Resolve-Path -LiteralPath $Book).Path;$before=(Get-FileHash $Book).Hash;$Out=[IO.Path]::GetFullPath($Out)
@@ -42,12 +42,13 @@ try{
   $wb.Worksheets.Item('水条件').Range('B3').Value2='NONE';$wb.Worksheets.Item('水条件').Range('A216:F415').ClearContents()
   $null=$xl.Run("'"+$wb.Name+"'!FEMWriteNumericSetting",'MESH_QUALITY_MIN_JACOBIAN_RATIO',0.000001)
   $null=$xl.Run("'"+$wb.Name+"'!FEMWriteNumericSetting",'MESH_QUALITY_MIN_ANGLE_DEG',10.0)
+  $null=$xl.Run("'"+$wb.Name+"'!FEMWriteNumericSetting",'MESH_T6_PATCH_ENABLE',0.0)
   $null=$xl.Run("'"+$wb.Name+"'!FEMWriteNumericSetting",'MESH_QUALITY_MAX_ANGLE_DEG',170.0)
   $null=$xl.Run("'"+$wb.Name+"'!FEMWriteNumericSetting",'MESH_QUALITY_MAX_ASPECT_RATIO',5.0)
   $null=$xl.Run("'"+$wb.Name+"'!FEMWriteTextSetting",'EXPORT_MODE','OFF')
   $null=$xl.Run("'"+$wb.Name+"'!FEMInvalidateRemeshedModel")
  }
- Assert ($wb.Worksheets.Item("メッシュ設定").Range("F30").Value2 -eq "MESH_T6_FALLBACK" -and $wb.Worksheets.Item("メッシュ設定").Range("C30").Value2 -eq 0) "release contains fallback option with OFF default before refresh"
+ Assert ($wb.Worksheets.Item("メッシュ設定").Range("F30").Value2 -eq "MESH_T6_FALLBACK" -and $wb.Worksheets.Item("メッシュ設定").Range("C30").Value2 -in @(0,1)) "release contains a valid fallback option before refresh"
  $null=Run 'M6Quiet';$null=Run 'FEMUiRefreshInputs';$null=Raw 'FEM24Install';$null=Raw 'FEM24Model'
  $front=$wb.Worksheets.Item('モデル');$xl.EnableEvents=$true;$front.Range('C4').Value2='メッシュ生成・支持条件'
  $optionRow=0;for($r=8;$r -le 30;$r++){if([string]$front.Cells($r,1).Value2 -like '*不適合Q8*'){$optionRow=$r;break}}

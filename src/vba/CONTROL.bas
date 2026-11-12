@@ -287,6 +287,7 @@ Private Sub CreateMeshFromGeometryDefinition()
 
     On Error GoTo ErrorHandler
     currentStage = "開始"
+    MeshQualityEnsureSettings
     FEMShapeGenerationOK = False
     If AnalysisRunning Then
         If Not SuppressUserMessages Then MsgBox "解析処理中です。", vbExclamation
@@ -1056,6 +1057,7 @@ Sub ボタン5_Click()
     On Error GoTo ErrorHandler
     SaveApplicationState
     FEMLastProc = "入力設定の検査"
+    NewtonProgressEnsureSettings
     ResetAnalysisState
     FEMUiValidateSettings
     FEMViewerMarkDirty
@@ -1314,6 +1316,11 @@ Dim i As Long, CC As Long
 End Sub
 
 Sub ボタン20_Click()
+    If FEMMeshSheetHasT6() Then
+        MeshT6PatchCurrentSheet
+        If Not SuppressUserMessages Then MsgBox MeshT6PatchLastDetail, vbInformation
+        Exit Sub
+    End If
     MeshOptimizeExisting
 End Sub
 

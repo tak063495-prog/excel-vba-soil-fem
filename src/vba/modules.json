@@ -203,5 +203,20 @@
         "name":  "FEMFixedStressGauge",
         "file":  "FEMFixedStressGauge.bas",
         "type":  1
+    },
+    {
+        "name":  "MeshQuality",
+        "file":  "MeshQuality.bas",
+        "type":  1
+    },
+    {
+        "name":  "MeshT6Patch",
+        "file":  "MeshT6Patch.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMIterationProgress",
+        "file":  "FEMIterationProgress.bas",
+        "type":  1
     }
 ]

@@ -34,6 +34,8 @@ Public Sub FEMUiPrepareInputs()
   Next item
   ThisWorkbook.Worksheets("要素データ").cells(1, 11).value2 = "要素形式（Q8/T6）"
   FEMUiOrderRuntimePage ws, keys
+  MeshQualityEnsureSettings
+  NewtonProgressEnsureSettings
   Set ws = ThisWorkbook.Worksheets("メッシュ設定")
   found = False
   For r = 1 To ws.cells(ws.rows.count, 6).End(xlUp).row
@@ -218,6 +220,15 @@ Private Function FEMUiRecommendation(ByVal keyName As String) As Variant
     Case "ACCEL_PREDICT_MAX_RATIO": FEMUiRecommendation = 1.5
     Case "ACCEL_TANGENT_CHANGE": FEMUiRecommendation = 0.05
     Case "MESH_T6_FALLBACK": FEMUiRecommendation = "0（既定OFF）"
+    Case "MESH_T6_MIN_ANGLE_DEG": FEMUiRecommendation = 20#
+    Case "MESH_T6_MAX_ANGLE_DEG": FEMUiRecommendation = 140#
+    Case "MESH_T6_MAX_ASPECT_RATIO": FEMUiRecommendation = 5#
+    Case "MESH_Q8_MIN_JACOBIAN_AREA_RATIO": FEMUiRecommendation = 0.1
+    Case "MESH_T6_SMOOTH_ITERATIONS": FEMUiRecommendation = 10#
+    Case "MESH_QUALITY_REFINE": FEMUiRecommendation = "改善候補を比較する場合1"
+    Case "MESH_QUALITY_REFINE_PASSES": FEMUiRecommendation = 1#
+    Case "MESH_QUALITY_REFINE_MAX_RATIO": FEMUiRecommendation = 1.12
+    Case "MESH_QUALITY_REFINE_FRACTION": FEMUiRecommendation = 0.03
     Case "MESH_QUALITY_MIN_AREA_RATIO": FEMUiRecommendation = 0.000001
     Case "MESH_QUALITY_MIN_JACOBIAN_RATIO": FEMUiRecommendation = 0.000001
     Case "MESH_QUALITY_MAX_ASPECT_RATIO": FEMUiRecommendation = 5#
@@ -331,7 +342,7 @@ Private Sub FEMUiWriteGuide()
   ws.range("B2").Font.size = 20: ws.range("B2").Font.bOld = True
   ws.Hyperlinks.Add anchor:=ws.range("B4"), address:="", SubAddress:="'操作パネル'!B2", TextToDisplay:="操作パネルへ戻る"
   sections = Array( _
-    Array("1 材料・単位", "材料データ：E、ν、γ、c、φ、ψとSOIL/STRUCT/JOINTを確認。全シートで単位を統一（例 m・kN・kPa、角度deg）。物性・荷重に汎用の推奨値はありません。"), _
+    Array("1 材料・単位", "材料データ：E、ν、γ、c、φ、ψとSOIL/STRUCT/STRUCT_ELASTIC/JOINTを確認。全シートで単位を統一（例 m・kN・kPa、角度deg）。物性・荷重に汎用の推奨値はありません。"), _
     Array("2 メッシュ・支持", "形状入力の座標・境界・格子間隔からメッシュを作成し、図で拘束と品質を確認。底面・側面支持はモデル依存。節点/要素を直接入力する操作も可能。"), _
     Array("3 接合（任意）", "接合：材料A/Bの共有辺にJOINTを生成。材料種別JOINT、Kn/Ks、psi=0。履歴なし応力上限モデルで、塑性すべり・除荷履歴は未対応。"), _
     Array("4 ステージ・載荷", "ステージは上から有効=1だけ実行。GRAVITY/LOAD/UNLOAD/BIRTH/DEATH/SRM/RESET_U/RESET_STRESS/MATSET。LOAD対象・BOX範囲・符号は載荷で指定。"), _

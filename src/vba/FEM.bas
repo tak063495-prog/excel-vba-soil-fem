@@ -206,6 +206,8 @@ Private Function P6ParseMaterialKind(ByVal rawValue As Variant) As String
   token = UCase$(Trim$(CStr(rawValue)))
   If token = "JOINT" Or token = "接合" Or token = "IF" Or token = "INTERFACE" Then
     P6ParseMaterialKind = "JOINT"
+  ElseIf token = "STRUCT_ELASTIC" Then
+    P6ParseMaterialKind = "STRUCT_ELASTIC"
   ElseIf token = "STRUCT" Or token = "構造" Or token = "CONCRETE" Or token = "RC" Then
     P6ParseMaterialKind = "STRUCT"
   End If
@@ -315,6 +317,7 @@ Private Sub P6LoadInputCache()
     P6InputMaterialReduce(rowIndex) = P6ParseOnOff(materialValues(rowIndex, 9), True)
     P6InputMaterialInitialActive(rowIndex) = P6ParseOnOff(materialValues(rowIndex, 10), True)
     P6InputMaterialKind(rowIndex) = P6ParseMaterialKind(materialValues(rowIndex, 11))
+    If P6InputMaterialKind(rowIndex) = "STRUCT_ELASTIC" Then P6InputMaterialReduce(rowIndex) = False
     If P6InputMaterialKind(rowIndex) = "JOINT" Then
       P6InputMaterialKs(rowIndex) = P6BulkReadNumeric(materialValues, rowIndex, 12, "せん断剛性", True)
       If P6InputMaterialThickness(rowIndex) <= 0# Then P6InputMaterialThickness(rowIndex) = 1#
@@ -341,6 +344,8 @@ Private Sub P6LoadInputCache()
     materialFingerprint = P6FingerprintStep(materialFingerprint, P6QuantizeScaled(P6InputMaterialKs(rowIndex), 1000000#))
     If P6InputMaterialKind(rowIndex) = "JOINT" Then
       materialFingerprint = P6FingerprintStep(materialFingerprint, 2#)
+    ElseIf P6InputMaterialKind(rowIndex) = "STRUCT_ELASTIC" Then
+      materialFingerprint = P6FingerprintStep(materialFingerprint, 3#)
     ElseIf P6InputMaterialKind(rowIndex) = "STRUCT" Then
       materialFingerprint = P6FingerprintStep(materialFingerprint, 1#)
     End If
@@ -2491,7 +2496,7 @@ Public Function Nrf(Smat() As Double, Spmat() As Double, UE() As Double, Stmat()
       End If
     End If
     P2ResetOutput outputState
-    If Not P2MaterialPointUpdate(inputState, outputState) Then
+    If Not P2MaterialPointUpdate(inputState, outputState, P6MaterialKindOf(materialIndex) = "STRUCT_ELASTIC") Then
       If outputState.failureCode = 0 Then
         errNumber = vbObjectError + P2_FAILURE_NOT_CONVERGED
       Else

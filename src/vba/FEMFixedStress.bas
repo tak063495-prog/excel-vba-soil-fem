@@ -297,10 +297,14 @@ Public Sub FSPrepare(Optional ByVal fromCheckpoint As Boolean = False)
   Dim e As Long, a As Long, b As Long, d As Long, mat As Long, node As Long
   Dim lm() As Double, lh() As Double, ll() As Double, lq() As Double, lg() As Double
   Dim newUsed() As Boolean, initialP() As Double, pressure As Double, volume As Double, initiallyReady As Boolean, g As Long
+  Dim oldMap() As Long, oldPressure() As Double, oldReference() As Double, oldNode As Long
   If Not GWActive Then FSCoupledInputError "時間連成には初期水圧場が必要です。"
   If P6MixedUP Or P6ConsolActive Then FSCoupledInputError "時間連成と旧MIXED_UP/CONSOLは併用できません。"
   FSLoadMaterials
   initiallyReady = mReady
+  If initiallyReady And Not fromCheckpoint Then
+    oldMap = mMap: oldPressure = mP: oldReference = mReference
+  End If
   ReDim mMap(0 To 3, 0 To NumberOfElement - 1)
   ReDim mMass(0 To 3, 0 To 3, 0 To NumberOfElement - 1)
   ReDim mFlow(0 To 3, 0 To 3, 0 To NumberOfElement - 1)
@@ -329,17 +333,23 @@ Public Sub FSPrepare(Optional ByVal fromCheckpoint As Boolean = False)
         If a < 3 Or Not FEMElementIsT6(e) Then
           node = GWFlowNode(e, a): mMap(a, e) = node
           pressure = 0#
+          oldNode = -1
           If Not fromCheckpoint Then
-            If mUsed(node) Then
-              pressure = mP(node)
-            Else
-              pressure = GWInitialNodePressure(e, a)
+            If initiallyReady Then
+              oldNode = oldMap(a, e)
+              If oldNode >= 0 Then
+                If Not mUsed(oldNode) Then oldNode = -1
+              End If
             End If
+            If oldNode >= 0 Then pressure = oldPressure(oldNode) Else pressure = GWInitialNodePressure(e, a)
           End If
           If pressure < -0.0000001 Then FSCoupledInputError "時間連成の初期領域が飽和していません。要素=" & CStr(e + 1)
           If newUsed(node) And Abs(initialP(node) - pressure) > 0.0000001 Then FSCoupledInputError "共有圧力節点の初期水圧が矛盾しています。"
           initialP(node) = pressure: newUsed(node) = True
-          If Not mUsed(node) Then mP(node) = pressure: mReference(node) = pressure
+          If Not fromCheckpoint Then
+            mP(node) = pressure
+            If oldNode >= 0 Then mReference(node) = oldReference(oldNode) Else mReference(node) = pressure
+          End If
         End If
         mGravity(a, e) = lg(a)
         For b = 0 To 3
@@ -668,6 +678,11 @@ Public Function FSRunStage(ByVal stageId As Long, ByVal kind As String) As Boole
   If kind = "WAIT" And duration <= 0# Then FSCoupledInputError "時間経過には正の工程継続時間が必要です。"
   If loadMode = "LINEAR" And duration <= 0# Then FSCoupledInputError "線形載荷には正の工程時間が必要です。"
   If waterMode = "LINEAR" And duration <= 0# Then FSCoupledInputError "線形水位変化には正の工程時間が必要です。"
+  ' Validate user input before replacing dt with a saved adaptive step.
+  If minimum = 0# Then minimum = dt / 1024#
+  If maximum = 0# Then maximum = dt
+  If maximum > 0# And dt > maximum Then dt = maximum
+  If minimum > dt And duration > 0# Then FSCoupledInputError "最小刻みは初期刻み以下にしてください。"
   If kind <> "LOAD" And kind <> "APPLY" And kind <> "UNLOAD" And Len(FSLoadingSet(stageId)) > 0 Then FSCoupledInputError "載荷セットはLOAD/APPLY/UNLOADへ指定してください。"
   If kind <> "WATER" And (waterMode <> "HOLD" Or Len(series) > 0) Then FSCoupledInputError "境界水位の変更はWATER（水理変動）工程へ指定してください。"
   If Not mReady Or mGeneration <> P3ActiveSetGen Then FSPrepare
@@ -704,10 +719,8 @@ Public Function FSRunStage(ByVal stageId As Long, ByVal kind As String) As Boole
     mStageBaseSelf = baseSelf: mStageBaseApplied = baseApplied: mStageBaseBoundary = baseBoundary
     mStageEndSelf = finalSelf: mStageEndApplied = finalApplied: mStageEndBoundary = finalBoundary
   End If
-  If minimum = 0# Then minimum = dt / 1024#
-  If maximum = 0# Then maximum = dt
-  If maximum > 0# And dt > maximum Then dt = maximum
-  If minimum > dt And duration > 0# Then FSCoupledInputError "最小刻みは初期刻み以下にしてください。"
+  ' Legacy accepted checkpoints may contain dt below the configured minimum.
+  ' Retain their time partition; new cutbacks stop at the configured minimum.
   instantPending = (duration = 0# Or ((kind = "APPLY" Or kind = "LOAD" Or kind = "UNLOAD" Or kind = "BIRTH" Or kind = "DEATH") And loadMode = "INSTANT"))
   If continuing Then instantPending = False
   If saveEvery > 0# Then saveTarget = saveEvery Else saveTarget = duration
@@ -784,6 +797,7 @@ Public Function FSRunStage(ByVal stageId As Long, ByVal kind As String) As Boole
         Exit Function
       End If
       dt = take / 2#
+      If dt < minimum Then dt = minimum
     End If
   Loop
   FSResumePending = False
@@ -850,12 +864,13 @@ Public Sub FSInitializeBirth(ByVal materialId As Long)
 End Sub
 
 Public Function FSHydraulicMemory() As Variant
-  FSHydraulicMemory = Array(mP, mReference, mUsed, GWTransientState(), FSLedgerMemory(), FSRunningStage, FSStageElapsed, FSStageDuration, FSResumePending, mStageStartProfile, mStageDt, FSFluidResidual, FSMassError, FSOuterIteration, mReferenceGp)
+  FSHydraulicMemory = Array(mP, mReference, mUsed, GWTransientState(), FSLedgerMemory(), FSRunningStage, FSStageElapsed, FSStageDuration, FSResumePending, mStageStartProfile, mStageDt, FSFluidResidual, FSMassError, FSOuterIteration, mReferenceGp, mBoundaryFlow)
 End Function
 Public Sub FSRestoreHydraulicMemory(ByVal saved As Variant)
   mP = saved(0): mOldP = mP: mReference = saved(1): mUsed = saved(2): mReferenceGp = saved(14)
   GWRestoreTransientState saved(3)
   FSPrepare True
+  mBoundaryFlow = saved(15)
   FSLedgerRestore saved(4)
   FSRunningStage = saved(5): FSStageElapsed = saved(6): FSStageDuration = saved(7): FSResumePending = saved(8)
   mStageStartProfile = saved(9): mStageDt = saved(10): FSFluidResidual = saved(11): FSMassError = saved(12): FSOuterIteration = saved(13)

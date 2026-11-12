@@ -199,7 +199,7 @@ Private Sub FEMUiRestoreGuides()
   Set ws = ThisWorkbook.Worksheets("材料データ")
   FEMUiList ws, "I2:I2000", "1,0"
   FEMUiList ws, "J2:J2000", "ON,OFF"
-  FEMUiList ws, "K2:K2000", "SOIL,STRUCT,JOINT"
+  FEMUiList ws, "K2:K2000", "SOIL,STRUCT,STRUCT_ELASTIC,JOINT"
   FEMUiList ws, "M2:M2000", "0,1"
 End Sub
 
@@ -295,7 +295,10 @@ Private Sub FEMUiMakeButtons()
   Next ws
   Exit Sub
 Failed:
-  Err.Raise Err.number, "FEMUiMakeButtons", ws.name & "/" & shp.name & ": " & Err.description
+  Dim originalError As Long, originalText As String
+  originalError = Err.number: originalText = Err.description
+  If Not ws Is Nothing Then originalText = ws.name & ": " & originalText
+  Err.Raise originalError, "FEMUiMakeButtons", originalText
 End Sub
 
 Private Sub FEMUiOrderTabs()

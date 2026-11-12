@@ -161,7 +161,7 @@ Private Sub FEMMatBuildMaterialTable()
   For i = 0 To n - 1
     o = i * SFM_MAT_STRIDE
     If i < NumberOfMaterial Then
-      If Material(i).MaterialCacheReady Then mMat(o) = 1#
+      If Material(i).MaterialCacheReady And Material(i).kind <> "STRUCT_ELASTIC" Then mMat(o) = 1#
     End If
     mMat(o + 1) = Material(i).ElasticD00
     mMat(o + 2) = Material(i).ElasticD01

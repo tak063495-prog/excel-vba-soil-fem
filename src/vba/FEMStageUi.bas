@@ -1,4 +1,4 @@
-Option Explicit
+﻿Option Explicit
 
 ' Presentation only. All editable cells write through to the original input tables.
 Public Const FEM24_STAMP As String = "20261024_STAGE_01"
@@ -351,7 +351,7 @@ Private Sub Settings(ByVal ws As Worksheet, ByVal source As String, Optional ByV
     key = CStr(src.cells(r, 6).value2): include = (Len(key) > 0)
     If mode = "VIEW" Then include = (left$(key, 5) = "VIEW_")
     If mode = "SAVE" Then include = (Len(key) > 0 And left$(key, 5) <> "VIEW_")
-    If mode = "MESH" Then include = (left$(key, 8) = "MESH_BC_" Or key = "MESH_MATERIAL" Or key = "MESH_GEN_COMPARE" Or key = "MESH_T6_FALLBACK")
+    If mode = "MESH" Then include = (left$(key, 8) = "MESH_BC_" Or key = "MESH_MATERIAL" Or key = "MESH_GEN_COMPARE" Or key = "MESH_T6_FALLBACK" Or left$(key, 8) = "MESH_T6_" Or left$(key, 8) = "MESH_Q8_" Or left$(key, 19) = "MESH_QUALITY_REFINE")
     If include Then
       ws.range(ws.cells(d, 1), ws.cells(d, 3)).Merge: ws.cells(d, 1).value2 = src.cells(r, 2).value2
       ws.range(ws.cells(d, 4), ws.cells(d, 5)).Merge: ws.cells(d, 4).value2 = src.cells(r, 3).value2
@@ -410,7 +410,7 @@ Private Sub Render(ByVal ws As Worksheet)
       End Select
     Case "材料・接合"
       Select Case section
-        Case "材料特性": Table ws, "材料データ", "A2:M2000", 1, "SOIL/STRUCT/JOINTを材料ごとに指定。BIRTH待ちは初期状態OFF。SRM対象は強度低減=1。物性・重量は解析条件に合わせます。"
+        Case "材料特性": Table ws, "材料データ", "A2:M2000", 1, "SOIL/STRUCT/STRUCT_ELASTIC/JOINTを材料ごとに指定。BIRTH待ちは初期状態OFF。SRM対象は強度低減=1。物性・重量は解析条件に合わせます。"
         Case "接合条件": Table ws, "接合", "A2:G2000", 1, "材料A/Bの共有辺へ接合を生成。水圧方式SOIL/CONTINUOUS/PRESCRIBED。接合を含む場合はメッシュ生成方式の適用範囲を確認。"
         Case "圧密材料特性": Table ws, "水条件", "V12:AB211", 11, "材料番号ごとにBiot係数α、貯留1/M[1/kPa]、kx・ky[m/s]を指定。EFFECTIVEの排水骨格E・νを使用します。物性は空欄のまま計算できません。"
         Case Else: Table ws, "水条件", "F12:J211", 11, "材料番号に対応させ、TOTAL/EFFECTIVE・透水係数K[m/s]・水位線IDを指定。水頭0は非透水節点では未計算値です。"

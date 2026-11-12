@@ -235,8 +235,8 @@ Private Sub GWLoadDefinition()
       seen.Add CStr(mat), True
       kind = UCase$(Trim$(CStr(mWs.cells(r, 7).value2)))
       If kind <> "TOTAL" And kind <> "EFFECTIVE" Then GWFail "材料の応力基準をTOTAL/EFFECTIVEで指定してください。"
-      If (Material(mat).kind = "STRUCT" Or Material(mat).kind = "JOINT") And kind <> "TOTAL" Then GWFail "構造材料へ地盤の有効応力を適用できません。"
-      If Material(mat).kind = "STRUCT" Or Material(mat).kind = "JOINT" Then
+      If (Material(mat).kind = "STRUCT" Or Material(mat).kind = "STRUCT_ELASTIC" Or Material(mat).kind = "JOINT") And kind <> "TOTAL" Then GWFail "構造材料へ地盤の有効応力を適用できません。"
+      If Material(mat).kind = "STRUCT" Or Material(mat).kind = "STRUCT_ELASTIC" Or Material(mat).kind = "JOINT" Then
         If GWNum(mWs.cells(r, 8).value2, "構造体のK（初期版は遮水0）") <> 0# Then GWFail "構造体の透水は初期版の適用外です。遮水K=0を明示してください。"
       End If
       mBasis(mat) = (kind = "EFFECTIVE")
