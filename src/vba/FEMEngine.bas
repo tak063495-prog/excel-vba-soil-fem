@@ -1231,6 +1231,7 @@ End Sub
 Private Function P3JointContactChangedSinceFactor() As Boolean
   Dim i As Long, k As Long, gp As Long
   P3JointContactChangedSinceFactor = False
+  If FaceSupportContactChanged() Then P3JointContactChangedSinceFactor = True: Exit Function
   If Not P3HasJointElements Then Exit Function
   If Not P6FactorReady Then
     P3JointContactChangedSinceFactor = True
@@ -2282,6 +2283,7 @@ NextEvalElement:
   P3CurrentElementZeroIncrement = False
   If P6MixedUP Then P6AddPressureToInternalForce
   FSForceCorrection iNForce
+  FaceSupportAddForce iNForce
   For i = 0 To lastDof
     internalForce(i) = iNForce(i)
   Next i

@@ -434,6 +434,8 @@ Private Sub P6LoadInputCache()
     P6GeometryRevision = P6NextRevision(P6GeometryRevision)
     P6InputGeometryFingerprint = geometryFingerprint
   End If
+  FaceSupportRead
+  If Len(FaceSupportSignature) > 0 Then materialFingerprint = P6FingerprintStep(materialFingerprint, FaceSupportFingerprint)
   If Not P6InputFingerprintReady Or materialFingerprint <> P6InputMaterialFingerprint Then
     P6MaterialInputRevision = P6NextRevision(P6MaterialInputRevision)
     P6InputMaterialFingerprint = materialFingerprint
@@ -1142,7 +1144,7 @@ End Function
 Public Sub P6PrepareMeshCaches()
     Dim topologySignature As String
 
-    topologySignature = P6ComputeTopologySignature()
+    topologySignature = P6ComputeTopologySignature() & FaceSupportSignature
     If topologySignature <> P6RCMCacheSignature Then
         P6RCMCacheSignature = topologySignature
         P6RCMCacheReady = False
@@ -3055,6 +3057,7 @@ Public Sub SaveAnalysisReport()
   If FEM_DIAGNOSTIC_LAST_ROW >= FEM_INTEGRATED_P1_START_ROW Then
     Err.Raise vbObjectError + 3090, "FEM.SaveAnalysisReport", "診断最終行がP1開始行と重なります。FEM_DIAGNOSTIC_LAST_ROW=" & CStr(FEM_DIAGNOSTIC_LAST_ROW) & " FEM_INTEGRATED_P1_START_ROW=" & CStr(FEM_INTEGRATED_P1_START_ROW)
   End If
+  FaceSupportWriteResults
   Set ws = GetDiagnosticSheet()
    P6CaptureDiagnostics
    ws.range("A1:B" & CStr(FEM_DIAGNOSTIC_LAST_ROW)).ClearContents

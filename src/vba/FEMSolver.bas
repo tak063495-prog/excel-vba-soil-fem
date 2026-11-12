@@ -180,6 +180,7 @@ NextRcmAdjI:
     Next localI
   Next elementId
 
+  FaceSupportRCMEdges adjacency
   For nodeId = 0 To nodeCount - 1
     degree(nodeId) = adjacency(nodeId).count
   Next nodeId
@@ -265,7 +266,7 @@ NextRcmCandJ:
 NextRcmCandI:
     Next localI
   Next elementId
-  P6ComputeRCMCandidateBandwidth = candidateBandwidth
+  P6ComputeRCMCandidateBandwidth = FaceSupportCandidateBand(oldToNew, candidateBandwidth)
 End Function
 
 Private Sub P6ValidateRCMPermutation(ByRef oldToNew() As Long, ByRef newToOld() As Long)
@@ -433,7 +434,9 @@ Private Sub P6EvaluateRCMBandwidth(ByVal originalBandwidth As Long)
     End If
     Exit Sub
   End If
-  If FEMKernRcm(oldToNew, newToOld, P6RCMCandidateBandwidth) Then
+  P6RCMNativeUsed = False
+  If Len(FaceSupportSignature) = 0 Then P6RCMNativeUsed = FEMKernRcm(oldToNew, newToOld, P6RCMCandidateBandwidth)
+  If P6RCMNativeUsed Then
     P6RCMNativeUsed = True
   Else
     P6RCMNativeUsed = False
@@ -682,6 +685,7 @@ Dim errNum As Long, errSrc As String, errDesc As String
    End If
  End If
 
+ BandWidth = FaceSupportBandWidth(BandWidth)
    matrixMax = 0#
    symmetryMax = 0#
    For k = 0 To NumberOfElement - 1
@@ -719,6 +723,7 @@ Else
   For s = s To P6ScatterN - 1
     OriginalMat(P6ScatterRow(s), P6ScatterCol(s)) = OriginalMat(P6ScatterRow(s), P6ScatterCol(s)) + Elem(P6ScatterElem(s)).kmat(P6ScatterI(s), P6ScatterJ(s))
   Next s
+  FaceSupportAddBand
   If P6PrepareBiotMixed() Then
     If P6MixedUP Then
       P6CopyBand OriginalMat, TotalMat
@@ -896,6 +901,7 @@ NextCsrFillCol:
     Loop
   Next rowNo
 
+  FaceSupportAugmentCSR
   ' 行内の列番号を数値配列上で昇順にし、結果を再現可能にする。
   For rowNo = 0 To lastDof
     For position = P6CSRRowPtr(rowNo) + 1 To P6CSRRowPtr(rowNo + 1) - 1
@@ -934,7 +940,7 @@ NextCsrFillCol:
     Next localRow
   Next elementId
   P6CSRPatternReady = True
-  P6CSRPatternSignature = P6RCMCacheSignature
+  P6CSRPatternSignature = P6RCMCacheSignature & FaceSupportSignature
   P6BuildCSRPattern = True
 End Function
 
@@ -1153,7 +1159,7 @@ Private Function P6BuildCSRFromElements() As Boolean
   P6CSRMinimumDiagonal = 0#
   On Error GoTo CSRBuildFailed
   If nDof <= 0 Or lastDof < 0 Then Exit Function
-  If Not P6CSRPatternReady Or P6CSRPatternSignature <> P6RCMCacheSignature Then
+  If Not P6CSRPatternReady Or P6CSRPatternSignature <> P6RCMCacheSignature & FaceSupportSignature Then
     If Not P6BuildCSRPattern() Then Exit Function
   End If
   If P6CSRNNZ <= 0 Then Exit Function
@@ -1171,8 +1177,10 @@ Private Function P6BuildCSRFromElements() As Boolean
   P6CSRDeviatoricReady = False
   If Not P6EnsureCSRScatterList() Then Exit Function
   If Not P6AssembleCSRValuesDetailed() Then Exit Function
+  FaceSupportAddCSR
   If Not P6CheckCSRDiagonalValues(P6CSROriginalValues, True) Then
     If Not P6AssembleCSRValuesDirect() Then Exit Function
+    FaceSupportAddCSR
     If Not P6CheckCSRDiagonalValues(P6CSROriginalValues, True) Then
       SetAnalysisFailure RESULT_GLOBAL_SINGULAR, _
         "CSR数値組立後の対角成分が0または極小です。ゼロ対角数=" & CStr(P6CSRDiagonalZeroCount) & _

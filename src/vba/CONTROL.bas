@@ -287,6 +287,7 @@ Private Sub CreateMeshFromGeometryDefinition()
 
     On Error GoTo ErrorHandler
     currentStage = "開始"
+    If FaceSupportHasInput() Then Err.Raise vbObjectError + 3494, "CONTROL", "壁面支持は生成済み節点番号を参照しています。再メッシュ前に支持表を保存・解除し、生成後の節点で再設定してください。"
     MeshQualityEnsureSettings
     FEMShapeGenerationOK = False
     If AnalysisRunning Then

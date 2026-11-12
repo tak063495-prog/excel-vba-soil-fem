@@ -148,6 +148,15 @@ End Function
  Rows $wb.Worksheets.Item('ステージ') 2 1 $data.stages 6
  if($data.loads){Rows $wb.Worksheets.Item('載荷') 2 1 $data.loads $(if($data.loads[0].Count -ge 11){11}else{10})}
  if($data.jointPairs){Rows $wb.Worksheets.Item('接合') 2 1 $data.jointPairs 7}
+ $support=$null;try{$support=$wb.Worksheets.Item('壁面支持')}catch{}
+ if($null -ne $support){$support.Range('A2:G10000').ClearContents()}
+ if($data.faceSupports){
+  if($null -eq $support){$support=$wb.Worksheets.Add();$support.Name='壁面支持'}
+  $headers=@('ID','地盤節点','壁上節点','壁下節点','剛性[kN/m]','法線1/-1','備考')
+  for($c=0;$c -lt $headers.Count;$c++){$support.Cells.Item(1,$c+1).Value2=$headers[$c]}
+  $support.Range('A2:G10000').ClearContents()
+  Rows $support 2 1 $data.faceSupports 7
+ }
  if($data.shape){
   $shapePage=$wb.Worksheets.Item('形状入力')
   $shapePage.Range('B8:D2000').ClearContents();$shapePage.Range('G8:J2000').ClearContents()

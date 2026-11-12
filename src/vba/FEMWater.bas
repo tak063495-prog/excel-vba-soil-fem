@@ -1065,6 +1065,7 @@ Public Sub GWRebuildAcceptedInternalForce()
   Next e
   If P6MixedUP Then P6AddPressureToInternalForce
   FSForceCorrection iNForce
+  FaceSupportAddForce iNForce
   For i = 0 To lastDof
     P3FinalInternalForce(i) = iNForce(i)
   Next i

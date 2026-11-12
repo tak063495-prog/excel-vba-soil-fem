@@ -2271,6 +2271,7 @@ Private Function FEMIoContentHash() As String
   Dim h As Double, i As Long, j As Long
   h = 17#
   h = FEMIoMixText(h, FEM_BUILD_STAMP)
+  If Len(FaceSupportSignature) > 0 Then h = FEMIoMixText(h, FaceSupportSignature)
   h = FEMIoMixText(h, UCase$(Trim$(P6ReadTextSetting("RCM_POLICY", "AUTO"))))
   h = FEMIoMixText(h, UCase$(Trim$(P6ReadTextSetting("FLOW_POLICY", "INCONSISTENT"))))
   h = FEMIoMixText(h, UCase$(Trim$(P6ReadTextSetting("WEIGHT_MODE", "TOTAL"))))

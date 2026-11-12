@@ -223,5 +223,10 @@
         "name":  "FEMBodyWeight",
         "file":  "FEMBodyWeight.bas",
         "type":  1
+    },
+    {
+        "name":  "FEMFaceSupport",
+        "file":  "FEMFaceSupport.bas",
+        "type":  1
     }
 ]
