@@ -155,7 +155,7 @@ Public Sub FEMUiBuildGeometry()
   listRow = 0
   For Each key In unusedRows.keys
     listRow = listRow + 1
-    diagnostic(6 + listRow, 1) = CStr(key): diagnostic(6 + listRow, 2) = unusedRows(CStr(key))
+    diagnostic(7 + listRow, 1) = CStr(key): diagnostic(7 + listRow, 2) = unusedRows(CStr(key))
   Next key
   diagRow = Application.Max(usedCount + 3, 26 + innerCount)
   legacyPage.range(legacyPage.cells(diagRow, 1), legacyPage.cells(diagRow + UBound(diagnostic, 1) - 1, 2)).value2 = diagnostic

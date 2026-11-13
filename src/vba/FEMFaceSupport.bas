@@ -4,7 +4,7 @@ Option Explicit
 ' Its three-node action/reaction conserves both force and moment. No ground fixity.
 Private mCount As Long, mIds() As Long, mInputId() As Long, mK() As Double, mSense() As Double
 Private mDof() As Long, mC() As Double, mFactorClosed() As Boolean, mFactorKnown As Boolean
-Private mReadOK As Boolean
+Private mReadOK As Boolean, mMapped As Boolean
 Public FaceSupportFingerprint As Double, FaceSupportSignature As String
 
 Public Sub FaceSupportInstall()
@@ -42,8 +42,8 @@ End Function
 Public Sub FaceSupportRead()
   Dim ws As Worksheet, stages As Worksheet, v As Variant, r As Long, j As Long, n As Double
   Dim last As Long, seen As Object, key As String, mode As String
-  Dim connected() As Boolean, active() As Boolean, e As Long, i As Long
-  mCount = 0: mReadOK = False: mFactorKnown = False: FaceSupportFingerprint = 0#: FaceSupportSignature = ""
+  Dim connected() As Boolean, active() As Boolean, continuum() As Boolean, e As Long, i As Long
+  mCount = 0: mReadOK = False: mMapped = False: mFactorKnown = False: FaceSupportFingerprint = 0#: FaceSupportSignature = ""
   On Error Resume Next: Set ws = ThisWorkbook.Worksheets("壁面支持"): On Error GoTo 0
   If ws Is Nothing Then Exit Sub
   For j = 1 To 6
@@ -78,16 +78,21 @@ NextInput:
   Next r
   If mCount = 0 Then Exit Sub
   If P6ReadSetting("CONSOL_ENABLE", 0#) <> 0# Then SupportFail "壁面支持は静的解析のみです。圧密との併用は未対応です。"
-  ReDim connected(0 To P6InputNodeCount - 1): ReDim active(1 To P6InputMaterialCount)
-  For r = 1 To P6InputMaterialCount: active(P6InputMaterialId(r)) = P6InputMaterialInitialActive(r): Next r
+  ReDim connected(0 To P6InputNodeCount - 1): ReDim active(1 To P6InputMaterialCount): ReDim continuum(1 To P6InputMaterialCount)
+  For r = 1 To P6InputMaterialCount
+    active(P6InputMaterialId(r)) = P6InputMaterialInitialActive(r)
+    continuum(P6InputMaterialId(r)) = (P6InputMaterialKind(r) <> "JOINT")
+  Next r
   For e = 1 To P6InputElementCount
-    If active(P6InputElementMaterial(e)) Then
+    ' Supports attach to continuum nodes. JOINT has six actual nodes and two
+    ' optional zero fields; neither those fields nor joint-only nodes qualify.
+    If active(P6InputElementMaterial(e)) And continuum(P6InputElementMaterial(e)) Then
       For j = 1 To 8: connected(P6InputElementNode(e, j) - 1) = True: Next j
     End If
   Next e
   For i = 0 To mCount - 1
     For j = 0 To 2
-      If Not connected(mIds(i, j)) Then SupportFail "壁面支持の全節点を、初期から有効な要素へ接続してください。"
+      If Not connected(mIds(i, j)) Then SupportFail "壁面支持の全節点を、初期から有効な連続体要素へ接続してください。"
     Next j
   Next i
   ReDim mDof(0 To mCount - 1, 0 To 2): ReDim mC(0 To mCount - 1, 0 To 2): ReDim mFactorClosed(0 To mCount - 1)
@@ -107,6 +112,7 @@ End Sub
 
 Public Sub FaceSupportMap()
   Dim i As Long, j As Long, n As Long, top As Long, lower As Long, t As Double
+  mMapped = False
   If mCount > 0 And Not mReadOK Then SupportFail "壁面支持の入力検査が完了していません。"
   For i = 0 To mCount - 1
     top = mIds(i, 1): lower = mIds(i, 2)
@@ -120,6 +126,7 @@ Public Sub FaceSupportMap()
       mDof(i, j) = 2 * P6GetInternalFreeNode(n)
     Next j
   Next i
+  mMapped = True
 End Sub
 
 Private Function SupportGap(ByVal i As Long) As Double
@@ -267,13 +274,20 @@ Public Sub FaceSupportAddCSR()
   mFactorKnown = True
 End Sub
 
+Private Function SupportResultsReady() As Boolean
+  If mCount = 0 Or Not mReadOK Or Not mMapped Or lastDof < 0 Then Exit Function
+  On Error GoTo NotReady
+  SupportResultsReady = (LBound(TDisp) = 0 And UBound(TDisp) >= lastDof)
+NotReady:
+End Function
+
 Public Sub FaceSupportWriteResults()
   Dim ws As Worksheet, i As Long, gap As Double
   On Error Resume Next: Set ws = ThisWorkbook.Worksheets("壁面支持結果"): On Error GoTo 0
-  If mCount = 0 Or lastDof < 0 Or Not mReadOK Then
+  If Not SupportResultsReady() Then
     If Not ws Is Nothing Then
       ws.cells.ClearContents
-      ws.range("A1").value2 = IIf(mCount = 0, "壁面支持の入力なし", "壁面支持の入力未検証：結果なし")
+      ws.range("A1").value2 = IIf(mCount = 0, "壁面支持の入力なし", "壁面支持の入力・自由度・変位の準備未完了：結果なし")
     End If
     Exit Sub
   End If
