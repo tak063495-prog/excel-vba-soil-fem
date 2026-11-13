@@ -44,6 +44,15 @@ Public Function FaceMatrixProbe() As Variant
 End Function
 ''')
  cm=wb.VBProject.VBComponents('FEMSolver').CodeModule;cm.AddFromString('''
+Public Function FaceRemapCSRProbe() As String
+ On Error GoTo Failed
+ FaceClearMapProbe
+ If Not P6BuildCSRPattern() Then Err.Raise 1005,,"CSR pattern preparation failed"
+ If Not FaceMapReadyProbe() Then Err.Raise 1006,,"FaceSupportMap was not called"
+ FaceRemapCSRProbe="PASS":Exit Function
+Failed:
+ FaceRemapCSRProbe="ERROR|" & Err.Description
+End Function
 Public Function FaceFallbackMatrixProbe() As Double
  Dim before() As Double,i As Long,j As Long,matrixError As Double
  If P6UseCSR Then Exit Function
@@ -58,6 +67,12 @@ Public Function FaceFallbackMatrixProbe() As Double
 End Function
 ''')
  cm=wb.VBProject.VBComponents('FEMFaceSupport').CodeModule;cm.AddFromString('''
+Public Sub FaceClearMapProbe()
+ mMapped=False
+End Sub
+Public Function FaceMapReadyProbe() As Boolean
+ FaceMapReadyProbe=mMapped
+End Function
 Public Function FaceInvariantProbe() As Variant
  Dim saved() As Double,f() As Double,i As Long,j As Long,rigidMax As Double,openMax As Double,netX As Double,moment As Double,slaveForce As Double
  saved=TDisp:ReDim f(lastDof)
@@ -91,10 +106,11 @@ Public Function FaceAuditRun() As Variant
 End Function
 ''')
  r=list(app.Run(prefix+'FaceAuditRun'));assert r[0]=='PASS' and abs(r[2]-36)<1e-8 and abs(r[3]-1)<1e-8 and abs(r[4]-36)<1e-8 and r[5]<=1e-5,r
+ remap=app.Run(prefix+'FaceRemapCSRProbe');assert remap=='PASS',remap
  matrix=list(app.Run(prefix+'FaceMatrixProbe'));fallback=float(app.Run(prefix+'FaceFallbackMatrixProbe'));invariants=list(app.Run(prefix+'FaceInvariantProbe'))
  assert fallback<1e-8,fallback
  assert matrix[0]<1e-6 and max(abs(x) for x in invariants[:4])<1e-8 and invariants[4]<0,(matrix,invariants)
- record={'status':'PASS','analysis':r,'directional_jacobian_error':matrix[0],'csr':matrix[1],'bandwidth':matrix[2],'rigid_motion_force':invariants[0],'opening_force':invariants[1],'net_support_force':invariants[2],'net_support_moment':invariants[3],'compression_internal_force':invariants[4],'band_fallback_matrix_max_error':fallback}
+ record={'status':'PASS','analysis':r,'cold_csr_remap':remap,'directional_jacobian_error':matrix[0],'csr':matrix[1],'bandwidth':matrix[2],'rigid_motion_force':invariants[0],'opening_force':invariants[1],'net_support_force':invariants[2],'net_support_moment':invariants[3],'compression_internal_force':invariants[4],'band_fallback_matrix_max_error':fallback}
  (a.out/'results.json').write_text(json.dumps(record,indent=2),encoding='utf-8');print(json.dumps(record),flush=True)
 finally:
  if wb is not None:wb.Close(False)

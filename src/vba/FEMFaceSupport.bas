@@ -222,7 +222,8 @@ Public Sub FaceSupportAugmentCSR()
   Dim extra As Object, cols As Object, r As Long, c As Long, i As Long, j As Long, k As Long, p As Long, n As Long
   Dim key As Variant, rows() As Long, columns() As Long, found As Boolean
   If mCount = 0 Then Exit Sub
-  FaceSupportMap: Set extra = CreateObject("Scripting.Dictionary")
+  FaceSupportMap
+  Set extra = CreateObject("Scripting.Dictionary")
   For i = 0 To mCount - 1
     For j = 0 To 2
       r = mDof(i, j)
@@ -292,7 +293,8 @@ Public Sub FaceSupportWriteResults()
     Exit Sub
   End If
   If ws Is Nothing Then Set ws = ThisWorkbook.Worksheets.Add: ws.name = "壁面支持結果"
-  FaceSupportMap: ws.cells.ClearContents
+  FaceSupportMap
+  ws.cells.ClearContents
   ws.range("A1:H1").value2 = Array("支持ID", "盛土節点", "壁上節点", "壁下節点", "法線相対変位[m]", "盛土への支持力X[kN]", "ばね剛性[kN/m]", "接触状態")
   For i = 0 To mCount - 1
     gap = SupportGap(i)

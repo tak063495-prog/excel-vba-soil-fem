@@ -6770,7 +6770,8 @@ NextAlpha:
     P3GlobalIterationCount = P3GlobalIterationCount + 1: P6PerfNewtonCount = P6PerfNewtonCount + 1
     If Not BandSolver() Then
       If P3IsFatalFailure() Then GoTo FatalTrial
-      P3ClearTransientFailure: reason = "LINEAR_SOLVE": GoTo RestoreTrial
+      P3ClearTransientFailure
+      reason = "LINEAR_SOLVE": GoTo RestoreTrial
     End If
     direction = Disp
   Next innerStep

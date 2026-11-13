@@ -116,7 +116,8 @@ Failed:
   If Err.number <> 0 Then FEMSparseReason = "VBA_ERROR_" & CStr(Err.number)
   Err.Clear
   P6SolverEvent "SPARSE_DIRECT_FALLBACK", FEMSparseReason
-  FEMSparseReleaseFactor: mRejectedGeneration = P6TangentGeneration
+  FEMSparseReleaseFactor
+  mRejectedGeneration = P6TangentGeneration
   FEMSparseTryBandSolve = 2
 #End If
 End Function
