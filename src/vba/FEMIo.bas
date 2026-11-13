@@ -2282,6 +2282,9 @@ Private Function FEMIoContentHash() As String
   If Len(FaceSupportSignature) > 0 Then h = FEMIoMixText(h, FaceSupportSignature)
   h = FEMIoMixText(h, UCase$(Trim$(P6ReadTextSetting("RCM_POLICY", "AUTO"))))
   h = FEMIoMixText(h, UCase$(Trim$(P6ReadTextSetting("FLOW_POLICY", "INCONSISTENT"))))
+  ' Older DAVIS+SRM checkpoints included an unbounded elastic hourglass
+  ' force. Reject that incompatible operator while preserving other histories.
+  If P3SrmEnabled And UCase$(Trim$(P6ReadTextSetting("FLOW_POLICY", "INCONSISTENT"))) = "DAVIS" And P6ReadSetting("Q8_HOURGLASS_FACTOR", 0.05) > 0# Then h = FEMIoMixText(h, "SRM_MC_FORCE_V2")
   h = FEMIoMixText(h, UCase$(Trim$(P6ReadTextSetting("WEIGHT_MODE", "TOTAL"))))
   h = FEMIoMix(h, P6QuantizeScaled(P6ReadSetting("Q8_HOURGLASS_FACTOR", 0.05), 1000000#))
   If P6InputCacheReady Then

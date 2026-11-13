@@ -1736,7 +1736,7 @@ Private Function P3RebuildTangentFromSpmat() As Boolean
   If nativeTangentAllowed Then nativeTangent = FEMMatTangent(P3IncoElasticCorrection, P3FlowPolicyIsInconsistent())
   hgApplied = -1
   If nativeTangent Then
-    hgApplied = FEMKernHgApply(Not (P3SrmEnabled And P3FlowPolicyIsInconsistent() And Not P3IncoElasticCorrection))
+    hgApplied = FEMKernHgApply(Not (P3SrmEnabled And Not P3IncoElasticCorrection))
     If hgApplied > 0 Then P6HourglassReuseCount = P6HourglassReuseCount + hgApplied
   End If
   For k = 0 To NumberOfElement - 1
@@ -1778,7 +1778,7 @@ Private Function P3RebuildTangentFromSpmat() As Boolean
         If hgApplied >= 0 And FEMKernHgDone(k) Then
           unsymFlag = FEMKernUnsym(k)
         Else
-          If Not (P3SrmEnabled And P3FlowPolicyIsInconsistent() And Not P3IncoElasticCorrection) Then P6AddQ8HourglassStabilization Elem(k), Material(materialIndex).thickness, True
+          If Not (P3SrmEnabled And Not P3IncoElasticCorrection) Then P6AddQ8HourglassStabilization Elem(k), Material(materialIndex).thickness, True
           unsymFlag = False
           If Not P6NeedsFullNonsymmetric() Then unsymFlag = P3KmatIsUnsymmetric(Elem(k).kmat)
         End If
@@ -2249,7 +2249,7 @@ Private Function P3EvaluateTrialState(ByRef incrementBase() As Double, ByRef int
   If nativeOn Then
     If CurrentIncrement >= 0 Then nativeFlags = 1
     If P3TrialStateInitialized Then nativeFlags = nativeFlags Or 2
-    If P3SrmEnabled And P3FlowPolicyIsInconsistent() Then nativeFlags = nativeFlags Or 4
+    If P3SrmEnabled Then nativeFlags = nativeFlags Or 4
   End If
   nativeNext = 0
   For k = 0 To NumberOfElement - 1
@@ -2773,7 +2773,7 @@ Private Function P3RunLoadStages() As Boolean
   P3IncoElasticCorrection = False
   P3ApplyNewtonPolicy P3RunLogKind
   GWBeginLoad
-  If P3SrmEnabled And P3FlowPolicyIsInconsistent() Then P6SolverEvent "SRM_MATERIAL_FORCE", "hourglass_force=False;newton_hourglass_tangent=False;elastic_hourglass_tangent=iteration_regularization"
+  If P3SrmEnabled Then P6SolverEvent "SRM_MATERIAL_FORCE", "hourglass_force=False;newton_hourglass_tangent=False;elastic_hourglass_tangent=iteration_regularization"
   P3ResetFailureDiagnostics
   P3EvalSkipCount = 0
   P3TangentDirtyRebuildCount = 0
