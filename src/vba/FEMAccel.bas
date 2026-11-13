@@ -168,8 +168,12 @@ Public Sub AccelRememberIncrement(ByRef base() As Double, ByVal deltaLambda As D
     AccelV2aPreviousIterations = iterations: AccelV2aPreviousStep = deltaLambda
     If AccelV2a And iterations > 5 Then AccelV2aLongCandidates = AccelV2aLongCandidates + 1
   End If
-  ' Keep the existing V1 limit and leave old predictor arrays inaccessible when rejected.
-  If iterations > 5 Then Exit Sub
+  ' Retain the legacy limit by default. A long, normally converged increment
+  ' can optionally seed V1; its prediction is still checked by the real solver.
+  If iterations > 5 Then
+    If P6ReadSetting("ACCEL_PREDICT_LONG_HISTORY", 0#) <> 1# Then Exit Sub
+    If FSActive Or P6ConsolActive Then Exit Sub
+  End If
   ReDim AccelDelta(lastDof)
   For i = 0 To lastDof
     If NodeCond(i) = 0 Then AccelDelta(i) = TDisp(i) - base(i)

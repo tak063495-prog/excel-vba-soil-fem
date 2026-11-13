@@ -2767,6 +2767,7 @@ Private Function P3RunLoadStages() As Boolean
   Dim gravityRan As Boolean, applyRan As Boolean
   Dim duMax As Double
   Dim predictorUsed As Boolean, accelerationRetried As Boolean, correctionBuilt As Boolean
+  Dim predictorFailureMemo As String
   Dim logStepAction As String, recoveryRatio As Double, boundedNextStep As Double
   Dim stagnationCount As Long, elasticRetried As Boolean, newtonRetried As Boolean, elasticPreference As Boolean
   Dim elWinRes As Double, elWinIter As Long, elRate As Double, elNeed As Double
@@ -2879,6 +2880,7 @@ P3RetrySameIncrement:
       For i = 0 To lastDof
         incrementBase(i) = P3CommittedDisp(i)
       Next i
+      predictorFailureMemo = P3SrmTrialFailNote
       P3ApplyIncrementPredictor targetFactor - stageFactor, prescribedFactor, predictorUsed
       ' Compare contact Newton/line-search residuals on the SAME Dirichlet boundary.
       ' The optional predictor is disabled for JOINT; without lifting, the old
@@ -3151,6 +3153,15 @@ P3NextGlobalIteration:
         End If
         If SuppressUserMessages Then SaveP0Progress "p3_" & CStr(stageId) & "_increment_" & CStr(P3SuccessfulIncrementCount)
       Else
+        ' This operator belongs to an uncommitted predicted increment. Retry
+        ' the accepted history without V1 before declaring a model failure.
+        If predictorUsed And Not accelerationRetried And ResultStatus = RESULT_GLOBAL_SINGULAR And Not P3UserCancel And Not P3SearchFatal Then
+          If AnalysisErrorNumber = vbObjectError + 3303 Or AnalysisErrorNumber = vbObjectError + 3304 Then
+            P6SolverEvent "PREDICTOR_LINEAR_REJECT", "same_target=True;error=" & CStr(AnalysisErrorNumber)
+            P3ClearTransientFailure
+            P3SrmTrialFailNote = predictorFailureMemo
+          End If
+        End If
         ' Acceleration failures do not establish SRM FAIL. Retry the same target
         ' from committed history with all optional solver features disabled.
         StepRecoveryFailedAttempt P3AccelFailureReason()

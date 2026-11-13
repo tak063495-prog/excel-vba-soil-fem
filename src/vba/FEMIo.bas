@@ -132,6 +132,7 @@ Private Sub FEMRebuildSettingsLayout(ByVal ws As Worksheet)
   writeRow = writeRow + 1
   FEMPutSection ws, writeRow, "高速化比較（0=従来経路、各方式を単独評価）"
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ACCEL_V1_PREDICTOR", "高速化", "変位予測子", 0, "0=基準 / 1=同一ステージの確定変位増分から予測", False
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ACCEL_PREDICT_LONG_HISTORY", "高速化", "長い反復後の変位予測", 0, "1=反復5回を超えて正常収束した静的増分もV1予測に使用。切戻し・再試行・工程変更の履歴は除外。0=従来どおり5回以内。", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ACCEL_V2A_REUSE", "高速化", "増分間接線再利用", 0, "DAVISで0=基準 / 1=旧LU再利用。INCONSISTENTは毎反復更新のため休止", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ACCEL_V2B_COST", "高速化", "費用に応じた接線更新", 0, "DAVISで費用に応じた限定再利用。INCONSISTENTは毎反復更新のため休止", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ACCEL_V3_COST_SEARCH", "高速化", "費用に応じたFs探索", 0, "0=二分 / 1=保護付き探索。最終実幅は基準二分以下", False
@@ -3775,7 +3776,7 @@ End Sub
 
 Private Function FEMSettingChoiceList(ByVal keyName As String) As String
   Select Case UCase$(Trim$(keyName))
-    Case "ACCEL_STEP_FRESH_LU", "ACCEL_STEP_RECOVERY", "ACCEL_ADAPTIVE", "ACCEL_V1_PREDICTOR", "ACCEL_V2A_REUSE", "ACCEL_V2B_COST", "ACCEL_V3_COST_SEARCH", "ACCEL_V4_ANDERSON", "ACCEL_V5_GMRES_LU", "ACCEL_TRACE"
+    Case "ACCEL_STEP_FRESH_LU", "ACCEL_STEP_RECOVERY", "ACCEL_ADAPTIVE", "ACCEL_PREDICT_LONG_HISTORY", "ACCEL_V1_PREDICTOR", "ACCEL_V2A_REUSE", "ACCEL_V2B_COST", "ACCEL_V3_COST_SEARCH", "ACCEL_V4_ANDERSON", "ACCEL_V5_GMRES_LU", "ACCEL_TRACE"
       FEMSettingChoiceList = "0,1"
     Case "MESH_BC_BOTTOM", "MESH_BC_LEFT", "MESH_BC_RIGHT", "MESH_BC_TOP"
       FEMSettingChoiceList = "NONE,ROLLER,PINNED"
