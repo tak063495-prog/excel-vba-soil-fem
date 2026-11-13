@@ -793,7 +793,8 @@ Public Function P3SetMaterialForStrengthFactor(ByVal strengthFactor As Double) A
       Else
         psiDeg = origPsi
       End If
-      If P3FlowPolicyMode <> 1 And P3SrmPsiMode <> 2 Then
+      ' Apply the selected dilation policy before the Davis equivalent.
+      If P3SrmPsiMode <> 2 Then
         If psiDeg > phiDeg Then psiDeg = phiDeg
       End If
       Material(i).cohesion = P3OriginalMaterial(i).cohesion / strengthFactor
