@@ -31,3 +31,15 @@ model with shallow pressure. It checks fresh analysis and resume, scientific
 and legacy frame loading, rejection of pressure corruption above the derived
 bound, rejection of falsely precise rounded coordinates, and the zero
 allowance at a DRY endpoint.
+
+The legacy bound resolves a material selector of `*` (including an empty
+material input normalized to `*`) against the active default profile, just as
+normal hydrostatic evaluation does. Checkpoint `PROFILE` restoration takes
+precedence over the sheet default after a WATER stage. Missing profile IDs or
+profiles with fewer than two points are rejected explicitly.
+
+The precision test also accepts `--material-profile explicit|wildcard|blank`
+and `--saved-profile-override`. The latter performs a real WATER stage from a
+different sheet default to the saved shallow-water profile. Every mode checks
+legacy frame loading and actual analysis resume, strict new-file checks,
+pressure corruption rejection and the unchanged DRY endpoint guard.

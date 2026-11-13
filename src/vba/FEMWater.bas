@@ -938,7 +938,11 @@ Private Function GWLegacyPressureRoundoff(ByVal e As Long, ByVal gp As Long) As 
   Dim shapeSum As Double, delta As Double, px As Double, py As Double
   If mMode <> "HYDROSTATIC" Or Material(Elem(e).MatNo).kind <> "SOIL" Then Exit Function
   profile = mMatProfile(Elem(e).MatNo)
+  If profile = "*" Then profile = mProfile
+  If mProfileData Is Nothing Then GWReadProfileCache
+  If Not mProfileData.Exists(profile) Then GWFail "水位線がありません。ID=" & profile
   points = mProfileData(profile)
+  If UBound(points, 2) < 1 Then GWFail "水位線には2点以上が必要です。ID=" & profile
   For j = 1 To UBound(points, 2)
     slope = Abs((points(1, j) - points(1, j - 1)) / (points(0, j) - points(0, j - 1)))
     If slope > bound Then bound = slope

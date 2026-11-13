@@ -5,6 +5,8 @@ import win32com.client
 
 ap=argparse.ArgumentParser();ap.add_argument('--book',type=Path,required=True)
 ap.add_argument('--out',type=Path,required=True);ap.add_argument('--runner',type=Path)
+ap.add_argument('--material-profile',choices=['explicit','wildcard','blank'],default='explicit')
+ap.add_argument('--saved-profile-override',action='store_true')
 a=ap.parse_args();root=Path(__file__).resolve().parents[1];a.out=a.out.resolve()
 a.out.mkdir(parents=True,exist_ok=False)
 data=json.loads((root/'tests/fixtures/mixed_t6/mixed_water.json').read_text(encoding='utf-8'))
@@ -12,7 +14,14 @@ offset=.123456789045
 for node in data['nodes']:node[1]+=offset;node[2]+=offset
 level=offset+(1-.5773502692)/2+.0005
 data['name']='shallow_water_precision'
+material_profile={'explicit':'W','wildcard':'*','blank':''}[a.material_profile]
+data['water']['materials'][0][3]=material_profile
 data['water']['profiles']=[['W',-1+offset,level,''],['W',3+offset,level,'']]
+if a.saved_profile_override:
+ assert a.material_profile!='explicit','The stage-override test needs a default material selector'
+ data['water']['defaultProfile']='OTHER'
+ data['water']['profiles'] += [['OTHER',-1+offset,level+.1,''],['OTHER',3+offset,level+.1,'']]
+ data['stages'].append([2,'WATER','W',1,1,'switch from OTHER to shallow W'])
 data.setdefault('settings',{})['EXPORT_MODE']='STAGE'
 fixture=a.out/'fixture.json';fixture.write_text(json.dumps(data),encoding='utf-8')
 runner=(a.runner or root/'tests/run_groundwater_fixture.ps1').resolve()
@@ -20,7 +29,7 @@ dest=a.out/'analysis';log=a.out/'analysis.log'
 with log.open('w',encoding='utf-8') as stream:
  result=subprocess.run(['pwsh','-NoProfile','-File',str(runner),'-Book',str(a.book.resolve()),'-Fixture',str(fixture),'-Out',str(dest),'-Native','AUTO','-Resume'],cwd=root,stdout=stream,stderr=subprocess.STDOUT)
 if result.returncode:print(log.read_text(encoding='utf-8')[-2500:]);sys.exit(1)
-scientific=dest/f"{data['name']}_out"/'stg01_GRAVITY'
+scientific=dest/f"{data['name']}_out"/('stg02_WATER' if a.saved_profile_override else 'stg01_GRAVITY')
 node=list(csv.reader((scientific/'node.csv').open()))
 assert all('E' in value.upper() for row in node[1:] for value in row[1:5])
 expected={int(n[0]):n[1:3] for n in data['nodes']}
@@ -48,6 +57,15 @@ try:
  for ws in w.Worksheets:
   if ws.ProtectContents:ws.Protect(Password='',DrawingObjects=False,Contents=True,Scenarios=True,UserInterfaceOnly=True)
  mod=w.VBProject.VBComponents.Add(1);mod.Name='CoordinatePrecisionProbe';mod.CodeModule.AddFromString('''
+Public Function CoordinatePrecisionResume(ByVal folder As String) As String
+ On Error GoTo Failed
+ SuppressUserMessages=True
+ FEMWriteTextSetting "EXPORT_LOAD",folder
+ P0_RunAnalysis
+ CoordinatePrecisionResume=ResultStatus & "|" & AnalysisMessage:Exit Function
+Failed:
+ CoordinatePrecisionResume="ERROR|" & Err.Description
+End Function
 Public Function CoordinatePrecisionView(ByVal folder As String) As String
  On Error GoTo Failed
  SuppressUserMessages=True
@@ -59,27 +77,34 @@ End Function
 ''')
  cm=w.VBProject.VBComponents('FEMWater').CodeModule;cm.AddFromString('''
 Public Function CoordinatePrecisionEndpointProbe() As Variant
+ On Error GoTo Failed
  Dim saved As Variant,points As Variant,profile As String,px As Double,py As Double,oldOutside As Boolean
  Dim interior As Double,endpoint As Double
- profile=mMatProfile(Elem(0).MatNo):saved=mProfileData(profile):points=saved
+ profile=mMatProfile(Elem(0).MatNo)
+ If profile="*" Then profile=mProfile
+ saved=mProfileData(profile):points=saved
  oldOutside=mOutsideDry
  interior=GWLegacyPressureRoundoff(0,0)
  FEMGaussPhysicalXY 0,0,px,py
  points(0,0)=px:mProfileData(profile)=points:mOutsideDry=True
  endpoint=GWLegacyPressureRoundoff(0,0)
  mProfileData(profile)=saved:mOutsideDry=oldOutside
- CoordinatePrecisionEndpointProbe=Array(interior,endpoint)
+ CoordinatePrecisionEndpointProbe=Array(interior,endpoint):Exit Function
+Failed:
+ CoordinatePrecisionEndpointProbe=Array("ERROR",Err.Description)
 End Function
 ''')
  prefix="'"+w.Name+"'!";views={}
- for name,folder in (('scientific',scientific),('legacy_fixed10',legacy),('legacy_corrupt_pressure',corrupt),('scientific_rounded_coordinates',scientific_rounded)):
+ for name,folder in (('legacy_fixed10',legacy),('scientific',scientific),('legacy_corrupt_pressure',corrupt),('scientific_rounded_coordinates',scientific_rounded)):
   value=app.Run(prefix+'CoordinatePrecisionView',str(folder));views[name]=value
   if name in ('legacy_corrupt_pressure','scientific_rounded_coordinates'):assert value.startswith('ERROR|') and 'チェックポイント' in value,value
   else:assert value=='PASS',(name,value)
   if name=='scientific':
    interior,endpoint=app.Run(prefix+'CoordinatePrecisionEndpointProbe')
    assert interior>0 and endpoint==0,(interior,endpoint)
- record={'status':'PASS','fresh_and_resume':'PASS','new_coordinate_error_m':error,'legacy_coordinate_error_m':legacy_error,'views':views,'corrupt_pressure_delta_kPa':1e-7,'interior_roundoff_bound_kPa':interior,'dry_endpoint_roundoff_bound_kPa':endpoint}
+ legacy_resume=app.Run(prefix+'CoordinatePrecisionResume',str(legacy))
+ assert legacy_resume.startswith('PASS|'),legacy_resume
+ record={'legacy_analysis_resume':legacy_resume,'status':'PASS','fresh_and_resume':'PASS','material_profile':a.material_profile,'saved_profile_override':a.saved_profile_override,'new_coordinate_error_m':error,'legacy_coordinate_error_m':legacy_error,'views':views,'corrupt_pressure_delta_kPa':1e-7,'interior_roundoff_bound_kPa':interior,'dry_endpoint_roundoff_bound_kPa':endpoint}
  (a.out/'results.json').write_text(json.dumps(record,indent=2,ensure_ascii=False),encoding='utf-8')
  print(json.dumps(record),flush=True)
 finally:
