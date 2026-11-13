@@ -4148,6 +4148,47 @@ Public Sub P3PrepareOutputResidual()
   ComputeResidual
 End Sub
 
+Private Function P3CanReuseStaticPrefixForFs1() As Boolean
+  Dim i As Long, lastActive As Long, hasApply As Boolean, kindText As String
+  If P6ReadSetting("SRM_REUSE_STATIC_FS1", 0#) <> 1# Then Exit Function
+  If P3SrmTrialRunning Or P3UserCancel Or P3SearchFatal Then Exit Function
+  If FSActive Or P6MixedUP Or P6ConsolActive Then Exit Function
+  If P3GravityReuseStatus <> "PASS" Or Not P3GravityCommitted Then Exit Function
+  If ResultStatus <> RESULT_NOT_RUN And ResultStatus <> RESULT_PASS Then Exit Function
+  If Not P2IsFinite(P3CurrentStrengthFactor) Then Exit Function
+  If Abs(P3CurrentStrengthFactor - 1#) > 0.000000000001 Then Exit Function
+  If P3SrmReplayStart <> 0 Or P3SrmReplayLimit < 1 Then Exit Function
+  If Not P2IsFinite(RelativeResidualFree) Or RelativeResidualFree < 0# Then Exit Function
+  If RelativeResidualFree > P3_ENGINEERING_RESIDUAL Or Not P3BoundaryDispSatisfied() Then Exit Function
+  For i = 1 To P3SrmReplayLimit
+    If P3StageOn(i) Then
+      kindText = P3StageKind(i)
+      If kindText <> "GRAVITY" And kindText <> "APPLY" And kindText <> "LOAD" Then Exit Function
+      If kindText <> "GRAVITY" Then hasApply = True
+      lastActive = i
+    End If
+  Next i
+  If Not hasApply Or lastActive < 1 Then Exit Function
+  If P3LastCompletedStage <> P3StageId(lastActive) Then Exit Function
+  P3CanReuseStaticPrefixForFs1 = True
+End Function
+
+Private Function P3ReadSrmScanStep(ByRef scanStep As Double) As Boolean
+  Dim raw As String
+  On Error GoTo InvalidSetting
+  raw = P6ReadTextSetting("SRM_SCAN_STEP", "0.1")
+  If Not IsNumeric(raw) Then GoTo InvalidSetting
+  scanStep = CDbl(raw)
+  If Not P2IsFinite(scanStep) Then GoTo InvalidSetting
+  If scanStep < 0.001 Or scanStep > 1# Then GoTo InvalidSetting
+  P3ReadSrmScanStep = True
+  Exit Function
+InvalidSetting:
+  If Err.number <> 0 And Err.number <> 6 And Err.number <> 13 Then Err.Raise Err.number, Err.source, Err.description
+  Err.Clear
+  SetAnalysisFailure RESULT_INPUT_ERROR, "SRM_SCAN_STEPは0.001以上1以下の数値を指定してください。", vbObjectError + 3291, -1, -1, CurrentIncrement, CurrentIteration
+End Function
+
 Private Function P3CanReuseGravityForFs1() As Boolean
   Dim i As Long, kindText As String
   P3CanReuseGravityForFs1 = False
@@ -4231,6 +4272,7 @@ Private Function P3RunStrengthReduction() As Boolean
   Dim fsValue As Double, fMax As Double, fTol As Double
   Dim flow As Double, fHigh As Double, stepValue As Double
   Dim bisectCount As Long, baselineWidth As Double
+  Dim scanStep As Double, reuseStaticPrefix As Boolean, reuseLabel As String
   P3RunStrengthReduction = False
   P3SrmTrialCount = 0
   P3SrmLower = 0#
@@ -4259,8 +4301,14 @@ Private Function P3RunStrengthReduction() As Boolean
     End If
     Exit Function
   End If
+  If Not P3ReadSrmScanStep(scanStep) Then
+    FSS = 0#: P3FosInterpretation = "UNDETERMINED"
+    Exit Function
+  End If
   fsValue = 1#
-  If P3CanReuseGravityForFs1() Then
+  reuseStaticPrefix = P3CanReuseStaticPrefixForFs1()
+  If P3CanReuseGravityForFs1() Or reuseStaticPrefix Then
+    If reuseStaticPrefix Then reuseLabel = "STATIC_PREFIX" Else reuseLabel = "GRAVITY"
     P6SrmFs1ReuseCount = P6SrmFs1ReuseCount + 1
     P3SrmTrialCount = P3SrmTrialCount + 1
     P6PerfMark
@@ -4269,14 +4317,14 @@ Private Function P3RunStrengthReduction() As Boolean
       P3RunLogStageNo = P3SrmLogStageNo
       P3RunLogKind = P3SrmLogKind
     End If
-    FEMAppendRunLog "SRM試行", "TRY", "Fs=1.000 REUSE_FROM_GRAVITY"
+    FEMAppendRunLog "SRM試行", "TRY", "Fs=1.000 REUSE_FROM_" & reuseLabel
     If P3GravityReuseStatus = "PASS" Then
       P3CaptureSrmSuccessSnapshot 1#
-      FEMAppendRunLog "SRM試行", "PASS", "Fs=1.000 PASS_REUSED_FROM_GRAVITY 残差=" & Format$(RelativeResidualFree, "0.000E+00")
+      FEMAppendRunLog "SRM試行", "PASS", "Fs=1.000 PASS_REUSED_FROM_" & reuseLabel & " 残差=" & Format$(RelativeResidualFree, "0.000E+00")
       P6PerfEmitReuse "PASS_REUSED"
       flow = 1#
       P3SrmLower = 1#
-      stepValue = 0.1
+      stepValue = scanStep
       Do
         fsValue = flow + stepValue
         If fsValue > fMax Then fsValue = fMax
@@ -4320,7 +4368,7 @@ Private Function P3RunStrengthReduction() As Boolean
     End If
   ElseIf P3TryStrengthFactor(fsValue) Then
     flow = fsValue
-    stepValue = 0.1
+    stepValue = scanStep
     Do
       fsValue = flow + stepValue
       If fsValue > fMax Then fsValue = fMax
@@ -6707,8 +6755,10 @@ Private Function P3TryAssociatedPotentialWatchdog(ByRef incrementBase() As Doubl
   Dim originalNorm As Double, alpha As Double, firstAlpha As Double, oldWork As Double, newWork As Double, residualCap As Double
   Dim oldLinearResidual As Double, oldLinearIterations As Long, stepOK As Boolean, exhausted As Boolean, reason As String
   Dim errorNumber As Long, errorMessage As String, failedStatus As String, failedError As Long, failedElement As Long, failedGauss As Long
+  Dim oldTrialFailNote As String
   On Error GoTo FatalTrial
   savedT = TDisp: savedDirection = Disp
+  oldTrialFailNote = P3SrmTrialFailNote
   oldLinearResidual = P6IterativeLastResidual: oldLinearIterations = P6IterativeLastIterations
   If Not P3EvaluateTrialState(incrementBase, internalForce) Then GoTo FatalTrial
   P3UpdateResidualMetrics targetForce, internalForce
@@ -6774,6 +6824,13 @@ NextAlpha:
     localIteration = localIteration + 1
     P3GlobalIterationCount = P3GlobalIterationCount + 1: P6PerfNewtonCount = P6PerfNewtonCount + 1
     If Not BandSolver() Then
+      ' This operator belongs to an uncommitted look-ahead point. A singular
+      ' trial direction does not invalidate the previously accepted state.
+      If ResultStatus = RESULT_GLOBAL_SINGULAR And Not P3UserCancel And Not P3SearchFatal And AnalysisErrorNumber <> 18 Then
+        P6SolverEvent "ASSOCIATED_ENERGY_LINEAR_REJECT", "operator=UNCOMMITTED_LOOKAHEAD;error=" & CStr(AnalysisErrorNumber)
+        P3ClearTransientFailure
+        reason = "TRIAL_LINEAR_SOLVE": GoTo RestoreTrial
+      End If
       If P3IsFatalFailure() Then GoTo FatalTrial
       P3ClearTransientFailure
       reason = "LINEAR_SOLVE": GoTo RestoreTrial
@@ -6782,6 +6839,7 @@ NextAlpha:
   Next innerStep
 RestoreTrial:
   P6SolverEvent "ASSOCIATED_ENERGY_REJECT", "reason=" & reason
+  P3SrmTrialFailNote = oldTrialFailNote
   P3RestoreCommittedMaterialState False
   For i = 0 To lastDof: TDisp(i) = savedT(i): UDisp(i) = savedT(i): Disp(i) = savedDirection(i): Next i
   If Not P3EvaluateTrialState(incrementBase, internalForce) Then GoTo FatalTrial

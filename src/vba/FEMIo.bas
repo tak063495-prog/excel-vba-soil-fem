@@ -124,6 +124,8 @@ Private Sub FEMRebuildSettingsLayout(ByVal ws As Worksheet)
   writeRow = writeRow + 1
   FEMPutSection ws, writeRow, "3. SRMパラメータ（実行の有無はステージシート）"
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "SRM_FMAX", "SRM", "上限Fs", 3#, "探索の上限", False
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "SRM_SCAN_STEP", "SRM", "上限探索の刻み", 0.1, "0.001～1。大規模では0.5等で上限を探し、最終区間幅はSRM_TOLで決定。既定0.1。", False
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "SRM_REUSE_STATIC_FS1", "SRM", "収束済み静的履歴のFs1再利用", 0, "1=GRAVITYとLOAD/APPLYだけの履歴がFs1で全て収束済みなら、その状態を探索の初期収束点に使用。未完了・施工変更・時間連成は再計算。0=従来動作。", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "SRM_TOL", "SRM", "許容差", 0.025, "通常0.025 / 検証0.0125。PASSとFAILの幅がこれ以下で終了", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "SRM_PSI_POLICY", "SRM", "ψの扱い", "CAP", "CAP=ψをφ'以下に制限 / REDUCE=ψもFsで低減 / KEEP=入力のまま", True
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "SRM_MODE", "SRM", "モード", "REAPPLY", "REAPPLYのみ。各Fs試行で先行ステージを再実行", True
