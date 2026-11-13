@@ -21,10 +21,18 @@ End Function
 Public Function FaceUiMeshMessage() As String
  FaceUiMeshMessage=FEMUiMeshPreviewError
 End Function
+Public Function FaceUiValidate() As String
+ On Error GoTo Invalid
+ FEMUiValidateSettings
+ FaceUiValidate="PASS":Exit Function
+Invalid:
+ FaceUiValidate="ERROR|" & Err.Description
+End Function
 ''')
  prefix="'"+wb.Name+"'!"
  # Follow Workbook_Open's canonical-settings refresh before rendering front pages.
- for key in ('NATIVE_SPARSE_DIRECT','NATIVE_WATER_TANGENT','ASSOCIATED_ENERGY_FIRST'):app.Run(prefix+'FEMWriteNumericSetting',key,1.)
+ for key in ('NATIVE_SPARSE_DIRECT','NATIVE_WATER_TANGENT','ASSOCIATED_ENERGY_FIRST','STATIC_KEEP_ACCEPTED_STEP'):app.Run(prefix+'FEMWriteNumericSetting',key,1.)
+ app.Run(prefix+'FEMWriteNumericSetting','STATIC_INITIAL_STEPS',20.)
  app.Run(prefix+'FEMWriteBuildStamp',False);app.Run(prefix+'FEM24Install');app.Run(prefix+'FEM24Water')
  app.EnableEvents=True;page=wb.Worksheets('境界・水条件');page.Range('C4').Value2='壁面支持'
  raw=wb.Worksheets('壁面支持');old=raw.Range('E2').Value2;assert page.Range('E8').Value2==old
@@ -36,7 +44,7 @@ End Function
  assert wb.Worksheets('節点データ').Range('A1:I20').Value2==before,'Remeshing changed ID-based support nodes'
  assert '壁面支持' in app.Run(prefix+'FaceUiMeshMessage')
  options={}
- for key in ('NATIVE_SPARSE_DIRECT','NATIVE_WATER_TANGENT','ASSOCIATED_ENERGY_RECOVERY','ASSOCIATED_ENERGY_FIRST'):
+ for key in ('NATIVE_SPARSE_DIRECT','NATIVE_WATER_TANGENT','ASSOCIATED_ENERGY_RECOVERY','ASSOCIATED_ENERGY_FIRST','STATIC_KEEP_ACCEPTED_STEP','STATIC_INITIAL_STEPS'):
   found=[]
   for name in ('メッシュ設定','解析設定','高速化設定','出力・表示','詳細設定'):
    sheet=wb.Worksheets(name);last=sheet.Cells(sheet.Rows.Count,6).End(-4162).Row
@@ -44,10 +52,23 @@ End Function
     if values[3]==key:found.append((sheet,row))
   assert len(found)==1,(key,[(s.Name,r) for s,r in found])
   sheet,row=found[0];cell=sheet.Cells(row,3);original=cell.Value2
-  assert cell.Validation.Type==3 and cell.Validation.Formula1.replace(';',',')=='0,1',(key,cell.Validation.Formula1)
-  for value in (0.,1.,original):
+  if key=='STATIC_INITIAL_STEPS':
+   assert cell.Validation.Type==7 and '100000' in cell.Validation.Formula1
+   values=(0.,10.,20.,100000.,original)
+  else:
+   assert cell.Validation.Type==3 and cell.Validation.Formula1.replace(';',',')=='0,1',(key,cell.Validation.Formula1)
+   values=(0.,1.,original)
+  for value in values:
    cell.Value2=value
    assert app.Run(prefix+'FEMReadSetting',key,-1.)==value,(key,value)
+  if key=='STATIC_INITIAL_STEPS':
+   assert app.Run(prefix+'FaceUiValidate')=='PASS'
+   for invalid in (-1.,.5,100001.):
+    cell.Value2=invalid
+    message=app.Run(prefix+'FaceUiValidate')
+    assert message.startswith('ERROR|') and key in message,(invalid,message)
+   cell.Value2=original
+   assert app.Run(prefix+'FaceUiValidate')=='PASS'
   options[key]={'page':sheet.Name,'row':row,'preserved_value':original,'write_through':'PASS'}
  record={'status':'PASS','front_setting_write_through':True,'front_edit_dirty_flags':front,'raw_edit_dirty_flags':direct,'remesh_preserved_nodes':True,'stiffness_value':old}
  record['solver_options']=options

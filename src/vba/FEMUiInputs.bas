@@ -108,6 +108,7 @@ Private Sub FEMUiEnsureSolverOptions()
   Dim r As Long, sourceRow As Long, targetRow As Long, keyName As String
   options = Array(Array("NONSYM_SOLVER", "解析設定"), Array("NONSYM_ELASTIC_START_DOF", "解析設定"), _
     Array("ASSOCIATED_ENERGY_RECOVERY", "解析設定"), Array("ASSOCIATED_ENERGY_FIRST", "解析設定"), _
+    Array("STATIC_KEEP_ACCEPTED_STEP", "解析設定"), Array("STATIC_INITIAL_STEPS", "解析設定"), _
     Array("NATIVE_SPARSE_DIRECT", "高速化設定"), Array("NATIVE_WATER_TANGENT", "高速化設定"))
   Set legacy = ThisWorkbook.Worksheets("設定")
   ' Append only: existing input/formula positions are never moved by this migration.

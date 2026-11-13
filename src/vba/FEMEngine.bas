@@ -2720,6 +2720,36 @@ Private Function P3GlobalIterationLimit(ByVal iteration As Long) As Long
   P3GlobalIterationLimit = NewtonProgressLimit(P3BaseGlobalIterationLimit(), iteration)
 End Function
 
+Private Function P3ConfiguredInitialStep(ByVal legacyStep As Double) As Double
+  Dim count As Double
+  count = P6ReadSetting("STATIC_INITIAL_STEPS", 0#)
+  If Not P2IsFinite(count) Or count < 0# Or count > 100000# Then
+    Err.Raise vbObjectError + 3271, "P3ConfiguredInitialStep", "STATIC_INITIAL_STEPS must be 0 or an integer from 1 to 100000."
+  End If
+  If count <> Fix(count) Then Err.Raise vbObjectError + 3271, "P3ConfiguredInitialStep", "STATIC_INITIAL_STEPS must be an integer."
+  P3ConfiguredInitialStep = legacyStep
+  If count > 0# Then P3ConfiguredInitialStep = 1# / count
+End Function
+
+Private Sub P3AcceptedNewtonStep(ByRef stepSize As Double, ByVal iterations As Long, ByVal recoveryRatio As Double, ByRef action As String)
+  If iterations <= 2 Then
+    stepSize = stepSize * 1.5: action = "GROW_1_5"
+  ElseIf iterations <= 5 Then
+    action = "KEEP"
+    If recoveryRatio > 1# Then
+      stepSize = stepSize * recoveryRatio: action = "RECOVER_1_1"
+    End If
+  ElseIf P6ReadSetting("STATIC_KEEP_ACCEPTED_STEP", 0#) = 1# Then
+    ' Only converged normal-Newton increments reach this helper.
+    ' Failed attempts retain their independent rollback/cutback policy.
+    action = "KEEP_CONVERGED"
+  ElseIf iterations <= 8 Then
+    stepSize = stepSize * 0.7: action = "SHRINK_0_7"
+  Else
+    stepSize = stepSize * 0.5: action = "SHRINK_0_5"
+  End If
+End Sub
+
 Private Function P3RunLoadStages() As Boolean
   Dim targetForce() As Double, incrementBase() As Double, internalForce() As Double
   Dim i As Long, stageId As Long, stageSteps As Long, localIteration As Long
@@ -2810,6 +2840,7 @@ Private Function P3RunLoadStages() As Boolean
         stepSize = P3LastSuccessStepSize
       End If
     End If
+    stepSize = P3ConfiguredInitialStep(stepSize)
     elasticPreference = P6PreferElasticStart()
     If elasticPreference Then P6SolverEvent "ELASTIC_CORRECTION_START", "reason=LARGE_GMRES;dof=" & CStr(nDof) & ";force_law=NONASSOCIATED_UNCHANGED"
     If stepSize > P3_MAX_STEP_SIZE Then stepSize = P3_MAX_STEP_SIZE
@@ -3087,23 +3118,7 @@ P3NextGlobalIteration:
             stepSize = stepSize * 0.5: logStepAction = "ELASTIC_SHRINK_0_5"
           End If
         Else
-        If localIteration <= 2 Then
-          stepSize = stepSize * 1.5
-          logStepAction = "GROW_1_5"
-        ElseIf localIteration <= 5 Then
-          stepSize = stepSize
-          logStepAction = "KEEP"
-          If recoveryRatio > 1# Then
-            stepSize = stepSize * recoveryRatio
-            logStepAction = "RECOVER_1_1"
-          End If
-        ElseIf localIteration <= 8 Then
-          stepSize = stepSize * 0.7
-          logStepAction = "SHRINK_0_7"
-        Else
-          stepSize = stepSize * 0.5
-          logStepAction = "SHRINK_0_5"
-        End If
+          P3AcceptedNewtonStep stepSize, localIteration, recoveryRatio, logStepAction
         End If
         boundedNextStep = StepRecoveryBoundNextStep(stepSize)
         If boundedNextStep < stepSize Then

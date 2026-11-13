@@ -119,6 +119,8 @@ Private Sub FEMRebuildSettingsLayout(ByVal ws As Worksheet)
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NONSYM_ELASTIC_START_DOF", "解析", "非関連の補助開始規模", 2000#, "GMRES選択時、この自由度数以上では弾性補助から開始。材料則・残差判定は維持。0=通常Newton開始。必要時は通常Newtonへ再試行", True
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ASSOCIATED_ENERGY_RECOVERY", "解析", "関連流れの停滞回復", 1, "1=関連流れ・単一材料更新の静的解析で、ポテンシャル降下を確認する限定試行。元の自由節点残差を減らす補正だけ受理。0=従来の回復経路。", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ASSOCIATED_ENERGY_FIRST", "解析", "関連流れの先行回復試行", 0, "1=適用可能な通常Newton補正で限定回復を先に試す。受理条件は元の自由節点残差の減少。0=ラインサーチ失敗後のみ。", False
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "STATIC_KEEP_ACCEPTED_STEP", "解析", "収束済み増分幅の維持", 0, "1=通常Newtonが収束した増分を反復回数だけでは縮小しない。失敗時の縮小・残差判定は維持。0=従来の適応刻み。", False
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "STATIC_INITIAL_STEPS", "解析", "静的初期分割数", 0, "0=自重10・載荷20分割の従来値。1～100000の整数=各静的段階の初期増分1/分割数。失敗時は自動縮小。", False
   writeRow = writeRow + 1
   FEMPutSection ws, writeRow, "3. SRMパラメータ（実行の有無はステージシート）"
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "SRM_FMAX", "SRM", "上限Fs", 3#, "探索の上限", False

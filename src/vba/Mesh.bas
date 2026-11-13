@@ -654,6 +654,10 @@ Public Function P5QualityMeetsSettings() As Boolean
 End Function
 
 Public Function P5QualitySummary() As String
+    If P5Q8Count + P5T6Count = 0 Then
+        P5QualitySummary = "このセッションではメッシュ品質を未評価です。要素数0・警告0は品質合格を意味しません。"
+        Exit Function
+    End If
     P5QualitySummary = "Q8=" & CStr(P5Q8Count) & "（形状目標外" & CStr(P5Q8ShapeWarnings) & "）、T6=" & CStr(P5T6Count) & "（形状目標外" & CStr(P5T6ShapeWarnings) & "）、サイズ目標外=" & CStr(P5SizeWarnings) & "、最小面積=" & Format$(P5MinElementArea, "0.000E+00") & _
                        "、最小Jacobian=" & Format$(P5MinJacobian, "0.000E+00") & _
                        "、最小角度=" & Format$(P5MinAngleDeg, "0.0") & "°" & _
