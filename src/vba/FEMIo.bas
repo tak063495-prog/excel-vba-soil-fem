@@ -4123,15 +4123,10 @@ WriteFailed:
   Err.Clear
 End Sub
 
-' Stiff contact springs amplify rounded gap errors; retain Double-scale kinematics.
+' Retain high precision for all kinematics. Fixed-10 coordinates can change
+' regenerated shallow pore pressure and fixed-12 gaps affect stiff supports.
 Private Function FEMIoKinematicText(ByVal value As Double, ByVal coordinate As Boolean) As String
-  If GWActive And P3HasJointElements Then
-    FEMIoKinematicText = Replace$(Format$(value, "0.0000000000000000E+00"), Application.International(xlDecimalSeparator), ".")
-  ElseIf coordinate Then
-    FEMIoKinematicText = Format$(value, "0.0000000000")
-  Else
-    FEMIoKinematicText = Format$(value, "0.000000000000")
-  End If
+  FEMIoKinematicText = Replace$(Format$(value, "0.0000000000000000E+00"), Application.International(xlDecimalSeparator), ".")
 End Function
 
 Public Function FEMIoFrameSignature() As String

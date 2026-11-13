@@ -907,10 +907,60 @@ Failed:
   End If
 End Function
 
+Private Function GWLegacyRoundedCoordinates(ByVal folder As String) As Boolean
+  Dim f As Integer, line As String, fields() As String, j As Long, dot As Long
+  Dim failedNumber As Long, failedText As String
+  On Error GoTo Failed
+  f = FreeFile
+  Open folder & Application.PathSeparator & "node.csv" For Input As #f
+  Line Input #f, line
+  If Not EOF(f) Then Line Input #f, line Else line = ""
+  Close #f: f = 0
+  fields = Split(line, ",")
+  If UBound(fields) <> 6 Then Exit Function
+  For j = 1 To 2
+    If InStr(1, UCase$(fields(j)), "E") > 0 Then Exit Function
+    dot = InStr(1, fields(j), ".")
+    If dot = 0 Or Len(fields(j)) - dot <> 10 Then Exit Function
+  Next j
+  GWLegacyRoundedCoordinates = True
+  Exit Function
+Failed:
+  failedNumber = Err.number: failedText = Err.description
+  On Error Resume Next
+  If f > 0 Then Close #f
+  On Error GoTo 0
+  Err.Raise failedNumber, "GWLegacyRoundedCoordinates", failedText
+End Function
+
+Private Function GWLegacyPressureRoundoff(ByVal e As Long, ByVal gp As Long) As Double
+  Dim points As Variant, profile As String, j As Long, slope As Double, bound As Double
+  Dim shapeSum As Double, delta As Double, px As Double, py As Double
+  If mMode <> "HYDROSTATIC" Or Material(Elem(e).MatNo).kind <> "SOIL" Then Exit Function
+  profile = mMatProfile(Elem(e).MatNo)
+  points = mProfileData(profile)
+  For j = 1 To UBound(points, 2)
+    slope = Abs((points(1, j) - points(1, j - 1)) / (points(0, j) - points(0, j - 1)))
+    If slope > bound Then bound = slope
+  Next j
+  For j = 0 To 7: shapeSum = shapeSum + Abs(FEMGaussShapeValue(e, gp, j)): Next j
+  ' Old node.csv rounded each coordinate to 10 decimals. Propagate that
+  ' half-quantum through the actual element shape and hydrostatic gradient.
+  delta = 0.000000000051 * shapeSum
+  If mOutsideDry Then
+    FEMGaussPhysicalXY e, gp, px, py
+    ' DRY has a discontinuity at the profile endpoints. Never use the
+    ' continuous-gradient allowance to cross or conceal that discontinuity.
+    If px - delta <= points(0, 0) Or px + delta >= points(0, UBound(points, 2)) Then Exit Function
+  End If
+  GWLegacyPressureRoundoff = mGamma * delta * (1# + bound)
+End Function
+
 Public Sub GWReadCheckpoint(ByVal folder As String)
   Dim f As Integer, line As String, parts() As String, count As Long, e As Long, g As Long
   Dim loaded() As Double, seen() As Boolean, p As Double, profile As String
   Dim errorNumber As Long, errorText As String, resultSheet As Worksheet, resultRow As Long
+  Dim legacyRounded As Boolean, tolerance As Double, difference As Double, roundoff As Double, roundedCount As Long
   If Not GWActive Then Exit Sub
   On Error GoTo Failed
   f = FreeFile
@@ -978,11 +1028,20 @@ Public Sub GWReadCheckpoint(ByVal folder As String)
     Exit Sub
   End If
   GWRebuild
+  legacyRounded = GWLegacyRoundedCoordinates(folder)
   For e = 0 To NumberOfElement - 1
     For g = 0 To 3
-      If Abs(loaded(g, e) - mTarget(g, e)) > 0.0000000001 * (1# + Abs(mTarget(g, e))) Then GWFail "再生成した水圧場とチェックポイントが一致しません。"
+      tolerance = 0.0000000001 * (1# + Abs(mTarget(g, e)))
+      difference = Abs(loaded(g, e) - mTarget(g, e))
+      If difference > tolerance And legacyRounded Then
+        roundoff = GWLegacyPressureRoundoff(e, g)
+        If difference <= tolerance + roundoff Then roundedCount = roundedCount + 1
+        tolerance = tolerance + roundoff
+      End If
+      If difference > tolerance Then GWFail "再生成した水圧場とチェックポイントが一致しません。"
     Next g
   Next e
+  If roundedCount > 0 Then P6SolverEvent "CHECKPOINT_COORDINATE_ROUNDOFF", "format=FIXED10;accepted_points=" & CStr(roundedCount) & ";bound=shape_sum*half_coordinate_quantum*hydrostatic_gradient"
   mCurrent = loaded: mCommitted = loaded: mStart = loaded
   Exit Sub
 Failed:
