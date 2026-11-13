@@ -189,6 +189,7 @@ Private Sub FEMRebuildSettingsLayout(ByVal ws As Worksheet)
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NATIVE_PRECISION", "DLL・I/O", "DLLの演算精度（倍精度）", "AUTO", "全方式Double。AUTO=CPU対応命令を選択 / STRICT=従来VBA互換 / SSE2・AVX2=方式指定。微小な丸め差あり。", True
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NATIVE_SPARSE_DIRECT", "DLL・I/O", "対称疎行列直接法", 0, "1=別添DLLで対称正定値行列を疎LDLT分解。真の線形残差を確認し、不適合・DLL不在は帯行列へ復帰。0=従来経路。", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NATIVE_WATER_TANGENT", "DLL・I/O", "水条件時の要素剛性積分", 0, "1=VBAで計算済みの材料接線を既存DLLで積分。水圧・構成則・自重の計算は従来経路。0=VBA積分。", False
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NATIVE_DRY_WATER", "DLL・I/O", "水条件時の乾燥要素の材料演算", 0, "1=静水圧の確定・試行水圧が全積分点で厳密に0の要素のみ既存DLLを使用。湿潤・部分湿潤・時間連成は従来VBA。収束条件は同じ。0=従来経路。", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NATIVE_STATE_COPY", "DLL・I/O", "状態配列のDLL転送", 1, "1=検証済み一括転送 / 0=比較用VBA経路。", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NATIVE_ASSEMBLY", "DLL・I/O", "行列組立のDLL処理", 1, "1=検証済みDLL組立 / 0=比較用VBA経路。収束条件は同じ。", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NATIVE_GMRES_SIMD", "DLL・I/O", "GMRESのCPU拡張命令", 1, "1=CPU対応命令を使用。非対応命令を無理に実行しません。", False

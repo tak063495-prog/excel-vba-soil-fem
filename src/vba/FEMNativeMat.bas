@@ -29,12 +29,14 @@ Private mMat() As Double
 Private mDone() As Integer
 Private mTangentOK As Boolean, mDoneReady As Boolean
 Public FEMMatEvalCalls As Long, FEMMatEvalElements As Long, FEMMatDeclines As Long
+Public FEMMatDryWaterElements As Long
 Public FEMMatTangentCalls As Long, FEMMatTangentElements As Long, FEMMatFallbacks As Long
 Public FEMMatDeclineReason(0 To 7) As Long
 
 Public Sub FEMMatResetCounts()
   Dim i As Long
   FEMMatEvalCalls = 0: FEMMatEvalElements = 0: FEMMatDeclines = 0
+  FEMMatDryWaterElements = 0
   FEMMatTangentCalls = 0: FEMMatTangentElements = 0: FEMMatFallbacks = 0
   FEMKernResetCounts
   For i = 0 To 7: FEMMatDeclineReason(i) = 0: Next i
@@ -46,14 +48,26 @@ Public Sub FEMMatRefresh()
 End Sub
 
 Public Function FEMMatStatusText() As String
-  If FEMMatAvailable() Then
+  If FEMMatEvaluationAvailable() Then
     FEMMatStatusText = "NATIVE(" & SFM_DLL & ";eval_calls=" & CStr(FEMMatEvalCalls) & ";eval_elements=" & CStr(FEMMatEvalElements) & _
       ";declined=" & CStr(FEMMatDeclines) & "[joint=" & CStr(FEMMatDeclineReason(2)) & ",material=" & CStr(FEMMatDeclineReason(3)) & _
       ",substep=" & CStr(FEMMatDeclineReason(4)) & ",point=" & CStr(FEMMatDeclineReason(5)) & ",fp=" & CStr(FEMMatDeclineReason(6)) & _
       ",dof=" & CStr(FEMMatDeclineReason(7)) & "];tangent_calls=" & CStr(FEMMatTangentCalls) & ";tangent_elements=" & CStr(FEMMatTangentElements) & _
-      ";fallback=" & CStr(FEMMatFallbacks) & ")"
+      ";fallback=" & CStr(FEMMatFallbacks) & ";dry_water_elements=" & CStr(FEMMatDryWaterElements) & ")"
   Else
     FEMMatStatusText = "VBA(" & mReason & ")"
+  End If
+End Function
+
+' Optional hybrid evaluation: only exactly dry elements use the dry kernel.
+' Wet/partially wet elements and coupled modes keep the original VBA update.
+Public Function FEMMatEvaluationAvailable() As Boolean
+  If GWActive Then
+    If P6ReadSetting("NATIVE_DRY_WATER", 0#) <> 1# Then mReason = "PHYSICAL_WATER_VBA_MATERIAL": Exit Function
+    If FSActive Or P6MixedUP Or P6ConsolActive Then mReason = "COUPLED_WATER_VBA_MATERIAL": Exit Function
+    FEMMatEvaluationAvailable = FEMMatAvailable(True)
+  Else
+    FEMMatEvaluationAvailable = FEMMatAvailable()
   End If
 End Function
 
@@ -201,16 +215,29 @@ End Sub
 ' Evaluates elements kStart.. natively. Returns the first element index that
 ' VBA must evaluate (NumberOfElement when all done). Never raises.
 Public Function FEMMatEval(ByVal kStart As Long, ByRef incrementBase() As Double, ByVal flags As Long) As Long
-  Dim r As Long, reason As Long
+  Dim r As Long, reason As Long, runEnd As Long
   FEMMatEval = kStart
-  If Not FEMMatAvailable() Then Exit Function
+  If Not FEMMatEvaluationAvailable() Then Exit Function
+  If kStart < 0 Or kStart >= NumberOfElement Then Exit Function
+  runEnd = NumberOfElement
+  If GWActive Then
+    If Not GWNativeDryElement(kStart) Then Exit Function
+    runEnd = kStart + 1
+    Do While runEnd < NumberOfElement
+      If Not GWNativeDryElement(runEnd) Then Exit Do
+      runEnd = runEnd + 1
+    Loop
+  End If
 #If Win64 Then
   On Error GoTo Failed
   If LBound(TDisp) <> 0 Or LBound(incrementBase) <> 0 Or LBound(iNForce) <> 0 Then Exit Function
   If (flags And 2) <> 0 Then
     If LBound(P3ActivePlasticPoint, 1) <> 0 Or UBound(P3ActivePlasticPoint, 1) <> 3 Or LBound(P3ActivePlasticPoint, 2) <> 0 Or UBound(P3ActivePlasticPoint, 2) < NumberOfElement - 1 Then Exit Function
   End If
+  ' Wet-mode VBA reevaluates the constitutive law even at zero strain.
+  If GWActive Then flags = flags And Not 1
   FEMMatCommonParams flags
+  mPar(2) = runEnd
   mPar(3) = VarPtr(TDisp(0))
   mPar(4) = VarPtr(incrementBase(0))
   mPar(5) = VarPtr(iNForce(0))
@@ -220,10 +247,11 @@ Public Function FEMMatEval(ByVal kStart As Long, ByRef incrementBase() As Double
   If UBound(incrementBase) < mPar(15) Then mPar(15) = UBound(incrementBase)
   If UBound(iNForce) < mPar(15) Then mPar(15) = UBound(iNForce)
   r = SfmEval(VarPtr(mPar(0)), kStart)
-  If r < kStart Or r > NumberOfElement Then FEMMatDisable "EVAL_RC_" & CStr(r): Exit Function
+  If r < kStart Or r > runEnd Then FEMMatDisable "EVAL_RC_" & CStr(r): Exit Function
   FEMMatEvalCalls = FEMMatEvalCalls + 1
   If mOut(7) > 0 Then
     FEMMatEvalElements = FEMMatEvalElements + CLng(mOut(7))
+    If GWActive Then FEMMatDryWaterElements = FEMMatDryWaterElements + CLng(mOut(7))
     AccelMaterialCalls = AccelMaterialCalls + CLng(mOut(0))
     AccelSubstepCalls(0) = AccelSubstepCalls(0) + CLng(mOut(1))
     AccelMaterialSuccess = AccelMaterialSuccess + CLng(mOut(2))
@@ -233,7 +261,7 @@ Public Function FEMMatEval(ByVal kStart As Long, ByRef incrementBase() As Double
     P3ActivePlasticPointCount = P3ActivePlasticPointCount + CLng(mOut(6))
   End If
   If mOut(8) >= 0 Then FailureElement = CLng(mOut(8))
-  If r < NumberOfElement Then
+  If r < runEnd Then
     FEMMatDeclines = FEMMatDeclines + 1
     reason = CLng(mOut(9))
     If reason >= 0 And reason <= 7 Then FEMMatDeclineReason(reason) = FEMMatDeclineReason(reason) + 1

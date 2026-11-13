@@ -1347,3 +1347,18 @@ Public Sub GWTransientJointConstraints(ByRef locked() As Boolean, ByRef pressure
     End If
   Next n
 End Sub
+
+' The dry constitutive kernel has no pore-pressure input. Bound its run at
+' every element whose actual old or trial pressure is nonzero. Recheck each
+' evaluation so a water ramp cannot reuse stale dry eligibility.
+Public Function GWNativeDryElement(ByVal elementId As Long) As Boolean
+  Dim g As Long
+  If Not GWActive Then GWNativeDryElement = True: Exit Function
+  If Not mReady Or mMode <> "HYDROSTATIC" Or mTemporal Or FSActive Then Exit Function
+  If elementId < 0 Or elementId >= NumberOfElement Then Exit Function
+  If Elem(elementId).IsJoint Then Exit Function
+  For g = 0 To 3
+    If mCurrent(g, elementId) <> 0# Or mCommitted(g, elementId) <> 0# Then Exit Function
+  Next g
+  GWNativeDryElement = True
+End Function

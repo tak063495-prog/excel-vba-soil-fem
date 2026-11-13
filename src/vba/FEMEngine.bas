@@ -2245,7 +2245,7 @@ Private Function P3EvaluateTrialState(ByRef incrementBase() As Double, ByRef int
   ' Native material/force kernel (FEMNativeMat): evaluates runs of elements in
   ' order and stops at the first element it does not handle, which the
   ' unchanged VBA code below evaluates. Force sums keep the element order.
-  nativeOn = FEMMatAvailable() And Not GWActive
+  nativeOn = FEMMatEvaluationAvailable()
   If nativeOn Then
     If CurrentIncrement >= 0 Then nativeFlags = 1
     If P3TrialStateInitialized Then nativeFlags = nativeFlags Or 2
