@@ -2,6 +2,7 @@
 Private mSampleValid As Boolean, mReady As Boolean, mEnabled As Boolean, mWindow As Long, mLimit As Long, mBase As Long
 Private mLast As Long, mPrevious As Double, mResidual As Double, mStoppedAt As Long
 Private mAt() As Long, mValue() As Double
+Private mReservedSample As Long
 
 ' Reset for every increment/retry and each coupled mechanical solve. Trial
 ' line-search/watchdog states must never enter this accepted-iterate history.
@@ -11,6 +12,7 @@ Public Sub NewtonProgressReset(ByVal baseLimit As Long)
     mWindow = CLng(FEMReadSetting("NEWTON_PROGRESS_WINDOW", 20#))
     If mWindow < 2 Or mWindow > 1000 Then Err.Raise vbObjectError + 3027, , "Newtonの進捗確認間隔は2～1000です。"
     mBase = baseLimit: mLimit = baseLimit: mLast = -1: mPrevious = 0#: mResidual = 0#: mStoppedAt = -1: mSampleValid = False
+    mReservedSample = -1
     ReDim mAt(0 To mWindow): ReDim mValue(0 To mWindow)
     For i = 0 To mWindow: mAt(i) = -1: Next i
     mReady = True
@@ -24,6 +26,28 @@ Public Function NewtonProgressReduction(ByVal current As Double, ByVal previous 
     ' percentage-rate cutoff while the accepted residual is still falling.
     NewtonProgressReduction = current < previous
 End Function
+
+Public Sub NewtonProgressReserveRecovery(ByVal baseLimit As Long, ByVal workIteration As Long, ByVal additionalWork As Long)
+    Dim reference As Double, nextLimit As Double, oldLimit As Long
+    If Not mReady Then NewtonProgressReset baseLimit
+    If Not mEnabled Or Not mSampleValid Then Exit Sub
+    If additionalWork < 1 Or additionalWork > 1000 Then Exit Sub
+    If mLast < 0 Or mLast = mReservedSample Then Exit Sub
+    ' At most the just-completed linear solve may separate this request from
+    ' a real accepted state. Rejected look-ahead points are never evidence.
+    If workIteration < mLast Then Exit Sub
+    If workIteration - mLast > 1 Then Exit Sub
+    If CDbl(workIteration) + CDbl(additionalWork) < CDbl(mLimit) Then Exit Sub
+    ' A short configured window can contain no predecessor after a bounded
+    ' multi-solve correction. Use the last actual accepted predecessor then.
+    If Not ProgressReference(reference) Then reference = mPrevious
+    If Not NewtonProgressReduction(mResidual, reference) Then Exit Sub
+    If Not NewtonProgressReduction(mResidual, mPrevious) Then Exit Sub
+    nextLimit = CDbl(workIteration) + CDbl(additionalWork) + CDbl(mWindow)
+    If nextLimit >= 2147483000# Then Exit Sub
+    oldLimit = mLimit: mLimit = CLng(nextLimit): mReservedSample = mLast
+    FEMAppendRunLog "NEWTON_PROGRESS", "RESERVE_RECOVERY", "accepted_iteration=" & CStr(mLast) & ";work_iteration=" & CStr(workIteration) & ";additional_work=" & CStr(additionalWork) & ";old_limit=" & CStr(oldLimit) & ";next_check=" & CStr(mLimit) & ";residual=" & Format$(mResidual, "0.000000000000E+00")
+End Sub
 
 Public Sub NewtonProgressRecord(ByVal iteration As Long, ByVal residual As Double)
     Dim slot As Long

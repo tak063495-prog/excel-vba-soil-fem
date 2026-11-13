@@ -6584,6 +6584,10 @@ End Function
 
 Private Function P3AccelApplyCorrection(ByRef incrementBase() As Double, ByRef targetForce() As Double, ByRef internalForce() As Double, ByRef correctionRatio As Double, ByVal residualBefore As Double, ByRef localIteration As Long) As Boolean
   Dim cutsBefore As Long, ok As Boolean
+  ' One normal correction may spend up to 3*5 watchdog solves plus six
+  ' regularized solves. Reserve that bounded work only from fresh, declining
+  ' accepted residuals; intermediate potential steps cannot renew the budget.
+  NewtonProgressReserveRecovery P3BaseGlobalIterationLimit(), localIteration, 21
   mAccelAttemptFailure = ""
   mLineSearchFailure = "": mLineSearchTries = 0: mLineSearchMaterialRejects = 0: mLineSearchBestQ = -1#
   cutsBefore = P3LineSearchCuts
