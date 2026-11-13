@@ -27,6 +27,18 @@ Public Function MeshQ8JacobianWithinTarget(ByVal area As Double, ByVal minJacobi
     If area > 0# Then MeshQ8JacobianWithinTarget = (4# * minJacobian / area >= target - 0.0000001)
 End Function
 
+' Compare sizes on the same reference-square scale. Straight T6 uses a Duffy
+' map whose worst 2x2 determinant contains the fixed (1-1/sqrt(3)) factor.
+' Remove that coordinate factor only for size warnings; retain raw Jacobians
+' for geometry validity and reporting, and keep independent shape targets.
+Public Function MeshElementHasSizeWarning(ByVal triangle As Boolean, ByVal area As Double, ByVal minJacobian As Double, ByVal modelScale As Double) As Boolean
+    Dim sizeJacobian As Double
+    If area <= 0# Or minJacobian <= 0# Or modelScale <= 0# Then MeshElementHasSizeWarning = True: Exit Function
+    sizeJacobian = minJacobian
+    If triangle Then sizeJacobian = minJacobian / (1# - 1# / Sqr(3#))
+    MeshElementHasSizeWarning = (area < modelScale ^ 2 * FEMReadSetting("MESH_QUALITY_MIN_AREA_RATIO", 0.000001) Or sizeJacobian < modelScale ^ 2 * FEMReadSetting("MESH_QUALITY_MIN_JACOBIAN_RATIO", 0.000001))
+End Function
+
 ' Mean-ratio quality: 1 for an equilateral triangle, 0 at degeneration.
 Public Function MeshTriangleScore(ByRef x() As Double, ByRef y() As Double, ByVal a As Long, ByVal b As Long, ByVal c As Long) As Double
     Dim cross As Double, sum As Double

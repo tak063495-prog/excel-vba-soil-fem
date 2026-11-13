@@ -168,7 +168,7 @@ Private Sub FEMRebuildSettingsLayout(ByVal ws As Worksheet)
   writeRow = writeRow + 1
   FEMPutSection ws, writeRow, "6. メッシュ品質（閾値）"
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "MESH_QUALITY_MIN_AREA_RATIO", "品質", "最小面積比", 0.000001, "代表寸法^2に対する比", False
-  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "MESH_QUALITY_MIN_JACOBIAN_RATIO", "品質", "最小Jacobian比", 0.000001, "代表寸法^2に対する比", False
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "MESH_QUALITY_MIN_JACOBIAN_RATIO", "品質", "最小Jacobian比", 0.000001, "要素形式の基準座標差を補正して代表寸法^2と比較。形状・反転の判定とは別。", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "MESH_QUALITY_MIN_ANGLE_DEG", "品質", "最小角度", 10#, "deg", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "MESH_QUALITY_MAX_ANGLE_DEG", "品質", "最大角度", 170#, "deg", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "MESH_QUALITY_MAX_ASPECT_RATIO", "品質", "最大アスペクト", 5#, "長辺/短辺", False

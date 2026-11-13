@@ -573,7 +573,7 @@ Private Sub P5EvaluateMeshQuadQuality(ByVal elementId As Long, ByRef connectivit
         If dy1 > P5MaxAngleDeg Then P5MaxAngleDeg = dy1
         P5T6Count = P5T6Count + 1
         If Not MeshShapeWithinTargets(True, dx1, dy1, maxEdge / minEdge) Then P5T6ShapeWarnings = P5T6ShapeWarnings + 1
-        If area < P5ModelScale ^ 2 * P5ReadSetting("MESH_QUALITY_MIN_AREA_RATIO", 0.000001) Or minJacobian < P5ModelScale ^ 2 * P5ReadSetting("MESH_QUALITY_MIN_JACOBIAN_RATIO", 0.000001) Then P5SizeWarnings = P5SizeWarnings + 1
+        If MeshElementHasSizeWarning(True, area, minJacobian, P5ModelScale) Then P5SizeWarnings = P5SizeWarnings + 1
         Exit Sub
     End If
     P5Q8Count = P5Q8Count + 1
@@ -618,7 +618,7 @@ Private Sub P5EvaluateMeshQuadQuality(ByVal elementId As Long, ByRef connectivit
         Next iv
     Next iu
     If Not MeshShapeWithinTargets(False, localMinAngle, localMaxAngle, maxEdge / minEdge) Or Not MeshQ8JacobianWithinTarget(area, minJacobian) Then P5Q8ShapeWarnings = P5Q8ShapeWarnings + 1
-    If area < P5ModelScale ^ 2 * P5ReadSetting("MESH_QUALITY_MIN_AREA_RATIO", 0.000001) Or minJacobian < P5ModelScale ^ 2 * P5ReadSetting("MESH_QUALITY_MIN_JACOBIAN_RATIO", 0.000001) Then P5SizeWarnings = P5SizeWarnings + 1
+    If MeshElementHasSizeWarning(False, area, minJacobian, P5ModelScale) Then P5SizeWarnings = P5SizeWarnings + 1
     If minJacobian < P5MinJacobian Then P5MinJacobian = minJacobian
     If minJacobian <= P5AreaTolerance Then Err.Raise vbObjectError + 3468, "Mesh.P5ValidateMeshQuality", "要素Jacobianが正でないか小さすぎます。要素=" & CStr(elementId)
 End Sub
