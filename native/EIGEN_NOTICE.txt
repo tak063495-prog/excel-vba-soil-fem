@@ -1,0 +1,12 @@
+soilfem_sparse_x64.dll optionally uses unmodified Eigen 3.4.0 headers.
+Eigen is primarily licensed under MPL-2.0, with some BSD code. The wrapper
+defines EIGEN_MPL2_ONLY to exclude LGPL-only components. See licenses/.
+
+Corresponding unmodified source (including copyright notices):
+https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz
+SHA256: 8586084f71f9bde545ee7fa6d00288b264a2b7ac3607b974e54d13e7162c1c72
+Release tag: 3.4.0 (3147391d)
+
+The wrapper in soilfem_sparse.cpp is independently authored, Apache-2.0.
+No Eigen headers are modified. Use build_sparse.cmd with the extracted
+verified source directory, from an x64 Windows/MSVC development environment.

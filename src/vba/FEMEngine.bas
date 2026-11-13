@@ -1721,7 +1721,7 @@ Private Function P3RebuildTangentFromSpmat() As Boolean
   Dim hasSpmat As Boolean
   Dim t0 As Double
   Dim errNum As Long, errSrc As String, errDesc As String
-  Dim nativeTangent As Boolean, hgApplied As Long, unsymFlag As Boolean
+  Dim nativeTangent As Boolean, hgApplied As Long, unsymFlag As Boolean, nativeTangentAllowed As Boolean
   P3RebuildTangentFromSpmat = False
   FEMLastProc = "P3RebuildTangentFromSpmat"
   t0 = Timer
@@ -1730,7 +1730,9 @@ Private Function P3RebuildTangentFromSpmat() As Boolean
   ' Native element tangents (Spmat repair + SetElmStiffness) for all eligible
   ' elements in one call; hourglass, checks and flags stay below in VBA.
   nativeTangent = False
-  If FEMMatAvailable() Then nativeTangent = FEMMatTangent(P3IncoElasticCorrection, P3FlowPolicyIsInconsistent())
+  nativeTangentAllowed = FEMMatAvailable()
+  If GWActive And P6ReadSetting("NATIVE_WATER_TANGENT", 0#) = 1# Then nativeTangentAllowed = FEMMatAvailable(True)
+  If nativeTangentAllowed Then nativeTangent = FEMMatTangent(P3IncoElasticCorrection, P3FlowPolicyIsInconsistent())
   hgApplied = -1
   If nativeTangent Then
     hgApplied = FEMKernHgApply(Not (P3SrmEnabled And P3FlowPolicyIsInconsistent() And Not P3IncoElasticCorrection))
@@ -1777,7 +1779,7 @@ Private Function P3RebuildTangentFromSpmat() As Boolean
         Else
           If Not (P3SrmEnabled And P3FlowPolicyIsInconsistent() And Not P3IncoElasticCorrection) Then P6AddQ8HourglassStabilization Elem(k), Material(materialIndex).thickness, True
           unsymFlag = False
-          If Not P3FlowPolicyIsInconsistent() Then unsymFlag = P3KmatIsUnsymmetric(Elem(k).kmat)
+          If Not P6NeedsFullNonsymmetric() Then unsymFlag = P3KmatIsUnsymmetric(Elem(k).kmat)
         End If
         If Not P6NeedsFullNonsymmetric() And unsymFlag Then
           SetAnalysisFailure RESULT_MATERIAL_ERROR, "BAND対称ソルバは非対称接線に未対応です（非関連流れ φ≠ψ の塑性接線）。FLOW_POLICY=INCONSISTENT または DAVIS を指定してください。要素=" & CStr(k + 1), vbObjectError + 3240, k + 1, -1, CurrentIncrement, CurrentIteration
@@ -6570,6 +6572,14 @@ Private Function P3AccelApplyCorrection(ByRef incrementBase() As Double, ByRef t
   mAccelAttemptFailure = ""
   mLineSearchFailure = "": mLineSearchTries = 0: mLineSearchMaterialRejects = 0: mLineSearchBestQ = -1#
   cutsBefore = P3LineSearchCuts
+  If Not P3IncoElasticCorrection And P6ReadSetting("ASSOCIATED_ENERGY_FIRST", 0#) = 1# Then
+    If P3AssociatedPotentialEligible() Then
+      If P3TryNewtonWatchdog(incrementBase, targetForce, internalForce, correctionRatio, localIteration) Then
+        mAAReady = False: P3AccelApplyCorrection = True: Exit Function
+      End If
+      If P3IsFatalFailure() Or localIteration >= P3GlobalIterationLimit(localIteration) Then Exit Function
+    End If
+  End If
   If P3IncoElasticCorrection Then
     ok = P3ApplyLineSearch(incrementBase, targetForce, internalForce, correctionRatio, residualBefore, 16)
     If Not ok And Not P3IsFatalFailure() Then ok = P3TryNewtonWatchdog(incrementBase, targetForce, internalForce, correctionRatio, localIteration)
@@ -6635,6 +6645,7 @@ Public Function P3JointTangentState(ByVal e As Long, ByVal gp As Long) As Long
     If Elem(e).Stmat(1, gp) < 0# Then P3JointTangentState = P3JointTangentState + 8
   End If
 End Function
+
 
 Private Function P3AssociatedPotentialEligible() As Boolean
   Dim m As Long, e As Long, g As Long

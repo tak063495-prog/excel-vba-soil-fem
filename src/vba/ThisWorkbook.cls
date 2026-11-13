@@ -1,4 +1,8 @@
 ﻿
+Private Sub Workbook_BeforeClose(Cancel As Boolean)
+  If Not AnalysisRunning Then FEMSparseReleaseFactor
+End Sub
+
 Private Sub Workbook_Open()
   Dim eventsSaved As Boolean
   eventsSaved = Application.EnableEvents

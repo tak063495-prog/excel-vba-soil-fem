@@ -1629,6 +1629,7 @@ Public Sub P6ResetBandBench()
   P6BandBenchOnly = False
   P6KernelCached = False
   FEMNativeRefresh
+  FEMSparseReset
   Erase P6BandBenchSnap
   Erase P6BandBenchFree
 End Sub
@@ -4455,10 +4456,25 @@ End Sub
 Function BandSolver() As Boolean
   Dim csrOk As Boolean
   Dim ldltShadow As Boolean
+  Dim sparseResult As Long, sparseNewFactor As Boolean
   P6BandSolveCallCount = P6BandSolveCallCount + 1
   BandSolver = False
   MatrixFactored = False
   ldltShadow = False
+  sparseResult = FEMSparseTryBandSolve(sparseNewFactor)
+  If sparseResult = 1 Then
+    If sparseNewFactor Then
+      P6FactorizationCount = P6FactorizationCount + 1
+      P6RememberFactorKeys
+    Else
+      P6FactorizationReuseCount = P6FactorizationReuseCount + 1
+    End If
+    P6FactorReady = True: MatrixFactored = True: BandSolver = True
+    Exit Function
+  ElseIf sparseResult = 2 Then
+    P6FactorReady = False: Erase P6FactoredBand
+    If Not P6UseCSR Then P6SolverMode = "BAND_LU"
+  End If
   If P6UseCSR Then
     csrOk = P6SolveCSR()
     If P6NeedsFullNonsymmetric() Then
@@ -4578,6 +4594,7 @@ Public Sub P6AccelResetPreconditioner()
 End Sub
 
 Private Sub P6AccelCapturePreconditioner()
+  If FEMSparseHasFactor() Then mPreReady = False: Exit Sub
   On Error GoTo CapturePreSkip
   mPreReady = False
   If Not AccelV5 Or AccelBaselineRetry Or P6MixedUP Or P3HasJointElements Or P6UseCSR Then Exit Sub

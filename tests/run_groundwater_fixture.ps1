@@ -7,6 +7,8 @@ $Out=[IO.Path]::GetFullPath($Out);New-Item -ItemType Directory -Path $Out | Out-
 $data=Get-Content -LiteralPath $Fixture -Raw -Encoding UTF8 | ConvertFrom-Json
 $copy=Join-Path $Out ($data.name+'.xlsm');Copy-Item -LiteralPath $Book -Destination $copy
 Copy-Item -LiteralPath (Join-Path (Split-Path $Book) 'soilfem_native_x64.dll') -Destination $Out
+$sparseDll=Join-Path (Split-Path $Book) 'soilfem_sparse_x64.dll'
+if(Test-Path -LiteralPath $sparseDll){Copy-Item -LiteralPath $sparseDll -Destination $Out}
 $xl=New-Object -ComObject Excel.Application
 try{
  $xl.DisplayAlerts=$false;$xl.EnableEvents=[bool]$data.shape;$xl.AutomationSecurity=1

@@ -25,6 +25,13 @@ operator; fatal/capacity errors and user cancellation retain their normal meanin
 Set the option to 0 to retain the previous recovery selection. It does not
 change cohesion, friction, dilation, the force law, or convergence tolerances.
 
+`ASSOCIATED_ENERGY_FIRST=1` optionally tries the same bounded helper before
+ordinary line search for an eligible full-Newton correction. Its default is 0.
+An unsuccessful optional trial restores the original state/operator before the
+ordinary path is tried, unless cancellation, a fatal error or the global budget
+requires exit. The acceptance and material-commit rules above also apply to
+this earlier invocation.
+
 `tests/check_associated_watchdog.py` exercises a real two-element elastic FE
 problem with a deliberately chosen descent direction whose first trial increases
 the force-residual norm. It checks eventual residual reduction, unchanged

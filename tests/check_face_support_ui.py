@@ -22,7 +22,10 @@ Public Function FaceUiMeshMessage() As String
  FaceUiMeshMessage=FEMUiMeshPreviewError
 End Function
 ''')
- prefix="'"+wb.Name+"'!";app.Run(prefix+'FEM24Install');app.Run(prefix+'FEM24Water')
+ prefix="'"+wb.Name+"'!"
+ # Follow Workbook_Open's canonical-settings refresh before rendering front pages.
+ for key in ('NATIVE_SPARSE_DIRECT','NATIVE_WATER_TANGENT','ASSOCIATED_ENERGY_FIRST'):app.Run(prefix+'FEMWriteNumericSetting',key,1.)
+ app.Run(prefix+'FEMWriteBuildStamp',False);app.Run(prefix+'FEM24Install');app.Run(prefix+'FEM24Water')
  app.EnableEvents=True;page=wb.Worksheets('境界・水条件');page.Range('C4').Value2='壁面支持'
  raw=wb.Worksheets('壁面支持');old=raw.Range('E2').Value2;assert page.Range('E8').Value2==old
  app.Run(prefix+'FaceUiSetClean');page.Range('E8').Value2=old*2.;assert raw.Range('E2').Value2==old*2.
@@ -32,7 +35,22 @@ End Function
  app.Run(prefix+'ボタン19_Click')
  assert wb.Worksheets('節点データ').Range('A1:I20').Value2==before,'Remeshing changed ID-based support nodes'
  assert '壁面支持' in app.Run(prefix+'FaceUiMeshMessage')
+ options={}
+ for key in ('NATIVE_SPARSE_DIRECT','NATIVE_WATER_TANGENT','ASSOCIATED_ENERGY_RECOVERY','ASSOCIATED_ENERGY_FIRST'):
+  found=[]
+  for name in ('メッシュ設定','解析設定','高速化設定','出力・表示','詳細設定'):
+   sheet=wb.Worksheets(name);last=sheet.Cells(sheet.Rows.Count,6).End(-4162).Row
+   for row,values in enumerate(sheet.Range(f'C1:F{last}').Value2,1):
+    if values[3]==key:found.append((sheet,row))
+  assert len(found)==1,(key,[(s.Name,r) for s,r in found])
+  sheet,row=found[0];cell=sheet.Cells(row,3);original=cell.Value2
+  assert cell.Validation.Type==3 and cell.Validation.Formula1.replace(';',',')=='0,1',(key,cell.Validation.Formula1)
+  for value in (0.,1.,original):
+   cell.Value2=value
+   assert app.Run(prefix+'FEMReadSetting',key,-1.)==value,(key,value)
+  options[key]={'page':sheet.Name,'row':row,'preserved_value':original,'write_through':'PASS'}
  record={'status':'PASS','front_setting_write_through':True,'front_edit_dirty_flags':front,'raw_edit_dirty_flags':direct,'remesh_preserved_nodes':True,'stiffness_value':old}
+ record['solver_options']=options
  (a.out/'results.json').write_text(json.dumps(record,indent=2),encoding='utf-8');print(json.dumps(record),flush=True)
 finally:
  if wb is not None:wb.Close(False)

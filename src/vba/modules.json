@@ -228,5 +228,10 @@
         "name":  "FEMFaceSupport",
         "file":  "FEMFaceSupport.bas",
         "type":  1
+    },
+    {
+        "name":  "FEMSparse",
+        "file":  "FEMSparse.bas",
+        "type":  1
     }
 ]

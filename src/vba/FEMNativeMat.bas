@@ -252,7 +252,8 @@ Public Function FEMMatTangent(ByVal elasticCorrection As Boolean, ByVal inconsis
   Dim rc As Long, flags As Long
   mTangentOK = False
   FEMMatTangent = False
-  If Not FEMMatAvailable() Then Exit Function
+  ' Pure integration of the already evaluated Spmat. No stress/water update.
+  If Not FEMMatAvailable(True) Then Exit Function
 #If Win64 Then
   On Error GoTo Failed
   If elasticCorrection Then flags = flags Or 8

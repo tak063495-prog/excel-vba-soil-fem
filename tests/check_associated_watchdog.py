@@ -52,7 +52,7 @@ Public Function AssociatedWatchdogAudit() As Variant
  P3RestoreCommittedMaterialState False
  TDisp=base:UDisp=base:Disp=direction
  inc=P3SuccessfulIncrementCount
- accepted=P3TryNewtonWatchdog(base,target,internal,correction,it)
+ accepted=P3AccelApplyCorrection(base,target,internal,correction,original,it)
  afterRatio=ResidualNormFree/original
  For i=0 To lastDof:If Abs(P3CommittedDisp(i)-base(i))>commitError Then commitError=Abs(P3CommittedDisp(i)-base(i))
  Next i
@@ -66,7 +66,7 @@ Public Function AssociatedWatchdogAudit() As Variant
 End Function
 ''')
  prefix="'"+w.Name+"'!"
- for key,value in [('FLOW_POLICY','DAVIS'),('NATIVE_SPARSE_DIRECT',0.),('ASSOCIATED_ENERGY_RECOVERY',1.),('EXPORT_LOAD','')]:app.Run(prefix+('FEMWriteTextSetting' if isinstance(value,str) else 'FEMWriteNumericSetting'),key,value)
+ for key,value in [('FLOW_POLICY','DAVIS'),('NATIVE_SPARSE_DIRECT',0.),('ASSOCIATED_ENERGY_RECOVERY',1.),('ASSOCIATED_ENERGY_FIRST',1.),('EXPORT_LOAD','')]:app.Run(prefix+('FEMWriteTextSetting' if isinstance(value,str) else 'FEMWriteNumericSetting'),key,value)
  cc=app.VBE.CommandBars.FindControl(1,578)
  if cc.Enabled:cc.Execute()
  assert not app.VBE.CommandBars.FindControl(1,578).Enabled,'Probe compile failed'

@@ -118,6 +118,7 @@ Private Sub FEMRebuildSettingsLayout(ByVal ws As Worksheet)
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NONSYM_SOLVER", "解析", "非対称線形解法", "BAND", "BAND=帯域LU（既定） / GMRES=大規模向けCSR・ILU0右前処理。非関連流れのc・φ・ψを保持し真残差で判定", True
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NONSYM_ELASTIC_START_DOF", "解析", "非関連の補助開始規模", 2000#, "GMRES選択時、この自由度数以上では弾性補助から開始。材料則・残差判定は維持。0=通常Newton開始。必要時は通常Newtonへ再試行", True
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ASSOCIATED_ENERGY_RECOVERY", "解析", "関連流れの停滞回復", 1, "1=関連流れ・単一材料更新の静的解析で、ポテンシャル降下を確認する限定試行。元の自由節点残差を減らす補正だけ受理。0=従来の回復経路。", False
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ASSOCIATED_ENERGY_FIRST", "解析", "関連流れの先行回復試行", 0, "1=適用可能な通常Newton補正で限定回復を先に試す。受理条件は元の自由節点残差の減少。0=ラインサーチ失敗後のみ。", False
   writeRow = writeRow + 1
   FEMPutSection ws, writeRow, "3. SRMパラメータ（実行の有無はステージシート）"
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "SRM_FMAX", "SRM", "上限Fs", 3#, "探索の上限", False
@@ -184,6 +185,8 @@ Private Sub FEMRebuildSettingsLayout(ByVal ws As Worksheet)
   FEMPutSection ws, writeRow, "DLL・I/O（推奨値。倍精度と収束条件を維持）"
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NATIVE_DLL", "DLL・I/O", "DLLの使用", "AUTO", "AUTO=利用可能なDLLを使用 / BAND=行列DLLのみ / OFF=VBA。未対応CPUでは対応経路へ復帰。", True
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NATIVE_PRECISION", "DLL・I/O", "DLLの演算精度（倍精度）", "AUTO", "全方式Double。AUTO=CPU対応命令を選択 / STRICT=従来VBA互換 / SSE2・AVX2=方式指定。微小な丸め差あり。", True
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NATIVE_SPARSE_DIRECT", "DLL・I/O", "対称疎行列直接法", 0, "1=別添DLLで対称正定値行列を疎LDLT分解。真の線形残差を確認し、不適合・DLL不在は帯行列へ復帰。0=従来経路。", False
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NATIVE_WATER_TANGENT", "DLL・I/O", "水条件時の要素剛性積分", 0, "1=VBAで計算済みの材料接線を既存DLLで積分。水圧・構成則・自重の計算は従来経路。0=VBA積分。", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NATIVE_STATE_COPY", "DLL・I/O", "状態配列のDLL転送", 1, "1=検証済み一括転送 / 0=比較用VBA経路。", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NATIVE_ASSEMBLY", "DLL・I/O", "行列組立のDLL処理", 1, "1=検証済みDLL組立 / 0=比較用VBA経路。収束条件は同じ。", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NATIVE_GMRES_SIMD", "DLL・I/O", "GMRESのCPU拡張命令", 1, "1=CPU対応命令を使用。非対応命令を無理に実行しません。", False

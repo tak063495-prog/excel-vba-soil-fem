@@ -34,6 +34,7 @@ Public Sub FEMUiPrepareInputs()
   Next item
   ThisWorkbook.Worksheets("要素データ").cells(1, 11).value2 = "要素形式（Q8/T6）"
   FEMUiOrderRuntimePage ws, keys
+  FEMUiEnsureSolverOptions
   MeshQualityEnsureSettings
   NewtonProgressEnsureSettings
   GWEnsureProfileSetting
@@ -90,6 +91,45 @@ Public Sub FEMUiPrepareInputs()
   With ThisWorkbook.Worksheets("高速化設定")
     .range("B5").value2 = "通常はDLL・I/OをAUTO/1。下段V方式は比較用。未対応経路は自動復帰。収束条件は変更しません。"
   End With
+End Sub
+
+Private Function FEMUiHasOption(ByVal keyName As String) As Boolean
+  Dim p As Variant, r As Long, ws As Worksheet
+  For Each p In Array("メッシュ設定", "解析設定", "高速化設定", "出力・表示", "詳細設定")
+    Set ws = ThisWorkbook.Worksheets(CStr(p))
+    For r = 8 To ws.cells(ws.rows.count, 6).End(xlUp).row
+      If UCase$(Trim$(CStr(ws.cells(r, 6).value2))) = keyName Then FEMUiHasOption = True: Exit Function
+    Next r
+  Next p
+End Function
+
+Private Sub FEMUiEnsureSolverOptions()
+  Dim options As Variant, item As Variant, legacy As Worksheet, ws As Worksheet
+  Dim r As Long, sourceRow As Long, targetRow As Long, keyName As String
+  options = Array(Array("NONSYM_SOLVER", "解析設定"), Array("NONSYM_ELASTIC_START_DOF", "解析設定"), _
+    Array("ASSOCIATED_ENERGY_RECOVERY", "解析設定"), Array("ASSOCIATED_ENERGY_FIRST", "解析設定"), _
+    Array("NATIVE_SPARSE_DIRECT", "高速化設定"), Array("NATIVE_WATER_TANGENT", "高速化設定"))
+  Set legacy = ThisWorkbook.Worksheets("設定")
+  ' Append only: existing input/formula positions are never moved by this migration.
+  For Each item In options
+    keyName = CStr(item(0))
+    If Not FEMUiHasOption(keyName) Then
+      sourceRow = 0
+      For r = 5 To legacy.cells(legacy.rows.count, 5).End(xlUp).row
+        If CStr(legacy.cells(r, 5).value2) = keyName Then sourceRow = r: Exit For
+      Next r
+      If sourceRow > 0 Then
+        If legacy.cells(sourceRow, 3).HasFormula Then Err.Raise vbObjectError + 3833, "FEMUiEnsureSolverOptions", "数式を含む追加設定を移動せず停止しました。キー=" & keyName
+        Set ws = ThisWorkbook.Worksheets(CStr(item(1)))
+        targetRow = ws.cells(ws.rows.count, 6).End(xlUp).row + 1
+        If targetRow < 8 Then targetRow = 8
+        ws.cells(targetRow, 2).value2 = legacy.cells(sourceRow, 2).value2
+        ws.cells(targetRow, 3).value2 = legacy.cells(sourceRow, 3).value2
+        ws.cells(targetRow, 5).value2 = legacy.cells(sourceRow, 4).value2
+        ws.cells(targetRow, 6).value2 = keyName
+      End If
+    End If
+  Next item
 End Sub
 
 Public Sub FEMUiPreflightRuntimeLayout(ByVal ws As Worksheet)
