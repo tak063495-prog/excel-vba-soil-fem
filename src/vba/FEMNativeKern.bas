@@ -30,14 +30,15 @@ Public Sub FEMKernResetCounts()
   FEMKernHgCalls = 0: FEMKernHgApplied = 0
 End Sub
 
-Public Function FEMKernOn() As Boolean
+' algebraOnly allows pure CSR arithmetic under physical water, never material updates.
+Public Function FEMKernOn(Optional ByVal algebraOnly As Boolean = False) As Boolean
   FEMKernOn = False
   If FEMNativeModeText() <> "AUTO" Then Exit Function
-  FEMKernOn = FEMMatAvailable()
+  FEMKernOn = FEMMatAvailable(algebraOnly)
 End Function
 
 Public Function FEMKernStatusText() As String
-  If FEMKernOn() Or FEMKernRegCalls > 0 Then
+  If FEMKernOn() Or FEMKernRegCalls > 0 Or FEMKernGmresCalls > 0 Or FEMKernIluCalls > 0 Or FEMKernResNormCalls > 0 Then
     FEMKernStatusText = "KERN(scatter=" & CStr(FEMKernScatterCalls) & ";residual=" & CStr(FEMKernResidualCalls) & ";resnorm=" & CStr(FEMKernResNormCalls) & _
       ";ilu=" & CStr(FEMKernIluCalls) & ";gmres=" & CStr(FEMKernGmresCalls) & ";regularized=" & CStr(FEMKernRegCalls) & ";rcm=" & CStr(FEMKernRcmCalls) & ";hg=" & CStr(FEMKernHgCalls) & "/" & CStr(FEMKernHgApplied) & ";declined=" & CStr(FEMKernDeclines) & ")"
   Else
@@ -82,7 +83,7 @@ End Function
 
 Public Function FEMKernCsrResNorm(ByVal n As Long, ByRef rp() As Long, ByRef ci() As Long, ByRef v() As Double, ByRef x() As Double, ByRef b() As Double, ByRef r() As Double, ByRef normOut As Double) As Boolean
   FEMKernCsrResNorm = False
-  If Not FEMKernOn() Then Exit Function
+  If Not FEMKernOn(True) Then Exit Function
 #If Win64 Then
   On Error GoTo Failed
   If SfmCsrResNorm(n, VarPtr(rp(0)), VarPtr(ci(0)), VarPtr(v(0)), VarPtr(x(0)), VarPtr(b(0)), VarPtr(r(0)), normOut) <> 0 Then Exit Function
@@ -100,7 +101,7 @@ Public Function FEMKernIlu0(ByVal n As Long, ByVal nnz As Long, ByRef rp() As Lo
     ByRef failRow As Long, ByRef failCol As Long, ByRef minAbs As Double) As Long
   Dim f(0 To 1) As Long
   FEMKernIlu0 = -1
-  If Not FEMKernOn() Then Exit Function
+  If Not FEMKernOn(True) Then Exit Function
 #If Win64 Then
   On Error GoTo Failed
   FEMKernIlu0 = SfmIlu0(n, nnz, VarPtr(rp(0)), VarPtr(ci(0)), VarPtr(dp(0)), VarPtr(vals(0)), VarPtr(ilu(0)), VarPtr(f(0)), minAbs)
@@ -119,7 +120,7 @@ Public Function FEMKernGmres(ByVal n As Long, ByRef rp() As Long, ByRef ci() As 
     ByRef x() As Double, ByVal restart As Long, ByVal maxIt As Long, ByVal tol As Double, ByRef lastRes As Double, ByRef iters As Long, ByRef ev() As Double, ByRef nEv As Long) As Long
   Dim need As Double, cap As Long
   FEMKernGmres = -1
-  If Not FEMKernOn() Then Exit Function
+  If Not FEMKernOn(True) Then Exit Function
 #If Win64 Then
   On Error GoTo Failed
   need = CDbl(n) * (2# * restart + 5#) + CDbl(restart + 1) * restart + 4# * restart + 2#

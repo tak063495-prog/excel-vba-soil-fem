@@ -115,6 +115,7 @@ Private Sub FEMRebuildSettingsLayout(ByVal ws As Worksheet)
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "Q8_HOURGLASS_FACTOR", "解析", "アワーグラス係数", 0.05, "0～1", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "RCM_POLICY", "解析", "RCM", "AUTO", "AUTO=帯幅が減るときだけ並び替え / ON=必ずRCM / OFF=入力順", True
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "FLOW_POLICY", "解析", "非関連の扱い", "INCONSISTENT", "INCONSISTENT=非関連流れ・非対称整合接線・全Newton / DAVIS=等価関連c*,φ*（JOINTには掛けない）", True
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NONSYM_SOLVER", "解析", "非対称線形解法", "BAND", "BAND=帯域LU（既定） / GMRES=大規模向けCSR・ILU0右前処理。非関連流れのc・φ・ψを保持し真残差で判定", True
   writeRow = writeRow + 1
   FEMPutSection ws, writeRow, "3. SRMパラメータ（実行の有無はステージシート）"
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "SRM_FMAX", "SRM", "上限Fs", 3#, "探索の上限", False

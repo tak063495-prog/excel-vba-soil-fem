@@ -14,6 +14,7 @@ Private Function FEMUiValidationList(ByVal keyName As String) As String
     Case "WEIGHT_MODE": FEMUiValidationList = "TOTAL"
     Case "RCM_POLICY": FEMUiValidationList = "AUTO,ON,OFF"
     Case "FLOW_POLICY": FEMUiValidationList = "INCONSISTENT,DAVIS"
+    Case "NONSYM_SOLVER": FEMUiValidationList = "BAND,GMRES"
     Case "SRM_PSI_POLICY": FEMUiValidationList = "CAP,REDUCE,KEEP"
     Case "SRM_MODE": FEMUiValidationList = "REAPPLY"
     Case "OUTPUT_STAGE_MODE": FEMUiValidationList = "FINAL,ALL"

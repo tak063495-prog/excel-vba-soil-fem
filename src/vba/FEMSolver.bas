@@ -490,7 +490,7 @@ End Function
 
 Private Sub P6SelectSolverMode()
   Dim memoryLimitMB As Double, symmetryTolerance As Double
-  Dim iterativeMethod As String, policy As String
+  Dim iterativeMethod As String, policy As String, nonsymSolver As String
   Dim requestedRestart As Long
   Dim isLargeProblem As Boolean
 
@@ -520,6 +520,12 @@ Private Sub P6SelectSolverMode()
     P6UseCSR = True
     P6SolverPolicy = "NONSYMMETRIC"
     P6SolverMode = "NONSYM_BAND_LU"
+    nonsymSolver = UCase$(Trim$(P6ReadTextSetting("NONSYM_SOLVER", "BAND")))
+    If nonsymSolver = "GMRES" Then
+      P6SolverMode = "CSR_GMRES"
+    ElseIf nonsymSolver <> "BAND" Then
+      Err.Raise vbObjectError + 3513, "FEMSolver", "NONSYM_SOLVERはBANDまたはGMRESを指定してください。"
+    End If
   End If
   P6MixedCoupledKrylov = False
 
@@ -543,6 +549,7 @@ Private Sub P6SelectSolverMode()
   P6MatrixStoragePolicy = "帯域格納＋分解済み帯域因子; mode=BAND_LU; solver=固定"
   If P6UseCSR Then
     P6MatrixStoragePolicy = "非対称帯域LU（行ピボット）＋CSR真残差照合; total-stress displacement"
+    If P6SolverMode = "CSR_GMRES" Then P6MatrixStoragePolicy = "非対称CSR・右前処理GMRES(ILU0)・真残差照合; total-stress displacement"
   End If
   P6SolverSelectionReady = True
 End Sub
@@ -4093,7 +4100,7 @@ Private Function P6SolveCSR() As Boolean
     P6SolveCSR = P6SolveMixedUzawa()
     Exit Function
   End If
-  If P6NeedsFullNonsymmetric() Then
+  If P6NeedsFullNonsymmetric() And P6SolverMode <> "CSR_GMRES" Then
     If P6SolveNonsymmetricBand() Then
       P6SolveCSR = True
       Exit Function
@@ -4779,5 +4786,16 @@ End Function
 Public Function P6NeedsFullNonsymmetric() As Boolean
   ' Solver/operator choice only; the continuum flow/material policy is unchanged.
   ' A wet JOINT retains its nonsymmetric friction derivative even with DAVIS soil.
+  Dim bandBytes As Double, limitBytes As Double
   P6NeedsFullNonsymmetric = P3FlowPolicyIsInconsistent() Or (GWEnabled() And P3HasJointElements)
+  If Not P6NeedsFullNonsymmetric Then Exit Function
+  ' This recovery operator is elastic and symmetric; the evaluated material
+  ' force remains nonassociated. Keep JOINT and mixed/coupled operators on CSR.
+  If P3IncoElasticCorrection And Not P3HasJointElements And Not P6MixedUP And Not P6ConsolActive And Not FSActive Then
+    If UCase$(Trim$(P6ReadTextSetting("NONSYM_SOLVER", "BAND"))) = "GMRES" Then
+      bandBytes = 2# * CDbl(nDof) * (CDbl(BandWidth) + 1#) * 8#
+      limitBytes = P6ReadSetting("SOLVER_MEMORY_LIMIT_MB", 512#) * 1048576#
+      If bandBytes <= limitBytes Then P6NeedsFullNonsymmetric = False
+    End If
+  End If
 End Function
