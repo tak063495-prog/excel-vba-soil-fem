@@ -15,6 +15,11 @@ plastic tangent; its failure alone does not establish an SRM limit state. The
 existing regularized and elastic correction retries remain in effect and are
 accepted only against the actual nonlinear material-force residual.
 
+For GMRES models at or above `NONSYM_ELASTIC_START_DOF` (default 2000),
+start with the elastic correction when its band fits the memory limit. Set
+this threshold to 0 to start with full Newton. A failed elastic attempt still
+receives the existing clean Newton retry and regularized recovery.
+
 For the elastic correction retry, the correction matrix is symmetric. The
 GMRES option uses the band Cholesky path for that retry when its estimated
 memory fits the configured limit. The evaluated nonassociated stress and
@@ -31,6 +36,6 @@ Validation uses actual Excel runs and checkpoint resumes: groundwater with
 plastic Mohr-Coulomb points, mixed Q8/T6 gravity, and a moving-wall support
 case. Native AUTO and OFF are compared with the pivoted BAND reference.
 `tests/check_gmres_solver_option.py --book <compiled.xlsm> --out <new-folder>`
-runs the water/plastic and mixed element comparisons. Use the existing
+runs the water/plastic, mixed element and automatic elastic-start comparisons. Use the existing
 `tests/run_groundwater_fixture.ps1` for the `face_support/gmres_water` fixture.
 Test-only forced elastic operators are never part of the product source.

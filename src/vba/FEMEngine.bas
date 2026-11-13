@@ -2804,6 +2804,8 @@ Private Function P3RunLoadStages() As Boolean
         stepSize = P3LastSuccessStepSize
       End If
     End If
+    elasticPreference = P6PreferElasticStart()
+    If elasticPreference Then P6SolverEvent "ELASTIC_CORRECTION_START", "reason=LARGE_GMRES;dof=" & CStr(nDof) & ";force_law=NONASSOCIATED_UNCHANGED"
     If stepSize > P3_MAX_STEP_SIZE Then stepSize = P3_MAX_STEP_SIZE
     If stepSize < P3_MIN_STEP_FACTOR Then stepSize = P3_MIN_STEP_FACTOR
     AccelResetStage

@@ -1,4 +1,4 @@
-param([Parameter(Mandatory=$true)][string]$Book,[Parameter(Mandatory=$true)][string]$Fixture,[Parameter(Mandatory=$true)][string]$Out,[switch]$Resume,[string]$Flow="INCONSISTENT",[string]$Native="AUTO",[switch]$FrontUi,[string]$ResumeState='',[switch]$ReopenResume,[ValidateSet('','FS','FS_UI','FLAG','CAPTURE','SAVE','PLASTIC','WRITE_TIME','WRITE_STAGE','PLCSV_TIME','PLCSV_STAGE','FSCSV_TIME','FSCSV_STAGE','LEDGERCSV_TIME','LEDGERCSV_STAGE','GWCSV_TIME','GWCSV_STAGE','FSCSV_TIME_UI')][string]$CancelAt='',[ValidateSet(5,18)][int]$FaultNumber=18,[ValidateRange(0,100)][int]$CancelAfterAccepted=2,[switch]$CheckLedger,[switch]$ExpectedOrdinaryFailure,[switch]$WaterObservables)
+﻿param([Parameter(Mandatory=$true)][string]$Book,[Parameter(Mandatory=$true)][string]$Fixture,[Parameter(Mandatory=$true)][string]$Out,[switch]$Resume,[string]$Flow="INCONSISTENT",[string]$Native="AUTO",[switch]$FrontUi,[string]$ResumeState='',[switch]$ReopenResume,[ValidateSet('','FS','FS_UI','FLAG','CAPTURE','SAVE','PLASTIC','WRITE_TIME','WRITE_STAGE','PLCSV_TIME','PLCSV_STAGE','FSCSV_TIME','FSCSV_STAGE','LEDGERCSV_TIME','LEDGERCSV_STAGE','GWCSV_TIME','GWCSV_STAGE','FSCSV_TIME_UI')][string]$CancelAt='',[ValidateSet(5,18)][int]$FaultNumber=18,[ValidateRange(0,100)][int]$CancelAfterAccepted=2,[switch]$CheckLedger,[switch]$ExpectedOrdinaryFailure,[switch]$WaterObservables)
 $ErrorActionPreference='Stop'
 if(Get-Process EXCEL -ErrorAction SilentlyContinue){throw 'Another Excel is running; do not dispatch.'}
 if(Test-Path -LiteralPath $Out){throw 'Preserve previous evidence.'}
@@ -140,7 +140,11 @@ End Function
   $ws.Range($ws.Cells($firstRow,$firstColumn),$ws.Cells(($firstRow+$rows.Count-1),($firstColumn+$cols-1))).Value2=$v
  }
  $null=Call 'FEMEnsureStageSheets'
- foreach($name in '節点データ','要素データ','材料データ','ステージ','載荷'){$wb.Worksheets.Item($name).Range('A2:N10000').ClearContents()}
+ foreach($name in '節点データ','要素データ','材料データ','ステージ','載荷'){
+  $fixtureSheet=$wb.Worksheets.Item($name)
+  $fixtureLastRow=[Math]::Max(10000,[int]$fixtureSheet.Cells.Item($fixtureSheet.Rows.Count,1).End(-4162).Row)
+  $fixtureSheet.Range("A2:N$fixtureLastRow").ClearContents()
+ }
  $wb.Worksheets.Item('接合').Range('A2:G10000').ClearContents()
  Rows $wb.Worksheets.Item('節点データ') 2 1 $data.nodes 9
  Rows $wb.Worksheets.Item('要素データ') 2 1 $data.elements $(if($data.elements[0].Count -ge 11){11}else{10})
@@ -165,6 +169,11 @@ End Function
  }
  $null=Call 'FEMWaterInstallUi'
  $water=$wb.Worksheets.Item('水条件')
+ # Fixtures replace all hydraulic input blocks, including those in a full model.
+ $water.Range('A12:AL211').ClearContents()
+ $water.Range('A216:F415').ClearContents()
+ $water.Range('V216:AB415').ClearContents()
+ $water.Range('V420:X619').ClearContents()
  $water.Range('B3').Value2=[string]$data.water.mode;$water.Range('B4').Value2=[double]$data.water.gamma
  $water.Range('B5').Value2=[string]$data.water.defaultProfile;$water.Range('B6').Value2=[string]$data.water.auto
  Rows $water 12 1 $data.water.profiles 4

@@ -53,6 +53,7 @@ Private Function FEMUiValidationRule(ByVal keyName As String, ByVal rowNo As Lon
     Case "MESH_QUALITY_MAX_ANGLE_DEG": FEMUiValidationRule = "=AND(ISNUMBER(" & c & ")," & c & ">0," & c & "<180)"
     Case "MESH_REPAIR_DAMPING", "ADAPT_MARK_FRACTION": FEMUiValidationRule = "=AND(ISNUMBER(" & c & ")," & c & ">=0," & c & "<=1)"
     Case "MESH_REPAIR_IMPROVEMENT_TOLERANCE", "MESH_TERRAIN_COUNT_MIN", "MESH_TERRAIN_COUNT_MAX": FEMUiValidationRule = "=AND(ISNUMBER(" & c & ")," & c & ">=0)"
+    Case "NONSYM_ELASTIC_START_DOF": FEMUiValidationRule = "=AND(ISNUMBER(" & c & ")," & c & ">=0," & c & "=INT(" & c & "))"
     Case "SOLVER_TOLERANCE", "SOLVER_REEVAL_DOF_THRESHOLD", "SOLVER_MEMORY_LIMIT_MB": FEMUiValidationRule = "=AND(ISNUMBER(" & c & ")," & c & ">0)"
   End Select
 End Function
@@ -134,6 +135,7 @@ Private Function FEMUiValidationAccepts(ByVal keyName As String, ByVal value As 
     Case "MESH_QUALITY_MIN_ANGLE_DEG", "MESH_QUALITY_MAX_ANGLE_DEG": FEMUiValidationAccepts = (x > 0# And x < 180#)
     Case "MESH_REPAIR_DAMPING", "ADAPT_MARK_FRACTION": FEMUiValidationAccepts = (x >= 0# And x <= 1#)
     Case "MESH_REPAIR_IMPROVEMENT_TOLERANCE", "MESH_TERRAIN_COUNT_MIN", "MESH_TERRAIN_COUNT_MAX": FEMUiValidationAccepts = (x >= 0#)
+    Case "NONSYM_ELASTIC_START_DOF": FEMUiValidationAccepts = (x >= 0# And x = Fix(x))
     Case "SOLVER_TOLERANCE", "SOLVER_REEVAL_DOF_THRESHOLD", "SOLVER_MEMORY_LIMIT_MB": FEMUiValidationAccepts = (x > 0#)
   End Select
 End Function

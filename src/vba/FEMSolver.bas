@@ -4786,16 +4786,25 @@ End Function
 Public Function P6NeedsFullNonsymmetric() As Boolean
   ' Solver/operator choice only; the continuum flow/material policy is unchanged.
   ' A wet JOINT retains its nonsymmetric friction derivative even with DAVIS soil.
-  Dim bandBytes As Double, limitBytes As Double
   P6NeedsFullNonsymmetric = P3FlowPolicyIsInconsistent() Or (GWEnabled() And P3HasJointElements)
   If Not P6NeedsFullNonsymmetric Then Exit Function
-  ' This recovery operator is elastic and symmetric; the evaluated material
-  ' force remains nonassociated. Keep JOINT and mixed/coupled operators on CSR.
-  If P3IncoElasticCorrection And Not P3HasJointElements And Not P6MixedUP And Not P6ConsolActive And Not FSActive Then
-    If UCase$(Trim$(P6ReadTextSetting("NONSYM_SOLVER", "BAND"))) = "GMRES" Then
-      bandBytes = 2# * CDbl(nDof) * (CDbl(BandWidth) + 1#) * 8#
-      limitBytes = P6ReadSetting("SOLVER_MEMORY_LIMIT_MB", 512#) * 1048576#
-      If bandBytes <= limitBytes Then P6NeedsFullNonsymmetric = False
-    End If
-  End If
+  ' The elastic retry changes only the correction operator, never the force law.
+  If P3IncoElasticCorrection And P6CanUseElasticBandRecovery() Then P6NeedsFullNonsymmetric = False
+End Function
+
+Public Function P6CanUseElasticBandRecovery() As Boolean
+  Dim bandBytes As Double, limitBytes As Double
+  If P3HasJointElements Or P6MixedUP Or P6ConsolActive Or FSActive Then Exit Function
+  If UCase$(Trim$(P6ReadTextSetting("NONSYM_SOLVER", "BAND"))) <> "GMRES" Then Exit Function
+  bandBytes = 2# * CDbl(nDof) * (CDbl(BandWidth) + 1#) * 8#
+  limitBytes = P6ReadSetting("SOLVER_MEMORY_LIMIT_MB", 512#) * 1048576#
+  P6CanUseElasticBandRecovery = (nDof > 0 And bandBytes <= limitBytes)
+End Function
+
+Public Function P6PreferElasticStart() As Boolean
+  Dim threshold As Double
+  If Not P3FlowPolicyIsInconsistent() Then Exit Function
+  threshold = P6ReadSetting("NONSYM_ELASTIC_START_DOF", 2000#)
+  If threshold <= 0# Or CDbl(nDof) < threshold Then Exit Function
+  P6PreferElasticStart = P6CanUseElasticBandRecovery()
 End Function
