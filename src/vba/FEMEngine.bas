@@ -6431,6 +6431,10 @@ Private Sub P3SetGlobalBudgetFailure()
 End Sub
 
 Private Function P3TryNewtonWatchdog(ByRef incrementBase() As Double, ByRef targetForce() As Double, ByRef internalForce() As Double, ByRef correctionRatio As Double, ByRef localIteration As Long) As Boolean
+  If P3AssociatedPotentialEligible() Then
+    P3TryNewtonWatchdog = P3TryAssociatedPotentialWatchdog(incrementBase, targetForce, internalForce, correctionRatio, localIteration)
+    Exit Function
+  End If
   ' Bounded look-ahead crosses a nonsmooth merit ridge without committing it.
   ' Accept only if the combined correction decreases the ORIGINAL free residual.
   Dim savedT() As Double, savedDirection() As Double
@@ -6582,6 +6586,7 @@ Private Function P3AccelApplyCorrection(ByRef incrementBase() As Double, ByRef t
     If Not ok And Not P3IsFatalFailure() Then ok = P3TryResidualRecovery(incrementBase, targetForce, internalForce, correctionRatio, localIteration)
   Else
     ok = P3ApplyLineSearch(incrementBase, targetForce, internalForce, correctionRatio, residualBefore)
+    If Not ok And Not P3IsFatalFailure() And P3AssociatedPotentialEligible() Then ok = P3TryNewtonWatchdog(incrementBase, targetForce, internalForce, correctionRatio, localIteration)
     If Not ok And Not P3IsFatalFailure() Then ok = P3TryResidualRecovery(incrementBase, targetForce, internalForce, correctionRatio, localIteration)
   End If
   If Not ok Or P3LineSearchCuts <> cutsBefore Then mAAReady = False
@@ -6629,4 +6634,145 @@ Public Function P3JointTangentState(ByVal e As Long, ByVal gp As Long) As Long
     If Elem(e).Stmat(0, gp) > 0# Then P3JointTangentState = P3JointTangentState + 4
     If Elem(e).Stmat(1, gp) < 0# Then P3JointTangentState = P3JointTangentState + 8
   End If
+End Function
+
+Private Function P3AssociatedPotentialEligible() As Boolean
+  Dim m As Long, e As Long, g As Long
+  If P6ReadSetting("ASSOCIATED_ENERGY_RECOVERY", 1#) = 0# Then Exit Function
+  If P3HasJointElements Or FSActive Or P6MixedUP Or P6ConsolActive Then Exit Function
+  If Not P3BoundaryDispSatisfied() Or NumberOfMaterial < 1 Then Exit Function
+  For m = 0 To NumberOfMaterial - 1
+    If P6MaterialKindOf(m) <> "STRUCT_ELASTIC" Then
+      If Abs(Material(m).fai - Material(m).psai) > 0.000000000001 Then Exit Function
+    End If
+  Next m
+  ' The one-step associated return is a convex potential gradient. Do not
+  ' assume that property for replayed multi-substep or coupled operators.
+  For e = 0 To NumberOfElement - 1
+    If P3IsElementActive(e) Then
+      If Elem(e).IsJoint Then Exit Function
+      For g = 0 To 3
+        If Elem(e).P2LastSuccessfulSubsteps(g) > 1 Then Exit Function
+      Next g
+    End If
+  Next e
+  P3AssociatedPotentialEligible = True
+End Function
+
+Private Function P3ResidualDirectionWork(ByRef target() As Double, ByRef internal() As Double, ByRef direction() As Double) As Double
+  Dim i As Long
+  For i = 0 To lastDof
+    If NodeCond(i) = 0 Then P3ResidualDirectionWork = P3ResidualDirectionWork + (target(i) - internal(i)) * direction(i)
+  Next i
+End Function
+
+Private Function P3TryAssociatedPotentialWatchdog(ByRef incrementBase() As Double, ByRef targetForce() As Double, ByRef internalForce() As Double, ByRef correctionRatio As Double, ByRef localIteration As Long) As Boolean
+  ' Associated, one-step continuum only. Along d, a convex potential has
+  ' derivative -r.d. Positive endpoint r.d proves a descending trial segment.
+  ' Intermediate force residuals may rise; accept the COMBINED correction only
+  ' when the original free residual decreases. No state is committed here.
+  Dim savedT() As Double, savedDirection() As Double, currentT() As Double, direction() As Double
+  Dim i As Long, innerStep As Long, search As Long
+  Dim originalNorm As Double, alpha As Double, firstAlpha As Double, oldWork As Double, newWork As Double, residualCap As Double
+  Dim oldLinearResidual As Double, oldLinearIterations As Long, stepOK As Boolean, exhausted As Boolean, reason As String
+  Dim errorNumber As Long, errorMessage As String, failedStatus As String, failedError As Long, failedElement As Long, failedGauss As Long
+  On Error GoTo FatalTrial
+  savedT = TDisp: savedDirection = Disp
+  oldLinearResidual = P6IterativeLastResidual: oldLinearIterations = P6IterativeLastIterations
+  If Not P3EvaluateTrialState(incrementBase, internalForce) Then GoTo FatalTrial
+  P3UpdateResidualMetrics targetForce, internalForce
+  originalNorm = ResidualNormFree: direction = savedDirection
+  residualCap = 100# * originalNorm
+  If 10# * P3ForceRef > residualCap Then residualCap = 10# * P3ForceRef
+  For innerStep = 1 To 6
+    currentT = TDisp
+    oldWork = P3ResidualDirectionWork(targetForce, internalForce, direction)
+    If Not P2IsFinite(oldWork) Or oldWork <= 0# Then reason = "NO_DESCENT_DIRECTION": GoTo RestoreTrial
+    alpha = 1#: stepOK = False
+    For search = 1 To 16
+      P3RestoreCommittedMaterialState False
+      For i = 0 To lastDof
+        TDisp(i) = currentT(i)
+        If NodeCond(i) = 0 Then TDisp(i) = currentT(i) + alpha * direction(i)
+        UDisp(i) = TDisp(i)
+      Next i
+      P6LsNoteTry
+      If Not P3EvaluateTrialState(incrementBase, internalForce) Then
+        If P3MaterialFailureIsFatal() Then GoTo FatalTrial
+        P3ClearTransientFailure
+        GoTo NextAlpha
+      End If
+      P3UpdateResidualMetrics targetForce, internalForce
+      If Not P2IsFinite(ResidualNormFree) Then GoTo NextAlpha
+      If ResidualNormFree < originalNorm * (1# - 0.0001) Then
+        For i = 0 To lastDof: Disp(i) = TDisp(i) - savedT(i): Next i
+        P3ApplyCorrectionRatioFromDir 1#, savedT, correctionRatio
+        P3LineSearchRetryCorrection = False: mLineSearchFailure = ""
+        If innerStep = 1 Then firstAlpha = alpha
+        P6LsNoteAccept firstAlpha, False: P6LsNoteQ originalNorm, ResidualNormFree
+        IncrementLogLineSearchAlpha firstAlpha
+        P6SolverEvent "ASSOCIATED_ENERGY_ACCEPT", "steps=" & CStr(innerStep) & ";first_alpha=" & CStr(firstAlpha) & ";before_norm=" & Format$(originalNorm, "0.000E+00") & ";after_norm=" & Format$(ResidualNormFree, "0.000E+00")
+        P3RequestTangentRebuild "RESIDUAL_RECOVERY"
+        NewtonProgressRecord localIteration, RelativeResidualFree
+        P3TryAssociatedPotentialWatchdog = True
+        Exit Function
+      End If
+      If Not P3AssociatedPotentialEligible() Then reason = "POTENTIAL_SCOPE": GoTo RestoreTrial
+      newWork = P3ResidualDirectionWork(targetForce, internalForce, direction)
+      If P2IsFinite(newWork) And ResidualNormFree <= residualCap Then
+        If newWork >= 0.0001 * oldWork And newWork <= oldWork * (1# + 0.00000001) Then
+          stepOK = True
+          If innerStep = 1 Then firstAlpha = alpha
+          P6SolverEvent "ASSOCIATED_ENERGY_STEP", "step=" & CStr(innerStep) & ";alpha=" & CStr(alpha) & ";work_before=" & Format$(oldWork, "0.000E+00") & ";work_after=" & Format$(newWork, "0.000E+00") & ";relres=" & Format$(RelativeResidualFree, "0.000E+00")
+          FEMIoFlushEvents
+          Exit For
+        End If
+      End If
+NextAlpha:
+      alpha = alpha * 0.5
+    Next search
+    If Not stepOK Then reason = "NO_POTENTIAL_STEP": GoTo RestoreTrial
+    If innerStep = 6 Then reason = "LOOKAHEAD_LIMIT": GoTo RestoreTrial
+    If localIteration >= P3GlobalIterationLimit(localIteration) Then exhausted = True: reason = "BUDGET": GoTo RestoreTrial
+    For i = 0 To lastDof
+      Disp(i) = 0#: force(i) = 0#
+      If NodeCond(i) = 0 Then force(i) = targetForce(i) - internalForce(i)
+    Next i
+    If Not P3RebuildTangentFromSpmat() Then GoTo FatalTrial
+    SetBoundaryCondition
+    localIteration = localIteration + 1
+    P3GlobalIterationCount = P3GlobalIterationCount + 1: P6PerfNewtonCount = P6PerfNewtonCount + 1
+    If Not BandSolver() Then
+      If P3IsFatalFailure() Then GoTo FatalTrial
+      P3ClearTransientFailure: reason = "LINEAR_SOLVE": GoTo RestoreTrial
+    End If
+    direction = Disp
+  Next innerStep
+RestoreTrial:
+  P6SolverEvent "ASSOCIATED_ENERGY_REJECT", "reason=" & reason
+  P3RestoreCommittedMaterialState False
+  For i = 0 To lastDof: TDisp(i) = savedT(i): UDisp(i) = savedT(i): Disp(i) = savedDirection(i): Next i
+  If Not P3EvaluateTrialState(incrementBase, internalForce) Then GoTo FatalTrial
+  P3UpdateResidualMetrics targetForce, internalForce
+  If Not P3RebuildTangentFromSpmat() Then GoTo FatalTrial
+  P6IterativeLastResidual = oldLinearResidual: P6IterativeLastIterations = oldLinearIterations
+  If exhausted Then P3SetGlobalBudgetFailure
+  Exit Function
+FatalTrial:
+  errorNumber = Err.number: errorMessage = Err.description
+  If errorNumber <> 0 Then
+    If errorNumber = 7 Then
+      SetAnalysisFailure RESULT_CAPACITY_ERROR, errorMessage, errorNumber, FailureElement, FailureGaussPoint, CurrentIncrement, CurrentIteration
+    Else
+      SetAnalysisFailure RESULT_RUNTIME_ERROR, errorMessage, errorNumber, FailureElement, FailureGaussPoint, CurrentIncrement, CurrentIteration
+    End If
+    Err.Clear
+  End If
+  failedStatus = ResultStatus: failedError = AnalysisErrorNumber: errorMessage = AnalysisMessage
+  failedElement = FailureElement: failedGauss = FailureGaussPoint
+  On Error Resume Next
+  P3RestoreCommittedMaterialState False
+  For i = 0 To lastDof: TDisp(i) = savedT(i): UDisp(i) = savedT(i): Next i
+  SetAnalysisFailure failedStatus, errorMessage, failedError, failedElement, failedGauss, CurrentIncrement, CurrentIteration
+  P3LineSearchRetryCorrection = False: mLineSearchFailure = "ASSOCIATED_ENERGY_FATAL"
 End Function

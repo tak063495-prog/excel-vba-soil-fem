@@ -117,6 +117,7 @@ Private Sub FEMRebuildSettingsLayout(ByVal ws As Worksheet)
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "FLOW_POLICY", "解析", "非関連の扱い", "INCONSISTENT", "INCONSISTENT=非関連流れ・非対称整合接線・全Newton / DAVIS=等価関連c*,φ*（JOINTには掛けない）", True
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NONSYM_SOLVER", "解析", "非対称線形解法", "BAND", "BAND=帯域LU（既定） / GMRES=大規模向けCSR・ILU0右前処理。非関連流れのc・φ・ψを保持し真残差で判定", True
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NONSYM_ELASTIC_START_DOF", "解析", "非関連の補助開始規模", 2000#, "GMRES選択時、この自由度数以上では弾性補助から開始。材料則・残差判定は維持。0=通常Newton開始。必要時は通常Newtonへ再試行", True
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ASSOCIATED_ENERGY_RECOVERY", "解析", "関連流れの停滞回復", 1, "1=関連流れ・単一材料更新の静的解析で、ポテンシャル降下を確認する限定試行。元の自由節点残差を減らす補正だけ受理。0=従来の回復経路。", False
   writeRow = writeRow + 1
   FEMPutSection ws, writeRow, "3. SRMパラメータ（実行の有無はステージシート）"
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "SRM_FMAX", "SRM", "上限Fs", 3#, "探索の上限", False
