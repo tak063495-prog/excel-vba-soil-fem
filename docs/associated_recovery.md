@@ -15,7 +15,16 @@ without treating that intermediate state as converged. It checks eligibility
 again at each intermediate state and requires finite values and bounded work.
 
 At most six look-ahead steps and sixteen halved trial lengths per step are
-allowed. Inner Newton solves consume the normal global iteration budget.
+allowed. Inner Newton solves count toward the global iteration budget.
+When `NEWTON_PROGRESS_CONTINUE=1`, a bounded recovery call may reserve its
+remaining work before reaching that budget. Reservation requires a fresh real
+accepted residual that is strictly below both the preceding accepted residual
+and the progress-window reference. Each accepted sample can reserve once;
+rejected intermediate states never count as progress. Stale, growing, invalid
+or disabled progress cannot reserve work. This prevents an improving solve
+from being cut off between accepted states solely because recovery used
+additional linear solves. The existing strict outer progress check remains.
+
 Only a combined correction that decreases the **original actual free residual**
 is accepted. The existing equilibrium, displacement and material convergence
 criteria remain in effect. This helper never commits a material state or a load
@@ -36,7 +45,12 @@ this earlier invocation.
 problem with a deliberately chosen descent direction whose first trial increases
 the force-residual norm. It checks eventual residual reduction, unchanged
 committed displacement/increment count, and exact rollback of a negative-work
-trial. Separate full-model testing is required to establish completion of a
+trial. With `--budget-recovery`, it also places the work counter just below
+100 and verifies that a genuinely improving accepted history permits a real
+residual-reducing recovery to finish beyond 100, with no material or load
+commit. `tests/check_newton_progress.py` covers reservation freshness,
+duplicate requests, stalled/increasing residuals, disabled continuation and
+short windows with gaps between accepted work indices. Separate full-model testing is required to establish completion of a
 particular gravity/load/SRM analysis.
 
 Constitutive background: [Sysala and Cermak, implicit Mohr-Coulomb return mapping](https://arxiv.org/abs/1508.07435).
