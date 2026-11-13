@@ -23,7 +23,7 @@ Public Type Material_Data '材料データ
   cohesion As Double
   ReduceStrength As Boolean 'SRMでc・φを下げるか
   InitialActive As Boolean  'ON=解析開始から有効、OFF=BIRTH待ち
-  kind As String          'SOIL / STRUCT / JOINT
+  kind As String          'SOIL / STRUCT / STRUCT_ELASTIC / JOINT
   kn As Double            'JOINT 法線剛性
   ks As Double            'JOINT せん断剛性
   AllowTension As Boolean 'JOINT False=剥離可
@@ -508,7 +508,7 @@ Public Const P3_DEFAULT_INCREMENT_COUNT As Long = 100
 Public Const P3_INITIAL_SELF_WEIGHT_INCREMENT_COUNT As Long = 10
 Public Const P3_GRAVITY_STEP_SIZE As Double = 0.1
 Public Const P3_APPLY_STEP_SIZE As Double = 0.05
-Public Const P3_MAX_GLOBAL_ITERATIONS As Long = 50
+Public Const P3_MAX_GLOBAL_ITERATIONS As Long = 100
 Public Const P3_MAX_STEP_RETRIES As Long = 8
 Public Const P3_MAX_STRENGTH_RETRIES As Long = 25
 Public Const P3_MIN_STEP_FACTOR As Double = 0.000001
@@ -994,6 +994,7 @@ Public P6InputMaterialYoung() As Double
 Public P6InputMaterialPoisson() As Double
 Public P6InputMaterialThickness() As Double
 Public P6InputMaterialWeight() As Double
+Public P6InputMaterialWeightSat() As Double
 Public P6InputMaterialFriction() As Double
 Public P6InputMaterialCohesion() As Double
 Public P6InputMaterialDilation() As Double

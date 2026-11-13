@@ -287,6 +287,8 @@ Private Sub CreateMeshFromGeometryDefinition()
 
     On Error GoTo ErrorHandler
     currentStage = "開始"
+    If FaceSupportHasInput() Then Err.Raise vbObjectError + 3494, "CONTROL", "壁面支持は生成済み節点番号を参照しています。再メッシュ前に支持表を保存・解除し、生成後の節点で再設定してください。"
+    MeshQualityEnsureSettings
     FEMShapeGenerationOK = False
     If AnalysisRunning Then
         If Not SuppressUserMessages Then MsgBox "解析処理中です。", vbExclamation
@@ -1056,6 +1058,7 @@ Sub ボタン5_Click()
     On Error GoTo ErrorHandler
     SaveApplicationState
     FEMLastProc = "入力設定の検査"
+    NewtonProgressEnsureSettings
     ResetAnalysisState
     FEMUiValidateSettings
     FEMViewerMarkDirty
@@ -1314,6 +1317,11 @@ Dim i As Long, CC As Long
 End Sub
 
 Sub ボタン20_Click()
+    If FEMMeshSheetHasT6() Then
+        MeshT6PatchCurrentSheet
+        If Not SuppressUserMessages Then MsgBox MeshT6PatchLastDetail, vbInformation
+        Exit Sub
+    End If
     MeshOptimizeExisting
 End Sub
 

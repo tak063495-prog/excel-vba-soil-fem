@@ -10,6 +10,7 @@ Private Declare PtrSafe Function SfmCsrResNorm Lib "soilfem_native_x64.dll" Alia
 Private Declare PtrSafe Function SfmIlu0 Lib "soilfem_native_x64.dll" Alias "sfm_ilu0" (ByVal n As Long, ByVal nnz As Long, ByVal rp As LongPtr, ByVal ci As LongPtr, ByVal dp As LongPtr, ByVal vals As LongPtr, ByVal ilu As LongPtr, ByVal fail As LongPtr, ByRef minAbs As Double) As Long
 Private Declare PtrSafe Function SfmGmres Lib "soilfem_native_x64.dll" Alias "sfm_gmres" (ByVal params As LongPtr, ByVal tol As Double) As Long
 Private Declare PtrSafe Function SfmRegularized Lib "soilfem_native_x64.dll" Alias "sfm_regularized" (ByVal params As LongPtr, ByVal damping As Double, ByVal itTol As Double) As Long
+Private Declare PtrSafe Function SfnRegularized Lib "soilfem_native_x64.dll" Alias "sfn_regularized" (ByVal params As LongPtr, ByVal damping As Double, ByVal itTol As Double) As Long
 Private Declare PtrSafe Function SfmResidual Lib "soilfem_native_x64.dll" Alias "sfm_residual" (ByVal params As LongPtr, ByVal forceRef As Double) As Long
 Private Declare PtrSafe Function SfmRcm Lib "soilfem_native_x64.dll" Alias "sfm_rcm" (ByVal nNode As Long, ByVal nElem As Long, ByVal nodes As LongPtr, ByVal elnode As LongPtr, ByVal o2n As LongPtr, ByVal n2o As LongPtr, ByRef candBw As Long) As Long
 Private Declare PtrSafe Function SfmHgApply Lib "soilfem_native_x64.dll" Alias "sfm_hg_apply" (ByVal params As LongPtr, ByVal tdone As LongPtr, ByVal hgdone As LongPtr, ByVal unsym As LongPtr, ByVal hoff As LongPtr, ByVal shapeGen As Long, ByVal hgFactor As Double, ByVal applyHg As Long) As Long
@@ -29,14 +30,15 @@ Public Sub FEMKernResetCounts()
   FEMKernHgCalls = 0: FEMKernHgApplied = 0
 End Sub
 
-Public Function FEMKernOn() As Boolean
+' algebraOnly allows pure CSR arithmetic under physical water, never material updates.
+Public Function FEMKernOn(Optional ByVal algebraOnly As Boolean = False) As Boolean
   FEMKernOn = False
   If FEMNativeModeText() <> "AUTO" Then Exit Function
-  FEMKernOn = FEMMatAvailable()
+  FEMKernOn = FEMMatAvailable(algebraOnly)
 End Function
 
 Public Function FEMKernStatusText() As String
-  If FEMKernOn() Then
+  If FEMKernOn() Or FEMKernRegCalls > 0 Or FEMKernGmresCalls > 0 Or FEMKernIluCalls > 0 Or FEMKernResNormCalls > 0 Then
     FEMKernStatusText = "KERN(scatter=" & CStr(FEMKernScatterCalls) & ";residual=" & CStr(FEMKernResidualCalls) & ";resnorm=" & CStr(FEMKernResNormCalls) & _
       ";ilu=" & CStr(FEMKernIluCalls) & ";gmres=" & CStr(FEMKernGmresCalls) & ";regularized=" & CStr(FEMKernRegCalls) & ";rcm=" & CStr(FEMKernRcmCalls) & ";hg=" & CStr(FEMKernHgCalls) & "/" & CStr(FEMKernHgApplied) & ";declined=" & CStr(FEMKernDeclines) & ")"
   Else
@@ -81,7 +83,7 @@ End Function
 
 Public Function FEMKernCsrResNorm(ByVal n As Long, ByRef rp() As Long, ByRef ci() As Long, ByRef v() As Double, ByRef x() As Double, ByRef b() As Double, ByRef r() As Double, ByRef normOut As Double) As Boolean
   FEMKernCsrResNorm = False
-  If Not FEMKernOn() Then Exit Function
+  If Not FEMKernOn(True) Then Exit Function
 #If Win64 Then
   On Error GoTo Failed
   If SfmCsrResNorm(n, VarPtr(rp(0)), VarPtr(ci(0)), VarPtr(v(0)), VarPtr(x(0)), VarPtr(b(0)), VarPtr(r(0)), normOut) <> 0 Then Exit Function
@@ -99,7 +101,7 @@ Public Function FEMKernIlu0(ByVal n As Long, ByVal nnz As Long, ByRef rp() As Lo
     ByRef failRow As Long, ByRef failCol As Long, ByRef minAbs As Double) As Long
   Dim f(0 To 1) As Long
   FEMKernIlu0 = -1
-  If Not FEMKernOn() Then Exit Function
+  If Not FEMKernOn(True) Then Exit Function
 #If Win64 Then
   On Error GoTo Failed
   FEMKernIlu0 = SfmIlu0(n, nnz, VarPtr(rp(0)), VarPtr(ci(0)), VarPtr(dp(0)), VarPtr(vals(0)), VarPtr(ilu(0)), VarPtr(f(0)), minAbs)
@@ -118,7 +120,7 @@ Public Function FEMKernGmres(ByVal n As Long, ByRef rp() As Long, ByRef ci() As 
     ByRef x() As Double, ByVal restart As Long, ByVal maxIt As Long, ByVal tol As Double, ByRef lastRes As Double, ByRef iters As Long, ByRef ev() As Double, ByRef nEv As Long) As Long
   Dim need As Double, cap As Long
   FEMKernGmres = -1
-  If Not FEMKernOn() Then Exit Function
+  If Not FEMKernOn(True) Then Exit Function
 #If Win64 Then
   On Error GoTo Failed
   need = CDbl(n) * (2# * restart + 5#) + CDbl(restart + 1) * restart + 4# * restart + 2#
@@ -151,14 +153,18 @@ End Function
 Public Function FEMKernRegularized(ByVal n As Long, ByVal bw As Long, ByRef rp() As Long, ByRef ci() As Long, ByRef orig() As Double, ByRef nc() As Long, _
     ByRef f() As Double, ByRef d() As Double, ByVal damping As Double, ByVal itTol As Double, ByRef normalRes As Double, ByRef factorDone As Boolean) As Long
   FEMKernRegularized = -1
-  If Not FEMKernOn() Then Exit Function
+  ' This algebra uses the assembled total-stress tangent and residual. It
+  ' does not evaluate a material point, so prescribed physical water is safe.
+  If FEMNativeModeText() <> "AUTO" Then Exit Function
+  If Not FEMMatAvailable(True) Then Exit Function
 #If Win64 Then
   On Error GoTo Failed
   ReDim mBand(0 To n - 1, 0 To bw)
   ReDim mVec(0 To 3 * n - 1)
   mG(0) = n: mG(1) = VarPtr(rp(0)): mG(2) = VarPtr(ci(0)): mG(3) = VarPtr(orig(0)): mG(4) = VarPtr(nc(0))
   mG(5) = VarPtr(f(0)): mG(6) = VarPtr(d(0)): mG(7) = VarPtr(mBand(0, 0)): mG(8) = bw: mG(9) = VarPtr(mVec(0)): mG(10) = VarPtr(mOutD(0))
-  FEMKernRegularized = SfmRegularized(VarPtr(mG(0)), damping, itTol)
+  FEMKernRegularized = FEMKernSelectedRecovery(damping, itTol)
+  If FEMKernRegularized < 0 Then FEMKernRegularized = SfmRegularized(VarPtr(mG(0)), damping, itTol)
   normalRes = mOutD(0): factorDone = (mOutD(1) <> 0#)
   Erase mBand
   If FEMKernRegularized >= 0 Then FEMKernRegCalls = FEMKernRegCalls + 1
@@ -166,6 +172,18 @@ Public Function FEMKernRegularized(ByVal n As Long, ByVal bw As Long, ByRef rp()
 Failed:
   If Err.number = 18 Then Err.Raise 18 ' ユーザー中断はDLL無効化・VBA代替へ進めず呼出側へ送る
   Err.Clear: FEMKernDeclines = FEMKernDeclines + 1: FEMKernRegularized = -1
+#End If
+End Function
+
+' Optional export: old DLLs and STRICT precision retain the x87 core.
+Private Function FEMKernSelectedRecovery(ByVal damping As Double, ByVal itTol As Double) As Long
+  FEMKernSelectedRecovery = -1
+#If Win64 Then
+  On Error GoTo Missing
+  FEMKernSelectedRecovery = SfnRegularized(VarPtr(mG(0)), damping, itTol)
+Missing:
+  If Err.number = 18 Then Err.Raise 18
+  Err.Clear
 #End If
 End Function
 

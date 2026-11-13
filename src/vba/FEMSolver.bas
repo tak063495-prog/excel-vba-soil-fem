@@ -180,6 +180,7 @@ NextRcmAdjI:
     Next localI
   Next elementId
 
+  FaceSupportRCMEdges adjacency
   For nodeId = 0 To nodeCount - 1
     degree(nodeId) = adjacency(nodeId).count
   Next nodeId
@@ -265,7 +266,7 @@ NextRcmCandJ:
 NextRcmCandI:
     Next localI
   Next elementId
-  P6ComputeRCMCandidateBandwidth = candidateBandwidth
+  P6ComputeRCMCandidateBandwidth = FaceSupportCandidateBand(oldToNew, candidateBandwidth)
 End Function
 
 Private Sub P6ValidateRCMPermutation(ByRef oldToNew() As Long, ByRef newToOld() As Long)
@@ -433,7 +434,9 @@ Private Sub P6EvaluateRCMBandwidth(ByVal originalBandwidth As Long)
     End If
     Exit Sub
   End If
-  If FEMKernRcm(oldToNew, newToOld, P6RCMCandidateBandwidth) Then
+  P6RCMNativeUsed = False
+  If Len(FaceSupportSignature) = 0 Then P6RCMNativeUsed = FEMKernRcm(oldToNew, newToOld, P6RCMCandidateBandwidth)
+  If P6RCMNativeUsed Then
     P6RCMNativeUsed = True
   Else
     P6RCMNativeUsed = False
@@ -487,7 +490,7 @@ End Function
 
 Private Sub P6SelectSolverMode()
   Dim memoryLimitMB As Double, symmetryTolerance As Double
-  Dim iterativeMethod As String, policy As String
+  Dim iterativeMethod As String, policy As String, nonsymSolver As String
   Dim requestedRestart As Long
   Dim isLargeProblem As Boolean
 
@@ -517,6 +520,12 @@ Private Sub P6SelectSolverMode()
     P6UseCSR = True
     P6SolverPolicy = "NONSYMMETRIC"
     P6SolverMode = "NONSYM_BAND_LU"
+    nonsymSolver = UCase$(Trim$(P6ReadTextSetting("NONSYM_SOLVER", "BAND")))
+    If nonsymSolver = "GMRES" Then
+      P6SolverMode = "CSR_GMRES"
+    ElseIf nonsymSolver <> "BAND" Then
+      Err.Raise vbObjectError + 3513, "FEMSolver", "NONSYM_SOLVERはBANDまたはGMRESを指定してください。"
+    End If
   End If
   P6MixedCoupledKrylov = False
 
@@ -540,6 +549,7 @@ Private Sub P6SelectSolverMode()
   P6MatrixStoragePolicy = "帯域格納＋分解済み帯域因子; mode=BAND_LU; solver=固定"
   If P6UseCSR Then
     P6MatrixStoragePolicy = "非対称帯域LU（行ピボット）＋CSR真残差照合; total-stress displacement"
+    If P6SolverMode = "CSR_GMRES" Then P6MatrixStoragePolicy = "非対称CSR・右前処理GMRES(ILU0)・真残差照合; total-stress displacement"
   End If
   P6SolverSelectionReady = True
 End Sub
@@ -682,6 +692,7 @@ Dim errNum As Long, errSrc As String, errDesc As String
    End If
  End If
 
+ BandWidth = FaceSupportBandWidth(BandWidth)
    matrixMax = 0#
    symmetryMax = 0#
    For k = 0 To NumberOfElement - 1
@@ -719,6 +730,7 @@ Else
   For s = s To P6ScatterN - 1
     OriginalMat(P6ScatterRow(s), P6ScatterCol(s)) = OriginalMat(P6ScatterRow(s), P6ScatterCol(s)) + Elem(P6ScatterElem(s)).kmat(P6ScatterI(s), P6ScatterJ(s))
   Next s
+  FaceSupportAddBand
   If P6PrepareBiotMixed() Then
     If P6MixedUP Then
       P6CopyBand OriginalMat, TotalMat
@@ -896,6 +908,7 @@ NextCsrFillCol:
     Loop
   Next rowNo
 
+  FaceSupportAugmentCSR
   ' 行内の列番号を数値配列上で昇順にし、結果を再現可能にする。
   For rowNo = 0 To lastDof
     For position = P6CSRRowPtr(rowNo) + 1 To P6CSRRowPtr(rowNo + 1) - 1
@@ -934,7 +947,7 @@ NextCsrFillCol:
     Next localRow
   Next elementId
   P6CSRPatternReady = True
-  P6CSRPatternSignature = P6RCMCacheSignature
+  P6CSRPatternSignature = P6RCMCacheSignature & FaceSupportSignature
   P6BuildCSRPattern = True
 End Function
 
@@ -1153,7 +1166,7 @@ Private Function P6BuildCSRFromElements() As Boolean
   P6CSRMinimumDiagonal = 0#
   On Error GoTo CSRBuildFailed
   If nDof <= 0 Or lastDof < 0 Then Exit Function
-  If Not P6CSRPatternReady Or P6CSRPatternSignature <> P6RCMCacheSignature Then
+  If Not P6CSRPatternReady Or P6CSRPatternSignature <> P6RCMCacheSignature & FaceSupportSignature Then
     If Not P6BuildCSRPattern() Then Exit Function
   End If
   If P6CSRNNZ <= 0 Then Exit Function
@@ -1171,8 +1184,10 @@ Private Function P6BuildCSRFromElements() As Boolean
   P6CSRDeviatoricReady = False
   If Not P6EnsureCSRScatterList() Then Exit Function
   If Not P6AssembleCSRValuesDetailed() Then Exit Function
+  FaceSupportAddCSR
   If Not P6CheckCSRDiagonalValues(P6CSROriginalValues, True) Then
     If Not P6AssembleCSRValuesDirect() Then Exit Function
+    FaceSupportAddCSR
     If Not P6CheckCSRDiagonalValues(P6CSROriginalValues, True) Then
       SetAnalysisFailure RESULT_GLOBAL_SINGULAR, _
         "CSR数値組立後の対角成分が0または極小です。ゼロ対角数=" & CStr(P6CSRDiagonalZeroCount) & _
@@ -1614,6 +1629,7 @@ Public Sub P6ResetBandBench()
   P6BandBenchOnly = False
   P6KernelCached = False
   FEMNativeRefresh
+  FEMSparseReset
   Erase P6BandBenchSnap
   Erase P6BandBenchFree
 End Sub
@@ -3535,7 +3551,10 @@ Public Function P6SolveResidualRecovery(ByVal damping As Double) As Boolean
   Dim stride48 As Long, lowerI48 As Long, lowerJ48 As Long, diagonalI48 As Long
   Dim positionI48 As Long, positionJ48 As Long
   P6SolveResidualRecovery = False
-  If Not P6CSRReady Or damping <= 0# Or Not P2IsFinite(damping) Then GoTo Rejected
+  If damping <= 0# Or Not P2IsFinite(damping) Then GoTo Rejected
+  If Not P6CSRReady Then
+    If Not P6BuildCSRFromElements() Then GoTo Rejected
+  End If
   bw = 2 * BandWidth: If bw > lastDof Then bw = lastDof
   ' Flat storage has the same number of Doubles and work arrays as frozen32.
   ' Keep the original 2D implementation for dimensions beyond a Long flat index.
@@ -4082,7 +4101,7 @@ Private Function P6SolveCSR() As Boolean
     P6SolveCSR = P6SolveMixedUzawa()
     Exit Function
   End If
-  If P6NeedsFullNonsymmetric() Then
+  If P6NeedsFullNonsymmetric() And P6SolverMode <> "CSR_GMRES" Then
     If P6SolveNonsymmetricBand() Then
       P6SolveCSR = True
       Exit Function
@@ -4129,6 +4148,7 @@ Private Function P6RebuildBandFromElements() As Boolean
   Dim i As Long, j As Long, k As Long, ii As Long, jj As Long
   P6RebuildBandFromElements = False
   If lastDof < 0 Or BandWidth < 0 Then Exit Function
+  BandWidth = FaceSupportBandWidth(BandWidth)
   ReDim OriginalMat(lastDof, BandWidth)
   For k = 0 To NumberOfElement - 1
     If Not P3IsElementActive(k) Then GoTo NextRebuildElement
@@ -4145,6 +4165,7 @@ NextRebuildI:
     Next i
 NextRebuildElement:
   Next k
+  FaceSupportAddBand
   P6RebuildBandFromElements = True
 End Function
 
@@ -4435,10 +4456,25 @@ End Sub
 Function BandSolver() As Boolean
   Dim csrOk As Boolean
   Dim ldltShadow As Boolean
+  Dim sparseResult As Long, sparseNewFactor As Boolean
   P6BandSolveCallCount = P6BandSolveCallCount + 1
   BandSolver = False
   MatrixFactored = False
   ldltShadow = False
+  sparseResult = FEMSparseTryBandSolve(sparseNewFactor)
+  If sparseResult = 1 Then
+    If sparseNewFactor Then
+      P6FactorizationCount = P6FactorizationCount + 1
+      P6RememberFactorKeys
+    Else
+      P6FactorizationReuseCount = P6FactorizationReuseCount + 1
+    End If
+    P6FactorReady = True: MatrixFactored = True: BandSolver = True
+    Exit Function
+  ElseIf sparseResult = 2 Then
+    P6FactorReady = False: Erase P6FactoredBand
+    If Not P6UseCSR Then P6SolverMode = "BAND_LU"
+  End If
   If P6UseCSR Then
     csrOk = P6SolveCSR()
     If P6NeedsFullNonsymmetric() Then
@@ -4558,6 +4594,7 @@ Public Sub P6AccelResetPreconditioner()
 End Sub
 
 Private Sub P6AccelCapturePreconditioner()
+  If FEMSparseHasFactor() Then mPreReady = False: Exit Sub
   On Error GoTo CapturePreSkip
   mPreReady = False
   If Not AccelV5 Or AccelBaselineRetry Or P6MixedUP Or P3HasJointElements Or P6UseCSR Then Exit Sub
@@ -4766,5 +4803,40 @@ End Function
 Public Function P6NeedsFullNonsymmetric() As Boolean
   ' Solver/operator choice only; the continuum flow/material policy is unchanged.
   ' A wet JOINT retains its nonsymmetric friction derivative even with DAVIS soil.
-  P6NeedsFullNonsymmetric = P3FlowPolicyIsInconsistent() Or (GWEnabled() And P3HasJointElements)
+  Dim i As Long
+  P6NeedsFullNonsymmetric = (GWEnabled() And P3HasJointElements)
+  If P3FlowPolicyIsInconsistent() Then
+    ' The setting permits nonassociated flow; phi=psi still has a symmetric
+    ' continuum tangent. Retain nonsymmetric joint and coupled operators.
+    If P3HasJointElements Or FSActive Or P6MixedUP Or P6ConsolActive Or NumberOfMaterial < 1 Then
+      P6NeedsFullNonsymmetric = True
+    Else
+      For i = 0 To NumberOfMaterial - 1
+        If P6MaterialKindOf(i) <> "STRUCT_ELASTIC" Then
+          If Abs(Material(i).fai - Material(i).psai) > 0.000000000001 Then P6NeedsFullNonsymmetric = True: Exit For
+        End If
+      Next i
+    End If
+  End If
+  If Not P6NeedsFullNonsymmetric Then Exit Function
+  ' The elastic retry changes only the correction operator, never the force law.
+  If P3IncoElasticCorrection And P6CanUseElasticBandRecovery() Then P6NeedsFullNonsymmetric = False
+End Function
+
+Public Function P6CanUseElasticBandRecovery() As Boolean
+  Dim bandBytes As Double, limitBytes As Double
+  If P3HasJointElements Or P6MixedUP Or P6ConsolActive Or FSActive Then Exit Function
+  If UCase$(Trim$(P6ReadTextSetting("NONSYM_SOLVER", "BAND"))) <> "GMRES" Then Exit Function
+  bandBytes = 2# * CDbl(nDof) * (CDbl(BandWidth) + 1#) * 8#
+  limitBytes = P6ReadSetting("SOLVER_MEMORY_LIMIT_MB", 512#) * 1048576#
+  P6CanUseElasticBandRecovery = (nDof > 0 And bandBytes <= limitBytes)
+End Function
+
+Public Function P6PreferElasticStart() As Boolean
+  Dim threshold As Double
+  If Not P3FlowPolicyIsInconsistent() Then Exit Function
+  If Not P6NeedsFullNonsymmetric() Then Exit Function
+  threshold = P6ReadSetting("NONSYM_ELASTIC_START_DOF", 2000#)
+  If threshold <= 0# Or CDbl(nDof) < threshold Then Exit Function
+  P6PreferElasticStart = P6CanUseElasticBandRecovery()
 End Function

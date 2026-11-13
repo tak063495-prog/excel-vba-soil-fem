@@ -12,3 +12,4 @@ EXPORTS
     sfm_residual
     sfm_rcm
     sfm_hg_apply
+    sfn_regularized

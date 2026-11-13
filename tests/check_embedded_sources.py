@@ -23,11 +23,15 @@ if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('dump');p.add_argument('report');a=p.parse_args()
     root=Path(__file__).resolve().parents[1]
     embedded=json.loads(Path(a.dump).read_text(encoding='utf-8-sig'));hashes={}
+    source_dir=root/'src/vba'
+    expected={p.stem for p in source_dir.glob('*.bas')}|{'ThisWorkbook'}
+    registered={item['name'] for item in json.loads((source_dir/'modules.json').read_text(encoding='utf-8-sig'))}
+    assert registered==expected,('Module registry does not match sources',sorted(expected-registered),sorted(registered-expected))
+    assert set(embedded)==expected,('Incomplete or extra embedded modules',sorted(expected-set(embedded)),sorted(set(embedded)-expected))
     for name,code in embedded.items():
         assert name.isidentifier(),name
         source=root/'src/vba'/(name+('.cls' if name=='ThisWorkbook' else '.bas'))
         assert normalize(source.read_text(encoding='utf-8-sig'))==normalize(code),name
         hashes[name]=hashlib.sha256(source.read_bytes()).hexdigest()
-    assert len(hashes)==33,len(hashes)
     report=dict(status='PASS',modules=hashes,normalization='VBE identifier/keyword case outside string literals and apostrophe comments; line endings/trailing whitespace/Attribute VB_. String literals and comment text preserved.')
-    Path(a.report).write_bytes((json.dumps(report,indent=2)+'\n').encode());print('PASS: 33 embedded VBA modules; string literals and comments preserved.')
+    Path(a.report).write_bytes((json.dumps(report,indent=2)+'\n').encode());print(f'PASS: {len(hashes)} embedded VBA modules; string literals and comments preserved.')

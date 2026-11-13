@@ -14,6 +14,7 @@ Private Function FEMUiValidationList(ByVal keyName As String) As String
     Case "WEIGHT_MODE": FEMUiValidationList = "TOTAL"
     Case "RCM_POLICY": FEMUiValidationList = "AUTO,ON,OFF"
     Case "FLOW_POLICY": FEMUiValidationList = "INCONSISTENT,DAVIS"
+    Case "NONSYM_SOLVER": FEMUiValidationList = "BAND,GMRES"
     Case "SRM_PSI_POLICY": FEMUiValidationList = "CAP,REDUCE,KEEP"
     Case "SRM_MODE": FEMUiValidationList = "REAPPLY"
     Case "OUTPUT_STAGE_MODE": FEMUiValidationList = "FINAL,ALL"
@@ -26,7 +27,7 @@ Private Function FEMUiValidationList(ByVal keyName As String) As String
     Case "VIEW_SCALE_MODE": FEMUiValidationList = "AUTO,SYMMETRIC,USER"
     Case "VIEW_DETAIL_MODE": FEMUiValidationList = "SIMPLE,DETAIL"
     Case "VIEW_RESULT_SOURCE": FEMUiValidationList = "SMOOTHED,ELEMENT,RAW_GAUSS"
-    Case "MESH_T6_FALLBACK": FEMUiValidationList = "0,1"
+    Case "MESH_T6_FALLBACK", "MESH_QUALITY_REFINE", "NEWTON_PROGRESS_CONTINUE", "ASSOCIATED_ENERGY_RECOVERY", "ASSOCIATED_ENERGY_FIRST", "NATIVE_SPARSE_DIRECT", "NATIVE_WATER_TANGENT", "STATIC_KEEP_ACCEPTED_STEP": FEMUiValidationList = "0,1"
     Case "MESH_GEN_COMPARE": FEMUiValidationList = "0,1,2"
     Case "NATIVE_DLL": FEMUiValidationList = "AUTO,BAND,OFF"
     Case "NATIVE_PRECISION": FEMUiValidationList = "STRICT,SSE2,AUTO,AVX2"
@@ -52,6 +53,8 @@ Private Function FEMUiValidationRule(ByVal keyName As String, ByVal rowNo As Lon
     Case "MESH_QUALITY_MAX_ANGLE_DEG": FEMUiValidationRule = "=AND(ISNUMBER(" & c & ")," & c & ">0," & c & "<180)"
     Case "MESH_REPAIR_DAMPING", "ADAPT_MARK_FRACTION": FEMUiValidationRule = "=AND(ISNUMBER(" & c & ")," & c & ">=0," & c & "<=1)"
     Case "MESH_REPAIR_IMPROVEMENT_TOLERANCE", "MESH_TERRAIN_COUNT_MIN", "MESH_TERRAIN_COUNT_MAX": FEMUiValidationRule = "=AND(ISNUMBER(" & c & ")," & c & ">=0)"
+    Case "STATIC_INITIAL_STEPS": FEMUiValidationRule = "=AND(ISNUMBER(" & c & ")," & c & ">=0," & c & "<=100000," & c & "=INT(" & c & "))"
+    Case "NONSYM_ELASTIC_START_DOF": FEMUiValidationRule = "=AND(ISNUMBER(" & c & ")," & c & ">=0," & c & "=INT(" & c & "))"
     Case "SOLVER_TOLERANCE", "SOLVER_REEVAL_DOF_THRESHOLD", "SOLVER_MEMORY_LIMIT_MB": FEMUiValidationRule = "=AND(ISNUMBER(" & c & ")," & c & ">0)"
   End Select
 End Function
@@ -119,6 +122,7 @@ Private Function FEMUiValidationAccepts(ByVal keyName As String, ByVal value As 
   x = CDbl(value): k = UCase$(Trim$(keyName))
   Select Case k
     Case "MESH_NX", "MESH_NY", "MESH_MATERIAL", "SOLVER_MAX_ITERATIONS", "SOLVER_GMRES_RESTART": FEMUiValidationAccepts = (x >= 1# And x <= 2147483647# And x = Fix(x))
+    Case "STATIC_INITIAL_STEPS": FEMUiValidationAccepts = (x >= 0# And x <= 100000# And x = Fix(x))
     Case "MESH_REPAIR_MAX_ITERATIONS": FEMUiValidationAccepts = (x >= 1# And x <= 50# And x = Fix(x))
     Case "MESH_REPAIR_ANGLE_ITERATIONS": FEMUiValidationAccepts = (x >= 1# And x <= 5000# And x = Fix(x))
     Case "Q8_HOURGLASS_FACTOR", "ACCEL_ADAPTIVE", "ACCEL_V1_PREDICTOR", "ACCEL_V2A_REUSE", "ACCEL_V2B_COST", "ACCEL_V3_COST_SEARCH", "ACCEL_V4_ANDERSON", "ACCEL_V5_GMRES_LU", "ACCEL_TRACE", "ACCEL_STEP_RECOVERY", "ACCEL_STEP_FRESH_LU", "NATIVE_STATE_COPY", "NATIVE_ASSEMBLY", "NATIVE_GMRES_SIMD", "NATIVE_GMRES_TUNED", "NATIVE_GMRES_PREPARED", "IO_FAST_PATH", "EVENT_LOG_FAST": FEMUiValidationAccepts = (x >= 0# And x <= 1#)
@@ -133,6 +137,7 @@ Private Function FEMUiValidationAccepts(ByVal keyName As String, ByVal value As 
     Case "MESH_QUALITY_MIN_ANGLE_DEG", "MESH_QUALITY_MAX_ANGLE_DEG": FEMUiValidationAccepts = (x > 0# And x < 180#)
     Case "MESH_REPAIR_DAMPING", "ADAPT_MARK_FRACTION": FEMUiValidationAccepts = (x >= 0# And x <= 1#)
     Case "MESH_REPAIR_IMPROVEMENT_TOLERANCE", "MESH_TERRAIN_COUNT_MIN", "MESH_TERRAIN_COUNT_MAX": FEMUiValidationAccepts = (x >= 0#)
+    Case "NONSYM_ELASTIC_START_DOF": FEMUiValidationAccepts = (x >= 0# And x = Fix(x))
     Case "SOLVER_TOLERANCE", "SOLVER_REEVAL_DOF_THRESHOLD", "SOLVER_MEMORY_LIMIT_MB": FEMUiValidationAccepts = (x > 0#)
   End Select
 End Function

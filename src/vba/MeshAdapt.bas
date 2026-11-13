@@ -59,6 +59,7 @@ Private candidateOptions As String
 Private candidateSignature As String, candidateKind As String, meshScale As Double
 Private movedCount As Long, sweepCount As Long, beforeAngle As Double, beforeAspect As Double
 Private operationStep As String
+Private qualityRefining As Boolean
 Private oldAreaByMaterial As Object, newElements() As Variant
 Private forceLimits As Object
 Private refineScore() As Double, candidateScore() As Double
@@ -291,7 +292,7 @@ Private Function Metric(ByVal e As Long, ByRef ar As Double, ByRef q As Double, 
         If cross / Sqr(l1 * l2) < metricSJ(e) Then metricSJ(e) = cross / Sqr(l1 * l2)
         If angle < 30# - 0.0000001 Or angle > 150# + 0.0000001 Then
             metricClass(e) = 2
-        ElseIf angle < 45# - 0.0000001 Or angle > 135# + 0.0000001 Then
+        ElseIf Not MeshShapeWithinTargets(False, angle, angle, 1#) Then
             If metricClass(e) < 1 Then metricClass(e) = 1
         End If
         If l1 < shortest Then shortest = l1
@@ -299,6 +300,7 @@ Private Function Metric(ByVal e As Long, ByRef ar As Double, ByRef q As Double, 
         ar = ar + xx(a) * yy(b) - xx(b) * yy(a)
     Next j
     ar = ar / 2#: asp = Sqr(longest / shortest)
+    If Not MeshShapeWithinTargets(False, amin, metricMax(e), asp) And metricClass(e) = 0 Then metricClass(e) = 1
     Metric = ar > 0#
 End Function
 
@@ -591,6 +593,7 @@ ScoresReady:
     ReDim marks(1 To edgeN)
     operationStep = "分割辺の選定"
     targetCount = CLng(ne * FEMReadSetting("ADAPT_MARK_FRACTION", 0.15))
+    If qualityRefining Then targetCount = CLng(ne * FEMReadSetting("MESH_QUALITY_REFINE_FRACTION", 0.03))
     If targetCount < 1 Then targetCount = 1
     If targetCount > ne Then targetCount = ne
     count = 0
@@ -1259,9 +1262,11 @@ Done:
         comparisonText = comparisonText & vbCrLf & "採用優先：両方合格なら品質の良い方 (MESH_GEN_COMPARE=0)"
     End If
     Call RestoreState(best)
+    If candidateKind = "SMOOTH" Then CompareQualityRefinement best, bestQ
+    Call RestoreState(best)
     Call CheckCandidate
     MeshAdaptLastSummary = "選択：" & selectedMethod & " / 要素 " & originalNE & " → " & ne & " / 節点 " & originalNN & " → " & nn & vbCrLf & _
-        comparisonText & vbCrLf & "合格45～135° / 警告30～150°内 / その他は不合格。採用後は再解析が必要です。"
+        comparisonText & vbCrLf & "Q8の設定目標で形状を判定。30～150°外は重点修正対象。採用後は再解析が必要です。"
     If bestQ.failN > 0 Then MeshAdaptLastSummary = MeshAdaptLastSummary & vbCrLf & "不合格要素が残っています。外形・拘束と角度基準を確認してください。"
     GenerateAndCompare = True
 End Function
@@ -1711,7 +1716,7 @@ End Sub
 Private Sub EnsureRefinementCapacity()
     Dim cap As Long, i As Long, j As Long, rows() As Variant, elements() As Long
     cap = nn + ne * 25
-    If cap > 300000 Then Err.Raise vbObjectError + 3801, , "再メッシュの作業上限を超えます。"
+    If cap > 60000 Then cap = 60000
     If UBound(xx) < cap Then ReDim Preserve xx(1 To cap): ReDim Preserve yy(1 To cap)
     If UBound(nodeRows, 1) < cap Then
         ReDim rows(1 To cap, 1 To 14)
@@ -1843,7 +1848,20 @@ Private Function TryMarkElement(ByVal element As Long, ByRef marked() As Boolean
     Dim e As Long, j As Long, n As Long, last As Long, total As Long, key As Double, i As Long
     ReDim markDue(1 To ne): ReDim markHeap(1 To ne + 8): ReDim markLog(1 To edgeN)
     markHeapN = 0: markLogN = 0
-    For j = 0 To 3: MarkOneEdge elementEdge(element, j), marked, 0#: Next j
+    If qualityRefining And aspects(element) > 2# Then
+        ' Bisect the longest direction of stretched quads; four-way splitting
+        ' alone preserves the aspect ratio and would not improve their shape.
+        Dim longest As Double, length As Double, side As Long, a As Long, b As Long
+        For j = 0 To 3
+            a = conn(element, j + 1): b = conn(element, (j + 1) Mod 4 + 1)
+            length = (xx(b) - xx(a)) ^ 2 + (yy(b) - yy(a)) ^ 2
+            If length > longest Then longest = length: side = j
+        Next j
+        MarkOneEdge elementEdge(element, side), marked, 0#
+        MarkOneEdge elementEdge(element, (side + 2) Mod 4), marked, 0#
+    Else
+        For j = 0 To 3: MarkOneEdge elementEdge(element, j), marked, 0#: Next j
+    End If
     Do While markHeapN > 0
         key = MarkQueuePop(): e = CLng(key - Fix((key - 1#) / ne) * ne)
         If markDue(e) = key Then
@@ -1907,6 +1925,7 @@ Public Function MeshAdaptConvertBadQ8ToT6(ByRef x() As Double, ByRef y() As Doub
     Dim v(1 To 4) As Long, m(1 To 4) As Long, area As Double, a1 As Double, a2 As Double
     Dim out() As Variant, nodeCount As Long, rowCount As Long, mat As Variant
     Dim diag As Long, mid As Long, q As String, trimmed() As Variant
+    Dim score1 As Double, score2 As Double, valid1 As Boolean, valid2 As Boolean, pass1 As Boolean, pass2 As Boolean, warn As Long
     Dim areaFloor As Double, minX As Double, maxX As Double, minY As Double, maxY As Double, span As Double
     On Error GoTo Fail
     converted = 0: outputCount = 0: detail = ""
@@ -1921,13 +1940,17 @@ Public Function MeshAdaptConvertBadQ8ToT6(ByRef x() As Double, ByRef y() As Doub
         If y(j) > maxY Then maxY = y(j)
     Next j
     span = maxX - minX: If maxY - minY > span Then span = maxY - minY
-    areaFloor = span * span * FEMReadSetting("MESH_QUALITY_MIN_AREA_RATIO", 0.000001)
+    areaFloor = span * span * 0.00000000000001
     ReDim out(1 To n * 2, 1 To 11)
     For e = 1 To n
         For j = 1 To 10: out(e, j) = source(e, j): Next j
         out(e, 11) = "Q8"
+        If c >= 11 Then
+            If UCase$(Trim$(CStr(source(e, 11)))) = "T6" Then out(e, 11) = "T6"
+        End If
         If e > UBound(failedMask) Then Err.Raise vbObjectError + 3880, , "T6品質マスクの要素数が一致しません。"
         If Not failedMask(e) Then GoTo NextElement
+        If CStr(out(e, 11)) = "T6" Then Err.Raise vbObjectError + 3880, , "T6をQ8として再分割できません。"
         For j = 1 To 4: v(j) = CLng(source(e, j + 1)): m(j) = CLng(source(e, j + 5)): Next j
         For j = 1 To 4
             If v(j) < 1 Or v(j) > nodeCount Or m(j) < 1 Or m(j) > nodeCount Then _
@@ -1935,11 +1958,22 @@ Public Function MeshAdaptConvertBadQ8ToT6(ByRef x() As Double, ByRef y() As Doub
         Next j
         area = T6PolygonArea(x, y, v(1), v(2), v(3), v(4))
         If area <= 0# Then Err.Raise vbObjectError + 3883, , "Q8の向きまたは形状が不正なためT6へ変換できません。要素=" & CStr(e)
-        a1 = T6TriangleArea(x, y, v(1), v(2), v(3)): a2 = T6TriangleArea(x, y, v(1), v(3), v(4)): diag = 1
-        If a1 <= 0# Or a2 <= 0# Or Not T6TriangleAcceptable(x, y, v(1), v(2), v(3), areaFloor) Or Not T6TriangleAcceptable(x, y, v(1), v(3), v(4), areaFloor) Then
-            a1 = T6TriangleArea(x, y, v(1), v(2), v(4)): a2 = T6TriangleArea(x, y, v(2), v(3), v(4)): diag = 2
+        ' Evaluate both diagonals before adding nodes. Shape targets are warnings;
+        ' positive, nondegenerate straight T6 geometry is mandatory.
+        valid1 = T6TriangleAcceptable(x, y, v(1), v(2), v(3), areaFloor) And T6TriangleAcceptable(x, y, v(1), v(3), v(4), areaFloor)
+        valid2 = T6TriangleAcceptable(x, y, v(1), v(2), v(4), areaFloor) And T6TriangleAcceptable(x, y, v(2), v(3), v(4), areaFloor)
+        If Not valid1 And Not valid2 Then Err.Raise vbObjectError + 3884, , "Q8を有効な二三角形へ分割できません。要素=" & CStr(e)
+        pass1 = False: pass2 = False: score1 = -1#: score2 = -1#
+        If valid1 Then
+            score1 = Application.Min(MeshTriangleScore(x, y, v(1), v(2), v(3)), MeshTriangleScore(x, y, v(1), v(3), v(4)))
+            pass1 = MeshTriangleWithinTargets(x, y, v(1), v(2), v(3)) And MeshTriangleWithinTargets(x, y, v(1), v(3), v(4))
         End If
-        If a1 <= 0# Or a2 <= 0# Then Err.Raise vbObjectError + 3884, , "Q8を有効な二三角形へ分割できません。要素=" & CStr(e)
+        If valid2 Then
+            score2 = Application.Min(MeshTriangleScore(x, y, v(1), v(2), v(4)), MeshTriangleScore(x, y, v(2), v(3), v(4)))
+            pass2 = MeshTriangleWithinTargets(x, y, v(1), v(2), v(4)) And MeshTriangleWithinTargets(x, y, v(2), v(3), v(4))
+        End If
+        diag = 1
+        If Not valid1 Or (pass2 And Not pass1) Or (pass1 = pass2 And score2 > score1 + 0.000000000001) Then diag = 2
         If diag = 1 Then
             mid = T6AppendMidpoint(x, y, v(1), v(3)): mat = source(e, 10)
             rowCount = rowCount + 1: out(rowCount, 1) = rowCount: out(rowCount, 2) = v(1): out(rowCount, 3) = v(2): out(rowCount, 4) = v(3): out(rowCount, 5) = v(3)
@@ -1954,12 +1988,15 @@ Public Function MeshAdaptConvertBadQ8ToT6(ByRef x() As Double, ByRef y() As Doub
         If Not T6TriangleAcceptable(x, y, out(e, 2), out(e, 3), out(e, 4), areaFloor) Or _
            Not T6TriangleAcceptable(x, y, out(rowCount, 2), out(rowCount, 3), out(rowCount, 4), areaFloor) Then _
             Err.Raise vbObjectError + 3885, , "T6分割後の三角形品質が不足します。要素=" & CStr(e)
-        converted = converted + 1: q = q & IIf(Len(q) = 0, "", ",") & CStr(e)
+        If Not MeshTriangleWithinTargets(x, y, CLng(out(e, 2)), CLng(out(e, 3)), CLng(out(e, 4))) Then warn = warn + 1
+        If Not MeshTriangleWithinTargets(x, y, CLng(out(rowCount, 2)), CLng(out(rowCount, 3)), CLng(out(rowCount, 4))) Then warn = warn + 1
+        converted = converted + 1
+        If converted <= 20 Then q = q & IIf(Len(q) = 0, "", ",") & CStr(e)
 NextElement:
     Next e
     If rowCount > FEM_FIXED_DATA_CAPACITY Then Err.Raise vbObjectError + 3975, , "T6要素数が容量を超えます。"
     outputCount = rowCount
-    detail = "Q8=" & CStr(n - converted) & " / T6=" & CStr(2 * converted) & " / 置換元Q8=" & CStr(converted) & IIf(Len(q) > 0, "（" & q & "）", "")
+    detail = "Q8=" & CStr(n - converted) & " / T6=" & CStr(2 * converted) & " / 置換元Q8=" & CStr(converted) & " / T6形状目標外=" & CStr(warn) & IIf(Len(q) > 0, "（元要素先頭20件：" & q & "）", "")
     ReDim trimmed(1 To rowCount, 1 To 11)
     For e = 1 To rowCount: For j = 1 To 11: trimmed(e, j) = out(e, j): Next j: Next e
     MeshAdaptConvertBadQ8ToT6 = trimmed
@@ -2051,21 +2088,48 @@ Private Function T6AppendMidpoint(ByRef x() As Double, ByRef y() As Double, ByVa
 End Function
 
 Private Function T6TriangleAcceptable(ByRef x() As Double, ByRef y() As Double, ByVal a As Long, ByVal b As Long, ByVal c As Long, Optional ByVal areaFloor As Double = 0#) As Boolean
-    Dim abx As Double, aby As Double, bcx As Double, bcy As Double, cax As Double, cay As Double
-    Dim den As Double, cs As Double, ang As Double, minAng As Double, maxAng As Double, k As Long
-    Dim l1 As Double, l2 As Double, l3 As Double, shortest As Double, longest As Double
-    If T6TriangleArea(x, y, a, b, c) <= areaFloor Then Exit Function
-    abx = x(b) - x(a): aby = y(b) - y(a): bcx = x(c) - x(b): bcy = y(c) - y(b): cax = x(a) - x(c): cay = y(a) - y(c)
-    minAng = 180#
-    For k = 1 To 3
-        If k = 1 Then cs = -(cax * abx + cay * aby) / (Sqr(cax * cax + cay * cay) * Sqr(abx * abx + aby * aby))
-        If k = 2 Then cs = -(abx * bcx + aby * bcy) / (Sqr(abx * abx + aby * aby) * Sqr(bcx * bcx + bcy * bcy))
-        If k = 3 Then cs = -(bcx * cax + bcy * cay) / (Sqr(bcx * bcx + bcy * bcy) * Sqr(cax * cax + cay * cay))
-        cs = Application.Max(-1#, Application.Min(1#, cs)): ang = Application.Acos(cs) * 180# / 3.14159265358979
-        If ang < minAng Then minAng = ang
-        If ang > maxAng Then maxAng = ang
-    Next k
-    l1 = Sqr(abx * abx + aby * aby): l2 = Sqr(bcx * bcx + bcy * bcy): l3 = Sqr(cax * cax + cay * cay)
-    shortest = Application.Min(l1, l2, l3): longest = Application.Max(l1, l2, l3)
-    T6TriangleAcceptable = minAng >= FEMReadSetting("MESH_QUALITY_MIN_ANGLE_DEG", 10#) And maxAng <= FEMReadSetting("MESH_QUALITY_MAX_ANGLE_DEG", 170#) And longest / shortest <= FEMReadSetting("MESH_QUALITY_MAX_ASPECT_RATIO", 5#)
+    T6TriangleAcceptable = T6TriangleArea(x, y, a, b, c) > areaFloor And MeshTriangleScore(x, y, a, b, c) > 0.000000000001
 End Function
+
+' Try a conforming local Q8 refinement before the T6 fallback. Retain it only
+' when the number of target misses/severe misses actually decreases.
+Private Sub CompareQualityRefinement(ByRef best As CandidateState, ByRef bestQ As QualityRecord)
+    Dim q As QualityRecord, e As Long, pass As Long, limit As Long, budget As Long, ratio As Double
+    Dim oldMethod As String, record As String
+    If FEMReadSetting("MESH_QUALITY_REFINE", 0#) < 0.5 Then Exit Sub
+    limit = CLng(FEMReadSetting("MESH_QUALITY_REFINE_PASSES", 1#))
+    ratio = FEMReadSetting("MESH_QUALITY_REFINE_MAX_RATIO", 1.12)
+    If limit < 1 Or limit > 3 Or ratio < 1.01 Or ratio > 2# Or FEMReadSetting("MESH_QUALITY_REFINE_FRACTION", 0.03) <= 0# Or FEMReadSetting("MESH_QUALITY_REFINE_FRACTION", 0.03) > 1# Then Err.Raise vbObjectError + 3980, , "局所細分化の回数・倍率・対象割合が不正です。"
+    budget = CLng(Fix(originalNE * ratio)): If budget > 60000 Then budget = 60000
+    oldMethod = selectedMethod
+    For pass = 1 To limit
+        On Error GoTo Rejected
+        RestoreState best
+        ReDim refineScore(1 To ne)
+        For e = 1 To ne
+            If metricClass(e) > 0 Then refineScore(e) = energies(e) + 10# * metricClass(e)
+        Next e
+        qualityRefining = True
+        Application.StatusBar = "メッシュ候補：品質による局所細分化 " & CStr(pass)
+        RefinePlastic True, budget
+        qualityRefining = False
+        CheckCandidate
+        OptimizeAngles
+        CheckCandidate
+        GetQuality q
+        record = QualityLine("局所細分化" & CStr(pass), q)
+        If (q.failN + q.warnN < bestQ.failN + bestQ.warnN And q.failN <= bestQ.failN) Or (q.failN < bestQ.failN And q.failN + q.warnN <= bestQ.failN + bestQ.warnN) Then
+            bestQ = q: CaptureState best: selectedMethod = oldMethod & "＋局所細分化"
+            comparisonText = comparisonText & vbCrLf & record & "（品質改善のため採用）"
+        Else
+            comparisonText = comparisonText & vbCrLf & record & "（品質改善なし・不採用）"
+            Exit For
+        End If
+    Next pass
+    Exit Sub
+Rejected:
+    qualityRefining = False
+    comparisonText = comparisonText & vbCrLf & "局所細分化" & CStr(pass) & "：不採用（" & Err.Description & "）"
+    Err.Clear
+    RestoreState best
+End Sub

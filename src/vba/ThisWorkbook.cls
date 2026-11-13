@@ -1,4 +1,8 @@
 ﻿
+Private Sub Workbook_BeforeClose(Cancel As Boolean)
+  If Not AnalysisRunning Then FEMSparseReleaseFactor
+End Sub
+
 Private Sub Workbook_Open()
   Dim eventsSaved As Boolean
   eventsSaved = Application.EnableEvents
@@ -37,7 +41,7 @@ Private Sub Workbook_SheetChange(ByVal sh As Object, ByVal target As range)
     Exit Sub
   End If
   If sheetName = "節点データ" Or sheetName = "材料データ" Or sheetName = "要素データ" _
-     Or sheetName = "水条件" Or sheetName = "形状入力" Or sheetName = "ステージ" Or sheetName = "載荷" Or sheetName = "図形定義" Or sheetName = "接合" Then
+     Or sheetName = "水条件" Or sheetName = "形状入力" Or sheetName = "ステージ" Or sheetName = "載荷" Or sheetName = "図形定義" Or sheetName = "接合" Or sheetName = "壁面支持" Then
     FEM24ClearPlot
     FEMViewerMarkDirty
     FEMUiInvalidateMeshPreview

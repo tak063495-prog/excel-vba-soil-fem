@@ -1,8 +1,10 @@
 ﻿
 Option Explicit
+Private Const P5DelaunayNodeLimit As Long = 60000
 Private P5ModelScale As Double
 Private P5GeometryTolerance As Double
 Private P5AreaTolerance As Double
+Private P5Q8Count As Long, P5T6Count As Long, P5Q8ShapeWarnings As Long, P5T6ShapeWarnings As Long, P5SizeWarnings As Long
 Private P5MinElementArea As Double
 Private P5MinJacobian As Double
 Private P5MaxAspectRatio As Double
@@ -135,7 +137,7 @@ End Sub
 
 Public Sub AssertMeshNodeCapacity(ByVal nextNode As Long)
     If nextNode < 1 Then Err.Raise vbObjectError + 3411, "Mesh.AssertMeshNodeCapacity", "生成節点番号が不正です。"
-    If nextNode > UBound(px) Or nextNode > UBound(py) Or nextNode > UBound(ifix) Then _
+    If nextNode > P5DelaunayNodeLimit Or nextNode > UBound(px) Or nextNode > UBound(py) Or nextNode > UBound(ifix) Then _
         Err.Raise vbObjectError + 3412, "Mesh.AssertMeshNodeCapacity", "メッシュ生成中に節点固定配列の容量を超えました。"
 End Sub
 
@@ -236,11 +238,11 @@ Public Sub P5PrepareGeometryDefinitionWorkspace()
     If maxBoundaryNodes < 3 Then Err.Raise vbObjectError + 3474, "Mesh.P5PrepareGeometryDefinitionWorkspace", "図形定義の境界節点数が3未満です。"
     If maxBoundaryNodes > 1999 Then Err.Raise vbObjectError + 3475, "Mesh.P5PrepareGeometryDefinitionWorkspace", "図形定義の境界節点数が旧デローニ経路の容量を超えています。"
 
-    ' TRMODEL/ROUGH/TRFINEは内部で2001～2003の一時節点を使用し、
+    ' 一時外接三角形は実節点の上限より外側の3スロットを使用し、
     ' 最悪時の要素数も含めて旧経路の上限を明示的に確保する。
-    nodeCapacity = 60000
+    nodeCapacity = P5DelaunayNodeLimit + 3
     elementCapacity = 60000
-    adjacencyNodeCapacity = 2000
+    adjacencyNodeCapacity = P5DelaunayNodeLimit
 
     ReDim ibex(1 To IIf(externalCount > 0, externalCount, 1))
     ReDim ibin(1 To IIf(internalCount > 0, internalCount, 1))
@@ -546,6 +548,7 @@ Public Sub P5ValidateMeshQuality(ByVal nodeCount As Long, ByVal elementCount As 
     If P5GeometryTolerance < 0.000000000001 Then P5GeometryTolerance = 0.000000000001
     P5AreaTolerance = P5ModelScale * P5ModelScale * 0.000000000001
     If P5AreaTolerance < 1E-24 Then P5AreaTolerance = 1E-24
+    P5Q8Count = 0: P5T6Count = 0: P5Q8ShapeWarnings = 0: P5T6ShapeWarnings = 0: P5SizeWarnings = 0
     P5MinElementArea = 1E+308: P5MinJacobian = 1E+308
     P5MaxAspectRatio = 0#: P5MinAngleDeg = 180#: P5MaxAngleDeg = 0#
     P5BoundaryEdgeCount = 0: P5SharedEdgeCount = 0: P5ConnectedComponentCount = 0
@@ -568,8 +571,14 @@ Private Sub P5EvaluateMeshQuadQuality(ByVal elementId As Long, ByRef connectivit
         If maxEdge / minEdge > P5MaxAspectRatio Then P5MaxAspectRatio = maxEdge / minEdge
         If dx1 < P5MinAngleDeg Then P5MinAngleDeg = dx1
         If dy1 > P5MaxAngleDeg Then P5MaxAngleDeg = dy1
+        P5T6Count = P5T6Count + 1
+        If Not MeshShapeWithinTargets(True, dx1, dy1, maxEdge / minEdge) Then P5T6ShapeWarnings = P5T6ShapeWarnings + 1
+        If MeshElementHasSizeWarning(True, area, minJacobian, P5ModelScale) Then P5SizeWarnings = P5SizeWarnings + 1
         Exit Sub
     End If
+    P5Q8Count = P5Q8Count + 1
+    Dim localMinAngle As Double, localMaxAngle As Double, iu As Long, iv As Long
+    localMinAngle = 180#: localMaxAngle = 0#
     For i = 1 To 8
         nodeNo(i) = connectivity(elementId, i)
         If nodeNo(i) < 1 Or nodeNo(i) > UBound(x) Then Err.Raise vbObjectError + 3463, "Mesh.P5ValidateMeshQuality", "要素接続番号が範囲外です。要素=" & CStr(elementId)
@@ -594,19 +603,22 @@ Private Sub P5EvaluateMeshQuadQuality(ByVal elementId As Long, ByRef connectivit
         dx2 = x(nodeNo(nextIndex)) - x(nodeNo(i)): dy2 = y(nodeNo(nextIndex)) - y(nodeNo(i))
         dotValue = dx1 * dx2 + dy1 * dy2: crossValue = dx1 * dy2 - dy1 * dx2
         angleDeg = P5Atan2(Abs(crossValue), dotValue) * 180# / 3.14159265358979
+        If angleDeg < localMinAngle Then localMinAngle = angleDeg
+        If angleDeg > localMaxAngle Then localMaxAngle = angleDeg
         If angleDeg < P5MinAngleDeg Then P5MinAngleDeg = angleDeg
         If angleDeg > P5MaxAngleDeg Then P5MaxAngleDeg = angleDeg
         If angleDeg < 0.001 Or angleDeg > 179.999 Then Err.Raise vbObjectError + 3467, "Mesh.P5ValidateMeshQuality", "要素角度が退化しています。要素=" & CStr(elementId) & "、頂点=" & CStr(i)
     Next i
     If minEdge > 0# And maxEdge / minEdge > P5MaxAspectRatio Then P5MaxAspectRatio = maxEdge / minEdge
-    xiValues(1) = -1#: etaValues(1) = -1#: xiValues(2) = 1#: etaValues(2) = -1#: xiValues(3) = 1#: etaValues(3) = 1#: xiValues(4) = -1#: etaValues(4) = 1#
-    xiValues(5) = -0.577350269189626: etaValues(5) = -0.577350269189626: xiValues(6) = 0.577350269189626: etaValues(6) = -0.577350269189626
-    xiValues(7) = 0.577350269189626: etaValues(7) = 0.577350269189626: xiValues(8) = -0.577350269189626: etaValues(8) = 0.577350269189626
     minJacobian = 1E+308
-    For i = 1 To 8
-        jacobianValue = P5MeshQuadJacobian(x, y, nodeNo, xiValues(i), etaValues(i))
-        If jacobianValue < minJacobian Then minJacobian = jacobianValue
-    Next i
+    For iu = 0 To 4
+        For iv = 0 To 4
+            jacobianValue = P5MeshQuadJacobian(x, y, nodeNo, -1# + iu * 0.5, -1# + iv * 0.5)
+            If jacobianValue < minJacobian Then minJacobian = jacobianValue
+        Next iv
+    Next iu
+    If Not MeshShapeWithinTargets(False, localMinAngle, localMaxAngle, maxEdge / minEdge) Or Not MeshQ8JacobianWithinTarget(area, minJacobian) Then P5Q8ShapeWarnings = P5Q8ShapeWarnings + 1
+    If MeshElementHasSizeWarning(False, area, minJacobian, P5ModelScale) Then P5SizeWarnings = P5SizeWarnings + 1
     If minJacobian < P5MinJacobian Then P5MinJacobian = minJacobian
     If minJacobian <= P5AreaTolerance Then Err.Raise vbObjectError + 3468, "Mesh.P5ValidateMeshQuality", "要素Jacobianが正でないか小さすぎます。要素=" & CStr(elementId)
 End Sub
@@ -638,29 +650,15 @@ Private Function P5MeshQuadJacobian(ByRef x() As Double, ByRef y() As Double, By
 End Function
 
 Public Function P5QualityMeetsSettings() As Boolean
-    Dim scaleSquared As Double, minAreaRatio As Double, minJacobianRatio As Double
-    Dim minAreaRatioTarget As Double, minJacobianRatioTarget As Double
-    Dim minAngleTarget As Double, maxAngleTarget As Double, maxAspectTarget As Double
-    P5QualityMeetsSettings = False
-    If P5ModelScale <= 0# Then Exit Function
-    scaleSquared = P5ModelScale * P5ModelScale
-    minAreaRatio = P5MinElementArea / scaleSquared
-    minJacobianRatio = P5MinJacobian / scaleSquared
-    minAreaRatioTarget = P5ReadSetting("MESH_QUALITY_MIN_AREA_RATIO", 0.000001)
-    minJacobianRatioTarget = P5ReadSetting("MESH_QUALITY_MIN_JACOBIAN_RATIO", 0.000001)
-    minAngleTarget = P5ReadSetting("MESH_QUALITY_MIN_ANGLE_DEG", 10#)
-    maxAngleTarget = P5ReadSetting("MESH_QUALITY_MAX_ANGLE_DEG", 170#)
-    maxAspectTarget = P5ReadSetting("MESH_QUALITY_MAX_ASPECT_RATIO", 5#)
-    P5QualityMeetsSettings = minAreaRatio >= minAreaRatioTarget And _
-                             minJacobianRatio >= minJacobianRatioTarget And _
-                             P5MinAngleDeg >= minAngleTarget And _
-                             P5MaxAngleDeg <= maxAngleTarget And _
-                             P5MaxAspectRatio <= maxAspectTarget And _
-                             P5IsolatedNodeCount = 0 And P5ConnectedComponentCount = 1
+    P5QualityMeetsSettings = (P5ModelScale > 0# And P5Q8ShapeWarnings = 0 And P5T6ShapeWarnings = 0 And P5SizeWarnings = 0 And P5IsolatedNodeCount = 0 And P5ConnectedComponentCount = 1)
 End Function
 
 Public Function P5QualitySummary() As String
-    P5QualitySummary = "最小面積=" & Format$(P5MinElementArea, "0.000E+00") & _
+    If P5Q8Count + P5T6Count = 0 Then
+        P5QualitySummary = "このセッションではメッシュ品質を未評価です。要素数0・警告0は品質合格を意味しません。"
+        Exit Function
+    End If
+    P5QualitySummary = "Q8=" & CStr(P5Q8Count) & "（形状目標外" & CStr(P5Q8ShapeWarnings) & "）、T6=" & CStr(P5T6Count) & "（形状目標外" & CStr(P5T6ShapeWarnings) & "）、サイズ目標外=" & CStr(P5SizeWarnings) & "、最小面積=" & Format$(P5MinElementArea, "0.000E+00") & _
                        "、最小Jacobian=" & Format$(P5MinJacobian, "0.000E+00") & _
                        "、最小角度=" & Format$(P5MinAngleDeg, "0.0") & "°" & _
                        "、最大アスペクト比=" & Format$(P5MaxAspectRatio, "0.00")
@@ -669,6 +667,11 @@ End Function
 Public Sub P5WriteMeshQualitySettings(ByVal routeName As String, ByVal repairStatus As String, _
                                       ByVal nodeCount As Long, ByVal elementCount As Long, _
                                       ByVal iterationCount As Long, ByVal movedNodeCount As Long)
+    P5WriteNumericSetting "MESH_QUALITY_LAST_Q8_COUNT", CDbl(P5Q8Count)
+    P5WriteNumericSetting "MESH_QUALITY_LAST_T6_COUNT", CDbl(P5T6Count)
+    P5WriteNumericSetting "MESH_QUALITY_LAST_Q8_SHAPE_WARNINGS", CDbl(P5Q8ShapeWarnings)
+    P5WriteNumericSetting "MESH_QUALITY_LAST_T6_SHAPE_WARNINGS", CDbl(P5T6ShapeWarnings)
+    P5WriteNumericSetting "MESH_QUALITY_LAST_SIZE_WARNINGS", CDbl(P5SizeWarnings)
     P5WriteTextSetting "MESH_QUALITY_LAST_STATUS", IIf(P5QualityMeetsSettings(), "PASS", "WARN")
     P5WriteTextSetting "MESH_QUALITY_LAST_ROUTE", routeName
     P5WriteTextSetting "MESH_QUALITY_LAST_REPAIR_STATUS", repairStatus
@@ -737,11 +740,7 @@ Public Sub P5BuildT6FallbackMask(ByVal nodeCount As Long, ByVal elementCount As 
         Next i
         If Not P5MeshQuadMetrics(e, connectivity, x, y, qa, qj, qAspect, qMinAngle, qMaxAngle) Then _
             Err.Raise vbObjectError + 3483, "Mesh.P5BuildT6FallbackMask", "要素品質を評価できません。要素=" & CStr(e)
-        If minDet < scale2 * FEMReadSetting("MESH_QUALITY_MIN_JACOBIAN_RATIO", 0.000001) Or _
-           qa < scale2 * FEMReadSetting("MESH_QUALITY_MIN_AREA_RATIO", 0.000001) Or _
-           qMinAngle < FEMReadSetting("MESH_QUALITY_MIN_ANGLE_DEG", 10#) Or _
-           qMaxAngle > FEMReadSetting("MESH_QUALITY_MAX_ANGLE_DEG", 170#) Or _
-           qAspect > FEMReadSetting("MESH_QUALITY_MAX_ASPECT_RATIO", 5#) Then failed(e) = True: failedCount = failedCount + 1
+        If Not MeshQ8JacobianWithinTarget(qa, minDet) Or Not MeshShapeWithinTargets(False, qMinAngle, qMaxAngle, qAspect) Then failed(e) = True: failedCount = failedCount + 1
     Next e
 End Sub
 
@@ -749,11 +748,12 @@ Public Sub P5ApplyT6FallbackCurrentSheet()
     Dim ns As Variant, es As Variant, x() As Double, y() As Double, conn() As Variant
     Dim mask() As Boolean, failedCount As Long, converted As Long, outCount As Long, detail As String, result As Variant
     Dim i As Long, n As Long, e As Long, wsN As Worksheet, wsE As Worksheet, j As Long
-    Dim ci() As Long, nr() As Variant, lastN As Long, lastE As Long
+    Dim ci() As Long, nr() As Variant, lastN As Long, lastE As Long, moved As Long, sweeps As Long
     If FEMReadSetting("MESH_T6_FALLBACK", 0#) = 0# Then Exit Sub
     Set wsN = ThisWorkbook.Worksheets("節点データ"): Set wsE = ThisWorkbook.Worksheets("要素データ")
     lastN = wsN.Cells(wsN.Rows.Count, 1).End(xlUp).Row: lastE = wsE.Cells(wsE.Rows.Count, 1).End(xlUp).Row
     If lastN < 2 Or lastE < 2 Then Exit Sub
+    If FEMMeshSheetHasT6() Then Exit Sub
     ns = wsN.Range(wsN.Cells(2, 1), wsN.Cells(lastN, 14)).Value2
     es = wsE.Range(wsE.Cells(2, 1), wsE.Cells(lastE, 10)).Value2
     n = UBound(ns, 1): e = UBound(es, 1): If n < 1 Or e < 1 Then Exit Sub
@@ -766,19 +766,27 @@ Public Sub P5ApplyT6FallbackCurrentSheet()
     For i = 1 To e: For j = 1 To 8: ci(i, j) = CLng(es(i, j + 1)): Next j: Next i
     P5BuildT6FallbackMask n, e, ci, x, y, mask, failedCount: If failedCount = 0 Then Exit Sub
     result = MeshAdaptConvertBadQ8ToT6(x, y, conn, mask, converted, outCount, detail)
+    Dim mixed() As Variant: mixed = result
+    MeshImproveT6 x, y, mixed, ns, moved, sweeps
+    result = mixed
+    detail = detail & " / T6辺交換=" & CStr(MeshT6LastFlipCount) & " / T6平滑化移動節点=" & CStr(moved) & " / 反復=" & CStr(sweeps)
+    ReDim ci(1 To outCount, 1 To 8)
+    For i = 1 To outCount: For j = 1 To 8: ci(i, j) = CLng(result(i, j + 1)): Next j: Next i
+    P5ValidateMeshQuality UBound(x), outCount, ci, x, y
     wsN.Range(wsN.Cells(2, 1), wsN.Cells(wsN.Rows.Count, 14)).ClearContents
-    ReDim nr(1 To UBound(x), 1 To 9)
+    ReDim nr(1 To UBound(x), 1 To 14)
     For i = 1 To UBound(x)
         nr(i, 1) = i: nr(i, 2) = x(i): nr(i, 3) = y(i)
         If i <= n Then
-            For j = 4 To 9: nr(i, j) = ns(i, j): Next j
+            For j = 4 To 14: nr(i, j) = ns(i, j): Next j
         End If
     Next i
-    wsN.Range(wsN.Cells(2, 1), wsN.Cells(UBound(x) + 1, 9)).Value2 = nr
+    wsN.Range(wsN.Cells(2, 1), wsN.Cells(UBound(x) + 1, 14)).Value2 = nr
     wsE.Range(wsE.Cells(2, 1), wsE.Cells(wsE.Rows.Count, 11)).ClearContents
     wsE.Range(wsE.Cells(2, 1), wsE.Cells(outCount + 1, 11)).Value2 = result
     FEMInvalidateRemeshedModel
     FEMWriteTextSetting "MESH_GEN_LAST_T6_DETAIL", detail
+    MeshT6PatchCurrentSheet
 End Sub
 
 Private Function P5Atan2(ByVal yValue As Double, ByVal xValue As Double) As Double
@@ -1319,9 +1327,9 @@ Sub TRMODEL(NEX As Long, NIN As Long, ibex() As Long, ibin() As Long, ibno() As 
     Next i
     
     NELM = 1
-    ia = 2000 + 1
-    ib = 2000 + 2
-    ic = 2000 + 3
+    ia = P5DelaunayNodeLimit + 1
+    ib = P5DelaunayNodeLimit + 2
+    ic = P5DelaunayNodeLimit + 3
     mtj(1, 1) = ia
     mtj(1, 2) = ib
     mtj(1, 3) = ic
@@ -1545,7 +1553,7 @@ Sub DELAUN(jz As Long, js As Long, jg As Long, ntp As Long, px() As Double, py()
         Call INCR(iv1, NELM, jnb, nei)
         Call INCR(iv2, NELM - 1, jnb, nei)
     
-        If iv3 <= 2000 Then
+        If iv3 <= P5DelaunayNodeLimit Then
             nei(iv3, NEIBOR(iv3, it, jnb(), nei())) = NELM - 1
         End If
     
@@ -1730,7 +1738,7 @@ label80:
         iv = iv + 1
         kv(iv) = jelm
         If ibr(jelm) <= jnb(iq) Then Exit Do
-        mmin = 4001 + 1
+        mmin = UBound(ibr) + 1
         For j = 1 To 3
             jr = jac(jelm, j)
             If jr = 0 Then GoTo Continue3
@@ -1747,7 +1755,7 @@ label80:
             End If
 Continue3:
         Next j
-        If mmin = 4001 + 1 Then
+        If mmin = UBound(ibr) + 1 Then
             'Show ERROR message and stop the execution
             Err.Raise vbObjectError + 3490, "Mesh.SEARCH", "境界メッシュ処理に失敗しました（SEARCH）。"
 
@@ -1786,7 +1794,7 @@ Sub POLY(iq As Long, ip As Long, iv As Long, kv() As Long, _
 
         mtj(kv(1), (ia Mod 3) + 1) = iq
         jac(kv(1), ia) = jr
-        jac(kv(1), (ja Mod 3) + 1) = kv(2)
+        jac(kv(1), (ia Mod 3) + 1) = kv(2)
 
         mtj(kv(2), (ja Mod 3) + 1) = ip
         jac(kv(2), ja) = ir
@@ -2263,24 +2271,24 @@ Sub REMOVE(NEX As Long, mindex() As Long, NELM As Long, mtj() As Long, jac() As 
                         kelm = jac(jelm, k)
                         If kelm <> 0 Then
                             Call edge(kelm, jelm, jac(), kedg) ' Assuming EDGE is another function you've converted
-                            jac(kelm, kedg) = ielm + 4001 + 1
+                            jac(kelm, kedg) = ielm + UBound(idm) + 1
                         End If
                     Next k
                     For l = 1 To 3
                         lelm = jkp(l)
                         If lelm <> 0 Then
                             Call edge(lelm, ielm, jac(), ledg) ' Assuming EDGE is another function you've converted
-                            jac(lelm, ledg) = jelm + 4001 + 1
+                            jac(lelm, ledg) = jelm + UBound(idm) + 1
                         End If
                     Next l
                     For k = 1 To 3
-                        jac(ielm, k) = jac(ielm, k) Mod (4001 + 1)
-                        jac(jelm, k) = jac(jelm, k) Mod (4001 + 1)
+                        jac(ielm, k) = jac(ielm, k) Mod (UBound(idm) + 1)
+                        jac(jelm, k) = jac(jelm, k) Mod (UBound(idm) + 1)
                         kelm = jac(ielm, k)
                         lelm = jac(jelm, k)
                         For l = 1 To 3
-                            If kelm > 0 Then jac(kelm, l) = jac(kelm, l) Mod (4001 + 1)
-                            If lelm > 0 Then jac(lelm, l) = jac(lelm, l) Mod (4001 + 1)
+                            If kelm > 0 Then jac(kelm, l) = jac(kelm, l) Mod (UBound(idm) + 1)
+                            If lelm > 0 Then jac(lelm, l) = jac(lelm, l) Mod (UBound(idm) + 1)
                         Next l
                     Next k
                     For k = 1 To 3
@@ -2349,7 +2357,7 @@ loopj:
 End Sub
 Sub INCR(n As Long, l As Long, jnb() As Long, nei() As Long)
 
-    If n <= 2000 Then
+    If n <= P5DelaunayNodeLimit Then
         jnb(n) = jnb(n) + 1
         If 100 < jnb(n) Then
             Err.Raise vbObjectError + 3490, "Mesh.INCR", "境界メッシュ処理に失敗しました（INCR）。"
@@ -2364,7 +2372,7 @@ Sub DECR(n As Long, l As Long, jnb() As Long, nei() As Long)
 
     Dim i As Long, inb As Long
 
-    If n <= 2000 Then
+    If n <= P5DelaunayNodeLimit Then
         inb = NEIBOR(n, l, jnb(), nei())
         For i = inb To jnb(n) - 1
             nei(n, i) = nei(n, i + 1)
@@ -3230,7 +3238,7 @@ Public Sub MeshInsertJoints()
                 rawKind = UCase$(Trim$(CStr(wsM.Cells(rowNo, 11).value2)))
                 If rawKind = "JOINT" Or rawKind = "接合" Then
                     kindById(matA) = "JOINT"
-                ElseIf rawKind = "STRUCT" Or rawKind = "構造" Then
+                ElseIf rawKind = "STRUCT" Or rawKind = "STRUCT_ELASTIC" Or rawKind = "構造" Then
                     kindById(matA) = "STRUCT"
                 Else
                     kindById(matA) = "SOIL"
@@ -3409,4 +3417,3 @@ Private Function MeshJointDupNode(ByVal origNode As Long, ByRef nodeCount As Lon
     slaveDup.Add key, nodeCount
     MeshJointDupNode = nodeCount
 End Function
-

@@ -203,5 +203,90 @@
         "name":  "FEMFixedStressGauge",
         "file":  "FEMFixedStressGauge.bas",
         "type":  1
+    },
+    {
+        "name":  "MeshQuality",
+        "file":  "MeshQuality.bas",
+        "type":  1
+    },
+    {
+        "name":  "MeshT6Patch",
+        "file":  "MeshT6Patch.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMIterationProgress",
+        "file":  "FEMIterationProgress.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMBodyWeight",
+        "file":  "FEMBodyWeight.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMFaceSupport",
+        "file":  "FEMFaceSupport.bas",
+        "type":  1
+    },
+    {
+        "name":  "FEMSparse",
+        "file":  "FEMSparse.bas",
+        "type":  1
+    },
+    {
+        "name": "FEMJointWater",
+        "file": "FEMJointWater.bas",
+        "type": 1
+    },
+    {
+        "name": "FEMNativeFigure",
+        "file": "FEMNativeFigure.bas",
+        "type": 1
+    },
+    {
+        "name": "FEMSeepage",
+        "file": "FEMSeepage.bas",
+        "type": 1
+    },
+    {
+        "name": "FEMSeepageFlux",
+        "file": "FEMSeepageFlux.bas",
+        "type": 1
+    },
+    {
+        "name": "FEMStageEditor",
+        "file": "FEMStageEditor.bas",
+        "type": 1
+    },
+    {
+        "name": "FEMStageUi",
+        "file": "FEMStageUi.bas",
+        "type": 1
+    },
+    {
+        "name": "FEMTerrainBlocks",
+        "file": "FEMTerrainBlocks.bas",
+        "type": 1
+    },
+    {
+        "name": "FEMWater",
+        "file": "FEMWater.bas",
+        "type": 1
+    },
+    {
+        "name": "FEMWaterGeometry",
+        "file": "FEMWaterGeometry.bas",
+        "type": 1
+    },
+    {
+        "name": "FEMWaterUi",
+        "file": "FEMWaterUi.bas",
+        "type": 1
+    },
+    {
+        "name": "FEMWaterView",
+        "file": "FEMWaterView.bas",
+        "type": 1
     }
 ]

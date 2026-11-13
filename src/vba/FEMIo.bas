@@ -1,5 +1,6 @@
 ﻿Option Explicit
 Private femIoViewingCheckpoint As Boolean
+Private femIoResumeFosText As String
 Private mEvBuf As String, mEvPath As String, mEvHeader As String, mEvCount As Long
 Private mIoFast As Boolean, mIoBookIdentity As String, mIoCachedDir As String, mIoSep As String
 Private mEventFast As Boolean, mEvUsed As Long
@@ -114,15 +115,24 @@ Private Sub FEMRebuildSettingsLayout(ByVal ws As Worksheet)
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "Q8_HOURGLASS_FACTOR", "解析", "アワーグラス係数", 0.05, "0～1", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "RCM_POLICY", "解析", "RCM", "AUTO", "AUTO=帯幅が減るときだけ並び替え / ON=必ずRCM / OFF=入力順", True
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "FLOW_POLICY", "解析", "非関連の扱い", "INCONSISTENT", "INCONSISTENT=非関連流れ・非対称整合接線・全Newton / DAVIS=等価関連c*,φ*（JOINTには掛けない）", True
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NONSYM_SOLVER", "解析", "非対称線形解法", "BAND", "BAND=帯域LU（既定） / GMRES=大規模向けCSR・ILU0右前処理。非関連流れのc・φ・ψを保持し真残差で判定", True
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NONSYM_ELASTIC_START_DOF", "解析", "非関連の補助開始規模", 2000#, "GMRES選択時、この自由度数以上では弾性補助から開始。材料則・残差判定は維持。0=通常Newton開始。必要時は通常Newtonへ再試行", True
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ASSOCIATED_ENERGY_RECOVERY", "解析", "関連流れの停滞回復", 1, "1=関連流れ・単一材料更新の静的解析で、ポテンシャル降下を確認する限定試行。元の自由節点残差を減らす補正だけ受理。0=従来の回復経路。", False
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ASSOCIATED_ENERGY_FIRST", "解析", "関連流れの先行回復試行", 0, "1=適用可能な通常Newton補正で限定回復を先に試す。受理条件は元の自由節点残差の減少。0=ラインサーチ失敗後のみ。", False
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "STATIC_KEEP_ACCEPTED_STEP", "解析", "収束済み増分幅の維持", 0, "1=通常Newtonが収束した増分を反復回数だけでは縮小しない。失敗時の縮小・残差判定は維持。0=従来の適応刻み。", False
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "STATIC_INITIAL_STEPS", "解析", "静的初期分割数", 0, "0=自重10・載荷20分割の従来値。1～100000の整数=各静的段階の初期増分1/分割数。失敗時は自動縮小。", False
   writeRow = writeRow + 1
   FEMPutSection ws, writeRow, "3. SRMパラメータ（実行の有無はステージシート）"
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "SRM_FMAX", "SRM", "上限Fs", 3#, "探索の上限", False
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "SRM_SCAN_STEP", "SRM", "上限探索の刻み", 0.1, "0.001～1。大規模では0.5等で上限を探し、最終区間幅はSRM_TOLで決定。既定0.1。", False
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "SRM_REUSE_STATIC_FS1", "SRM", "収束済み静的履歴のFs1再利用", 0, "1=GRAVITYとLOAD/APPLYだけの履歴がFs1で全て収束済みなら、その状態を探索の初期収束点に使用。未完了・施工変更・時間連成は再計算。0=従来動作。", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "SRM_TOL", "SRM", "許容差", 0.025, "通常0.025 / 検証0.0125。PASSとFAILの幅がこれ以下で終了", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "SRM_PSI_POLICY", "SRM", "ψの扱い", "CAP", "CAP=ψをφ'以下に制限 / REDUCE=ψもFsで低減 / KEEP=入力のまま", True
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "SRM_MODE", "SRM", "モード", "REAPPLY", "REAPPLYのみ。各Fs試行で先行ステージを再実行", True
   writeRow = writeRow + 1
   FEMPutSection ws, writeRow, "高速化比較（0=従来経路、各方式を単独評価）"
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ACCEL_V1_PREDICTOR", "高速化", "変位予測子", 0, "0=基準 / 1=同一ステージの確定変位増分から予測", False
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ACCEL_PREDICT_LONG_HISTORY", "高速化", "長い反復後の変位予測", 0, "1=反復5回を超えて正常収束した静的増分もV1予測に使用。切戻し・再試行・工程変更の履歴は除外。0=従来どおり5回以内。", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ACCEL_V2A_REUSE", "高速化", "増分間接線再利用", 0, "DAVISで0=基準 / 1=旧LU再利用。INCONSISTENTは毎反復更新のため休止", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ACCEL_V2B_COST", "高速化", "費用に応じた接線更新", 0, "DAVISで費用に応じた限定再利用。INCONSISTENTは毎反復更新のため休止", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "ACCEL_V3_COST_SEARCH", "高速化", "費用に応じたFs探索", 0, "0=二分 / 1=保護付き探索。最終実幅は基準二分以下", False
@@ -158,7 +168,7 @@ Private Sub FEMRebuildSettingsLayout(ByVal ws As Worksheet)
   writeRow = writeRow + 1
   FEMPutSection ws, writeRow, "6. メッシュ品質（閾値）"
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "MESH_QUALITY_MIN_AREA_RATIO", "品質", "最小面積比", 0.000001, "代表寸法^2に対する比", False
-  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "MESH_QUALITY_MIN_JACOBIAN_RATIO", "品質", "最小Jacobian比", 0.000001, "代表寸法^2に対する比", False
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "MESH_QUALITY_MIN_JACOBIAN_RATIO", "品質", "最小Jacobian比", 0.000001, "要素形式の基準座標差を補正して代表寸法^2と比較。形状・反転の判定とは別。", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "MESH_QUALITY_MIN_ANGLE_DEG", "品質", "最小角度", 10#, "deg", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "MESH_QUALITY_MAX_ANGLE_DEG", "品質", "最大角度", 170#, "deg", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "MESH_QUALITY_MAX_ASPECT_RATIO", "品質", "最大アスペクト", 5#, "長辺/短辺", False
@@ -180,6 +190,9 @@ Private Sub FEMRebuildSettingsLayout(ByVal ws As Worksheet)
   FEMPutSection ws, writeRow, "DLL・I/O（推奨値。倍精度と収束条件を維持）"
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NATIVE_DLL", "DLL・I/O", "DLLの使用", "AUTO", "AUTO=利用可能なDLLを使用 / BAND=行列DLLのみ / OFF=VBA。未対応CPUでは対応経路へ復帰。", True
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NATIVE_PRECISION", "DLL・I/O", "DLLの演算精度（倍精度）", "AUTO", "全方式Double。AUTO=CPU対応命令を選択 / STRICT=従来VBA互換 / SSE2・AVX2=方式指定。微小な丸め差あり。", True
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NATIVE_SPARSE_DIRECT", "DLL・I/O", "対称疎行列直接法", 0, "1=別添DLLで対称正定値行列を疎LDLT分解。真の線形残差を確認し、不適合・DLL不在は帯行列へ復帰。0=従来経路。", False
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NATIVE_WATER_TANGENT", "DLL・I/O", "水条件時の要素剛性積分", 0, "1=VBAで計算済みの材料接線を既存DLLで積分。水圧・構成則・自重の計算は従来経路。0=VBA積分。", False
+  FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NATIVE_DRY_WATER", "DLL・I/O", "水条件時の乾燥要素の材料演算", 0, "1=静水圧の確定・試行水圧が全積分点で厳密に0の要素のみ既存DLLを使用。湿潤・部分湿潤・時間連成は従来VBA。収束条件は同じ。0=従来経路。", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NATIVE_STATE_COPY", "DLL・I/O", "状態配列のDLL転送", 1, "1=検証済み一括転送 / 0=比較用VBA経路。", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NATIVE_ASSEMBLY", "DLL・I/O", "行列組立のDLL処理", 1, "1=検証済みDLL組立 / 0=比較用VBA経路。収束条件は同じ。", False
   FEMPutCached ws, writeRow, cacheKey, cacheVal, cacheN, "NATIVE_GMRES_SIMD", "DLL・I/O", "GMRESのCPU拡張命令", 1, "1=CPU対応命令を使用。非対応命令を無理に実行しません。", False
@@ -2270,8 +2283,12 @@ Private Function FEMIoContentHash() As String
   Dim h As Double, i As Long, j As Long
   h = 17#
   h = FEMIoMixText(h, FEM_BUILD_STAMP)
+  If Len(FaceSupportSignature) > 0 Then h = FEMIoMixText(h, FaceSupportSignature)
   h = FEMIoMixText(h, UCase$(Trim$(P6ReadTextSetting("RCM_POLICY", "AUTO"))))
   h = FEMIoMixText(h, UCase$(Trim$(P6ReadTextSetting("FLOW_POLICY", "INCONSISTENT"))))
+  ' Older DAVIS+SRM checkpoints included an unbounded elastic hourglass
+  ' force. Reject that incompatible operator while preserving other histories.
+  If P3SrmEnabled And UCase$(Trim$(P6ReadTextSetting("FLOW_POLICY", "INCONSISTENT"))) = "DAVIS" And P6ReadSetting("Q8_HOURGLASS_FACTOR", 0.05) > 0# Then h = FEMIoMixText(h, "SRM_MC_FORCE_V2")
   h = FEMIoMixText(h, UCase$(Trim$(P6ReadTextSetting("WEIGHT_MODE", "TOTAL"))))
   h = FEMIoMix(h, P6QuantizeScaled(P6ReadSetting("Q8_HOURGLASS_FACTOR", 0.05), 1000000#))
   If P6InputCacheReady Then
@@ -2295,6 +2312,7 @@ Private Function FEMIoContentHash() As String
       h = FEMIoMix(h, P6QuantizeScaled(P6InputMaterialPoisson(i), 1000000000#))
       h = FEMIoMix(h, P6QuantizeScaled(P6InputMaterialThickness(i), 1000000#))
       h = FEMIoMix(h, P6QuantizeScaled(P6InputMaterialWeight(i), 1000000#))
+      If P6InputMaterialWeightSat(i) <> P6InputMaterialWeight(i) Then h = FEMIoMix(h, P6QuantizeScaled(P6InputMaterialWeightSat(i), 1000000#))
       h = FEMIoMix(h, P6QuantizeScaled(P6InputMaterialFriction(i), 1000000#))
       h = FEMIoMix(h, P6QuantizeScaled(P6InputMaterialCohesion(i), 1000000#))
       h = FEMIoMix(h, P6QuantizeScaled(P6InputMaterialDilation(i), 1000000#))
@@ -2547,6 +2565,8 @@ Private Sub FEMIoWriteMeta(ByVal stageFolder As String, ByVal stageNo As Long, B
   Print #fileNumber, "DOF=" & CStr(lastDof)
   Print #fileNumber, "ORIGIN=" & IIf(P3OriginSnapReady, "1", "0")
   Print #fileNumber, "REPLAY_START=" & CStr(P3SrmReplayStart)
+  Print #fileNumber, "HYDRAULICS=" & IIf(FSActive, "FIXED_STRESS", "ONE_WAY")
+  Print #fileNumber, "FOS=" & FEMIoFosNumber(P3FosPass) & "," & FEMIoFosNumber(P3FosFail) & "," & FEMIoFosNumber(P3FosMid) & "," & FEMIoFosNumber(P3FosWidth) & "," & IIf(P3FosBracket, "1", "0") & "," & P3FosInterpretation & "," & CStr(P3SrmTrialCount)
   Close #fileNumber
 End Sub
 
@@ -2881,7 +2901,9 @@ Public Function FEMIoTryResume(Optional ByVal explicitFolder As String = "", Opt
   Dim metaStamp As String, metaSig As String, metaPlan As String, metaStatus As String
   Dim metaStage As Long, metaKind As String, metaNodes As Long, metaElems As Long, metaDof As Long
   Dim rhs As String, matchCount As Long, stageIndex As Long, i As Long
+  Dim metaHydraulics As String, requiresCoupled As Boolean, planRow As Long
   FEMIoTryResume = 0
+  femIoResumeFosText = ""
   femIoViewingCheckpoint = viewing
   femIoResumeIndex = 0
   femIoResumeFs = 1#
@@ -2945,6 +2967,8 @@ ReadSelectedCheckpoint:
     If left$(lineText, 4) = "SIG=" Then metaSig = mid$(lineText, 5)
     If left$(lineText, 5) = "PLAN=" Then metaPlan = mid$(lineText, 6)
     If left$(lineText, 7) = "STATUS=" Then metaStatus = UCase$(Trim$(mid$(lineText, 8)))
+    If left$(lineText, 11) = "HYDRAULICS=" Then metaHydraulics = mid$(lineText, 12)
+    If left$(lineText, 4) = "FOS=" Then femIoResumeFosText = mid$(lineText, 5)
     If left$(lineText, 6) = "STAGE=" Then
       rhs = mid$(lineText, 7)
       If Not FEMIoParseLong(rhs, metaStage) Then metaStage = -1
@@ -3033,6 +3057,18 @@ ReadSelectedCheckpoint:
   End If
   If matchCount > 1 Then
     SetAnalysisFailure RESULT_INPUT_ERROR, "ステージ番号が重複しているため再開できません。STAGE=" & CStr(metaStage), vbObjectError + 3095, -1, -1, 0, 0
+    Exit Function
+  End If
+  ' Legacy saves are classified from their executed prefix, not future stages.
+  requiresCoupled = (metaHydraulics = "FIXED_STRESS")
+  For stageIndex = 1 To femIoResumeIndex
+    planRow = FSPlanRow(P3StageId(stageIndex))
+    If planRow > 0 And P3StageKind(stageIndex) <> "SRM" Then
+      If UCase$(Trim$(CStr(ThisWorkbook.Worksheets("水条件").cells(planRow, 13).value2))) = "FIXED_STRESS" Then requiresCoupled = True
+    End If
+  Next stageIndex
+  If requiresCoupled And Dir$(stageFolder & Application.PathSeparator & "fixed_stress.csv") = "" Then
+    SetAnalysisFailure RESULT_INPUT_ERROR, "時間連成の必須状態 fixed_stress.csv がありません。不完全な保存からは再開できません。", vbObjectError + 3099, -1, -1, 0, 0
     Exit Function
   End If
   If Not FEMIoLoadNode(stageFolder) Then
@@ -3332,6 +3368,51 @@ NextDofLine:
 End Function
 
 ' Order matters: geometry -> self-weight -> derived principals -> commit. Commit-before-rebuild restores stale Spmat on rollback.
+Private Function FEMIoFosNumber(ByVal value As Double) As String
+  FEMIoFosNumber = Replace$(Format$(value, "0.0000000000000000E+00"), Application.International(xlDecimalSeparator), ".")
+End Function
+
+Private Function FEMIoRestoreFos() As Boolean
+  Dim parts() As String, values(0 To 3) As Double, i As Long, trials As Long
+  Dim ws As Worksheet, r As Long
+  If Len(femIoResumeFosText) > 0 Then
+    parts = Split(femIoResumeFosText, ",")
+    If UBound(parts) <> 6 Then GoTo Invalid
+    For i = 0 To 3
+      If Not FEMIoParseDouble(parts(i), values(i)) Then GoTo Invalid
+      If values(i) < 0# Then GoTo Invalid
+    Next i
+    If parts(4) <> "0" And parts(4) <> "1" Then GoTo Invalid
+    If Not FEMIoParseLong(parts(6), trials) Then GoTo Invalid
+    If trials < 0 Or Len(parts(5)) = 0 Then GoTo Invalid
+    If parts(4) = "1" Then
+      If values(1) <= values(0) Or Abs(values(3) - (values(1) - values(0))) > 0.000000001 Then GoTo Invalid
+      If Abs(values(2) - 0.5 * (values(0) + values(1))) > 0.000000001 Then GoTo Invalid
+    End If
+    P3FosPass = values(0): P3FosFail = values(1): P3FosMid = values(2): P3FosWidth = values(3)
+    P3FosBracket = (parts(4) = "1"): P3FosInterpretation = parts(5): P3SrmTrialCount = trials
+  ElseIf Not GWActive And femIoResumeKind = "SRM" Then
+    P3FosPass = femIoResumeFss: P3FosMid = femIoResumeFss
+    P3FosFail = 0#: P3FosWidth = 0#: P3FosBracket = False: P3SrmTrialCount = 0
+    P3FosInterpretation = "LEGACY_INTERVAL_UNAVAILABLE"
+  End If
+  If P3FosInterpretation <> "NOT_EVALUATED" Then
+    P3SrmNote = "保存Fsを復元。判定=" & P3FosInterpretation & " Fs=" & CStr(P3FosMid)
+    Set ws = ThisWorkbook.Worksheets("ステージ結果")
+    For r = ws.cells(ws.rows.count, 1).End(xlUp).row To 2 Step -1
+      If UCase$(CStr(ws.cells(r, 2).value2)) = "SRM" Then
+        ws.cells(r, 5).value2 = IIf(P3FosBracket, P3FosMid, P3FosPass)
+        ws.cells(r, 9).value2 = P3SrmTrialCount: ws.cells(r, 10).value2 = P3SrmNote
+        Exit For
+      End If
+    Next r
+  End If
+  FEMIoRestoreFos = True
+  Exit Function
+Invalid:
+  SetAnalysisFailure RESULT_INPUT_ERROR, "チェックポイントのFs診断情報が不完全です。", vbObjectError + 3099, -1, -1, 0, 0
+End Function
+
 Public Function FEMIoFinishResume() As Boolean
   Dim i As Long
   FEMIoFinishResume = False
@@ -3355,6 +3436,7 @@ Public Function FEMIoFinishResume() As Boolean
   If femIoResumeFss > 0# Then FSS = femIoResumeFss
   If Not FEMIoRebuildResumeGeometry() Then Exit Function
   GWReadCheckpoint femIoResumeFolder
+  If Not FEMIoRestoreFos() Then Exit Function
   P3AssembleSelfWeightOnly
   FEMIoRefreshDerivedStressState
   P3CommitMaterialState
@@ -3643,19 +3725,22 @@ Private Sub FEMEnsureMaterialSheetLayout()
   ws.cells(1, 11).value2 = "種別"
   ws.cells(1, 12).value2 = "せん断剛性"
   ws.cells(1, 13).value2 = "引張"
+  ws.cells(1, 14).value2 = "飽和単位体積重量（任意）"
   ws.cells(1, 15).value2 = "凡例（入力しない）"
   ws.cells(2, 15).value2 = "強度低減"
   ws.cells(2, 16).value2 = "1=SRMでc・φを下げる / 0=構造物・基盤は下げない"
   ws.cells(3, 15).value2 = "初期状態"
   ws.cells(3, 16).value2 = "ON=解析開始から有効 / OFF=BIRTH待ち"
   ws.cells(4, 15).value2 = "種別"
-  ws.cells(4, 16).value2 = "SOIL=地盤 / STRUCT=構造 / JOINT=接合。空=SOIL"
+  ws.cells(4, 16).value2 = "SOIL=地盤 / STRUCT=弾塑性構造 / STRUCT_ELASTIC=線形弾性構造 / JOINT=接合。空=SOIL"
   ws.cells(5, 15).value2 = "JOINT"
   ws.cells(5, 16).value2 = "Kn=B列、Ks=L列、psi=0のみ。履歴なし応力上限モデル。残留塑性すべりは未対応"
   ws.cells(6, 15).value2 = "DAVIS"
   ws.cells(6, 16).value2 = "FLOW_POLICY=DAVISでもJOINTのc,φは変換しない"
   ws.cells(7, 15).value2 = "単位"
   ws.cells(7, 16).value2 = "角度は度。粘着力は応力と同じ単位"
+  ws.cells(8, 15).value2 = "飽和重量"
+  ws.cells(8, 16).value2 = "N列空欄=E列と同じ。静的HYDROSTATICのみ、水位以下はN列の全重量γsat。水圧を別途適用。"
   lastRow = ws.cells(ws.rows.count, 1).End(xlUp).row
   If lastRow < 2 Then lastRow = 2
   For rowNo = 2 To lastRow
@@ -3691,7 +3776,7 @@ End Sub
 
 Private Function FEMSettingChoiceList(ByVal keyName As String) As String
   Select Case UCase$(Trim$(keyName))
-    Case "ACCEL_STEP_FRESH_LU", "ACCEL_STEP_RECOVERY", "ACCEL_ADAPTIVE", "ACCEL_V1_PREDICTOR", "ACCEL_V2A_REUSE", "ACCEL_V2B_COST", "ACCEL_V3_COST_SEARCH", "ACCEL_V4_ANDERSON", "ACCEL_V5_GMRES_LU", "ACCEL_TRACE"
+    Case "ACCEL_STEP_FRESH_LU", "ACCEL_STEP_RECOVERY", "ACCEL_ADAPTIVE", "ACCEL_PREDICT_LONG_HISTORY", "ACCEL_V1_PREDICTOR", "ACCEL_V2A_REUSE", "ACCEL_V2B_COST", "ACCEL_V3_COST_SEARCH", "ACCEL_V4_ANDERSON", "ACCEL_V5_GMRES_LU", "ACCEL_TRACE"
       FEMSettingChoiceList = "0,1"
     Case "MESH_BC_BOTTOM", "MESH_BC_LEFT", "MESH_BC_RIGHT", "MESH_BC_TOP"
       FEMSettingChoiceList = "NONE,ROLLER,PINNED"
@@ -3806,7 +3891,7 @@ End Sub
 Private Sub FEMApplyMaterialValidation(ByVal ws As Worksheet)
   FEMApplyListValidation ws.range("I2:I2000"), "1,0"
   FEMApplyListValidation ws.range("J2:J2000"), "ON,OFF"
-  FEMApplyListValidation ws.range("K2:K2000"), "SOIL,STRUCT,JOINT"
+  FEMApplyListValidation ws.range("K2:K2000"), "SOIL,STRUCT,STRUCT_ELASTIC,JOINT"
   FEMApplyListValidation ws.range("M2:M2000"), "0,1"
 End Sub
 
@@ -3870,7 +3955,7 @@ Private Sub FEMEnsureSpecSheet()
   FEMSpecPut ws, rowNo, "設定", "生成時比較", "0 / 1 / 2", "両方合格のとき。0=品質の良い方。1=角度最適化（デローニ修正）。2=地形追従"
   FEMSpecPut ws, rowNo, "材料", "強度低減", "1 または 0", "1=SRMでc・φを下げる。0=構造物・基盤"
   FEMSpecPut ws, rowNo, "材料", "初期状態", "ON / OFF", "ON=最初から有効。OFF=BIRTH待ち"
-  FEMSpecPut ws, rowNo, "材料", "種別", "SOIL / STRUCT / JOINT", "空はSOIL。JOINTはkn=ヤング率、ks=せん断剛性"
+  FEMSpecPut ws, rowNo, "材料", "種別", "SOIL / STRUCT / STRUCT_ELASTIC / JOINT", "空はSOIL。STRUCT_ELASTIC=線形弾性構造・SRM低減対象外（E・ν・厚さ・γを使用）。STRUCT=従来の弾塑性構造。JOINTはkn=ヤング率、ks=せん断剛性"
   FEMSpecPut ws, rowNo, "材料", "引張（JOINT）", "0 または 1", "0=剥離可。1=引張も負担"
   FEMSpecPut ws, rowNo, "材料", "JOINTのモデル", "psi=0のみ", "履歴なし応力上限モデル。降伏後の塑性すべり・除荷履歴・ダイレタンシーは未対応"
   FEMSpecPut ws, rowNo, "載荷", "選択", "TOP / BOTTOM / LEFT / RIGHT / BOX / 節点番号", "実在する正の整数ID。BOXだけX1～Y2を使う。解析座標、その材料の節点だけ"
@@ -4045,15 +4130,10 @@ WriteFailed:
   Err.Clear
 End Sub
 
-' Stiff contact springs amplify rounded gap errors; retain Double-scale kinematics.
+' Retain high precision for all kinematics. Fixed-10 coordinates can change
+' regenerated shallow pore pressure and fixed-12 gaps affect stiff supports.
 Private Function FEMIoKinematicText(ByVal value As Double, ByVal coordinate As Boolean) As String
-  If GWActive And P3HasJointElements Then
-    FEMIoKinematicText = Replace$(Format$(value, "0.0000000000000000E+00"), Application.International(xlDecimalSeparator), ".")
-  ElseIf coordinate Then
-    FEMIoKinematicText = Format$(value, "0.0000000000")
-  Else
-    FEMIoKinematicText = Format$(value, "0.000000000000")
-  End If
+  FEMIoKinematicText = Replace$(Format$(value, "0.0000000000000000E+00"), Application.International(xlDecimalSeparator), ".")
 End Function
 
 Public Function FEMIoFrameSignature() As String

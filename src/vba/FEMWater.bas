@@ -4,6 +4,7 @@ Option Explicit
 Public GWActive As Boolean
 Public GWContext As String
 Private mOverrideProfile As String
+Private mProfileData As Object, mOutsideDry As Boolean
 Private mMode As String, mProfile As String, mGamma As Double, mAuto As Boolean
 Private mWs As Worksheet, mReady As Boolean, mFlowSolved As Boolean
 Private mBasis() As Boolean, mK() As Double, mMatProfile() As String
@@ -59,7 +60,7 @@ Public Function GWInputSignature() As String
         Case "水条件": lastRow = 619: cols = 38
         Case "節点データ": lastRow = ws.cells(ws.rows.count, 1).End(xlUp).row: cols = 9
         Case "要素データ": lastRow = ws.cells(ws.rows.count, 1).End(xlUp).row: cols = 10
-        Case "材料データ": lastRow = ws.cells(ws.rows.count, 1).End(xlUp).row: cols = 13
+        Case "材料データ": lastRow = ws.cells(ws.rows.count, 1).End(xlUp).row: cols = 14
         Case "ステージ": lastRow = ws.cells(ws.rows.count, 1).End(xlUp).row: cols = 6
         Case "接合": lastRow = ws.cells(ws.rows.count, 1).End(xlUp).row: cols = 7
       End Select
@@ -86,6 +87,11 @@ NextSigCell:
       Next i
     End If
   Next item
+  t = UCase$(Trim$(FEMReadTextSetting("GW_PROFILE_OUTSIDE", "ERROR")))
+  For k = 1 To Len(t)
+    h = h * 131# + (AscW(mid$(t, k, 1)) And &HFFFF&)
+    h = h - Fix(h / 2147483629#) * 2147483629#
+  Next k
   GWInputSignature = Format$(h, "0")
 End Function
 
@@ -178,22 +184,57 @@ Private Function GWLevel(ByVal profile As String, ByVal xv As Double) As Double
 End Function
 
 Private Function GWRawLevel(ByVal profile As String, ByVal xv As Double) As Double
-  Dim r As Long, count As Long, xp As Double, yp As Double, xx As Double, yy As Double, got As Boolean
+  Dim points As Variant, i As Long, last As Long, x0 As Double, x1 As Double
   If profile = "*" Then profile = mProfile
-  For r = 12 To 211
-    If Trim$(CStr(mWs.cells(r, 1).value2)) = profile Then
-      xx = GWNum(mWs.cells(r, 2).value2, "水位X 行" & CStr(r))
-      yy = GWNum(mWs.cells(r, 3).value2, "水位標高 行" & CStr(r))
-      If count > 0 Then
-        If xx <= xp Then GWFail "水位点は線ごとにX昇順です。重複/逆転 行=" & CStr(r)
-        If xv >= xp - 0.000000001 And xv <= xx + 0.000000001 Then
-          GWRawLevel = yp + (yy - yp) * (xv - xp) / (xx - xp): got = True
-        End If
+  If mProfileData Is Nothing Then GWReadProfileCache
+  If Not mProfileData.Exists(profile) Then GWFail "水位線がありません。ID=" & profile
+  points = mProfileData(profile): last = UBound(points, 2)
+  If last < 1 Then GWFail "水位線には2点以上が必要です。ID=" & profile
+  If xv < points(0, 0) - 0.000000001 Or xv > points(0, last) + 0.000000001 Then
+    If mOutsideDry Then GWRawLevel = -1E+100: Exit Function
+    GWFail "水位線「" & profile & "」は対象Xを覆う2点以上が必要です。X=" & CStr(xv)
+  End If
+  For i = 1 To last
+    x0 = points(0, i - 1): x1 = points(0, i)
+    If xv <= x1 + 0.000000001 Then
+      GWRawLevel = points(1, i - 1) + (points(1, i) - points(1, i - 1)) * (xv - x0) / (x1 - x0): Exit Function
+    End If
+  Next i
+End Function
+
+' Explicit partial profiles apply only to static prescribed water, never seepage
+' or transient coupling. Outside the supplied X range there is zero pressure.
+Public Sub GWReadProfileCache()
+  Dim values As Variant, points As Variant, id As String, mode As String, optionText As String
+  Dim r As Long, n As Long, x As Double, y As Double
+  Set mWs = ThisWorkbook.Worksheets("水条件")
+  mode = UCase$(Trim$(CStr(mWs.range("B3").value2)))
+  optionText = UCase$(Trim$(FEMReadTextSetting("GW_PROFILE_OUTSIDE", "ERROR")))
+  If optionText <> "ERROR" And optionText <> "DRY" Then GWFail "GW_PROFILE_OUTSIDEはERROR/DRYです。"
+  mOutsideDry = (optionText = "DRY")
+  If mOutsideDry And (mode <> "HYDROSTATIC" Or mTemporal Or FSActive Or Application.CountIf(mWs.range("M12:M211"), "FIXED_STRESS") > 0) Then GWFail "部分水位線DRYは静的HYDROSTATIC・片方向連携のみです。"
+  mProfile = Trim$(CStr(mWs.range("B5").value2))
+  If Len(mOverrideProfile) > 0 Then mProfile = mOverrideProfile
+  Set mProfileData = CreateObject("Scripting.Dictionary")
+  values = mWs.range("A12:C211").value2
+  For r = 1 To UBound(values, 1)
+    id = Trim$(CStr(values(r, 1)))
+    If Len(id) > 0 Then
+      x = GWNum(values(r, 2), "水位X"): y = GWNum(values(r, 3), "水位標高")
+      If mProfileData.Exists(id) Then
+        points = mProfileData(id): n = UBound(points, 2) + 1
+        If x <= points(0, n - 1) Then GWFail "水位点は線ごとにX昇順です。ID=" & id
+        ReDim Preserve points(0 To 1, 0 To n)
+      Else
+        ReDim points(0 To 1, 0 To 0): n = 0
       End If
-      xp = xx: yp = yy: count = count + 1
+      points(0, n) = x: points(1, n) = y: mProfileData(id) = points
     End If
   Next r
-  If count < 2 Or Not got Then GWFail "水位線「" & profile & "」は対象Xを覆う2点以上が必要です。X=" & CStr(xv)
+End Sub
+
+Public Function GWWeightIsWet(ByVal profile As String, ByVal x As Double, ByVal y As Double) As Boolean
+  GWWeightIsWet = (y < GWLevel(profile, x))
 End Function
 
 Private Function GWPressure(ByVal profile As String, ByVal xv As Double, ByVal yv As Double) As Double
@@ -215,6 +256,7 @@ Private Sub GWLoadDefinition()
   Dim r As Long, mat As Long, e As Long, side As Long, k As String, spec As String
   Dim seen As Object, kind As String, hydroNodes As Object, j As Long, nodeKey As String, pAtNode As Double
   GJReady = False
+  GWReadProfileCache
   Set mWs = ThisWorkbook.Worksheets("水条件")
   mMode = UCase$(Trim$(CStr(mWs.range("B3").value2)))
   If mMode <> "HYDROSTATIC" And mMode <> "STEADY" Then GWFail "水圧方式はNONE/HYDROSTATIC/STEADYです。"
@@ -235,8 +277,8 @@ Private Sub GWLoadDefinition()
       seen.Add CStr(mat), True
       kind = UCase$(Trim$(CStr(mWs.cells(r, 7).value2)))
       If kind <> "TOTAL" And kind <> "EFFECTIVE" Then GWFail "材料の応力基準をTOTAL/EFFECTIVEで指定してください。"
-      If (Material(mat).kind = "STRUCT" Or Material(mat).kind = "JOINT") And kind <> "TOTAL" Then GWFail "構造材料へ地盤の有効応力を適用できません。"
-      If Material(mat).kind = "STRUCT" Or Material(mat).kind = "JOINT" Then
+      If (Material(mat).kind = "STRUCT" Or Material(mat).kind = "STRUCT_ELASTIC" Or Material(mat).kind = "JOINT") And kind <> "TOTAL" Then GWFail "構造材料へ地盤の有効応力を適用できません。"
+      If Material(mat).kind = "STRUCT" Or Material(mat).kind = "STRUCT_ELASTIC" Or Material(mat).kind = "JOINT" Then
         If GWNum(mWs.cells(r, 8).value2, "構造体のK（初期版は遮水0）") <> 0# Then GWFail "構造体の透水は初期版の適用外です。遮水K=0を明示してください。"
       End If
       mBasis(mat) = (kind = "EFFECTIVE")
@@ -533,7 +575,7 @@ Private Sub GWBuildSurfaceForce()
       before(2 * j) = mWaterForce(2 * Elem(e).node(n))
       before(2 * j + 1) = mWaterForce(2 * Elem(e).node(n) + 1)
     Next j
-    GWWetEdgeLoad e, side, px, py, mGamma, mWaterForce
+    GWWetEdgeLoad e, side, px, py, mGamma, mWaterForce, mOutsideDry
     fx = 0#: fy = 0#: moment = 0#
     For j = 0 To 2
       Select Case j
@@ -865,10 +907,64 @@ Failed:
   End If
 End Function
 
+Private Function GWLegacyRoundedCoordinates(ByVal folder As String) As Boolean
+  Dim f As Integer, line As String, fields() As String, j As Long, dot As Long
+  Dim failedNumber As Long, failedText As String
+  On Error GoTo Failed
+  f = FreeFile
+  Open folder & Application.PathSeparator & "node.csv" For Input As #f
+  Line Input #f, line
+  If Not EOF(f) Then Line Input #f, line Else line = ""
+  Close #f: f = 0
+  fields = Split(line, ",")
+  If UBound(fields) <> 6 Then Exit Function
+  For j = 1 To 2
+    If InStr(1, UCase$(fields(j)), "E") > 0 Then Exit Function
+    dot = InStr(1, fields(j), ".")
+    If dot = 0 Or Len(fields(j)) - dot <> 10 Then Exit Function
+  Next j
+  GWLegacyRoundedCoordinates = True
+  Exit Function
+Failed:
+  failedNumber = Err.number: failedText = Err.description
+  On Error Resume Next
+  If f > 0 Then Close #f
+  On Error GoTo 0
+  Err.Raise failedNumber, "GWLegacyRoundedCoordinates", failedText
+End Function
+
+Private Function GWLegacyPressureRoundoff(ByVal e As Long, ByVal gp As Long) As Double
+  Dim points As Variant, profile As String, j As Long, slope As Double, bound As Double
+  Dim shapeSum As Double, delta As Double, px As Double, py As Double
+  If mMode <> "HYDROSTATIC" Or Material(Elem(e).MatNo).kind <> "SOIL" Then Exit Function
+  profile = mMatProfile(Elem(e).MatNo)
+  If profile = "*" Then profile = mProfile
+  If mProfileData Is Nothing Then GWReadProfileCache
+  If Not mProfileData.Exists(profile) Then GWFail "水位線がありません。ID=" & profile
+  points = mProfileData(profile)
+  If UBound(points, 2) < 1 Then GWFail "水位線には2点以上が必要です。ID=" & profile
+  For j = 1 To UBound(points, 2)
+    slope = Abs((points(1, j) - points(1, j - 1)) / (points(0, j) - points(0, j - 1)))
+    If slope > bound Then bound = slope
+  Next j
+  For j = 0 To 7: shapeSum = shapeSum + Abs(FEMGaussShapeValue(e, gp, j)): Next j
+  ' Old node.csv rounded each coordinate to 10 decimals. Propagate that
+  ' half-quantum through the actual element shape and hydrostatic gradient.
+  delta = 0.000000000051 * shapeSum
+  If mOutsideDry Then
+    FEMGaussPhysicalXY e, gp, px, py
+    ' DRY has a discontinuity at the profile endpoints. Never use the
+    ' continuous-gradient allowance to cross or conceal that discontinuity.
+    If px - delta <= points(0, 0) Or px + delta >= points(0, UBound(points, 2)) Then Exit Function
+  End If
+  GWLegacyPressureRoundoff = mGamma * delta * (1# + bound)
+End Function
+
 Public Sub GWReadCheckpoint(ByVal folder As String)
   Dim f As Integer, line As String, parts() As String, count As Long, e As Long, g As Long
   Dim loaded() As Double, seen() As Boolean, p As Double, profile As String
   Dim errorNumber As Long, errorText As String, resultSheet As Worksheet, resultRow As Long
+  Dim legacyRounded As Boolean, tolerance As Double, difference As Double, roundoff As Double, roundedCount As Long
   If Not GWActive Then Exit Sub
   On Error GoTo Failed
   f = FreeFile
@@ -936,11 +1032,20 @@ Public Sub GWReadCheckpoint(ByVal folder As String)
     Exit Sub
   End If
   GWRebuild
+  legacyRounded = GWLegacyRoundedCoordinates(folder)
   For e = 0 To NumberOfElement - 1
     For g = 0 To 3
-      If Abs(loaded(g, e) - mTarget(g, e)) > 0.0000000001 * (1# + Abs(mTarget(g, e))) Then GWFail "再生成した水圧場とチェックポイントが一致しません。"
+      tolerance = 0.0000000001 * (1# + Abs(mTarget(g, e)))
+      difference = Abs(loaded(g, e) - mTarget(g, e))
+      If difference > tolerance And legacyRounded Then
+        roundoff = GWLegacyPressureRoundoff(e, g)
+        If difference <= tolerance + roundoff Then roundedCount = roundedCount + 1
+        tolerance = tolerance + roundoff
+      End If
+      If difference > tolerance Then GWFail "再生成した水圧場とチェックポイントが一致しません。"
     Next g
   Next e
+  If roundedCount > 0 Then P6SolverEvent "CHECKPOINT_COORDINATE_ROUNDOFF", "format=FIXED10;accepted_points=" & CStr(roundedCount) & ";bound=shape_sum*half_coordinate_quantum*hydrostatic_gradient"
   mCurrent = loaded: mCommitted = loaded: mStart = loaded
   Exit Sub
 Failed:
@@ -1023,6 +1128,7 @@ Public Sub GWRebuildAcceptedInternalForce()
   Next e
   If P6MixedUP Then P6AddPressureToInternalForce
   FSForceCorrection iNForce
+  FaceSupportAddForce iNForce
   For i = 0 To lastDof
     P3FinalInternalForce(i) = iNForce(i)
   Next i
@@ -1159,7 +1265,7 @@ End Sub
 Public Sub GWAddProfileFaceLoad(ByVal e As Long, ByVal side As Long, ByVal profile As String, ByRef force() As Double)
   Dim px() As Double, py() As Double
   GWFaceProfilePoints profile, px, py
-  GWWetEdgeLoad e, side, px, py, mGamma, force
+  GWWetEdgeLoad e, side, px, py, mGamma, force, mOutsideDry
 End Sub
 
 ' A new mechanical mesh invalidates all node alias maps and cached water state.
@@ -1241,3 +1347,18 @@ Public Sub GWTransientJointConstraints(ByRef locked() As Boolean, ByRef pressure
     End If
   Next n
 End Sub
+
+' The dry constitutive kernel has no pore-pressure input. Bound its run at
+' every element whose actual old or trial pressure is nonzero. Recheck each
+' evaluation so a water ramp cannot reuse stale dry eligibility.
+Public Function GWNativeDryElement(ByVal elementId As Long) As Boolean
+  Dim g As Long
+  If Not GWActive Then GWNativeDryElement = True: Exit Function
+  If Not mReady Or mMode <> "HYDROSTATIC" Or mTemporal Or FSActive Then Exit Function
+  If elementId < 0 Or elementId >= NumberOfElement Then Exit Function
+  If Elem(elementId).IsJoint Then Exit Function
+  For g = 0 To 3
+    If mCurrent(g, elementId) <> 0# Or mCommitted(g, elementId) <> 0# Then Exit Function
+  Next g
+  GWNativeDryElement = True
+End Function

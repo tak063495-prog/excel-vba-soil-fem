@@ -1,4 +1,4 @@
-Option Explicit
+﻿Option Explicit
 
 ' Presentation only. All editable cells write through to the original input tables.
 Public Const FEM24_STAMP As String = "20261024_STAGE_01"
@@ -136,7 +136,7 @@ Private Function Sections(ByVal page As String) As String
     Case "ホーム": Sections = "作業の流れ"
     Case "モデル": Sections = "形状の座標,形状の領域,メッシュ生成・支持条件"
     Case "材料・接合": Sections = "材料特性,接合条件,材料の水理特性,圧密材料特性"
-    Case "境界・水条件": Sections = "水条件の基本,水位線,水理境界,載荷条件,節点の支持・変位"
+    Case "境界・水条件": Sections = "水条件の基本,水位線,水理境界,載荷条件,壁面支持,節点の支持・変位"
     Case "施工工程": Sections = "工程の編集,時間・連成設定,時間の詳細設定,排水条件セット,水位の時系列"
     Case "解析・保存": Sections = "解析・SRM,保存・再開,高速化,詳細設定"
     Case "結果": Sections = "図と概要,表示設定,工程別数値,時間履歴,水量収支,時刻別の図,節点結果,要素結果,水圧結果,接合結果,診断"
@@ -351,7 +351,7 @@ Private Sub Settings(ByVal ws As Worksheet, ByVal source As String, Optional ByV
     key = CStr(src.cells(r, 6).value2): include = (Len(key) > 0)
     If mode = "VIEW" Then include = (left$(key, 5) = "VIEW_")
     If mode = "SAVE" Then include = (Len(key) > 0 And left$(key, 5) <> "VIEW_")
-    If mode = "MESH" Then include = (left$(key, 8) = "MESH_BC_" Or key = "MESH_MATERIAL" Or key = "MESH_GEN_COMPARE" Or key = "MESH_T6_FALLBACK")
+    If mode = "MESH" Then include = (left$(key, 8) = "MESH_BC_" Or key = "MESH_MATERIAL" Or key = "MESH_GEN_COMPARE" Or key = "MESH_T6_FALLBACK" Or left$(key, 8) = "MESH_T6_" Or left$(key, 8) = "MESH_Q8_" Or left$(key, 19) = "MESH_QUALITY_REFINE")
     If include Then
       ws.range(ws.cells(d, 1), ws.cells(d, 3)).Merge: ws.cells(d, 1).value2 = src.cells(r, 2).value2
       ws.range(ws.cells(d, 4), ws.cells(d, 5)).Merge: ws.cells(d, 4).value2 = src.cells(r, 3).value2
@@ -410,7 +410,7 @@ Private Sub Render(ByVal ws As Worksheet)
       End Select
     Case "材料・接合"
       Select Case section
-        Case "材料特性": Table ws, "材料データ", "A2:M2000", 1, "SOIL/STRUCT/JOINTを材料ごとに指定。BIRTH待ちは初期状態OFF。SRM対象は強度低減=1。物性・重量は解析条件に合わせます。"
+        Case "材料特性": Table ws, "材料データ", "A2:M2000", 1, "SOIL/STRUCT/STRUCT_ELASTIC/JOINTを材料ごとに指定。SRM対象は強度低減=1。任意の飽和全重量γsatは詳細表N列（静的HYDROSTATICのみ、空欄=E列）。"
         Case "接合条件": Table ws, "接合", "A2:G2000", 1, "材料A/Bの共有辺へ接合を生成。水圧方式SOIL/CONTINUOUS/PRESCRIBED。接合を含む場合はメッシュ生成方式の適用範囲を確認。"
         Case "圧密材料特性": Table ws, "水条件", "V12:AB211", 11, "材料番号ごとにBiot係数α、貯留1/M[1/kPa]、kx・ky[m/s]を指定。EFFECTIVEの排水骨格E・νを使用します。物性は空欄のまま計算できません。"
         Case Else: Table ws, "水条件", "F12:J211", 11, "材料番号に対応させ、TOTAL/EFFECTIVE・透水係数K[m/s]・水位線IDを指定。水頭0は非透水節点では未計算値です。"
@@ -424,6 +424,9 @@ Private Sub Render(ByVal ws As Worksheet)
         Case "水位線": Table ws, "水条件", "A12:D211", 11, "同じIDで左→右へXと水位標高を複数行登録。折れ点の間は直線補間。地表より高い指定は外水圧の判定にも使います。"
         Case "水理境界": Table ws, "水条件", "A216:F415", 215, "STEADYの水頭・流量・不透水境界等を指定。節点/辺の番号は再メッシュで変わるため再設定が必要です。"
         Case "載荷条件": Table ws, "載荷", "A2:K2000", 1, "A=材料、K=載荷セットID（空欄は従来）。時間詳細の載荷セットで工程別に選択。指定DOFは値を上書き、未指定は継承。DISP[m]/FORCE[kN]/FIX、0も有効。"
+        Case "壁面支持"
+          FaceSupportInstall
+          Table ws, "壁面支持", "A2:G2000", 1, "仮の無質量・圧縮のみ土留め。水平支持力を既存壁へ返し、壁の移動・回転と土の鉛直移動を許す。耐力照査は別途。3節点は同じX座標。"
         Case Else: Table ws, "節点データ", "A2:I2001", 1, "生成済みメッシュの実際の拘束。D/E:0自由・1固定。座標/番号を変える場合は要素との整合が必要です。2000行を超えるモデルは詳細表で編集してください。"
       End Select
     Case "施工工程"

@@ -1,4 +1,4 @@
-param([Parameter(Mandatory=$true)][string]$Book,[Parameter(Mandatory=$true)][string]$Fixture,[Parameter(Mandatory=$true)][string]$Out,[switch]$Resume,[string]$Flow="INCONSISTENT",[string]$Native="AUTO",[switch]$FrontUi,[string]$ResumeState='',[switch]$ReopenResume,[ValidateSet('','FS','FS_UI','FLAG','CAPTURE','SAVE','PLASTIC','WRITE_TIME','WRITE_STAGE','PLCSV_TIME','PLCSV_STAGE','FSCSV_TIME','FSCSV_STAGE','LEDGERCSV_TIME','LEDGERCSV_STAGE','GWCSV_TIME','GWCSV_STAGE','FSCSV_TIME_UI')][string]$CancelAt='',[ValidateSet(5,18)][int]$FaultNumber=18,[ValidateRange(0,100)][int]$CancelAfterAccepted=2,[switch]$CheckLedger,[switch]$ExpectedOrdinaryFailure,[switch]$WaterObservables)
+﻿param([Parameter(Mandatory=$true)][string]$Book,[Parameter(Mandatory=$true)][string]$Fixture,[Parameter(Mandatory=$true)][string]$Out,[switch]$Resume,[string]$Flow="INCONSISTENT",[string]$Native="AUTO",[switch]$FrontUi,[string]$ResumeState='',[switch]$ReopenResume,[ValidateSet('','FS','FS_UI','FLAG','CAPTURE','SAVE','PLASTIC','WRITE_TIME','WRITE_STAGE','PLCSV_TIME','PLCSV_STAGE','FSCSV_TIME','FSCSV_STAGE','LEDGERCSV_TIME','LEDGERCSV_STAGE','GWCSV_TIME','GWCSV_STAGE','FSCSV_TIME_UI')][string]$CancelAt='',[ValidateSet(5,18)][int]$FaultNumber=18,[ValidateRange(0,100)][int]$CancelAfterAccepted=2,[switch]$CheckLedger,[switch]$ExpectedOrdinaryFailure,[switch]$WaterObservables)
 $ErrorActionPreference='Stop'
 if(Get-Process EXCEL -ErrorAction SilentlyContinue){throw 'Another Excel is running; do not dispatch.'}
 if(Test-Path -LiteralPath $Out){throw 'Preserve previous evidence.'}
@@ -7,6 +7,8 @@ $Out=[IO.Path]::GetFullPath($Out);New-Item -ItemType Directory -Path $Out | Out-
 $data=Get-Content -LiteralPath $Fixture -Raw -Encoding UTF8 | ConvertFrom-Json
 $copy=Join-Path $Out ($data.name+'.xlsm');Copy-Item -LiteralPath $Book -Destination $copy
 Copy-Item -LiteralPath (Join-Path (Split-Path $Book) 'soilfem_native_x64.dll') -Destination $Out
+$sparseDll=Join-Path (Split-Path $Book) 'soilfem_sparse_x64.dll'
+if(Test-Path -LiteralPath $sparseDll){Copy-Item -LiteralPath $sparseDll -Destination $Out}
 $xl=New-Object -ComObject Excel.Application
 try{
  $xl.DisplayAlerts=$false;$xl.EnableEvents=[bool]$data.shape;$xl.AutomationSecurity=1
@@ -140,14 +142,27 @@ End Function
   $ws.Range($ws.Cells($firstRow,$firstColumn),$ws.Cells(($firstRow+$rows.Count-1),($firstColumn+$cols-1))).Value2=$v
  }
  $null=Call 'FEMEnsureStageSheets'
- foreach($name in '節点データ','要素データ','材料データ','ステージ','載荷'){$wb.Worksheets.Item($name).Range('A2:N10000').ClearContents()}
+ foreach($name in '節点データ','要素データ','材料データ','ステージ','載荷'){
+  $fixtureSheet=$wb.Worksheets.Item($name)
+  $fixtureLastRow=[Math]::Max(10000,[int]$fixtureSheet.Cells.Item($fixtureSheet.Rows.Count,1).End(-4162).Row)
+  $fixtureSheet.Range("A2:N$fixtureLastRow").ClearContents()
+ }
  $wb.Worksheets.Item('接合').Range('A2:G10000').ClearContents()
  Rows $wb.Worksheets.Item('節点データ') 2 1 $data.nodes 9
  Rows $wb.Worksheets.Item('要素データ') 2 1 $data.elements $(if($data.elements[0].Count -ge 11){11}else{10})
- Rows $wb.Worksheets.Item('材料データ') 2 1 $data.materials 13
+ Rows $wb.Worksheets.Item('材料データ') 2 1 $data.materials $(if($data.materials[0].Count -ge 14){14}else{13})
  Rows $wb.Worksheets.Item('ステージ') 2 1 $data.stages 6
  if($data.loads){Rows $wb.Worksheets.Item('載荷') 2 1 $data.loads $(if($data.loads[0].Count -ge 11){11}else{10})}
  if($data.jointPairs){Rows $wb.Worksheets.Item('接合') 2 1 $data.jointPairs 7}
+ $support=$null;try{$support=$wb.Worksheets.Item('壁面支持')}catch{}
+ if($null -ne $support){$support.Range('A2:G10000').ClearContents()}
+ if($data.faceSupports){
+  if($null -eq $support){$support=$wb.Worksheets.Add();$support.Name='壁面支持'}
+  $headers=@('ID','地盤節点','壁上節点','壁下節点','剛性[kN/m]','法線1/-1','備考')
+  for($c=0;$c -lt $headers.Count;$c++){$support.Cells.Item(1,$c+1).Value2=$headers[$c]}
+  $support.Range('A2:G10000').ClearContents()
+  Rows $support 2 1 $data.faceSupports 7
+ }
  if($data.shape){
   $shapePage=$wb.Worksheets.Item('形状入力')
   $shapePage.Range('B8:D2000').ClearContents();$shapePage.Range('G8:J2000').ClearContents()
@@ -156,6 +171,11 @@ End Function
  }
  $null=Call 'FEMWaterInstallUi'
  $water=$wb.Worksheets.Item('水条件')
+ # Fixtures replace all hydraulic input blocks, including those in a full model.
+ $water.Range('A12:AL211').ClearContents()
+ $water.Range('A216:F415').ClearContents()
+ $water.Range('V216:AB415').ClearContents()
+ $water.Range('V420:X619').ClearContents()
  $water.Range('B3').Value2=[string]$data.water.mode;$water.Range('B4').Value2=[double]$data.water.gamma
  $water.Range('B5').Value2=[string]$data.water.defaultProfile;$water.Range('B6').Value2=[string]$data.water.auto
  Rows $water 12 1 $data.water.profiles 4
@@ -167,6 +187,8 @@ End Function
  if($data.water.drainSets){Rows $water 216 22 $data.water.drainSets 7}
  if($data.water.timeCurves){Rows $water 420 22 $data.water.timeCurves 3}
  SetSetting 'EXPORT_MODE' $(if($Resume){'STAGE'}else{'OFF'});SetSetting 'EXPORT_LOAD' '';SetSetting 'FLOW_POLICY' $Flow;SetSetting 'NATIVE_DLL' $Native;SetSetting 'OUTPUT_STAGE_MODE' 'ALL'
+ # A partial-profile option from the template must not leak into transient fixtures.
+ SetSetting 'GW_PROFILE_OUTSIDE' 'ERROR'
  if($data.settings){foreach($property in $data.settings.PSObject.Properties){SetSetting $property.Name $property.Value}}
  if($Resume){SetSetting 'EXPORT_MODE' 'STAGE'}
  if($FrontUi){

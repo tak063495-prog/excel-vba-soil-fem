@@ -1,4 +1,4 @@
-Option Explicit
+﻿Option Explicit
 
 ' T6 uses the existing eight-slot/native ABI without adding fictitious DOFs.
 ' Slots: A,B,C,C,AB,BC,C,CA. Slots 3 and 6 have identically zero shape.
@@ -177,7 +177,8 @@ Public Sub FEMT6MeshMetrics(ByVal e As Long, ByRef conn() As Long, ByRef xx() As
   Next j
   If Not FEMT6GeometryValid(el) Then Err.Raise vbObjectError + 3972, , "T6のJacobian・辺中点が不正です。要素=" & CStr(e)
   area = ((el.x(1) - el.x(0)) * (el.y(2) - el.y(0)) - (el.x(2) - el.x(0)) * (el.y(1) - el.y(0))) / 2#
-  jac = area / 2#: minEdge = 1E+308: maxEdge = 0#: minAngle = 180#: maxAngle = 0#
+  ' Straight T6 Duffy Jacobian at the worst of the actual 2x2 Gauss points.
+  jac = area * (1# - 1# / Sqr(3#)) / 4#: minEdge = 1E+308: maxEdge = 0#: minAngle = 180#: maxAngle = 0#
   For j = 0 To 2
     prev = (j + 2) Mod 3: nxt = (j + 1) Mod 3
     dx1 = el.x(prev) - el.x(j): dy1 = el.y(prev) - el.y(j)

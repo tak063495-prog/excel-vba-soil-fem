@@ -1,4 +1,4 @@
-Option Explicit
+﻿Option Explicit
 
 Public Function M6SetFallback(ByVal enabled As Long) As String
   On Error GoTo Failed
@@ -81,7 +81,7 @@ Public Function M6Generate(ByVal fallback As Long, ByVal invalid As Boolean, Opt
   SuppressUserMessages = True
   Set ws = ThisWorkbook.Worksheets("形状入力")
   ws.Range("B8:D2000").ClearContents: ws.Range("G8:J2000").ClearContents
-  pts = Array(Array(1, 0, 0), Array(2, 2, 0), Array(3, 2, 1), Array(4, 0, 1))
+  pts = Array(Array(1, 0, 0), Array(2, 2, 0), Array(3, 2.3, 1), Array(4, 0, 1))
   For i = 0 To 3
     ws.Cells(i + 8, 2).Value2 = pts(i)(0): ws.Cells(i + 8, 3).Value2 = pts(i)(1): ws.Cells(i + 8, 4).Value2 = pts(i)(2)
   Next i
@@ -89,7 +89,14 @@ Public Function M6Generate(ByVal fallback As Long, ByVal invalid As Boolean, Opt
   ws.Cells(8, 9).Value2 = IIf(invalid, "1,3,2,4", "1,2,3,4"): ws.Cells(8, 10).Value2 = 1#
   FEMWriteNumericSetting "MESH_GEN_COMPARE", CDbl(method)
   FEMWriteNumericSetting "MESH_T6_FALLBACK", CDbl(fallback)
-  If fallback <> 0 Then FEMWriteNumericSetting "MESH_QUALITY_MIN_JACOBIAN_RATIO", 0.03 Else FEMWriteNumericSetting "MESH_QUALITY_MIN_JACOBIAN_RATIO", 0.000001
+  If fallback <> 0 Then
+    FEMWriteNumericSetting "MESH_QUALITY_MIN_ANGLE_DEG", 89#
+    FEMWriteNumericSetting "MESH_QUALITY_MAX_ANGLE_DEG", 91#
+  Else
+    FEMWriteNumericSetting "MESH_QUALITY_MIN_ANGLE_DEG", 10#
+    FEMWriteNumericSetting "MESH_QUALITY_MAX_ANGLE_DEG", 170#
+  End If
+  FEMWriteNumericSetting "MESH_QUALITY_MIN_JACOBIAN_RATIO", 0.000001
   FEMUiGenerateShape
   If Not FEMShapeGenerationOK Or Len(FEMUiMeshPreviewError) > 0 Then Err.Raise vbObjectError + 3986, , FEMUiMeshPreviewError
   M6Generate = "PASS"

@@ -726,14 +726,18 @@ __declspec(dllexport) int32_t __stdcall sfm_gmres(const int64_t *G, double dtol)
  * R (int64): 0 n 1 rowptr 2 col 3 origVals 4 nodeCond(int32) 5 force 6 disp out 7 bandWork (n*(bw+1)) 8 bw
  *            9 vecWork (4n) 10 out(double) [0]normal_relres [1]factorDone
  * returns 1 accepted (Disp written), 0 rejected */
+/* The caller supplies opaque n*(bw+1) scratch Doubles. Store each lower
+ * band row contiguously: the Cholesky dot products then scan adjacent
+ * memory instead of n-Double strides. Scalar arithmetic and loop order
+ * are unchanged, including x87 rounding and the true normal residual. */
 __declspec(dllexport) int32_t __stdcall sfm_regularized(const int64_t *R, double damping, double itTol) {
   int32_t n = (int32_t)R[0]; const int32_t *rp = (const int32_t *)(intptr_t)R[1], *ci = (const int32_t *)(intptr_t)R[2];
   const double *O = (const double *)(intptr_t)R[3]; const int32_t *nc = (const int32_t *)(intptr_t)R[4];
   const double *F = (const double *)(intptr_t)R[5]; double *D = (double *)(intptr_t)R[6], *a = (double *)(intptr_t)R[7];
   int32_t bw = (int32_t)R[8]; double *vw = (double *)(intptr_t)R[9], *o = (double *)(intptr_t)R[10];
-  double *rhs = vw, *sol = vw + n, *cs = vw + 2 * n; int64_t ld = n;
+  double *rhs = vw, *sol = vw + n, *cs = vw + 2 * n;
   int32_t row, col, p, q, c1, c2, i, j, k, fc, lr; double v, normB = 0.0, nres = 0.0, tmp;
-#define A_(r, c) a[(r) + (int64_t)(c) * ld]
+#define A_(r, c) a[(int64_t)(r) * ((int64_t)bw + 1) + (c)]
   o[0] = 0; o[1] = 0;
   if (!g_ready || n < 1 || bw < 0) return -1;
   fp_clear();

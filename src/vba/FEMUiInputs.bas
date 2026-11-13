@@ -34,6 +34,10 @@ Public Sub FEMUiPrepareInputs()
   Next item
   ThisWorkbook.Worksheets("要素データ").cells(1, 11).value2 = "要素形式（Q8/T6）"
   FEMUiOrderRuntimePage ws, keys
+  FEMUiEnsureSolverOptions
+  MeshQualityEnsureSettings
+  NewtonProgressEnsureSettings
+  GWEnsureProfileSetting
   Set ws = ThisWorkbook.Worksheets("メッシュ設定")
   found = False
   For r = 1 To ws.cells(ws.rows.count, 6).End(xlUp).row
@@ -87,6 +91,46 @@ Public Sub FEMUiPrepareInputs()
   With ThisWorkbook.Worksheets("高速化設定")
     .range("B5").value2 = "通常はDLL・I/OをAUTO/1。下段V方式は比較用。未対応経路は自動復帰。収束条件は変更しません。"
   End With
+End Sub
+
+Private Function FEMUiHasOption(ByVal keyName As String) As Boolean
+  Dim p As Variant, r As Long, ws As Worksheet
+  For Each p In Array("メッシュ設定", "解析設定", "高速化設定", "出力・表示", "詳細設定")
+    Set ws = ThisWorkbook.Worksheets(CStr(p))
+    For r = 8 To ws.cells(ws.rows.count, 6).End(xlUp).row
+      If UCase$(Trim$(CStr(ws.cells(r, 6).value2))) = keyName Then FEMUiHasOption = True: Exit Function
+    Next r
+  Next p
+End Function
+
+Private Sub FEMUiEnsureSolverOptions()
+  Dim options As Variant, item As Variant, legacy As Worksheet, ws As Worksheet
+  Dim r As Long, sourceRow As Long, targetRow As Long, keyName As String
+  options = Array(Array("NONSYM_SOLVER", "解析設定"), Array("NONSYM_ELASTIC_START_DOF", "解析設定"), _
+    Array("ASSOCIATED_ENERGY_RECOVERY", "解析設定"), Array("ASSOCIATED_ENERGY_FIRST", "解析設定"), _
+    Array("STATIC_KEEP_ACCEPTED_STEP", "解析設定"), Array("STATIC_INITIAL_STEPS", "解析設定"), _
+    Array("NATIVE_SPARSE_DIRECT", "高速化設定"), Array("NATIVE_WATER_TANGENT", "高速化設定"))
+  Set legacy = ThisWorkbook.Worksheets("設定")
+  ' Append only: existing input/formula positions are never moved by this migration.
+  For Each item In options
+    keyName = CStr(item(0))
+    If Not FEMUiHasOption(keyName) Then
+      sourceRow = 0
+      For r = 5 To legacy.cells(legacy.rows.count, 5).End(xlUp).row
+        If CStr(legacy.cells(r, 5).value2) = keyName Then sourceRow = r: Exit For
+      Next r
+      If sourceRow > 0 Then
+        If legacy.cells(sourceRow, 3).HasFormula Then Err.Raise vbObjectError + 3833, "FEMUiEnsureSolverOptions", "数式を含む追加設定を移動せず停止しました。キー=" & keyName
+        Set ws = ThisWorkbook.Worksheets(CStr(item(1)))
+        targetRow = ws.cells(ws.rows.count, 6).End(xlUp).row + 1
+        If targetRow < 8 Then targetRow = 8
+        ws.cells(targetRow, 2).value2 = legacy.cells(sourceRow, 2).value2
+        ws.cells(targetRow, 3).value2 = legacy.cells(sourceRow, 3).value2
+        ws.cells(targetRow, 5).value2 = legacy.cells(sourceRow, 4).value2
+        ws.cells(targetRow, 6).value2 = keyName
+      End If
+    End If
+  Next item
 End Sub
 
 Public Sub FEMUiPreflightRuntimeLayout(ByVal ws As Worksheet)
@@ -218,6 +262,15 @@ Private Function FEMUiRecommendation(ByVal keyName As String) As Variant
     Case "ACCEL_PREDICT_MAX_RATIO": FEMUiRecommendation = 1.5
     Case "ACCEL_TANGENT_CHANGE": FEMUiRecommendation = 0.05
     Case "MESH_T6_FALLBACK": FEMUiRecommendation = "0（既定OFF）"
+    Case "MESH_T6_MIN_ANGLE_DEG": FEMUiRecommendation = 20#
+    Case "MESH_T6_MAX_ANGLE_DEG": FEMUiRecommendation = 140#
+    Case "MESH_T6_MAX_ASPECT_RATIO": FEMUiRecommendation = 5#
+    Case "MESH_Q8_MIN_JACOBIAN_AREA_RATIO": FEMUiRecommendation = 0.1
+    Case "MESH_T6_SMOOTH_ITERATIONS": FEMUiRecommendation = 10#
+    Case "MESH_QUALITY_REFINE": FEMUiRecommendation = "改善候補を比較する場合1"
+    Case "MESH_QUALITY_REFINE_PASSES": FEMUiRecommendation = 1#
+    Case "MESH_QUALITY_REFINE_MAX_RATIO": FEMUiRecommendation = 1.12
+    Case "MESH_QUALITY_REFINE_FRACTION": FEMUiRecommendation = 0.03
     Case "MESH_QUALITY_MIN_AREA_RATIO": FEMUiRecommendation = 0.000001
     Case "MESH_QUALITY_MIN_JACOBIAN_RATIO": FEMUiRecommendation = 0.000001
     Case "MESH_QUALITY_MAX_ASPECT_RATIO": FEMUiRecommendation = 5#
@@ -331,7 +384,7 @@ Private Sub FEMUiWriteGuide()
   ws.range("B2").Font.size = 20: ws.range("B2").Font.bOld = True
   ws.Hyperlinks.Add anchor:=ws.range("B4"), address:="", SubAddress:="'操作パネル'!B2", TextToDisplay:="操作パネルへ戻る"
   sections = Array( _
-    Array("1 材料・単位", "材料データ：E、ν、γ、c、φ、ψとSOIL/STRUCT/JOINTを確認。全シートで単位を統一（例 m・kN・kPa、角度deg）。物性・荷重に汎用の推奨値はありません。"), _
+    Array("1 材料・単位", "材料データ：E、ν、γ、c、φ、ψとSOIL/STRUCT/STRUCT_ELASTIC/JOINTを確認。全シートで単位を統一（例 m・kN・kPa、角度deg）。物性・荷重に汎用の推奨値はありません。"), _
     Array("2 メッシュ・支持", "形状入力の座標・境界・格子間隔からメッシュを作成し、図で拘束と品質を確認。底面・側面支持はモデル依存。節点/要素を直接入力する操作も可能。"), _
     Array("3 接合（任意）", "接合：材料A/Bの共有辺にJOINTを生成。材料種別JOINT、Kn/Ks、psi=0。履歴なし応力上限モデルで、塑性すべり・除荷履歴は未対応。"), _
     Array("4 ステージ・載荷", "ステージは上から有効=1だけ実行。GRAVITY/LOAD/UNLOAD/BIRTH/DEATH/SRM/RESET_U/RESET_STRESS/MATSET。LOAD対象・BOX範囲・符号は載荷で指定。"), _
