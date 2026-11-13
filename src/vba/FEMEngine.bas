@@ -2083,6 +2083,11 @@ Private Sub P3RestoreCommittedMaterialState(Optional ByVal invalidateFactor As B
     Next im
   Next k
 StateCopyDone:
+  ' Restoring Spmat does not restore kmat. Even an elastic probe after a
+  ' rejected plastic trial must rebuild the element operator when requested.
+  ' Keep factor reuse independent: invalidateFactor=False still permits the
+  ' deliberately reused modified-Newton factor until its normal rebuild.
+  P3MarkAllTangentDirty
   If P6MixedUP And P6PressureCount > 0 Then
     For k = 0 To P6PressureCount - 1
       P6Pressure(k) = P6CommittedPressure(k)
@@ -2092,7 +2097,6 @@ StateCopyDone:
   If invalidateFactor Then
     P6FactorReady = False
     P3RequestTangentRebuild "CUTBACK"
-    P3MarkAllTangentDirty
     P3AfterCutback = True
   End If
 End Sub
