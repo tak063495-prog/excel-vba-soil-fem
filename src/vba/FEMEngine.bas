@@ -1779,7 +1779,7 @@ Private Function P3RebuildTangentFromSpmat() As Boolean
           unsymFlag = False
           If Not P3FlowPolicyIsInconsistent() Then unsymFlag = P3KmatIsUnsymmetric(Elem(k).kmat)
         End If
-        If Not P3FlowPolicyIsInconsistent() And unsymFlag Then
+        If Not P6NeedsFullNonsymmetric() And unsymFlag Then
           SetAnalysisFailure RESULT_MATERIAL_ERROR, "BAND対称ソルバは非対称接線に未対応です（非関連流れ φ≠ψ の塑性接線）。FLOW_POLICY=INCONSISTENT または DAVIS を指定してください。要素=" & CStr(k + 1), vbObjectError + 3240, k + 1, -1, CurrentIncrement, CurrentIteration
           GoTo TangentDone
         End If

@@ -185,6 +185,8 @@ End Function
  if($data.water.drainSets){Rows $water 216 22 $data.water.drainSets 7}
  if($data.water.timeCurves){Rows $water 420 22 $data.water.timeCurves 3}
  SetSetting 'EXPORT_MODE' $(if($Resume){'STAGE'}else{'OFF'});SetSetting 'EXPORT_LOAD' '';SetSetting 'FLOW_POLICY' $Flow;SetSetting 'NATIVE_DLL' $Native;SetSetting 'OUTPUT_STAGE_MODE' 'ALL'
+ # A partial-profile option from the template must not leak into transient fixtures.
+ SetSetting 'GW_PROFILE_OUTSIDE' 'ERROR'
  if($data.settings){foreach($property in $data.settings.PSObject.Properties){SetSetting $property.Name $property.Value}}
  if($Resume){SetSetting 'EXPORT_MODE' 'STAGE'}
  if($FrontUi){

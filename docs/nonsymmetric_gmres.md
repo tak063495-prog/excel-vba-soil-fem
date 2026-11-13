@@ -2,7 +2,11 @@
 
 `FLOW_POLICY=INCONSISTENT` evaluates the original Mohr-Coulomb cohesion,
 friction and dilation angles and retains the complete nonsymmetric Newton
-operator. `NONSYM_SOLVER=BAND` remains the default pivoted band solver.
+operator. When all continuum materials have `phi=psi`, the operator remains
+symmetric and uses the symmetric band solver; the selected flow policy does
+not by itself make that matrix nonsymmetric. JOINT and coupled operators
+retain their conservative nonsymmetric selection. `NONSYM_SOLVER=BAND` remains
+the default pivoted band solver for a nonsymmetric operator.
 Set `NONSYM_SOLVER=GMRES` in the analysis settings to select the existing
 CSR right-preconditioned GMRES solver directly. This avoids allocating the
 large nonsymmetric band factors. It does not apply the Davis equivalent

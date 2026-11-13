@@ -4786,7 +4786,21 @@ End Function
 Public Function P6NeedsFullNonsymmetric() As Boolean
   ' Solver/operator choice only; the continuum flow/material policy is unchanged.
   ' A wet JOINT retains its nonsymmetric friction derivative even with DAVIS soil.
-  P6NeedsFullNonsymmetric = P3FlowPolicyIsInconsistent() Or (GWEnabled() And P3HasJointElements)
+  Dim i As Long
+  P6NeedsFullNonsymmetric = (GWEnabled() And P3HasJointElements)
+  If P3FlowPolicyIsInconsistent() Then
+    ' The setting permits nonassociated flow; phi=psi still has a symmetric
+    ' continuum tangent. Retain nonsymmetric joint and coupled operators.
+    If P3HasJointElements Or FSActive Or P6MixedUP Or P6ConsolActive Or NumberOfMaterial < 1 Then
+      P6NeedsFullNonsymmetric = True
+    Else
+      For i = 0 To NumberOfMaterial - 1
+        If P6MaterialKindOf(i) <> "STRUCT_ELASTIC" Then
+          If Abs(Material(i).fai - Material(i).psai) > 0.000000000001 Then P6NeedsFullNonsymmetric = True: Exit For
+        End If
+      Next i
+    End If
+  End If
   If Not P6NeedsFullNonsymmetric Then Exit Function
   ' The elastic retry changes only the correction operator, never the force law.
   If P3IncoElasticCorrection And P6CanUseElasticBandRecovery() Then P6NeedsFullNonsymmetric = False
@@ -4804,6 +4818,7 @@ End Function
 Public Function P6PreferElasticStart() As Boolean
   Dim threshold As Double
   If Not P3FlowPolicyIsInconsistent() Then Exit Function
+  If Not P6NeedsFullNonsymmetric() Then Exit Function
   threshold = P6ReadSetting("NONSYM_ELASTIC_START_DOF", 2000#)
   If threshold <= 0# Or CDbl(nDof) < threshold Then Exit Function
   P6PreferElasticStart = P6CanUseElasticBandRecovery()
