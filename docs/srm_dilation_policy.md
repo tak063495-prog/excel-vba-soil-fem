@@ -16,9 +16,10 @@ degrees; the old Davis path instead produced 25.6126285856 degrees and a
 slightly smaller cohesion. This correction implements the selected policy;
 it does not calibrate material strength to a reference safety factor.
 
-Materials excluded from strength reduction retain their original parameters.
-The existing Davis conversion of nonassociated continuum materials and the
-separate JOINT treatment remain in effect. KEEP retains its explicit uncapped
+Materials excluded from strength reduction do not acquire Fs-dependent
+changes; their selected flow-policy conversion still applies. The existing
+Davis conversion of nonassociated continuum materials and the separate JOINT
+treatment remain in effect. KEEP retains its explicit uncapped
 meaning.
 
 `tests/check_srm_psi_policy.py` compares the production transformation against
