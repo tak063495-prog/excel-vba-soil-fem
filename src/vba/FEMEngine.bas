@@ -2673,6 +2673,16 @@ LineSearchReject:
   Next i
   P3RestoreCommittedMaterialState False
   P3ClearTransientFailure
+  ' TDisp is the last valid Newton iterate, not the committed increment origin.
+  ' Recreate its stress, tangent, internal force and active plastic set together.
+  ' Otherwise a rejected alpha leaves committed (often zero) plastic points in
+  ' the SRM failure classifier and a stale candidate force in residual metrics.
+  If Not P3EvaluateTrialState(incrementBase, internalForce) Then
+    mLineSearchFailure = "LINESEARCH_RESTORE_STATE_FAILURE"
+    P3LineSearchRetryCorrection = False
+    Exit Function
+  End If
+  P3UpdateResidualMetrics targetForce, internalForce
   P3RequestTangentRebuild "LINESEARCH_RETRY"
   P3LineSearchRetryCorrection = True
   P3LineSearchCuts = P3LineSearchCuts + 1

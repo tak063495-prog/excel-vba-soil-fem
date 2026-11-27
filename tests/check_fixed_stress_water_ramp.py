@@ -3,6 +3,7 @@ import argparse
 import csv
 import json
 from pathlib import Path
+from check_fixed_stress_history import finite, validate_json
 
 
 def check(run):
@@ -15,17 +16,22 @@ def check(run):
         phase = next(line.split(',') for line in lines if line.startswith('PHASE,'))
         if int(phase[1]) != 3:
             continue
-        fraction = float(phase[2])/40.0
-        load_y = sum(float(row['locked_sw']) for row in csv.DictReader((file.parent/'dof.csv').open(encoding='utf-8-sig')) if int(row['dof']) % 2)
+        time = finite(state[1], f'{file}: STATE time')
+        fraction = finite(phase[2], f'{file}: PHASE elapsed')/40.0
+        with (file.parent/'dof.csv').open(encoding='utf-8-sig') as source:
+            loads = [(int(row['dof']), finite(row['locked_sw'], f'{file.parent}/dof.csv dof={row["dof"]} locked_sw')) for row in csv.DictReader(source)]
+        load_y = finite(sum(v for dof, v in loads if dof % 2), f'{file}: load sum')
         expected = -(40+9.81*(2+fraction))
         if abs(load_y-expected) > 1e-8:
             raise ValueError(f'water load jump at t={state[1]}: {load_y} != {expected}')
-        frames.append({'frame': file.parent.name, 'time_s': float(state[1]), 'fraction': fraction,
+        finite(expected, f'{file}: expected load')
+        frames.append({'frame': file.parent.name, 'time_s': time, 'fraction': fraction,
                        'load_y_kN': load_y, 'expected_y_kN': expected, 'error_kN': abs(load_y-expected)})
     if len(frames) < 4 or not any(0 < row['fraction'] < 1 for row in frames):
         raise ValueError('no intermediate ramp fields')
     result = json.loads((run/'result.json').read_text(encoding='utf-8-sig'))
-    reaction_error = abs(result['metrics'][2]-69.43)
+    validate_json(result, str(run/'result.json'))
+    reaction_error = finite(abs(result['metrics'][2]-69.43), 'reaction error')
     if reaction_error > 1e-6:
         raise ValueError(f'final reaction error {reaction_error}')
     return {'status': 'PASS', 'frames': sorted(frames, key=lambda r:r['time_s']),
@@ -38,6 +44,10 @@ if __name__ == '__main__':
     ap.add_argument('--run', type=Path, required=True)
     ap.add_argument('--report', type=Path, required=True)
     args = ap.parse_args()
-    result = check(args.run)
-    args.report.write_text(json.dumps(result, indent=2), encoding='utf-8')
-    print(json.dumps(result, indent=2))
+    try:
+        result = check(args.run)
+    except (ValueError, KeyError, TypeError, OverflowError) as error:
+        args.report.write_text(json.dumps({'status':'FAIL', 'error':str(error)}, allow_nan=False), encoding='utf-8')
+        raise
+    args.report.write_text(json.dumps(result, indent=2, allow_nan=False), encoding='utf-8')
+    print(json.dumps(result, indent=2, allow_nan=False))

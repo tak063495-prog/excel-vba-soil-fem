@@ -1,5 +1,6 @@
 ﻿Option Explicit
 Private femIoViewingCheckpoint As Boolean
+Private femIoResumeFosText As String
 Private mEvBuf As String, mEvPath As String, mEvHeader As String, mEvCount As Long
 Private mIoFast As Boolean, mIoBookIdentity As String, mIoCachedDir As String, mIoSep As String
 Private mEventFast As Boolean, mEvUsed As Long
@@ -2547,6 +2548,8 @@ Private Sub FEMIoWriteMeta(ByVal stageFolder As String, ByVal stageNo As Long, B
   Print #fileNumber, "DOF=" & CStr(lastDof)
   Print #fileNumber, "ORIGIN=" & IIf(P3OriginSnapReady, "1", "0")
   Print #fileNumber, "REPLAY_START=" & CStr(P3SrmReplayStart)
+  Print #fileNumber, "HYDRAULICS=" & IIf(FSActive, "FIXED_STRESS", "ONE_WAY")
+  Print #fileNumber, "FOS=" & FEMIoFosNumber(P3FosPass) & "," & FEMIoFosNumber(P3FosFail) & "," & FEMIoFosNumber(P3FosMid) & "," & FEMIoFosNumber(P3FosWidth) & "," & IIf(P3FosBracket, "1", "0") & "," & P3FosInterpretation & "," & CStr(P3SrmTrialCount)
   Close #fileNumber
 End Sub
 
@@ -2881,7 +2884,9 @@ Public Function FEMIoTryResume(Optional ByVal explicitFolder As String = "", Opt
   Dim metaStamp As String, metaSig As String, metaPlan As String, metaStatus As String
   Dim metaStage As Long, metaKind As String, metaNodes As Long, metaElems As Long, metaDof As Long
   Dim rhs As String, matchCount As Long, stageIndex As Long, i As Long
+  Dim metaHydraulics As String, requiresCoupled As Boolean, planRow As Long
   FEMIoTryResume = 0
+  femIoResumeFosText = ""
   femIoViewingCheckpoint = viewing
   femIoResumeIndex = 0
   femIoResumeFs = 1#
@@ -2945,6 +2950,8 @@ ReadSelectedCheckpoint:
     If left$(lineText, 4) = "SIG=" Then metaSig = mid$(lineText, 5)
     If left$(lineText, 5) = "PLAN=" Then metaPlan = mid$(lineText, 6)
     If left$(lineText, 7) = "STATUS=" Then metaStatus = UCase$(Trim$(mid$(lineText, 8)))
+    If left$(lineText, 11) = "HYDRAULICS=" Then metaHydraulics = mid$(lineText, 12)
+    If left$(lineText, 4) = "FOS=" Then femIoResumeFosText = mid$(lineText, 5)
     If left$(lineText, 6) = "STAGE=" Then
       rhs = mid$(lineText, 7)
       If Not FEMIoParseLong(rhs, metaStage) Then metaStage = -1
@@ -3033,6 +3040,18 @@ ReadSelectedCheckpoint:
   End If
   If matchCount > 1 Then
     SetAnalysisFailure RESULT_INPUT_ERROR, "ステージ番号が重複しているため再開できません。STAGE=" & CStr(metaStage), vbObjectError + 3095, -1, -1, 0, 0
+    Exit Function
+  End If
+  ' Legacy saves are classified from their executed prefix, not future stages.
+  requiresCoupled = (metaHydraulics = "FIXED_STRESS")
+  For stageIndex = 1 To femIoResumeIndex
+    planRow = FSPlanRow(P3StageId(stageIndex))
+    If P3StageOn(stageIndex) And planRow > 0 And P3StageKind(stageIndex) <> "SRM" Then
+      If UCase$(Trim$(CStr(ThisWorkbook.Worksheets("水条件").cells(planRow, 13).value2))) = "FIXED_STRESS" Then requiresCoupled = True
+    End If
+  Next stageIndex
+  If requiresCoupled And Dir$(stageFolder & Application.PathSeparator & "fixed_stress.csv") = "" Then
+    SetAnalysisFailure RESULT_INPUT_ERROR, "時間連成の必須状態 fixed_stress.csv がありません。不完全な保存からは再開できません。", vbObjectError + 3099, -1, -1, 0, 0
     Exit Function
   End If
   If Not FEMIoLoadNode(stageFolder) Then
@@ -3332,6 +3351,51 @@ NextDofLine:
 End Function
 
 ' Order matters: geometry -> self-weight -> derived principals -> commit. Commit-before-rebuild restores stale Spmat on rollback.
+Private Function FEMIoFosNumber(ByVal value As Double) As String
+  FEMIoFosNumber = Replace$(Format$(value, "0.0000000000000000E+00"), Application.International(xlDecimalSeparator), ".")
+End Function
+
+Private Function FEMIoRestoreFos() As Boolean
+  Dim parts() As String, values(0 To 3) As Double, i As Long, trials As Long
+  Dim ws As Worksheet, r As Long
+  If Len(femIoResumeFosText) > 0 Then
+    parts = Split(femIoResumeFosText, ",")
+    If UBound(parts) <> 6 Then GoTo Invalid
+    For i = 0 To 3
+      If Not FEMIoParseDouble(parts(i), values(i)) Then GoTo Invalid
+      If values(i) < 0# Then GoTo Invalid
+    Next i
+    If parts(4) <> "0" And parts(4) <> "1" Then GoTo Invalid
+    If Not FEMIoParseLong(parts(6), trials) Then GoTo Invalid
+    If trials < 0 Or Len(parts(5)) = 0 Then GoTo Invalid
+    If parts(4) = "1" Then
+      If values(1) <= values(0) Or Abs(values(3) - (values(1) - values(0))) > 0.000000001 Then GoTo Invalid
+      If Abs(values(2) - 0.5 * (values(0) + values(1))) > 0.000000001 Then GoTo Invalid
+    End If
+    P3FosPass = values(0): P3FosFail = values(1): P3FosMid = values(2): P3FosWidth = values(3)
+    P3FosBracket = (parts(4) = "1"): P3FosInterpretation = parts(5): P3SrmTrialCount = trials
+  ElseIf Not GWActive And femIoResumeKind = "SRM" Then
+    P3FosPass = femIoResumeFss: P3FosMid = femIoResumeFss
+    P3FosFail = 0#: P3FosWidth = 0#: P3FosBracket = False: P3SrmTrialCount = 0
+    P3FosInterpretation = "LEGACY_INTERVAL_UNAVAILABLE"
+  End If
+  If P3FosInterpretation <> "NOT_EVALUATED" Then
+    P3SrmNote = "保存Fsを復元。判定=" & P3FosInterpretation & " Fs=" & CStr(P3FosMid)
+    Set ws = ThisWorkbook.Worksheets("ステージ結果")
+    For r = ws.cells(ws.rows.count, 1).End(xlUp).row To 2 Step -1
+      If UCase$(CStr(ws.cells(r, 2).value2)) = "SRM" Then
+        ws.cells(r, 5).value2 = IIf(P3FosBracket, P3FosMid, P3FosPass)
+        ws.cells(r, 9).value2 = P3SrmTrialCount: ws.cells(r, 10).value2 = P3SrmNote
+        Exit For
+      End If
+    Next r
+  End If
+  FEMIoRestoreFos = True
+  Exit Function
+Invalid:
+  SetAnalysisFailure RESULT_INPUT_ERROR, "チェックポイントのFs診断情報が不完全です。", vbObjectError + 3099, -1, -1, 0, 0
+End Function
+
 Public Function FEMIoFinishResume() As Boolean
   Dim i As Long
   FEMIoFinishResume = False
@@ -3355,6 +3419,7 @@ Public Function FEMIoFinishResume() As Boolean
   If femIoResumeFss > 0# Then FSS = femIoResumeFss
   If Not FEMIoRebuildResumeGeometry() Then Exit Function
   GWReadCheckpoint femIoResumeFolder
+  If Not FEMIoRestoreFos() Then Exit Function
   P3AssembleSelfWeightOnly
   FEMIoRefreshDerivedStressState
   P3CommitMaterialState
