@@ -203,5 +203,10 @@
         "name":  "FEMFixedStressGauge",
         "file":  "FEMFixedStressGauge.bas",
         "type":  1
+    },
+    {
+        "name":  "FEMBandFast",
+        "file":  "FEMBandFast.bas",
+        "type":  1
     }
 ]

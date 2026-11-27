@@ -51,6 +51,7 @@ Public Sub FEMNativeSetMode(ByVal modeText As String)
 End Sub
 
 Public Sub FEMNativeResetCounts()
+  FEMBandFastReset
   FEMNativeFactorCalls = 0: FEMNativeSolveCalls = 0: FEMNativeNsCalls = 0: FEMNativeFallbacks = 0
   FEMNativeStateCopies = 0
   FEMNativeGmresCalls = 0
@@ -238,6 +239,7 @@ Public Function FEMNativeStatusText() As String
   Else
     FEMNativeStatusText = "VBA(" & mReason & ")"
   End If
+  FEMNativeStatusText = FEMNativeStatusText & ";band_fast=" & FEMBandFastStatus()
 End Function
 
 Public Function FEMNativeAvailable() As Boolean
@@ -329,7 +331,11 @@ End Sub
 Public Function FEMNativeBandFactor(ByRef band() As Double, ByRef packed() As Double, ByRef work() As Double, _
     ByVal n As Long, ByVal bw As Long, ByVal tol As Double, ByRef failK As Long) As Long
   Dim rc As Long, ld As Long
-  FEMNativeBandFactor = -1
+  FEMNativeBandFactor = FEMBandFastFactor(band, packed, work, n, bw, tol, failK)
+  If FEMNativeBandFactor = 0 Or FEMNativeBandFactor = 1 Then
+    FEMNativeFactorCalls = FEMNativeFactorCalls + 1
+    Exit Function
+  End If
   If Not FEMNativeAvailable() Then Exit Function
 #If Win64 Then
   On Error GoTo Failed
@@ -355,7 +361,11 @@ End Function
 Public Function FEMNativeBandSolve(ByRef packed() As Double, ByRef rhs() As Double, ByRef x() As Double, _
     ByVal n As Long, ByVal bw As Long, ByVal tol As Double, ByRef failK As Long) As Long
   Dim rc As Long
-  FEMNativeBandSolve = -1
+  FEMNativeBandSolve = FEMBandFastSolve(packed, rhs, x, n, bw, tol, failK)
+  If FEMNativeBandSolve = 0 Or FEMNativeBandSolve = 1 Then
+    FEMNativeSolveCalls = FEMNativeSolveCalls + 1
+    Exit Function
+  End If
   If Not FEMNativeAvailable() Then Exit Function
 #If Win64 Then
   On Error GoTo Failed

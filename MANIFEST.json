@@ -11506,18 +11506,18 @@
   },
   {
     "path": "src/vba/FEMCore.bas",
-    "bytes": 54181,
-    "sha256": "a251fff7053162544b05e3573d41b9f1ea6772c09d7d63f1a75c706bdbe5d8fe"
+    "bytes": 54184,
+    "sha256": "eb439325cc19d90f2ab2beedde124a2f0b344753b6be1c4042465888650d2203"
   },
   {
     "path": "src/vba/FEMEngine.bas",
-    "bytes": 302372,
-    "sha256": "f715fdfa4970d8d2dc960b71c4c81abddc2eef4a9433e072f4a9c2be0b81e0bf"
+    "bytes": 302948,
+    "sha256": "26dc5f58ec57aba841152bc0e7ad52810b5becdf17aeec4cc6447ce93bd30c3c"
   },
   {
     "path": "src/vba/FEMFixedStress.bas",
-    "bytes": 46211,
-    "sha256": "b2e2c930d5b28ec2d46c2ff93cba90428607e45d63a53014fba70bf890bcdf31"
+    "bytes": 47037,
+    "sha256": "722c29151cdcf9b46e3927da674c5079947de81f7d67aef4049a8f5966ec39f0"
   },
   {
     "path": "src/vba/FEMFixedStressGauge.bas",
@@ -11561,8 +11561,8 @@
   },
   {
     "path": "src/vba/FEMIo.bas",
-    "bytes": 182249,
-    "sha256": "bcf5621df7fed6daf52c1d1714d7e7081d4658d03f155c72fabebb189de9001d"
+    "bytes": 186015,
+    "sha256": "75f33b42835436a326e2467de5977ec8e58c0a5aeaa888e85d6e1159a7582a79"
   },
   {
     "path": "src/vba/FEMJointWater.bas",
@@ -11576,8 +11576,8 @@
   },
   {
     "path": "src/vba/FEMNative.bas",
-    "bytes": 24389,
-    "sha256": "8e5d7b1eb0154210a03fb8a74c34f02e30ac91a73a21f7d1d9c656b6bcca4620"
+    "bytes": 24879,
+    "sha256": "36d98e303593047aed7406b32e8e8835a2294aa6940f4308be962802dee9e7dd"
   },
   {
     "path": "src/vba/FEMNativeFigure.bas",
@@ -11746,8 +11746,8 @@
   },
   {
     "path": "src/vba/modules.json",
-    "bytes": 4408,
-    "sha256": "3ceec7492a34b915ea66151cf9a1e6c120df4a8947a0fe4a949a23f127ba2a0d"
+    "bytes": 4513,
+    "sha256": "232f39d403871ac2879077cdfcfb66dd5e2a69799b8edfb222e9b33cae181b62"
   },
   {
     "path": "tests/annotate_fixed_stress_manual.py",
@@ -11771,8 +11771,8 @@
   },
   {
     "path": "tests/build_workbook_ui.ps1",
-    "bytes": 4195,
-    "sha256": "2f7584c5c2362c998861d565a4fc7fb88f7ea09010de26b6f1a2474a7ac2f297"
+    "bytes": 4446,
+    "sha256": "126ebb8c80aa17f642eb85849cd83c32e9dd5f1544b36ff4023a7e2bb5db3048"
   },
   {
     "path": "tests/capture_fixed_stress_manual.ps1",
@@ -11816,8 +11816,8 @@
   },
   {
     "path": "tests/check_fixed_stress_history.py",
-    "bytes": 2657,
-    "sha256": "0c6a61357d86c9a10a0acdb4bf55856a3e3ae969fa6472c4c7aa06eca5f1be5a"
+    "bytes": 3705,
+    "sha256": "3942c1bf85ca4e0ae3a2011bbc875723db3c64fcba2dcbad279c3356a80f01f4"
   },
   {
     "path": "tests/check_fixed_stress_linear.py",
@@ -11846,8 +11846,8 @@
   },
   {
     "path": "tests/check_fixed_stress_water_ramp.py",
-    "bytes": 2081,
-    "sha256": "4d2ed69f5d95252094349513955f78eee4b0f0b16796e8dcfc388ece7fa570d7"
+    "bytes": 2753,
+    "sha256": "302a273f849a5bdc5529ed7ac726f134461d5971f8f83a8ee77970e0b27e14c0"
   },
   {
     "path": "tests/check_groundwater.py",
@@ -13351,8 +13351,8 @@
   },
   {
     "path": "tests/native/make_native_workbook.ps1",
-    "bytes": 5404,
-    "sha256": "0a3d39866515f9f29b3e93ca2d8d96a4f2d75a34a689e6b7a02997b1ed9f7689"
+    "bytes": 5418,
+    "sha256": "6fc93f35cbfadf74f6080036f116cc00f1a9afb940a34bf019d959421d94268a"
   },
   {
     "path": "tests/native/measure_event_buffer.ps1",
@@ -14398,5 +14398,95 @@
     "path": "workbook/validation/literature_cases_20261009.zip",
     "bytes": 31895391,
     "sha256": "2401dfe3b61f215eb7981bd073125e9eeb87359e3f4b37732e40a20a20523b47"
+  },
+  {
+    "path": "docs/20261127_issue_audit.md",
+    "bytes": 7504,
+    "sha256": "824f31e697247ce47f6c200e9a0d32c176a512654928b69972ff0ce6fc0e2c30"
+  },
+  {
+    "path": "docs/20261127_validation.json",
+    "bytes": 1664,
+    "sha256": "e0205ec2305723bff6f7e4c3a1d6accb4083ee668479f185c91309d589079fb4"
+  },
+  {
+    "path": "native/strict_band/README.md",
+    "bytes": 1561,
+    "sha256": "dd879612a9bb7c3adb98a2674b0dd92313b608d77421897dd576cf9fd1d4f851"
+  },
+  {
+    "path": "native/strict_band/build.py",
+    "bytes": 1055,
+    "sha256": "2a4b7304983e444c851d17bea9780f87987762a867f272468ccdb6309eac46e4"
+  },
+  {
+    "path": "native/strict_band/soilfem_band_fast.c",
+    "bytes": 3918,
+    "sha256": "96eaa530a5928373cfbd8eaf678294605d9eb8287367b0eb8f334e749c7e0eda"
+  },
+  {
+    "path": "native/strict_band/soilfem_band_fast_x64.dll",
+    "bytes": 5120,
+    "sha256": "5608e5b3c895162fbbb57b5ed4722e17e8c936a28d70679f02526658720d151f"
+  },
+  {
+    "path": "src/vba/FEMBandFast.bas",
+    "bytes": 7182,
+    "sha256": "8cfb5a50bffd91409b941188ea0ebabe03425a05529a5ff764694d67c66054b9"
+  },
+  {
+    "path": "tests/check_checkpoint_repairs_excel.py",
+    "bytes": 11900,
+    "sha256": "5943c92b3d97bcb8aa2a8687adb5ad7e0e4933f82f10de2a7b17ca37684b504b"
+  },
+  {
+    "path": "tests/check_strict_band_excel.py",
+    "bytes": 2748,
+    "sha256": "1b6f4905f10341403c3537c891b9b75d5cda3461bb9cf4eecd6abf2858833936"
+  },
+  {
+    "path": "tests/fixtures/issue62_67/disabled_coupled_prefix.json",
+    "bytes": 2356,
+    "sha256": "da1d7cc8518e6ce3462d5dc0db6229580e72a9e0699166aead64df402eb05c13"
+  },
+  {
+    "path": "tests/fixtures/issue62_67/dry_fixed_fs.json",
+    "bytes": 1679,
+    "sha256": "2b50b3a8cd66968e8014083b99ff54ef66cd587178771081c9ab25415bdc994e"
+  },
+  {
+    "path": "tests/fixtures/issue62_67/joint_pressure_split.json",
+    "bytes": 4386,
+    "sha256": "d6f5b72e40861714648344265e0d7e90f7c54044badad10670f29d7fcc2186ff"
+  },
+  {
+    "path": "tests/fixtures/issue62_67/minimum_step.json",
+    "bytes": 2357,
+    "sha256": "ad4008f67860bebff0b5dcf13e3dc668542bfb6aad5daf0e96c5df32962d5327"
+  },
+  {
+    "path": "tests/generate_issue62_67_fixtures.py",
+    "bytes": 2057,
+    "sha256": "c3f20f880b3de595d53712084128d4dd6e782088c1428515bfcf164cd31e49cf"
+  },
+  {
+    "path": "tests/strict_band_driver.bas",
+    "bytes": 5248,
+    "sha256": "76f5f3b344a90821038ab18f8129b460049d3d39a1eb1707f465351acdf1c6d2"
+  },
+  {
+    "path": "tests/test_nonfinite_regression.py",
+    "bytes": 3350,
+    "sha256": "be40ecad4876405e839ce88fefd4b3e8eeed7249db853c6dafe5f2e55c010479"
+  },
+  {
+    "path": "delivery/2DSoilFEM_1m_SRM_fast_issuefix_20261127.zip",
+    "bytes": 6804426,
+    "sha256": "69a537f73957eee8196df4d3d0781994995624bb7a566f9b92f45b2944f8a89b"
+  },
+  {
+    "path": "delivery/SRM_FAST_1M_20261127_README.md",
+    "bytes": 1142,
+    "sha256": "94dfb592bbd5111a4b6cfc6e40aeb1149f2364170acfcb24b9fd4450464f61a8"
   }
 ]
