@@ -14478,5 +14478,15 @@
     "path": "tests/test_nonfinite_regression.py",
     "bytes": 3350,
     "sha256": "be40ecad4876405e839ce88fefd4b3e8eeed7249db853c6dafe5f2e55c010479"
+  },
+  {
+    "path": "delivery/2DSoilFEM_1m_SRM_fast_issuefix_20261127.zip",
+    "bytes": 6804426,
+    "sha256": "69a537f73957eee8196df4d3d0781994995624bb7a566f9b92f45b2944f8a89b"
+  },
+  {
+    "path": "delivery/SRM_FAST_1M_20261127_README.md",
+    "bytes": 1142,
+    "sha256": "94dfb592bbd5111a4b6cfc6e40aeb1149f2364170acfcb24b9fd4450464f61a8"
   }
 ]
