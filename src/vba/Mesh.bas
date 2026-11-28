@@ -2837,7 +2837,7 @@ Next i
 
 
 End Sub
-Sub QUDATA(node As Long, NELM As Long, mmtj() As Long, px() As Double, py() As Double, ifix() As Long, idm() As Long)
+Sub QUDATA(node As Long, NELM As Long, mmtj() As Long, px() As Double, py() As Double, ifix() As Long, idm() As Long, Optional ByRef tablesChanged As Boolean = False)
     Dim ws1 As Worksheet, ws2 As Worksheet
     Dim oldNodeCount As Long, oldElementCount As Long, clearNodeRows As Long, clearElementRows As Long
     Dim i As Long, j As Long, validElementCount As Long, newNodeCount As Long
@@ -2922,6 +2922,7 @@ Sub QUDATA(node As Long, NELM As Long, mmtj() As Long, px() As Double, py() As D
     Next i
     clearNodeRows = oldNodeCount: If node > clearNodeRows Then clearNodeRows = node
     clearElementRows = oldElementCount: If NELM > clearElementRows Then clearElementRows = NELM
+    tablesChanged = True
     If clearNodeRows > 0 Then ws1.range(ws1.Cells(2, 1), ws1.Cells(clearNodeRows + 1, 11)).ClearContents
     If clearElementRows > 0 Then ws2.range(ws2.Cells(2, 1), ws2.Cells(clearElementRows + 1, 11)).ClearContents
 

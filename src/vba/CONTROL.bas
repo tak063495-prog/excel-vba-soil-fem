@@ -281,7 +281,7 @@ Private Sub CreateMeshFromGeometryDefinition()
     MeshPerfEnter "CONTROL.CreateMeshFromGeometryDefinition"
     Dim errorNumber As Long
     Dim errorDescription As String
-    Dim stateWasSaved As Boolean
+    Dim stateWasSaved As Boolean, meshTablesChanged As Boolean
     Dim currentStage As String
     Dim terrainX() As Double, terrainY() As Double, terrainElements() As Variant
     Dim terrainConn() As Long, t6Failed() As Boolean, t6Count As Long, t6Rows As Long, t6Detail As String, t6Converted As Variant
@@ -310,11 +310,11 @@ Private Sub CreateMeshFromGeometryDefinition()
     Set savedElementSheet = ThisWorkbook.Worksheets("要素データ")
     savedNodeRows = Application.Max(2, savedNodeSheet.cells(savedNodeSheet.rows.count, 1).End(xlUp).row)
     savedElementRows = Application.Max(2, savedElementSheet.cells(savedElementSheet.rows.count, 1).End(xlUp).row)
-    oldNodes = savedNodeSheet.range("A1:N" & CStr(savedNodeRows)).value2
-    oldElements = savedElementSheet.range("A1:K" & CStr(savedElementRows)).value2
+    oldNodes = MeshTableFormulaSnapshot(savedNodeSheet.range("A1:N" & CStr(savedNodeRows)))
+    oldElements = MeshTableFormulaSnapshot(savedElementSheet.range("A1:K" & CStr(savedElementRows)))
     If FEMReadSetting("MESH_GEN_COMPARE", 1#) >= 2.5 Then
         currentStage = "添付形状照合・準備済みメッシュ復元"
-        FEMPreparedRestoreMesh
+        FEMPreparedRestoreMesh meshTablesChanged
         If stateWasSaved Then RestoreApplicationState
         MeshPerfLeave "CONTROL.CreateMeshFromGeometryDefinition": Exit Sub
     End If
@@ -339,7 +339,7 @@ Private Sub CreateMeshFromGeometryDefinition()
         Call ControlInvalidateP2Output
         Call FEMInvalidateRemeshedModel
         Call FEMInvalidateSettingCache
-        MeshCommitGeneratedMesh UBound(terrainX), IIf(t6Rows > 0, t6Rows, UBound(terrainElements, 1)), terrainX, terrainY, terrainElements
+        MeshCommitGeneratedMesh UBound(terrainX), IIf(t6Rows > 0, t6Rows, UBound(terrainElements, 1)), terrainX, terrainY, terrainElements, meshTablesChanged
         P5EvaluateCurrentSheet "地形格子・直接生成"
         FEMWriteTextSetting "MESH_GEN_LAST_METHOD", "地形追従格子（直接生成）"
         FEMWriteTextSetting "MESH_GEN_LAST_COMPARE", MeshAdaptLastSummary
@@ -376,7 +376,7 @@ Private Sub CreateMeshFromGeometryDefinition()
     currentStage = "メッシュ検査"
     QUCHECKDATA node, NNEX, px, py, mpx, mpy, mibex, mibno, ifix
     currentStage = "Q8結果出力"
-    QUDATA node, NELM, mmtj, px, py, ifix, idm
+    QUDATA node, NELM, mmtj, px, py, ifix, idm, meshTablesChanged
     currentStage = "境界条件"
     MeshApplySheetBoundaryConditions
     currentStage = "現行シート検証"
@@ -402,11 +402,11 @@ ErrorHandler:
     FEMShapeGenerationOK = False
     FEMUiMeshPreviewError = "メッシュ作成 [" & currentStage & "]：" & errorDescription
     On Error Resume Next
-    If Not IsEmpty(oldNodes) Then
+    If meshTablesChanged And Not IsEmpty(oldNodes) Then
         savedNodeSheet.range("A1:N" & CStr(Application.Max(savedNodeRows, savedNodeSheet.cells(savedNodeSheet.rows.count, 1).End(xlUp).row))).ClearContents
-        savedNodeSheet.range("A1").Resize(savedNodeRows, 14).value2 = oldNodes
+        savedNodeSheet.range("A1").Resize(savedNodeRows, 14).Formula2 = oldNodes
         savedElementSheet.range("A1:K" & CStr(Application.Max(savedElementRows, savedElementSheet.cells(savedElementSheet.rows.count, 1).End(xlUp).row))).ClearContents
-        savedElementSheet.range("A1").Resize(savedElementRows, 11).value2 = oldElements
+        savedElementSheet.range("A1").Resize(savedElementRows, 11).Formula2 = oldElements
         FEMInvalidateInputCache
         FEMUiInvalidateMeshPreview
     End If
@@ -418,6 +418,27 @@ ErrorHandler:
     End If
     MeshPerfLeave "CONTROL.CreateMeshFromGeometryDefinition"
 End Sub
+
+Private Function MeshTableFormulaSnapshot(ByVal source As Range) As Variant
+    Dim data As Variant, r As Long, c As Long, formulas As Range, cell As Range
+    data = source.value2
+    ' Formula2 assignment interprets text such as "=1", "001" or "'text".
+    ' Quote every text constant, then restore only actual formulas as formulas.
+    For r = 1 To UBound(data, 1)
+        For c = 1 To UBound(data, 2)
+            If VarType(data(r, c)) = vbString Then data(r, c) = "'" & data(r, c)
+        Next c
+    Next r
+    On Error Resume Next
+    Set formulas = source.SpecialCells(xlCellTypeFormulas)
+    On Error GoTo 0
+    If Not formulas Is Nothing Then
+        For Each cell In formulas.cells
+            data(cell.row - source.row + 1, cell.column - source.column + 1) = cell.Formula2
+        Next cell
+    End If
+    MeshTableFormulaSnapshot = data
+End Function
 
 Sub ボタン19_Click()
     CreateMeshFromGeometryDefinition
@@ -533,7 +554,7 @@ End Sub
 
 Private Sub MeshCommitGeneratedMesh(ByVal nodeCount As Long, ByVal elementCount As Long, _
                                     ByRef nodeX() As Double, ByRef nodeY() As Double, _
-                                    ByRef elementRows() As Variant)
+                                    ByRef elementRows() As Variant, Optional ByRef tablesChanged As Boolean = False)
     Dim wsNode As Worksheet, wsElement As Worksheet
     Dim oldNodeCount As Long, oldElementCount As Long
     Dim nodeOutput() As Variant
@@ -551,6 +572,7 @@ Private Sub MeshCommitGeneratedMesh(ByVal nodeCount As Long, ByVal elementCount 
     Set wsElement = ThisWorkbook.Worksheets("要素データ")
     oldNodeCount = wsNode.cells(wsNode.rows.count, 1).End(xlUp).row - 1
     oldElementCount = wsElement.cells(wsElement.rows.count, 1).End(xlUp).row - 1
+    tablesChanged = True
     If oldNodeCount > 0 Then wsNode.range(wsNode.cells(2, 1), wsNode.cells(oldNodeCount + 1, 14)).ClearContents
     If oldElementCount > 0 Then wsElement.range(wsElement.cells(2, 1), wsElement.cells(oldElementCount + 1, 11)).ClearContents
 

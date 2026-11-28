@@ -16,8 +16,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 30473,
-    "sha256": "850a49d4ce2e6141e7ad9236eacbfc6e48b5ba1f5d67e2de16572e387c1377cb"
+    "bytes": 30626,
+    "sha256": "6117ef4924d2daaedbeb294bace642be1ead55aec651159c7935ee07e61a53d3"
   },
   {
     "path": "docs/ACCELERATION_HISTORY.md",
@@ -11486,8 +11486,8 @@
   },
   {
     "path": "src/vba/CONTROL.bas",
-    "bytes": 105535,
-    "sha256": "02a6f0a06afee62ce3e6357adccb865e0f5b69561fbd4894c5331095fe9b4b3a"
+    "bytes": 106645,
+    "sha256": "20ba0fadbf49552fbf860da99c38ea1db03f76cae98ba5fe29cace8fcbab9b0f"
   },
   {
     "path": "src/vba/FEM.bas",
@@ -11507,7 +11507,7 @@
   {
     "path": "src/vba/FEMCore.bas",
     "bytes": 54183,
-    "sha256": "9fb60cc9d18396bdc7138ca7c289cfbdb3adef30887a8e059d1f3ff8295b0d7d"
+    "sha256": "baf3dde14de87e6777539157148057e94e154884ae4323c7c90103390ee1c5c1"
   },
   {
     "path": "src/vba/FEMEngine.bas",
@@ -11516,8 +11516,8 @@
   },
   {
     "path": "src/vba/FEMFixedStress.bas",
-    "bytes": 47037,
-    "sha256": "722c29151cdcf9b46e3927da674c5079947de81f7d67aef4049a8f5966ec39f0"
+    "bytes": 48148,
+    "sha256": "b17503b3960b5665719dfa00f815e9e10a10b72af1b19f8a56d8a1be983f34b1"
   },
   {
     "path": "src/vba/FEMFixedStressGauge.bas",
@@ -11721,8 +11721,8 @@
   },
   {
     "path": "src/vba/Mesh.bas",
-    "bytes": 143533,
-    "sha256": "10b392446bdcf6557a71661093ba2be0ee37856582fa568cba420f6dff29c501"
+    "bytes": 143608,
+    "sha256": "dd327d7cc7abe21579ff8dcd89776f0a72e821b1ee5ab3870ff70ff41e26a685"
   },
   {
     "path": "src/vba/MeshAdapt.bas",
@@ -14491,47 +14491,67 @@
   },
   {
     "path": "delivery/2DSoilFEM_1m_gravity_fix_c6000_20261128.zip",
-    "bytes": 10931619,
-    "sha256": "b61bb0d22c2c51ba002e1a7ad4a3c2cc450f0cd215836fcac2cb0839959b90a1"
+    "bytes": 11012030,
+    "sha256": "52da716f864763c7c1b1a063a9f75a92460e2e0cee087982190e8996868b06ed"
   },
   {
     "path": "delivery/SRM_GRAVITY_FIX_20261128_README.md",
-    "bytes": 898,
-    "sha256": "2f298487b6e8a938b5e1d8f65cfb889c2e026fc2a531dd151ae9b97fe5838f96"
+    "bytes": 1040,
+    "sha256": "2a7f3bd580a1edadfbd014eb47d640b568cdd20c04a7cbadeba6b1897bacd1d4"
   },
   {
     "path": "docs/SRM_GRAVITY_FIX_20261128.md",
-    "bytes": 4970,
-    "sha256": "4d1711f71aeaa626debd6b72fe31b904d3c7103f2f0395b64a23188eed6840ca"
+    "bytes": 5190,
+    "sha256": "c165e6f1c897326566459116a0d4058a2691973fc1e4de35232cd990a6388509"
   },
   {
     "path": "docs/verification/srm_gravity_1m_20261128.json",
-    "bytes": 8248,
-    "sha256": "eae5c17bacd69a89097fcd4d9fa3d2425f742715c712a7e903e076afdd2b2123"
+    "bytes": 15224,
+    "sha256": "7b973d7b1a35105bd04281ad13feb428d95f6d1fbdc7b1a260b63ee5fe51807b"
   },
   {
     "path": "docs/verification/srm_gravity_source_import_20261128.json",
     "bytes": 5679,
-    "sha256": "6ebf68f9b8a26a8ad172b10a04a50226caa4435111323bfd1eeba7cb7a0bd573"
+    "sha256": "92f1bc89b922342c63fc83020d3e2ad4e39879921cc1f370b723044a743a1a6c"
   },
   {
     "path": "src/vba/FEMPreparedMesh.bas",
-    "bytes": 5656,
-    "sha256": "25fe7fa840249b722f7b5fe90c51546c65632ff289cd67a8993cb0695e0610b2"
+    "bytes": 5729,
+    "sha256": "484a5c6d167f123bc345a490b64c85fa5cd43125b73e2e082e176a024948c74d"
   },
   {
     "path": "tests/check_srm_gravity_convergence_excel.py",
-    "bytes": 4811,
-    "sha256": "50794b4c63df6c909e0f52b92814f4a807025b965ead05b2b5116122f470b4f4"
+    "bytes": 5288,
+    "sha256": "0f049b137deef96ba1caa4b7b9c18d1a577bd739acf2de4bec5f8ed872869264"
   },
   {
     "path": "tests/check_srm_gravity_delivery.py",
-    "bytes": 2731,
-    "sha256": "acbeca6a236c77eaa7cdc82403b792d24311389f26005e00bf4033f609400dab"
+    "bytes": 3670,
+    "sha256": "af92891a19799c19fbb489225a201cc313e013e7845e5913e76acf2909823755"
   },
   {
     "path": "tests/check_srm_source_import_excel.py",
     "bytes": 2554,
     "sha256": "aa47018b5bd0f1923dd6419ecb2b7c4ff739f41f00ee043c0faf27697f838ea9"
+  },
+  {
+    "path": "docs/ISSUES_73_75_20261128.md",
+    "bytes": 5399,
+    "sha256": "080805c0065e8e06f430db2afd62fc834602707f363b623dabf7edd5daba1731"
+  },
+  {
+    "path": "docs/verification/issues_73_75_20261128.json",
+    "bytes": 13401,
+    "sha256": "ea46a7bf59e595b8344d5b4dbf42fb158e96f28a5d5d3445736627cab720234b"
+  },
+  {
+    "path": "tests/check_issue73_excel.py",
+    "bytes": 10569,
+    "sha256": "be1efd902524cc991a7753c774c4ca5181b12866626f2612836e754c0887e48f"
+  },
+  {
+    "path": "tests/check_issue75_excel.py",
+    "bytes": 4755,
+    "sha256": "17a8eb2815d2bbbc27d26078ac153e905210713b9d2b1dbdd553023ff88c6a54"
   }
 ]

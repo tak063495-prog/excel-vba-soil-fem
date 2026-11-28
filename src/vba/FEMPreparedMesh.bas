@@ -88,7 +88,7 @@ BadMesh:
         "解析メッシュの材料別面積が添付の12領域と一致しません。モデル画面の「形状からメッシュ作成」で準備済みメッシュを復元してください。"
 End Sub
 
-Public Sub FEMPreparedRestoreMesh()
+Public Sub FEMPreparedRestoreMesh(Optional ByRef tablesChanged As Boolean = False)
     Dim ws As Worksheet, wn As Worksheet, we As Worksheet, n As Long, e As Long, last As Long
     FEMPreparedAssertGeometry
     Set ws = ThisWorkbook.Worksheets(CacheSheet)
@@ -96,6 +96,7 @@ Public Sub FEMPreparedRestoreMesh()
     n = CLng(ws.range("Y3").value2): e = CLng(ws.range("Y4").value2)
     If n < 3 Or e < 1 Then Err.Raise vbObjectError + 7203, , "準備済みメッシュが空です。"
     last = Application.Max(n + 1, wn.cells(wn.rows.count, 1).End(xlUp).row)
+    tablesChanged = True
     wn.range("A2:N" & CStr(last)).ClearContents
     last = Application.Max(e + 1, we.cells(we.rows.count, 1).End(xlUp).row)
     we.range("A2:K" & CStr(last)).ClearContents

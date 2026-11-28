@@ -34,9 +34,23 @@ with zipfile.ZipFile(archive) as z:
     assert record['correction_operator_regression']['result'][3]==0
     assert record['audit']['input_cells_identical']==710691
     assert record['final_global_convergence_unchanged'] and not record['production_instrumentation_included']
+    if 'issue_repairs' in record:
+        repairs=record['issue_repairs']
+        assert repairs['73']['passed'] and repairs['75']['passed']
+        assert repairs['73']['source_sha256']==repairs['75']['source_sha256']==record['workbook_sha256']
+        for case in repairs['73']['cases']:
+            assert case['passed'] and case['result'][4:6]==[4,2]
+            assert case['metrics'][0]>0.1 and max(case['metrics'][1:6])==0
+            assert case['explicit_conflict_control']['rejected']
+        for name in ['signature_mismatch_before_write','validation_failure_after_write','normal_prepared_restore']:
+            assert repairs['75'][name]['passed']
+        assert all(r['status']=='PASS' for r in record['checkpoint_regressions'].values())
+        assert record['solver_source_unchanged_from_previous_build']
     evidence=json.loads((root/'docs/verification/srm_gravity_1m_20261128.json').read_text(encoding='utf8'))
     assert evidence==record
-    for n in ['FEMEngine.bas','FEMCore.bas']:
+    exports=[n for n in z.namelist() if n.startswith(base+'/修正ソース/') and n.endswith('.bas')]
+    for export in exports:
+        n=export.rsplit('/',1)[-1]
         exported=z.read(base+'/修正ソース/'+n)
         assert b'\r\r\n' not in exported,n
         assert normalize(exported.decode('utf-8-sig'))==normalize(modules[n]),n
