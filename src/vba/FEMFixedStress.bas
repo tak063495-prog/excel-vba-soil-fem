@@ -298,6 +298,7 @@ Public Sub FSPrepare(Optional ByVal fromCheckpoint As Boolean = False)
   Dim lm() As Double, lh() As Double, ll() As Double, lq() As Double, lg() As Double
   Dim newUsed() As Boolean, initialP() As Double, pressure As Double, volume As Double, initiallyReady As Boolean, g As Long
   Dim oldMap() As Long, oldPressure() As Double, oldReference() As Double, oldNode As Long
+  Dim inherited() As Boolean, initialReference() As Double
   If Not GWActive Then FSCoupledInputError "時間連成には初期水圧場が必要です。"
   If P6MixedUP Or P6ConsolActive Then FSCoupledInputError "時間連成と旧MIXED_UP/CONSOLは併用できません。"
   FSLoadMaterials
@@ -312,14 +313,41 @@ Public Sub FSPrepare(Optional ByVal fromCheckpoint As Boolean = False)
   ReDim mQ(0 To 15, 0 To 3, 0 To NumberOfElement - 1)
   ReDim mGravity(0 To 3, 0 To NumberOfElement - 1)
   ReDim newUsed(NumberOfFreeNode - 1): ReDim initialP(NumberOfFreeNode - 1)
+  ReDim inherited(NumberOfFreeNode - 1): ReDim initialReference(NumberOfFreeNode - 1)
   ReDim mBoundaryFlow(NumberOfFreeNode - 1)
   If Not mReady Then
     ReDim mReferenceGp(0 To 3, 0 To NumberOfElement - 1)
     ReDim mP(NumberOfFreeNode - 1): ReDim mOldP(NumberOfFreeNode - 1)
     ReDim mReference(NumberOfFreeNode - 1): ReDim mUsed(NumberOfFreeNode - 1)
   End If
+  ' Resolve accepted histories before visiting newborn elements. A shared new
+  ' representative inherits surviving local maps even when the newborn is first.
   For e = 0 To NumberOfElement - 1
     For a = 0 To 3: mMap(a, e) = -1: Next a
+    mat = Elem(e).MatNo
+    If P3IsElementActive(e) And Material(mat).kind = "SOIL" And mAlpha(mat) > 0# Then
+      For a = 0 To 3
+        If a < 3 Or Not FEMElementIsT6(e) Then
+          node = GWFlowNode(e, a): mMap(a, e) = node
+          If initiallyReady And Not fromCheckpoint Then
+            oldNode = oldMap(a, e)
+            If oldNode >= 0 Then
+              If mUsed(oldNode) Then
+                If inherited(node) Then
+                  If Abs(initialP(node) - oldPressure(oldNode)) > 0.0000001 Or Abs(initialReference(node) - oldReference(oldNode)) > 0.0000001 Then FSCoupledInputError "合流する存続要素の受理水圧または参照水圧が矛盾しています。"
+                Else
+                  initialP(node) = oldPressure(oldNode)
+                  initialReference(node) = oldReference(oldNode)
+                  inherited(node) = True
+                End If
+              End If
+            End If
+          End If
+        End If
+      Next a
+    End If
+  Next e
+  For e = 0 To NumberOfElement - 1
     mat = Elem(e).MatNo
     If P3IsElementActive(e) And Material(mat).kind = "SOIL" And mAlpha(mat) > 0# Then
       FSLocalMatrices e, mAlpha(mat), mStorage(mat), mKx(mat), mKy(mat), mGamma, lm, lh, ll, lq, lg
@@ -331,24 +359,17 @@ Public Sub FSPrepare(Optional ByVal fromCheckpoint As Boolean = False)
       FSLedgerTopology e, True, volume, mPorosity(mat), (Not initiallyReady Or fromCheckpoint)
       For a = 0 To 3
         If a < 3 Or Not FEMElementIsT6(e) Then
-          node = GWFlowNode(e, a): mMap(a, e) = node
+          node = mMap(a, e)
           pressure = 0#
-          oldNode = -1
           If Not fromCheckpoint Then
-            If initiallyReady Then
-              oldNode = oldMap(a, e)
-              If oldNode >= 0 Then
-                If Not mUsed(oldNode) Then oldNode = -1
-              End If
-            End If
-            If oldNode >= 0 Then pressure = oldPressure(oldNode) Else pressure = GWInitialNodePressure(e, a)
+            If inherited(node) Then pressure = initialP(node) Else pressure = GWInitialNodePressure(e, a)
           End If
           If pressure < -0.0000001 Then FSCoupledInputError "時間連成の初期領域が飽和していません。要素=" & CStr(e + 1)
           If newUsed(node) And Abs(initialP(node) - pressure) > 0.0000001 Then FSCoupledInputError "共有圧力節点の初期水圧が矛盾しています。"
           initialP(node) = pressure: newUsed(node) = True
           If Not fromCheckpoint Then
             mP(node) = pressure
-            If oldNode >= 0 Then mReference(node) = oldReference(oldNode) Else mReference(node) = pressure
+            If inherited(node) Then mReference(node) = initialReference(node) Else mReference(node) = pressure
           End If
         End If
         mGravity(a, e) = lg(a)

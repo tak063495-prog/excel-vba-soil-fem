@@ -1,0 +1,531 @@
+{
+  "passed": true,
+  "build": "20261128_ISSUE73_75_FIX_01",
+  "workbook_sha256": "0d866b9b2e8fba9f63cb253d9530f0cbb8a6c242e25008643bb1a592651fb221",
+  "dll_sha256": "5608e5b3c895162fbbb57b5ed4722e17e8c936a28d70679f02526658720d151f",
+  "zip_sha256": "52da716f864763c7c1b1a063a9f75a92460e2e0cee087982190e8996868b06ed",
+  "input_audit": {
+    "passed": true,
+    "compile_passed": true,
+    "input_cells_identical": 710691,
+    "input_sheets_identical": [
+      "形状入力",
+      "図形定義",
+      "節点データ",
+      "要素データ",
+      "材料データ",
+      "載荷",
+      "ステージ",
+      "接合",
+      "水条件",
+      "設定",
+      "メッシュ設定",
+      "解析設定",
+      "高速化設定",
+      "詳細設定",
+      "出力・表示",
+      "SRM準備メッシュ"
+    ],
+    "all_nonversion_constants_identical": true,
+    "solver_unchanged": true,
+    "modified_modules": [
+      "Mesh.bas",
+      "CONTROL.bas",
+      "FEMCore.bas",
+      "FEMFixedStress.bas",
+      "FEMPreparedMesh.bas"
+    ],
+    "source_sha256": "1941e8f6f794f749031ed1a2ecd167a1b965dd76b8f991e48905c07d1a23bcfb",
+    "workbook_sha256": "0d866b9b2e8fba9f63cb253d9530f0cbb8a6c242e25008643bb1a592651fb221"
+  },
+  "issue73": {
+    "passed": true,
+    "expected_old_bug": false,
+    "source_sha256": "0d866b9b2e8fba9f63cb253d9530f0cbb8a6c242e25008643bb1a592651fb221",
+    "source_unchanged": true,
+    "cases": [
+      {
+        "name": "birth_survivor_first",
+        "result": [
+          true,
+          "PASS",
+          "",
+          3,
+          4,
+          2.0
+        ],
+        "metrics": [
+          9.88050308470288,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          2,
+          2
+        ],
+        "passed": true,
+        "explicit_conflict_control": {
+          "reference_only": false,
+          "rejected": true,
+          "message": "合流する存続要素の受理水圧または参照水圧が矛盾しています。"
+        }
+      },
+      {
+        "name": "birth_newborn_first",
+        "result": [
+          true,
+          "PASS",
+          "",
+          3,
+          4,
+          2.0
+        ],
+        "metrics": [
+          9.88050308470288,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          2,
+          2
+        ],
+        "passed": true,
+        "explicit_conflict_control": {
+          "reference_only": true,
+          "rejected": true,
+          "message": "合流する存続要素の受理水圧または参照水圧が矛盾しています。"
+        }
+      }
+    ]
+  },
+  "issue75": {
+    "signature_mismatch_before_write": {
+      "passed": true,
+      "result": [
+        false,
+        "メッシュ作成 [添付形状照合・準備済みメッシュ復元]：形状または格子間隔が準備済みメッシュと異なります。添付形状用メッシュのまま解析できません。変更形状に対応するメッシュを再作成してください。"
+      ]
+    },
+    "validation_failure_after_write": {
+      "passed": true,
+      "result": [
+        false,
+        "メッシュ作成 [添付形状照合・準備済みメッシュ復元]：解析メッシュの材料別面積が添付の12領域と一致しません。モデル画面の「形状からメッシュ作成」で準備済みメッシュを復元してください。"
+      ],
+      "formulas_values_and_text_constants_preserved": true,
+      "references_recalculate": true
+    },
+    "normal_prepared_restore": {
+      "passed": true,
+      "nodes": 24568,
+      "elements": 12117,
+      "result": [
+        true,
+        ""
+      ]
+    },
+    "passed": true,
+    "source_sha256": "0d866b9b2e8fba9f63cb253d9530f0cbb8a6c242e25008643bb1a592651fb221",
+    "source_unchanged": true
+  },
+  "checkpoint_regressions": {
+    "67": {
+      "status": "PASS",
+      "restored": [
+        1.2,
+        1.2,
+        0.0,
+        1.2,
+        0.0,
+        "FIXED_FS_VERIFIED",
+        1,
+        0.0,
+        0,
+        0.0,
+        false
+      ],
+      "legacy": [
+        1.2,
+        1.2,
+        0.0,
+        1.2,
+        0.0,
+        "LEGACY_INTERVAL_UNAVAILABLE",
+        0,
+        0.0,
+        0,
+        0.0,
+        false
+      ],
+      "restored_stage_rows": [
+        [
+          "番号",
+          "種別",
+          "材料番号",
+          "成否",
+          "Fsまたはλ",
+          "最大変位",
+          "反力X",
+          "反力Y",
+          "試行",
+          "メッセージ"
+        ],
+        [
+          1.0,
+          "GRAVITY",
+          null,
+          "PASS",
+          1.0,
+          0.0008556795602880524,
+          0.0,
+          20.0,
+          0.0,
+          "自重"
+        ],
+        [
+          2.0,
+          "SRM",
+          null,
+          "PASS",
+          1.2,
+          0.0008556795602880524,
+          0.0,
+          20.0,
+          1.0,
+          "保存Fsを復元。判定=FIXED_FS_VERIFIED Fs=1.2"
+        ],
+        [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      ],
+      "seeded_interval_roundtrip": [
+        1.2,
+        1.1,
+        1.3,
+        1.2,
+        0.2,
+        "NUMERICAL_BRACKET",
+        7,
+        0.0,
+        0,
+        0.0,
+        false
+      ],
+      "invalid_interval_rejected": [
+        "ERROR|チェックポイントのFs診断情報が不完全です。",
+        "ERROR|チェックポイントのFs診断情報が不完全です。"
+      ]
+    },
+    "66": {
+      "status": "PASS",
+      "pre_coupling_checkpoint": "PASS",
+      "normal_partial_checkpoint": "PASS",
+      "missing": "ERROR|時刻別結果を読み込めません。時間連成の必須状態 fixed_stress.csv がありません。不完全な保存からは再開できません。",
+      "legacy_missing": "ERROR|時刻別結果を読み込めません。時間連成の必須状態 fixed_stress.csv がありません。不完全な保存からは再開できません。"
+    },
+    "66_disabled_prefix": {
+      "status": "PASS",
+      "disabled_prior_coupling_plan_ignored": true
+    },
+    "62": {
+      "status": "PASS",
+      "natural_accepted_max_flow": 2.53908204687286e-09,
+      "restored_max_flow": 2.53908204687286e-09,
+      "max_roundtrip_error": 0.0,
+      "synthetic_nonzero_control_used": false
+    },
+    "65": {
+      "status": "PASS",
+      "test": "seeded accepted nonhydrostatic pressure 100 kPa; actual CONTINUOUS topology split and FSPrepare",
+      "old_representative_new_representative_pressure": [
+        [
+          3.0,
+          8.0,
+          100.0
+        ],
+        [
+          2.0,
+          9.0,
+          100.0
+        ],
+        [
+          10.0,
+          10.0,
+          100.0
+        ],
+        [
+          11.0,
+          11.0,
+          100.0
+        ]
+      ]
+    },
+    "63": {
+      "status": "PASS",
+      "controlled_first_trial_failure": true,
+      "trial_steps_seconds": [
+        0.75,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "legacy_adaptive_dt_0_375_resume": "PASS|",
+      "resumed_state": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        "NOT_EVALUATED",
+        0,
+        3.0,
+        7,
+        3.0,
+        false
+      ],
+      "legacy_test_note": "constant, fully constrained field; only saved adaptive dt changed to exercise the historical subminimum compatibility path"
+    }
+  },
+  "existing_fixtures": [
+    {
+      "case": "column_smoke",
+      "passed": true,
+      "state": [
+        true,
+        "PASS",
+        "",
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        "NOT_EVALUATED",
+        0,
+        86400.0,
+        11,
+        86400.0,
+        false
+      ],
+      "seconds": 15.520849227905273
+    },
+    {
+      "case": "disabled_coupled_prefix",
+      "passed": true,
+      "state": [
+        true,
+        "PASS",
+        "",
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        "NOT_EVALUATED",
+        0,
+        0.0,
+        0,
+        0.0,
+        false
+      ],
+      "seconds": 11.671923398971558
+    },
+    {
+      "case": "dry_fixed_fs",
+      "passed": true,
+      "state": [
+        true,
+        "PASS",
+        "",
+        1.2,
+        1.2,
+        0.0,
+        1.2,
+        0.0,
+        "FIXED_FS_VERIFIED",
+        1,
+        0.0,
+        0,
+        0.0,
+        false
+      ],
+      "seconds": 12.92858362197876
+    },
+    {
+      "case": "joint_pressure_split",
+      "passed": true,
+      "state": [
+        true,
+        "PASS",
+        "",
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        "NOT_EVALUATED",
+        0,
+        1.0,
+        1,
+        1.0,
+        false
+      ],
+      "seconds": 11.823139905929565
+    },
+    {
+      "case": "minimum_step",
+      "passed": true,
+      "state": [
+        true,
+        "PASS",
+        "",
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        "NOT_EVALUATED",
+        0,
+        3.0,
+        4,
+        3.0,
+        false
+      ],
+      "seconds": 16.656882524490356
+    }
+  ],
+  "gravity": {
+    "passed": true,
+    "verification_scope": "Original stage 1 GRAVITY; intentional diagnostic stop at stage boundary before SRM. No input/stage/acceptance changes.",
+    "elapsed_seconds": 584.9990425109863,
+    "source_sha256": "0d866b9b2e8fba9f63cb253d9530f0cbb8a6c242e25008643bb1a592651fb221",
+    "state": [
+      true,
+      "NOT_RUN",
+      "",
+      0.0,
+      8,
+      4.6185842211937665e-11,
+      1e-05,
+      0.0001,
+      1e-08,
+      50,
+      4,
+      47,
+      47,
+      66,
+      0
+    ],
+    "last_increment": {
+      "ver": "20261128_ISSUE73_75_FIX_01",
+      "trial_id": "1",
+      "stage": "1",
+      "kind": "GRAVITY",
+      "fs": "1.000000000000E+00",
+      "srm_stage": "0",
+      "increment": "8",
+      "attempt_id": "8",
+      "lambda_start": "9.062500000000E-01",
+      "lambda_target": "1.000000000000E+00",
+      "delta_lambda": "9.375000000000E-02",
+      "planned_step": "9.375000000000E-02",
+      "previous_step": "2.000000000000E-01",
+      "step_ratio": "4.687500000000E-01",
+      "retry_count": "0",
+      "baseline_retry": "False",
+      "predictor_used": "False",
+      "v2a_enabled": "True",
+      "v2a_eligible": "True",
+      "v2a_path": "LONG",
+      "previous_v2_iterations": "7",
+      "v2a_used": "False",
+      "v2a_gates": "LONG.PLASTIC_XOR:1",
+      "v2a_first_q": "NA",
+      "iterations": "11",
+      "newton": "11",
+      "factorizations": "6",
+      "reuses": "5",
+      "factor_ms": "3.914843750000E+04",
+      "elapsed_ms": "5.844531250000E+04",
+      "accepted": "True",
+      "outcome": "ACCEPT",
+      "next_step": "NA",
+      "step_action": "SHRINK_0_5|STAGE_COMPLETE",
+      "failure_reason": "",
+      "relative_residual": "4.618584221194E-11",
+      "step_recovery_enabled": "False",
+      "step_recovery_probe": "False",
+      "step_recovery_ratio": "1.000000000000E+00",
+      "step_recovery_reason": "DISABLED",
+      "step_recovery_stable": "0",
+      "step_recovery_cooldown": "0",
+      "step_recovery_state": "DISABLED",
+      "step_recovery_episode": "0",
+      "step_recovery_observing": "False",
+      "step_recovery_anchor": "NA",
+      "step_recovery_cap": "NA",
+      "step_recovery_restore": "NA",
+      "step_recovery_window_successes": "0",
+      "step_recovery_window_ms": "0.000000000000E+00",
+      "step_recovery_window_progress": "0.000000000000E+00",
+      "step_recovery_pre_ms_per_lambda": "NA",
+      "step_recovery_post_ms_per_lambda": "NA",
+      "step_recovery_cost_ratio": "NA",
+      "step_recovery_pre_lu_per_lambda": "NA",
+      "step_recovery_post_lu_per_lambda": "NA",
+      "step_recovery_lu_ratio": "NA",
+      "step_recovery_pre_newton_per_lambda": "NA",
+      "step_recovery_post_newton_per_lambda": "NA",
+      "step_recovery_events": "",
+      "step_recovery_bad_streak": "0",
+      "step_recovery_fresh_lu": "False",
+      "correction_ratio": "2.916177662509E-07",
+      "line_search_cuts": "2",
+      "rebuild_reasons": "FIRST:1;ACTIVE:1;LINESEARCH_OK:1;RESID:3",
+      "line_search_min_alpha": "5.000000000000E-01"
+    },
+    "accepted_increments": 8,
+    "manifest": [
+      [
+        "2026-11-28 13:43:57",
+        "stg01_GRAVITY",
+        "1",
+        "GRAVITY",
+        "SUCCESS",
+        "577657285"
+      ]
+    ],
+    "logs": ".\\work\\fem\\issue7375\\gravity_full\\gravity_verification_out",
+    "source_unchanged": true,
+    "load_factor": 1.0,
+    "srm_trials": 0,
+    "max_iterations_per_increment": 43,
+    "cutbacks": 0
+  },
+  "nonfinite_unit_tests": 4
+}

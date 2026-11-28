@@ -46,8 +46,15 @@ End Sub
  rows=list(csv.DictReader((logs/'increment_summary.csv').open(encoding='cp932')))
  manifest=list(csv.reader((logs/'manifest.csv').open(encoding='cp932')))
  accepted=[r for r in rows if r.get('accepted')=='True']
+ for increment in accepted:
+  assert int(increment['iterations'])<=data[9],increment
+  assert float(increment['relative_residual'])<=data[6],increment
+  if increment['correction_ratio']!='NA':
+   assert float(increment['correction_ratio'])<=data[7] or float(increment['relative_residual'])<=data[8],increment
  passed=bool(data[0])
  record=dict(passed=passed,verification_scope='Original stage 1 GRAVITY; intentional diagnostic stop at stage boundary before SRM. No input/stage/acceptance changes.',elapsed_seconds=time.time()-t,source_sha256=initial_hash,state=data,last_increment=rows[-1] if rows else None,accepted_increments=len(accepted),manifest=manifest,logs=str(logs),source_unchanged=hashlib.sha256(source.read_bytes()).hexdigest()==initial_hash)
+ record['max_iterations_per_increment']=max((int(r['iterations']) for r in accepted),default=0)
+ record['cutbacks']=sum(r.get('accepted')!='True' for r in rows)
  (folder/'gravity_raw_capture.json').write_text(json.dumps(record,ensure_ascii=False,indent=2),encoding='utf8')
  assert record['source_unchanged']
  if passed:
