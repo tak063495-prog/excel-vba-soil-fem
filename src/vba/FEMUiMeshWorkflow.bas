@@ -26,7 +26,7 @@ Public Sub FEMUiShapeOnlyPage()
   ws.range("B5").value2 = "材料・外周拘束を確認 → 形状入力 → 作成 → メッシュ・拘束・品質を確認します。"
   ws.range("B28").value2 = "形状メッシュ：座標・境界・格子間隔は「形状入力」で指定"
   ws.range("E9").value2 = "外側境界1つの材料番号。複数領域は入力順に材料1,2,…"
-  ws.range("E29").value2 = "0=品質比較。1=デローニ優先。2=地形格子を直接生成（適用不可は停止）。"
+  ws.range("E29").value2 = "0=品質比較 / 1=デローニ / 2=地形格子 / 3=添付形状用の準備済みメッシュを復元。"
   ws.range("B31:E31").UnMerge: ws.range("B31:E31").Merge
   ws.range("B31").value2 = "作成すると節点・要素を更新します。既存モデルを使う場合は作成せず、確認表示へ進んでください。"
   ws.range("B31").WrapText = True: ws.rows(31).RowHeight = 34
@@ -61,9 +61,11 @@ Private Function MeshFingerprint() As String
   Dim spec As Variant, ws As Worksheet, data As Variant, v As Variant, r As Long, c As Long, last As Long
   Dim a As Double, b As Double, s As String
   a = 17#: b = 31#
-  For Each spec In Array(Array("節点データ", 9), Array("要素データ", 11), Array("材料データ", 13), Array("ステージ", 6), Array("接合", 4))
+  For Each spec In Array(Array("節点データ", 9), Array("要素データ", 11), Array("材料データ", 13), Array("ステージ", 6), Array("接合", 4), Array("形状入力", 10), Array("載荷", 8), Array("水条件", 28), Array("設定", 5))
     Set ws = ThisWorkbook.Worksheets(CStr(spec(0)))
     last = ws.cells(ws.rows.count, 1).End(xlUp).row
+    If CStr(spec(0)) = "形状入力" Then last = Application.Max(last, ws.cells(ws.rows.count, 2).End(xlUp).row, ws.cells(ws.rows.count, 8).End(xlUp).row)
+    If CStr(spec(0)) = "水条件" Then last = Application.Max(last, ws.UsedRange.row + ws.UsedRange.rows.count - 1)
     data = ws.range(ws.cells(1, 1), ws.cells(Application.Max(2, last), CLng(spec(1)))).value2
     FingerprintText CStr(spec(0)) & ":" & CStr(last), a, b
     For r = 1 To UBound(data, 1)
@@ -104,6 +106,7 @@ Public Sub FEMUiPreviewMesh()
   eventSaved = Application.EnableEvents
   On Error GoTo Failed
   Application.EnableEvents = False
+  FEMPreparedValidateMesh
   On Error Resume Next
   P5EvaluateCurrentSheet "解析前メッシュ確認"
   qualityError = Err.description: Err.Clear

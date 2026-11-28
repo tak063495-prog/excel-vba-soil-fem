@@ -16,8 +16,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 29712,
-    "sha256": "fa83ef688c228cc6ed03152e9a1b6fb3af11e6127eb8a4af73d85361bfa12cd5"
+    "bytes": 30473,
+    "sha256": "850a49d4ce2e6141e7ad9236eacbfc6e48b5ba1f5d67e2de16572e387c1377cb"
   },
   {
     "path": "docs/ACCELERATION_HISTORY.md",
@@ -11486,8 +11486,8 @@
   },
   {
     "path": "src/vba/CONTROL.bas",
-    "bytes": 103784,
-    "sha256": "27f430e965d010f71278b9f8cf794da82be560fe90657672a3bdd9945ef6073c"
+    "bytes": 105535,
+    "sha256": "02a6f0a06afee62ce3e6357adccb865e0f5b69561fbd4894c5331095fe9b4b3a"
   },
   {
     "path": "src/vba/FEM.bas",
@@ -11506,13 +11506,13 @@
   },
   {
     "path": "src/vba/FEMCore.bas",
-    "bytes": 54184,
-    "sha256": "eb439325cc19d90f2ab2beedde124a2f0b344753b6be1c4042465888650d2203"
+    "bytes": 54183,
+    "sha256": "9fb60cc9d18396bdc7138ca7c289cfbdb3adef30887a8e059d1f3ff8295b0d7d"
   },
   {
     "path": "src/vba/FEMEngine.bas",
-    "bytes": 302948,
-    "sha256": "26dc5f58ec57aba841152bc0e7ad52810b5becdf17aeec4cc6447ce93bd30c3c"
+    "bytes": 311522,
+    "sha256": "3ac6be4c7c6bb5ce2d11c5a4582a394af2b63cc259e59fa30cf1f17ce4ce07a0"
   },
   {
     "path": "src/vba/FEMFixedStress.bas",
@@ -11561,8 +11561,8 @@
   },
   {
     "path": "src/vba/FEMIo.bas",
-    "bytes": 186015,
-    "sha256": "75f33b42835436a326e2467de5977ec8e58c0a5aeaa888e85d6e1159a7582a79"
+    "bytes": 186010,
+    "sha256": "75470b000e18e1251d12467061c50fee847e523fb5c86db911affa1f5e412d2c"
   },
   {
     "path": "src/vba/FEMJointWater.bas",
@@ -11641,8 +11641,8 @@
   },
   {
     "path": "src/vba/FEMStageUi.bas",
-    "bytes": 46549,
-    "sha256": "909d4d8468685db2d832ee9c7432124cd068475192e93cb6716c276643806abd"
+    "bytes": 46603,
+    "sha256": "058e205e8294bcd867a4503be04bcb7e491ab21dffc4cde0130ded7fef919dca"
   },
   {
     "path": "src/vba/FEMStepRecovery.bas",
@@ -11666,8 +11666,8 @@
   },
   {
     "path": "src/vba/FEMUiGeometry.bas",
-    "bytes": 9973,
-    "sha256": "ea085d2d4bc982b6871410b7904bdc0cf02670a491ffa4e183a088cf18dac689"
+    "bytes": 13721,
+    "sha256": "3e05fc715746d0bc4f2295be05577dc6dd4b7fd3bb06c7e885c0ef7e2089d559"
   },
   {
     "path": "src/vba/FEMUiInputs.bas",
@@ -11681,13 +11681,13 @@
   },
   {
     "path": "src/vba/FEMUiMeshWorkflow.bas",
-    "bytes": 7370,
-    "sha256": "2ec02c145188f13b992794a0114b095b9fbf46217a807ecdc25de441a1795b03"
+    "bytes": 7771,
+    "sha256": "e2ae1b70a2940b1d5eba8e2a4971d3e85d2edec10b4bb80120a27d601c59658a"
   },
   {
     "path": "src/vba/FEMUiValidation.bas",
-    "bytes": 13447,
-    "sha256": "ef98a27bd8e6d8d4d4f7608a664c3684d12de96f3f3c8924b85a83f50164cb84"
+    "bytes": 13449,
+    "sha256": "5fb5c5556cbba45f78291311d4e85fb7b0262cb8e0b6a2dea4c307cf409052a7"
   },
   {
     "path": "src/vba/FEMViewIncrement.bas",
@@ -11746,8 +11746,8 @@
   },
   {
     "path": "src/vba/modules.json",
-    "bytes": 4513,
-    "sha256": "232f39d403871ac2879077cdfcfb66dd5e2a69799b8edfb222e9b33cae181b62"
+    "bytes": 5779,
+    "sha256": "4a4f0fffa9311659b46ef61ad5f3fab154f5dd05d842f762b00f0f181122f6e4"
   },
   {
     "path": "tests/annotate_fixed_stress_manual.py",
@@ -14486,7 +14486,52 @@
   },
   {
     "path": "delivery/SRM_FAST_1M_20261127_README.md",
-    "bytes": 1142,
-    "sha256": "94dfb592bbd5111a4b6cfc6e40aeb1149f2364170acfcb24b9fd4450464f61a8"
+    "bytes": 1252,
+    "sha256": "dc93be2c06381b674d29c69431e1c152c3ab1d8890c0bc2783e39fb22e8728cc"
+  },
+  {
+    "path": "delivery/2DSoilFEM_1m_gravity_fix_c6000_20261128.zip",
+    "bytes": 10931619,
+    "sha256": "b61bb0d22c2c51ba002e1a7ad4a3c2cc450f0cd215836fcac2cb0839959b90a1"
+  },
+  {
+    "path": "delivery/SRM_GRAVITY_FIX_20261128_README.md",
+    "bytes": 898,
+    "sha256": "2f298487b6e8a938b5e1d8f65cfb889c2e026fc2a531dd151ae9b97fe5838f96"
+  },
+  {
+    "path": "docs/SRM_GRAVITY_FIX_20261128.md",
+    "bytes": 4970,
+    "sha256": "4d1711f71aeaa626debd6b72fe31b904d3c7103f2f0395b64a23188eed6840ca"
+  },
+  {
+    "path": "docs/verification/srm_gravity_1m_20261128.json",
+    "bytes": 8248,
+    "sha256": "eae5c17bacd69a89097fcd4d9fa3d2425f742715c712a7e903e076afdd2b2123"
+  },
+  {
+    "path": "docs/verification/srm_gravity_source_import_20261128.json",
+    "bytes": 5679,
+    "sha256": "6ebf68f9b8a26a8ad172b10a04a50226caa4435111323bfd1eeba7cb7a0bd573"
+  },
+  {
+    "path": "src/vba/FEMPreparedMesh.bas",
+    "bytes": 5656,
+    "sha256": "25fe7fa840249b722f7b5fe90c51546c65632ff289cd67a8993cb0695e0610b2"
+  },
+  {
+    "path": "tests/check_srm_gravity_convergence_excel.py",
+    "bytes": 4811,
+    "sha256": "50794b4c63df6c909e0f52b92814f4a807025b965ead05b2b5116122f470b4f4"
+  },
+  {
+    "path": "tests/check_srm_gravity_delivery.py",
+    "bytes": 2731,
+    "sha256": "acbeca6a236c77eaa7cdc82403b792d24311389f26005e00bf4033f609400dab"
+  },
+  {
+    "path": "tests/check_srm_source_import_excel.py",
+    "bytes": 2554,
+    "sha256": "aa47018b5bd0f1923dd6419ecb2b7c4ff739f41f00ee043c0faf27697f838ea9"
   }
 ]
