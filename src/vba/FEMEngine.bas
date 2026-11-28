@@ -2080,6 +2080,10 @@ Private Sub P3RestoreCommittedMaterialState(Optional ByVal invalidateFactor As B
     Next im
   Next k
 StateCopyDone:
+  ' Restoring a rejected trial replaces Spmat, but not the already built kmat.
+  ' Mark every element for the next requested rebuild, including points that
+  ' returned from plastic loading to an elastic committed state.
+  P3MarkAllTangentDirty
   If P6MixedUP And P6PressureCount > 0 Then
     For k = 0 To P6PressureCount - 1
       P6Pressure(k) = P6CommittedPressure(k)
@@ -2089,7 +2093,6 @@ StateCopyDone:
   If invalidateFactor Then
     P6FactorReady = False
     P3RequestTangentRebuild "CUTBACK"
-    P3MarkAllTangentDirty
     P3AfterCutback = True
   End If
 End Sub
@@ -2548,6 +2551,8 @@ Private Function P3ApplyLineSearch(ByRef incrementBase() As Double, ByRef target
   Dim i As Long, tryCount As Long
   Dim alpha As Double, bestAlpha As Double, bestRes As Double
   Dim trialCorr As Double
+  Dim potentialBefore As Double, potentialTrial As Double, potentialSlope As Double
+  Dim potentialOn As Boolean, residualAccepted As Boolean, correctionAccepted As Boolean
   P3ApplyLineSearch = False
   P3LineSearchRetryCorrection = False
   mLineSearchFailure = "": mLineSearchTries = 0: mLineSearchMaterialRejects = 0: mLineSearchBestQ = -1#
@@ -2562,6 +2567,13 @@ Private Function P3ApplyLineSearch(ByRef incrementBase() As Double, ByRef target
   For i = 0 To lastDof
     P3LineSearchSavedT(i) = TDisp(i)
   Next i
+  potentialOn = P3IncrementPotential(incrementBase, targetForce, potentialBefore)
+  If potentialOn Then
+    For i = 0 To lastDof
+      If NodeCond(i) = 0 Then potentialSlope = potentialSlope + (internalForce(i) - targetForce(i)) * Disp(i)
+    Next i
+    If potentialSlope >= 0# Then potentialOn = False
+  End If
   Dim searchLimit As Long
   searchLimit = P3_LINESEARCH_MAX
   If P3FlowPolicyIsInconsistent() Then searchLimit = P3_INCO_LINESEARCH_MAX
@@ -2604,7 +2616,19 @@ Private Function P3ApplyLineSearch(ByRef incrementBase() As Double, ByRef target
       If residualBefore > 0# Then mLineSearchBestQ = bestRes / residualBefore
       bestAlpha = alpha
     End If
+    residualAccepted = False
     If residualBefore <= 0# Or ResidualNormFree <= residualBefore * (1# - 0.0001 * alpha) Or RelativeResidualFree <= P3_ENGINEERING_RESIDUAL * 0.1 Then
+      residualAccepted = True
+    End If
+    correctionAccepted = residualAccepted
+    If potentialOn Then
+      correctionAccepted = False
+      If P3IncrementPotential(incrementBase, targetForce, potentialTrial) Then
+        correctionAccepted = (potentialTrial <= potentialBefore + 0.0001 * alpha * potentialSlope)
+        If correctionAccepted Then P6SolverEvent "INCREMENT_POTENTIAL_DESCENT", "alpha=" & CStr(alpha) & ";dpotential=" & CStr(potentialTrial - potentialBefore) & ";slope=" & CStr(potentialSlope) & ";relative_residual=" & CStr(RelativeResidualFree)
+      End If
+    End If
+    If correctionAccepted Then
       P3UpdateResidualMetrics targetForce, internalForce
       trialCorr = 0#
       P3ApplyCorrectionRatioFromDir alpha, P3LineSearchSavedT, trialCorr
@@ -2932,6 +2956,17 @@ P3RetrySameIncrement:
         End If
         SetBoundaryCondition
         If Not BandSolver() Then
+          If ResultStatus = RESULT_GLOBAL_SINGULAR And P3CanRegularizeCorrection() Then
+            P3ClearTransientFailure
+            If P3TrySymmetricCorrection(incrementBase, targetForce, internalForce, correctionRatio, localIteration) Then
+              P3ClearTransientFailure
+              If correctionRatio > P3MaxCorrection Then P3MaxCorrection = correctionRatio
+              stagnationCount = 0: lineSearchRebuildUsed = False
+              P3RequestTangentRebuild "SINGULAR_CORRECTION_RECOVERY"
+              GoTo P3NextGlobalIteration
+            End If
+            If ResultStatus = RESULT_NOT_RUN Then SetAnalysisFailure RESULT_GLOBAL_SINGULAR, "接線の補正計算でも釣合い残差を減らせませんでした。", vbObjectError + 3305, FailureElement, FailureGaussPoint, CurrentIncrement, CurrentIteration
+          End If
           If P3FlowPolicyIsInconsistent() And Not P3IncoElasticCorrection And Not P3IsFatalFailure() Then
             ' Retry a failed Newton direction with the existing regularized
             ' residual minimization. Acceptance still requires actual force
@@ -6567,6 +6602,7 @@ Private Function P3AccelApplyCorrection(ByRef incrementBase() As Double, ByRef t
     If Not ok And Not P3IsFatalFailure() Then ok = P3TryResidualRecovery(incrementBase, targetForce, internalForce, correctionRatio, localIteration)
   Else
     ok = P3ApplyLineSearch(incrementBase, targetForce, internalForce, correctionRatio, residualBefore)
+    If Not ok And Not P3IsFatalFailure() Then ok = P3TrySymmetricCorrection(incrementBase, targetForce, internalForce, correctionRatio, localIteration)
   End If
   If Not ok Or P3LineSearchCuts <> cutsBefore Then mAAReady = False
   P3AccelApplyCorrection = ok
@@ -6613,4 +6649,124 @@ Public Function P3JointTangentState(ByVal e As Long, ByVal gp As Long) As Long
     If Elem(e).Stmat(0, gp) > 0# Then P3JointTangentState = P3JointTangentState + 4
     If Elem(e).Stmat(1, gp) < 0# Then P3JointTangentState = P3JointTangentState + 8
   End If
+End Function
+Private Function P3IncrementPotential(ByRef incrementBase() As Double, ByRef targetForce() As Double, ByRef potential As Double) As Boolean
+  ' Associated backward-Euler return mapping is the elastic-metric projection.
+  ' Its incremental potential has gradient equal to the actual internal force:
+  ' sigma:de - 1/2*(sigma-sigma_n):C^-1:(sigma-sigma_n).
+  ' This is a line-search merit only; the original force/correction/boundary
+  ' convergence tests, budgets, constitutive update and physical K are unchanged.
+  Dim k As Long, g As Long, j As Long, m As Long, i As Long
+  Dim ex As Double, ey As Double, gammaXY As Double
+  Dim sx As Double, sy As Double, sz As Double, tau As Double
+  Dim dx As Double, dy As Double, dz As Double, dt As Double
+  Dim complianceWork As Double, localValue As Double, young As Double, Poisson As Double
+  P3IncrementPotential = False: potential = 0#
+  If Not P3FlowPolicyIsDavis() Then Exit Function
+  If P6MixedUP Or GWActive Or FSActive Or P3HasJointElements Then Exit Function
+  For i = 0 To lastDof
+    If NodeCond(i) <> 0 And Abs(Disp(i)) > 0.000000000001 Then Exit Function
+  Next i
+  For k = 0 To NumberOfElement - 1
+    If P3IsElementActive(k) Then
+      If Elem(k).IsJoint Or Elem(k).HourglassModeCount > 0 Then Exit Function
+      m = Elem(k).MatNo
+      If Abs(Material(m).fai - Material(m).psai) > 0.000000001 Then Exit Function
+      young = Material(m).young: Poisson = Material(m).Poisson
+      For g = 0 To 3
+        If Elem(k).P2LastSuccessfulSubsteps(g) > 1 Then Exit Function
+        ex = 0#: ey = 0#: gammaXY = 0#
+        For j = 0 To 15
+          ex = ex + Elem(k).bMat(0, j, g) * Elem(k).u(j)
+          ey = ey + Elem(k).bMat(1, j, g) * Elem(k).u(j)
+          gammaXY = gammaXY + Elem(k).bMat(2, j, g) * Elem(k).u(j)
+        Next j
+        sx = Elem(k).Stmat(0, g): sy = Elem(k).Stmat(1, g)
+        tau = Elem(k).Stmat(2, g): sz = Elem(k).Stmat(16, g)
+        dx = sx - Elem(k).mStmat(0, g): dy = sy - Elem(k).mStmat(1, g)
+        dt = tau - Elem(k).mStmat(2, g): dz = sz - Elem(k).mStmat(16, g)
+        complianceWork = (dx * dx + dy * dy + dz * dz - 2# * Poisson * (dx * dy + dy * dz + dz * dx) + 2# * (1# + Poisson) * dt * dt) / young
+        localValue = sx * ex + sy * ey + tau * gammaXY - 0.5 * complianceWork
+        potential = potential + localValue * Elem(k).dj(g) * Material(m).thickness
+      Next g
+    End If
+  Next k
+  For i = 0 To lastDof
+    potential = potential - targetForce(i) * (TDisp(i) - incrementBase(i))
+  Next i
+  P3IncrementPotential = P2IsFinite(potential)
+End Function
+
+Private Function P3TrySymmetricCorrection(ByRef incrementBase() As Double, ByRef targetForce() As Double, ByRef internalForce() As Double, ByRef correctionRatio As Double, ByRef localIteration As Long) As Boolean
+  ' A near-singular yielded tangent can give a direction whose entire fixed
+  ' line-search window overshoots. Regularize ONLY the correction equation.
+  ' OriginalMat is restored exactly before evaluating the material residual;
+  ' no spring force, strength, load, acceptance threshold or budget is changed.
+  Dim diagSaved() As Double, diagMagnitude As Double, trialDamping As Double
+  Dim i As Long, attempt As Long, beforeNorm As Double, solved As Boolean
+  Dim diagonalModified As Boolean, errorNumber As Long, errorText As String
+  P3TrySymmetricCorrection = False
+  If Not P3CanRegularizeCorrection() Then Exit Function
+  On Error GoTo Failed
+  ReDim diagSaved(0 To lastDof)
+  For attempt = 0 To 5
+    If localIteration >= P3GlobalIterationLimit() Then
+      P3SetGlobalBudgetFailure
+      Exit Function
+    End If
+    If Not P3EvaluateTrialState(incrementBase, internalForce) Then Exit Function
+    P3UpdateResidualMetrics targetForce, internalForce
+    beforeNorm = ResidualNormFree
+    P3MarkAllTangentDirty
+    If Not P3RebuildTangentFromSpmat() Then Exit Function
+    diagMagnitude = 0#
+    For i = 0 To lastDof
+      diagSaved(i) = OriginalMat(i, 0)
+      If NodeCond(i) = 0 And Abs(diagSaved(i)) > diagMagnitude Then diagMagnitude = Abs(diagSaved(i))
+      Disp(i) = 0#: force(i) = 0#
+      If NodeCond(i) = 0 Then force(i) = targetForce(i) - internalForce(i)
+    Next i
+    If diagMagnitude <= 0# Or Not P2IsFinite(diagMagnitude) Then Exit Function
+    trialDamping = diagMagnitude * 0.0001 * (10# ^ attempt)
+    For i = 0 To lastDof
+      If NodeCond(i) = 0 Then OriginalMat(i, 0) = diagSaved(i) + trialDamping
+    Next i
+    diagonalModified = True
+    P6FactorReady = False
+    SetBoundaryCondition
+    localIteration = localIteration + 1
+    P3GlobalIterationCount = P3GlobalIterationCount + 1
+    P6PerfNewtonCount = P6PerfNewtonCount + 1
+    solved = BandSolver()
+    For i = 0 To lastDof: OriginalMat(i, 0) = diagSaved(i): Next i
+    diagonalModified = False
+    P6InvalidateNumericTangent
+    If solved Then
+      If P3ApplyLineSearch(incrementBase, targetForce, internalForce, correctionRatio, beforeNorm) Then
+        P3RequestTangentRebuild "CORRECTION_ONLY_REGULARIZATION"
+        P3MarkAllTangentDirty
+        P6SolverEvent "SYMMETRIC_CORRECTION_ACCEPT", "damping=" & Format$(trialDamping, "0.000E+00") & ";relres=" & Format$(RelativeResidualFree, "0.000E+00") & ";correction=" & Format$(correctionRatio, "0.000E+00") & ";shared_iteration=" & CStr(localIteration)
+        P3TrySymmetricCorrection = True
+        Exit Function
+      End If
+    End If
+    If P3IsFatalFailure() Then Exit Function
+    P3ClearTransientFailure
+  Next attempt
+  Exit Function
+Failed:
+  errorNumber = Err.number: errorText = Err.description
+  On Error Resume Next
+  If diagonalModified Then
+    For i = 0 To lastDof: OriginalMat(i, 0) = diagSaved(i): Next i
+  End If
+  P6InvalidateNumericTangent
+  On Error GoTo 0
+  Err.Raise errorNumber, "P3TrySymmetricCorrection", errorText
+End Function
+
+Private Function P3CanRegularizeCorrection() As Boolean
+  If P3UserCancel Or P3SearchFatal Then Exit Function
+  If P6UseCSR Or P6MixedUP Or GWActive Or FSActive Or P3HasJointElements Then Exit Function
+  P3CanRegularizeCorrection = P3FlowPolicyIsDavis() And P3BoundaryDispSatisfied()
 End Function

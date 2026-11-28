@@ -199,7 +199,7 @@ Private Sub Frame(ByVal ws As Worksheet)
   ws.columns("N:O").Hidden = True
   ws.rows(1).RowHeight = 30: ws.rows(2).RowHeight = 29: ws.rows(3).RowHeight = 29
   ws.rows(4).RowHeight = 25: ws.rows("5:6").RowHeight = 22
-  ws.range("A1:M1").Merge: ws.range("A1").value2 = "2D Soil FEM  |  " & ws.name & "  |  1024"
+  ws.range("A1:M1").Merge: ws.range("A1").value2 = "2D Soil FEM  |  " & ws.name & "  |  SRM修正版 20261127"
   ws.range("A1:M1").Interior.Color = RGB(20, 43, 66): ws.range("A1").Font.Color = vbWhite: ws.range("A1").Font.size = 17
   actions = Array("FEM24Home", "FEM24Model", "FEM24Materials", "FEM24Water", "FEM24Stages", "FEM24Analysis", "FEM24Results")
   i = 0
@@ -394,7 +394,7 @@ Private Sub Render(ByVal ws As Worksheet)
   section = CStr(ws.range("C4").value2)
   Select Case ws.name
     Case "ホーム"
-      ws.range("A5").value2 = "施工工程を中心に、条件を登録 → メッシュ確認 → 解析 → 結果を確認します。項目欄で同じ画面内の表を切り替えます。"
+      ws.range("A5").value2 = "SRM修正版：添付12層の準備済みメッシュを収録。解析前メッシュを確認 → 確認したメッシュで解析。形状変更時は専用メッシュの再作成が必要です。"
       ws.range("A8:M9").Merge: ws.range("A8").value2 = "1 モデル → 2 材料・接合 → 3 境界・水条件 → 4 施工工程 → 5 解析・保存 → 6 結果"
       ws.range("A11:M12").Merge: ws.range("A11").value2 = "工程は上から実行。追加・複製・削除・上下移動が可能です。途中のSRMは必要Fsの照査、最後の有効行のSRMはFs探索です。"
       ws.range("A14:M15").Merge: ws.range("A14").value2 = "入力変更後は結果を無効化し、メッシュ確認をやり直します。詳細表を開いた後は上部の「7画面へ戻る」で戻れます。"

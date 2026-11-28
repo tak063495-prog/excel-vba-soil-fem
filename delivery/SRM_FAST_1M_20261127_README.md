@@ -14,6 +14,7 @@ issue #62～67と、提供されたphase-Aブックの#69を修正していま�
 #70・71は既存PR #68内の修正コードを確認したもので、この配布物にその追加機能は含みません。
 
 関連修正：[PR #72](https://github.com/tak063495-prog/excel-vba-soil-fem/pull/72)。
-mainへのマージは行っていません。
+PR #72はmainへマージ済みです。新しい自重収束修正版は
+[2026-11-28版](SRM_GRAVITY_FIX_20261128_README.md)を参照してください。
 
 ZIP SHA256: `69a537f73957eee8196df4d3d0781994995624bb7a566f9b92f45b2944f8a89b`

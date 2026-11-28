@@ -240,6 +240,8 @@ Private Function ErrorStatus(ByVal errorNumber As Long) As String
     Dim localNumber As Long
     localNumber = errorNumber - vbObjectError
     Select Case localNumber
+        Case 7201 To 7203
+            ErrorStatus = RESULT_INPUT_ERROR
         Case 3001 To 3008
             ErrorStatus = RESULT_INPUT_ERROR
         Case 3820 To 3829
@@ -284,6 +286,8 @@ Private Sub CreateMeshFromGeometryDefinition()
     Dim terrainX() As Double, terrainY() As Double, terrainElements() As Variant
     Dim terrainConn() As Long, t6Failed() As Boolean, t6Count As Long, t6Rows As Long, t6Detail As String, t6Converted As Variant
     Dim te As Long, tj As Long
+    Dim oldNodes As Variant, oldElements As Variant, savedNodeRows As Long, savedElementRows As Long
+    Dim savedNodeSheet As Worksheet, savedElementSheet As Worksheet
 
     On Error GoTo ErrorHandler
     currentStage = "開始"
@@ -301,6 +305,19 @@ Private Sub CreateMeshFromGeometryDefinition()
     Application.Calculation = xlCalculationManual
     Err.Clear
     On Error GoTo ErrorHandler
+
+    Set savedNodeSheet = ThisWorkbook.Worksheets("節点データ")
+    Set savedElementSheet = ThisWorkbook.Worksheets("要素データ")
+    savedNodeRows = Application.Max(2, savedNodeSheet.cells(savedNodeSheet.rows.count, 1).End(xlUp).row)
+    savedElementRows = Application.Max(2, savedElementSheet.cells(savedElementSheet.rows.count, 1).End(xlUp).row)
+    oldNodes = savedNodeSheet.range("A1:N" & CStr(savedNodeRows)).value2
+    oldElements = savedElementSheet.range("A1:K" & CStr(savedElementRows)).value2
+    If FEMReadSetting("MESH_GEN_COMPARE", 1#) >= 2.5 Then
+        currentStage = "添付形状照合・準備済みメッシュ復元"
+        FEMPreparedRestoreMesh
+        If stateWasSaved Then RestoreApplicationState
+        MeshPerfLeave "CONTROL.CreateMeshFromGeometryDefinition": Exit Sub
+    End If
 
     If FEMReadSetting("MESH_GEN_COMPARE", 1#) >= 1.5 Then
         currentStage = "地形格子の適用確認・直接生成"
@@ -382,8 +399,17 @@ Private Sub CreateMeshFromGeometryDefinition()
 ErrorHandler:
     errorNumber = Err.number
     errorDescription = Err.description
+    FEMShapeGenerationOK = False
     FEMUiMeshPreviewError = "メッシュ作成 [" & currentStage & "]：" & errorDescription
     On Error Resume Next
+    If Not IsEmpty(oldNodes) Then
+        savedNodeSheet.range("A1:N" & CStr(Application.Max(savedNodeRows, savedNodeSheet.cells(savedNodeSheet.rows.count, 1).End(xlUp).row))).ClearContents
+        savedNodeSheet.range("A1").Resize(savedNodeRows, 14).value2 = oldNodes
+        savedElementSheet.range("A1:K" & CStr(Application.Max(savedElementRows, savedElementSheet.cells(savedElementSheet.rows.count, 1).End(xlUp).row))).ClearContents
+        savedElementSheet.range("A1").Resize(savedElementRows, 11).value2 = oldElements
+        FEMInvalidateInputCache
+        FEMUiInvalidateMeshPreview
+    End If
     P5ReleaseGeometryDefinitionWorkspace
     On Error GoTo 0
     If stateWasSaved Then RestoreApplicationState
@@ -1057,6 +1083,7 @@ Sub ボタン5_Click()
     SaveApplicationState
     FEMLastProc = "入力設定の検査"
     ResetAnalysisState
+    FEMPreparedValidateMesh
     FEMUiValidateSettings
     FEMViewerMarkDirty
     P1ClearViewerLayers
